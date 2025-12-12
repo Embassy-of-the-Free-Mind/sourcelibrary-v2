@@ -9,7 +9,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.560.0",
+    "mongodb": "^7.0.0",
     "next": "16.0.10",
+    "openai": "^6.10.0",
     "react": "19.2.1",
     "react-dom": "19.2.1"
   },
