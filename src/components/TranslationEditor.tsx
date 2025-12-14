@@ -523,16 +523,10 @@ export default function TranslationEditor({
               {book.language || 'Latin'}
             </span>
           </div>
-          <div className="flex-1 overflow-auto p-4">
-            <div className="relative aspect-[3/4] rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div className="flex-1 overflow-hidden p-4">
+            <div className="relative w-full h-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
               {page.photo ? (
-                <Image
-                  src={page.photo}
-                  alt={`Page ${page.page_number}`}
-                  fill
-                  className="object-contain"
-                  sizes="33vw"
-                />
+                <ImageWithMagnifier src={page.photo} alt={`Page ${page.page_number}`} />
               ) : (
                 <div className="w-full h-full flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                   No image available
