@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import {
   Loader2,
@@ -11,7 +11,8 @@ import {
   Eye,
   Pencil,
   Copy,
-  Check
+  Check,
+  ZoomIn
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import type { Page, Book } from '@/lib/types';
@@ -121,6 +122,77 @@ function SettingsModal({ isOpen, onClose, title, promptText, onPromptChange }: S
   );
 }
 
+// Magnifier component for zooming into the source image
+function ImageWithMagnifier({ src, alt }: { src: string; alt: string }) {
+  const [showMagnifier, setShowMagnifier] = useState(false);
+  const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const imageRef = useRef<HTMLDivElement>(null);
+
+  const magnifierSize = 180;
+  const zoomLevel = 2.5;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!imageRef.current) return;
+
+    const rect = imageRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    // Position as percentage for background-position
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+
+    setCursorPosition({ x, y });
+    setMagnifierPosition({ x: xPercent, y: yPercent });
+  };
+
+  return (
+    <div
+      ref={imageRef}
+      className="relative w-full h-full cursor-crosshair"
+      onMouseEnter={() => setShowMagnifier(true)}
+      onMouseLeave={() => setShowMagnifier(false)}
+      onMouseMove={handleMouseMove}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        className="object-contain"
+        sizes="50vw"
+      />
+
+      {/* Magnifier lens */}
+      {showMagnifier && (
+        <div
+          className="absolute pointer-events-none rounded-full shadow-lg"
+          style={{
+            width: magnifierSize,
+            height: magnifierSize,
+            left: cursorPosition.x - magnifierSize / 2,
+            top: cursorPosition.y - magnifierSize / 2,
+            border: '3px solid var(--border-medium)',
+            backgroundImage: `url(${src})`,
+            backgroundSize: `${zoomLevel * 100}%`,
+            backgroundPosition: `${magnifierPosition.x}% ${magnifierPosition.y}%`,
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: 'var(--bg-white)',
+          }}
+        />
+      )}
+
+      {/* Zoom hint */}
+      {!showMagnifier && (
+        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded text-xs" style={{ background: 'rgba(0,0,0,0.5)', color: 'white' }}>
+          <ZoomIn className="w-3 h-3" />
+          Hover to zoom
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function TranslationEditor({
   book,
   page,
@@ -134,7 +206,6 @@ export default function TranslationEditor({
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
 
   const [processing, setProcessing] = useState<'ocr' | 'translation' | 'summary' | 'all' | null>(null);
-  const [saving, setSaving] = useState(false);
   const [mode, setMode] = useState<'read' | 'edit'>('read');
 
   const [showOcrSettings, setShowOcrSettings] = useState(false);
@@ -143,7 +214,6 @@ export default function TranslationEditor({
   const [ocrPrompt, setOcrPrompt] = useState('OCR the page in {language}. Return only the transcribed text.');
   const [translationPrompt, setTranslationPrompt] = useState('Translate the following {language} text to English. Preserve formatting and add [[notes]] for uncertainties.');
 
-  const [copiedOcr, setCopiedOcr] = useState(false);
   const [copiedTranslation, setCopiedTranslation] = useState(false);
 
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
@@ -193,29 +263,150 @@ export default function TranslationEditor({
   };
 
   const handleSave = async () => {
-    setSaving(true);
     try {
       await onSave({
         ocr: ocrText,
         translation: translationText,
         summary: summaryText
       });
-    } finally {
-      setSaving(false);
+    } catch (error) {
+      console.error('Save error:', error);
     }
   };
 
-  const copyToClipboard = async (text: string, type: 'ocr' | 'translation') => {
+  const copyToClipboard = async (text: string) => {
     await navigator.clipboard.writeText(text);
-    if (type === 'ocr') {
-      setCopiedOcr(true);
-      setTimeout(() => setCopiedOcr(false), 2000);
-    } else {
-      setCopiedTranslation(true);
-      setTimeout(() => setCopiedTranslation(false), 2000);
-    }
+    setCopiedTranslation(true);
+    setTimeout(() => setCopiedTranslation(false), 2000);
   };
 
+  // READ MODE - Clean reading experience
+  if (mode === 'read') {
+    return (
+      <div className="h-screen flex flex-col" style={{ background: 'var(--bg-cream)' }}>
+        {/* Minimal Header */}
+        <header className="px-6 py-4 flex items-center justify-between" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
+          <div className="flex items-center gap-4">
+            <a href={`/book/${book.id}`} className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
+              <ChevronLeft className="w-5 h-5" />
+            </a>
+            <div>
+              <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                {book.display_title || book.title}
+              </h1>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Page {currentIndex + 1} of {pages.length}</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            {/* Mode Toggle */}
+            <div className="flex items-center rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
+              <button
+                onClick={() => setMode('read')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
+                style={{
+                  background: 'var(--bg-white)',
+                  color: 'var(--text-primary)',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                }}
+              >
+                <Eye className="w-4 h-4" />
+                Read
+              </button>
+              <button
+                onClick={() => setMode('edit')}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
+                style={{
+                  background: 'transparent',
+                  color: 'var(--text-muted)',
+                }}
+              >
+                <Pencil className="w-4 h-4" />
+                Edit
+              </button>
+            </div>
+
+            {/* Navigation */}
+            <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
+              <button
+                onClick={() => previousPage && onNavigate(previousPage.id)}
+                disabled={!previousPage}
+                className="p-2 rounded-md transition-all disabled:opacity-30"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <span className="px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1} / {pages.length}</span>
+              <button
+                onClick={() => nextPage && onNavigate(nextPage.id)}
+                disabled={!nextPage}
+                className="p-2 rounded-md transition-all disabled:opacity-30"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </header>
+
+        {/* Two-column reading layout */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Source Image with Magnifier */}
+          <div className="w-1/2 flex flex-col" style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+            <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <span className="label">Original</span>
+              <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
+                {book.language || 'Latin'}
+              </span>
+            </div>
+            <div className="flex-1 overflow-hidden p-6">
+              <div className="relative w-full h-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                {page.photo ? (
+                  <ImageWithMagnifier src={page.photo} alt={`Page ${page.page_number}`} />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+                    No image available
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Translation */}
+          <div className="w-1/2 flex flex-col" style={{ background: 'var(--bg-white)' }}>
+            <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2">
+                <span className="label">Translation</span>
+                <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}>
+                  English
+                </span>
+              </div>
+              <button
+                onClick={() => copyToClipboard(translationText)}
+                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs transition-colors hover:opacity-70"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                {copiedTranslation ? <Check className="w-3.5 h-3.5" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedTranslation ? 'Copied' : 'Copy'}
+              </button>
+            </div>
+            <div className="flex-1 overflow-auto p-6">
+              {translationText ? (
+                <NotesRenderer text={translationText} />
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center" style={{ color: 'var(--text-muted)' }}>
+                  <p className="text-lg mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}>No translation yet</p>
+                  <p className="text-sm">Switch to Edit mode to run OCR and translation.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // EDIT MODE - Full editing interface
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--bg-warm)' }}>
       {/* Header */}
@@ -240,9 +431,8 @@ export default function TranslationEditor({
                 onClick={() => setMode('read')}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
                 style={{
-                  background: mode === 'read' ? 'var(--bg-white)' : 'transparent',
-                  color: mode === 'read' ? 'var(--text-primary)' : 'var(--text-muted)',
-                  boxShadow: mode === 'read' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                  background: 'transparent',
+                  color: 'var(--text-muted)',
                 }}
               >
                 <Eye className="w-4 h-4" />
@@ -252,9 +442,9 @@ export default function TranslationEditor({
                 onClick={() => setMode('edit')}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
                 style={{
-                  background: mode === 'edit' ? 'var(--bg-white)' : 'transparent',
-                  color: mode === 'edit' ? 'var(--text-primary)' : 'var(--text-muted)',
-                  boxShadow: mode === 'edit' ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                  background: 'var(--bg-white)',
+                  color: 'var(--text-primary)',
+                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
                 }}
               >
                 <Pencil className="w-4 h-4" />
@@ -343,30 +533,18 @@ export default function TranslationEditor({
 
           <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
             <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>OCR Text</span>
-            <div className="flex items-center gap-2">
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{ocrText.length} chars</span>
-              <button
-                onClick={() => copyToClipboard(ocrText, 'ocr')}
-                className="p-1 transition-colors hover:opacity-70"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {copiedOcr ? <Check className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-4 h-4" />}
-              </button>
-            </div>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{ocrText.length} chars</span>
           </div>
 
           <div className="flex-1 overflow-auto p-4">
-            {mode === 'edit' ? (
-              <textarea
-                value={ocrText}
-                onChange={(e) => setOcrText(e.target.value)}
-                className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
-                placeholder="OCR text will appear here..."
-              />
-            ) : (
-              <NotesRenderer text={ocrText} />
-            )}
+            <textarea
+              value={ocrText}
+              onChange={(e) => setOcrText(e.target.value)}
+              onBlur={handleSave}
+              className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
+              style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
+              placeholder="OCR text will appear here..."
+            />
           </div>
         </div>
 
@@ -403,30 +581,18 @@ export default function TranslationEditor({
                 English
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
-              <button
-                onClick={() => copyToClipboard(translationText, 'translation')}
-                className="p-1 transition-colors hover:opacity-70"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {copiedTranslation ? <Check className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-4 h-4" />}
-              </button>
-            </div>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
           </div>
 
           <div className="flex-1 overflow-auto p-4">
-            {mode === 'edit' ? (
-              <textarea
-                value={translationText}
-                onChange={(e) => setTranslationText(e.target.value)}
-                className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
-                placeholder="Translation will appear here..."
-              />
-            ) : (
-              <NotesRenderer text={translationText} />
-            )}
+            <textarea
+              value={translationText}
+              onChange={(e) => setTranslationText(e.target.value)}
+              onBlur={handleSave}
+              className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
+              style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
+              placeholder="Translation will appear here..."
+            />
           </div>
         </div>
       </div>
