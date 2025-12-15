@@ -1,7 +1,11 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { DEFAULT_PROMPTS } from './types';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+
+// Use gemini-1.5-flash for vision tasks (supports images)
+const VISION_MODEL = 'gemini-1.5-flash';
+const TEXT_MODEL = 'gemini-1.5-flash';
 
 export async function performOCR(
   imageUrl: string,
@@ -9,7 +13,10 @@ export async function performOCR(
   previousPageOcr?: string,
   customPrompt?: string
 ): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY environment variable is not set');
+  }
+  const model = genAI.getGenerativeModel({ model: VISION_MODEL });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
 
@@ -43,7 +50,10 @@ export async function performTranslation(
   previousPageTranslation?: string,
   customPrompt?: string
 ): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY environment variable is not set');
+  }
+  const model = genAI.getGenerativeModel({ model: TEXT_MODEL });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.translation)
     .replace('{source_language}', sourceLanguage)
@@ -64,7 +74,10 @@ export async function generateSummary(
   previousPageSummary?: string,
   customPrompt?: string
 ): Promise<string> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY environment variable is not set');
+  }
+  const model = genAI.getGenerativeModel({ model: TEXT_MODEL });
 
   let prompt = customPrompt || DEFAULT_PROMPTS.summary;
   prompt += `\n\n**Translated text:**\n${translatedText}`;
