@@ -3,9 +3,9 @@ import { DEFAULT_PROMPTS } from './types';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-// Use gemini-1.5-flash for vision tasks (supports images)
-const VISION_MODEL = 'gemini-1.5-flash';
-const TEXT_MODEL = 'gemini-1.5-flash';
+// Use gemini-2.0-flash (GA as of 2025)
+const VISION_MODEL = 'gemini-2.0-flash';
+const TEXT_MODEL = 'gemini-2.0-flash';
 
 export async function performOCR(
   imageUrl: string,
@@ -16,6 +16,10 @@ export async function performOCR(
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set');
   }
+
+  console.log('Starting OCR for image:', imageUrl);
+  console.log('API Key present:', !!process.env.GEMINI_API_KEY);
+
   const model = genAI.getGenerativeModel({ model: VISION_MODEL });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
@@ -25,22 +29,34 @@ export async function performOCR(
   }
 
   // Fetch the image
+  console.log('Fetching image...');
   const imageResponse = await fetch(imageUrl);
+  if (!imageResponse.ok) {
+    throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
+  }
+
   const imageBuffer = await imageResponse.arrayBuffer();
   const base64Image = Buffer.from(imageBuffer).toString('base64');
   const mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+  console.log('Image fetched, size:', imageBuffer.byteLength, 'mimeType:', mimeType);
 
-  const result = await model.generateContent([
-    prompt,
-    {
-      inlineData: {
-        mimeType,
-        data: base64Image,
+  console.log('Calling Gemini API...');
+  try {
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          mimeType,
+          data: base64Image,
+        },
       },
-    },
-  ]);
-
-  return result.response.text();
+    ]);
+    console.log('Gemini API response received');
+    return result.response.text();
+  } catch (geminiError) {
+    console.error('Gemini API error:', geminiError);
+    throw new Error(`Gemini API error: ${geminiError instanceof Error ? geminiError.message : 'Unknown error'}`);
+  }
 }
 
 export async function performTranslation(
