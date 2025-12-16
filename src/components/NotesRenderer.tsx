@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface NotesRendererProps {
   text: string;
@@ -108,6 +109,7 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
           return (
             <ReactMarkdown
               key={index}
+              remarkPlugins={[remarkGfm]}
               components={{
                 // Customize rendering to be inline-friendly
                 p: ({ children }) => <span className="whitespace-pre-wrap">{children}</span>,
@@ -128,6 +130,23 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
                   <code className="bg-stone-100 px-1 py-0.5 rounded text-sm font-mono">{children}</code>
                 ),
                 hr: () => <hr className="my-4 border-stone-200" />,
+                // Table support
+                table: ({ children }) => (
+                  <div className="overflow-x-auto my-4">
+                    <table className="min-w-full border-collapse border border-stone-200">{children}</table>
+                  </div>
+                ),
+                thead: ({ children }) => <thead className="bg-stone-100">{children}</thead>,
+                tbody: ({ children }) => <tbody>{children}</tbody>,
+                tr: ({ children }) => <tr className="border-b border-stone-200">{children}</tr>,
+                th: ({ children }) => (
+                  <th className="px-3 py-2 text-left text-sm font-semibold text-stone-700 border border-stone-200">
+                    {children}
+                  </th>
+                ),
+                td: ({ children }) => (
+                  <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
+                ),
               }}
             >
               {segment.content}
