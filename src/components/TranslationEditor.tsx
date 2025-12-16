@@ -14,7 +14,9 @@ import {
   Check,
   ZoomIn,
   Scissors,
-  ArrowLeftRight
+  ArrowLeftRight,
+  Columns,
+  BookOpen
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import type { Page, Book } from '@/lib/types';
@@ -258,6 +260,21 @@ export default function TranslationEditor({
   const [translationPrompt, setTranslationPrompt] = useState('Translate the following {language} text to English. Preserve formatting and add [[notes]] for uncertainties.');
 
   const [copiedTranslation, setCopiedTranslation] = useState(false);
+  const [showOcrInRead, setShowOcrInRead] = useState(false);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
+      if (e.key === 'ArrowLeft' && previousPage) {
+        onNavigate(previousPage.id);
+      } else if (e.key === 'ArrowRight' && nextPage) {
+        onNavigate(nextPage.id);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [previousPage, nextPage, onNavigate]);
 
   const handleSplitPage = async (side: 'left' | 'right') => {
     if (splitting) return;
@@ -357,84 +374,84 @@ export default function TranslationEditor({
 
   // READ MODE - Clean reading experience
   if (mode === 'read') {
+    const columnWidth = showOcrInRead ? 'md:w-1/3' : 'md:w-1/2';
+
     return (
       <div className="h-screen flex flex-col" style={{ background: 'var(--bg-cream)' }}>
-        {/* Minimal Header */}
-        <header className="px-6 py-4 flex items-center justify-between" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-          <div className="flex items-center gap-4">
-            <a href={`/book/${book.id}`} className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
-              <ChevronLeft className="w-5 h-5" />
+        {/* Compact Header */}
+        <header className="px-4 py-2 flex items-center justify-between" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
+          {/* Left: Back + Title */}
+          <div className="flex items-center gap-3 min-w-0">
+            <a href={`/book/${book.id}`} className="p-1.5 rounded-md hover:bg-stone-100 transition-colors flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
+              <BookOpen className="w-5 h-5" />
             </a>
-            <div>
-              <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+            <div className="min-w-0">
+              <h1 className="text-base font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
                 {book.display_title || book.title}
               </h1>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Page {currentIndex + 1} of {pages.length}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            {/* Mode Toggle */}
-            <div className="flex items-center rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
-              <button
-                onClick={() => setMode('read')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
-                style={{
-                  background: 'var(--bg-white)',
-                  color: 'var(--text-primary)',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-                }}
-              >
-                <Eye className="w-4 h-4" />
-                Read
-              </button>
-              <button
-                onClick={() => setMode('edit')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
-                style={{
-                  background: 'transparent',
-                  color: 'var(--text-muted)',
-                }}
-              >
-                <Pencil className="w-4 h-4" />
-                Edit
-              </button>
+          {/* Center: Page Navigation */}
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => previousPage && onNavigate(previousPage.id)}
+              disabled={!previousPage}
+              className="p-2 rounded-lg hover:bg-stone-100 transition-all disabled:opacity-30 disabled:hover:bg-transparent"
+              style={{ color: 'var(--text-secondary)' }}
+              title="Previous page (←)"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <div className="flex items-center gap-2 px-3">
+              <span className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>{currentIndex + 1}</span>
+              <span className="text-sm" style={{ color: 'var(--text-muted)' }}>of {pages.length}</span>
             </div>
+            <button
+              onClick={() => nextPage && onNavigate(nextPage.id)}
+              disabled={!nextPage}
+              className="p-2 rounded-lg hover:bg-stone-100 transition-all disabled:opacity-30 disabled:hover:bg-transparent"
+              style={{ color: 'var(--text-secondary)' }}
+              title="Next page (→)"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
 
-            {/* Navigation */}
-            <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
+          {/* Right: View Options + Edit */}
+          <div className="flex items-center gap-2">
+            {/* Show OCR Toggle */}
+            {ocrText && (
               <button
-                onClick={() => previousPage && onNavigate(previousPage.id)}
-                disabled={!previousPage}
-                className="p-2 rounded-md transition-all disabled:opacity-30"
-                style={{ color: 'var(--text-secondary)' }}
+                onClick={() => setShowOcrInRead(!showOcrInRead)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${showOcrInRead ? 'bg-amber-100 text-amber-700' : 'hover:bg-stone-100'}`}
+                style={{ color: showOcrInRead ? undefined : 'var(--text-muted)' }}
+                title="Show original text"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <Columns className="w-4 h-4" />
+                <span className="hidden sm:inline">{book.language || 'Original'}</span>
               </button>
-              <span className="px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1} / {pages.length}</span>
-              <button
-                onClick={() => nextPage && onNavigate(nextPage.id)}
-                disabled={!nextPage}
-                className="p-2 rounded-md transition-all disabled:opacity-30"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+            )}
+            {/* Edit Button */}
+            <button
+              onClick={() => setMode('edit')}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-all"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              <Pencil className="w-4 h-4" />
+              <span className="hidden sm:inline">Edit</span>
+            </button>
           </div>
         </header>
 
-        {/* Two-column reading layout (stacked on mobile) */}
+        {/* Reading layout */}
         <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-          {/* Source Image with Magnifier */}
-          <div className="w-full md:w-1/2 flex flex-col" style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
-            <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="label">Original</span>
-              <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
-                {book.language || 'Latin'}
-              </span>
+          {/* Source Image */}
+          <div className={`w-full ${columnWidth} flex flex-col`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+            <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Image</span>
             </div>
-            <div className="flex-1 overflow-hidden p-6">
+            <div className="flex-1 overflow-hidden p-4">
               <div className="relative w-full h-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
                 {page.photo ? (
                   <ImageWithMagnifier src={page.photo} alt={`Page ${page.page_number}`} />
@@ -447,64 +464,75 @@ export default function TranslationEditor({
             </div>
           </div>
 
-          {/* Translation */}
-          <div className="w-full md:w-1/2 flex flex-col" style={{ background: 'var(--bg-white)' }}>
-            <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <div className="flex items-center gap-2">
-                <span className="label">Translation</span>
-                <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}>
-                  English
-                </span>
+          {/* OCR Text (optional middle column) */}
+          {showOcrInRead && ocrText && (
+            <div className={`w-full ${columnWidth} flex flex-col`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+              <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{book.language || 'Original'}</span>
               </div>
-              <button
-                onClick={() => copyToClipboard(translationText)}
-                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs transition-colors hover:opacity-70"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                {copiedTranslation ? <Check className="w-3.5 h-3.5" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3.5 h-3.5" />}
-                {copiedTranslation ? 'Copied' : 'Copy'}
-              </button>
+              <div className="flex-1 overflow-auto p-4">
+                <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
+                  <NotesRenderer text={ocrText} />
+                </div>
+              </div>
             </div>
-            <div className="flex-1 overflow-auto p-6">
+          )}
+
+          {/* Translation */}
+          <div className={`w-full ${columnWidth} flex flex-col`} style={{ background: 'var(--bg-white)' }}>
+            <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>English</span>
+              {translationText && (
+                <button
+                  onClick={() => copyToClipboard(translationText)}
+                  className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  {copiedTranslation ? <Check className="w-3 h-3" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3 h-3" />}
+                  {copiedTranslation ? 'Copied' : 'Copy'}
+                </button>
+              )}
+            </div>
+            <div className="flex-1 overflow-auto p-4">
               {translationText ? (
                 <NotesRenderer text={translationText} />
               ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center px-8">
-                  <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mb-4">
-                    <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="h-full flex flex-col items-center justify-center text-center px-6">
+                  <div className="w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center mb-4">
+                    <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                     </svg>
                   </div>
-                  <h3 className="text-xl font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
-                    Ready to translate this page?
+                  <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                    Translate this page?
                   </h3>
-                  <p className="text-sm mb-6 max-w-xs" style={{ color: 'var(--text-muted)' }}>
-                    AI will transcribe the original {book.language || 'text'} and translate it to English.
+                  <p className="text-sm mb-5 max-w-xs" style={{ color: 'var(--text-muted)' }}>
+                    AI will transcribe and translate to English.
                   </p>
                   <button
                     onClick={() => handleProcess('all')}
                     disabled={processing !== null}
-                    className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
                     style={{ background: 'var(--accent-rust, #c45d3a)' }}
                   >
                     {processing ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
-                        {processing === 'ocr' ? 'Transcribing...' : processing === 'translation' ? 'Translating...' : 'Processing...'}
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        {processing === 'ocr' ? 'Transcribing...' : 'Translating...'}
                       </>
                     ) : (
-                      <>
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        Start Translation
-                      </>
+                      'Start Translation'
                     )}
                   </button>
                 </div>
               )}
             </div>
           </div>
+        </div>
+
+        {/* Keyboard hint */}
+        <div className="px-4 py-1.5 text-center text-xs hidden md:block" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+          Use ← → arrow keys to navigate pages
         </div>
       </div>
     );
