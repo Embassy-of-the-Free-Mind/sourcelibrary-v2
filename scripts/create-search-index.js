@@ -8,7 +8,23 @@
  */
 
 const { MongoClient } = require('mongodb');
-require('dotenv').config({ path: '.env.local' });
+const fs = require('fs');
+const path = require('path');
+
+// Load .env.local manually
+const envPath = path.join(__dirname, '..', '.env.local');
+if (fs.existsSync(envPath)) {
+  const envContent = fs.readFileSync(envPath, 'utf8');
+  for (const line of envContent.split('\n')) {
+    const trimmed = line.trim();
+    if (trimmed && !trimmed.startsWith('#')) {
+      const [key, ...valueParts] = trimmed.split('=');
+      if (key && valueParts.length > 0) {
+        process.env[key] = valueParts.join('=').replace(/^["']|["']$/g, '');
+      }
+    }
+  }
+}
 
 async function createSearchIndex() {
   const uri = process.env.MONGODB_URI;
@@ -38,9 +54,11 @@ async function createSearchIndex() {
     }
 
     // Create the text index
+    // Use "none" as default_language to disable stemming (Latin isn't supported)
+    // Use language_override to prevent MongoDB from using the document's "language" field
     const result = await collection.createIndex(
       { 'ocr.data': 'text', 'translation.data': 'text' },
-      { name: 'page_text_search' }
+      { name: 'page_text_search', default_language: 'none', language_override: 'none' }
     );
 
     console.log('Text index created:', result);
