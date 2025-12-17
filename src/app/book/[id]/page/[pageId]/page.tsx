@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import TranslationEditor from '@/components/TranslationEditor';
 import type { Book, Page } from '@/lib/types';
@@ -12,36 +12,33 @@ interface PageProps {
 export default function PageEditorPage({ params }: PageProps) {
   const router = useRouter();
   const [bookId, setBookId] = useState<string>('');
-  const [pageId, setPageId] = useState<string>('');
+  const [initialPageId, setInitialPageId] = useState<string>('');
+  const [currentPageId, setCurrentPageId] = useState<string>('');
   const [book, setBook] = useState<Book | null>(null);
   const [pages, setPages] = useState<Page[]>([]);
-  const [currentPage, setCurrentPage] = useState<Page | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     params.then(({ id, pageId }) => {
       setBookId(id);
-      setPageId(pageId);
+      setInitialPageId(pageId);
+      setCurrentPageId(pageId);
     });
   }, [params]);
 
+  // Only fetch book data once when bookId changes (not on every page change)
   useEffect(() => {
-    if (!bookId || !pageId) return;
+    if (!bookId) return;
 
     async function fetchData() {
       setLoading(true);
       try {
-        // Fetch book with all pages
         const bookRes = await fetch(`/api/books/${bookId}`);
         if (!bookRes.ok) throw new Error('Book not found');
         const bookData = await bookRes.json();
 
         setBook(bookData);
         setPages(bookData.pages || []);
-
-        // Find current page
-        const page = bookData.pages?.find((p: Page) => p.id === pageId);
-        setCurrentPage(page || null);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -50,11 +47,18 @@ export default function PageEditorPage({ params }: PageProps) {
     }
 
     fetchData();
-  }, [bookId, pageId]);
+  }, [bookId]);
 
-  const handleNavigate = (newPageId: string) => {
-    router.push(`/book/${bookId}/page/${newPageId}`);
-  };
+  // Client-side navigation - no refetch, just update URL and current page
+  const handleNavigate = useCallback((newPageId: string) => {
+    setCurrentPageId(newPageId);
+    // Update URL without triggering a refetch
+    window.history.pushState(null, '', `/book/${bookId}/page/${newPageId}`);
+  }, [bookId]);
+
+  // Derive current page from pages array
+  const currentPage = pages.find(p => p.id === currentPageId) || null;
+  const currentIndex = pages.findIndex(p => p.id === currentPageId);
 
   const handleSave = async (data: { ocr?: string; translation?: string; summary?: string }) => {
     if (!currentPage) return;
@@ -97,8 +101,6 @@ export default function PageEditorPage({ params }: PageProps) {
       </div>
     );
   }
-
-  const currentIndex = pages.findIndex(p => p.id === pageId);
 
   return (
     <TranslationEditor

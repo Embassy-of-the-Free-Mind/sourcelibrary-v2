@@ -276,10 +276,10 @@ function ImageWithMagnifier({ src, thumbnail, alt }: { src: string; thumbnail?: 
 
   // Use thumbnail for display, full image for magnifier
   // If no thumbnail, use resize API to generate one on-the-fly
-  const getResizedUrl = (url: string, width: number = 600) => {
-    return `/api/image?url=${encodeURIComponent(url)}&w=${width}&q=75`;
+  const getResizedUrl = (url: string, width: number = 400) => {
+    return `/api/image?url=${encodeURIComponent(url)}&w=${width}&q=70`;
   };
-  const displaySrc = thumbnail || getResizedUrl(src, 600);
+  const displaySrc = thumbnail || getResizedUrl(src, 400);
   const magnifierSrc = src;
 
   useEffect(() => {
@@ -450,19 +450,24 @@ export default function TranslationEditor({
 
   // Prefetch adjacent page images for faster navigation
   useEffect(() => {
-    const prefetchImage = (url: string | undefined) => {
-      if (url) {
-        const img = new window.Image();
-        img.src = url;
-      }
+    const getSmallImageUrl = (p: Page) => {
+      if (p.thumbnail) return p.thumbnail;
+      if (p.compressed_photo) return p.compressed_photo;
+      // Use resize API for small version
+      return `/api/image?url=${encodeURIComponent(p.photo)}&w=400&q=70`;
     };
 
-    // Prefetch thumbnail or compressed versions first (faster)
+    const prefetchImage = (url: string) => {
+      const img = new window.Image();
+      img.src = url;
+    };
+
+    // Prefetch small versions of adjacent pages
     if (previousPage) {
-      prefetchImage(previousPage.thumbnail || previousPage.compressed_photo || previousPage.photo);
+      prefetchImage(getSmallImageUrl(previousPage));
     }
     if (nextPage) {
-      prefetchImage(nextPage.thumbnail || nextPage.compressed_photo || nextPage.photo);
+      prefetchImage(getSmallImageUrl(nextPage));
     }
   }, [previousPage, nextPage]);
 
