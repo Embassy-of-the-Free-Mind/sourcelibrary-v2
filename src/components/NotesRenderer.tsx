@@ -111,8 +111,8 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
               key={index}
               remarkPlugins={[remarkGfm]}
               components={{
-                // Customize rendering to be inline-friendly
-                p: ({ children }) => <span className="whitespace-pre-wrap">{children}</span>,
+                // Use div for paragraphs to support block elements like tables
+                p: ({ children }) => <div className="whitespace-pre-wrap mb-4 last:mb-0">{children}</div>,
                 strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
                 em: ({ children }) => <em className="italic">{children}</em>,
                 h1: ({ children }) => <h1 className="text-2xl font-serif font-bold mt-4 mb-2">{children}</h1>,
