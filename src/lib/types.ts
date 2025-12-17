@@ -57,6 +57,17 @@ export interface ProcessingPrompts {
   summary: string;
 }
 
+export interface Prompt {
+  _id?: unknown;
+  id?: string;
+  name: string;
+  type: 'ocr' | 'translation' | 'summary';
+  content: string;
+  is_default?: boolean;
+  created_at?: Date;
+  updated_at?: Date;
+}
+
 // Default prompts with [[notes]] support
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
   ocr: `You are transcribing a Renaissance Latin facsimile.

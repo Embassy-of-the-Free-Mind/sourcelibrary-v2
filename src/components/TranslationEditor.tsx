@@ -19,7 +19,7 @@ import {
   BookOpen
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
-import type { Page, Book } from '@/lib/types';
+import type { Page, Book, Prompt } from '@/lib/types';
 
 interface TranslationEditorProps {
   book: Book;
@@ -35,11 +35,125 @@ interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  promptText: string;
-  onPromptChange: (text: string) => void;
+  promptType: 'ocr' | 'translation' | 'summary';
+  selectedPromptId: string | null;
+  onSelectPrompt: (prompt: Prompt) => void;
 }
 
-function SettingsModal({ isOpen, onClose, title, promptText, onPromptChange }: SettingsModalProps) {
+function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, onSelectPrompt }: SettingsModalProps) {
+  const [prompts, setPrompts] = useState<Prompt[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
+  const [editedContent, setEditedContent] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [newPromptName, setNewPromptName] = useState('');
+  const [creating, setCreating] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+
+  // Fetch prompts when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      fetchPrompts();
+    }
+  }, [isOpen, promptType]);
+
+  // Update selected prompt when prompts load or selection changes
+  useEffect(() => {
+    if (prompts.length > 0) {
+      const prompt = selectedPromptId
+        ? prompts.find(p => p.id === selectedPromptId || p._id?.toString() === selectedPromptId)
+        : prompts.find(p => p.is_default);
+      if (prompt) {
+        setSelectedPrompt(prompt);
+        setEditedContent(prompt.content);
+        setHasChanges(false);
+      }
+    }
+  }, [prompts, selectedPromptId]);
+
+  const fetchPrompts = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/prompts?type=${promptType}`);
+      if (response.ok) {
+        const data = await response.json();
+        setPrompts(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch prompts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSelectPrompt = (promptId: string) => {
+    const prompt = prompts.find(p => p.id === promptId || p._id?.toString() === promptId);
+    if (prompt) {
+      setSelectedPrompt(prompt);
+      setEditedContent(prompt.content);
+      setHasChanges(false);
+      onSelectPrompt(prompt);
+    }
+  };
+
+  const handleContentChange = (content: string) => {
+    setEditedContent(content);
+    setHasChanges(content !== selectedPrompt?.content);
+  };
+
+  const handleSaveChanges = async () => {
+    if (!selectedPrompt || !hasChanges) return;
+    setSaving(true);
+    try {
+      const response = await fetch(`/api/prompts/${selectedPrompt.id || selectedPrompt._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: editedContent }),
+      });
+      if (response.ok) {
+        const updated = await response.json();
+        setPrompts(prompts.map(p =>
+          (p.id === updated.id || p._id?.toString() === updated.id) ? updated : p
+        ));
+        setSelectedPrompt(updated);
+        setHasChanges(false);
+        onSelectPrompt(updated);
+      }
+    } catch (error) {
+      console.error('Failed to save prompt:', error);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleCreatePrompt = async () => {
+    if (!newPromptName.trim() || !editedContent.trim()) return;
+    setCreating(true);
+    try {
+      const response = await fetch('/api/prompts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newPromptName.trim(),
+          type: promptType,
+          content: editedContent,
+        }),
+      });
+      if (response.ok) {
+        const newPrompt = await response.json();
+        setPrompts([...prompts, newPrompt]);
+        setSelectedPrompt(newPrompt);
+        setNewPromptName('');
+        setHasChanges(false);
+        onSelectPrompt(newPrompt);
+      }
+    } catch (error) {
+      console.error('Failed to create prompt:', error);
+    } finally {
+      setCreating(false);
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -66,11 +180,21 @@ function SettingsModal({ isOpen, onClose, title, promptText, onPromptChange }: S
           <div>
             <label className="label block mb-2">Prompt Template</label>
             <select
+              value={selectedPrompt?.id || selectedPrompt?._id?.toString() || ''}
+              onChange={(e) => handleSelectPrompt(e.target.value)}
+              disabled={loading}
               className="w-full px-3 py-2.5 rounded-lg text-sm"
               style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
             >
-              <option>Standard {title.replace(' Settings', '')}</option>
-              <option>Scholarly {title.replace(' Settings', '')}</option>
+              {loading ? (
+                <option>Loading...</option>
+              ) : (
+                prompts.map(p => (
+                  <option key={p.id || p._id?.toString()} value={p.id || p._id?.toString()}>
+                    {p.name}{p.is_default ? ' (Default)' : ''}
+                  </option>
+                ))
+              )}
             </select>
           </div>
 
@@ -79,8 +203,8 @@ function SettingsModal({ isOpen, onClose, title, promptText, onPromptChange }: S
               Prompt Text <span style={{ color: 'var(--text-faint)', fontWeight: 'normal', textTransform: 'none' }}>(use {'{language}'} as placeholders)</span>
             </label>
             <textarea
-              value={promptText}
-              onChange={(e) => onPromptChange(e.target.value)}
+              value={editedContent}
+              onChange={(e) => handleContentChange(e.target.value)}
               className="w-full h-40 px-3 py-2.5 rounded-lg text-sm font-mono resize-none"
               style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-cream)', color: 'var(--text-secondary)' }}
             />
@@ -88,10 +212,12 @@ function SettingsModal({ isOpen, onClose, title, promptText, onPromptChange }: S
 
           <div className="flex justify-end">
             <button
-              className="text-sm font-medium transition-opacity hover:opacity-70"
+              onClick={handleSaveChanges}
+              disabled={!hasChanges || saving}
+              className="text-sm font-medium transition-opacity hover:opacity-70 disabled:opacity-40"
               style={{ color: 'var(--accent-rust)' }}
             >
-              Save Changes
+              {saving ? 'Saving...' : hasChanges ? 'Save Changes' : 'Saved'}
             </button>
           </div>
 
@@ -101,16 +227,23 @@ function SettingsModal({ isOpen, onClose, title, promptText, onPromptChange }: S
               <input
                 type="text"
                 placeholder="New prompt name..."
+                value={newPromptName}
+                onChange={(e) => setNewPromptName(e.target.value)}
                 className="flex-1 px-3 py-2.5 rounded-lg text-sm"
                 style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
               />
               <button
-                className="px-4 py-2 text-sm font-medium transition-opacity hover:opacity-70"
+                onClick={handleCreatePrompt}
+                disabled={!newPromptName.trim() || creating}
+                className="px-4 py-2 text-sm font-medium transition-opacity hover:opacity-70 disabled:opacity-40"
                 style={{ color: 'var(--text-muted)' }}
               >
-                + Add
+                {creating ? '...' : '+ Add'}
               </button>
             </div>
+            <p className="text-xs mt-2" style={{ color: 'var(--text-faint)' }}>
+              Creates a new prompt with the current text content
+            </p>
           </div>
         </div>
 
@@ -256,11 +389,14 @@ export default function TranslationEditor({
   const [showSplitOptions, setShowSplitOptions] = useState(false);
   const [splitting, setSplitting] = useState(false);
 
-  const [ocrPrompt, setOcrPrompt] = useState('OCR the page in {language}. Return only the transcribed text.');
-  const [translationPrompt, setTranslationPrompt] = useState('Translate the following {language} text to English. Preserve formatting and add [[notes]] for uncertainties.');
+  const [selectedOcrPromptId, setSelectedOcrPromptId] = useState<string | null>(null);
+  const [selectedTranslationPromptId, setSelectedTranslationPromptId] = useState<string | null>(null);
 
   const [copiedTranslation, setCopiedTranslation] = useState(false);
   const [showOcrInRead, setShowOcrInRead] = useState(false);
+
+  const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
+  const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
 
   // Keyboard navigation
   useEffect(() => {
@@ -307,9 +443,6 @@ export default function TranslationEditor({
       setSplitting(false);
     }
   };
-
-  const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
-  const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
 
   // Update state when page changes
   useEffect(() => {
@@ -777,16 +910,18 @@ export default function TranslationEditor({
         isOpen={showOcrSettings}
         onClose={() => setShowOcrSettings(false)}
         title="OCR Settings"
-        promptText={ocrPrompt}
-        onPromptChange={setOcrPrompt}
+        promptType="ocr"
+        selectedPromptId={selectedOcrPromptId}
+        onSelectPrompt={(prompt) => setSelectedOcrPromptId(prompt.id || prompt._id?.toString() || null)}
       />
 
       <SettingsModal
         isOpen={showTranslationSettings}
         onClose={() => setShowTranslationSettings(false)}
         title="Translation Settings"
-        promptText={translationPrompt}
-        onPromptChange={setTranslationPrompt}
+        promptType="translation"
+        selectedPromptId={selectedTranslationPromptId}
+        onSelectPrompt={(prompt) => setSelectedTranslationPromptId(prompt.id || prompt._id?.toString() || null)}
       />
     </div>
   );
