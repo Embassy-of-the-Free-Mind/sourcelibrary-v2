@@ -229,3 +229,11 @@ a:hover {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+/* Search highlight */
+mark {
+  background: rgba(201, 168, 108, 0.3);
+  color: inherit;
+  padding: 1px 2px;
+  border-radius: 2px;
+}

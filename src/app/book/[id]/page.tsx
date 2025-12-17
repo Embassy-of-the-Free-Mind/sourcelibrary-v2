@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
 import { ArrowLeft, BookOpen, Calendar, Globe, FileText, CheckCircle } from 'lucide-react';
+import SearchPanel from '@/components/SearchPanel';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -98,6 +99,7 @@ export default async function BookDetailPage({ params }: PageProps) {
                   <FileText className="w-4 h-4" />
                   {pages.length} pages
                 </div>
+                <SearchPanel bookId={book.id} />
               </div>
 
               {/* Processing Stats */}
