@@ -137,6 +137,16 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
           <p>Source Library — A project of the Ancient Wisdom Trust</p>
           <p className="mt-2">Preserving humanity's wisdom for the digital age</p>
+          <div className="mt-4 pt-4 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-center gap-2">
+            <span>CC0 Public Domain</span>
+            <span className="hidden sm:inline">•</span>
+            <a
+              href="mailto:derek@ancientwisdomtrust.org"
+              className="text-amber-400 hover:text-amber-300 transition-colors"
+            >
+              derek@ancientwisdomtrust.org
+            </a>
+          </div>
         </div>
       </footer>
     </div>

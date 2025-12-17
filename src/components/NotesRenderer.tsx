@@ -10,15 +10,11 @@ interface NotesRendererProps {
   className?: string;
 }
 
-// Convert [[notes:...]] to numbered superscripts and collect footnotes
-function processNotesForMarkdown(text: string): { processedText: string; footnotes: string[] } {
-  const footnotes: string[] = [];
-
-  // Replace [[notes:...]] with superscript markers
-  // We use a special format that won't be parsed as markdown: ^[n]^
+// Convert [[notes:...]] to inline highlighted notes
+function processNotesForMarkdown(text: string): string {
+  // Replace [[notes:...]] with inline highlighted spans
   const processedText = text.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {
-    footnotes.push(content.trim());
-    return `<sup class="note-ref">${footnotes.length}</sup>`;
+    return `<span class="inline-note">${content.trim()}</span>`;
   });
 
   // Replace [[page number:...]] with styled page markers
@@ -26,11 +22,11 @@ function processNotesForMarkdown(text: string): { processedText: string; footnot
     return `<span class="page-marker">Page ${pageNum.trim()}</span>`;
   });
 
-  return { processedText: finalText, footnotes };
+  return finalText;
 }
 
 export default function NotesRenderer({ text, className = '' }: NotesRendererProps) {
-  const { processedText, footnotes } = useMemo(() => processNotesForMarkdown(text), [text]);
+  const processedText = useMemo(() => processNotesForMarkdown(text), [text]);
 
   if (!text) {
     return (
@@ -49,15 +45,18 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
         allowedElements={[
           'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
           'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
-          'em', 'strong', 'del', 'hr', 'br', 'a',
+          'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
           'table', 'thead', 'tbody', 'tr', 'th', 'td',
-          'sup', 'span'
+          'span'
         ]}
         unwrapDisallowed={true}
         components={{
-          p: ({ children }) => <p className="mb-4 last:mb-0 leading-relaxed">{children}</p>,
-          strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+          p: ({ children }) => <p className="mb-4 last:mb-0 leading-relaxed text-[var(--text-secondary)]">{children}</p>,
+          strong: ({ children }) => <strong className="font-bold text-[var(--text-primary)]">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
+          img: ({ src, alt }) => (
+            <img src={src} alt={alt || ''} className="max-w-full h-auto rounded my-4" />
+          ),
           h1: ({ children }) => (
             <h1 className="text-2xl font-serif font-bold mt-6 mb-3 text-[var(--text-primary)]">{children}</h1>
           ),
@@ -107,20 +106,15 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
           td: ({ children }) => (
             <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
           ),
-          // Custom elements for notes
-          sup: ({ children, className }) => {
-            if (className === 'note-ref') {
-              const noteIndex = parseInt(String(children), 10);
-              const noteContent = footnotes[noteIndex - 1] || '';
+          // Custom elements for notes and page markers
+          span: ({ children, className }) => {
+            if (className === 'inline-note') {
               return (
-                <sup className="text-amber-700 cursor-help font-medium ml-0.5" title={noteContent}>
+                <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5">
                   {children}
-                </sup>
+                </span>
               );
             }
-            return <sup>{children}</sup>;
-          },
-          span: ({ children, className }) => {
             if (className === 'page-marker') {
               return (
                 <span className="inline-block bg-stone-100 text-stone-500 text-xs px-2 py-0.5 rounded font-medium my-1">
@@ -134,23 +128,6 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
       >
         {processedText}
       </ReactMarkdown>
-
-      {/* Footnotes section */}
-      {footnotes.length > 0 && (
-        <div className="mt-6 pt-4 border-t border-stone-200">
-          <div className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-            Notes
-          </div>
-          <ol className="list-none space-y-1.5 text-sm text-stone-600">
-            {footnotes.map((note, index) => (
-              <li key={index} className="flex gap-2">
-                <span className="text-amber-700 font-medium flex-shrink-0">{index + 1}.</span>
-                <span>{note}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
     </div>
   );
 }

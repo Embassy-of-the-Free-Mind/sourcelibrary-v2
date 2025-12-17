@@ -312,11 +312,32 @@ function ImageWithMagnifier({ src, thumbnail, alt }: { src: string; thumbnail?: 
   }, [src]);
 
   useEffect(() => {
-    // Get actual rendered image dimensions
+    // Get actual rendered image dimensions (accounting for object-contain)
     const updateDimensions = () => {
       if (imgRef.current) {
-        const rect = imgRef.current.getBoundingClientRect();
-        setImageDimensions({ width: rect.width, height: rect.height });
+        const img = imgRef.current;
+        const containerRect = img.getBoundingClientRect();
+        const naturalWidth = img.naturalWidth;
+        const naturalHeight = img.naturalHeight;
+
+        if (naturalWidth && naturalHeight) {
+          // Calculate the actual rendered size with object-contain
+          const containerAspect = containerRect.width / containerRect.height;
+          const imageAspect = naturalWidth / naturalHeight;
+
+          let renderedWidth, renderedHeight;
+          if (imageAspect > containerAspect) {
+            // Image is wider - constrained by width
+            renderedWidth = containerRect.width;
+            renderedHeight = containerRect.width / imageAspect;
+          } else {
+            // Image is taller - constrained by height
+            renderedHeight = containerRect.height;
+            renderedWidth = containerRect.height * imageAspect;
+          }
+
+          setImageDimensions({ width: renderedWidth, height: renderedHeight });
+        }
       }
     };
 
@@ -340,27 +361,31 @@ function ImageWithMagnifier({ src, thumbnail, alt }: { src: string; thumbnail?: 
     // Skip magnifier on touch devices
     if (isTouchDevice) return;
     if (!containerRef.current || !imgRef.current || !fullImageLoaded) return;
+    if (!imageDimensions.width || !imageDimensions.height) return;
 
     const containerRect = containerRef.current.getBoundingClientRect();
-    const imgRect = imgRef.current.getBoundingClientRect();
+
+    // Calculate where the actual image is rendered within the container (object-contain centers it)
+    const imgOffsetX = (containerRect.width - imageDimensions.width) / 2;
+    const imgOffsetY = (containerRect.height - imageDimensions.height) / 2;
 
     // Get cursor position relative to container
     const containerX = e.clientX - containerRect.left;
     const containerY = e.clientY - containerRect.top;
 
-    // Get cursor position relative to the actual image
-    const imgX = e.clientX - imgRect.left;
-    const imgY = e.clientY - imgRect.top;
+    // Get cursor position relative to the actual rendered image
+    const imgX = containerX - imgOffsetX;
+    const imgY = containerY - imgOffsetY;
 
-    // Check if cursor is over the actual image
-    const isOverImage = imgX >= 0 && imgX <= imgRect.width && imgY >= 0 && imgY <= imgRect.height;
+    // Check if cursor is over the actual rendered image
+    const isOverImage = imgX >= 0 && imgX <= imageDimensions.width && imgY >= 0 && imgY <= imageDimensions.height;
 
     if (isOverImage) {
       setCursorPosition({ x: containerX, y: containerY });
 
       // Calculate background position as percentage of image dimensions
-      const xPercent = (imgX / imgRect.width) * 100;
-      const yPercent = (imgY / imgRect.height) * 100;
+      const xPercent = (imgX / imageDimensions.width) * 100;
+      const yPercent = (imgY / imageDimensions.height) * 100;
       setMagnifierPosition({ x: xPercent, y: yPercent });
       setShowMagnifier(true);
     } else {
@@ -430,7 +455,7 @@ function ImageWithMagnifier({ src, thumbnail, alt }: { src: string; thumbnail?: 
               border: '4px solid white',
               boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
               backgroundImage: `url(${magnifierSrc})`,
-              backgroundSize: getMagnifierBackgroundSize(),
+              backgroundSize: `${imageDimensions.width * zoomLevel}px ${imageDimensions.height * zoomLevel}px`,
               backgroundPosition: `${-magnifierPosition.x * imageDimensions.width * zoomLevel / 100 + magnifierSize / 2}px ${-magnifierPosition.y * imageDimensions.height * zoomLevel / 100 + magnifierSize / 2}px`,
               backgroundRepeat: 'no-repeat',
               backgroundColor: 'var(--bg-white)',
@@ -438,9 +463,12 @@ function ImageWithMagnifier({ src, thumbnail, alt }: { src: string; thumbnail?: 
           />
         )}
 
-        {/* Action buttons */}
-        {isLoaded && !showMagnifier && (
-          <div className="absolute bottom-3 right-3 flex items-center gap-2">
+        {/* Action buttons - always visible, with pointer-events */}
+        {isLoaded && (
+          <div
+            className="absolute bottom-3 right-3 flex items-center gap-2 z-10"
+            onMouseEnter={() => setShowMagnifier(false)}
+          >
             {/* HD View button - desktop only */}
             {!isTouchDevice && fullImageLoaded && (
               <button
@@ -713,11 +741,11 @@ export default function TranslationEditor({
             <a href={`/book/${book.id}`} className="p-1.5 rounded-md hover:bg-stone-100 transition-colors flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
               <BookOpen className="w-5 h-5" />
             </a>
-            <div className="min-w-0">
+            <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
               <h1 className="text-base font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
                 {book.display_title || book.title}
               </h1>
-            </div>
+            </a>
           </div>
 
           {/* Center: Page Navigation */}
@@ -783,12 +811,13 @@ export default function TranslationEditor({
             transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
           }}
         >
-          {/* Source Image */}
-          <div className={`w-full ${imageWidth} flex flex-col`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
-            <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+          {/* Source Image - fixed height on mobile, flex on desktop */}
+          <div className={`w-full ${imageWidth} flex flex-col h-48 lg:h-auto`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+            <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Image</span>
+              <span className="text-xs lg:hidden" style={{ color: 'var(--text-faint)' }}>Tap to enlarge</span>
             </div>
-            <div className="flex-1 overflow-hidden p-4">
+            <div className="flex-1 overflow-hidden p-2 lg:p-4">
               <div className="relative w-full h-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
                 {page.photo ? (
                   <ImageWithMagnifier src={page.photo} thumbnail={page.thumbnail || page.compressed_photo} alt={`Page ${page.page_number}`} />
@@ -801,9 +830,9 @@ export default function TranslationEditor({
             </div>
           </div>
 
-          {/* OCR Text (optional middle column) */}
+          {/* OCR Text (optional middle column) - hidden on mobile by default */}
           {showOcrInRead && ocrText && (
-            <div className={`w-full ${textWidth} flex flex-col`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+            <div className={`w-full ${textWidth} flex-col hidden lg:flex`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
               <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
                 <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{book.language || 'Original'}</span>
               </div>
@@ -815,9 +844,9 @@ export default function TranslationEditor({
             </div>
           )}
 
-          {/* Translation */}
-          <div className={`w-full ${textWidth} flex flex-col`} style={{ background: 'var(--bg-white)' }}>
-            <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+          {/* Translation - takes remaining space */}
+          <div className={`w-full ${textWidth} flex flex-col min-h-0 flex-1`} style={{ background: 'var(--bg-white)' }}>
+            <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>English</span>
               {translationText && (
                 <button
@@ -830,7 +859,7 @@ export default function TranslationEditor({
                 </button>
               )}
             </div>
-            <div className="flex-1 overflow-auto p-4">
+            <div className="flex-1 overflow-auto p-4 min-h-0">
               {translationText ? (
                 <NotesRenderer text={translationText} />
               ) : (
@@ -867,10 +896,18 @@ export default function TranslationEditor({
           </div>
         </div>
 
-        {/* Navigation hint - different for mobile vs desktop */}
-        <div className="px-4 py-1.5 text-center text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <span className="hidden lg:inline">Use ← → arrow keys to navigate pages</span>
-          <span className="lg:hidden">Swipe left/right to navigate pages</span>
+        {/* Navigation hint + CC0 footer */}
+        <div className="px-4 py-1.5 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+          <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
+          <span className="lg:hidden">Swipe left/right to navigate</span>
+          <span className="hidden sm:inline">•</span>
+          <span className="flex items-center gap-2">
+            CC0 Public Domain
+            <span className="hidden sm:inline">•</span>
+            <a href="mailto:derek@ancientwisdomtrust.org" className="hover:underline" style={{ color: 'var(--accent-rust)' }}>
+              derek@ancientwisdomtrust.org
+            </a>
+          </span>
         </div>
       </div>
     );
@@ -1108,6 +1145,15 @@ export default function TranslationEditor({
             />
           </div>
         </div>
+      </div>
+
+      {/* CC0 Footer */}
+      <div className="px-4 py-1.5 flex items-center justify-center gap-2 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+        <span>CC0 Public Domain</span>
+        <span>•</span>
+        <a href="mailto:derek@ancientwisdomtrust.org" className="hover:underline" style={{ color: 'var(--accent-rust)' }}>
+          derek@ancientwisdomtrust.org
+        </a>
       </div>
 
       {/* Settings Modals */}
