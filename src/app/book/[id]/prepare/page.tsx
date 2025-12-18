@@ -841,10 +841,8 @@ export default function PreparePage({ params }: PageProps) {
                   {/* Thumbnail - click to preview */}
                   <button
                     onClick={() => {
-                      const previewUrl = page.crop?.xStart !== undefined
-                        ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=600&q=75&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
-                        : `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=600&q=75`;
-                      setFullscreenImage({ src: previewUrl, alt: `Page ${index + 1}` });
+                      // Use the same thumbnail URL that's already loaded/cached
+                      setFullscreenImage({ src: getImageUrl(page), alt: `Page ${index + 1}` });
                     }}
                     className={`w-16 h-12 rounded overflow-hidden flex-shrink-0 transition-all cursor-zoom-in ${
                       markedForSplit
