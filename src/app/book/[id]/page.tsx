@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
-import { ArrowLeft, BookOpen, Calendar, Globe, FileText, CheckCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Globe, FileText, CheckCircle, Scissors, Settings } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import DownloadButton from '@/components/DownloadButton';
 
@@ -118,8 +118,15 @@ export default async function BookDetailPage({ params }: PageProps) {
                   <div className="text-xs text-stone-400">Summarized</div>
                 </div>
 
-                {/* Download Button */}
-                <div className="w-full sm:w-auto sm:ml-auto mt-2 sm:mt-0 flex justify-center sm:justify-end">
+                {/* Prepare & Download */}
+                <div className="w-full sm:w-auto sm:ml-auto mt-2 sm:mt-0 flex items-center justify-center sm:justify-end gap-2">
+                  <Link
+                    href={`/book/${book.id}/prepare`}
+                    className="flex items-center gap-2 px-4 py-2 bg-stone-600 text-white rounded-lg hover:bg-stone-500 transition-colors text-sm"
+                  >
+                    <Scissors className="w-4 h-4" />
+                    Prepare Pages
+                  </Link>
                   <DownloadButton
                     bookId={book.id}
                     hasTranslations={pagesWithTranslation > 0}

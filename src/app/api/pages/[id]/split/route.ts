@@ -2,9 +2,23 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
+interface BoundingBox {
+  xmin: number;
+  xmax: number;
+  ymin: number;
+  ymax: number;
+}
+
+interface DetectionData {
+  isTwoPageSpread: boolean;
+  leftPage?: BoundingBox;
+  rightPage?: BoundingBox;
+}
+
 interface SplitRequest {
-  side: 'left' | 'right'; // Which half to keep on this page
-  splitRatio?: number; // Where to split (0-100, default 50)
+  side?: 'left' | 'right'; // Which half to keep on this page (legacy)
+  splitRatio?: number; // Where to split (0-100, default 50) (legacy)
+  detection?: DetectionData; // AI detection with bounding boxes
 }
 
 export async function POST(
@@ -14,7 +28,7 @@ export async function POST(
   try {
     const { id: pageId } = await params;
     const body: SplitRequest = await request.json();
-    const { side, splitRatio = 50 } = body;
+    const { side, splitRatio = 50, detection } = body;
 
     const db = await getDb();
 
@@ -40,39 +54,59 @@ export async function POST(
       .sort({ page_number: 1 })
       .toArray();
 
-    const currentIndex = allPages.findIndex(p => p.id === pageId);
     const currentPageNumber = currentPage.page_number;
 
     // Generate new page ID
     const newPageId = new ObjectId().toHexString();
 
-    // Store the crop info for both pages
-    // We'll store crop percentages and let the frontend handle the actual cropping display
-    const leftCrop = { xStart: 0, xEnd: splitRatio };
-    const rightCrop = { xStart: splitRatio, xEnd: 100 };
+    // Determine crop coordinates
+    let leftCrop: { xStart: number; xEnd: number };
+    let rightCrop: { xStart: number; xEnd: number };
 
-    // Update current page with crop info (keeps the selected side)
-    const currentCrop = side === 'left' ? leftCrop : rightCrop;
+    if (detection?.leftPage && detection?.rightPage) {
+      // Use AI detection bounding boxes (0-1000 scale)
+      leftCrop = {
+        xStart: detection.leftPage.xmin,
+        xEnd: detection.leftPage.xmax
+      };
+      rightCrop = {
+        xStart: detection.rightPage.xmin,
+        xEnd: detection.rightPage.xmax
+      };
+    } else {
+      // Legacy: simple percentage split
+      leftCrop = { xStart: 0, xEnd: splitRatio * 10 }; // Convert to 0-1000 scale
+      rightCrop = { xStart: splitRatio * 10, xEnd: 1000 };
+    }
+
+    // Determine which side the current page keeps (default to left)
+    const keepLeft = side !== 'right';
+    const currentCrop = keepLeft ? leftCrop : rightCrop;
+    const newCrop = keepLeft ? rightCrop : leftCrop;
+
+    // Update current page with crop info
     await db.collection('pages').updateOne(
       { id: pageId },
       {
         $set: {
-          'crop': currentCrop,
+          crop: currentCrop,
+          photo_original: currentPage.photo_original || currentPage.photo,
           updated_at: new Date()
         }
       }
     );
 
     // Create new page with the other half
-    const newCrop = side === 'left' ? rightCrop : leftCrop;
     const newPageNumber = currentPageNumber + 0.5; // Will be renumbered
 
     const newPage = {
       id: newPageId,
       book_id: currentPage.book_id,
       page_number: newPageNumber,
-      photo: currentPage.photo, // Same image, different crop
+      photo: currentPage.photo_original || currentPage.photo,
+      photo_original: currentPage.photo_original || currentPage.photo,
       crop: newCrop,
+      split_from: pageId,
       ocr: null,
       translation: null,
       summary: null,
