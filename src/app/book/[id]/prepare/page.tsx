@@ -83,8 +83,6 @@ export default function PreparePage({ params }: PageProps) {
     ocr: null, translation: null, summary: null
   });
 
-  // Fullscreen image viewer
-  const [fullscreenImage, setFullscreenImage] = useState<{ src: string; alt: string } | null>(null);
 
   useEffect(() => {
     params.then(({ id }) => setBookId(id));
@@ -838,29 +836,35 @@ export default function PreparePage({ params }: PageProps) {
                     className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500"
                   />
 
-                  {/* Thumbnail - click to preview */}
-                  <button
-                    onClick={() => {
-                      // Use the same thumbnail URL that's already loaded/cached
-                      setFullscreenImage({ src: getImageUrl(page), alt: `Page ${index + 1}` });
-                    }}
-                    className={`w-16 h-12 rounded overflow-hidden flex-shrink-0 transition-all cursor-zoom-in ${
+                  {/* Thumbnail - hover to magnify */}
+                  <div
+                    className={`relative w-16 h-12 rounded overflow-visible flex-shrink-0 group ${
                       markedForSplit
                         ? 'ring-2 ring-amber-500 bg-amber-100'
                         : isSplitPage
                           ? 'bg-purple-100'
-                          : 'bg-stone-100 hover:ring-2 hover:ring-stone-300'
+                          : 'bg-stone-100'
                     }`}
-                    title="Click to preview"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={getImageUrl(page)}
                       alt={`Page ${index + 1}`}
-                      className="w-full h-full object-contain pointer-events-none"
+                      className="w-full h-full object-contain rounded"
                       loading="lazy"
                     />
-                  </button>
+                    {/* Magnified preview on hover */}
+                    <div className="absolute left-0 top-full mt-2 z-50 hidden group-hover:block">
+                      <div className="bg-white rounded-lg shadow-2xl border border-stone-200 p-1">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={getImageUrl(page)}
+                          alt={`Page ${index + 1}`}
+                          className="w-64 h-auto object-contain rounded"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
                   {/* Page info */}
                   <div className="flex-1 min-w-0">
@@ -1035,27 +1039,6 @@ export default function PreparePage({ params }: PageProps) {
         )}
       </main>
 
-      {/* Quick Image Preview */}
-      {fullscreenImage && (
-        <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 cursor-pointer"
-          onClick={() => setFullscreenImage(null)}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={fullscreenImage.src}
-            alt={fullscreenImage.alt}
-            className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button
-            onClick={() => setFullscreenImage(null)}
-            className="absolute top-4 right-4 text-white/80 hover:text-white"
-          >
-            <X className="w-8 h-8" />
-          </button>
-        </div>
-      )}
     </div>
   );
 }
