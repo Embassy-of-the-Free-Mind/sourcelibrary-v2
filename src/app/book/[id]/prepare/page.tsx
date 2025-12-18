@@ -26,6 +26,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import type { Book, Page, Prompt } from '@/lib/types';
+import FullscreenImageViewer from '@/components/FullscreenImageViewer';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -81,6 +82,9 @@ export default function PreparePage({ params }: PageProps) {
   const [prompts, setPrompts] = useState<{ ocr: Prompt | null; translation: Prompt | null; summary: Prompt | null }>({
     ocr: null, translation: null, summary: null
   });
+
+  // Fullscreen image viewer
+  const [fullscreenImage, setFullscreenImage] = useState<{ src: string; alt: string } | null>(null);
 
   useEffect(() => {
     params.then(({ id }) => setBookId(id));
@@ -805,16 +809,24 @@ export default function PreparePage({ params }: PageProps) {
                     className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500"
                   />
 
-                  {/* Thumbnail */}
-                  <div className="w-16 h-12 bg-stone-100 rounded overflow-hidden flex-shrink-0">
+                  {/* Thumbnail - click to enlarge */}
+                  <button
+                    onClick={() => {
+                      const fullUrl = page.crop?.xStart !== undefined
+                        ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=1200&q=90&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
+                        : page.photo_original || page.photo;
+                      setFullscreenImage({ src: fullUrl, alt: `Page ${index + 1}` });
+                    }}
+                    className="w-16 h-12 bg-stone-100 rounded overflow-hidden flex-shrink-0 hover:ring-2 hover:ring-amber-400 transition-all cursor-zoom-in"
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={getImageUrl(page)}
                       alt={`Page ${index + 1}`}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain pointer-events-none"
                       loading="lazy"
                     />
-                  </div>
+                  </button>
 
                   {/* Page info */}
                   <div className="flex-1 min-w-0">
@@ -985,6 +997,16 @@ export default function PreparePage({ params }: PageProps) {
           </div>
         )}
       </main>
+
+      {/* Fullscreen Image Viewer */}
+      {fullscreenImage && (
+        <FullscreenImageViewer
+          src={fullscreenImage.src}
+          alt={fullscreenImage.alt}
+          isOpen={true}
+          onClose={() => setFullscreenImage(null)}
+        />
+      )}
     </div>
   );
 }
