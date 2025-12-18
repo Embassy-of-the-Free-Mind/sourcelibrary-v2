@@ -136,39 +136,44 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Input:** The page image and (if available) the previous page's transcription for context.
 
-**Output:** A faithful transcription in Markdown format.
+**Output:** A faithful transcription in Markdown format that visually resembles the original.
 
-**Markdown to use:**
-- **bold** for emphasized or decorated text in the original
-- *italic* for foreign words or titles
-- > blockquotes for prayers, quotes, or set-apart passages
-- ## headings for chapter/section titles
-- --- for decorative dividers or section breaks
+**First:** Detect and note the language with [[language: detected language]]
+
+**Representing text styles:**
+- # Large title → use # heading (biggest)
+- ## Section heading → use ## heading
+- ### Subsection → use ### heading
+- **Bold text** → use **bold**
+- *Italic text* → use *italic*
+- LARGER TEXT should use BIGGER HEADINGS - match the visual hierarchy
+- Preserve line breaks and paragraph structure
+
+**Layout markup:**
 - ->centered text<- for centered lines (titles, headers)
-- | tables | for columnar data, lists, or parallel text
+- | tables | for columnar data, parallel text, lists in columns
+- > blockquotes for prayers, quotes, set-apart passages
+- --- for decorative dividers or section breaks
+
+**Annotations:**
 - [[notes: ...]] for your observations about the text
-- [[margin: ...]] for text in the margins (glosses, additions, references)
+- [[margin: ...]] for text in the margins
 - [[gloss: ...]] for interlinear annotations above/below words
 - [[insert: ...]] for text in boxes, cartouches, or later additions
 - [[unclear: ...]] for illegible or uncertain readings
 - [[page number: N]] for visible page numbers
 
 **Do NOT use:**
-- Code blocks (\`\`\`) or inline code (\`backticks\`) - this is prose, not code
-- HTML tags - use markdown equivalents
-
-**Handling page layout:**
-- Use tables for columnar layouts or parallel texts
-- Use [[margin: ...]] for marginal notes, even if extensive
-- Use [[insert: ...]] for boxed text, diagrams with labels, or later additions
-- Use [[gloss: ...]] for small annotations written between lines
-- Transcribe in reading order (usually top-to-bottom, left-to-right)
+- Code blocks (\`\`\`) or inline code - this is prose, not code
+- If markdown can't capture the layout, add a [[notes: ...]] explaining it
 
 **Instructions:**
 1. Begin with [[notes: ...]] summarizing image quality, layout, and any special features.
-2. Preserve original spelling, capitalization, and punctuation.
-3. Mark uncertain readings with [[unclear: possible reading]].
-4. Capture ALL text on the page, including margins, boxes, and annotations.
+2. Include [[page number: N]] if visible.
+3. Preserve original spelling, capitalization, punctuation, line breaks, and paragraphs.
+4. Bold text → **bold**. Italic → *italic*. Larger text → bigger heading.
+5. Recreate tables in markdown when you see columnar layouts.
+6. Capture ALL text including margins, boxes, and annotations.
 
 **Language:** {language}`,
 
@@ -176,29 +181,29 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Input:** The OCR transcription and (if available) the previous page's translation for continuity.
 
-**Output:** A readable English translation in Markdown format.
+**Output:** A readable English translation that preserves the markdown formatting from the OCR.
 
-**Markdown to use:**
-- **bold** for emphasis
-- *italic* for foreign terms kept in original
-- > blockquotes for prayers, quotes, or set-apart passages
-- ## headings mirroring the original structure
-- --- for section breaks
-- ->centered text<- for centered lines
-- | tables | preserve columnar layouts from the original
-- [[notes: ...]] for translation notes, context, or alternate readings
-- [[margin: ...]] translate marginal notes, keeping them marked
-- [[insert: ...]] translate boxed or inserted text, keeping it marked
+**Preserve from OCR:**
+- Heading levels (# ## ###) - keep the same hierarchy
+- **Bold** and *italic* formatting
+- Tables - recreate them in the translation
+- Centered text (->text<-)
+- Line breaks and paragraph structure
+- All [[markup: ...]] annotations - translate the content but keep the markup
+
+**Add translation notes:**
+- [[notes: ...]] for interpretive choices, historical context, alternate readings
+- Explain references a modern reader wouldn't know
 
 **Do NOT use:**
-- Code blocks or backticks - this is prose, not code
+- Code blocks or backticks - this is prose
 
 **Instructions:**
-1. Start with [[notes: ...]] for context about this passage.
-2. Mirror the source layout (headings, paragraphs, tables, centered text).
-3. Translate ALL text including margins, boxes, and annotations - keep the markup.
+1. Start with [[notes: ...]] mentioning context or continuity with previous page.
+2. Mirror the source layout - headings, paragraphs, tables, centered text.
+3. Translate ALL text including [[margin:]], [[insert:]], [[gloss:]] - keep the markup tags.
 4. Add [[notes: ...]] inline to explain historical references or difficult phrases.
-5. Style: warm and accessible, like a museum label - explain rather than assume knowledge.
+5. Style: warm museum label - explain rather than assume knowledge.
 6. Preserve the voice and spirit of the original.
 
 **Source language:** {source_language}
