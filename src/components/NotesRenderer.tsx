@@ -10,19 +10,45 @@ interface NotesRendererProps {
   className?: string;
 }
 
-// Convert [[notes:...]] to inline highlighted notes
+// Convert special markup to styled HTML spans
 function processNotesForMarkdown(text: string): string {
-  // Replace [[notes:...]] with inline highlighted spans
-  const processedText = text.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {
+  let result = text;
+
+  // Centered text: ->text<- or ::text::
+  result = result.replace(/->(.*?)<-/g, '<div class="text-center">$1</div>');
+  result = result.replace(/::(.*?)::/g, '<div class="text-center">$1</div>');
+
+  // AI/editorial notes (amber) - our analysis
+  result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {
     return `<span class="inline-note">${content.trim()}</span>`;
   });
 
-  // Replace [[page number:...]] with styled page markers
-  const finalText = processedText.replace(/\[\[page\s*number:\s*(.*?)\]\]/gi, (match, pageNum) => {
+  // Marginalia - text in margins of original manuscript (teal)
+  result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => {
+    return `<span class="margin-note">${content.trim()}</span>`;
+  });
+
+  // Gloss - interlinear annotations in original (purple)
+  result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, (match, content) => {
+    return `<span class="gloss-note">${content.trim()}</span>`;
+  });
+
+  // Insertion - later additions to the text (green)
+  result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, (match, content) => {
+    return `<span class="insert-note">${content.trim()}</span>`;
+  });
+
+  // Uncertain/illegible text (gray with ?)
+  result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, (match, content) => {
+    return `<span class="unclear-text">${content.trim()}</span>`;
+  });
+
+  // Page number markers
+  result = result.replace(/\[\[page\s*number:\s*(.*?)\]\]/gi, (match, pageNum) => {
     return `<span class="page-marker">Page ${pageNum.trim()}</span>`;
   });
 
-  return finalText;
+  return result;
 }
 
 export default function NotesRenderer({ text, className = '' }: NotesRendererProps) {
@@ -47,7 +73,7 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
           'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
           'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
           'table', 'thead', 'tbody', 'tr', 'th', 'td',
-          'span'
+          'span', 'div'
         ]}
         unwrapDisallowed={true}
         components={{
@@ -106,15 +132,56 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
           td: ({ children }) => (
             <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
           ),
-          // Custom elements for notes and page markers
+          // Centered text
+          div: ({ children, className }) => {
+            if (className === 'text-center') {
+              return <div className="text-center my-4">{children}</div>;
+            }
+            return <div>{children}</div>;
+          },
+          // Custom elements for notes, callouts, and markers
           span: ({ children, className }) => {
+            // AI/editorial notes (amber)
             if (className === 'inline-note') {
               return (
-                <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5">
+                <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
                   {children}
                 </span>
               );
             }
+            // Marginalia from original manuscript (teal)
+            if (className === 'margin-note') {
+              return (
+                <span className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
+                  {children}
+                </span>
+              );
+            }
+            // Gloss/interlinear annotations (purple)
+            if (className === 'gloss-note') {
+              return (
+                <span className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
+                  {children}
+                </span>
+              );
+            }
+            // Later insertions (green)
+            if (className === 'insert-note') {
+              return (
+                <span className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
+                  {children}
+                </span>
+              );
+            }
+            // Unclear/illegible text (gray)
+            if (className === 'unclear-text') {
+              return (
+                <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
+                  {children}?
+                </span>
+              );
+            }
+            // Page markers
             if (className === 'page-marker') {
               return (
                 <span className="inline-block bg-stone-100 text-stone-500 text-xs px-2 py-0.5 rounded font-medium my-1">
