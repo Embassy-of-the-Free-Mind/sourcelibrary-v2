@@ -104,10 +104,10 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
             </blockquote>
           ),
           code: ({ children }) => (
-            <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm font-mono text-stone-700">{children}</code>
+            <code className="font-mono text-[var(--text-secondary)]">{children}</code>
           ),
           pre: ({ children }) => (
-            <pre className="bg-stone-100 p-3 rounded-lg overflow-x-auto my-3 text-sm">{children}</pre>
+            <pre className="font-mono overflow-x-auto my-3 text-[var(--text-secondary)]">{children}</pre>
           ),
           hr: () => <hr className="my-6 border-stone-200" />,
           a: ({ href, children }) => (
