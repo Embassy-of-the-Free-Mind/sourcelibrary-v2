@@ -26,7 +26,6 @@ import {
   AlertCircle
 } from 'lucide-react';
 import type { Book, Page, Prompt } from '@/lib/types';
-import FullscreenImageViewer from '@/components/FullscreenImageViewer';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -847,10 +846,11 @@ export default function PreparePage({ params }: PageProps) {
                       }
                     }}
                     onDoubleClick={() => {
-                      const fullUrl = page.crop?.xStart !== undefined
-                        ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=1200&q=90&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
-                        : page.photo_original || page.photo;
-                      setFullscreenImage({ src: fullUrl, alt: `Page ${index + 1}` });
+                      // Use medium res for quick preview (not full res)
+                      const previewUrl = page.crop?.xStart !== undefined
+                        ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=600&q=75&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
+                        : `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=600&q=75`;
+                      setFullscreenImage({ src: previewUrl, alt: `Page ${index + 1}` });
                     }}
                     className={`w-16 h-12 rounded overflow-hidden flex-shrink-0 transition-all ${
                       markedForSplit
@@ -1040,14 +1040,26 @@ export default function PreparePage({ params }: PageProps) {
         )}
       </main>
 
-      {/* Fullscreen Image Viewer */}
+      {/* Quick Image Preview */}
       {fullscreenImage && (
-        <FullscreenImageViewer
-          src={fullscreenImage.src}
-          alt={fullscreenImage.alt}
-          isOpen={true}
-          onClose={() => setFullscreenImage(null)}
-        />
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 cursor-pointer"
+          onClick={() => setFullscreenImage(null)}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={fullscreenImage.src}
+            alt={fullscreenImage.alt}
+            className="max-w-[90vw] max-h-[90vh] object-contain rounded-lg shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            onClick={() => setFullscreenImage(null)}
+            className="absolute top-4 right-4 text-white/80 hover:text-white"
+          >
+            <X className="w-8 h-8" />
+          </button>
+        </div>
       )}
     </div>
   );
