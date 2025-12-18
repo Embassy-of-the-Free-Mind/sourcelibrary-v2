@@ -13,8 +13,6 @@ import {
   Copy,
   Check,
   ZoomIn,
-  Scissors,
-  ArrowLeftRight,
   Columns,
   BookOpen,
   Maximize2
@@ -30,7 +28,6 @@ interface TranslationEditorProps {
   currentIndex: number;
   onNavigate: (pageId: string) => void;
   onSave: (data: { ocr?: string; translation?: string; summary?: string }) => Promise<void>;
-  onPageSplit?: () => void; // Callback to refresh pages after split
 }
 
 interface SettingsModalProps {
@@ -512,7 +509,6 @@ export default function TranslationEditor({
   currentIndex,
   onNavigate,
   onSave,
-  onPageSplit
 }: TranslationEditorProps) {
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
@@ -523,8 +519,6 @@ export default function TranslationEditor({
 
   const [showOcrSettings, setShowOcrSettings] = useState(false);
   const [showTranslationSettings, setShowTranslationSettings] = useState(false);
-  const [showSplitOptions, setShowSplitOptions] = useState(false);
-  const [splitting, setSplitting] = useState(false);
 
   const [selectedOcrPrompt, setSelectedOcrPrompt] = useState<Prompt | null>(null);
   const [selectedTranslationPrompt, setSelectedTranslationPrompt] = useState<Prompt | null>(null);
@@ -620,38 +614,6 @@ export default function TranslationEditor({
     touchStartY.current = 0;
     setSwipeOffset(0);
     setIsSwiping(false);
-  };
-
-  const handleSplitPage = async (side: 'left' | 'right') => {
-    if (splitting) return;
-    setSplitting(true);
-    try {
-      const response = await fetch(`/api/pages/${page.id}/split`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ side })
-      });
-
-      if (!response.ok) {
-        throw new Error('Split failed');
-      }
-
-      const result = await response.json();
-      setShowSplitOptions(false);
-
-      // Refresh the page data
-      if (onPageSplit) {
-        onPageSplit();
-      } else {
-        // Fallback: navigate to the new page
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error('Split error:', error);
-      alert('Failed to split page. Please try again.');
-    } finally {
-      setSplitting(false);
-    }
   };
 
   // Update state when page changes
@@ -987,60 +949,11 @@ export default function TranslationEditor({
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Source Image Panel */}
         <div className="w-full lg:w-1/3 flex flex-col" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
-          <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-            <div className="flex items-center gap-2">
-              <span className="label">Source</span>
-              <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
-                {book.language || 'Latin'}
-              </span>
-            </div>
-            <div className="relative">
-              <button
-                onClick={() => setShowSplitOptions(!showSplitOptions)}
-                className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
-                style={{ color: 'var(--text-muted)' }}
-                title="Split two-page spread"
-              >
-                <Scissors className="w-3.5 h-3.5" />
-                Split
-              </button>
-              {showSplitOptions && (
-                <div
-                  className="absolute right-0 top-full mt-1 z-50 rounded-lg shadow-lg py-2 min-w-[180px]"
-                  style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
-                >
-                  <div className="px-3 py-1.5 text-xs font-medium" style={{ color: 'var(--text-muted)' }}>
-                    Split into two pages:
-                  </div>
-                  <button
-                    onClick={() => handleSplitPage('left')}
-                    disabled={splitting}
-                    className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 disabled:opacity-50"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {splitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowLeftRight className="w-4 h-4" />}
-                    Keep left → Add right
-                  </button>
-                  <button
-                    onClick={() => handleSplitPage('right')}
-                    disabled={splitting}
-                    className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 disabled:opacity-50"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {splitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowLeftRight className="w-4 h-4" />}
-                    Keep right → Add left
-                  </button>
-                  <div className="border-t my-1" style={{ borderColor: 'var(--border-light)' }} />
-                  <button
-                    onClick={() => setShowSplitOptions(false)}
-                    className="w-full px-3 py-1.5 text-left text-xs hover:bg-stone-50"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              )}
-            </div>
+          <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
+            <span className="label">Source</span>
+            <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
+              {book.language || 'Latin'}
+            </span>
           </div>
           <div className="flex-1 overflow-hidden p-4">
             <div className="relative w-full h-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
