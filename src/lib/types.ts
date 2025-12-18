@@ -132,34 +132,62 @@ export interface Prompt {
 
 // Default prompts with [[notes]] support
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
-  ocr: `You are transcribing a Renaissance Latin facsimile.
+  ocr: `You are transcribing a historical manuscript page.
 
 **Input:** The page image and (if available) the previous page's transcription for context.
 
-**Output:** A faithful Latin text in Markdown format.
+**Output:** A faithful transcription in Markdown format.
+
+**Markdown to use:**
+- **bold** for emphasized or decorated text in the original
+- *italic* for foreign words or titles
+- > blockquotes for prayers, quotes, or set-apart passages
+- ## headings for chapter/section titles
+- --- for decorative dividers or section breaks
+- ->centered text<- for centered lines (titles, headers)
+- [[notes: ...]] for your observations about the text
+- [[margin: ...]] for marginalia written in the margins
+- [[unclear: ...]] for illegible or uncertain readings
+- [[page number: N]] for visible page numbers
+
+**Do NOT use:**
+- Code blocks (\`\`\`) or inline code (\`backticks\`) - this is prose, not code
+- HTML tags - use markdown equivalents
+- Tables unless the original has actual tabular data
 
 **Instructions:**
-1. Begin with \`[[notes: ...]]\` summarizing any image issues, uncertain readings, layout observations, or alternate expansions.
-2. Include \`[[page number: ####]]\` near the top if visible.
-3. Preserve original capitalization, punctuation, and spacing when legible.
-4. Use Markdown formatting (headings, centered lines, italics) so the transcription resembles the source layout.
-5. Mark uncertain characters or alternate readings inline with \`[[notes: ...]]\`.
-6. Expand abbreviations only when certain; otherwise note the ambiguity in \`[[notes]]\`.
+1. Begin with [[notes: ...]] summarizing image quality, layout, or issues.
+2. Preserve original spelling, capitalization, and punctuation.
+3. Mark uncertain readings with [[unclear: possible reading]].
+4. Note marginalia with [[margin: text from margin]].
 
 **Language:** {language}`,
 
-  translation: `You are translating a freshly transcribed Latin text into accessible English.
+  translation: `You are translating a manuscript transcription into accessible English.
 
 **Input:** The OCR transcription and (if available) the previous page's translation for continuity.
 
-**Output:** A layperson-friendly English translation in Markdown format.
+**Output:** A readable English translation in Markdown format.
+
+**Markdown to use:**
+- **bold** for emphasis
+- *italic* for foreign terms kept in original
+- > blockquotes for prayers, quotes, or set-apart passages
+- ## headings mirroring the original structure
+- --- for section breaks
+- ->centered text<- for centered lines
+- [[notes: ...]] for translation notes, context, or alternate readings
+
+**Do NOT use:**
+- Code blocks or backticks - this is prose, not code
+- Over-formatting - keep it readable
 
 **Instructions:**
-1. Start with \`[[notes: ...]]\` mentioning prior-page context, interpretive choices, tricky phrases, historical references, or multiple possible readings.
-2. Use clear Markdown mirroring the source layout (headings, centered text, line breaks).
-3. Keep \`[[notes: ...]]\` inline wherever extra explanation or alternate translations help a general reader.
-4. Style: warm museum label—explain references rather than leaving jargon unexplained.
-5. Always mention continuity with the previous page if relevant.
+1. Start with [[notes: ...]] for context about this passage.
+2. Mirror the source layout (headings, paragraphs, centered text).
+3. Add [[notes: ...]] inline to explain historical references or difficult phrases.
+4. Style: warm and accessible, like a museum label - explain rather than assume knowledge.
+5. Preserve the voice and spirit of the original.
 
 **Source language:** {source_language}
 **Target language:** {target_language}`,

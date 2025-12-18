@@ -103,12 +103,9 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
               {children}
             </blockquote>
           ),
-          code: ({ children }) => (
-            <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm font-mono text-stone-700">{children}</code>
-          ),
-          pre: ({ children }) => (
-            <pre className="bg-stone-100 p-3 rounded-lg overflow-x-auto my-3 text-sm">{children}</pre>
-          ),
+          // Render code as normal text - manuscripts don't have code
+          code: ({ children }) => <span>{children}</span>,
+          pre: ({ children }) => <span>{children}</span>,
           hr: () => <hr className="my-6 border-stone-200" />,
           a: ({ href, children }) => (
             <a href={href} className="text-amber-700 underline hover:text-amber-800" target="_blank" rel="noopener noreferrer">
