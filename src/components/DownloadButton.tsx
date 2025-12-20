@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Download, ChevronDown, FileText, Languages, Layers, BookOpen } from 'lucide-react';
+import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns } from 'lucide-react';
 
 interface DownloadButtonProps {
   bookId: string;
@@ -26,7 +26,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr }: Down
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleDownload = async (format: 'translation' | 'ocr' | 'both' | 'epub-translation' | 'epub-ocr' | 'epub-both') => {
+  const handleDownload = async (format: 'translation' | 'ocr' | 'both' | 'epub-translation' | 'epub-ocr' | 'epub-both' | 'epub-parallel') => {
     setDownloading(format);
     try {
       const response = await fetch(`/api/books/${bookId}/download?format=${format}`);
@@ -180,6 +180,23 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr }: Down
                 <div className="text-xs text-stone-500">E-reader format</div>
               </div>
               {downloading === 'epub-both' && (
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+              )}
+            </button>
+          )}
+
+          {hasTranslations && hasOcr && (
+            <button
+              onClick={() => handleDownload('epub-parallel')}
+              disabled={downloading !== null}
+              className="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-amber-50 transition-colors disabled:opacity-50 border-t border-stone-100"
+            >
+              <Columns className="w-4 h-4 text-amber-700" />
+              <div className="text-left">
+                <div className="text-sm font-medium text-stone-900">Parallel Text</div>
+                <div className="text-xs text-stone-500">Loeb-style side by side</div>
+              </div>
+              {downloading === 'epub-parallel' && (
                 <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
               )}
             </button>
