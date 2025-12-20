@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { trackEvent } from '@/lib/analytics';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -161,6 +162,15 @@ export async function GET(
         });
       }
     }
+
+    // Track search
+    trackEvent('search', {
+      book_id: bookId,
+      metadata: {
+        query: trimmedQuery,
+        results_count: results.length,
+      },
+    });
 
     return NextResponse.json({
       query: trimmedQuery,

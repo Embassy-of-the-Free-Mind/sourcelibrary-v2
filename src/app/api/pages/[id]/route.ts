@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { trackEvent } from '@/lib/analytics';
 
 export async function GET(
   request: NextRequest,
@@ -13,6 +14,13 @@ export async function GET(
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
+
+    // Track page view
+    trackEvent('page_view', {
+      page_id: id,
+      book_id: page.book_id,
+      tenant_id: page.tenant_id,
+    });
 
     return NextResponse.json(page);
   } catch (error) {
@@ -57,6 +65,12 @@ export async function PATCH(
       updateData['summary.updated_at'] = new Date();
     }
 
+    // Get the page first to get book_id and track char changes
+    const existingPage = await db.collection('pages').findOne({ id });
+    if (!existingPage) {
+      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
     const result = await db.collection('pages').updateOne(
       { id },
       { $set: updateData }
@@ -64,6 +78,44 @@ export async function PATCH(
 
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    // Track edits
+    if (body.ocr) {
+      trackEvent('edit_ocr', {
+        page_id: id,
+        book_id: existingPage.book_id,
+        tenant_id: existingPage.tenant_id,
+        metadata: {
+          field: 'ocr',
+          chars_before: existingPage.ocr?.data?.length || 0,
+          chars_after: body.ocr.data?.length || 0,
+        },
+      });
+    }
+    if (body.translation) {
+      trackEvent('edit_translation', {
+        page_id: id,
+        book_id: existingPage.book_id,
+        tenant_id: existingPage.tenant_id,
+        metadata: {
+          field: 'translation',
+          chars_before: existingPage.translation?.data?.length || 0,
+          chars_after: body.translation.data?.length || 0,
+        },
+      });
+    }
+    if (body.summary) {
+      trackEvent('edit_summary', {
+        page_id: id,
+        book_id: existingPage.book_id,
+        tenant_id: existingPage.tenant_id,
+        metadata: {
+          field: 'summary',
+          chars_before: existingPage.summary?.data?.length || 0,
+          chars_after: body.summary.data?.length || 0,
+        },
+      });
     }
 
     const updatedPage = await db.collection('pages').findOne({ id });
@@ -90,6 +142,13 @@ export async function DELETE(
 
     // Delete the page
     await db.collection('pages').deleteOne({ id });
+
+    // Track page deletion
+    trackEvent('page_delete', {
+      page_id: id,
+      book_id: page.book_id,
+      tenant_id: page.tenant_id,
+    });
 
     // Renumber remaining pages for this book
     const remainingPages = await db.collection('pages')

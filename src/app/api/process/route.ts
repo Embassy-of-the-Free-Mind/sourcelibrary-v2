@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation, generateSummary } from '@/lib/ai';
+import { trackEvent } from '@/lib/analytics';
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,7 +19,17 @@ export async function POST(request: NextRequest) {
       autoSave = true
     } = body;
 
+    const startTime = Date.now();
     const db = await getDb();
+
+    // Get page info for tracking
+    let pageInfo: { book_id?: string; tenant_id?: string } = {};
+    if (pageId) {
+      const pageDoc = await db.collection('pages').findOne({ id: pageId });
+      if (pageDoc) {
+        pageInfo = { book_id: pageDoc.book_id, tenant_id: pageDoc.tenant_id };
+      }
+    }
 
     // Get previous page context if provided
     let previousPage: { ocr?: string; translation?: string; summary?: string } | undefined;
@@ -40,12 +51,38 @@ export async function POST(request: NextRequest) {
       if (!imageUrl) {
         return NextResponse.json({ error: 'imageUrl required for OCR' }, { status: 400 });
       }
-      results.ocr = await performOCR(
-        imageUrl,
-        language || 'Latin',
-        previousPage?.ocr,
-        customPrompts?.ocr
-      );
+      const ocrStart = Date.now();
+      try {
+        results.ocr = await performOCR(
+          imageUrl,
+          language || 'Latin',
+          previousPage?.ocr,
+          customPrompts?.ocr
+        );
+        trackEvent('process_ocr', {
+          page_id: pageId,
+          book_id: pageInfo.book_id,
+          tenant_id: pageInfo.tenant_id,
+          metadata: {
+            model: 'gemini-2.0-flash',
+            duration_ms: Date.now() - ocrStart,
+            success: true,
+          },
+        });
+      } catch (error) {
+        trackEvent('process_ocr', {
+          page_id: pageId,
+          book_id: pageInfo.book_id,
+          tenant_id: pageInfo.tenant_id,
+          metadata: {
+            model: 'gemini-2.0-flash',
+            duration_ms: Date.now() - ocrStart,
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+          },
+        });
+        throw error;
+      }
     }
 
     if (action === 'translation' || action === 'all') {
@@ -53,13 +90,39 @@ export async function POST(request: NextRequest) {
       if (!textToTranslate) {
         return NextResponse.json({ error: 'ocrText required for translation' }, { status: 400 });
       }
-      results.translation = await performTranslation(
-        textToTranslate,
-        language || 'Latin',
-        targetLanguage,
-        previousPage?.translation,
-        customPrompts?.translation
-      );
+      const translationStart = Date.now();
+      try {
+        results.translation = await performTranslation(
+          textToTranslate,
+          language || 'Latin',
+          targetLanguage,
+          previousPage?.translation,
+          customPrompts?.translation
+        );
+        trackEvent('process_translation', {
+          page_id: pageId,
+          book_id: pageInfo.book_id,
+          tenant_id: pageInfo.tenant_id,
+          metadata: {
+            model: 'gemini-2.0-flash',
+            duration_ms: Date.now() - translationStart,
+            success: true,
+          },
+        });
+      } catch (error) {
+        trackEvent('process_translation', {
+          page_id: pageId,
+          book_id: pageInfo.book_id,
+          tenant_id: pageInfo.tenant_id,
+          metadata: {
+            model: 'gemini-2.0-flash',
+            duration_ms: Date.now() - translationStart,
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+          },
+        });
+        throw error;
+      }
     }
 
     if (action === 'summary' || action === 'all') {
@@ -67,11 +130,37 @@ export async function POST(request: NextRequest) {
       if (!textToSummarize) {
         return NextResponse.json({ error: 'translatedText required for summary' }, { status: 400 });
       }
-      results.summary = await generateSummary(
-        textToSummarize,
-        previousPage?.summary,
-        customPrompts?.summary
-      );
+      const summaryStart = Date.now();
+      try {
+        results.summary = await generateSummary(
+          textToSummarize,
+          previousPage?.summary,
+          customPrompts?.summary
+        );
+        trackEvent('process_summary', {
+          page_id: pageId,
+          book_id: pageInfo.book_id,
+          tenant_id: pageInfo.tenant_id,
+          metadata: {
+            model: 'gemini-2.0-flash',
+            duration_ms: Date.now() - summaryStart,
+            success: true,
+          },
+        });
+      } catch (error) {
+        trackEvent('process_summary', {
+          page_id: pageId,
+          book_id: pageInfo.book_id,
+          tenant_id: pageInfo.tenant_id,
+          metadata: {
+            model: 'gemini-2.0-flash',
+            duration_ms: Date.now() - summaryStart,
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+          },
+        });
+        throw error;
+      }
     }
 
     // Auto-save to database if requested

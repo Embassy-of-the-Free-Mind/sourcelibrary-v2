@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { trackEvent, DownloadFormat } from '@/lib/analytics';
 import type { Book, Page } from '@/lib/types';
 import epub from 'epub-gen-memory';
 
@@ -514,6 +515,17 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       .replace(/^-|-$/g, '')
       .substring(0, 50);
 
+    // Map format to analytics format type
+    const formatMap: Record<string, DownloadFormat> = {
+      'translation': 'txt_translation',
+      'ocr': 'txt_ocr',
+      'both': 'txt_both',
+      'epub-translation': 'epub_translation',
+      'epub-ocr': 'epub_translation', // Same category
+      'epub-both': 'epub_bilingual',
+      'epub-parallel': 'epub_parallel',
+    };
+
     if (isEpub) {
       let epubBuffer: Buffer;
       let filename: string;
@@ -536,6 +548,16 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         filename = `${safeTitle}-${formatSuffix}.epub`;
       }
 
+      // Track download
+      trackEvent('download', {
+        book_id: id,
+        tenant_id: book.tenant_id as string,
+        metadata: {
+          format: formatMap[format] || format as DownloadFormat,
+          file_size: epubBuffer.length,
+        },
+      });
+
       return new Response(new Uint8Array(epubBuffer), {
         headers: {
           'Content-Type': 'application/epub+zip',
@@ -552,6 +574,16 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
 
       const filename = `${safeTitle}-${format}.txt`;
+
+      // Track download
+      trackEvent('download', {
+        book_id: id,
+        tenant_id: book.tenant_id as string,
+        metadata: {
+          format: formatMap[format] || format as DownloadFormat,
+          file_size: Buffer.byteLength(content, 'utf-8'),
+        },
+      });
 
       return new Response(content, {
         headers: {
