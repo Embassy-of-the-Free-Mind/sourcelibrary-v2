@@ -5,6 +5,9 @@ import {
   getTopDownloads,
   getRecentEvents,
   getEventsByDay,
+  getContentStats,
+  getVisitorsByDay,
+  getTopEditors,
   AnalyticsEventType,
 } from '@/lib/analytics';
 
@@ -13,7 +16,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
 
     // Parse query parameters
-    const view = searchParams.get('view') || 'overview'; // overview, top-books, top-downloads, recent, daily
+    const view = searchParams.get('view') || 'overview';
     const days = parseInt(searchParams.get('days') || '30', 10);
     const limit = parseInt(searchParams.get('limit') || '10', 10);
     const bookId = searchParams.get('book_id') || undefined;
@@ -26,23 +29,89 @@ export async function GET(request: NextRequest) {
 
     switch (view) {
       case 'overview': {
-        // Get comprehensive stats
-        const [stats, topBooks, topDownloads, dailyViews, dailyDownloads] = await Promise.all([
+        // Get comprehensive stats including content and visitor data
+        const [
+          stats,
+          contentStats,
+          topBooks,
+          topDownloads,
+          topEditors,
+          dailyViews,
+          dailyDownloads,
+          dailyVisitors,
+        ] = await Promise.all([
           getStats({ start_date: startDate, end_date: endDate, book_id: bookId }),
+          getContentStats(),
           getTopBooks({ limit: 5, start_date: startDate, end_date: endDate }),
           getTopDownloads({ limit: 5, start_date: startDate, end_date: endDate }),
+          getTopEditors({ limit: 5, start_date: startDate, end_date: endDate }),
           getEventsByDay({ event_type: 'page_view', days }),
           getEventsByDay({ event_type: 'download', days }),
+          getVisitorsByDay({ days }),
         ]);
 
         return NextResponse.json({
           stats,
+          contentStats,
           topBooks,
           topDownloads,
+          topEditors,
           charts: {
             dailyViews,
             dailyDownloads,
+            dailyVisitors,
           },
+        });
+      }
+
+      case 'content': {
+        // Get content statistics (books, pages, translations)
+        const contentStats = await getContentStats();
+        return NextResponse.json({ contentStats });
+      }
+
+      case 'visitors': {
+        // Get visitor statistics
+        const [stats, dailyVisitors] = await Promise.all([
+          getStats({ start_date: startDate, end_date: endDate }),
+          getVisitorsByDay({ days }),
+        ]);
+
+        return NextResponse.json({
+          unique_visitors: stats.unique_visitors,
+          unique_sessions: stats.unique_sessions,
+          total_hits: stats.total_hits,
+          charts: { dailyVisitors },
+        });
+      }
+
+      case 'editors': {
+        // Get editor statistics
+        const [stats, topEditors] = await Promise.all([
+          getStats({ start_date: startDate, end_date: endDate }),
+          getTopEditors({ limit, start_date: startDate, end_date: endDate }),
+        ]);
+
+        return NextResponse.json({
+          unique_editors: stats.unique_editors,
+          total_edits: stats.total_edits,
+          edits_by_type: stats.edits_by_type,
+          topEditors,
+        });
+      }
+
+      case 'processing': {
+        // Get processing statistics
+        const stats = await getStats({ start_date: startDate, end_date: endDate, book_id: bookId });
+
+        return NextResponse.json({
+          total_processing: stats.total_processing,
+          pages_ocr_processed: stats.pages_ocr_processed,
+          pages_translated: stats.pages_translated,
+          pages_summarized: stats.pages_summarized,
+          processing_by_type: stats.processing_by_type,
+          avg_processing_time_ms: stats.avg_processing_time_ms,
+          processing_success_rate: stats.processing_success_rate,
         });
       }
 
@@ -62,6 +131,15 @@ export async function GET(request: NextRequest) {
           end_date: endDate,
         });
         return NextResponse.json({ topDownloads });
+      }
+
+      case 'top-editors': {
+        const topEditors = await getTopEditors({
+          limit,
+          start_date: startDate,
+          end_date: endDate,
+        });
+        return NextResponse.json({ topEditors });
       }
 
       case 'recent': {
@@ -103,7 +181,7 @@ export async function GET(request: NextRequest) {
 
       default:
         return NextResponse.json(
-          { error: 'Invalid view. Use: overview, top-books, top-downloads, recent, daily, book' },
+          { error: 'Invalid view. Use: overview, content, visitors, editors, processing, top-books, top-downloads, top-editors, recent, daily, book' },
           { status: 400 }
         );
     }

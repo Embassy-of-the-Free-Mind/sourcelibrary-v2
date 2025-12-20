@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent, getVisitorInfo } from '@/lib/analytics';
 
 export async function GET(
   request: NextRequest,
@@ -22,10 +22,12 @@ export async function GET(
       .sort({ page_number: 1 })
       .toArray();
 
-    // Track book view
+    // Track book view with visitor info
+    const visitorInfo = getVisitorInfo(request);
     trackEvent('book_view', {
       book_id: id,
       tenant_id: book.tenant_id,
+      ...visitorInfo,
     });
 
     return NextResponse.json({ ...book, pages });

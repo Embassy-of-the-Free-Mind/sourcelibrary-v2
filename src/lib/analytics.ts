@@ -59,6 +59,8 @@ export interface AnalyticsEvent {
   // Context
   tenant_id: string;
   session_id?: string;          // Browser session for grouping
+  visitor_id?: string;          // Unique visitor identifier (from cookie/fingerprint)
+  ip_hash?: string;             // Hashed IP for unique visitor fallback
 
   // Entity references
   book_id?: string;
@@ -106,10 +108,16 @@ export interface AnalyticsEvent {
 export interface AnalyticsStats {
   total_events: number;
 
+  // Visitor stats
+  total_hits: number;                // Total page loads/requests
+  unique_visitors: number;           // Unique visitor_id or ip_hash
+  unique_sessions: number;           // Unique session_id
+
   // Reading stats
   total_book_views: number;
   total_page_views: number;
   unique_books_viewed: number;
+  unique_pages_read: number;         // Distinct pages viewed
 
   // Download stats
   total_downloads: number;
@@ -117,14 +125,18 @@ export interface AnalyticsStats {
 
   // Edit stats
   total_edits: number;
+  unique_editors: number;            // Unique sessions/visitors who edited
   edits_by_type: {
     ocr: number;
     translation: number;
     summary: number;
   };
 
-  // Processing stats
+  // Processing stats (pages processed)
   total_processing: number;
+  pages_ocr_processed: number;       // Pages that went through OCR
+  pages_translated: number;          // Pages that went through translation
+  pages_summarized: number;          // Pages that went through summary
   processing_by_type: {
     ocr: number;
     translation: number;
@@ -159,6 +171,8 @@ export async function trackEvent(
   options: {
     tenant_id?: string;
     session_id?: string;
+    visitor_id?: string;
+    ip_hash?: string;
     book_id?: string;
     page_id?: string;
     metadata?: AnalyticsEvent['metadata'];
@@ -173,6 +187,8 @@ export async function trackEvent(
       timestamp: new Date(),
       tenant_id: options.tenant_id || 'default',
       session_id: options.session_id,
+      visitor_id: options.visitor_id,
+      ip_hash: options.ip_hash,
       book_id: options.book_id,
       page_id: options.page_id,
       metadata: options.metadata,
@@ -218,14 +234,22 @@ export async function getStats(options: {
   // Calculate stats
   const stats: AnalyticsStats = {
     total_events: events.length,
+    total_hits: 0,
+    unique_visitors: 0,
+    unique_sessions: 0,
     total_book_views: 0,
     total_page_views: 0,
     unique_books_viewed: 0,
+    unique_pages_read: 0,
     total_downloads: 0,
     downloads_by_format: {},
     total_edits: 0,
+    unique_editors: 0,
     edits_by_type: { ocr: 0, translation: 0, summary: 0 },
     total_processing: 0,
+    pages_ocr_processed: 0,
+    pages_translated: 0,
+    pages_summarized: 0,
     processing_by_type: { ocr: 0, translation: 0, summary: 0 },
     avg_processing_time_ms: 0,
     processing_success_rate: 0,
@@ -236,26 +260,42 @@ export async function getStats(options: {
   };
 
   const uniqueBooks = new Set<string>();
+  const uniquePages = new Set<string>();
+  const uniqueVisitors = new Set<string>();
+  const uniqueSessions = new Set<string>();
+  const uniqueEditors = new Set<string>();
+  const pagesOcrProcessed = new Set<string>();
+  const pagesTranslated = new Set<string>();
+  const pagesSummarized = new Set<string>();
   let totalProcessingTime = 0;
   let processingCount = 0;
   let successfulProcessing = 0;
   let totalSearchResults = 0;
 
   for (const event of events) {
+    // Track visitors and sessions
+    if (event.visitor_id) uniqueVisitors.add(event.visitor_id);
+    else if (event.ip_hash) uniqueVisitors.add(event.ip_hash);
+    if (event.session_id) uniqueSessions.add(event.session_id);
+
     switch (event.event_type) {
       case 'book_view':
         stats.total_book_views++;
+        stats.total_hits++;
         if (event.book_id) uniqueBooks.add(event.book_id);
         break;
 
       case 'page_view':
       case 'page_read':
         stats.total_page_views++;
+        stats.total_hits++;
         if (event.book_id) uniqueBooks.add(event.book_id);
+        if (event.page_id) uniquePages.add(event.page_id);
         break;
 
       case 'download':
         stats.total_downloads++;
+        stats.total_hits++;
         const format = event.metadata?.format as string || 'unknown';
         stats.downloads_by_format[format] = (stats.downloads_by_format[format] || 0) + 1;
         break;
@@ -263,21 +303,32 @@ export async function getStats(options: {
       case 'edit_ocr':
         stats.total_edits++;
         stats.edits_by_type.ocr++;
+        // Track unique editors
+        if (event.visitor_id) uniqueEditors.add(event.visitor_id);
+        else if (event.session_id) uniqueEditors.add(event.session_id);
+        else if (event.ip_hash) uniqueEditors.add(event.ip_hash);
         break;
 
       case 'edit_translation':
         stats.total_edits++;
         stats.edits_by_type.translation++;
+        if (event.visitor_id) uniqueEditors.add(event.visitor_id);
+        else if (event.session_id) uniqueEditors.add(event.session_id);
+        else if (event.ip_hash) uniqueEditors.add(event.ip_hash);
         break;
 
       case 'edit_summary':
         stats.total_edits++;
         stats.edits_by_type.summary++;
+        if (event.visitor_id) uniqueEditors.add(event.visitor_id);
+        else if (event.session_id) uniqueEditors.add(event.session_id);
+        else if (event.ip_hash) uniqueEditors.add(event.ip_hash);
         break;
 
       case 'process_ocr':
         stats.total_processing++;
         stats.processing_by_type.ocr++;
+        if (event.page_id && event.metadata?.success) pagesOcrProcessed.add(event.page_id);
         if (event.metadata?.duration_ms) {
           totalProcessingTime += event.metadata.duration_ms;
           processingCount++;
@@ -288,6 +339,7 @@ export async function getStats(options: {
       case 'process_translation':
         stats.total_processing++;
         stats.processing_by_type.translation++;
+        if (event.page_id && event.metadata?.success) pagesTranslated.add(event.page_id);
         if (event.metadata?.duration_ms) {
           totalProcessingTime += event.metadata.duration_ms;
           processingCount++;
@@ -298,6 +350,7 @@ export async function getStats(options: {
       case 'process_summary':
         stats.total_processing++;
         stats.processing_by_type.summary++;
+        if (event.page_id && event.metadata?.success) pagesSummarized.add(event.page_id);
         if (event.metadata?.duration_ms) {
           totalProcessingTime += event.metadata.duration_ms;
           processingCount++;
@@ -307,6 +360,7 @@ export async function getStats(options: {
 
       case 'search':
         stats.total_searches++;
+        stats.total_hits++;
         if (event.metadata?.results_count !== undefined) {
           totalSearchResults += event.metadata.results_count;
         }
@@ -315,6 +369,13 @@ export async function getStats(options: {
   }
 
   stats.unique_books_viewed = uniqueBooks.size;
+  stats.unique_pages_read = uniquePages.size;
+  stats.unique_visitors = uniqueVisitors.size;
+  stats.unique_sessions = uniqueSessions.size;
+  stats.unique_editors = uniqueEditors.size;
+  stats.pages_ocr_processed = pagesOcrProcessed.size;
+  stats.pages_translated = pagesTranslated.size;
+  stats.pages_summarized = pagesSummarized.size;
   stats.avg_processing_time_ms = processingCount > 0 ? totalProcessingTime / processingCount : 0;
   stats.processing_success_rate = stats.total_processing > 0
     ? (successfulProcessing / stats.total_processing) * 100
@@ -502,5 +563,237 @@ export async function getEventsByDay(options: {
   return result.map(r => ({
     date: r._id,
     count: r.count,
+  }));
+}
+
+/**
+ * Helper to create a hash from a string (for IP hashing)
+ */
+function simpleHash(str: string): string {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash).toString(36);
+}
+
+/**
+ * Extract visitor tracking info from request headers
+ * Use this in API routes to get visitor_id and ip_hash
+ */
+export function getVisitorInfo(request: Request): {
+  visitor_id?: string;
+  ip_hash?: string;
+  session_id?: string;
+} {
+  const headers = request.headers;
+
+  // Try to get IP from various headers
+  const ip = headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+             headers.get('x-real-ip') ||
+             headers.get('cf-connecting-ip') || // Cloudflare
+             'unknown';
+
+  // Get or create visitor ID from cookie (would need client-side to set this)
+  const cookies = headers.get('cookie') || '';
+  const visitorMatch = cookies.match(/visitor_id=([^;]+)/);
+  const sessionMatch = cookies.match(/session_id=([^;]+)/);
+
+  return {
+    visitor_id: visitorMatch?.[1],
+    session_id: sessionMatch?.[1],
+    ip_hash: ip !== 'unknown' ? simpleHash(ip) : undefined,
+  };
+}
+
+/**
+ * Content stats from the database (not from analytics events)
+ * Shows actual content status of books and pages
+ */
+export interface ContentStats {
+  total_books: number;
+  total_pages: number;
+  pages_with_ocr: number;
+  pages_with_translation: number;
+  pages_with_summary: number;
+  fully_processed_pages: number;  // Has OCR + translation + summary
+  books_by_language: Record<string, number>;
+}
+
+/**
+ * Get content statistics directly from the database
+ * This shows the actual state of content, not analytics events
+ */
+export async function getContentStats(options: {
+  tenant_id?: string;
+} = {}): Promise<ContentStats> {
+  const db = await getDb();
+  const booksCollection = db.collection('books');
+  const pagesCollection = db.collection('pages');
+
+  const tenantFilter = { tenant_id: options.tenant_id || 'default' };
+
+  // Get book stats
+  const books = await booksCollection.find(tenantFilter).toArray();
+  const booksByLanguage: Record<string, number> = {};
+  for (const book of books) {
+    const lang = book.language || 'Unknown';
+    booksByLanguage[lang] = (booksByLanguage[lang] || 0) + 1;
+  }
+
+  // Get page stats using aggregation
+  const pageStats = await pagesCollection.aggregate([
+    { $match: tenantFilter },
+    {
+      $group: {
+        _id: null,
+        total: { $sum: 1 },
+        with_ocr: {
+          $sum: {
+            $cond: [{ $and: [{ $ne: ['$ocr.data', null] }, { $ne: ['$ocr.data', ''] }] }, 1, 0]
+          }
+        },
+        with_translation: {
+          $sum: {
+            $cond: [{ $and: [{ $ne: ['$translation.data', null] }, { $ne: ['$translation.data', ''] }] }, 1, 0]
+          }
+        },
+        with_summary: {
+          $sum: {
+            $cond: [{ $and: [{ $ne: ['$summary.data', null] }, { $ne: ['$summary.data', ''] }] }, 1, 0]
+          }
+        },
+        fully_processed: {
+          $sum: {
+            $cond: [
+              {
+                $and: [
+                  { $and: [{ $ne: ['$ocr.data', null] }, { $ne: ['$ocr.data', ''] }] },
+                  { $and: [{ $ne: ['$translation.data', null] }, { $ne: ['$translation.data', ''] }] },
+                  { $and: [{ $ne: ['$summary.data', null] }, { $ne: ['$summary.data', ''] }] }
+                ]
+              },
+              1,
+              0
+            ]
+          }
+        }
+      }
+    }
+  ]).toArray();
+
+  const stats = pageStats[0] || { total: 0, with_ocr: 0, with_translation: 0, with_summary: 0, fully_processed: 0 };
+
+  return {
+    total_books: books.length,
+    total_pages: stats.total,
+    pages_with_ocr: stats.with_ocr,
+    pages_with_translation: stats.with_translation,
+    pages_with_summary: stats.with_summary,
+    fully_processed_pages: stats.fully_processed,
+    books_by_language: booksByLanguage,
+  };
+}
+
+/**
+ * Get unique visitors by day for charting
+ */
+export async function getVisitorsByDay(options: {
+  tenant_id?: string;
+  days?: number;
+} = {}): Promise<{ date: string; visitors: number; sessions: number }[]> {
+  const db = await getDb();
+  const collection = db.collection<AnalyticsEvent>(COLLECTION_NAME);
+
+  const days = options.days || 30;
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - days);
+  startDate.setHours(0, 0, 0, 0);
+
+  const result = await collection.aggregate<{
+    _id: string;
+    visitors: string[];
+    sessions: string[];
+  }>([
+    {
+      $match: {
+        tenant_id: options.tenant_id || 'default',
+        timestamp: { $gte: startDate },
+      },
+    },
+    {
+      $group: {
+        _id: {
+          $dateToString: { format: '%Y-%m-%d', date: '$timestamp' },
+        },
+        visitors: {
+          $addToSet: {
+            $ifNull: ['$visitor_id', { $ifNull: ['$ip_hash', null] }]
+          }
+        },
+        sessions: { $addToSet: '$session_id' },
+      },
+    },
+    { $sort: { _id: 1 } },
+  ]).toArray();
+
+  return result.map(r => ({
+    date: r._id,
+    visitors: r.visitors.filter(v => v !== null).length,
+    sessions: r.sessions.filter(s => s !== null).length,
+  }));
+}
+
+/**
+ * Get top editors (users who made the most edits)
+ */
+export async function getTopEditors(options: {
+  tenant_id?: string;
+  limit?: number;
+  start_date?: Date;
+  end_date?: Date;
+} = {}): Promise<{ editor_id: string; edit_count: number }[]> {
+  const db = await getDb();
+  const collection = db.collection<AnalyticsEvent>(COLLECTION_NAME);
+
+  const now = new Date();
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  const result = await collection.aggregate<{ _id: string; count: number }>([
+    {
+      $match: {
+        tenant_id: options.tenant_id || 'default',
+        event_type: { $in: ['edit_ocr', 'edit_translation', 'edit_summary'] },
+        timestamp: {
+          $gte: options.start_date || thirtyDaysAgo,
+          $lte: options.end_date || now,
+        },
+      },
+    },
+    {
+      $project: {
+        editor: {
+          $ifNull: ['$visitor_id', { $ifNull: ['$session_id', '$ip_hash'] }]
+        }
+      }
+    },
+    {
+      $match: { editor: { $ne: null } }
+    },
+    {
+      $group: {
+        _id: '$editor',
+        count: { $sum: 1 },
+      },
+    },
+    { $sort: { count: -1 } },
+    { $limit: options.limit || 10 },
+  ]).toArray();
+
+  return result.map(r => ({
+    editor_id: r._id,
+    edit_count: r.count,
   }));
 }

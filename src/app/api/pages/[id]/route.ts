@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent, getVisitorInfo } from '@/lib/analytics';
 
 export async function GET(
   request: NextRequest,
@@ -15,11 +15,13 @@ export async function GET(
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    // Track page view
+    // Track page view with visitor info
+    const visitorInfo = getVisitorInfo(request);
     trackEvent('page_view', {
       page_id: id,
       book_id: page.book_id,
       tenant_id: page.tenant_id,
+      ...visitorInfo,
     });
 
     return NextResponse.json(page);
