@@ -261,10 +261,25 @@ export async function GET(
       totalPages: pages.length,
     };
 
-    // Cache the index on the book
+    // Cache the index on the book and save brief summary for display
+    const updateData: Record<string, unknown> = {
+      index,
+      updated_at: new Date()
+    };
+
+    // Save the abstract as the book summary for display on the book page
+    if (bookSummary.abstract) {
+      updateData.summary = {
+        data: bookSummary.abstract,
+        generated_at: new Date(),
+        page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
+        model: 'gemini-2.0-flash'
+      };
+    }
+
     await db.collection('books').updateOne(
       { id },
-      { $set: { index, updated_at: new Date() } }
+      { $set: updateData }
     );
 
     return NextResponse.json(index);

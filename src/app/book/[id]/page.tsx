@@ -149,35 +149,42 @@ async function BookInfo({ id }: { id: string }) {
       </div>
 
       {/* Book Summary */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg border border-stone-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-stone-900">About This Book</h2>
-            <Link
-              href={`/book/${book.id}/summary`}
-              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
-            >
-              <BookText className="w-4 h-4" />
-              {book.summary ? 'Full Summary & Index' : 'Generate Summary'}
-            </Link>
-          </div>
-          {book.summary ? (
-            <div className="prose prose-stone prose-sm max-w-none">
-              {(typeof book.summary === 'string' ? book.summary : book.summary.data)
-                .split('\n\n')
-                .map((paragraph: string, i: number) => (
-                  <p key={i} className="text-stone-700 leading-relaxed mb-4 last:mb-0">
-                    {paragraph}
-                  </p>
-                ))}
+      {(() => {
+        // Get summary from index.bookSummary.brief or fall back to book.summary
+        const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
+        const summaryText = indexBrief || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
+        const hasSummary = !!summaryText;
+
+        return (
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="bg-white rounded-lg border border-stone-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-stone-900">About This Book</h2>
+                <Link
+                  href={`/book/${book.id}/summary`}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
+                >
+                  <BookText className="w-4 h-4" />
+                  {hasSummary ? 'Full Summary & Index' : 'Generate Summary'}
+                </Link>
+              </div>
+              {hasSummary ? (
+                <div className="prose prose-stone prose-sm max-w-none">
+                  {summaryText!.split('\n\n').map((paragraph: string, i: number) => (
+                    <p key={i} className="text-stone-700 leading-relaxed mb-4 last:mb-0">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-stone-500 text-sm">
+                  No summary yet. Process page summaries and generate a book summary to see it here.
+                </p>
+              )}
             </div>
-          ) : (
-            <p className="text-stone-500 text-sm">
-              No summary yet. Process page summaries and generate a book summary to see it here.
-            </p>
-          )}
-        </div>
-      </div>
+          </div>
+        );
+      })()}
 
       {/* Stats + Pages Grid with Batch Mode */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
