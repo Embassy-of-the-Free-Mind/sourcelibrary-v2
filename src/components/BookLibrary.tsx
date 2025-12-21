@@ -443,17 +443,41 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
                   </div>
 
                   {/* Action */}
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 flex flex-col gap-2">
                     {item.source === 'ia' && item.iaIdentifier ? (
-                      <a
-                        href={`https://archive.org/details/${item.iaIdentifier}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
-                      >
-                        View
-                        <ExternalLink className="w-3.5 h-3.5" />
-                      </a>
+                      <>
+                        {importedBooks.has(item.id) ? (
+                          <Link
+                            href={`/book/${importedBooks.get(item.id)}`}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                          >
+                            <Check className="w-3.5 h-3.5" />
+                            Open
+                          </Link>
+                        ) : (
+                          <button
+                            onClick={() => importFromIA(item)}
+                            disabled={importingIds.has(item.id)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {importingIds.has(item.id) ? (
+                              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            ) : (
+                              <Plus className="w-3.5 h-3.5" />
+                            )}
+                            {importingIds.has(item.id) ? 'Importing...' : 'Import'}
+                          </button>
+                        )}
+                        <a
+                          href={`https://archive.org/details/${item.iaIdentifier}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                        >
+                          View on IA
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </>
                     ) : (
                       <span className="text-xs text-gray-400">Catalog entry</span>
                     )}
