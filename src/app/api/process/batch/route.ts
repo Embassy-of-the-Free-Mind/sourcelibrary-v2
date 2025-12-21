@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR } from '@/lib/ai';
+import { DEFAULT_MODEL } from '@/lib/types';
 
 const CONCURRENCY_LIMIT = 10;
 
@@ -13,6 +14,7 @@ interface BatchOCRRequest {
     customPrompt?: string;
   }>;
   autoSave?: boolean;
+  model?: string;
 }
 
 interface BatchResult {
@@ -27,7 +29,8 @@ interface BatchResult {
 async function processChunk(
   chunk: BatchOCRRequest['pages'],
   autoSave: boolean,
-  db: Awaited<ReturnType<typeof getDb>>
+  db: Awaited<ReturnType<typeof getDb>>,
+  model: string
 ): Promise<BatchResult[]> {
   const promises = chunk.map(async (page) => {
     const startTime = performance.now();
@@ -36,7 +39,8 @@ async function processChunk(
         page.imageUrl,
         page.language || 'Latin',
         page.previousOcr,
-        page.customPrompt
+        page.customPrompt,
+        model
       );
 
       const duration = performance.now() - startTime;
@@ -51,6 +55,7 @@ async function processChunk(
           language: page.language || 'Latin',
           textLength: ocr?.length || 0,
           batchSize: chunk.length,
+          model,
         },
         received_at: Date.now(),
       });
@@ -64,7 +69,7 @@ async function processChunk(
               ocr: {
                 data: ocr,
                 language: page.language || 'Latin',
-                model: 'gemini-2.0-flash',
+                model,
                 updated_at: new Date(),
               },
               updated_at: new Date(),
@@ -96,7 +101,7 @@ async function processChunk(
 export async function POST(request: NextRequest) {
   try {
     const body: BatchOCRRequest = await request.json();
-    const { pages, autoSave = true } = body;
+    const { pages, autoSave = true, model = DEFAULT_MODEL } = body;
 
     if (!pages || !Array.isArray(pages) || pages.length === 0) {
       return NextResponse.json(
@@ -112,7 +117,7 @@ export async function POST(request: NextRequest) {
     // Process in chunks of CONCURRENCY_LIMIT
     for (let i = 0; i < pages.length; i += CONCURRENCY_LIMIT) {
       const chunk = pages.slice(i, i + CONCURRENCY_LIMIT);
-      const chunkResults = await processChunk(chunk, autoSave, db);
+      const chunkResults = await processChunk(chunk, autoSave, db, model);
       allResults.push(...chunkResults);
     }
 

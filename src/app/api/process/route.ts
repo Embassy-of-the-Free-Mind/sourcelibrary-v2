@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation, generateSummary } from '@/lib/ai';
+import { DEFAULT_MODEL } from '@/lib/types';
 
 // Helper to record processing metrics
 async function recordProcessingMetric(
@@ -35,7 +36,8 @@ export async function POST(request: NextRequest) {
       translatedText,
       previousPageId,
       customPrompts,
-      autoSave = true
+      autoSave = true,
+      model = DEFAULT_MODEL
     } = body;
 
     const db = await getDb();
@@ -65,7 +67,8 @@ export async function POST(request: NextRequest) {
         imageUrl,
         language || 'Latin',
         previousPage?.ocr,
-        customPrompts?.ocr
+        customPrompts?.ocr,
+        model
       );
       const ocrDuration = performance.now() - ocrStart;
       await recordProcessingMetric(db, 'ocr_processing', ocrDuration, {
@@ -86,7 +89,8 @@ export async function POST(request: NextRequest) {
         language || 'Latin',
         targetLanguage,
         previousPage?.translation,
-        customPrompts?.translation
+        customPrompts?.translation,
+        model
       );
       const translationDuration = performance.now() - translationStart;
       await recordProcessingMetric(db, 'translation_processing', translationDuration, {
@@ -107,7 +111,8 @@ export async function POST(request: NextRequest) {
       results.summary = await generateSummary(
         textToSummarize,
         previousPage?.summary,
-        customPrompts?.summary
+        customPrompts?.summary,
+        model
       );
       const summaryDuration = performance.now() - summaryStart;
       await recordProcessingMetric(db, 'summary_processing', summaryDuration, {
@@ -125,7 +130,7 @@ export async function POST(request: NextRequest) {
         updateData['ocr'] = {
           data: results.ocr,
           language: language || 'Latin',
-          model: 'gemini-2.0-flash',
+          model,
           updated_at: new Date()
         };
       }
@@ -134,7 +139,7 @@ export async function POST(request: NextRequest) {
         updateData['translation'] = {
           data: results.translation,
           language: targetLanguage,
-          model: 'gemini-2.0-flash',
+          model,
           updated_at: new Date()
         };
       }
@@ -142,7 +147,7 @@ export async function POST(request: NextRequest) {
       if (results.summary) {
         updateData['summary'] = {
           data: results.summary,
-          model: 'gemini-2.0-flash',
+          model,
           updated_at: new Date()
         };
       }

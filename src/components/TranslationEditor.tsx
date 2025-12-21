@@ -15,12 +15,16 @@ import {
   ZoomIn,
   Columns,
   BookOpen,
-  Maximize2
+  Maximize2,
+  Image as ImageIcon,
+  FileText,
+  Languages
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
 import ImageWithMagnifier from './ImageWithMagnifier';
 import type { Page, Book, Prompt } from '@/lib/types';
+import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 
 interface TranslationEditorProps {
   book: Book;
@@ -38,9 +42,11 @@ interface SettingsModalProps {
   promptType: 'ocr' | 'translation' | 'summary';
   selectedPromptId: string | null;
   onSelectPrompt: (prompt: Prompt) => void;
+  selectedModel: string;
+  onSelectModel: (model: string) => void;
 }
 
-function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, onSelectPrompt }: SettingsModalProps) {
+function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, onSelectPrompt, selectedModel, onSelectModel }: SettingsModalProps) {
   const [prompts, setPrompts] = useState<Prompt[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
@@ -171,10 +177,16 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
             <div className="flex-1">
               <label className="label block mb-2">AI Model</label>
               <select
+                value={selectedModel}
+                onChange={(e) => onSelectModel(e.target.value)}
                 className="w-full px-3 py-2.5 rounded-lg text-sm"
                 style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
               >
-                <option>Gemini 2.0 Flash</option>
+                {GEMINI_MODELS.map((model) => (
+                  <option key={model.id} value={model.id}>
+                    {model.name}
+                  </option>
+                ))}
               </select>
             </div>
 
@@ -282,10 +294,15 @@ export default function TranslationEditor({
 
   const [selectedOcrPrompt, setSelectedOcrPrompt] = useState<Prompt | null>(null);
   const [selectedTranslationPrompt, setSelectedTranslationPrompt] = useState<Prompt | null>(null);
+  const [selectedModel, setSelectedModel] = useState<string>(DEFAULT_MODEL);
 
   const [copiedTranslation, setCopiedTranslation] = useState(false);
-  const [showOcrInRead, setShowOcrInRead] = useState(false);
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+
+  // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden)
+  const [showImagePanel, setShowImagePanel] = useState(true);
+  const [showOcrPanel, setShowOcrPanel] = useState(false);
+  const [showTranslationPanel, setShowTranslationPanel] = useState(true);
 
   // Swipe navigation state
   const touchStartX = useRef<number>(0);
@@ -422,7 +439,8 @@ export default function TranslationEditor({
           translatedText: action === 'summary' ? translationText : undefined,
           previousPageId: previousPage?.id,
           customPrompts: Object.keys(customPrompts).length > 0 ? customPrompts : undefined,
-          autoSave: true
+          autoSave: true,
+          model: selectedModel
         })
       });
 
@@ -508,8 +526,51 @@ export default function TranslationEditor({
             </button>
           </div>
 
-          {/* Right: Edit Button */}
+          {/* Right: Panel Toggles + Edit Button */}
           <div className="flex items-center gap-1 sm:gap-2">
+            {/* Panel visibility toggles */}
+            <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+              <button
+                onClick={() => setShowImagePanel(!showImagePanel)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? '' : 'opacity-50'}`}
+                style={{
+                  background: showImagePanel ? 'var(--bg-white)' : 'transparent',
+                  color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  boxShadow: showImagePanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                }}
+                title="Toggle source image"
+              >
+                <ImageIcon className="w-3.5 h-3.5" />
+                Image
+              </button>
+              <button
+                onClick={() => setShowOcrPanel(!showOcrPanel)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showOcrPanel ? '' : 'opacity-50'}`}
+                style={{
+                  background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
+                  color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  boxShadow: showOcrPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                }}
+                title="Toggle original text"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                OCR
+              </button>
+              <button
+                onClick={() => setShowTranslationPanel(!showTranslationPanel)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? '' : 'opacity-50'}`}
+                style={{
+                  background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
+                  color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  boxShadow: showTranslationPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                }}
+                title="Toggle translation"
+              >
+                <Languages className="w-3.5 h-3.5" />
+                English
+              </button>
+            </div>
+
             <button
               onClick={() => setMode('edit')}
               className="flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0"
@@ -521,171 +582,191 @@ export default function TranslationEditor({
           </div>
         </header>
 
-        {/* Three-panel layout */}
-        <div
-          className="flex-1 flex flex-col lg:flex-row overflow-hidden relative"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-          style={{
-            transform: isSwiping ? `translateX(${swipeOffset}px)` : 'none',
-            transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
-          }}
-        >
-          {/* Source Image Panel */}
-          <div className="w-full lg:w-1/3 flex flex-col h-48 lg:h-auto" style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
-            <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
-            </div>
-            <div className="flex-1 overflow-auto p-2 lg:p-4">
-              <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-                {pageImageUrl ? (
-                  <ImageWithMagnifier src={pageImageUrl} thumbnail={pageThumbnailUrl} alt={`Page ${page.page_number}`} scrollable />
-                ) : (
-                  <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-                    No image available
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+        {/* Panel layout - dynamic based on visibility */}
+        {(() => {
+          const visibleCount = [showImagePanel, showOcrPanel, showTranslationPanel].filter(Boolean).length;
+          const panelWidth = visibleCount === 1 ? 'w-full' : visibleCount === 2 ? 'lg:w-1/2' : 'lg:w-1/3';
 
-          {/* OCR Panel - Step 1 */}
-          <div className="w-full lg:w-1/3 flex flex-col" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
-            <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                  {ocrText ? (book.language || 'Original') : 'Step 1: Transcribe'}
-                </span>
-                {ocrText && (
-                  <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
-                    <Check className="w-3 h-3" />
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="flex-1 overflow-auto p-4 min-h-0">
-              {ocrText ? (
-                <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
-                  <NotesRenderer text={ocrText} />
-                </div>
-              ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-                    <svg className="w-8 h-8" style={{ color: 'var(--accent-rust, #c45d3a)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
+          return (
+            <div
+              className="flex-1 flex flex-col lg:flex-row overflow-hidden relative"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              style={{
+                transform: isSwiping ? `translateX(${swipeOffset}px)` : 'none',
+                transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
+              }}
+            >
+              {/* Source Image Panel */}
+              {showImagePanel && (
+                <div className={`w-full ${panelWidth} flex flex-col h-48 lg:h-auto`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
                   </div>
-                  <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
-                    Transcribe the {book.language || 'original text'}
-                  </h3>
-                  <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
-                    AI will read the manuscript image and transcribe the original text. This may take a minute.
-                  </p>
-                  <button
-                    onClick={() => handleProcess('ocr')}
-                    disabled={processing !== null}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{ background: 'var(--accent-rust, #c45d3a)' }}
-                  >
-                    {processing === 'ocr' ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Transcribing...
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        Start OCR
-                      </>
-                    )}
-                  </button>
+                  <div className="flex-1 overflow-auto p-2 lg:p-4">
+                    <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                      {pageImageUrl ? (
+                        <ImageWithMagnifier src={pageImageUrl} thumbnail={pageThumbnailUrl} alt={`Page ${page.page_number}`} scrollable />
+                      ) : (
+                        <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+                          No image available
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               )}
-            </div>
-          </div>
 
-          {/* Translation Panel - Step 2 */}
-          <div className="w-full lg:w-1/3 flex flex-col min-h-0 flex-1" style={{ background: 'var(--bg-white)' }}>
-            <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-                  {translationText ? 'English' : 'Step 2: Translate'}
-                </span>
-                {translationText && (
-                  <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
-                    <Check className="w-3 h-3" />
-                  </span>
-                )}
-              </div>
-              {translationText && (
-                <button
-                  onClick={() => copyToClipboard(translationText)}
-                  className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  {copiedTranslation ? <Check className="w-3 h-3" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3 h-3" />}
-                  {copiedTranslation ? 'Copied' : 'Copy'}
-                </button>
-              )}
-            </div>
-            <div className="flex-1 overflow-auto p-4 min-h-0">
-              {translationText ? (
-                <NotesRenderer text={translationText} />
-              ) : ocrText ? (
-                <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
-                    <svg className="w-8 h-8" style={{ color: 'var(--accent-sage, #6b8a63)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
-                    </svg>
+              {/* OCR Panel */}
+              {showOcrPanel && (
+                <div className={`w-full ${panelWidth} flex flex-col`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                        {ocrText ? (book.language || 'Original') : 'Step 1: Transcribe'}
+                      </span>
+                      {ocrText && (
+                        <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
+                          <Check className="w-3 h-3" />
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
-                    Ready to translate
-                  </h3>
-                  <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
-                    OCR complete! Now translate the {book.language || 'text'} into English.
-                  </p>
-                  <button
-                    onClick={() => handleProcess('translation')}
-                    disabled={processing !== null}
-                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{ background: 'var(--accent-sage, #6b8a63)' }}
-                  >
-                    {processing === 'translation' ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Translating...
-                      </>
+                  <div className="flex-1 overflow-auto p-4 min-h-0">
+                    {ocrText ? (
+                      <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
+                        <NotesRenderer text={ocrText} />
+                      </div>
                     ) : (
-                      <>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        Translate to English
-                      </>
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
+                          <svg className="w-8 h-8" style={{ color: 'var(--accent-rust, #c45d3a)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                          Transcribe the {book.language || 'original text'}
+                        </h3>
+                        <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
+                          AI will read the manuscript image and transcribe the original text. This may take a minute.
+                        </p>
+                        <button
+                          onClick={() => handleProcess('ocr')}
+                          disabled={processing !== null}
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
+                          style={{ background: 'var(--accent-rust, #c45d3a)' }}
+                        >
+                          {processing === 'ocr' ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Transcribing...
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                              Start OCR
+                            </>
+                          )}
+                        </button>
+                      </div>
                     )}
-                  </button>
-                </div>
-              ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'var(--bg-warm, #f5f3f0)' }}>
-                    <svg className="w-8 h-8" style={{ color: 'var(--text-faint, #c4c0b8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
                   </div>
-                  <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-muted)' }}>
-                    Complete OCR first
-                  </h3>
-                  <p className="text-sm max-w-xs" style={{ color: 'var(--text-faint)' }}>
-                    The original text needs to be transcribed before it can be translated.
-                  </p>
+                </div>
+              )}
+
+              {/* Translation Panel */}
+              {showTranslationPanel && (
+                <div className={`w-full ${panelWidth} flex flex-col min-h-0 flex-1`} style={{ background: 'var(--bg-white)' }}>
+                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                        {translationText ? 'English' : 'Step 2: Translate'}
+                      </span>
+                      {translationText && (
+                        <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
+                          <Check className="w-3 h-3" />
+                        </span>
+                      )}
+                    </div>
+                    {translationText && (
+                      <button
+                        onClick={() => copyToClipboard(translationText)}
+                        className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        {copiedTranslation ? <Check className="w-3 h-3" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3 h-3" />}
+                        {copiedTranslation ? 'Copied' : 'Copy'}
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex-1 overflow-auto p-4 min-h-0">
+                    {translationText ? (
+                      <NotesRenderer text={translationText} />
+                    ) : ocrText ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
+                          <svg className="w-8 h-8" style={{ color: 'var(--accent-sage, #6b8a63)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                          Ready to translate
+                        </h3>
+                        <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
+                          OCR complete! Now translate the {book.language || 'text'} into English.
+                        </p>
+                        <button
+                          onClick={() => handleProcess('translation')}
+                          disabled={processing !== null}
+                          className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
+                          style={{ background: 'var(--accent-sage, #6b8a63)' }}
+                        >
+                          {processing === 'translation' ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Translating...
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                              </svg>
+                              Translate to English
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                        <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'var(--bg-warm, #f5f3f0)' }}>
+                          <svg className="w-8 h-8" style={{ color: 'var(--text-faint, #c4c0b8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-muted)' }}>
+                          Complete OCR first
+                        </h3>
+                        <p className="text-sm max-w-xs" style={{ color: 'var(--text-faint)' }}>
+                          The original text needs to be transcribed before it can be translated.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Empty state when no panels visible */}
+              {visibleCount === 0 && (
+                <div className="flex-1 flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Select a panel to view</p>
                 </div>
               )}
             </div>
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Navigation hint + CC0 footer */}
         <div className="px-4 py-1.5 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
@@ -906,6 +987,8 @@ export default function TranslationEditor({
         promptType="ocr"
         selectedPromptId={selectedOcrPrompt?.id || selectedOcrPrompt?._id?.toString() || null}
         onSelectPrompt={setSelectedOcrPrompt}
+        selectedModel={selectedModel}
+        onSelectModel={setSelectedModel}
       />
 
       <SettingsModal
@@ -915,6 +998,8 @@ export default function TranslationEditor({
         promptType="translation"
         selectedPromptId={selectedTranslationPrompt?.id || selectedTranslationPrompt?._id?.toString() || null}
         onSelectPrompt={setSelectedTranslationPrompt}
+        selectedModel={selectedModel}
+        onSelectModel={setSelectedModel}
       />
 
       {/* How It Works Modal */}

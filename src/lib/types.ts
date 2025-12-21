@@ -1,5 +1,14 @@
 export type BookStatus = 'draft' | 'in_progress' | 'complete' | 'published';
 
+// Available Gemini models for processing
+export const GEMINI_MODELS = [
+  { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash' },
+  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash' },
+  { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash (Preview)' },
+] as const;
+
+export const DEFAULT_MODEL = 'gemini-2.0-flash';
+
 export interface BookSummary {
   data: string;
   generated_at: Date;

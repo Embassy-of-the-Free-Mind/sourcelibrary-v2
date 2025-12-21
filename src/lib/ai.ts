@@ -1,17 +1,14 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { DEFAULT_PROMPTS } from './types';
+import { DEFAULT_PROMPTS, DEFAULT_MODEL } from './types';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-
-// Use gemini-2.0-flash (GA as of 2025)
-const VISION_MODEL = 'gemini-2.0-flash';
-const TEXT_MODEL = 'gemini-2.0-flash';
 
 export async function performOCR(
   imageUrl: string,
   language: string,
   previousPageOcr?: string,
-  customPrompt?: string
+  customPrompt?: string,
+  modelId: string = DEFAULT_MODEL
 ): Promise<string> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set');
@@ -19,8 +16,9 @@ export async function performOCR(
 
   console.log('Starting OCR for image:', imageUrl);
   console.log('API Key present:', !!process.env.GEMINI_API_KEY);
+  console.log('Using model:', modelId);
 
-  const model = genAI.getGenerativeModel({ model: VISION_MODEL });
+  const model = genAI.getGenerativeModel({ model: modelId });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
 
@@ -83,12 +81,13 @@ export async function performTranslation(
   sourceLanguage: string,
   targetLanguage: string,
   previousPageTranslation?: string,
-  customPrompt?: string
+  customPrompt?: string,
+  modelId: string = DEFAULT_MODEL
 ): Promise<string> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set');
   }
-  const model = genAI.getGenerativeModel({ model: TEXT_MODEL });
+  const model = genAI.getGenerativeModel({ model: modelId });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.translation)
     .replace('{source_language}', sourceLanguage)
@@ -107,12 +106,13 @@ export async function performTranslation(
 export async function generateSummary(
   translatedText: string,
   previousPageSummary?: string,
-  customPrompt?: string
+  customPrompt?: string,
+  modelId: string = DEFAULT_MODEL
 ): Promise<string> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set');
   }
-  const model = genAI.getGenerativeModel({ model: TEXT_MODEL });
+  const model = genAI.getGenerativeModel({ model: modelId });
 
   let prompt = customPrompt || DEFAULT_PROMPTS.summary;
   prompt += `\n\n**Translated text:**\n${translatedText}`;
@@ -138,7 +138,8 @@ export async function processPageComplete(
     ocr?: string;
     translation?: string;
     summary?: string;
-  }
+  },
+  modelId: string = DEFAULT_MODEL
 ): Promise<{
   ocr: string;
   translation: string;
@@ -149,7 +150,8 @@ export async function processPageComplete(
     imageUrl,
     language,
     previousPage?.ocr,
-    customPrompts?.ocr
+    customPrompts?.ocr,
+    modelId
   );
 
   // Step 2: Translation
@@ -158,14 +160,16 @@ export async function processPageComplete(
     language,
     targetLanguage,
     previousPage?.translation,
-    customPrompts?.translation
+    customPrompts?.translation,
+    modelId
   );
 
   // Step 3: Summary
   const summary = await generateSummary(
     translation,
     previousPage?.summary,
-    customPrompts?.summary
+    customPrompts?.summary,
+    modelId
   );
 
   return { ocr, translation, summary };
