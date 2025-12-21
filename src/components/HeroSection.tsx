@@ -1,32 +1,31 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { recordLoadingMetric } from '@/lib/analytics';
 
 export default function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const loadStartTime = useRef<number | null>(null);
-
-  useEffect(() => {
-    loadStartTime.current = performance.now();
-  }, []);
+  const hasRecorded = useRef(false);
 
   const handleVideoLoad = () => {
-    if (loadStartTime.current !== null) {
-      const loadTime = performance.now() - loadStartTime.current;
+    if (!hasRecorded.current && typeof window !== 'undefined') {
+      // Use Navigation Timing API for accurate page-relative timing
+      const navStart = performance.timing?.navigationStart || performance.timeOrigin;
+      const loadTime = Date.now() - navStart;
       recordLoadingMetric('hero_video_load', loadTime);
+      hasRecorded.current = true;
     }
     setVideoLoaded(true);
   };
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Poster image - loads immediately as background */}
+      {/* Poster image - loads immediately as background (local, 2s into video) */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="https://cdn.prod.website-files.com/68d1e7256c545fabb892fb96%2F68d1ec78531116e68d2f7049_embassy-of-the-free-mind-montage-002-poster-00001.jpg"
+        src="/hero-poster.jpg"
         alt=""
         className="absolute inset-0 w-full h-full object-cover z-0"
         fetchPriority="high"
