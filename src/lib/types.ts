@@ -189,6 +189,10 @@ export const LATIN_PROMPTS = {
 - [[abbrev: X → expansion]] for abbreviation expansions (collected in metadata)
 - [[term: word]] or [[term: word → meaning]] for technical vocabulary
 
+**Do NOT use:**
+- Code blocks (\`\`\`) or inline code - this is prose, not code
+- If markdown can't capture the layout, add a [[meta: ...]] explaining it
+
 **Instructions:**
 1. Begin with [[meta: ...]] describing image quality, script type (humanist/gothic/italic), print quality.
 2. Include [[page number: N]] or [[folio: Nv/Nr]] if visible.
@@ -338,6 +342,10 @@ export const GERMAN_PROMPTS = {
 - [[page number: N]] or [[folio: 12r]] for page/folio numbers
 - [[abbrev: X → expansion]] for abbreviations (collected in metadata)
 - [[term: word]] for technical/alchemical vocabulary
+
+**Do NOT use:**
+- Code blocks (\`\`\`) or inline code - this is prose, not code
+- If markdown can't capture the layout, add a [[meta: ...]] explaining it
 
 **Instructions:**
 1. Begin with [[meta: ...]] describing script type, print quality, date if visible.
