@@ -4,10 +4,10 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
-import { ArrowLeft, BookOpen, Calendar, Globe, FileText, Scissors } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Globe, FileText } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
-import DownloadButton from '@/components/DownloadButton';
 import PageThumbnail from '@/components/PageThumbnail';
+import BookStats from '@/components/BookStats';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -131,37 +131,16 @@ async function BookInfo({ id }: { id: string }) {
                 <SearchPanel bookId={book.id} />
               </div>
 
-              {/* Processing Stats + Download */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-6 mt-4 sm:mt-6">
-                <div className="bg-stone-700/50 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
-                  <div className="text-xl sm:text-2xl font-bold text-amber-400">{pagesWithOcr}</div>
-                  <div className="text-xs text-stone-400">OCR</div>
-                </div>
-                <div className="bg-stone-700/50 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
-                  <div className="text-xl sm:text-2xl font-bold text-amber-400">{pagesWithTranslation}</div>
-                  <div className="text-xs text-stone-400">Translated</div>
-                </div>
-                <div className="bg-stone-700/50 rounded-lg px-3 sm:px-4 py-2 sm:py-3">
-                  <div className="text-xl sm:text-2xl font-bold text-amber-400">{pagesWithSummary}</div>
-                  <div className="text-xs text-stone-400">Summarized</div>
-                </div>
-
-                {/* Prepare & Download */}
-                <div className="w-full sm:w-auto sm:ml-auto mt-2 sm:mt-0 flex items-center justify-center sm:justify-end gap-2">
-                  <Link
-                    href={`/book/${book.id}/prepare`}
-                    className="flex items-center gap-2 px-4 py-2 bg-stone-600 text-white rounded-lg hover:bg-stone-500 transition-colors text-sm"
-                  >
-                    <Scissors className="w-4 h-4" />
-                    Prepare Pages
-                  </Link>
-                  <DownloadButton
-                    bookId={book.id}
-                    hasTranslations={pagesWithTranslation > 0}
-                    hasOcr={pagesWithOcr > 0}
-                  />
-                </div>
-              </div>
+              {/* Processing Stats + Actions */}
+              <BookStats
+                bookId={book.id}
+                pages={pages}
+                pagesWithOcr={pagesWithOcr}
+                pagesWithTranslation={pagesWithTranslation}
+                pagesWithSummary={pagesWithSummary}
+                hasTranslations={pagesWithTranslation > 0}
+                hasOcr={pagesWithOcr > 0}
+              />
             </div>
           </div>
         </div>

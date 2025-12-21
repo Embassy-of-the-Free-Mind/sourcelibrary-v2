@@ -196,8 +196,14 @@ export const LATIN_PROMPTS = {
 4. Expand abbreviations consistently, marking first occurrence.
 5. Flag all technical/esoteric vocabulary with [[term:]].
 6. Capture ALL text including margins and annotations.
+7. END with [[vocabulary: ...]] listing key Latin terms, names, and concepts on this page.
 
-**Important:** This page may have been split from a two-page spread. Focus on the MAIN text block. Ignore partial text at edges from facing pages.`,
+**Important:** This page may have been split from a two-page spread. Focus on the MAIN text block. Ignore partial text at edges from facing pages.
+
+**Final output format:**
+[page transcription]
+
+[[vocabulary: term1, term2, Person Name, Concept, ...]]`,
 
   translation: `You are translating a Neo-Latin text (1450-1700) into clear, accessible English.
 
@@ -256,7 +262,13 @@ This is a SCHOLARLY ACCESSIBLE translation:
 - Skip difficult passages
 
 **Source language:** Latin (Neo-Latin, 1450-1700)
-**Target language:** English`
+**Target language:** English
+
+**Final output format:**
+[translated text]
+
+[[summary: 1-2 sentence summary of this page's main content and significance]]
+[[keywords: key concepts, names, themes in English — for indexing]]`
 };
 
 export const GERMAN_PROMPTS = {
@@ -335,8 +347,14 @@ export const GERMAN_PROMPTS = {
 5. Preserve all Noun Capitalization.
 6. Mark language switches in multilingual texts.
 7. Flag technical vocabulary with [[term:]].
+8. END with [[vocabulary: ...]] listing key German terms, names, and concepts on this page.
 
-**Important:** This page may have been split from a two-page spread. Focus on the MAIN text block.`,
+**Important:** This page may have been split from a two-page spread. Focus on the MAIN text block.
+
+**Final output format:**
+[page transcription]
+
+[[vocabulary: term1, term2, Person Name, Concept, ...]]`,
 
   translation: `You are translating an early modern German text (1450-1800) into clear, accessible English.
 
@@ -403,7 +421,13 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
 - Skip or summarize difficult passages
 
 **Source language:** German (Early Modern, 1450-1800)
-**Target language:** English`
+**Target language:** English
+
+**Final output format:**
+[translated text]
+
+[[summary: 1-2 sentence summary of this page's main content and significance]]
+[[keywords: key concepts, names, themes in English — for indexing]]`
 };
 
 // Default prompts with [[notes]] support
@@ -451,10 +475,16 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 4. Bold text → **bold**. Italic → *italic*. Larger text → bigger heading.
 5. Recreate tables in markdown when you see columnar layouts.
 6. Capture ALL text including margins, boxes, and annotations.
+7. END with [[vocabulary: ...]] listing key terms, names, and concepts on this page.
 
 **Important:** This page may have been split from a two-page spread. You may see partial text from the adjacent page at the left or right edge. Focus on transcribing the MAIN text block of this page. Ignore any partial/cut-off text at the edges that clearly belongs to the facing page.
 
-**Language:** {language}`,
+**Language:** {language}
+
+**Final output format:**
+[page transcription]
+
+[[vocabulary: term1, term2, Person Name, Concept, ...]]`,
 
   translation: `You are translating a manuscript transcription into accessible English.
 
@@ -485,9 +515,16 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 4. Add [[notes: ...]] inline to explain historical references or difficult phrases.
 5. Style: warm museum label - explain rather than assume knowledge.
 6. Preserve the voice and spirit of the original.
+7. END with [[summary:]] and [[keywords:]] for indexing.
 
 **Source language:** {source_language}
-**Target language:** {target_language}`,
+**Target language:** {target_language}
+
+**Final output format:**
+[translated text]
+
+[[summary: 1-2 sentence summary of this page's main content and significance]]
+[[keywords: key concepts, names, themes in English — for indexing]]`,
 
   summary: `Summarize the contents of this page for a general, non-specialist reader.
 

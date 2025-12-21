@@ -16,8 +16,11 @@ interface ExtractedMetadata {
   language?: string;
   pageNumber?: string;
   folio?: string;
-  meta: string[];      // [[meta: ...]] entries
-  abbreviations: string[]; // [[abbrev: ...]] entries
+  meta: string[];           // [[meta: ...]] entries
+  abbreviations: string[];  // [[abbrev: ...]] entries
+  vocabulary: string[];     // [[vocabulary: ...]] - key terms from OCR
+  summary?: string;         // [[summary: ...]] - page summary from translation
+  keywords: string[];       // [[keywords: ...]] - English keywords for indexing
 }
 
 // Extract metadata entries and return cleaned text + metadata object
@@ -25,6 +28,8 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   const metadata: ExtractedMetadata = {
     meta: [],
     abbreviations: [],
+    vocabulary: [],
+    keywords: [],
   };
 
   let result = text;
@@ -56,6 +61,26 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract abbreviation expansions
   result = result.replace(/\[\[abbrev:\s*(.*?)\]\]/gi, (match, content) => {
     metadata.abbreviations.push(content.trim());
+    return '';
+  });
+
+  // Extract vocabulary (key terms from OCR)
+  result = result.replace(/\[\[vocabulary:\s*(.*?)\]\]/gi, (match, content) => {
+    const terms = content.split(',').map((t: string) => t.trim()).filter(Boolean);
+    metadata.vocabulary.push(...terms);
+    return '';
+  });
+
+  // Extract summary (page summary from translation)
+  result = result.replace(/\[\[summary:\s*(.*?)\]\]/gi, (match, content) => {
+    metadata.summary = content.trim();
+    return '';
+  });
+
+  // Extract keywords (English terms for indexing)
+  result = result.replace(/\[\[keywords:\s*(.*?)\]\]/gi, (match, content) => {
+    const terms = content.split(',').map((t: string) => t.trim()).filter(Boolean);
+    metadata.keywords.push(...terms);
     return '';
   });
 
@@ -115,12 +140,21 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const hasMetadata = metadata.language || metadata.pageNumber || metadata.folio ||
-    metadata.meta.length > 0 || metadata.abbreviations.length > 0;
+    metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
+    metadata.vocabulary.length > 0 || metadata.summary || metadata.keywords.length > 0;
 
   if (!hasMetadata) return null;
 
   return (
     <div className="mb-4 border border-stone-200 rounded-lg overflow-hidden bg-stone-50/50">
+      {/* Summary displayed prominently if present */}
+      {metadata.summary && (
+        <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-900">
+          <span className="font-medium">Summary: </span>
+          {metadata.summary}
+        </div>
+      )}
+
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center gap-2 px-3 py-2 text-left text-xs font-medium text-stone-500 hover:bg-stone-100 transition-colors"
@@ -142,6 +176,22 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
 
       {isOpen && (
         <div className="px-3 py-2 border-t border-stone-200 text-xs text-stone-600 space-y-2">
+          {metadata.keywords.length > 0 && (
+            <div>
+              <span className="font-medium text-stone-500">Keywords: </span>
+              <span className="text-indigo-700">
+                {metadata.keywords.join(', ')}
+              </span>
+            </div>
+          )}
+          {metadata.vocabulary.length > 0 && (
+            <div>
+              <span className="font-medium text-stone-500">Vocabulary: </span>
+              <span className="font-mono text-purple-700">
+                {metadata.vocabulary.join(', ')}
+              </span>
+            </div>
+          )}
           {metadata.meta.length > 0 && (
             <div>
               <span className="font-medium text-stone-500">Notes: </span>

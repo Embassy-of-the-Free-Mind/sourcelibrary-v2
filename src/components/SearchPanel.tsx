@@ -19,6 +19,8 @@ interface SearchResult {
 interface SearchResponse {
   query: string;
   total: number;
+  ocrPages: number;
+  translationPages: number;
   results: SearchResult[];
 }
 
@@ -33,6 +35,8 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
   const [isSearching, setIsSearching] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
+  const [ocrPages, setOcrPages] = useState(0);
+  const [translationPages, setTranslationPages] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -45,6 +49,8 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
     if (!query.trim()) {
       setResults([]);
       setTotalResults(0);
+      setOcrPages(0);
+      setTranslationPages(0);
       return;
     }
 
@@ -58,6 +64,8 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
           const data: SearchResponse = await response.json();
           setResults(data.results);
           setTotalResults(data.total);
+          setOcrPages(data.ocrPages);
+          setTranslationPages(data.translationPages);
         }
       } catch (error) {
         console.error('Search error:', error);
@@ -175,8 +183,20 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
             </div>
           ) : (
             <>
-              <div className="px-3 py-2 text-xs text-stone-500 border-b border-stone-100">
-                {totalResults} result{totalResults !== 1 ? 's' : ''} found
+              <div className="px-3 py-2 text-xs text-stone-500 border-b border-stone-100 flex items-center gap-3">
+                <span>{totalResults} page{totalResults !== 1 ? 's' : ''}</span>
+                {ocrPages > 0 && (
+                  <span className="flex items-center gap-1">
+                    <FileText className="w-3 h-3 text-blue-600" />
+                    {ocrPages} OCR
+                  </span>
+                )}
+                {translationPages > 0 && (
+                  <span className="flex items-center gap-1">
+                    <Languages className="w-3 h-3 text-green-600" />
+                    {translationPages} translated
+                  </span>
+                )}
               </div>
               <div className="divide-y divide-stone-100">
                 {results.map((result) => (

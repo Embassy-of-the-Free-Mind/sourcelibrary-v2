@@ -23,33 +23,49 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Video Background - poster shows immediately, no fade */}
-      <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          onCanPlay={handleVideoLoad}
-          poster="https://cdn.prod.website-files.com/68d1e7256c545fabb892fb96%2F68d1ec78531116e68d2f7049_embassy-of-the-free-mind-montage-002-poster-00001.jpg"
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm" type="video/webm" />
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
-        </video>
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
+      {/* Poster image - loads immediately as background */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="https://cdn.prod.website-files.com/68d1e7256c545fabb892fb96%2F68d1ec78531116e68d2f7049_embassy-of-the-free-mind-montage-002-poster-00001.jpg"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        fetchPriority="high"
+      />
+
+      {/* Video - plays over poster when ready */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        onCanPlay={handleVideoLoad}
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm" type="video/webm" />
+        <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/40 z-0" />
 
       {/* Header Navigation - visible immediately */}
       <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
         <Link href="/" className="text-white flex items-center gap-3">
           <Image src="/logo.svg" alt="Source Library" width={48} height={48} className="w-10 h-10 md:w-12 md:h-12" priority />
-          <span className="text-xl md:text-2xl uppercase tracking-wider">
-            <span className="font-semibold">Source</span>
-            <span className="font-light">Library</span>
+          <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
+            <span className="font-semibold text-white">Source</span>
+            <span className="font-light text-white">Library</span>
           </span>
+        </Link>
+        <Link
+          href="/upload"
+          className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+          Add Book
         </Link>
       </header>
 

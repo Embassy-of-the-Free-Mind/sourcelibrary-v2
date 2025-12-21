@@ -162,9 +162,21 @@ export async function GET(
       }
     }
 
+    // Count pages with OCR vs translation matches
+    let ocrPages = 0;
+    let translationPages = 0;
+    for (const result of results) {
+      const hasOcr = result.matches.some(m => m.field === 'ocr');
+      const hasTranslation = result.matches.some(m => m.field === 'translation');
+      if (hasOcr) ocrPages++;
+      if (hasTranslation) translationPages++;
+    }
+
     return NextResponse.json({
       query: trimmedQuery,
       total: results.length,
+      ocrPages,
+      translationPages,
       results
     });
   } catch (error) {

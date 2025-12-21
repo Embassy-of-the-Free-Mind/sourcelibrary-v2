@@ -31,9 +31,9 @@ export default function HomeLoading() {
         <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
           <Link href="/" className="text-white flex items-center gap-3">
             <Image src="/logo.svg" alt="Source Library" width={48} height={48} className="w-10 h-10 md:w-12 md:h-12" />
-            <span className="text-xl md:text-2xl uppercase tracking-wider">
-              <span className="font-semibold">Source</span>
-              <span className="font-light">Library</span>
+            <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
+              <span className="font-semibold text-white">Source</span>
+              <span className="font-light text-white">Library</span>
             </span>
           </Link>
         </header>
