@@ -12,20 +12,22 @@ import {
   Loader2,
   ChevronDown,
   ChevronRight,
-  Wand2,
-  RefreshCw,
+  ChevronLeft,
   GripVertical,
   Settings,
   FileText,
   Languages,
   BookOpen,
-  Play,
   Square,
   CheckCircle2,
   Circle,
-  AlertCircle
+  Wand2,
+  Eye
 } from 'lucide-react';
 import type { Book, Page, Prompt } from '@/lib/types';
+import ImageWithMagnifier from '@/components/ImageWithMagnifier';
+import SplitEditor from '@/components/SplitEditor';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -59,8 +61,11 @@ export default function PreparePage({ params }: PageProps) {
   const [detectionResults, setDetectionResults] = useState<Record<string, SplitDetection>>({});
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [expandedPages, setExpandedPages] = useState<Set<string>>(new Set());
-  const [pagesToSplit, setPagesToSplit] = useState<Set<string>>(new Set());
-  const [applying, setApplying] = useState(false);
+  const [splitting, setSplitting] = useState<string | null>(null);
+  const [reviewingSplits, setReviewingSplits] = useState<Page[]>([]);
+  const [editingSplitPage, setEditingSplitPage] = useState<Page | null>(null);
+  const [reviewMode, setReviewMode] = useState(false);
+  const [reviewIndex, setReviewIndex] = useState(0);
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
   const [dragOverPageId, setDragOverPageId] = useState<string | null>(null);
 
@@ -187,16 +192,102 @@ export default function PreparePage({ params }: PageProps) {
     });
   };
 
-  const toggleSplitMark = (pageId: string) => {
-    setPagesToSplit(prev => {
-      const next = new Set(prev);
-      if (next.has(pageId)) {
-        next.delete(pageId);
-      } else {
-        next.add(pageId);
+  // Split a page at a specific position (0-1000 scale)
+  // skipRefresh: skip fetching book after split (for batch operations)
+  const splitPageAt = async (pageId: string, splitPosition: number, skipRefresh = false) => {
+    setSplitting(pageId);
+    try {
+      const detection = {
+        isTwoPageSpread: true,
+        confidence: 'manual',
+        leftPage: { xmin: 0, xmax: splitPosition, ymin: 0, ymax: 1000 },
+        rightPage: { xmin: splitPosition, xmax: 1000, ymin: 0, ymax: 1000 }
+      };
+      await fetch(`/api/pages/${pageId}/split`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ detection })
+      });
+      if (!skipRefresh) {
+        await fetchBook();
       }
-      return next;
+      setSelectedPages(prev => {
+        const next = new Set(prev);
+        next.delete(pageId);
+        return next;
+      });
+    } catch (error) {
+      console.error('Split error:', error);
+      throw error;
+    } finally {
+      setSplitting(null);
+    }
+  };
+
+  // Split pages at a position (50% for dumb, or AI-detected)
+  const splitSelectedPages = async (useAI: boolean = false) => {
+    const toSplit = Array.from(selectedPages).filter(id => {
+      const page = pages.find(p => p.id === id);
+      return page && !page.split_from; // Only split non-split pages
     });
+
+    if (toSplit.length === 0) return;
+
+    const originalIds = new Set(toSplit);
+    setSplitting('batch');
+
+    try {
+      if (useAI) {
+        // AI splits need to be sequential (each needs detection first)
+        for (const pageId of toSplit) {
+          setSplitting(pageId);
+          const detectRes = await fetch(`/api/pages/${pageId}/detect-split`, { method: 'POST' });
+          if (detectRes.ok) {
+            const detection = await detectRes.json();
+            if (detection.isTwoPageSpread && detection.leftPage && detection.rightPage) {
+              await fetch(`/api/pages/${pageId}/split`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ detection })
+              });
+            }
+          }
+        }
+      } else {
+        // Batch 50% split - single API call for all pages
+        await fetch('/api/pages/batch-split', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            splits: toSplit.map(pageId => ({ pageId, splitPosition: 500 }))
+          })
+        });
+      }
+    } catch (error) {
+      console.error('Split error:', error);
+    } finally {
+      setSplitting(null);
+    }
+
+    // Fetch updated book and find ALL split pages for review
+    const res = await fetch(`/api/books/${bookId}`);
+    if (res.ok) {
+      const data = await res.json();
+      setBook(data);
+      setPages(data.pages || []);
+
+      // Find ALL pages from the splits: originals (now cropped) + new pages
+      const allSplitPages = (data.pages || []).filter((p: Page) =>
+        originalIds.has(p.id) || (p.split_from && originalIds.has(p.split_from))
+      );
+
+      if (allSplitPages.length > 0) {
+        // Sort by page number so they appear in order
+        allSplitPages.sort((a: Page, b: Page) => a.page_number - b.page_number);
+        setReviewingSplits(allSplitPages);
+      }
+    }
+    setSelectedPages(new Set());
   };
 
   const deletePage = async (pageId: string) => {
@@ -210,6 +301,8 @@ export default function PreparePage({ params }: PageProps) {
           next.delete(pageId);
           return next;
         });
+        // Also remove from review list if present
+        setReviewingSplits(prev => prev.filter(p => p.id !== pageId));
       }
     } catch (error) {
       console.error('Delete error:', error);
@@ -400,49 +493,21 @@ export default function PreparePage({ params }: PageProps) {
     }
   };
 
-  const applyMarkedSplits = async () => {
-    if (pagesToSplit.size === 0) return;
-
-    setApplying(true);
-    try {
-      for (const pageId of pagesToSplit) {
-        // For manual splits, split at 50% (middle of page)
-        const manualDetection = {
-          isTwoPageSpread: true,
-          confidence: 'manual',
-          leftPage: { xmin: 0, xmax: 500, ymin: 0, ymax: 1000 },
-          rightPage: { xmin: 500, xmax: 1000, ymin: 0, ymax: 1000 }
-        };
-        await fetch(`/api/pages/${pageId}/split`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ detection: manualDetection })
-        });
-      }
-      await fetchBook();
-      setSelectedPages(new Set());
-      setPagesToSplit(new Set());
-    } catch (error) {
-      console.error('Apply error:', error);
-    } finally {
-      setApplying(false);
-    }
-  };
+  const [resetting, setResetting] = useState(false);
 
   const resetBook = async () => {
     if (!confirm('Reset all pages to original state? This will delete all splits and clear detection results.')) return;
 
-    setApplying(true);
+    setResetting(true);
     try {
       await fetch(`/api/books/${bookId}/reset`, { method: 'POST' });
       await fetchBook();
       setDetectionResults({});
       setSelectedPages(new Set());
-      setPagesToSplit(new Set());
     } catch (error) {
       console.error('Reset error:', error);
     } finally {
-      setApplying(false);
+      setResetting(false);
     }
   };
 
@@ -487,18 +552,18 @@ export default function PreparePage({ params }: PageProps) {
     }
   };
 
-  // Get image URL with crop support
+  // Get image URL with crop support - small thumbnails for fast loading
   const getImageUrl = (page: Page) => {
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=300&q=70&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+      return `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
     }
-    return page.thumbnail || `/api/image?url=${encodeURIComponent(page.photo)}&w=300&q=70`;
+    return page.thumbnail || `/api/image?url=${encodeURIComponent(page.photo)}&w=150&q=60`;
   };
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader label="Loading book..." />
       </div>
     );
   }
@@ -528,6 +593,20 @@ export default function PreparePage({ params }: PageProps) {
             </div>
 
             <div className="flex items-center gap-3">
+              <Link
+                href={`/book/${bookId}/split`}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg"
+              >
+                <Scissors className="w-4 h-4" />
+                Split Pages
+              </Link>
+              <button
+                onClick={() => { setReviewIndex(0); setReviewMode(true); }}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg"
+              >
+                <Eye className="w-4 h-4" />
+                Review All
+              </button>
               <button
                 onClick={() => setShowPromptSettings(true)}
                 className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg"
@@ -537,10 +616,10 @@ export default function PreparePage({ params }: PageProps) {
               </button>
               <button
                 onClick={resetBook}
-                disabled={applying}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-lg"
+                disabled={resetting}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-lg disabled:opacity-50"
               >
-                <RotateCcw className="w-4 h-4" />
+                {resetting ? <Loader2 className="w-4 h-4 animate-spin" /> : <RotateCcw className="w-4 h-4" />}
                 Reset
               </button>
             </div>
@@ -578,112 +657,152 @@ export default function PreparePage({ params }: PageProps) {
         </div>
       </header>
 
-      {/* Action Bar */}
+      {/* Action Bar - Linear Workflow */}
       <div className="bg-white border-b border-stone-200 sticky top-[105px] z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          <div className="flex items-center justify-between">
-            {/* Left side - info and split action */}
-            <div className="flex items-center gap-4">
-              {pagesToSplit.size > 0 ? (
-                <>
-                  <span className="text-sm font-medium text-amber-600">
-                    {pagesToSplit.size} marked for split
-                  </span>
-                  <button
-                    onClick={() => setPagesToSplit(new Set())}
-                    className="text-sm text-stone-500 hover:text-stone-700"
-                  >
-                    Clear
-                  </button>
-                  <button
-                    onClick={applyMarkedSplits}
-                    disabled={applying}
-                    className="flex items-center gap-2 px-4 py-2 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50"
-                  >
-                    {applying ? <Loader2 className="w-4 h-4 animate-spin" /> : <Scissors className="w-4 h-4" />}
-                    Apply Splits
-                  </button>
-                </>
-              ) : (
-                <span className="text-sm text-stone-500">
-                  Click ✂️ to mark pages for splitting
-                </span>
-              )}
-            </div>
-
-            {/* Right side - process actions (only when pages selected via checkbox) */}
-            <div className="flex items-center gap-2">
-              {selectedPages.size > 0 ? (
-                <>
-                  <span className="text-sm text-stone-500 mr-2">{selectedPages.size} selected</span>
-                  <button
-                    onClick={runOcrOnSelected}
-                    disabled={processing.active}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
-                  >
-                    <FileText className="w-4 h-4" />
-                    OCR
-                  </button>
-                  <button
-                    onClick={runTranslationOnSelected}
-                    disabled={processing.active}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
-                  >
-                    <Languages className="w-4 h-4" />
-                    Translate
-                  </button>
-                  <button
-                    onClick={runSummaryOnSelected}
-                    disabled={processing.active}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50"
-                  >
-                    <BookOpen className="w-4 h-4" />
-                    Summarize
-                  </button>
-                  <button onClick={clearSelection} className="text-sm text-stone-500 hover:text-stone-700 ml-2">
-                    Clear
-                  </button>
-                </>
-              ) : (
-                /* Batch buttons - less prominent */
-                <div className="flex items-center gap-2 text-sm">
-                  {pagesNeedingOcr.length > 0 && (
+          {/* Selection Actions */}
+          {selectedPages.size > 0 ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-stone-700">{selectedPages.size} selected</span>
+                <button onClick={selectAll} className="text-sm text-amber-600 hover:text-amber-800">
+                  Select All
+                </button>
+                <button onClick={clearSelection} className="text-sm text-stone-500 hover:text-stone-700">
+                  Clear
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                {/* Split options - only show if any non-split pages selected */}
+                {Array.from(selectedPages).some(id => !pages.find(p => p.id === id)?.split_from) && (
+                  <>
                     <button
-                      onClick={runOcrOnAll}
-                      disabled={processing.active}
-                      className="text-blue-600 hover:text-blue-800 hover:underline disabled:opacity-50"
+                      onClick={() => splitSelectedPages(false)}
+                      disabled={!!splitting}
+                      className="flex items-center gap-2 px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50"
                     >
-                      OCR {pagesNeedingOcr.length} pages
+                      {splitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Scissors className="w-4 h-4" />}
+                      50% Split
                     </button>
-                  )}
-                  {pagesNeedingTranslation.length > 0 && (
-                    <>
-                      <span className="text-stone-300">|</span>
-                      <button
-                        onClick={runTranslationOnAll}
-                        disabled={processing.active}
-                        className="text-green-600 hover:text-green-800 hover:underline disabled:opacity-50"
-                      >
-                        Translate {pagesNeedingTranslation.length}
-                      </button>
-                    </>
-                  )}
-                  {pagesNeedingSummary.length > 0 && (
-                    <>
-                      <span className="text-stone-300">|</span>
-                      <button
-                        onClick={runSummaryOnAll}
-                        disabled={processing.active}
-                        className="text-purple-600 hover:text-purple-800 hover:underline disabled:opacity-50"
-                      >
-                        Summarize {pagesNeedingSummary.length}
-                      </button>
-                    </>
-                  )}
-                </div>
-              )}
+                    <button
+                      onClick={() => splitSelectedPages(true)}
+                      disabled={!!splitting}
+                      className="flex items-center gap-2 px-3 py-1.5 text-sm bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50"
+                    >
+                      {splitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Wand2 className="w-4 h-4" />}
+                      AI Split
+                    </button>
+                  </>
+                )}
+                <div className="w-px h-6 bg-stone-200 mx-1" />
+                <button
+                  onClick={runOcrOnSelected}
+                  disabled={processing.active}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                >
+                  <FileText className="w-4 h-4" />
+                  OCR
+                </button>
+                <button
+                  onClick={runTranslationOnSelected}
+                  disabled={processing.active}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
+                >
+                  <Languages className="w-4 h-4" />
+                  Translate
+                </button>
+                <button
+                  onClick={runSummaryOnSelected}
+                  disabled={processing.active}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  Summarize
+                </button>
+              </div>
             </div>
-          </div>
+          ) : (
+            /* Linear Workflow Steps */
+            <div className="flex items-center gap-6">
+              {/* Step 1: Prepare/Split */}
+              <div className="flex items-center gap-2">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  pages.some(p => !p.split_from && p.photo_original) ? 'bg-amber-100 text-amber-700' : 'bg-stone-100 text-stone-400'
+                }`}>1</div>
+                <span className="text-sm text-stone-600">Prepare</span>
+                <span className="text-xs text-stone-400">(click ✂️ to split spreads)</span>
+              </div>
+
+              {/* Arrow */}
+              <div className="text-stone-300">→</div>
+
+              {/* Step 2: OCR */}
+              <div className="flex items-center gap-2">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  pagesNeedingOcr.length > 0 ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
+                }`}>2</div>
+                {pagesNeedingOcr.length > 0 ? (
+                  <button
+                    onClick={runOcrOnAll}
+                    disabled={processing.active}
+                    className="text-sm text-blue-600 hover:text-blue-800 hover:underline disabled:opacity-50"
+                  >
+                    OCR {pagesNeedingOcr.length} pages
+                  </button>
+                ) : (
+                  <span className="text-sm text-green-600">✓ OCR complete</span>
+                )}
+              </div>
+
+              {/* Arrow */}
+              <div className="text-stone-300">→</div>
+
+              {/* Step 3: Translate */}
+              <div className="flex items-center gap-2">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  pagesNeedingOcr.length > 0 ? 'bg-stone-100 text-stone-400' :
+                  pagesNeedingTranslation.length > 0 ? 'bg-green-100 text-green-700' : 'bg-green-100 text-green-700'
+                }`}>3</div>
+                {pagesNeedingOcr.length > 0 ? (
+                  <span className="text-sm text-stone-400">Translate</span>
+                ) : pagesNeedingTranslation.length > 0 ? (
+                  <button
+                    onClick={runTranslationOnAll}
+                    disabled={processing.active}
+                    className="text-sm text-green-600 hover:text-green-800 hover:underline disabled:opacity-50"
+                  >
+                    Translate {pagesNeedingTranslation.length} pages
+                  </button>
+                ) : (
+                  <span className="text-sm text-green-600">✓ Translated</span>
+                )}
+              </div>
+
+              {/* Arrow */}
+              <div className="text-stone-300">→</div>
+
+              {/* Step 4: Summarize */}
+              <div className="flex items-center gap-2">
+                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                  pagesNeedingTranslation.length > 0 || pagesNeedingOcr.length > 0 ? 'bg-stone-100 text-stone-400' :
+                  pagesNeedingSummary.length > 0 ? 'bg-purple-100 text-purple-700' : 'bg-green-100 text-green-700'
+                }`}>4</div>
+                {pagesNeedingTranslation.length > 0 || pagesNeedingOcr.length > 0 ? (
+                  <span className="text-sm text-stone-400">Summarize</span>
+                ) : pagesNeedingSummary.length > 0 ? (
+                  <button
+                    onClick={runSummaryOnAll}
+                    disabled={processing.active}
+                    className="text-sm text-purple-600 hover:text-purple-800 hover:underline disabled:opacity-50"
+                  >
+                    Summarize {pagesNeedingSummary.length} pages
+                  </button>
+                ) : (
+                  <span className="text-sm text-green-600">✓ Complete</span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -734,6 +853,59 @@ export default function PreparePage({ params }: PageProps) {
                 <Square className="w-4 h-4" />
                 Stop
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Split Review Modal */}
+      {reviewingSplits.length > 0 && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full mx-4 max-h-[90vh] overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-stone-200">
+              <div>
+                <h2 className="text-lg font-semibold text-stone-900">Review Split Results</h2>
+                <p className="text-sm text-stone-500">{reviewingSplits.length} pages created from splits</p>
+              </div>
+              <button
+                onClick={() => setReviewingSplits([])}
+                className="px-4 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-700"
+              >
+                Done
+              </button>
+            </div>
+            <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {reviewingSplits.map((page, idx) => {
+                  const imageUrl = page.crop?.xStart !== undefined
+                    ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=600&q=85&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
+                    : `/api/image?url=${encodeURIComponent(page.photo)}&w=600&q=85`;
+
+                  return (
+                    <div key={page.id} className="relative group">
+                      <div className="aspect-[3/4] bg-stone-100 rounded-lg overflow-hidden border border-stone-200">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={imageUrl}
+                          alt={`Split page ${idx + 1}`}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="mt-2 flex items-center justify-between">
+                        <span className="text-sm text-stone-600">
+                          Page {pages.findIndex(p => p.id === page.id) + 1}
+                        </span>
+                        <button
+                          onClick={() => deletePage(page.id)}
+                          className="text-xs text-red-500 hover:text-red-700"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -793,16 +965,21 @@ export default function PreparePage({ params }: PageProps) {
             const detection = detectionResults[page.id];
             const isSelected = selectedPages.has(page.id);
             const isExpanded = expandedPages.has(page.id);
-            const isDetecting = detecting === page.id;
             const isDragging = draggedPageId === page.id;
             const isDragOver = dragOverPageId === page.id;
             const isSplitPage = !!page.split_from;
             const isProcessing = processing.currentPageId === page.id;
-            const markedForSplit = pagesToSplit.has(page.id);
+            const isSplitting = splitting === page.id;
 
             const hasOcr = !!page.ocr?.data;
             const hasTranslation = !!page.translation?.data;
             const hasSummary = !!page.summary?.data;
+
+            // Build image URLs for magnifier - use moderate res (800px) not full original
+            const fullImageUrl = page.crop?.xStart !== undefined
+              ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=800&q=75&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
+              : `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=800&q=75`;
+            const thumbnailUrl = getImageUrl(page);
 
             return (
               <div
@@ -818,6 +995,7 @@ export default function PreparePage({ params }: PageProps) {
                   isDragOver ? 'border-amber-400 ring-2 ring-amber-200' :
                   isSelected ? 'border-amber-400 ring-1 ring-amber-200' :
                   isProcessing ? 'border-blue-400 ring-1 ring-blue-200' :
+                  isSplitting ? 'border-amber-400 ring-1 ring-amber-200' :
                   'border-stone-200 hover:border-stone-300'
                 }`}
               >
@@ -833,57 +1011,31 @@ export default function PreparePage({ params }: PageProps) {
                     type="checkbox"
                     checked={isSelected}
                     onChange={() => togglePageSelection(page.id)}
-                    className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500"
+                    className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
                   />
 
-                  {/* Thumbnail - hover to magnify */}
-                  <div
-                    className={`relative w-16 h-12 rounded overflow-visible flex-shrink-0 group ${
-                      markedForSplit
-                        ? 'ring-2 ring-amber-500 bg-amber-100'
-                        : isSplitPage
-                          ? 'bg-purple-100'
-                          : 'bg-stone-100'
-                    }`}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={getImageUrl(page)}
+                  {/* Thumbnail with magnifier */}
+                  <div className="rounded overflow-hidden flex-shrink-0 relative w-32 h-24">
+                    <ImageWithMagnifier
+                      src={fullImageUrl}
+                      thumbnail={thumbnailUrl}
                       alt={`Page ${index + 1}`}
-                      className="w-full h-full object-contain rounded"
-                      loading="lazy"
+                      className="w-full h-full"
+                      magnifierSize={200}
+                      zoomLevel={2.5}
                     />
-                    {/* Magnified preview on hover */}
-                    <div className="absolute left-0 top-full mt-2 z-50 hidden group-hover:block">
-                      <div className="bg-white rounded-lg shadow-2xl border border-stone-200 p-1">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={
-                            page.crop?.xStart !== undefined
-                              ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=800&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
-                              : `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=800&q=80`
-                          }
-                          alt={`Page ${index + 1}`}
-                          className="w-80 h-auto object-contain rounded"
-                        />
-                      </div>
-                    </div>
                   </div>
 
                   {/* Page info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className={`text-sm font-medium ${isSplitPage ? 'text-purple-600' : 'text-stone-700'}`}>
+                      <span className="text-sm font-medium text-stone-700">
                         Page {index + 1}
                       </span>
-                      {isSplitPage && (
-                        <span className="text-xs px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded">
-                          split
-                        </span>
-                      )}
-                      {markedForSplit && (
-                        <span className="text-xs px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded">
-                          ✂️ to split
+                      {isSplitting && (
+                        <span className="text-xs px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded flex items-center gap-1">
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                          splitting...
                         </span>
                       )}
                       {isProcessing && (
@@ -930,15 +1082,16 @@ export default function PreparePage({ params }: PageProps) {
                   <div className="flex items-center gap-1">
                     {!isSplitPage && (
                       <button
-                        onClick={() => toggleSplitMark(page.id)}
-                        className={`p-1.5 rounded ${
-                          markedForSplit
-                            ? 'text-amber-600 bg-amber-100 hover:bg-amber-200'
-                            : 'text-stone-400 hover:text-amber-600 hover:bg-amber-50'
-                        }`}
-                        title={markedForSplit ? 'Unmark for split' : 'Mark for split'}
+                        onClick={() => setEditingSplitPage(page)}
+                        disabled={!!splitting}
+                        className="p-1.5 rounded text-stone-400 hover:text-amber-600 hover:bg-amber-50 disabled:opacity-50"
+                        title="Split this page"
                       >
-                        <Scissors className="w-4 h-4" />
+                        {isSplitting ? (
+                          <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
+                        ) : (
+                          <Scissors className="w-4 h-4" />
+                        )}
                       </button>
                     )}
                     <button
@@ -1042,6 +1195,126 @@ export default function PreparePage({ params }: PageProps) {
           </div>
         )}
       </main>
+
+      {/* Split Editor */}
+      {editingSplitPage && (
+        <SplitEditor
+          pageId={editingSplitPage.id}
+          imageUrl={editingSplitPage.photo_original || editingSplitPage.photo}
+          onSplit={splitPageAt}
+          onClose={() => setEditingSplitPage(null)}
+        />
+      )}
+
+      {/* Review Mode Gallery */}
+      {reviewMode && pages.length > 0 && (
+        <div className="fixed inset-0 bg-black z-50 flex flex-col">
+          {/* Header */}
+          <div className="flex items-center justify-between p-4 bg-black/50">
+            <div className="text-white">
+              <span className="text-lg font-medium">Page {reviewIndex + 1} of {pages.length}</span>
+              {pages[reviewIndex]?.split_from && (
+                <span className="ml-2 px-2 py-0.5 bg-purple-600 text-xs rounded">split</span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {/* Split button - only for non-split pages */}
+              {!pages[reviewIndex]?.split_from && (
+                <button
+                  onClick={() => {
+                    setEditingSplitPage(pages[reviewIndex]);
+                    setReviewMode(false);
+                  }}
+                  className="flex items-center gap-2 px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700"
+                >
+                  <Scissors className="w-4 h-4" />
+                  Split
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  deletePage(pages[reviewIndex].id);
+                  if (reviewIndex >= pages.length - 1) {
+                    setReviewIndex(Math.max(0, pages.length - 2));
+                  }
+                }}
+                className="flex items-center gap-2 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete
+              </button>
+              <button
+                onClick={() => setReviewMode(false)}
+                className="px-4 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="flex-1 flex items-center justify-center p-4 relative">
+            {/* Previous button */}
+            <button
+              onClick={() => setReviewIndex(i => Math.max(0, i - 1))}
+              disabled={reviewIndex === 0}
+              className="absolute left-4 p-3 bg-white/10 text-white rounded-full hover:bg-white/20 disabled:opacity-30"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+
+            {/* Page image */}
+            <div className="max-w-4xl max-h-full">
+              {(() => {
+                const page = pages[reviewIndex];
+                const imgUrl = page.crop?.xStart !== undefined
+                  ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=1200&q=85&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
+                  : `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=1200&q=85`;
+                return (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={imgUrl}
+                    alt={`Page ${reviewIndex + 1}`}
+                    className="max-h-[80vh] w-auto object-contain"
+                  />
+                );
+              })()}
+            </div>
+
+            {/* Next button */}
+            <button
+              onClick={() => setReviewIndex(i => Math.min(pages.length - 1, i + 1))}
+              disabled={reviewIndex === pages.length - 1}
+              className="absolute right-4 p-3 bg-white/10 text-white rounded-full hover:bg-white/20 disabled:opacity-30"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+          </div>
+
+          {/* Thumbnail strip */}
+          <div className="bg-black/50 p-3 overflow-x-auto">
+            <div className="flex gap-2 justify-center">
+              {pages.map((page, idx) => {
+                const thumbUrl = page.crop?.xStart !== undefined
+                  ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=100&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
+                  : `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=100&q=60`;
+                return (
+                  <button
+                    key={page.id}
+                    onClick={() => setReviewIndex(idx)}
+                    className={`flex-shrink-0 w-12 h-16 rounded overflow-hidden border-2 ${
+                      idx === reviewIndex ? 'border-amber-500' : 'border-transparent hover:border-white/50'
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={thumbUrl} alt="" className="w-full h-full object-cover" />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

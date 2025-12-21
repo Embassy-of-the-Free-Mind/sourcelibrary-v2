@@ -79,23 +79,29 @@ export async function POST(request: NextRequest) {
       const updateData: Record<string, unknown> = { updated_at: new Date() };
 
       if (results.ocr) {
-        updateData['ocr.data'] = results.ocr;
-        updateData['ocr.language'] = language || 'Latin';
-        updateData['ocr.model'] = 'gemini-2.0-flash';
-        updateData['ocr.updated_at'] = new Date();
+        updateData['ocr'] = {
+          data: results.ocr,
+          language: language || 'Latin',
+          model: 'gemini-2.0-flash',
+          updated_at: new Date()
+        };
       }
 
       if (results.translation) {
-        updateData['translation.data'] = results.translation;
-        updateData['translation.language'] = targetLanguage;
-        updateData['translation.model'] = 'gemini-2.0-flash';
-        updateData['translation.updated_at'] = new Date();
+        updateData['translation'] = {
+          data: results.translation,
+          language: targetLanguage,
+          model: 'gemini-2.0-flash',
+          updated_at: new Date()
+        };
       }
 
       if (results.summary) {
-        updateData['summary.data'] = results.summary;
-        updateData['summary.model'] = 'gemini-2.0-flash';
-        updateData['summary.updated_at'] = new Date();
+        updateData['summary'] = {
+          data: results.summary,
+          model: 'gemini-2.0-flash',
+          updated_at: new Date()
+        };
       }
 
       await db.collection('pages').updateOne(
