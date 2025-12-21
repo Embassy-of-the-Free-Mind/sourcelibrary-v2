@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { DEFAULT_PROMPTS } from '@/lib/types';
+import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS } from '@/lib/types';
 import type { Prompt } from '@/lib/types';
 
 // GET /api/prompts - Get all prompts, optionally filtered by type
@@ -19,6 +19,7 @@ export async function GET(request: NextRequest) {
     // If no prompts exist yet, seed the defaults
     if (prompts.length === 0) {
       const defaultPrompts: Omit<Prompt, '_id'>[] = [
+        // Standard prompts (defaults)
         {
           name: 'Standard OCR',
           type: 'ocr',
@@ -40,6 +41,40 @@ export async function GET(request: NextRequest) {
           type: 'summary',
           content: DEFAULT_PROMPTS.summary,
           is_default: true,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        // Latin prompts (Neo-Latin 1450-1700)
+        {
+          name: 'Latin OCR (Neo-Latin)',
+          type: 'ocr',
+          content: LATIN_PROMPTS.ocr,
+          is_default: false,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          name: 'Latin Translation (Neo-Latin)',
+          type: 'translation',
+          content: LATIN_PROMPTS.translation,
+          is_default: false,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        // German prompts (Early Modern 1450-1800)
+        {
+          name: 'German OCR (Fraktur)',
+          type: 'ocr',
+          content: GERMAN_PROMPTS.ocr,
+          is_default: false,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          name: 'German Translation (Early Modern)',
+          type: 'translation',
+          content: GERMAN_PROMPTS.translation,
+          is_default: false,
           created_at: new Date(),
           updated_at: new Date(),
         },

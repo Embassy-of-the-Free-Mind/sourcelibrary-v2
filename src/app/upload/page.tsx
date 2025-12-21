@@ -12,6 +12,8 @@ import {
   X,
   Image as ImageIcon,
   AlertCircle,
+  Search,
+  ExternalLink,
 } from 'lucide-react';
 
 interface UploadedPage {
@@ -20,18 +22,44 @@ interface UploadedPage {
   photo: string;
 }
 
+interface CatalogResult {
+  id: string;
+  title: string;
+  author: string;
+  year: string;
+  language: string;
+  description: string;
+  publisher?: string;
+  placeOfPublication?: string;
+  printer?: string;
+  source: 'ia' | 'bph';
+  iaIdentifier?: string;
+  imageUrl?: string;
+}
+
 type UploadStep = 'metadata' | 'upload' | 'complete';
 
 export default function UploadPage() {
   const router = useRouter();
   const [step, setStep] = useState<UploadStep>('metadata');
 
+  // Catalog search
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<CatalogResult[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [searchSource, setSearchSource] = useState<'all' | 'ia' | 'bph'>('all');
+  const [selectedCatalogItem, setSelectedCatalogItem] = useState<CatalogResult | null>(null);
+
   // Book metadata
   const [title, setTitle] = useState('');
   const [displayTitle, setDisplayTitle] = useState('');
   const [author, setAuthor] = useState('');
-  const [language, setLanguage] = useState('German');
+  const [language, setLanguage] = useState('Unknown');
   const [published, setPublished] = useState('');
+  const [publisher, setPublisher] = useState('');
+  const [placeOfPublication, setPlaceOfPublication] = useState('');
+  const [printer, setPrinter] = useState('');
+  const [iaIdentifier, setIaIdentifier] = useState('');
 
   // Upload state
   const [bookId, setBookId] = useState<string | null>(null);
@@ -58,6 +86,10 @@ export default function UploadPage() {
           author,
           language,
           published,
+          publisher: publisher || undefined,
+          place_of_publication: placeOfPublication || undefined,
+          printer: printer || undefined,
+          ia_identifier: iaIdentifier || undefined,
         }),
       });
 
@@ -74,6 +106,41 @@ export default function UploadPage() {
     } finally {
       setCreating(false);
     }
+  };
+
+  // Search catalogs
+  const handleSearch = async () => {
+    if (searchQuery.length < 2) return;
+
+    setSearching(true);
+    try {
+      const res = await fetch(`/api/catalog/search?q=${encodeURIComponent(searchQuery)}&source=${searchSource}&limit=20`);
+      if (res.ok) {
+        const data = await res.json();
+        setSearchResults(data.results);
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  // Select a catalog item to pre-fill form
+  const selectCatalogItem = (item: CatalogResult) => {
+    setSelectedCatalogItem(item);
+    setTitle(item.title);
+    setAuthor(item.author);
+    setPublished(item.year);
+    setLanguage(item.language || 'Latin');
+    setPublisher(item.publisher || '');
+    setPlaceOfPublication(item.placeOfPublication || '');
+    setPrinter(item.printer || '');
+    if (item.iaIdentifier) {
+      setIaIdentifier(item.iaIdentifier);
+    }
+    setSearchResults([]);
+    setSearchQuery('');
   };
 
   // Handle file selection
@@ -136,7 +203,7 @@ export default function UploadPage() {
   };
 
   // Languages commonly found in historical manuscripts
-  const languages = ['German', 'Latin', 'French', 'English', 'Italian', 'Dutch', 'Greek', 'Hebrew', 'Arabic'];
+  const languages = ['Unknown', 'Latin', 'German', 'French', 'English', 'Italian', 'Dutch', 'Greek', 'Hebrew', 'Arabic'];
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -197,18 +264,133 @@ export default function UploadPage() {
 
         {/* Step 1: Book Metadata */}
         {step === 'metadata' && (
-          <div className="bg-white rounded-xl border border-stone-200 p-6 sm:p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-                <BookOpen className="w-5 h-5 text-amber-700" />
-              </div>
-              <div>
-                <h1 className="text-xl font-semibold text-stone-900">Add New Book</h1>
-                <p className="text-sm text-stone-500">Enter the book's metadata</p>
-              </div>
+          <div className="space-y-6">
+            {/* Instructions */}
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+              <p className="font-medium mb-1">Two ways to add a book:</p>
+              <ol className="list-decimal list-inside space-y-1 text-amber-700">
+                <li><strong>Search catalogs</strong> — Find the book in Internet Archive or BPH to pre-fill metadata</li>
+                <li><strong>Enter manually</strong> — Skip the search and fill in the form below</li>
+              </ol>
             </div>
 
-            <form onSubmit={handleCreateBook} className="space-y-5">
+            {/* Catalog Search */}
+            <div className="bg-white rounded-xl border border-stone-200 p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <Search className="w-5 h-5 text-blue-700" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-stone-900">Search Catalogs</h2>
+                  <p className="text-sm text-stone-500">~37k books from Internet Archive and BPH</p>
+                </div>
+              </div>
+
+              <div className="flex gap-2 mb-3">
+                <div className="flex-1 relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+                    placeholder="Search by title, author, or keyword..."
+                    className="w-full px-4 py-2.5 pr-10 border border-stone-300 rounded-lg focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                  />
+                  {searching && (
+                    <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 animate-spin text-stone-400" />
+                  )}
+                </div>
+                <select
+                  value={searchSource}
+                  onChange={(e) => setSearchSource(e.target.value as 'all' | 'ia' | 'bph')}
+                  className="px-3 py-2 border border-stone-300 rounded-lg text-sm"
+                >
+                  <option value="all">All</option>
+                  <option value="ia">Internet Archive</option>
+                  <option value="bph">BPH</option>
+                </select>
+                <button
+                  type="button"
+                  onClick={handleSearch}
+                  disabled={searching || searchQuery.length < 2}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                >
+                  Search
+                </button>
+              </div>
+
+              {/* Search Results */}
+              {searchResults.length > 0 && (
+                <div className="max-h-80 overflow-y-auto border border-stone-200 rounded-lg divide-y divide-stone-100">
+                  {searchResults.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => selectCatalogItem(item)}
+                      className="w-full text-left p-3 hover:bg-stone-50 flex gap-3"
+                    >
+                      {item.imageUrl && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.imageUrl}
+                          alt=""
+                          className="w-12 h-16 object-cover rounded bg-stone-100 flex-shrink-0"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2">
+                          <p className="font-medium text-stone-900 truncate">{item.title}</p>
+                          <span className={`text-xs px-1.5 py-0.5 rounded flex-shrink-0 ${
+                            item.source === 'ia' ? 'bg-orange-100 text-orange-700' : 'bg-purple-100 text-purple-700'
+                          }`}>
+                            {item.source === 'ia' ? 'IA' : 'BPH'}
+                          </span>
+                        </div>
+                        <p className="text-sm text-stone-600">{item.author} • {item.year}</p>
+                        {item.description && (
+                          <p className="text-xs text-stone-500 mt-1 line-clamp-2">{item.description}</p>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Selected item indicator */}
+              {selectedCatalogItem && (
+                <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <span className="text-sm text-green-800">
+                      Selected: <strong>{selectedCatalogItem.title}</strong>
+                    </span>
+                  </div>
+                  {selectedCatalogItem.iaIdentifier && (
+                    <a
+                      href={`https://archive.org/details/${selectedCatalogItem.iaIdentifier}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                    >
+                      View on IA <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Book Metadata Form */}
+            <div className="bg-white rounded-xl border border-stone-200 p-6 sm:p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-amber-700" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-stone-900">Book Details</h2>
+                  <p className="text-sm text-stone-500">{selectedCatalogItem ? 'Edit the pre-filled details' : 'Enter the book metadata'}</p>
+                </div>
+              </div>
+
+              <form onSubmit={handleCreateBook} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-1">
                   Original Title <span className="text-red-500">*</span>
@@ -281,6 +463,48 @@ export default function UploadPage() {
                 </select>
               </div>
 
+              {/* Publication Details */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-1">
+                    Place of Publication
+                  </label>
+                  <input
+                    type="text"
+                    value={placeOfPublication}
+                    onChange={(e) => setPlaceOfPublication(e.target.value)}
+                    placeholder="e.g., Venice"
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-stone-700 mb-1">
+                    Publisher
+                  </label>
+                  <input
+                    type="text"
+                    value={publisher}
+                    onChange={(e) => setPublisher(e.target.value)}
+                    placeholder="e.g., Aldus Manutius"
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">
+                  Printer
+                </label>
+                <input
+                  type="text"
+                  value={printer}
+                  onChange={(e) => setPrinter(e.target.value)}
+                  placeholder="e.g., Johann Froben"
+                  className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                />
+              </div>
+
               <button
                 type="submit"
                 disabled={creating || !title}
@@ -299,6 +523,7 @@ export default function UploadPage() {
                 )}
               </button>
             </form>
+            </div>
           </div>
         )}
 

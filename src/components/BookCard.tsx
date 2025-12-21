@@ -1,26 +1,62 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Book as BookIcon } from 'lucide-react';
 import type { Book } from '@/lib/types';
+import { cn } from '@/lib/utils';
+import { recordLoadingMetric } from '@/lib/analytics';
 
 interface BookCardProps {
   book: Book;
+  priority?: boolean; // For first few cards to load eagerly
 }
 
-export default function BookCard({ book }: BookCardProps) {
+export default function BookCard({ book, priority = false }: BookCardProps) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const loadStartTime = useRef<number | null>(null);
+
+  useEffect(() => {
+    loadStartTime.current = performance.now();
+  }, []);
+
+  const handleImageLoad = () => {
+    if (loadStartTime.current !== null) {
+      const loadTime = performance.now() - loadStartTime.current;
+      recordLoadingMetric('book_card_image_load', loadTime, {
+        bookId: book.id,
+        priority
+      });
+    }
+    setImageLoaded(true);
+  };
+
   return (
     <Link href={`/book/${book.id}`} className="group">
       <div className="bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
-        <div className="aspect-[3/4] relative bg-stone-100">
-          {book.thumbnail ? (
+        {/* Image area - shimmer until loaded */}
+        <div className="aspect-[3/4] relative bg-stone-100 overflow-hidden">
+          {/* Shimmer placeholder - only for images, shows until loaded */}
+          {!imageLoaded && !imageError && book.thumbnail && (
+            <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+          )}
+
+          {book.thumbnail && !imageError ? (
             <Image
               src={book.thumbnail}
               alt={book.title}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-200"
+              className={cn(
+                'object-cover group-hover:scale-105 transition-transform duration-300',
+                imageLoaded ? 'opacity-100' : 'opacity-0'
+              )}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              onLoad={handleImageLoad}
+              onError={() => setImageError(true)}
+              priority={priority}
+              loading={priority ? 'eager' : 'lazy'}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -28,6 +64,8 @@ export default function BookCard({ book }: BookCardProps) {
             </div>
           )}
         </div>
+
+        {/* Text content - visible immediately, no shimmer */}
         <div className="p-4">
           <h3 className="font-serif font-semibold text-stone-900 line-clamp-2 group-hover:text-amber-700 transition-colors">
             {book.display_title || book.title}

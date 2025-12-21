@@ -1,26 +1,90 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 
 interface NotesRendererProps {
   text: string;
   className?: string;
+  showMetadata?: boolean; // Default false - hide metadata section
 }
 
-// Convert special markup to styled HTML spans
-function processNotesForMarkdown(text: string): string {
+interface ExtractedMetadata {
+  language?: string;
+  pageNumber?: string;
+  folio?: string;
+  meta: string[];      // [[meta: ...]] entries
+  abbreviations: string[]; // [[abbrev: ...]] entries
+}
+
+// Extract metadata entries and return cleaned text + metadata object
+function extractMetadata(text: string): { cleanText: string; metadata: ExtractedMetadata } {
+  const metadata: ExtractedMetadata = {
+    meta: [],
+    abbreviations: [],
+  };
+
+  let result = text;
+
+  // Extract language (hidden from reader)
+  result = result.replace(/\[\[language:\s*(.*?)\]\]/gi, (match, lang) => {
+    metadata.language = lang.trim();
+    return '';
+  });
+
+  // Extract page numbers
+  result = result.replace(/\[\[page\s*number:\s*(.*?)\]\]/gi, (match, num) => {
+    metadata.pageNumber = num.trim();
+    return '';
+  });
+
+  // Extract folio references
+  result = result.replace(/\[\[folio:\s*(.*?)\]\]/gi, (match, folio) => {
+    metadata.folio = folio.trim();
+    return '';
+  });
+
+  // Extract meta notes (page descriptions, image quality, etc.)
+  result = result.replace(/\[\[meta:\s*(.*?)\]\]/gi, (match, content) => {
+    metadata.meta.push(content.trim());
+    return '';
+  });
+
+  // Extract abbreviation expansions
+  result = result.replace(/\[\[abbrev:\s*(.*?)\]\]/gi, (match, content) => {
+    metadata.abbreviations.push(content.trim());
+    return '';
+  });
+
+  // Clean up extra whitespace from removed metadata
+  result = result.replace(/^\s*\n/gm, '\n').replace(/\n{3,}/g, '\n\n').trim();
+
+  return { cleanText: result, metadata };
+}
+
+// Convert inline markup to styled HTML spans
+function processInlineMarkup(text: string): string {
   let result = text;
 
   // Centered text: ->text<- or ::text::
   result = result.replace(/->(.*?)<-/g, '<div class="text-center">$1</div>');
   result = result.replace(/::(.*?)::/g, '<div class="text-center">$1</div>');
 
-  // AI/editorial notes (amber) - our analysis
+  // Editorial notes (amber) - interpretive choices, context for reader
   result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {
     return `<span class="inline-note">${content.trim()}</span>`;
+  });
+
+  // Technical terms with optional gloss: [[term: word]] or [[term: word → meaning]]
+  result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, (match, content) => {
+    const parts = content.split(/→|->/).map((s: string) => s.trim());
+    if (parts.length > 1) {
+      return `<span class="term-note"><em>${parts[0]}</em> (${parts[1]})</span>`;
+    }
+    return `<span class="term-note"><em>${parts[0]}</em></span>`;
   });
 
   // Marginalia - text in margins of original manuscript (teal)
@@ -43,16 +107,64 @@ function processNotesForMarkdown(text: string): string {
     return `<span class="unclear-text">${content.trim()}</span>`;
   });
 
-  // Page number markers
-  result = result.replace(/\[\[page\s*number:\s*(.*?)\]\]/gi, (match, pageNum) => {
-    return `<span class="page-marker">Page ${pageNum.trim()}</span>`;
-  });
-
   return result;
 }
 
-export default function NotesRenderer({ text, className = '' }: NotesRendererProps) {
-  const processedText = useMemo(() => processNotesForMarkdown(text), [text]);
+// Metadata panel component (collapsible)
+function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const hasMetadata = metadata.language || metadata.pageNumber || metadata.folio ||
+    metadata.meta.length > 0 || metadata.abbreviations.length > 0;
+
+  if (!hasMetadata) return null;
+
+  return (
+    <div className="mb-4 border border-stone-200 rounded-lg overflow-hidden bg-stone-50/50">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex items-center gap-2 px-3 py-2 text-left text-xs font-medium text-stone-500 hover:bg-stone-100 transition-colors"
+      >
+        {isOpen ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
+        <Info className="w-3 h-3" />
+        <span>Page Info</span>
+        {metadata.language && (
+          <span className="ml-auto px-1.5 py-0.5 bg-stone-200 rounded text-stone-600">
+            {metadata.language}
+          </span>
+        )}
+        {(metadata.pageNumber || metadata.folio) && (
+          <span className="px-1.5 py-0.5 bg-stone-200 rounded text-stone-600">
+            {metadata.folio ? `f. ${metadata.folio}` : `p. ${metadata.pageNumber}`}
+          </span>
+        )}
+      </button>
+
+      {isOpen && (
+        <div className="px-3 py-2 border-t border-stone-200 text-xs text-stone-600 space-y-2">
+          {metadata.meta.length > 0 && (
+            <div>
+              <span className="font-medium text-stone-500">Notes: </span>
+              {metadata.meta.join(' • ')}
+            </div>
+          )}
+          {metadata.abbreviations.length > 0 && (
+            <div>
+              <span className="font-medium text-stone-500">Abbreviations: </span>
+              <span className="font-mono text-stone-700">
+                {metadata.abbreviations.join(', ')}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function NotesRenderer({ text, className = '', showMetadata = true }: NotesRendererProps) {
+  const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
+  const processedText = useMemo(() => processInlineMarkup(cleanText), [cleanText]);
 
   if (!text) {
     return (
@@ -64,7 +176,10 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
 
   return (
     <div className={`prose-manuscript ${className}`}>
-      {/* Main text rendered as single markdown block */}
+      {/* Collapsible metadata panel */}
+      {showMetadata && <MetadataPanel metadata={metadata} />}
+
+      {/* Main text rendered as markdown */}
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
@@ -103,7 +218,6 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
               {children}
             </blockquote>
           ),
-          // Render code as normal text - manuscripts don't have code
           code: ({ children }) => <span>{children}</span>,
           pre: ({ children }) => <span>{children}</span>,
           hr: () => <hr className="my-6 border-stone-200" />,
@@ -112,7 +226,6 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
               {children}
             </a>
           ),
-          // Table support
           table: ({ children }) => (
             <div className="overflow-x-auto my-4">
               <table className="min-w-full border-collapse border border-stone-200">{children}</table>
@@ -129,16 +242,14 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
           td: ({ children }) => (
             <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
           ),
-          // Centered text
           div: ({ children, className }) => {
             if (className === 'text-center') {
               return <div className="text-center my-4">{children}</div>;
             }
             return <div>{children}</div>;
           },
-          // Custom elements for notes, callouts, and markers
           span: ({ children, className }) => {
-            // AI/editorial notes (amber)
+            // Editorial notes (amber)
             if (className === 'inline-note') {
               return (
                 <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
@@ -146,7 +257,15 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
                 </span>
               );
             }
-            // Marginalia from original manuscript (teal)
+            // Technical terms (indigo)
+            if (className === 'term-note') {
+              return (
+                <span className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
+                  {children}
+                </span>
+              );
+            }
+            // Marginalia (teal)
             if (className === 'margin-note') {
               return (
                 <span className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
@@ -154,7 +273,7 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
                 </span>
               );
             }
-            // Gloss/interlinear annotations (purple)
+            // Gloss (purple)
             if (className === 'gloss-note') {
               return (
                 <span className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
@@ -162,7 +281,7 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
                 </span>
               );
             }
-            // Later insertions (green)
+            // Insertions (green)
             if (className === 'insert-note') {
               return (
                 <span className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
@@ -170,19 +289,11 @@ export default function NotesRenderer({ text, className = '' }: NotesRendererPro
                 </span>
               );
             }
-            // Unclear/illegible text (gray)
+            // Unclear text (gray)
             if (className === 'unclear-text') {
               return (
                 <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
                   {children}?
-                </span>
-              );
-            }
-            // Page markers
-            if (className === 'page-marker') {
-              return (
-                <span className="inline-block bg-stone-100 text-stone-500 text-xs px-2 py-0.5 rounded font-medium my-1">
-                  {children}
                 </span>
               );
             }

@@ -91,18 +91,21 @@ export async function DELETE(
     // Delete the page
     await db.collection('pages').deleteOne({ id });
 
-    // Renumber remaining pages for this book
+    // Renumber remaining pages for this book - use bulkWrite for speed
     const remainingPages = await db.collection('pages')
       .find({ book_id: page.book_id })
       .sort({ page_number: 1 })
       .toArray();
 
-    // Update page numbers sequentially
-    for (let i = 0; i < remainingPages.length; i++) {
-      await db.collection('pages').updateOne(
-        { id: remainingPages[i].id },
-        { $set: { page_number: i + 1, updated_at: new Date() } }
-      );
+    // Bulk update all page numbers in one operation
+    if (remainingPages.length > 0) {
+      const bulkOps = remainingPages.map((p, i) => ({
+        updateOne: {
+          filter: { id: p.id },
+          update: { $set: { page_number: i + 1, updated_at: new Date() } }
+        }
+      }));
+      await db.collection('pages').bulkWrite(bulkOps);
     }
 
     return NextResponse.json({ success: true, deleted: id });

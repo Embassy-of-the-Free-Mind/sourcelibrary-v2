@@ -1,11 +1,13 @@
+import { Suspense } from 'react';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
-import { ArrowLeft, BookOpen, Calendar, Globe, FileText, CheckCircle, Scissors, Settings } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Globe, FileText, Scissors } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import DownloadButton from '@/components/DownloadButton';
+import PageThumbnail from '@/components/PageThumbnail';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -25,8 +27,45 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
   return { book: book as unknown as Book, pages: pages as unknown as Page[] };
 }
 
-export default async function BookDetailPage({ params }: PageProps) {
-  const { id } = await params;
+// Skeleton for book info while loading
+function BookInfoSkeleton() {
+  return (
+    <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
+          <div className="flex-shrink-0 flex justify-center sm:justify-start">
+            <div className="w-32 sm:w-48 aspect-[3/4] rounded-lg overflow-hidden bg-stone-700">
+              <div className="w-full h-full bg-gradient-to-r from-stone-700 via-stone-600 to-stone-700 bg-[length:200%_100%] animate-shimmer" />
+            </div>
+          </div>
+          <div className="flex-1 text-center sm:text-left">
+            <div className="h-8 w-64 bg-stone-700 rounded mb-2" />
+            <div className="h-6 w-40 bg-stone-700 rounded" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Skeleton for pages grid
+function PagesGridSkeleton() {
+  return (
+    <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3 sm:gap-4">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <div key={i}>
+          <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden">
+            <div className="w-full h-full bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+          </div>
+          <div className="h-3 w-6 bg-stone-100 rounded mx-auto mt-1" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Book info component (streams in)
+async function BookInfo({ id }: { id: string }) {
   const data = await getBook(id);
 
   if (!data) {
@@ -34,29 +73,17 @@ export default async function BookDetailPage({ params }: PageProps) {
   }
 
   const { book, pages } = data;
-
-  // Calculate processing stats
   const pagesWithOcr = pages.filter(p => p.ocr?.data).length;
   const pagesWithTranslation = pages.filter(p => p.translation?.data).length;
   const pagesWithSummary = pages.filter(p => p.summary?.data).length;
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link href="/" className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Library
-          </Link>
-        </div>
-      </header>
-
+    <>
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
-            {/* Thumbnail */}
+            {/* Thumbnail - priority loading */}
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
               <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
                 {book.thumbnail ? (
@@ -66,6 +93,7 @@ export default async function BookDetailPage({ params }: PageProps) {
                     fill
                     className="object-cover"
                     sizes="(max-width: 640px) 128px, 192px"
+                    priority
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
@@ -169,69 +197,14 @@ export default async function BookDetailPage({ params }: PageProps) {
           </div>
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3 sm:gap-4">
-            {pages.map((page) => {
-              const hasOcr = !!page.ocr?.data;
-              const hasTranslation = !!page.translation?.data;
-              const hasSummary = !!page.summary?.data;
-              const isComplete = hasOcr && hasTranslation && hasSummary;
-
-              // Build image URL with crop if available
-              const getImageUrl = () => {
-                const baseUrl = page.photo_original || page.photo;
-                if (!baseUrl) return null;
-                if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-                  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-                }
-                return page.thumbnail || `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
-              };
-              const imageUrl = getImageUrl();
-
-              return (
-                <Link
-                  key={page.id}
-                  href={`/book/${book.id}/page/${page.id}`}
-                  className="group relative"
-                >
-                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
-                    {imageUrl ? (
-                      /* eslint-disable-next-line @next/next/no-img-element */
-                      <img
-                        src={imageUrl}
-                        alt={`Page ${page.page_number}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-stone-100">
-                        <span className="text-stone-400 text-sm">{page.page_number}</span>
-                      </div>
-                    )}
-
-                    {/* Status indicators */}
-                    <div className="absolute bottom-1 right-1 flex gap-0.5">
-                      {hasOcr && (
-                        <div className="w-2 h-2 rounded-full bg-blue-500" title="OCR complete" />
-                      )}
-                      {hasTranslation && (
-                        <div className="w-2 h-2 rounded-full bg-green-500" title="Translated" />
-                      )}
-                      {hasSummary && (
-                        <div className="w-2 h-2 rounded-full bg-purple-500" title="Summarized" />
-                      )}
-                    </div>
-
-                    {isComplete && (
-                      <div className="absolute top-1 right-1">
-                        <CheckCircle className="w-4 h-4 text-green-500 bg-white rounded-full" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-center text-xs text-stone-500 mt-1">
-                    {page.page_number}
-                  </div>
-                </Link>
-              );
-            })}
+            {pages.map((page, index) => (
+              <PageThumbnail
+                key={page.id}
+                page={page}
+                bookId={book.id}
+                index={index}
+              />
+            ))}
           </div>
         )}
       </main>
@@ -251,6 +224,37 @@ export default async function BookDetailPage({ params }: PageProps) {
           </div>
         </div>
       </footer>
+    </>
+  );
+}
+
+export default async function BookDetailPage({ params }: PageProps) {
+  const { id } = await params;
+
+  return (
+    <div className="min-h-screen bg-stone-50">
+      {/* Header - renders immediately */}
+      <header className="bg-white border-b border-stone-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <Link href="/" className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900">
+            <ArrowLeft className="w-4 h-4" />
+            Back to Library
+          </Link>
+        </div>
+      </header>
+
+      {/* Book content streams in */}
+      <Suspense fallback={
+        <>
+          <BookInfoSkeleton />
+          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <h2 className="text-xl font-semibold text-stone-900 mb-6">Pages</h2>
+            <PagesGridSkeleton />
+          </main>
+        </>
+      }>
+        <BookInfo id={id} />
+      </Suspense>
     </div>
   );
 }

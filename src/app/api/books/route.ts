@@ -42,7 +42,17 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, display_title, author, language, published } = body;
+    const {
+      title,
+      display_title,
+      author,
+      language,
+      published,
+      publisher,
+      place_of_publication,
+      printer,
+      ia_identifier
+    } = body;
 
     if (!title) {
       return NextResponse.json({ error: 'Title is required' }, { status: 400 });
@@ -57,8 +67,12 @@ export async function POST(request: NextRequest) {
       title,
       display_title: display_title || null,
       author: author || 'Unknown',
-      language: language || 'Latin',
+      language: language || 'Unknown',
       published: published || 'Unknown',
+      publisher: publisher || null,
+      place_of_publication: place_of_publication || null,
+      printer: printer || null,
+      ia_identifier: ia_identifier || null,
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date(),

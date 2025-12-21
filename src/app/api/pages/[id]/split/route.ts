@@ -116,19 +116,22 @@ export async function POST(
 
     await db.collection('pages').insertOne(newPage);
 
-    // Renumber all pages after the current one
-    // Get all pages again and sort by page_number
+    // Renumber all pages - use bulkWrite for speed
     const updatedPages = await db.collection('pages')
       .find({ book_id: currentPage.book_id })
       .sort({ page_number: 1 })
       .toArray();
 
-    // Renumber sequentially
-    for (let i = 0; i < updatedPages.length; i++) {
-      await db.collection('pages').updateOne(
-        { id: updatedPages[i].id },
-        { $set: { page_number: i + 1 } }
-      );
+    // Bulk update all page numbers in one operation
+    const bulkOps = updatedPages.map((p, i) => ({
+      updateOne: {
+        filter: { id: p.id },
+        update: { $set: { page_number: i + 1 } }
+      }
+    }));
+
+    if (bulkOps.length > 0) {
+      await db.collection('pages').bulkWrite(bulkOps);
     }
 
     // Update book page count
