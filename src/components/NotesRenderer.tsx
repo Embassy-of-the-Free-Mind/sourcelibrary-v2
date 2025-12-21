@@ -94,9 +94,16 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
 function processInlineMarkup(text: string): string {
   let result = text;
 
-  // Centered text: ->text<- or ::text::
-  result = result.replace(/->(.*?)<-/g, '<div class="text-center">$1</div>');
-  result = result.replace(/::(.*?)::/g, '<div class="text-center">$1</div>');
+  // Centered text: ->text<- or ::text:: (handles multiline)
+  result = result.replace(/->([\s\S]*?)<-/g, (match, content) => {
+    // Clean up whitespace and join lines
+    const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
+    return `<div class="text-center">${cleaned}</div>`;
+  });
+  result = result.replace(/::([\s\S]*?)::/g, (match, content) => {
+    const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
+    return `<div class="text-center">${cleaned}</div>`;
+  });
 
   // Editorial notes (amber) - interpretive choices, context for reader
   result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {

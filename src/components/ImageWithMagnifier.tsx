@@ -39,10 +39,14 @@ export default function ImageWithMagnifier({
 
   // Use thumbnail for display, full image for magnifier
   // If no thumbnail, use resize API to generate one on-the-fly
+  // If src is already an /api/image URL, use it directly (already processed)
   const getResizedUrl = (url: string, width: number = 400) => {
+    // Don't double-wrap /api/image URLs
+    if (url.startsWith('/api/image')) return url;
     return `/api/image?url=${encodeURIComponent(url)}&w=${width}&q=70`;
   };
-  const displaySrc = thumbnail || getResizedUrl(src, 400);
+  const isApiImageUrl = src.startsWith('/api/image');
+  const displaySrc = thumbnail || (isApiImageUrl ? src : getResizedUrl(src, 400));
   const magnifierSrc = src;
 
   // Detect touch device on mount
