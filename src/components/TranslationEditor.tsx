@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
+import ImageWithMagnifier from './ImageWithMagnifier';
 import type { Page, Book, Prompt } from '@/lib/types';
 
 interface TranslationEditorProps {
@@ -157,54 +158,56 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="w-full max-w-lg mx-4 rounded-xl shadow-2xl" style={{ background: 'var(--bg-white)' }}>
-        <div className="flex items-center justify-between p-5" style={{ borderBottom: '1px solid var(--border-light)' }}>
+      <div className="w-full max-w-3xl mx-4 rounded-xl shadow-2xl max-h-[90vh] flex flex-col" style={{ background: 'var(--bg-white)' }}>
+        <div className="flex items-center justify-between p-5 flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
           <h2 className="text-lg font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>{title}</h2>
           <button onClick={onClose} className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-5 space-y-5">
-          <div>
-            <label className="label block mb-2">AI Model</label>
-            <select
-              className="w-full px-3 py-2.5 rounded-lg text-sm"
-              style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
-            >
-              <option>Gemini 2.0 Flash</option>
-            </select>
+        <div className="p-5 space-y-4 flex-1 overflow-auto">
+          <div className="flex gap-4">
+            <div className="flex-1">
+              <label className="label block mb-2">AI Model</label>
+              <select
+                className="w-full px-3 py-2.5 rounded-lg text-sm"
+                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
+              >
+                <option>Gemini 2.0 Flash</option>
+              </select>
+            </div>
+
+            <div className="flex-1">
+              <label className="label block mb-2">Prompt Template</label>
+              <select
+                value={selectedPrompt?.id || selectedPrompt?._id?.toString() || ''}
+                onChange={(e) => handleSelectPrompt(e.target.value)}
+                disabled={loading}
+                className="w-full px-3 py-2.5 rounded-lg text-sm"
+                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
+              >
+                {loading ? (
+                  <option>Loading...</option>
+                ) : (
+                  prompts.map(p => (
+                    <option key={p.id || p._id?.toString()} value={p.id || p._id?.toString()}>
+                      {p.name}{p.is_default ? ' (Default)' : ''}
+                    </option>
+                  ))
+                )}
+              </select>
+            </div>
           </div>
 
-          <div>
-            <label className="label block mb-2">Prompt Template</label>
-            <select
-              value={selectedPrompt?.id || selectedPrompt?._id?.toString() || ''}
-              onChange={(e) => handleSelectPrompt(e.target.value)}
-              disabled={loading}
-              className="w-full px-3 py-2.5 rounded-lg text-sm"
-              style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)', color: 'var(--text-primary)' }}
-            >
-              {loading ? (
-                <option>Loading...</option>
-              ) : (
-                prompts.map(p => (
-                  <option key={p.id || p._id?.toString()} value={p.id || p._id?.toString()}>
-                    {p.name}{p.is_default ? ' (Default)' : ''}
-                  </option>
-                ))
-              )}
-            </select>
-          </div>
-
-          <div>
+          <div className="flex-1 flex flex-col">
             <label className="label block mb-2">
               Prompt Text <span style={{ color: 'var(--text-faint)', fontWeight: 'normal', textTransform: 'none' }}>(use {'{language}'} as placeholders)</span>
             </label>
             <textarea
               value={editedContent}
               onChange={(e) => handleContentChange(e.target.value)}
-              className="w-full h-40 px-3 py-2.5 rounded-lg text-sm font-mono resize-none"
+              className="w-full min-h-[320px] px-3 py-2.5 rounded-lg text-sm font-mono resize-y"
               style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-cream)', color: 'var(--text-secondary)' }}
             />
           </div>
@@ -259,249 +262,6 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
   );
 }
 
-// Magnifier component for zooming into the source image
-// Desktop: hover to show magnifier lens, click HD button for fullscreen
-// Mobile/Touch: tap to open fullscreen viewer
-function ImageWithMagnifier({ src, thumbnail, alt }: { src: string; thumbnail?: string; alt: string }) {
-  const [showMagnifier, setShowMagnifier] = useState(false);
-  const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
-  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
-  const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
-  const [fullImageDimensions, setFullImageDimensions] = useState({ width: 0, height: 0 });
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [fullImageLoaded, setFullImageLoaded] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [showFullscreen, setShowFullscreen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  const magnifierSize = 200;
-  const zoomLevel = 3;
-
-  // Use thumbnail for display, full image for magnifier
-  // If no thumbnail, use resize API to generate one on-the-fly
-  const getResizedUrl = (url: string, width: number = 400) => {
-    return `/api/image?url=${encodeURIComponent(url)}&w=${width}&q=70`;
-  };
-  const displaySrc = thumbnail || getResizedUrl(src, 400);
-  const magnifierSrc = src;
-
-  // Detect touch device on mount
-  useEffect(() => {
-    const checkTouch = () => {
-      setIsTouchDevice(
-        'ontouchstart' in window ||
-        navigator.maxTouchPoints > 0 ||
-        window.matchMedia('(pointer: coarse)').matches
-      );
-    };
-    checkTouch();
-    // Re-check on resize (for responsive testing)
-    window.addEventListener('resize', checkTouch);
-    return () => window.removeEventListener('resize', checkTouch);
-  }, []);
-
-  useEffect(() => {
-    // Reset loaded state when src changes
-    setIsLoaded(false);
-    setFullImageLoaded(false);
-    setFullImageDimensions({ width: 0, height: 0 });
-  }, [src]);
-
-  useEffect(() => {
-    // Get actual rendered image dimensions (accounting for object-contain)
-    const updateDimensions = () => {
-      if (imgRef.current) {
-        const img = imgRef.current;
-        const containerRect = img.getBoundingClientRect();
-        const naturalWidth = img.naturalWidth;
-        const naturalHeight = img.naturalHeight;
-
-        if (naturalWidth && naturalHeight) {
-          // Calculate the actual rendered size with object-contain
-          const containerAspect = containerRect.width / containerRect.height;
-          const imageAspect = naturalWidth / naturalHeight;
-
-          let renderedWidth, renderedHeight;
-          if (imageAspect > containerAspect) {
-            // Image is wider - constrained by width
-            renderedWidth = containerRect.width;
-            renderedHeight = containerRect.width / imageAspect;
-          } else {
-            // Image is taller - constrained by height
-            renderedHeight = containerRect.height;
-            renderedWidth = containerRect.height * imageAspect;
-          }
-
-          setImageDimensions({ width: renderedWidth, height: renderedHeight });
-        }
-      }
-    };
-
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
-  }, [isLoaded]);
-
-  // Preload full image for magnifier and get its natural dimensions
-  useEffect(() => {
-    const img = new window.Image();
-    img.onload = () => {
-      setFullImageLoaded(true);
-      setFullImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
-    };
-    img.src = src;
-  }, [src]);
-
-  // Desktop: mouse move for magnifier
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Skip magnifier on touch devices
-    if (isTouchDevice) return;
-    if (!containerRef.current || !imgRef.current || !fullImageLoaded) return;
-    if (!imageDimensions.width || !imageDimensions.height) return;
-
-    const containerRect = containerRef.current.getBoundingClientRect();
-
-    // Calculate where the actual image is rendered within the container (object-contain centers it)
-    const imgOffsetX = (containerRect.width - imageDimensions.width) / 2;
-    const imgOffsetY = (containerRect.height - imageDimensions.height) / 2;
-
-    // Get cursor position relative to container
-    const containerX = e.clientX - containerRect.left;
-    const containerY = e.clientY - containerRect.top;
-
-    // Get cursor position relative to the actual rendered image
-    const imgX = containerX - imgOffsetX;
-    const imgY = containerY - imgOffsetY;
-
-    // Check if cursor is over the actual rendered image
-    const isOverImage = imgX >= 0 && imgX <= imageDimensions.width && imgY >= 0 && imgY <= imageDimensions.height;
-
-    if (isOverImage) {
-      setCursorPosition({ x: containerX, y: containerY });
-
-      // Calculate background position as percentage of image dimensions
-      const xPercent = (imgX / imageDimensions.width) * 100;
-      const yPercent = (imgY / imageDimensions.height) * 100;
-      setMagnifierPosition({ x: xPercent, y: yPercent });
-      setShowMagnifier(true);
-    } else {
-      setShowMagnifier(false);
-    }
-  };
-
-  // Mobile: tap to open fullscreen
-  const handleClick = () => {
-    if (isTouchDevice && isLoaded) {
-      setShowFullscreen(true);
-    }
-  };
-
-  // Calculate magnifier background size using full image aspect ratio
-  // Scale it so the displayed area matches what we're showing
-  const getMagnifierBackgroundSize = () => {
-    if (!fullImageDimensions.width || !imageDimensions.width) {
-      return `${imageDimensions.width * zoomLevel}px ${imageDimensions.height * zoomLevel}px`;
-    }
-    // Use the displayed image dimensions scaled by zoom level
-    // This ensures proper 1:1 mapping between cursor position and magnified area
-    return `${imageDimensions.width * zoomLevel}px ${imageDimensions.height * zoomLevel}px`;
-  };
-
-  return (
-    <>
-      <div
-        ref={containerRef}
-        className="relative w-full h-full"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={() => setShowMagnifier(false)}
-        onClick={handleClick}
-      >
-        {/* Loading skeleton */}
-        {!isLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-stone-100 animate-pulse">
-            <div className="text-stone-400 text-sm">Loading...</div>
-          </div>
-        )}
-
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          ref={imgRef}
-          src={displaySrc}
-          alt={alt}
-          loading="lazy"
-          className={`w-full h-full object-contain transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'}`}
-          onLoad={() => {
-            setIsLoaded(true);
-            if (imgRef.current) {
-              const rect = imgRef.current.getBoundingClientRect();
-              setImageDimensions({ width: rect.width, height: rect.height });
-            }
-          }}
-        />
-
-        {/* Desktop: Magnifier lens - uses full resolution image */}
-        {!isTouchDevice && showMagnifier && fullImageLoaded && (
-          <div
-            className="absolute pointer-events-none rounded-full overflow-hidden"
-            style={{
-              width: magnifierSize,
-              height: magnifierSize,
-              left: cursorPosition.x - magnifierSize / 2,
-              top: cursorPosition.y - magnifierSize / 2,
-              border: '4px solid white',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-              backgroundImage: `url(${magnifierSrc})`,
-              backgroundSize: `${imageDimensions.width * zoomLevel}px ${imageDimensions.height * zoomLevel}px`,
-              backgroundPosition: `${-magnifierPosition.x * imageDimensions.width * zoomLevel / 100 + magnifierSize / 2}px ${-magnifierPosition.y * imageDimensions.height * zoomLevel / 100 + magnifierSize / 2}px`,
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: 'var(--bg-white)',
-            }}
-          />
-        )}
-
-        {/* Action buttons - always visible, with pointer-events */}
-        {isLoaded && (
-          <div
-            className="absolute bottom-3 right-3 flex items-center gap-2 z-10"
-            onMouseEnter={() => setShowMagnifier(false)}
-          >
-            {/* HD View button - desktop only */}
-            {!isTouchDevice && fullImageLoaded && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowFullscreen(true);
-                }}
-                className="flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium transition-colors hover:bg-white/90"
-                style={{ background: 'rgba(255,255,255,0.8)', color: '#333' }}
-              >
-                <Maximize2 className="w-3 h-3" />
-                HD
-              </button>
-            )}
-            {/* Zoom hint */}
-            <div className="flex items-center gap-1.5 px-2 py-1 rounded text-xs" style={{ background: 'rgba(0,0,0,0.6)', color: 'white' }}>
-              <ZoomIn className="w-3 h-3" />
-              {isTouchDevice
-                ? 'Tap to view'
-                : fullImageLoaded ? 'Hover to zoom' : 'Loading HD...'}
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Fullscreen viewer - works for both mobile and desktop */}
-      <FullscreenImageViewer
-        src={src}
-        alt={alt}
-        isOpen={showFullscreen}
-        onClose={() => setShowFullscreen(false)}
-      />
-    </>
-  );
-}
-
 export default function TranslationEditor({
   book,
   page,
@@ -525,6 +285,7 @@ export default function TranslationEditor({
 
   const [copiedTranslation, setCopiedTranslation] = useState(false);
   const [showOcrInRead, setShowOcrInRead] = useState(false);
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
 
   // Swipe navigation state
   const touchStartX = useRef<number>(0);
@@ -700,12 +461,10 @@ export default function TranslationEditor({
     setTimeout(() => setCopiedTranslation(false), 2000);
   };
 
-  // READ MODE - Clean reading experience
+  // READ MODE - Always show 3 panels with step-by-step workflow
   if (mode === 'read') {
-    // Image column is narrow, text columns take the rest
-    // Use lg: (1024px) breakpoint so tablets stay in stacked view
-    const imageWidth = 'lg:w-1/4';
-    const textWidth = showOcrInRead ? 'lg:w-[37.5%]' : 'lg:w-3/4';
+    // If both OCR and translation exist, show the completed reading view
+    const isFullyTranslated = ocrText && translationText;
 
     return (
       <div className="h-screen flex flex-col" style={{ background: 'var(--bg-cream)' }}>
@@ -749,21 +508,8 @@ export default function TranslationEditor({
             </button>
           </div>
 
-          {/* Right: View Options + Edit */}
+          {/* Right: Edit Button */}
           <div className="flex items-center gap-1 sm:gap-2">
-            {/* Show OCR Toggle */}
-            {ocrText && (
-              <button
-                onClick={() => setShowOcrInRead(!showOcrInRead)}
-                className={`flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 ${showOcrInRead ? 'bg-amber-100 text-amber-700' : 'hover:bg-stone-100'}`}
-                style={{ color: showOcrInRead ? undefined : 'var(--text-muted)' }}
-                title="Show original text"
-              >
-                <Columns className="w-4 h-4" />
-                <span className="hidden sm:inline">{book.language || 'Original'}</span>
-              </button>
-            )}
-            {/* Edit Button */}
             <button
               onClick={() => setMode('edit')}
               className="flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0"
@@ -775,7 +521,7 @@ export default function TranslationEditor({
           </div>
         </header>
 
-        {/* Reading layout - with swipe navigation on mobile */}
+        {/* Three-panel layout */}
         <div
           className="flex-1 flex flex-col lg:flex-row overflow-hidden relative"
           onTouchStart={handleTouchStart}
@@ -786,18 +532,17 @@ export default function TranslationEditor({
             transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
           }}
         >
-          {/* Source Image - fixed height on mobile, flex on desktop */}
-          <div className={`w-full ${imageWidth} flex flex-col h-48 lg:h-auto`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+          {/* Source Image Panel */}
+          <div className="w-full lg:w-1/3 flex flex-col h-48 lg:h-auto" style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
             <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Image</span>
-              <span className="text-xs lg:hidden" style={{ color: 'var(--text-faint)' }}>Tap to enlarge</span>
+              <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
             </div>
-            <div className="flex-1 overflow-hidden p-2 lg:p-4">
-              <div className="relative w-full h-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+            <div className="flex-1 overflow-auto p-2 lg:p-4">
+              <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
                 {pageImageUrl ? (
-                  <ImageWithMagnifier src={pageImageUrl} thumbnail={pageThumbnailUrl} alt={`Page ${page.page_number}`} />
+                  <ImageWithMagnifier src={pageImageUrl} thumbnail={pageThumbnailUrl} alt={`Page ${page.page_number}`} scrollable />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+                  <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                     No image available
                   </div>
                 )}
@@ -805,24 +550,76 @@ export default function TranslationEditor({
             </div>
           </div>
 
-          {/* OCR Text (optional middle column) - hidden on mobile by default */}
-          {showOcrInRead && ocrText && (
-            <div className={`w-full ${textWidth} flex-col hidden lg:flex`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
-              <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-                <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>{book.language || 'Original'}</span>
+          {/* OCR Panel - Step 1 */}
+          <div className="w-full lg:w-1/3 flex flex-col" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+            <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                  {ocrText ? (book.language || 'Original') : 'Step 1: Transcribe'}
+                </span>
+                {ocrText && (
+                  <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
+                    <Check className="w-3 h-3" />
+                  </span>
+                )}
               </div>
-              <div className="flex-1 overflow-auto p-4">
+            </div>
+            <div className="flex-1 overflow-auto p-4 min-h-0">
+              {ocrText ? (
                 <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
                   <NotesRenderer text={ocrText} />
                 </div>
-              </div>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
+                    <svg className="w-8 h-8" style={{ color: 'var(--accent-rust, #c45d3a)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                    Transcribe the {book.language || 'original text'}
+                  </h3>
+                  <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
+                    AI will read the manuscript image and transcribe the original text. This may take a minute.
+                  </p>
+                  <button
+                    onClick={() => handleProcess('ocr')}
+                    disabled={processing !== null}
+                    className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{ background: 'var(--accent-rust, #c45d3a)' }}
+                  >
+                    {processing === 'ocr' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        Transcribing...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        Start OCR
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
-          )}
+          </div>
 
-          {/* Translation - takes remaining space */}
-          <div className={`w-full ${textWidth} flex flex-col min-h-0 flex-1`} style={{ background: 'var(--bg-white)' }}>
+          {/* Translation Panel - Step 2 */}
+          <div className="w-full lg:w-1/3 flex flex-col min-h-0 flex-1" style={{ background: 'var(--bg-white)' }}>
             <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>English</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                  {translationText ? 'English' : 'Step 2: Translate'}
+                </span>
+                {translationText && (
+                  <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
+                    <Check className="w-3 h-3" />
+                  </span>
+                )}
+              </div>
               {translationText && (
                 <button
                   onClick={() => copyToClipboard(translationText)}
@@ -837,34 +634,53 @@ export default function TranslationEditor({
             <div className="flex-1 overflow-auto p-4 min-h-0">
               {translationText ? (
                 <NotesRenderer text={translationText} />
-              ) : (
-                <div className="h-full flex flex-col items-center justify-center text-center px-6">
-                  <div className="w-14 h-14 rounded-full bg-amber-100 flex items-center justify-center mb-4">
-                    <svg className="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              ) : ocrText ? (
+                <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
+                    <svg className="w-8 h-8" style={{ color: 'var(--accent-sage, #6b8a63)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                     </svg>
                   </div>
                   <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
-                    Translate this page?
+                    Ready to translate
                   </h3>
-                  <p className="text-sm mb-5 max-w-xs" style={{ color: 'var(--text-muted)' }}>
-                    AI will transcribe and translate to English.
+                  <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
+                    OCR complete! Now translate the {book.language || 'text'} into English.
                   </p>
                   <button
-                    onClick={() => handleProcess('all')}
+                    onClick={() => handleProcess('translation')}
                     disabled={processing !== null}
                     className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
-                    style={{ background: 'var(--accent-rust, #c45d3a)' }}
+                    style={{ background: 'var(--accent-sage, #6b8a63)' }}
                   >
-                    {processing ? (
+                    {processing === 'translation' ? (
                       <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        {processing === 'ocr' ? 'Transcribing...' : 'Translating...'}
+                        Translating...
                       </>
                     ) : (
-                      'Start Translation'
+                      <>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                        Translate to English
+                      </>
                     )}
                   </button>
+                </div>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center px-4">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'var(--bg-warm, #f5f3f0)' }}>
+                    <svg className="w-8 h-8" style={{ color: 'var(--text-faint, #c4c0b8)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-muted)' }}>
+                    Complete OCR first
+                  </h3>
+                  <p className="text-sm max-w-xs" style={{ color: 'var(--text-faint)' }}>
+                    The original text needs to be transcribed before it can be translated.
+                  </p>
                 </div>
               )}
             </div>
@@ -968,12 +784,12 @@ export default function TranslationEditor({
               {book.language || 'Latin'}
             </span>
           </div>
-          <div className="flex-1 overflow-hidden p-4">
-            <div className="relative w-full h-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div className="flex-1 overflow-auto p-4">
+            <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
               {page.photo ? (
-                <ImageWithMagnifier src={page.photo} thumbnail={page.thumbnail || page.compressed_photo} alt={`Page ${page.page_number}`} />
+                <ImageWithMagnifier src={page.photo} thumbnail={page.thumbnail || page.compressed_photo} alt={`Page ${page.page_number}`} scrollable />
               ) : (
-                <div className="w-full h-full flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+                <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                   No image available
                 </div>
               )}
@@ -990,8 +806,8 @@ export default function TranslationEditor({
                 className="btn-secondary"
                 style={{ padding: '6px 12px' }}
               >
-                <Settings className="w-4 h-4" />
-                Settings
+                <Pencil className="w-4 h-4" />
+                Edit OCR Prompt
               </button>
               <button
                 onClick={() => handleProcess('ocr')}
@@ -1033,8 +849,8 @@ export default function TranslationEditor({
                 className="btn-secondary"
                 style={{ padding: '6px 12px' }}
               >
-                <Settings className="w-4 h-4" />
-                Settings
+                <Pencil className="w-4 h-4" />
+                Edit Translation Prompt
               </button>
               <button
                 onClick={() => handleProcess('translation')}
@@ -1100,6 +916,115 @@ export default function TranslationEditor({
         selectedPromptId={selectedTranslationPrompt?.id || selectedTranslationPrompt?._id?.toString() || null}
         onSelectPrompt={setSelectedTranslationPrompt}
       />
+
+      {/* How It Works Modal */}
+      {showHowItWorks && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden" style={{ background: 'var(--bg-white)' }}>
+            {/* Header */}
+            <div className="px-6 py-5 flex items-center justify-between" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
+              <h2 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                How Translation Works
+              </h2>
+              <button onClick={() => setShowHowItWorks(false)} className="p-1 rounded-full hover:bg-white/50 transition-colors" style={{ color: 'var(--text-secondary)' }}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-6">
+              {/* Process Diagram */}
+              <div className="flex items-center justify-between gap-2 py-4">
+                {/* Step 1: Image */}
+                <div className="flex flex-col items-center text-center flex-1">
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-2" style={{ background: 'var(--bg-warm)', border: '2px solid var(--border-medium)' }}>
+                    <svg className="w-7 h-7" style={{ color: 'var(--accent-violet)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Manuscript</span>
+                </div>
+
+                <svg className="w-6 h-6 flex-shrink-0" style={{ color: 'var(--text-muted)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+
+                {/* Step 2: OCR */}
+                <div className="flex flex-col items-center text-center flex-1">
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-2" style={{ background: 'var(--bg-warm)', border: '2px solid var(--border-medium)' }}>
+                    <svg className="w-7 h-7" style={{ color: 'var(--accent-sage)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Transcription</span>
+                </div>
+
+                <svg className="w-6 h-6 flex-shrink-0" style={{ color: 'var(--text-muted)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+
+                {/* Step 3: Translation */}
+                <div className="flex flex-col items-center text-center flex-1">
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center mb-2" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)', border: '2px solid var(--accent-rust)' }}>
+                    <svg className="w-7 h-7" style={{ color: 'var(--accent-rust)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                    </svg>
+                  </div>
+                  <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Translation</span>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="space-y-4" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
+                <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  Our AI-powered translation uses <strong>Gemini 2.0 Flash</strong> to read and understand historical manuscripts. The process happens in two stages:
+                </p>
+                <ol className="space-y-3 text-base" style={{ color: 'var(--text-secondary)' }}>
+                  <li className="flex gap-3">
+                    <span className="font-bold" style={{ color: 'var(--accent-sage)' }}>1.</span>
+                    <span><strong>Transcription</strong> — The AI reads the manuscript image and produces the original {book.language || 'text'}, preserving special characters and formatting.</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="font-bold" style={{ color: 'var(--accent-rust)' }}>2.</span>
+                    <span><strong>Translation</strong> — The transcribed text is translated into clear, readable English while maintaining the meaning and style of the original.</span>
+                  </li>
+                </ol>
+              </div>
+
+              {/* How to Help */}
+              <div className="rounded-xl p-5" style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)' }}>
+                <h3 className="text-base font-medium mb-3" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                  How You Can Help
+                </h3>
+                <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <li className="flex gap-2">
+                    <span style={{ color: 'var(--accent-rust)' }}>•</span>
+                    <span><strong>Review translations</strong> — Switch to Edit mode to correct any errors in the transcription or translation.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span style={{ color: 'var(--accent-rust)' }}>•</span>
+                    <span><strong>Improve prompts</strong> — Use the Settings to refine the AI prompts for better results.</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <span style={{ color: 'var(--accent-rust)' }}>•</span>
+                    <span><strong>Share knowledge</strong> — Your corrections help improve future translations.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 py-4" style={{ borderTop: '1px solid var(--border-light)' }}>
+              <button
+                onClick={() => setShowHowItWorks(false)}
+                className="w-full py-3 rounded-lg font-medium text-white transition-all hover:opacity-90"
+                style={{ background: 'var(--accent-rust, #c45d3a)' }}
+              >
+                Got it
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
