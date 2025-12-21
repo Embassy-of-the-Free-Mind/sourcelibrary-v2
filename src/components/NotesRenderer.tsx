@@ -34,6 +34,9 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
 
   let result = text;
 
+  // Strip markdown code fence wrappers if present (AI sometimes wraps output)
+  result = result.replace(/^```(?:markdown)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
+
   // Extract language (hidden from reader)
   result = result.replace(/\[\[language:\s*(.*?)\]\]/gi, (match, lang) => {
     metadata.language = lang.trim();
