@@ -23,8 +23,15 @@ export async function GET(request: NextRequest) {
 
     let buffer: Buffer;
 
-    // Handle local paths (starting with /)
-    if (url.startsWith('/')) {
+    // Handle absolute local paths (e.g., /Users/... from imports)
+    if (url.startsWith('/Users/') || url.startsWith('/home/')) {
+      if (!fs.existsSync(url)) {
+        return NextResponse.json({ error: 'Local file not found' }, { status: 404 });
+      }
+      buffer = fs.readFileSync(url);
+    }
+    // Handle relative local paths (starting with /)
+    else if (url.startsWith('/')) {
       const localPath = path.join(process.cwd(), 'public', url);
       if (!fs.existsSync(localPath)) {
         return NextResponse.json({ error: 'Local file not found' }, { status: 404 });

@@ -2,9 +2,10 @@
 
 import { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import BookCard from '@/components/BookCard';
 import { Book } from '@/lib/types';
-import { Search, Loader2, ExternalLink, BookOpen } from 'lucide-react';
+import { Search, Loader2, ExternalLink, BookOpen, Plus, Check } from 'lucide-react';
 
 interface BookLibraryProps {
   books: Book[];
@@ -27,6 +28,7 @@ interface CatalogResult {
 type SortOption = 'title-asc' | 'title-desc' | 'recent';
 
 export default function BookLibrary({ books, languages }: BookLibraryProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('title-asc');
@@ -37,6 +39,10 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
   const [catalogSearching, setCatalogSearching] = useState(false);
   const [hasSearchedCatalog, setHasSearchedCatalog] = useState(false);
   const [showCatalogResults, setShowCatalogResults] = useState(false);
+
+  // Import state
+  const [importingIds, setImportingIds] = useState<Set<string>>(new Set());
+  const [importedBooks, setImportedBooks] = useState<Map<string, string>>(new Map()); // catalogId -> bookId
 
   const filteredAndSortedBooks = useMemo(() => {
     let result = [...books];
@@ -131,6 +137,50 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
   // Get source label
   const getSourceLabel = (source: 'ia' | 'bph') => {
     return source === 'ia' ? 'Internet Archive' : 'Embassy of the Free Mind';
+  };
+
+  // Import book from IA
+  const importFromIA = async (item: CatalogResult) => {
+    if (!item.iaIdentifier || importingIds.has(item.id)) return;
+
+    setImportingIds(prev => new Set(prev).add(item.id));
+
+    try {
+      const response = await fetch('/api/import/ia', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ia_identifier: item.iaIdentifier,
+          title: item.title,
+          author: item.author || 'Unknown',
+          language: item.language || 'Unknown',
+          published: item.year || 'Unknown',
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.bookId) {
+        setImportedBooks(prev => new Map(prev).set(item.id, data.bookId));
+        // Refresh the page to show the new book
+        router.refresh();
+      } else if (response.status === 409 && data.existingId) {
+        // Book already exists
+        setImportedBooks(prev => new Map(prev).set(item.id, data.existingId));
+      } else {
+        console.error('Import failed:', data.error);
+        alert(`Import failed: ${data.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Import error:', error);
+      alert('Import failed. Please try again.');
+    } finally {
+      setImportingIds(prev => {
+        const next = new Set(prev);
+        next.delete(item.id);
+        return next;
+      });
+    }
   };
 
   return (

@@ -12,6 +12,12 @@ async function getBooks(): Promise<Book[]> {
 
     const books = await db.collection('books').aggregate([
       {
+        // Ensure id field exists (use _id as fallback for older imports)
+        $addFields: {
+          id: { $ifNull: ['$id', { $toString: '$_id' }] }
+        }
+      },
+      {
         $lookup: {
           from: 'pages',
           localField: 'id',

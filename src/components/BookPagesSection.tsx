@@ -323,7 +323,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
                   Batch Process
                 </button>
                 <Link
-                  href={`/book/${bookId}/prepare`}
+                  href={`/book/${bookId}/split`}
                   className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
                 >
                   <Scissors className="w-4 h-4" />
