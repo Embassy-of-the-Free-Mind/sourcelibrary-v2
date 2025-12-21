@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
-import { ArrowLeft, BookOpen, Calendar, Globe, FileText } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 
@@ -15,11 +15,28 @@ interface PageProps {
 async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null> {
   const db = await getDb();
 
-  const book = await db.collection('books').findOne({ id });
+  // Try to find by custom id field first, then by _id
+  let book = await db.collection('books').findOne({ id });
+
+  // If not found, try _id (for books imported without custom id)
+  if (!book) {
+    try {
+      const { ObjectId } = await import('mongodb');
+      if (ObjectId.isValid(id)) {
+        book = await db.collection('books').findOne({ _id: new ObjectId(id) });
+      }
+    } catch {
+      // Invalid ObjectId format, book not found
+    }
+  }
+
   if (!book) return null;
 
+  // Use the book's id field, or fall back to _id string
+  const bookId = book.id || book._id?.toString();
+
   const pages = await db.collection('pages')
-    .find({ book_id: id })
+    .find({ book_id: bookId })
     .sort({ page_number: 1 })
     .toArray();
 
@@ -132,10 +149,19 @@ async function BookInfo({ id }: { id: string }) {
       </div>
 
       {/* Book Summary */}
-      {book.summary && (
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white rounded-lg border border-stone-200 p-6">
-            <h2 className="text-lg font-semibold text-stone-900 mb-4">About This Book</h2>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-lg border border-stone-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-stone-900">About This Book</h2>
+            <Link
+              href={`/book/${book.id}/summary`}
+              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
+            >
+              <BookText className="w-4 h-4" />
+              {book.summary ? 'Full Summary & Index' : 'Generate Summary'}
+            </Link>
+          </div>
+          {book.summary ? (
             <div className="prose prose-stone prose-sm max-w-none">
               {(typeof book.summary === 'string' ? book.summary : book.summary.data)
                 .split('\n\n')
@@ -145,9 +171,13 @@ async function BookInfo({ id }: { id: string }) {
                   </p>
                 ))}
             </div>
-          </div>
+          ) : (
+            <p className="text-stone-500 text-sm">
+              No summary yet. Process page summaries and generate a book summary to see it here.
+            </p>
+          )}
         </div>
-      )}
+      </div>
 
       {/* Stats + Pages Grid with Batch Mode */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
