@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { Book, Page } from '@/lib/types';
 import epub from 'epub-gen-memory';
+import archiver from 'archiver';
+import sharp from 'sharp';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -110,33 +112,52 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
 
 // Convert markdown-like text to basic HTML for EPUB
 function markdownToHtml(text: string): string {
-  let html = text
-    // Escape HTML entities first
+  // First, remove image markdown syntax (can't embed in simple EPUB)
+  let html = text.replace(/!\[.*?\]\(.*?\)/g, '');
+
+  // Remove any standalone URLs
+  html = html.replace(/https?:\/\/[^\s\)]+/g, '');
+
+  // Escape HTML entities
+  html = html
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    // Convert [[notes: ...]] to styled aside blocks
-    .replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<aside class="note">$1</aside>')
-    // Convert headers
-    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-    // Convert bold and italic
-    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    // Convert line breaks to paragraphs (double newlines)
-    .replace(/\n\n+/g, '</p><p>')
-    // Convert single newlines to breaks
-    .replace(/\n/g, '<br/>');
+    .replace(/>/g, '&gt;');
 
-  // Wrap in paragraph tags
-  html = '<p>' + html + '</p>';
+  // Convert [[notes: ...]] to styled aside blocks
+  html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<aside class="note">$1</aside>');
 
-  // Clean up empty paragraphs
-  html = html.replace(/<p><\/p>/g, '').replace(/<p>\s*<\/p>/g, '');
+  // Convert headers (must be done before paragraph wrapping)
+  html = html.replace(/^### (.+)$/gm, '\n<h3>$1</h3>\n');
+  html = html.replace(/^## (.+)$/gm, '\n<h2>$1</h2>\n');
+  html = html.replace(/^# (.+)$/gm, '\n<h1>$1</h1>\n');
 
-  return html;
+  // Convert bold and italic
+  html = html.replace(/\*\*\*(.*?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+  // Split by double newlines to create paragraphs
+  const blocks = html.split(/\n\n+/);
+
+  // Process each block
+  html = blocks.map(block => {
+    block = block.trim();
+    if (!block) return '';
+    // Don't wrap headers or asides in paragraphs
+    if (block.startsWith('<h') || block.startsWith('<aside')) {
+      return block;
+    }
+    // Replace single newlines with breaks within paragraphs
+    block = block.replace(/\n/g, '<br/>');
+    return `<p>${block}</p>`;
+  }).filter(b => b).join('\n');
+
+  // Clean up empty paragraphs and whitespace issues
+  html = html.replace(/<p>\s*<\/p>/g, '');
+  html = html.replace(/<p><br\/><\/p>/g, '');
+
+  return html || '<p></p>';
 }
 
 // Custom CSS for EPUB styling
@@ -185,7 +206,7 @@ p {
 }
 `;
 
-// Loeb Classical Library style CSS - parallel text layout
+// Loeb Classical Library style CSS - facing pages layout
 const LOEB_CSS = `
 body {
   font-family: Georgia, "Times New Roman", serif;
@@ -218,7 +239,7 @@ p {
 }
 .page-header {
   font-size: 0.85em;
-  color: #666;
+  color: #8b0000;
   text-align: center;
   border-bottom: 2px solid #8b0000;
   padding-bottom: 0.5em;
@@ -233,37 +254,13 @@ p {
   font-size: 0.8em;
   color: #666;
 }
-/* Loeb-style parallel text layout */
-.parallel-container {
-  display: table;
-  width: 100%;
-  border-collapse: collapse;
+.original-text {
+  background: #fdfcf9;
+  padding: 0.5em;
 }
-.parallel-row {
-  display: table-row;
-}
-.parallel-original, .parallel-translation {
-  display: table-cell;
-  width: 50%;
-  padding: 0.8em;
-  vertical-align: top;
-  border-bottom: 1px solid #eee;
-}
-.parallel-original {
-  border-right: 1px solid #ccc;
-  background: #fafaf8;
-}
-.parallel-translation {
+.translation-text {
   background: #ffffff;
-}
-.column-header {
-  font-size: 0.75em;
-  color: #8b0000;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 0.8em;
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid #ddd;
+  padding: 0.5em;
 }
 .loeb-intro {
   text-align: center;
@@ -377,102 +374,652 @@ async function generateEpubDownload(
   return epubBuffer;
 }
 
-// Generate Loeb Classical Library style EPUB with parallel text
+// Fixed-layout EPUB page dimensions
+const PAGE_WIDTH = 600;
+const PAGE_HEIGHT = 900;
+
+// Generate fixed-layout EPUB with true facing pages (Loeb Classical Library style)
 async function generateLoebEpubDownload(
   book: Book,
   pages: Page[]
 ): Promise<Buffer> {
   const now = new Date().toISOString().split('T')[0];
   const bookTitle = book.display_title || book.title;
+  const bookId = `urn:uuid:${book.id}`;
 
-  // Build description
-  let description = `A parallel text edition in the style of the Loeb Classical Library, presenting the original ${book.language} text alongside the English translation.`;
-  if (book.summary) {
-    const summaryText = typeof book.summary === 'string' ? book.summary : book.summary.data;
-    if (summaryText) {
-      description = summaryText.substring(0, 500);
+  // Collect pages with both OCR and translation
+  const validPages = pages.filter(p => p.translation?.data && p.ocr?.data);
+
+  // Build the EPUB as a ZIP archive
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const archive = archiver('zip', { zlib: { level: 9 } });
+
+    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
+    archive.on('end', () => resolve(Buffer.concat(chunks)));
+    archive.on('error', reject);
+
+    // 1. mimetype (must be first, uncompressed)
+    archive.append('application/epub+zip', { name: 'mimetype', store: true });
+
+    // 2. META-INF/container.xml
+    archive.append(`<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`, { name: 'META-INF/container.xml' });
+
+    // 3. Build spine items and manifest entries
+    const spineItems: string[] = [];
+    const manifestItems: string[] = [];
+    const navItems: string[] = [];
+
+    // Title page
+    manifestItems.push(`<item id="title" href="title.xhtml" media-type="application/xhtml+xml" properties="svg"/>`);
+    spineItems.push(`<itemref idref="title" properties="page-spread-right"/>`);
+    navItems.push(`<li><a href="title.xhtml">Title Page</a></li>`);
+
+    // Content pages (pairs: original left, translation right)
+    let pageIndex = 0;
+    for (const page of validPages) {
+      const origId = `page-${page.page_number}-orig`;
+      const transId = `page-${page.page_number}-trans`;
+
+      manifestItems.push(`<item id="${origId}" href="${origId}.xhtml" media-type="application/xhtml+xml"/>`);
+      manifestItems.push(`<item id="${transId}" href="${transId}.xhtml" media-type="application/xhtml+xml"/>`);
+
+      // Left page (original) - even pages are verso (left)
+      spineItems.push(`<itemref idref="${origId}" properties="page-spread-left"/>`);
+      // Right page (translation) - odd pages are recto (right)
+      spineItems.push(`<itemref idref="${transId}" properties="page-spread-right"/>`);
+
+      navItems.push(`<li><a href="${origId}.xhtml">Page ${page.page_number}</a></li>`);
+      pageIndex++;
     }
-  }
 
-  // Build chapters from pages
-  const chapters: { title: string; content: string }[] = [];
+    // Colophon
+    manifestItems.push(`<item id="colophon" href="colophon.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="colophon" properties="page-spread-right"/>`);
+    navItems.push(`<li><a href="colophon.xhtml">About This Edition</a></li>`);
 
-  // Add front matter chapter with Loeb-style presentation
-  const frontMatter = `
-    <h1>${bookTitle}</h1>
-    <p><strong>Author:</strong> ${book.author}</p>
-    <p><strong>Original Language:</strong> ${book.language}</p>
-    ${book.published ? `<p><strong>Published:</strong> ${book.published}</p>` : ''}
-    <div class="loeb-intro">
-      <h2>Parallel Text Edition</h2>
-      <p>This edition presents the original ${book.language} text on the left with the English translation on the right, in the tradition of the Loeb Classical Library.</p>
-    </div>
-    <div class="colophon">
-      <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
-      <p><strong>Downloaded:</strong> ${now}</p>
-      <p><strong>License:</strong> CC BY 4.0 (Creative Commons Attribution)</p>
-      <p>This text was digitized and translated with AI assistance and human review by the Source Library, a project of the Ancient Wisdom Trust.</p>
-    </div>
-  `;
-  chapters.push({ title: 'Title Page', content: frontMatter });
+    // Add nav and CSS to manifest
+    manifestItems.push(`<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`);
+    manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
 
-  // Add page content in parallel format
-  for (const page of pages) {
-    const hasTranslation = page.translation?.data;
-    const hasOcr = page.ocr?.data;
+    // 4. OEBPS/content.opf (package document with fixed-layout metadata)
+    const opf = `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">${bookId}</dc:identifier>
+    <dc:title>${escapeXml(bookTitle)} (Parallel Text)</dc:title>
+    <dc:creator>${escapeXml(book.author)}</dc:creator>
+    <dc:publisher>Source Library</dc:publisher>
+    <dc:language>en</dc:language>
+    <dc:date>${now}</dc:date>
+    <dc:rights>CC BY 4.0</dc:rights>
+    <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
+    <!-- Fixed-layout metadata -->
+    <meta property="rendition:layout">pre-paginated</meta>
+    <meta property="rendition:orientation">auto</meta>
+    <meta property="rendition:spread">both</meta>
+  </metadata>
+  <manifest>
+    ${manifestItems.join('\n    ')}
+  </manifest>
+  <spine>
+    ${spineItems.join('\n    ')}
+  </spine>
+</package>`;
+    archive.append(opf, { name: 'OEBPS/content.opf' });
 
-    // Skip pages without both OCR and translation for parallel view
-    if (!hasTranslation || !hasOcr) continue;
+    // 5. OEBPS/nav.xhtml (navigation document)
+    const nav = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Contents</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body>
+  <nav epub:type="toc" id="toc">
+    <h1>Contents</h1>
+    <ol>
+      ${navItems.join('\n      ')}
+    </ol>
+  </nav>
+</body>
+</html>`;
+    archive.append(nav, { name: 'OEBPS/nav.xhtml' });
 
-    const ocrHtml = markdownToHtml(page.ocr.data);
-    const translationHtml = markdownToHtml(page.translation.data);
+    // 6. OEBPS/styles.css (fixed-layout styles with auto-scaling text)
+    const css = `
+@page {
+  margin: 0;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: ${PAGE_WIDTH}px;
+  height: ${PAGE_HEIGHT}px;
+  overflow: hidden;
+}
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+  line-height: 1.4;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #fffef9;
+}
+.page-left {
+  background: #f8f6f0;
+  border-right: 1px solid #d4c4a8;
+}
+.page-right {
+  background: #fffef9;
+  border-left: 1px solid #d4c4a8;
+}
+.page-header {
+  font-size: 9px;
+  color: #8b0000;
+  text-align: center;
+  font-variant: small-caps;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid #8b0000;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+.content {
+  height: calc(${PAGE_HEIGHT}px - 70px);
+  overflow: hidden;
+  font-size: 10px;
+  line-height: 1.35;
+}
+/* Auto-scale text for long content */
+.content.small-text {
+  font-size: 9px;
+  line-height: 1.3;
+}
+.content.tiny-text {
+  font-size: 8px;
+  line-height: 1.25;
+}
+h1 {
+  font-size: 20px;
+  color: #1a1a1a;
+  text-align: center;
+  margin-top: 60px;
+}
+h2 {
+  font-size: 14px;
+  color: #8b0000;
+  text-align: center;
+  font-variant: small-caps;
+}
+h3 {
+  font-size: 12px;
+  color: #333;
+  margin: 0.5em 0;
+}
+p {
+  margin: 0.5em 0;
+  text-align: justify;
+  text-indent: 1em;
+}
+p:first-of-type {
+  text-indent: 0;
+}
+.note {
+  font-size: 9px;
+  font-style: italic;
+  color: #666;
+  background: #f5f0e0;
+  padding: 5px;
+  margin: 8px 0;
+  border-left: 2px solid #8b0000;
+}
+.title-page {
+  text-align: center;
+  padding-top: 80px;
+}
+.title-page h1 {
+  margin-top: 0;
+  font-size: 22px;
+}
+.colophon {
+  font-size: 10px;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #ccc;
+  color: #666;
+}
+.loeb-intro {
+  margin: 30px 15px;
+  padding: 12px;
+  border: 1px solid #8b0000;
+  background: #fdf6e3;
+  text-align: center;
+}
+/* Image page styles */
+.image-page {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.image-page .page-header {
+  flex-shrink: 0;
+}
+.image-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+`;
+    archive.append(css, { name: 'OEBPS/styles.css' });
 
-    const content = `
-      <div class="page-header">Page ${page.page_number}</div>
-      <div class="parallel-container">
-        <div class="parallel-row">
-          <div class="parallel-original">
-            <div class="column-header">${book.language}</div>
-            ${ocrHtml}
-          </div>
-          <div class="parallel-translation">
-            <div class="column-header">English</div>
-            ${translationHtml}
-          </div>
+    // 7. Title page
+    const titlePage = createFixedPage(`
+      <div class="title-page">
+        <h1>${escapeXml(bookTitle)}</h1>
+        <p style="text-indent:0;text-align:center;margin-top:20px;"><strong>${escapeXml(book.author)}</strong></p>
+        ${book.published ? `<p style="text-indent:0;text-align:center;">${escapeXml(book.published)}</p>` : ''}
+        <div class="loeb-intro">
+          <h2>Parallel Text Edition</h2>
+          <p style="text-indent:0;text-align:center;">Original ${escapeXml(book.language)} with English translation</p>
+        </div>
+        <div class="colophon">
+          <p style="text-indent:0;text-align:center;">Source Library · ${now}</p>
+          <p style="text-indent:0;text-align:center;">CC BY 4.0</p>
         </div>
       </div>
-    `;
+    `, 'Title Page', 'page-right');
+    archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
 
-    chapters.push({
-      title: `Page ${page.page_number}`,
-      content: content
+    // 8. Content pages
+    for (const page of validPages) {
+      const ocrHtml = markdownToHtml(page.ocr.data);
+      const translationHtml = markdownToHtml(page.translation.data);
+
+      // Determine text size class based on content length
+      const ocrSizeClass = getTextSizeClass(page.ocr.data);
+      const transSizeClass = getTextSizeClass(page.translation.data);
+
+      // Original (left page)
+      const origPage = createFixedPage(`
+        <div class="page-header">${escapeXml(book.language)} · ${page.page_number}</div>
+        <div class="content ${ocrSizeClass}">${ocrHtml}</div>
+      `, `Page ${page.page_number} - ${book.language}`, 'page-left');
+      archive.append(origPage, { name: `OEBPS/page-${page.page_number}-orig.xhtml` });
+
+      // Translation (right page)
+      const transPage = createFixedPage(`
+        <div class="page-header">English · ${page.page_number}</div>
+        <div class="content ${transSizeClass}">${translationHtml}</div>
+      `, `Page ${page.page_number} - English`, 'page-right');
+      archive.append(transPage, { name: `OEBPS/page-${page.page_number}-trans.xhtml` });
+    }
+
+    // 9. Colophon
+    const colophonPage = createFixedPage(`
+      <h1>About This Edition</h1>
+      <p>This parallel text edition was prepared by the <strong>Source Library</strong> in the tradition of the Loeb Classical Library.</p>
+      <p>The Source Library digitizes and translates rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.</p>
+      <div class="colophon">
+        <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
+        <p><strong>License:</strong> CC BY 4.0 (Creative Commons Attribution)</p>
+        <p>Source Library is a project of the Ancient Wisdom Trust.</p>
+      </div>
+    `, 'About This Edition', 'page-right');
+    archive.append(colophonPage, { name: 'OEBPS/colophon.xhtml' });
+
+    archive.finalize();
+  });
+}
+
+// Helper to create a fixed-layout XHTML page
+function createFixedPage(content: string, title: string, pageClass: string): string {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=${PAGE_WIDTH}, height=${PAGE_HEIGHT}"/>
+  <title>${escapeXml(title)}</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body class="${pageClass}">
+  ${content}
+</body>
+</html>`;
+}
+
+// Helper to escape XML special characters
+function escapeXml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+// Helper to determine text size class based on content length
+function getTextSizeClass(text: string): string {
+  const length = text.length;
+  if (length > 3000) return 'tiny-text';
+  if (length > 2000) return 'small-text';
+  return '';
+}
+
+// Image dimensions for fixed-layout EPUB
+const IMAGE_WIDTH = 600;
+const IMAGE_HEIGHT = 900;
+
+// Fetch and process image for EPUB embedding
+// Uses minimal processing: grayscale + normalize (auto contrast)
+async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
+  try {
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(60000) // 60 second timeout
     });
+    if (!response.ok) return null;
+
+    const arrayBuffer = await response.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // Process with sharp: resize, grayscale, normalize, compress
+    const processed = await sharp(buffer)
+      .resize(IMAGE_WIDTH, IMAGE_HEIGHT, {
+        fit: 'inside',
+        withoutEnlargement: true
+      })
+      .grayscale()
+      .normalize()  // Auto contrast stretch
+      .jpeg({
+        quality: 75,
+        mozjpeg: true
+      })
+      .toBuffer();
+
+    console.log(`Image processed: ${url.slice(-30)} -> ${(processed.length / 1024).toFixed(1)}KB`);
+    return processed;
+  } catch (error) {
+    console.error(`Failed to fetch/process image: ${url}`, error);
+    return null;
   }
+}
 
-  // Add colophon chapter at the end
-  const colophon = `
-    <h1>About This Edition</h1>
-    <p>This parallel text edition was prepared by the <strong>Source Library</strong> in the tradition of the Loeb Classical Library, presenting original texts alongside their translations for scholarly comparison.</p>
-    <p>The Source Library is dedicated to digitizing and translating rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.</p>
-    <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-    <p><strong>License:</strong> This translation is released under a Creative Commons Attribution 4.0 International License (CC BY 4.0). You are free to share and adapt this material for any purpose, provided you give appropriate credit.</p>
-    <p>Source Library is a project of the Ancient Wisdom Trust. Preserving humanity's wisdom for the digital age.</p>
-  `;
-  chapters.push({ title: 'About This Edition', content: colophon });
+// Generate facsimile EPUB: original page image on left, translation on right
+async function generateFacsimileEpubDownload(
+  book: Book,
+  pages: Page[]
+): Promise<Buffer> {
+  const now = new Date().toISOString().split('T')[0];
+  const bookTitle = book.display_title || book.title;
+  const bookId = `urn:uuid:${book.id}`;
 
-  // Generate EPUB with Loeb styling
-  const epubBuffer = await epub({
-    title: `${bookTitle} (Parallel Text)`,
-    author: book.author,
-    publisher: 'Source Library',
-    description: description,
-    lang: 'en', // Primary language is English for the parallel edition
-    tocTitle: 'Contents',
-    css: LOEB_CSS,
-    date: now,
-  }, chapters);
+  // Collect pages with photo and translation
+  const validPages = pages.filter(p => p.translation?.data && (p.photo || p.compressed_photo));
 
-  return epubBuffer;
+  return new Promise(async (resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const archive = archiver('zip', { zlib: { level: 9 } });
+
+    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
+    archive.on('end', () => resolve(Buffer.concat(chunks)));
+    archive.on('error', reject);
+
+    // 1. mimetype
+    archive.append('application/epub+zip', { name: 'mimetype', store: true });
+
+    // 2. META-INF/container.xml
+    archive.append(`<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`, { name: 'META-INF/container.xml' });
+
+    // Build manifest and spine
+    const spineItems: string[] = [];
+    const manifestItems: string[] = [];
+    const navItems: string[] = [];
+
+    // Title page
+    manifestItems.push(`<item id="title" href="title.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="title" properties="page-spread-right"/>`);
+    navItems.push(`<li><a href="title.xhtml">Title Page</a></li>`);
+
+    // Content pages with images
+    for (const page of validPages) {
+      const imgId = `img-${page.page_number}`;
+      const pageId = `page-${page.page_number}-img`;
+      const transId = `page-${page.page_number}-trans`;
+
+      // Image asset
+      manifestItems.push(`<item id="${imgId}" href="images/${imgId}.jpg" media-type="image/jpeg"/>`);
+      // Image page
+      manifestItems.push(`<item id="${pageId}" href="${pageId}.xhtml" media-type="application/xhtml+xml"/>`);
+      // Translation page
+      manifestItems.push(`<item id="${transId}" href="${transId}.xhtml" media-type="application/xhtml+xml"/>`);
+
+      spineItems.push(`<itemref idref="${pageId}" properties="page-spread-left"/>`);
+      spineItems.push(`<itemref idref="${transId}" properties="page-spread-right"/>`);
+      navItems.push(`<li><a href="${pageId}.xhtml">Page ${page.page_number}</a></li>`);
+    }
+
+    // Colophon
+    manifestItems.push(`<item id="colophon" href="colophon.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="colophon" properties="page-spread-right"/>`);
+    navItems.push(`<li><a href="colophon.xhtml">About This Edition</a></li>`);
+
+    manifestItems.push(`<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`);
+    manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
+
+    // OPF
+    const opf = `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">${bookId}</dc:identifier>
+    <dc:title>${escapeXml(bookTitle)} (Facsimile Edition)</dc:title>
+    <dc:creator>${escapeXml(book.author)}</dc:creator>
+    <dc:publisher>Source Library</dc:publisher>
+    <dc:language>en</dc:language>
+    <dc:date>${now}</dc:date>
+    <dc:rights>CC BY 4.0</dc:rights>
+    <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
+    <meta property="rendition:layout">pre-paginated</meta>
+    <meta property="rendition:orientation">auto</meta>
+    <meta property="rendition:spread">both</meta>
+  </metadata>
+  <manifest>
+    ${manifestItems.join('\n    ')}
+  </manifest>
+  <spine>
+    ${spineItems.join('\n    ')}
+  </spine>
+</package>`;
+    archive.append(opf, { name: 'OEBPS/content.opf' });
+
+    // Navigation
+    const nav = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Contents</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body>
+  <nav epub:type="toc" id="toc">
+    <h1>Contents</h1>
+    <ol>
+      ${navItems.join('\n      ')}
+    </ol>
+  </nav>
+</body>
+</html>`;
+    archive.append(nav, { name: 'OEBPS/nav.xhtml' });
+
+    // CSS (same as Loeb but with image styles)
+    const css = `
+@page { margin: 0; }
+html, body {
+  margin: 0; padding: 0;
+  width: ${PAGE_WIDTH}px; height: ${PAGE_HEIGHT}px;
+  overflow: hidden;
+}
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px; line-height: 1.4;
+  padding: 20px; box-sizing: border-box;
+  background: #fffef9;
+}
+.page-left { background: #f8f6f0; }
+.page-right { background: #fffef9; }
+.page-header {
+  font-size: 9px; color: #8b0000;
+  text-align: center; font-variant: small-caps;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid #8b0000;
+  padding-bottom: 5px; margin-bottom: 10px;
+}
+.content {
+  height: calc(${PAGE_HEIGHT}px - 70px);
+  overflow: hidden;
+  font-size: 10px; line-height: 1.35;
+}
+.content.small-text { font-size: 9px; line-height: 1.3; }
+.content.tiny-text { font-size: 8px; line-height: 1.25; }
+.image-page { padding: 5px; }
+.image-page .page-header { margin-bottom: 5px; }
+.image-container {
+  height: calc(${PAGE_HEIGHT}px - 50px);
+  display: flex; align-items: center; justify-content: center;
+}
+.image-container img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  border: 1px solid #ddd;
+}
+h1 { font-size: 20px; text-align: center; margin-top: 60px; }
+h2 { font-size: 14px; color: #8b0000; text-align: center; font-variant: small-caps; }
+p { margin: 0.5em 0; text-align: justify; text-indent: 1em; }
+p:first-of-type { text-indent: 0; }
+.note { font-size: 9px; font-style: italic; color: #666; background: #f5f0e0; padding: 5px; margin: 8px 0; border-left: 2px solid #8b0000; }
+.title-page { text-align: center; padding-top: 80px; }
+.title-page h1 { margin-top: 0; font-size: 22px; }
+.colophon { font-size: 10px; margin-top: 30px; padding-top: 15px; border-top: 1px solid #ccc; color: #666; }
+.loeb-intro { margin: 30px 15px; padding: 12px; border: 1px solid #8b0000; background: #fdf6e3; text-align: center; }
+`;
+    archive.append(css, { name: 'OEBPS/styles.css' });
+
+    // Title page
+    const titlePage = createFixedPage(`
+      <div class="title-page">
+        <h1>${escapeXml(bookTitle)}</h1>
+        <p style="text-indent:0;text-align:center;margin-top:20px;"><strong>${escapeXml(book.author)}</strong></p>
+        ${book.published ? `<p style="text-indent:0;text-align:center;">${escapeXml(book.published)}</p>` : ''}
+        <div class="loeb-intro">
+          <h2>Facsimile Edition</h2>
+          <p style="text-indent:0;text-align:center;">Original page images with English translation</p>
+        </div>
+        <div class="colophon">
+          <p style="text-indent:0;text-align:center;">Source Library · ${now}</p>
+        </div>
+      </div>
+    `, 'Title Page', 'page-right');
+    archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
+
+    // Fetch and compress all images first (async)
+    console.log(`Fetching ${validPages.length} images for facsimile EPUB...`);
+    const imagePromises = validPages.map(async (page) => {
+      const imageUrl = page.compressed_photo || page.photo;
+      const imageBuffer = await fetchAndCompressImage(imageUrl);
+      return { page, imageBuffer };
+    });
+    const pageImages = await Promise.all(imagePromises);
+
+    // Add images and content pages
+    for (const { page, imageBuffer } of pageImages) {
+      const translationHtml = markdownToHtml(page.translation.data);
+      const transSizeClass = getTextSizeClass(page.translation.data);
+
+      // Add compressed image to archive (if successfully fetched)
+      if (imageBuffer) {
+        archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
+
+        // Image page (left) - reference local embedded image
+        const imgPage = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=${PAGE_WIDTH}, height=${PAGE_HEIGHT}"/>
+  <title>Page ${page.page_number}</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body class="page-left image-page">
+  <div class="page-header">Original · ${page.page_number}</div>
+  <div class="image-container">
+    <img src="images/img-${page.page_number}.jpg" alt="Page ${page.page_number}"/>
+  </div>
+</body>
+</html>`;
+        archive.append(imgPage, { name: `OEBPS/page-${page.page_number}-img.xhtml` });
+      } else {
+        // Fallback if image failed - show placeholder
+        const imgPage = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=${PAGE_WIDTH}, height=${PAGE_HEIGHT}"/>
+  <title>Page ${page.page_number}</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body class="page-left image-page">
+  <div class="page-header">Original · ${page.page_number}</div>
+  <div class="image-container">
+    <p style="color:#999;text-align:center;">[Image unavailable]</p>
+  </div>
+</body>
+</html>`;
+        archive.append(imgPage, { name: `OEBPS/page-${page.page_number}-img.xhtml` });
+      }
+
+      // Translation page (right)
+      const transPage = createFixedPage(`
+        <div class="page-header">English · ${page.page_number}</div>
+        <div class="content ${transSizeClass}">${translationHtml}</div>
+      `, `Page ${page.page_number} - English`, 'page-right');
+      archive.append(transPage, { name: `OEBPS/page-${page.page_number}-trans.xhtml` });
+    }
+
+    // Colophon
+    const colophonPage = createFixedPage(`
+      <h1>About This Edition</h1>
+      <p>This facsimile edition presents original manuscript pages alongside translations.</p>
+      <div class="colophon">
+        <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
+        <p><strong>License:</strong> CC BY 4.0</p>
+        <p>Source Library · Ancient Wisdom Trust</p>
+      </div>
+    `, 'About This Edition', 'page-right');
+    archive.append(colophonPage, { name: 'OEBPS/colophon.xhtml' });
+
+    archive.finalize();
+  });
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
@@ -481,17 +1028,18 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const { searchParams } = new URL(request.url);
     const format = searchParams.get('format') || 'translation';
 
-    // Valid formats: TXT (translation, ocr, both) and EPUB (epub-translation, epub-ocr, epub-both, epub-parallel)
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel'];
+    // Valid formats: TXT (translation, ocr, both) and EPUB (epub-translation, epub-ocr, epub-both, epub-parallel, epub-facsimile)
+    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile'];
     if (!validFormats.includes(format)) {
       return NextResponse.json(
-        { error: 'Invalid format. Use: translation, ocr, both, epub-translation, epub-ocr, epub-both, or epub-parallel' },
+        { error: 'Invalid format. Use: translation, ocr, both, epub-translation, epub-ocr, epub-both, epub-parallel, or epub-facsimile' },
         { status: 400 }
       );
     }
 
     const isEpub = format.startsWith('epub-');
     const isLoeb = format === 'epub-parallel';
+    const isFacsimile = format === 'epub-facsimile';
 
     const db = await getDb();
 
@@ -518,7 +1066,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       let epubBuffer: Buffer;
       let filename: string;
 
-      if (isLoeb) {
+      if (isFacsimile) {
+        // Generate facsimile EPUB (page images + translation)
+        epubBuffer = await generateFacsimileEpubDownload(
+          book as unknown as Book,
+          pages as unknown as Page[]
+        );
+        filename = `${safeTitle}-facsimile.epub`;
+      } else if (isLoeb) {
         // Generate Loeb-style parallel text EPUB
         epubBuffer = await generateLoebEpubDownload(
           book as unknown as Book,
