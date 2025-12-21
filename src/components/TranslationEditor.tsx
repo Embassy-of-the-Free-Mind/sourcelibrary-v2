@@ -440,7 +440,11 @@ export default function TranslationEditor({
           previousPageId: previousPage?.id,
           customPrompts: Object.keys(customPrompts).length > 0 ? customPrompts : undefined,
           autoSave: true,
-          model: selectedModel
+          model: selectedModel,
+          promptInfo: {
+            ocr: selectedOcrPrompt?.name,
+            translation: selectedTranslationPrompt?.name
+          }
         })
       });
 

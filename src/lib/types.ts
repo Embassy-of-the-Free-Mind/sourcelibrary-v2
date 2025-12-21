@@ -70,6 +70,7 @@ export interface OcrData {
   data: string;
   image_urls?: string[];
   updated_at?: Date;
+  prompt_name?: string;
 }
 
 export interface TranslationData {
@@ -77,12 +78,14 @@ export interface TranslationData {
   model: string;
   data: string;
   updated_at?: Date;
+  prompt_name?: string;
 }
 
 export interface SummaryData {
   data: string;
   model: string;
   updated_at?: Date;
+  prompt_name?: string;
 }
 
 // Crop coordinates for split pages (0-1000 scale)

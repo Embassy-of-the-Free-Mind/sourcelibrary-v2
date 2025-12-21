@@ -37,7 +37,8 @@ export async function POST(request: NextRequest) {
       previousPageId,
       customPrompts,
       autoSave = true,
-      model = DEFAULT_MODEL
+      model = DEFAULT_MODEL,
+      promptInfo // { ocr?: string, translation?: string, summary?: string } - prompt names
     } = body;
 
     const db = await getDb();
@@ -131,6 +132,7 @@ export async function POST(request: NextRequest) {
           data: results.ocr,
           language: language || 'Latin',
           model,
+          prompt_name: promptInfo?.ocr || 'Default',
           updated_at: new Date()
         };
       }
@@ -140,6 +142,7 @@ export async function POST(request: NextRequest) {
           data: results.translation,
           language: targetLanguage,
           model,
+          prompt_name: promptInfo?.translation || 'Default',
           updated_at: new Date()
         };
       }
@@ -148,6 +151,7 @@ export async function POST(request: NextRequest) {
         updateData['summary'] = {
           data: results.summary,
           model,
+          prompt_name: promptInfo?.summary || 'Default',
           updated_at: new Date()
         };
       }
