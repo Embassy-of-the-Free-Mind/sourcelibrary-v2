@@ -184,10 +184,11 @@ export default function ImageWithMagnifier({
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
+          key={displaySrc}
           ref={imgRef}
           src={displaySrc}
           alt={alt}
-          loading="lazy"
+          loading="eager"
           className={`w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
           onLoad={() => {
             setIsLoaded(true);
