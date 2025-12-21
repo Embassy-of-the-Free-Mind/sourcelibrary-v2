@@ -18,7 +18,8 @@ import {
   Maximize2,
   Image as ImageIcon,
   FileText,
-  Languages
+  Languages,
+  MessageSquare
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
@@ -301,6 +302,7 @@ export default function TranslationEditor({
 
   // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
+  const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
   const [showOcrPanel, setShowOcrPanel] = useState(false);
   const [showTranslationPanel, setShowTranslationPanel] = useState(true);
 
@@ -573,6 +575,19 @@ export default function TranslationEditor({
                 <Languages className="w-3.5 h-3.5" />
                 English
               </button>
+              <button
+                onClick={() => setShowNotes(!showNotes)}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showNotes ? '' : 'opacity-50'}`}
+                style={{
+                  background: showNotes ? 'var(--bg-white)' : 'transparent',
+                  color: showNotes ? 'var(--accent-amber, #b45309)' : 'var(--text-muted)',
+                  boxShadow: showNotes ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                }}
+                title="Toggle inline notes and annotations"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                Notes
+              </button>
             </div>
 
             <button
@@ -640,7 +655,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
                       <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
-                        <NotesRenderer text={ocrText} />
+                        <NotesRenderer text={ocrText} showNotes={showNotes} />
                       </div>
                     ) : (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
@@ -708,7 +723,7 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {translationText ? (
-                      <NotesRenderer text={translationText} />
+                      <NotesRenderer text={translationText} showNotes={showNotes} />
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>

@@ -9,7 +9,8 @@ import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 interface NotesRendererProps {
   text: string;
   className?: string;
-  showMetadata?: boolean; // Default false - hide metadata section
+  showMetadata?: boolean; // Default true - show metadata section
+  showNotes?: boolean; // Default true - show inline notes (margin, gloss, etc.)
 }
 
 interface ExtractedMetadata {
@@ -87,14 +88,21 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
     return '';
   });
 
+  // Extract headers (running headers) - hidden from display
+  result = result.replace(/\[\[header:\s*(.*?)\]\]/gi, () => '');
+
+  // Catch-all: remove any remaining [[tag: ...]] patterns that weren't handled above
+  // This ensures no metadata tags slip through to the reader
+  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|meta|abbrev|vocabulary|summary|keywords|header):\s*.*?\]\]/gi, '');
+
   // Clean up extra whitespace from removed metadata
   result = result.replace(/^\s*\n/gm, '\n').replace(/\n{3,}/g, '\n\n').trim();
 
   return { cleanText: result, metadata };
 }
 
-// Convert inline markup to styled HTML spans
-function processInlineMarkup(text: string): string {
+// Convert inline markup to styled HTML spans (or plain text if showNotes is false)
+function processInlineMarkup(text: string, showNotes: boolean = true): string {
   let result = text;
 
   // Centered text: ->text<- or ::text:: (handles multiline)
@@ -108,39 +116,52 @@ function processInlineMarkup(text: string): string {
     return `<div class="text-center">${cleaned}</div>`;
   });
 
-  // Editorial notes (amber) - interpretive choices, context for reader
-  result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {
-    return `<span class="inline-note">${content.trim()}</span>`;
-  });
+  if (showNotes) {
+    // Editorial notes (amber) - interpretive choices, context for reader
+    result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {
+      return `<span class="inline-note">${content.trim()}</span>`;
+    });
 
-  // Technical terms with optional gloss: [[term: word]] or [[term: word → meaning]]
-  result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, (match, content) => {
-    const parts = content.split(/→|->/).map((s: string) => s.trim());
-    if (parts.length > 1) {
-      return `<span class="term-note"><em>${parts[0]}</em> (${parts[1]})</span>`;
-    }
-    return `<span class="term-note"><em>${parts[0]}</em></span>`;
-  });
+    // Technical terms with optional gloss: [[term: word]] or [[term: word → meaning]]
+    result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, (match, content) => {
+      const parts = content.split(/→|->/).map((s: string) => s.trim());
+      if (parts.length > 1) {
+        return `<span class="term-note"><em>${parts[0]}</em> (${parts[1]})</span>`;
+      }
+      return `<span class="term-note"><em>${parts[0]}</em></span>`;
+    });
 
-  // Marginalia - text in margins of original manuscript (teal)
-  result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => {
-    return `<span class="margin-note">${content.trim()}</span>`;
-  });
+    // Marginalia - text in margins of original manuscript (teal)
+    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => {
+      return `<span class="margin-note">${content.trim()}</span>`;
+    });
 
-  // Gloss - interlinear annotations in original (purple)
-  result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, (match, content) => {
-    return `<span class="gloss-note">${content.trim()}</span>`;
-  });
+    // Gloss - interlinear annotations in original (purple)
+    result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, (match, content) => {
+      return `<span class="gloss-note">${content.trim()}</span>`;
+    });
 
-  // Insertion - later additions to the text (green)
-  result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, (match, content) => {
-    return `<span class="insert-note">${content.trim()}</span>`;
-  });
+    // Insertion - later additions to the text (green)
+    result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, (match, content) => {
+      return `<span class="insert-note">${content.trim()}</span>`;
+    });
 
-  // Uncertain/illegible text (gray with ?)
-  result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, (match, content) => {
-    return `<span class="unclear-text">${content.trim()}</span>`;
-  });
+    // Uncertain/illegible text (gray with ?)
+    result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, (match, content) => {
+      return `<span class="unclear-text">${content.trim()}</span>`;
+    });
+  } else {
+    // When notes are hidden, just extract the plain text content
+    result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => content.trim());
+    result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, (match, content) => {
+      const parts = content.split(/→|->/).map((s: string) => s.trim());
+      return parts[0]; // Just the term without the gloss
+    });
+    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => content.trim());
+    result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, (match, content) => content.trim());
+    result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, (match, content) => content.trim());
+    result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, (match, content) => `${content.trim()}?`);
+  }
 
   return result;
 }
@@ -222,9 +243,9 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   );
 }
 
-export default function NotesRenderer({ text, className = '', showMetadata = true }: NotesRendererProps) {
+export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
-  const processedText = useMemo(() => processInlineMarkup(cleanText), [cleanText]);
+  const processedText = useMemo(() => processInlineMarkup(cleanText, showNotes), [cleanText, showNotes]);
 
   if (!text) {
     return (
