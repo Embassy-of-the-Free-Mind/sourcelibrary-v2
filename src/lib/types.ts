@@ -186,8 +186,14 @@ export const LATIN_PROMPTS = {
 - [[insert: ...]] for later additions
 - [[unclear: ...]] for illegible readings
 - [[page number: N]] or [[folio: 12r]] for visible page/folio numbers
+- [[header: ...]] for running headers/page headings
 - [[abbrev: X → expansion]] for abbreviation expansions (collected in metadata)
 - [[term: word]] or [[term: word → meaning]] for technical vocabulary
+
+**IMPORTANT - Exclude from main text:**
+- Page numbers: Capture ONLY in [[page number: N]] or [[folio:]], do NOT include in the body text
+- Running headers/page headings: Capture ONLY in [[header: ...]], do NOT include in the body text
+- These elements should appear in metadata annotations only, never in the main transcription
 
 **Do NOT use:**
 - Code blocks (\`\`\`) or inline code - this is prose, not code
@@ -340,8 +346,14 @@ export const GERMAN_PROMPTS = {
 - [[insert: ...]] for later additions
 - [[unclear: ...]] for illegible readings
 - [[page number: N]] or [[folio: 12r]] for page/folio numbers
+- [[header: ...]] for running headers/page headings
 - [[abbrev: X → expansion]] for abbreviations (collected in metadata)
 - [[term: word]] for technical/alchemical vocabulary
+
+**IMPORTANT - Exclude from main text:**
+- Page numbers: Capture ONLY in [[page number: N]] or [[folio:]], do NOT include in the body text
+- Running headers/page headings: Capture ONLY in [[header: ...]], do NOT include in the body text
+- These elements should appear in metadata annotations only, never in the main transcription
 
 **Do NOT use:**
 - Code blocks (\`\`\`) or inline code - this is prose, not code
@@ -471,6 +483,12 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - [[insert: ...]] for text in boxes, cartouches, or later additions
 - [[unclear: ...]] for illegible or uncertain readings
 - [[page number: N]] for visible page numbers
+- [[header: ...]] for running headers/page headings
+
+**IMPORTANT - Exclude from main text:**
+- Page numbers: Capture ONLY in [[page number: N]], do NOT include in the body text
+- Running headers/page headings: Capture ONLY in [[header: ...]], do NOT include in the body text
+- These elements should appear in metadata annotations only, never in the main transcription
 
 **Do NOT use:**
 - Code blocks (\`\`\`) or inline code - this is prose, not code
