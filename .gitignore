@@ -42,3 +42,13 @@ next-env.d.ts
 
 # Catalog data files (too large for git)
 data/
+
+# User uploads and test files
+public/uploads/
+public/test-images/
+
+# Debug scripts
+check-books.js
+
+# Experimental tools
+tools/
