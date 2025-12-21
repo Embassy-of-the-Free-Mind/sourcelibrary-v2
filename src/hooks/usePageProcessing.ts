@@ -38,11 +38,95 @@ export function usePageProcessing({
 
   const stopProcessingRef = useRef(false);
 
+  // Parallel batch OCR processing (10 at a time)
+  const processBatchOCR = useCallback(async (pageIds: string[]) => {
+    if (pageIds.length === 0) return;
+
+    stopProcessingRef.current = false;
+    setProcessing({
+      active: true,
+      type: 'ocr',
+      currentPageId: null,
+      currentIndex: 0,
+      totalPages: pageIds.length,
+      completed: [],
+      failed: [],
+      stopped: false
+    });
+
+    try {
+      const batchPages = pageIds.map(pageId => {
+        const page = pages.find(p => p.id === pageId);
+        return {
+          pageId,
+          imageUrl: page?.photo || '',
+          language: book?.language || 'Latin',
+          customPrompt: prompts.ocr?.content
+        };
+      }).filter(p => p.imageUrl);
+
+      const response = await fetch('/api/process/batch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pages: batchPages, autoSave: true })
+      });
+
+      if (response.ok) {
+        const { results } = await response.json();
+        const completed: string[] = [];
+        const failed: string[] = [];
+
+        for (const result of results) {
+          if (result.success) {
+            const page = pages.find(p => p.id === result.pageId);
+            onPageUpdate(result.pageId, {
+              ocr: {
+                data: result.ocr,
+                language: book?.language || 'unknown',
+                model: 'gemini-2.0-flash'
+              }
+            });
+            completed.push(result.pageId);
+          } else {
+            failed.push(result.pageId);
+          }
+        }
+
+        setProcessing(prev => ({
+          ...prev,
+          active: false,
+          completed,
+          failed,
+          currentIndex: pageIds.length
+        }));
+      } else {
+        setProcessing(prev => ({
+          ...prev,
+          active: false,
+          failed: pageIds
+        }));
+      }
+    } catch (error) {
+      console.error('Batch OCR error:', error);
+      setProcessing(prev => ({
+        ...prev,
+        active: false,
+        failed: pageIds
+      }));
+    }
+  }, [pages, book, prompts, onPageUpdate]);
+
+  // Sequential processing for translation/summary (needs context)
   const processPages = useCallback(async (
     type: 'ocr' | 'translation' | 'summary',
     pageIds: string[]
   ) => {
     if (pageIds.length === 0) return;
+
+    // Use parallel batch for OCR
+    if (type === 'ocr') {
+      return processBatchOCR(pageIds);
+    }
 
     stopProcessingRef.current = false;
     setProcessing({
@@ -105,13 +189,6 @@ export function usePageProcessing({
           const result = await response.json();
           // Update local page data
           const updates: Partial<Page> = {};
-          if (result.ocr) {
-            updates.ocr = {
-              data: result.ocr,
-              language: page.ocr?.language || book?.language || 'unknown',
-              model: page.ocr?.model || 'gemini-2.0-flash'
-            };
-          }
           if (result.translation) {
             updates.translation = {
               data: result.translation,
@@ -141,9 +218,9 @@ export function usePageProcessing({
         failed: [...failed]
       }));
 
-      // Rate limiting delay
+      // Rate limiting delay for sequential processing
       if (i < pageIds.length - 1 && !stopProcessingRef.current) {
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 500));
       }
     }
 
@@ -152,7 +229,7 @@ export function usePageProcessing({
       active: false,
       currentPageId: null
     }));
-  }, [pages, book, prompts, onPageUpdate]);
+  }, [pages, book, prompts, onPageUpdate, processBatchOCR]);
 
   const stopProcessing = useCallback(() => {
     stopProcessingRef.current = true;

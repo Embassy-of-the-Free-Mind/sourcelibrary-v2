@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
 import { ArrowLeft, BookOpen, Calendar, Globe, FileText } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
-import PageThumbnail from '@/components/PageThumbnail';
-import BookStats from '@/components/BookStats';
+import BookPagesSection from '@/components/BookPagesSection';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -73,9 +72,6 @@ async function BookInfo({ id }: { id: string }) {
   }
 
   const { book, pages } = data;
-  const pagesWithOcr = pages.filter(p => p.ocr?.data).length;
-  const pagesWithTranslation = pages.filter(p => p.translation?.data).length;
-  const pagesWithSummary = pages.filter(p => p.summary?.data).length;
 
   return (
     <>
@@ -130,17 +126,6 @@ async function BookInfo({ id }: { id: string }) {
                 </div>
                 <SearchPanel bookId={book.id} />
               </div>
-
-              {/* Processing Stats + Actions */}
-              <BookStats
-                bookId={book.id}
-                pages={pages}
-                pagesWithOcr={pagesWithOcr}
-                pagesWithTranslation={pagesWithTranslation}
-                pagesWithSummary={pagesWithSummary}
-                hasTranslations={pagesWithTranslation > 0}
-                hasOcr={pagesWithOcr > 0}
-              />
             </div>
           </div>
         </div>
@@ -164,28 +149,9 @@ async function BookInfo({ id }: { id: string }) {
         </div>
       )}
 
-      {/* Pages Grid */}
+      {/* Stats + Pages Grid with Batch Mode */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-xl font-semibold text-stone-900 mb-6">Pages</h2>
-
-        {pages.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-lg border border-stone-200">
-            <FileText className="w-16 h-16 text-stone-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-stone-600">No pages yet</h3>
-            <p className="text-stone-500 mt-2">Upload pages to start processing.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3 sm:gap-4">
-            {pages.map((page, index) => (
-              <PageThumbnail
-                key={page.id}
-                page={page}
-                bookId={book.id}
-                index={index}
-              />
-            ))}
-          </div>
-        )}
+        <BookPagesSection bookId={book.id} pages={pages} />
       </main>
 
       {/* Footer */}

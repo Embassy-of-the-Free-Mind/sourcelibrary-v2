@@ -2,6 +2,26 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation, generateSummary } from '@/lib/ai';
 
+// Helper to record processing metrics
+async function recordProcessingMetric(
+  db: Awaited<ReturnType<typeof getDb>>,
+  name: string,
+  duration: number,
+  metadata?: Record<string, unknown>
+) {
+  try {
+    await db.collection('loading_metrics').insertOne({
+      name,
+      duration,
+      timestamp: Date.now(),
+      metadata,
+      received_at: Date.now(),
+    });
+  } catch (e) {
+    console.error('Failed to record metric:', e);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -35,17 +55,24 @@ export async function POST(request: NextRequest) {
 
     const results: { ocr?: string; translation?: string; summary?: string } = {};
 
-    // Process based on action
+    // Process based on action (with timing)
     if (action === 'ocr' || action === 'all') {
       if (!imageUrl) {
         return NextResponse.json({ error: 'imageUrl required for OCR' }, { status: 400 });
       }
+      const ocrStart = performance.now();
       results.ocr = await performOCR(
         imageUrl,
         language || 'Latin',
         previousPage?.ocr,
         customPrompts?.ocr
       );
+      const ocrDuration = performance.now() - ocrStart;
+      await recordProcessingMetric(db, 'ocr_processing', ocrDuration, {
+        pageId,
+        language: language || 'Latin',
+        textLength: results.ocr?.length || 0,
+      });
     }
 
     if (action === 'translation' || action === 'all') {
@@ -53,6 +80,7 @@ export async function POST(request: NextRequest) {
       if (!textToTranslate) {
         return NextResponse.json({ error: 'ocrText required for translation' }, { status: 400 });
       }
+      const translationStart = performance.now();
       results.translation = await performTranslation(
         textToTranslate,
         language || 'Latin',
@@ -60,6 +88,14 @@ export async function POST(request: NextRequest) {
         previousPage?.translation,
         customPrompts?.translation
       );
+      const translationDuration = performance.now() - translationStart;
+      await recordProcessingMetric(db, 'translation_processing', translationDuration, {
+        pageId,
+        sourceLanguage: language || 'Latin',
+        targetLanguage,
+        inputLength: textToTranslate.length,
+        outputLength: results.translation?.length || 0,
+      });
     }
 
     if (action === 'summary' || action === 'all') {
@@ -67,11 +103,18 @@ export async function POST(request: NextRequest) {
       if (!textToSummarize) {
         return NextResponse.json({ error: 'translatedText required for summary' }, { status: 400 });
       }
+      const summaryStart = performance.now();
       results.summary = await generateSummary(
         textToSummarize,
         previousPage?.summary,
         customPrompts?.summary
       );
+      const summaryDuration = performance.now() - summaryStart;
+      await recordProcessingMetric(db, 'summary_processing', summaryDuration, {
+        pageId,
+        inputLength: textToSummarize.length,
+        outputLength: results.summary?.length || 0,
+      });
     }
 
     // Auto-save to database if requested

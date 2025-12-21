@@ -1,0 +1,563 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import {
+  FileText,
+  Languages,
+  BookOpen,
+  Loader2,
+  CheckCircle2,
+  Square,
+  Play,
+  Scissors,
+  Wand2,
+  X,
+  Download,
+  Settings
+} from 'lucide-react';
+import DownloadButton from './DownloadButton';
+import type { Page, Prompt } from '@/lib/types';
+
+interface BookPagesSectionProps {
+  bookId: string;
+  pages: Page[];
+}
+
+type ActionType = 'ocr' | 'translation' | 'summary';
+
+interface ProcessingState {
+  active: boolean;
+  type: ActionType | null;
+  currentIndex: number;
+  totalPages: number;
+  completed: string[];
+  failed: string[];
+}
+
+// Format relative time
+function formatRelativeTime(date: Date | string | undefined): string {
+  if (!date) return 'Never';
+  const d = new Date(date);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return 'Just now';
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+export default function BookPagesSection({ bookId, pages }: BookPagesSectionProps) {
+  const router = useRouter();
+  const [batchMode, setBatchMode] = useState(false);
+  const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
+  const [action, setAction] = useState<ActionType>('ocr');
+  const [showPromptSettings, setShowPromptSettings] = useState(false);
+
+  // Prompt library state
+  const [prompts, setPrompts] = useState<Record<ActionType, Prompt[]>>({
+    ocr: [],
+    translation: [],
+    summary: []
+  });
+  const [selectedPromptIds, setSelectedPromptIds] = useState<Record<ActionType, string>>({
+    ocr: '',
+    translation: '',
+    summary: ''
+  });
+  const [editedPrompts, setEditedPrompts] = useState<Record<ActionType, string>>({
+    ocr: '',
+    translation: '',
+    summary: ''
+  });
+  const [promptsLoading, setPromptsLoading] = useState(true);
+
+  const [processing, setProcessing] = useState<ProcessingState>({
+    active: false,
+    type: null,
+    currentIndex: 0,
+    totalPages: 0,
+    completed: [],
+    failed: []
+  });
+  const [stopRequested, setStopRequested] = useState(false);
+
+  // Calculate stats
+  const pagesWithOcr = pages.filter(p => p.ocr?.data).length;
+  const pagesWithTranslation = pages.filter(p => p.translation?.data).length;
+  const pagesWithSummary = pages.filter(p => p.summary?.data).length;
+  const totalPages = pages.length;
+
+  // Calculate last activity dates
+  const lastOcrDate = pages
+    .filter(p => p.ocr?.updated_at)
+    .map(p => new Date(p.ocr!.updated_at!))
+    .sort((a, b) => b.getTime() - a.getTime())[0];
+
+  const lastTranslationDate = pages
+    .filter(p => p.translation?.updated_at)
+    .map(p => new Date(p.translation!.updated_at!))
+    .sort((a, b) => b.getTime() - a.getTime())[0];
+
+  // Fetch prompts
+  useEffect(() => {
+    const fetchPrompts = async () => {
+      setPromptsLoading(true);
+      try {
+        const [ocrRes, transRes, sumRes] = await Promise.all([
+          fetch('/api/prompts?type=ocr'),
+          fetch('/api/prompts?type=translation'),
+          fetch('/api/prompts?type=summary')
+        ]);
+
+        const loadPrompts = async (res: Response, type: ActionType) => {
+          if (res.ok) {
+            const data = await res.json();
+            const defaultPrompt = data.find((p: Prompt) => p.is_default) || data[0];
+            setPrompts(prev => ({ ...prev, [type]: data }));
+            if (defaultPrompt) {
+              setSelectedPromptIds(prev => ({ ...prev, [type]: defaultPrompt.id || defaultPrompt._id?.toString() || '' }));
+              setEditedPrompts(prev => ({ ...prev, [type]: defaultPrompt.content }));
+            }
+          }
+        };
+
+        await Promise.all([
+          loadPrompts(ocrRes, 'ocr'),
+          loadPrompts(transRes, 'translation'),
+          loadPrompts(sumRes, 'summary')
+        ]);
+      } catch (error) {
+        console.error('Error fetching prompts:', error);
+      } finally {
+        setPromptsLoading(false);
+      }
+    };
+    fetchPrompts();
+  }, []);
+
+  const handleSelectPrompt = (type: ActionType, promptId: string) => {
+    const prompt = prompts[type].find(p => (p.id || p._id?.toString()) === promptId);
+    if (prompt) {
+      setSelectedPromptIds(prev => ({ ...prev, [type]: promptId }));
+      setEditedPrompts(prev => ({ ...prev, [type]: prompt.content }));
+    }
+  };
+
+  const togglePage = useCallback((pageId: string) => {
+    setSelectedPages(prev => {
+      const next = new Set(prev);
+      if (next.has(pageId)) {
+        next.delete(pageId);
+      } else {
+        next.add(pageId);
+      }
+      return next;
+    });
+  }, []);
+
+  const selectAll = () => setSelectedPages(new Set(pages.map(p => p.id)));
+  const clearSelection = () => setSelectedPages(new Set());
+
+  const exitBatchMode = () => {
+    setBatchMode(false);
+    setSelectedPages(new Set());
+    setShowPromptSettings(false);
+  };
+
+  const runBatchProcess = async () => {
+    if (selectedPages.size === 0) return;
+
+    const pageIds = Array.from(selectedPages);
+    setStopRequested(false);
+    setProcessing({
+      active: true,
+      type: action,
+      currentIndex: 0,
+      totalPages: pageIds.length,
+      completed: [],
+      failed: []
+    });
+
+    const completed: string[] = [];
+    const failed: string[] = [];
+
+    for (let i = 0; i < pageIds.length; i++) {
+      if (stopRequested) break;
+
+      const pageId = pageIds[i];
+      const page = pages.find(p => p.id === pageId);
+      if (!page) continue;
+
+      setProcessing(prev => ({ ...prev, currentIndex: i + 1 }));
+
+      try {
+        const pageIndex = pages.findIndex(p => p.id === pageId);
+        const previousPage = pageIndex > 0 ? pages[pageIndex - 1] : null;
+
+        const response = await fetch('/api/process', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pageId,
+            action,
+            imageUrl: page.photo,
+            language: 'Latin',
+            targetLanguage: 'English',
+            ocrText: action === 'translation' ? page.ocr?.data : undefined,
+            translatedText: action === 'summary' ? page.translation?.data : undefined,
+            previousPageId: previousPage?.id,
+            customPrompts: {
+              ocr: editedPrompts.ocr,
+              translation: editedPrompts.translation,
+              summary: editedPrompts.summary
+            },
+            autoSave: true
+          })
+        });
+
+        if (response.ok) {
+          completed.push(pageId);
+        } else {
+          failed.push(pageId);
+        }
+      } catch (error) {
+        console.error(`Error processing page ${pageId}:`, error);
+        failed.push(pageId);
+      }
+
+      setProcessing(prev => ({ ...prev, completed: [...completed], failed: [...failed] }));
+
+      if (i < pageIds.length - 1 && !stopRequested) {
+        await new Promise(r => setTimeout(r, 1000));
+      }
+    }
+
+    setProcessing(prev => ({ ...prev, active: false }));
+    if (completed.length > 0) router.refresh();
+  };
+
+  const actionConfig = {
+    ocr: { label: 'OCR', icon: FileText, color: '#3b82f6' },
+    translation: { label: 'Translation', icon: Languages, color: '#22c55e' },
+    summary: { label: 'Summary', icon: BookOpen, color: '#a855f7' }
+  };
+
+  const selectedCount = selectedPages.size;
+  const estimatedTimeMinutes = Math.ceil(selectedCount * 0.5);
+
+  const getImageUrl = (page: Page) => {
+    const baseUrl = page.photo_original || page.photo;
+    if (!baseUrl) return null;
+    if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+    }
+    return page.thumbnail || `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Stats Bar - Clean horizontal layout */}
+      <div className="bg-white rounded-xl border border-stone-200 p-4">
+        <div className="flex flex-wrap items-center gap-6">
+          {/* OCR stat */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#eff6ff' }}>
+              <FileText className="w-5 h-5" style={{ color: '#3b82f6' }} />
+            </div>
+            <div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-semibold text-stone-900">{pagesWithOcr}</span>
+                <span className="text-sm text-stone-400">/ {totalPages}</span>
+              </div>
+              <div className="text-xs text-stone-500">OCR {lastOcrDate ? `· ${formatRelativeTime(lastOcrDate)}` : ''}</div>
+            </div>
+          </div>
+
+          {/* Translation stat */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f0fdf4' }}>
+              <Languages className="w-5 h-5" style={{ color: '#22c55e' }} />
+            </div>
+            <div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-semibold text-stone-900">{pagesWithTranslation}</span>
+                <span className="text-sm text-stone-400">/ {totalPages}</span>
+              </div>
+              <div className="text-xs text-stone-500">Translated {lastTranslationDate ? `· ${formatRelativeTime(lastTranslationDate)}` : ''}</div>
+            </div>
+          </div>
+
+          {/* Summary stat */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#faf5ff' }}>
+              <BookOpen className="w-5 h-5" style={{ color: '#a855f7' }} />
+            </div>
+            <div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-semibold text-stone-900">{pagesWithSummary}</span>
+                <span className="text-sm text-stone-400">/ {totalPages}</span>
+              </div>
+              <div className="text-xs text-stone-500">Summarized</div>
+            </div>
+          </div>
+
+          {/* Spacer */}
+          <div className="flex-1" />
+
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            {!batchMode ? (
+              <>
+                <button
+                  onClick={() => setBatchMode(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors text-sm font-medium border border-amber-200"
+                >
+                  <Wand2 className="w-4 h-4" />
+                  Batch Process
+                </button>
+                <Link
+                  href={`/book/${bookId}/prepare`}
+                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
+                >
+                  <Scissors className="w-4 h-4" />
+                  Split Pages
+                </Link>
+                <DownloadButton
+                  bookId={bookId}
+                  hasTranslations={pagesWithTranslation > 0}
+                  hasOcr={pagesWithOcr > 0}
+                />
+              </>
+            ) : (
+              <button
+                onClick={exitBatchMode}
+                className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors text-sm"
+              >
+                <X className="w-4 h-4" />
+                Exit
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Batch Mode Controls */}
+      {batchMode && (
+        <div className="bg-amber-50 rounded-xl border border-amber-200 p-4 space-y-4">
+          {/* Processing progress */}
+          {processing.active && (
+            <div className="bg-white rounded-lg p-4 border border-amber-200">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
+                  <span className="text-sm font-medium text-stone-700">
+                    {actionConfig[action].label} · Page {processing.currentIndex} of {processing.totalPages}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setStopRequested(true)}
+                  className="text-xs text-stone-500 hover:text-stone-700 flex items-center gap-1"
+                >
+                  <Square className="w-3 h-3" /> Stop
+                </button>
+              </div>
+              <div className="h-1.5 bg-stone-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-amber-500 transition-all duration-300"
+                  style={{ width: `${(processing.currentIndex / processing.totalPages) * 100}%` }}
+                />
+              </div>
+              <div className="flex justify-between mt-1 text-xs text-stone-500">
+                <span>{processing.completed.length} done</span>
+                {processing.failed.length > 0 && <span className="text-red-500">{processing.failed.length} failed</span>}
+              </div>
+            </div>
+          )}
+
+          {/* Action selector & Selection controls */}
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Action:</span>
+              <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
+                {(['ocr', 'translation', 'summary'] as ActionType[]).map(type => {
+                  const { label, icon: Icon, color } = actionConfig[type];
+                  const isSelected = action === type;
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => setAction(type)}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${
+                        isSelected ? 'text-white' : 'text-stone-600 hover:bg-stone-50'
+                      }`}
+                      style={isSelected ? { backgroundColor: color } : {}}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="h-6 w-px bg-amber-300" />
+
+            <div className="flex items-center gap-3 text-sm">
+              <span className="text-stone-600">
+                <strong>{selectedCount}</strong> selected
+              </span>
+              <button onClick={selectAll} className="text-amber-700 hover:text-amber-800 font-medium">
+                Select all
+              </button>
+              {selectedCount > 0 && (
+                <button onClick={clearSelection} className="text-stone-500 hover:text-stone-700">
+                  Clear
+                </button>
+              )}
+            </div>
+
+            <div className="flex-1" />
+
+            {/* Prompt settings toggle */}
+            <button
+              onClick={() => setShowPromptSettings(!showPromptSettings)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
+                showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
+              }`}
+            >
+              <Settings className="w-4 h-4" />
+              Prompt Settings
+            </button>
+          </div>
+
+          {/* Prompt Settings Panel */}
+          {showPromptSettings && (
+            <div className="bg-white rounded-lg border border-amber-200 p-4 space-y-3">
+              <div className="flex items-center gap-4">
+                <label className="text-sm text-stone-600">Template:</label>
+                <select
+                  value={selectedPromptIds[action]}
+                  onChange={(e) => handleSelectPrompt(action, e.target.value)}
+                  disabled={promptsLoading}
+                  className="flex-1 max-w-xs px-3 py-1.5 text-sm border border-stone-200 rounded-lg bg-white"
+                >
+                  {promptsLoading ? (
+                    <option>Loading...</option>
+                  ) : (
+                    prompts[action].map(p => (
+                      <option key={p.id || p._id?.toString()} value={p.id || p._id?.toString()}>
+                        {p.name}{p.is_default ? ' (Default)' : ''}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+              <textarea
+                value={editedPrompts[action]}
+                onChange={e => setEditedPrompts(prev => ({ ...prev, [action]: e.target.value }))}
+                className="w-full h-32 p-3 text-sm border border-stone-200 rounded-lg resize-none font-mono text-stone-700"
+                placeholder={`${actionConfig[action].label} prompt...`}
+              />
+              <p className="text-xs text-stone-400">
+                Use {'{language}'} and {'{target_language}'} as placeholders. Changes apply to this batch only.
+              </p>
+            </div>
+          )}
+
+          {/* Run button */}
+          <div className="flex items-center justify-between pt-2">
+            <span className="text-sm text-stone-500">
+              {selectedCount > 0 ? `~${estimatedTimeMinutes} min for ${selectedCount} pages` : 'Select pages to process'}
+            </span>
+            <button
+              onClick={runBatchProcess}
+              disabled={selectedCount === 0 || processing.active}
+              className="flex items-center gap-2 px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
+            >
+              <Play className="w-4 h-4" />
+              Run {actionConfig[action].label}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Pages Grid */}
+      <div>
+        <h2 className="text-lg font-semibold text-stone-900 mb-4">Pages</h2>
+
+        {pages.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-xl border border-stone-200">
+            <FileText className="w-12 h-12 text-stone-300 mx-auto mb-3" />
+            <h3 className="text-lg font-medium text-stone-600">No pages yet</h3>
+            <p className="text-stone-400 text-sm mt-1">Upload pages to start processing</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
+            {pages.map((page) => {
+              const isSelected = selectedPages.has(page.id);
+              const imageUrl = getImageUrl(page);
+              const hasOcr = !!page.ocr?.data;
+              const hasTranslation = !!page.translation?.data;
+              const hasSummary = !!page.summary?.data;
+
+              if (batchMode) {
+                return (
+                  <button
+                    key={page.id}
+                    onClick={() => togglePage(page.id)}
+                    className="group relative text-left"
+                  >
+                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${
+                      isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
+                    }`}>
+                      {imageUrl && (
+                        <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover" />
+                      )}
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-amber-500/20 flex items-center justify-center">
+                          <CheckCircle2 className="w-6 h-6 text-amber-600 drop-shadow" />
+                        </div>
+                      )}
+                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
+                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
+                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
+                      </div>
+                    </div>
+                    <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
+                  </button>
+                );
+              }
+
+              return (
+                <a key={page.id} href={`/book/${bookId}/page/${page.id}`} className="group relative">
+                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                    {imageUrl && (
+                      <img
+                        src={imageUrl}
+                        alt={`Page ${page.page_number}`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                      />
+                    )}
+                    <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
+                      {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" title="OCR" />}
+                      {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" title="Translated" />}
+                      {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" title="Summarized" />}
+                    </div>
+                  </div>
+                  <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
+                </a>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
