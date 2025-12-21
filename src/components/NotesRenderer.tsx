@@ -151,16 +151,13 @@ function processInlineMarkup(text: string, showNotes: boolean = true): string {
       return `<span class="unclear-text">${content.trim()}</span>`;
     });
   } else {
-    // When notes are hidden, just extract the plain text content
-    result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => content.trim());
-    result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, (match, content) => {
-      const parts = content.split(/→|->/).map((s: string) => s.trim());
-      return parts[0]; // Just the term without the gloss
-    });
-    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => content.trim());
-    result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, (match, content) => content.trim());
-    result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, (match, content) => content.trim());
-    result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, (match, content) => `${content.trim()}?`);
+    // When notes are hidden, completely remove all note content
+    result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, '');
+    result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, '');
+    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, '');
+    result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, '');
+    result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, '');
+    result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, '');
   }
 
   return result;

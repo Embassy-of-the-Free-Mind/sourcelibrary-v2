@@ -575,19 +575,6 @@ export default function TranslationEditor({
                 <Languages className="w-3.5 h-3.5" />
                 English
               </button>
-              <button
-                onClick={() => setShowNotes(!showNotes)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showNotes ? '' : 'opacity-50'}`}
-                style={{
-                  background: showNotes ? 'var(--bg-white)' : 'transparent',
-                  color: showNotes ? 'var(--accent-amber, #b45309)' : 'var(--text-muted)',
-                  boxShadow: showNotes ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
-                }}
-                title="Toggle inline notes and annotations"
-              >
-                <MessageSquare className="w-3.5 h-3.5" />
-                Notes
-              </button>
             </div>
 
             <button
@@ -711,14 +698,25 @@ export default function TranslationEditor({
                       )}
                     </div>
                     {translationText && (
-                      <button
-                        onClick={() => copyToClipboard(translationText)}
-                        className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
-                        style={{ color: 'var(--text-muted)' }}
-                      >
-                        {copiedTranslation ? <Check className="w-3 h-3" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3 h-3" />}
-                        {copiedTranslation ? 'Copied' : 'Copy'}
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => setShowNotes(!showNotes)}
+                          className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100 ${showNotes ? '' : 'opacity-50'}`}
+                          style={{ color: showNotes ? 'var(--accent-amber, #b45309)' : 'var(--text-muted)' }}
+                          title="Toggle inline notes and annotations"
+                        >
+                          <MessageSquare className="w-3 h-3" />
+                          Notes
+                        </button>
+                        <button
+                          onClick={() => copyToClipboard(translationText)}
+                          className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
+                          style={{ color: 'var(--text-muted)' }}
+                        >
+                          {copiedTranslation ? <Check className="w-3 h-3" style={{ color: 'var(--accent-sage)' }} /> : <Copy className="w-3 h-3" />}
+                          {copiedTranslation ? 'Copied' : 'Copy'}
+                        </button>
+                      </div>
                     )}
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
