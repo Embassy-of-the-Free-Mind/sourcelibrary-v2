@@ -219,15 +219,41 @@ export default function BookSummaryPage() {
           <div className="text-center py-16 bg-white rounded-lg border border-stone-200">
             <FileText className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-stone-600">No summaries yet</h3>
-            <p className="text-stone-500 mt-2 mb-6">
-              Process page summaries first, then generate the book summary.
+            <p className="text-stone-500 mt-2 mb-6 max-w-md mx-auto">
+              Generate a summary using AI research about the book and author,
+              or process page translations first for a more detailed summary.
             </p>
-            <Link
-              href={`/book/${bookId}/prepare`}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
-            >
-              Prepare Pages
-            </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                onClick={regenerateIndex}
+                disabled={generating}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors disabled:opacity-50"
+              >
+                {generating ? (
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    Generating Summary...
+                  </>
+                ) : (
+                  <>
+                    <BookOpen className="w-4 h-4" />
+                    Generate Summary
+                  </>
+                )}
+              </button>
+              <Link
+                href={`/book/${bookId}/prepare`}
+                className="inline-flex items-center gap-2 px-4 py-2 text-stone-600 hover:text-stone-800 hover:bg-stone-100 rounded-lg transition-colors"
+              >
+                <FileText className="w-4 h-4" />
+                Process Pages First
+              </Link>
+            </div>
+            {generating && (
+              <p className="text-stone-400 text-sm mt-4">
+                Researching the book and generating summary... This may take a minute.
+              </p>
+            )}
           </div>
         ) : activeTab === 'summary' ? (
           <div className="space-y-8">

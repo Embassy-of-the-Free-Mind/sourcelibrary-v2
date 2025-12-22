@@ -42,7 +42,7 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
 
   // Import state
   const [importingIds, setImportingIds] = useState<Set<string>>(new Set());
-  const [importedBooks, setImportedBooks] = useState<Map<string, string>>(new Map()); // catalogId -> bookId
+  const [importedBooks, setImportedBooks] = useState<Record<string, string>>({}); // catalogId -> bookId
 
   const filteredAndSortedBooks = useMemo(() => {
     let result = [...books];
@@ -161,12 +161,12 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
       const data = await response.json();
 
       if (response.ok && data.bookId) {
-        setImportedBooks(prev => new Map(prev).set(item.id, data.bookId));
+        setImportedBooks(prev => ({ ...prev, [item.id]: data.bookId }));
         // Refresh the page to show the new book
         router.refresh();
       } else if (response.status === 409 && data.existingId) {
-        // Book already exists
-        setImportedBooks(prev => new Map(prev).set(item.id, data.existingId));
+        // Book already exists - show the Open button
+        setImportedBooks(prev => ({ ...prev, [item.id]: data.existingId }));
       } else {
         console.error('Import failed:', data.error);
         alert(`Import failed: ${data.error || 'Unknown error'}`);
@@ -446,9 +446,9 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
                   <div className="flex-shrink-0 flex flex-col gap-2">
                     {item.source === 'ia' && item.iaIdentifier ? (
                       <>
-                        {importedBooks.has(item.id) ? (
+                        {importedBooks[item.id] ? (
                           <Link
-                            href={`/book/${importedBooks.get(item.id)}`}
+                            href={`/book/${importedBooks[item.id]}`}
                             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
                           >
                             <Check className="w-3.5 h-3.5" />

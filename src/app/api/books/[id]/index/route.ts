@@ -280,11 +280,23 @@ ${researchContext}
 Use this research to provide accurate historical context in your summaries.
 ` : '';
 
-  const prompt = `You are a scholarly summarizer working on a historical text: "${bookTitle}" by ${bookAuthor}.${languageContext}
-${researchSection}
+  const pageSummarySection = summaryText ? `
 ## Page Summaries
 ${summaryText}
+` : `
+## Note
+No page-by-page summaries are available yet. Generate the summary based on the background research above.
+`;
 
+  const sectionsInstructions = summaryText ? `
+4. **SECTIONS**: Identify the natural divisions in this text (3-8 sections based on thematic shifts). For each section provide:
+   - A descriptive title
+   - The approximate page range
+   - A brief summary (2-3 sentences)` : `
+4. **SECTIONS**: Since no page summaries are available, return an empty array for sections.`;
+
+  const prompt = `You are a scholarly summarizer working on a historical text: "${bookTitle}" by ${bookAuthor}.${languageContext}
+${researchSection}${pageSummarySection}
 ## Task
 Generate a comprehensive analysis with these components:
 
@@ -297,22 +309,18 @@ Generate a comprehensive analysis with these components:
    - Historical context: When and where this text originated (use research data)
    - Who the author was and their significance
    - The author's purpose and intended audience
-   - The main themes and arguments
+   - The main themes and arguments (if known from research)
    - The text's significance in its field or tradition
    - Any notable methodology or structure
 
 3. **DETAILED** (3-5 paragraphs): A fuller summary that:
    - Opens with detailed historical and intellectual context (use research data)
    - Places the author in their historical moment
-   - Traces the development of ideas through the text
-   - Discusses key arguments, figures, or concepts in depth
+   - Describes the text's known contents and structure
+   - Discusses key themes or concepts the work addresses
    - Notes the text's place in broader intellectual history
    - Concludes with the text's lasting significance and influence
-
-4. **SECTIONS**: Identify the natural divisions in this text (3-8 sections based on thematic shifts). For each section provide:
-   - A descriptive title
-   - The approximate page range
-   - A brief summary (2-3 sentences)
+${sectionsInstructions}
 
 Output as JSON:
 {
