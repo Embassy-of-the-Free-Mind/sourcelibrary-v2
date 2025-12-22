@@ -152,41 +152,78 @@ function extractPageSummaries(pages: PageData[]): { page: number; summary: strin
   return summaries;
 }
 
+interface SectionSummary {
+  title: string;
+  startPage: number;
+  endPage: number;
+  summary: string;
+}
+
+interface GeneratedSummary {
+  brief: string;
+  abstract: string;
+  detailed: string;
+  sections: SectionSummary[];
+}
+
 // Generate hierarchical book summary using AI
 async function generateBookSummary(
   pageSummaries: { page: number; summary: string }[],
   bookTitle: string,
-  bookAuthor: string
-): Promise<{ brief: string; abstract: string; detailed: string }> {
+  bookAuthor: string,
+  bookLanguage?: string
+): Promise<GeneratedSummary> {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
   const summaryText = pageSummaries
     .map(s => `Page ${s.page}: ${s.summary}`)
     .join('\n');
 
-  const prompt = `You are summarizing a historical text: "${bookTitle}" by ${bookAuthor}.
+  const languageContext = bookLanguage ? ` The original text is in ${bookLanguage}.` : '';
+
+  const prompt = `You are a scholarly summarizer working on a historical text: "${bookTitle}" by ${bookAuthor}.${languageContext}
 
 Here are the page-by-page summaries:
 ${summaryText}
 
-Generate three levels of summary:
+Generate a comprehensive analysis with these components:
 
-1. **BRIEF** (1-2 sentences): A tweet-length description for browsing.
+1. **BRIEF** (2-3 sentences): A concise description for browsing that includes:
+   - What type of text this is (treatise, dialogue, commentary, etc.)
+   - The approximate historical period/context if discernible
+   - The main subject matter
 
-2. **ABSTRACT** (1 paragraph, 4-6 sentences): A catalog-style description covering the main themes, arguments, and significance.
+2. **ABSTRACT** (1 paragraph, 5-8 sentences): A scholarly abstract that includes:
+   - Historical context: When and where this text likely originated
+   - The author's purpose and intended audience (if discernible)
+   - The main themes and arguments
+   - The text's significance in its field or tradition
+   - Any notable methodology or structure
 
-3. **DETAILED** (2-4 paragraphs): A fuller summary organized by the book's natural sections/themes. Include:
-   - The book's purpose and context
-   - Key arguments or teachings
-   - Major figures or concepts discussed
-   - Historical significance
+3. **DETAILED** (3-5 paragraphs): A fuller summary that:
+   - Opens with historical and intellectual context
+   - Traces the development of ideas through the text
+   - Discusses key arguments, figures, or concepts in depth
+   - Notes the text's place in broader intellectual history
+   - Concludes with the text's lasting significance
+
+4. **SECTIONS**: Identify the natural divisions in this text (3-8 sections based on thematic shifts). For each section provide:
+   - A descriptive title
+   - The approximate page range
+   - A brief summary (2-3 sentences)
 
 Output as JSON:
 {
   "brief": "...",
   "abstract": "...",
-  "detailed": "..."
-}`;
+  "detailed": "...",
+  "sections": [
+    {"title": "...", "startPage": 1, "endPage": 5, "summary": "..."},
+    ...
+  ]
+}
+
+Important: Write as a scholar would for an educated general audience. Avoid jargon but don't oversimplify. If historical context isn't clear from the summaries, make reasonable inferences based on the author name, text style, and content.`;
 
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
@@ -197,7 +234,14 @@ Output as JSON:
     throw new Error('Failed to parse book summary JSON');
   }
 
-  return JSON.parse(jsonMatch[0]);
+  const parsed = JSON.parse(jsonMatch[0]);
+
+  // Ensure sections array exists
+  if (!parsed.sections) {
+    parsed.sections = [];
+  }
+
+  return parsed;
 }
 
 // GET /api/books/[id]/index - Get or generate book index
@@ -240,13 +284,21 @@ export async function GET(
 
     // Generate book summary if we have enough page summaries
     let bookSummary = { brief: '', abstract: '', detailed: '' };
+    let sectionSummaries: SectionSummary[] = [];
     if (pageSummaries.length >= 3) {
       try {
-        bookSummary = await generateBookSummary(
+        const generated = await generateBookSummary(
           pageSummaries,
           book.display_title || book.title,
-          book.author || 'Unknown'
+          book.author || 'Unknown',
+          book.language || undefined
         );
+        bookSummary = {
+          brief: generated.brief,
+          abstract: generated.abstract,
+          detailed: generated.detailed,
+        };
+        sectionSummaries = generated.sections || [];
       } catch (e) {
         console.error('Failed to generate book summary:', e);
       }
@@ -255,6 +307,7 @@ export async function GET(
     const index: BookIndex = {
       ...conceptIndex,
       pageSummaries,
+      sectionSummaries,
       bookSummary,
       generatedAt: new Date(),
       pagesCovered: pageSummaries.length,
@@ -267,10 +320,10 @@ export async function GET(
       updated_at: new Date()
     };
 
-    // Save the abstract as the book summary for display on the book page
-    if (bookSummary.abstract) {
+    // Save the brief as the book summary for display on the book page (with historical context)
+    if (bookSummary.brief) {
       updateData.summary = {
-        data: bookSummary.abstract,
+        data: bookSummary.brief,
         generated_at: new Date(),
         page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
         model: 'gemini-2.0-flash'

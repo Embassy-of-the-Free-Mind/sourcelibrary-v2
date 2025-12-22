@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 import rehypeRaw from 'rehype-raw';
 import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 
@@ -259,7 +260,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
 
       {/* Main text rendered as markdown */}
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkBreaks]}
         rehypePlugins={[rehypeRaw]}
         allowedElements={[
           'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
