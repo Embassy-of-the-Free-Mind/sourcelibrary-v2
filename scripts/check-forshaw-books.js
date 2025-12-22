@@ -1,8 +1,30 @@
 const { MongoClient } = require('mongodb');
+const fs = require('fs');
+const path = require('path');
+
+// Load .env.local
+function loadEnv() {
+  const envPath = path.join(__dirname, '..', '.env.local');
+  if (fs.existsSync(envPath)) {
+    const content = fs.readFileSync(envPath, 'utf8');
+    content.split('\n').forEach(line => {
+      const match = line.match(/^([^=]+)=(.*)$/);
+      if (match && !process.env[match[1]]) {
+        process.env[match[1]] = match[2];
+      }
+    });
+  }
+}
+loadEnv();
 
 async function check() {
-  const uri = process.env.MONGODB_URI || 'mongodb+srv://nirmal:***REMOVED***@research-apps.ywilvpy.mongodb.net/';
-  const dbName = process.env.MONGODB_DB || 'bookstore';
+  const uri = process.env.MONGODB_URI;
+  const dbName = process.env.MONGODB_DB;
+
+  if (!uri || !dbName) {
+    console.error('Missing MONGODB_URI or MONGODB_DB in .env.local');
+    process.exit(1);
+  }
 
   const client = await MongoClient.connect(uri);
   const db = client.db(dbName);
