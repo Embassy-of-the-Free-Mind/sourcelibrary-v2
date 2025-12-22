@@ -4,6 +4,75 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
+// Research a book/author using Wikipedia API and web search
+async function researchBook(title: string, author: string): Promise<string> {
+  const searchResults: string[] = [];
+
+  // Search Wikipedia for the author
+  try {
+    const authorQuery = encodeURIComponent(author);
+    const authorRes = await fetch(
+      `https://en.wikipedia.org/api/rest_v1/page/summary/${authorQuery}`,
+      { headers: { 'User-Agent': 'SourceLibrary/1.0' } }
+    );
+    if (authorRes.ok) {
+      const data = await authorRes.json();
+      if (data.extract && data.extract.length > 50) {
+        searchResults.push(`About the author (${author}):\n${data.extract}`);
+      }
+    }
+  } catch (e) {
+    console.log('Wikipedia author search failed:', e);
+  }
+
+  // Search Wikipedia for the book title
+  try {
+    const titleQuery = encodeURIComponent(title.replace(/[^\w\s]/g, ''));
+    const titleRes = await fetch(
+      `https://en.wikipedia.org/api/rest_v1/page/summary/${titleQuery}`,
+      { headers: { 'User-Agent': 'SourceLibrary/1.0' } }
+    );
+    if (titleRes.ok) {
+      const data = await titleRes.json();
+      if (data.extract && data.extract.length > 50) {
+        searchResults.push(`About "${title}":\n${data.extract}`);
+      }
+    }
+  } catch (e) {
+    console.log('Wikipedia title search failed:', e);
+  }
+
+  // Use Gemini to research if we don't have Wikipedia results
+  if (searchResults.length === 0) {
+    try {
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+      const researchPrompt = `You are a scholarly research assistant. Provide brief factual background on:
+
+Title: "${title}"
+Author: ${author}
+
+Include (if known):
+- Who was the author? (dates, background, other works)
+- When and where was this text written?
+- What genre/tradition does it belong to?
+- Why is it historically significant?
+- What intellectual/religious/philosophical context shaped it?
+
+Keep response to 2-3 paragraphs. If you're uncertain about details, say so. Focus on established scholarly consensus.`;
+
+      const result = await model.generateContent(researchPrompt);
+      const researchText = result.response.text();
+      if (researchText && researchText.length > 100) {
+        searchResults.push(`Scholarly context:\n${researchText}`);
+      }
+    } catch (e) {
+      console.log('Gemini research failed:', e);
+    }
+  }
+
+  return searchResults.join('\n\n');
+}
+
 interface PageData {
   page_number: number;
   ocr?: { data: string };
@@ -140,9 +209,29 @@ function extractPageSummaries(pages: PageData[]): { page: number; summary: strin
   const summaries: { page: number; summary: string }[] = [];
 
   for (const page of pages) {
-    // Try translation first, then dedicated summary
+    // Try [[summary:]] tag first, then dedicated summary field
     const text = page.translation?.data || '';
-    const summary = extractSummary(text) || page.summary?.data;
+    let summary = extractSummary(text) || page.summary?.data;
+
+    // If no explicit summary but we have translation text, use first paragraph
+    if (!summary && text.length > 50) {
+      // Strip metadata tags and get clean text
+      let cleanText = text
+        .replace(/\[\[[^\]]+\]\]/g, '') // Remove all [[tag:...]] patterns
+        .replace(/^```(?:markdown)?\s*\n?/i, '') // Remove code fences
+        .replace(/\n?```\s*$/i, '')
+        .trim();
+
+      // Get first meaningful paragraph (skip very short lines)
+      const paragraphs = cleanText.split(/\n\n+/).filter(p => p.trim().length > 30);
+      if (paragraphs.length > 0) {
+        // Take first paragraph, limit to ~300 chars
+        summary = paragraphs[0].trim();
+        if (summary.length > 300) {
+          summary = summary.substring(0, 300).replace(/\s+\S*$/, '') + '...';
+        }
+      }
+    }
 
     if (summary) {
       summaries.push({ page: page.page_number, summary });
@@ -171,7 +260,8 @@ async function generateBookSummary(
   pageSummaries: { page: number; summary: string }[],
   bookTitle: string,
   bookAuthor: string,
-  bookLanguage?: string
+  bookLanguage?: string,
+  researchContext?: string
 ): Promise<GeneratedSummary> {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
@@ -181,31 +271,43 @@ async function generateBookSummary(
 
   const languageContext = bookLanguage ? ` The original text is in ${bookLanguage}.` : '';
 
-  const prompt = `You are a scholarly summarizer working on a historical text: "${bookTitle}" by ${bookAuthor}.${languageContext}
+  const researchSection = researchContext ? `
+## Background Research
+The following information was gathered about the book and author:
 
-Here are the page-by-page summaries:
+${researchContext}
+
+Use this research to provide accurate historical context in your summaries.
+` : '';
+
+  const prompt = `You are a scholarly summarizer working on a historical text: "${bookTitle}" by ${bookAuthor}.${languageContext}
+${researchSection}
+## Page Summaries
 ${summaryText}
 
+## Task
 Generate a comprehensive analysis with these components:
 
 1. **BRIEF** (2-3 sentences): A concise description for browsing that includes:
    - What type of text this is (treatise, dialogue, commentary, etc.)
-   - The approximate historical period/context if discernible
+   - The approximate historical period/context (be specific if research provides dates)
    - The main subject matter
 
 2. **ABSTRACT** (1 paragraph, 5-8 sentences): A scholarly abstract that includes:
-   - Historical context: When and where this text likely originated
-   - The author's purpose and intended audience (if discernible)
+   - Historical context: When and where this text originated (use research data)
+   - Who the author was and their significance
+   - The author's purpose and intended audience
    - The main themes and arguments
    - The text's significance in its field or tradition
    - Any notable methodology or structure
 
 3. **DETAILED** (3-5 paragraphs): A fuller summary that:
-   - Opens with historical and intellectual context
+   - Opens with detailed historical and intellectual context (use research data)
+   - Places the author in their historical moment
    - Traces the development of ideas through the text
    - Discusses key arguments, figures, or concepts in depth
    - Notes the text's place in broader intellectual history
-   - Concludes with the text's lasting significance
+   - Concludes with the text's lasting significance and influence
 
 4. **SECTIONS**: Identify the natural divisions in this text (3-8 sections based on thematic shifts). For each section provide:
    - A descriptive title
@@ -223,7 +325,7 @@ Output as JSON:
   ]
 }
 
-Important: Write as a scholar would for an educated general audience. Avoid jargon but don't oversimplify. If historical context isn't clear from the summaries, make reasonable inferences based on the author name, text style, and content.`;
+Important: Write as a scholar would for an educated general audience. Integrate the research naturally - don't just repeat it, but use it to enrich your analysis. If research is available, prefer it over speculation.`;
 
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
@@ -281,17 +383,34 @@ export async function GET(
 
     // Extract page summaries
     const pageSummaries = extractPageSummaries(pages);
+    console.log(`Found ${pageSummaries.length} page summaries from ${pages.length} total pages`);
 
-    // Generate book summary if we have enough page summaries
+    // Generate book summary if we have page summaries OR translations
     let bookSummary = { brief: '', abstract: '', detailed: '' };
     let sectionSummaries: SectionSummary[] = [];
-    if (pageSummaries.length >= 3) {
+
+    // Research the book first (useful even without page summaries)
+    const bookTitle = book.display_title || book.title;
+    const bookAuthor = book.author || 'Unknown';
+    let researchContext = '';
+
+    try {
+      console.log('Researching book:', bookTitle, 'by', bookAuthor);
+      researchContext = await researchBook(bookTitle, bookAuthor);
+      console.log('Research found:', researchContext ? researchContext.substring(0, 200) + '...' : 'none');
+    } catch (e) {
+      console.error('Research failed:', e);
+    }
+
+    // Generate summary if we have at least 1 page summary, or just research
+    if (pageSummaries.length >= 1 || researchContext) {
       try {
         const generated = await generateBookSummary(
           pageSummaries,
-          book.display_title || book.title,
-          book.author || 'Unknown',
-          book.language || undefined
+          bookTitle,
+          bookAuthor,
+          book.language || undefined,
+          researchContext || undefined
         );
         bookSummary = {
           brief: generated.brief,
@@ -299,9 +418,12 @@ export async function GET(
           detailed: generated.detailed,
         };
         sectionSummaries = generated.sections || [];
+        console.log('Summary generated successfully');
       } catch (e) {
         console.error('Failed to generate book summary:', e);
       }
+    } else {
+      console.log('Skipping summary generation: no page summaries and no research context');
     }
 
     const index: BookIndex = {
