@@ -642,7 +642,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
                       <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
-                        <NotesRenderer text={ocrText} showNotes={showNotes} />
+                        <NotesRenderer text={ocrText} showNotes={showNotes} showMetadata={showNotes} />
                       </div>
                     ) : (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
@@ -721,7 +721,7 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {translationText ? (
-                      <NotesRenderer text={translationText} showNotes={showNotes} />
+                      <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={showNotes} />
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
