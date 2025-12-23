@@ -106,9 +106,13 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract headers (running headers) - hidden from display
   result = result.replace(/\[\[header:\s*(.*?)\]\]/gi, () => '');
 
-  // Catch-all: remove any remaining [[tag: ...]] patterns that weren't handled above
+  // Catch-all: remove any remaining [[tag: ...]] patterns (handles multiline)
   // This ensures no metadata tags slip through to the reader
-  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|meta|abbrev|vocabulary|summary|keywords|header):\s*.*?\]\]/gi, '');
+  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
+
+  // Final aggressive cleanup: remove ANY remaining [[something: ...]] patterns
+  // This catches any malformed or unexpected tags
+  result = result.replace(/\[\[[a-z_-]+:\s*[\s\S]*?\]\]/gi, '');
 
   // Clean up extra whitespace from removed metadata
   result = result.replace(/^\s*\n/gm, '\n').replace(/\n{3,}/g, '\n\n').trim();
