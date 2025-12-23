@@ -27,6 +27,8 @@ import {
 import type { Book, Page, Prompt } from '@/lib/types';
 import ImageWithMagnifier from '@/components/ImageWithMagnifier';
 import SplitEditor from '@/components/SplitEditor';
+import SplitModeOverlay from '@/components/SplitModeOverlay';
+import SplitReviewScreen from '@/components/SplitReviewScreen';
 import { BookLoader } from '@/components/ui/BookLoader';
 
 interface PageProps {
@@ -68,6 +70,12 @@ export default function PreparePage({ params }: PageProps) {
   const [reviewIndex, setReviewIndex] = useState(0);
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
   const [dragOverPageId, setDragOverPageId] = useState<string | null>(null);
+
+  // Split mode state
+  const [splitMode, setSplitMode] = useState(false);
+  const [splitPositions, setSplitPositions] = useState<Record<string, number>>({});
+  const [splitModeReview, setSplitModeReview] = useState(false);
+  const [splitModeApplying, setSplitModeApplying] = useState(false);
 
   // Processing state
   const [processing, setProcessing] = useState<ProcessingState>({
@@ -288,6 +296,80 @@ export default function PreparePage({ params }: PageProps) {
       }
     }
     setSelectedPages(new Set());
+  };
+
+  // Toggle split mode
+  const toggleSplitMode = () => {
+    if (splitMode) {
+      // Exiting split mode - clear state
+      setSplitMode(false);
+      setSplitPositions({});
+      setSelectedPages(new Set());
+    } else {
+      // Entering split mode - clear selection and positions
+      setSplitMode(true);
+      setSelectedPages(new Set());
+      setSplitPositions({});
+    }
+  };
+
+  // Toggle page in split mode (adds/removes from split positions)
+  const toggleSplitModeSelection = (pageId: string) => {
+    setSplitPositions(prev => {
+      const next = { ...prev };
+      if (next[pageId] !== undefined) {
+        delete next[pageId];
+      } else {
+        next[pageId] = 500; // Default 50% split
+      }
+      return next;
+    });
+    setSelectedPages(prev => {
+      const next = new Set(prev);
+      if (next.has(pageId)) {
+        next.delete(pageId);
+      } else {
+        next.add(pageId);
+      }
+      return next;
+    });
+  };
+
+  // Update split position for a page
+  const updateSplitPosition = (pageId: string, position: number) => {
+    setSplitPositions(prev => ({ ...prev, [pageId]: position }));
+  };
+
+  // Apply all split mode splits
+  const applySplitMode = async () => {
+    const pageIds = Object.keys(splitPositions);
+    if (pageIds.length === 0) return;
+
+    setSplitModeApplying(true);
+    try {
+      const splits = pageIds.map(pageId => ({
+        pageId,
+        splitPosition: splitPositions[pageId] ?? 500
+      }));
+
+      await fetch('/api/pages/batch-split', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ splits })
+      });
+
+      await fetchBook();
+
+      // Reset split mode state
+      setSplitMode(false);
+      setSplitModeReview(false);
+      setSelectedPages(new Set());
+      setSplitPositions({});
+    } catch (error) {
+      console.error('Split mode error:', error);
+    } finally {
+      setSplitModeApplying(false);
+    }
   };
 
   const deletePage = async (pageId: string) => {
@@ -593,13 +675,17 @@ export default function PreparePage({ params }: PageProps) {
             </div>
 
             <div className="flex items-center gap-3">
-              <Link
-                href={`/book/${bookId}/split`}
-                className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg"
+              <button
+                onClick={toggleSplitMode}
+                className={`flex items-center gap-2 px-3 py-2 text-sm rounded-lg transition-colors ${
+                  splitMode
+                    ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                    : 'text-stone-600 hover:text-stone-900 hover:bg-stone-100'
+                }`}
               >
                 <Scissors className="w-4 h-4" />
-                Split Pages
-              </Link>
+                {splitMode ? 'Exit Split Mode' : 'Split Mode'}
+              </button>
               <button
                 onClick={() => { setReviewIndex(0); setReviewMode(true); }}
                 className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg"
@@ -660,8 +746,35 @@ export default function PreparePage({ params }: PageProps) {
       {/* Action Bar - Linear Workflow */}
       <div className="bg-white border-b border-stone-200 sticky top-[105px] z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-          {/* Selection Actions */}
-          {selectedPages.size > 0 ? (
+          {/* Split Mode Bar */}
+          {splitMode ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-medium text-amber-700">
+                  Split Mode: {Object.keys(splitPositions).length} pages selected
+                </span>
+                {Object.keys(splitPositions).length > 0 && (
+                  <button
+                    onClick={() => { setSplitPositions({}); setSelectedPages(new Set()); }}
+                    className="text-sm text-stone-500 hover:text-stone-700"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-stone-500 mr-2">Click pages to select for splitting</span>
+                <button
+                  onClick={() => setSplitModeReview(true)}
+                  disabled={Object.keys(splitPositions).length === 0}
+                  className="flex items-center gap-2 px-4 py-2 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50"
+                >
+                  <Eye className="w-4 h-4" />
+                  Review Splits ({Object.keys(splitPositions).length})
+                </button>
+              </div>
+            </div>
+          ) : selectedPages.size > 0 ? (
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-sm font-medium text-stone-700">{selectedPages.size} selected</span>
@@ -1006,16 +1119,31 @@ export default function PreparePage({ params }: PageProps) {
                     <GripVertical className="w-4 h-4" />
                   </div>
 
-                  {/* Checkbox */}
-                  <input
-                    type="checkbox"
-                    checked={isSelected}
-                    onChange={() => togglePageSelection(page.id)}
-                    className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
-                  />
+                  {/* Checkbox - different behavior in split mode */}
+                  {splitMode ? (
+                    <input
+                      type="checkbox"
+                      checked={splitPositions[page.id] !== undefined}
+                      onChange={() => !isSplitPage && toggleSplitModeSelection(page.id)}
+                      disabled={isSplitPage}
+                      className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
+                    />
+                  ) : (
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      onChange={() => togglePageSelection(page.id)}
+                      className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
+                    />
+                  )}
 
-                  {/* Thumbnail with magnifier */}
-                  <div className="rounded overflow-hidden flex-shrink-0 relative w-32 h-24">
+                  {/* Thumbnail with magnifier and split overlay */}
+                  <div
+                    className={`rounded overflow-hidden flex-shrink-0 relative w-32 h-24 ${
+                      splitMode && !isSplitPage ? 'cursor-pointer' : ''
+                    }`}
+                    onClick={splitMode && !isSplitPage ? () => toggleSplitModeSelection(page.id) : undefined}
+                  >
                     <ImageWithMagnifier
                       src={fullImageUrl}
                       thumbnail={thumbnailUrl}
@@ -1024,6 +1152,14 @@ export default function PreparePage({ params }: PageProps) {
                       magnifierSize={200}
                       zoomLevel={2.5}
                     />
+                    {/* Split mode overlay */}
+                    {splitMode && splitPositions[page.id] !== undefined && (
+                      <SplitModeOverlay
+                        splitPosition={splitPositions[page.id]}
+                        onAdjust={(delta) => updateSplitPosition(page.id, Math.max(100, Math.min(900, splitPositions[page.id] + delta)))}
+                        onSetPosition={(pos) => updateSplitPosition(page.id, pos)}
+                      />
+                    )}
                   </div>
 
                   {/* Page info */}
@@ -1314,6 +1450,24 @@ export default function PreparePage({ params }: PageProps) {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Split Mode Review Screen */}
+      {splitModeReview && (
+        <SplitReviewScreen
+          pages={pages.filter(p => splitPositions[p.id] !== undefined)}
+          splitPositions={splitPositions}
+          onUpdatePosition={updateSplitPosition}
+          onApprove={applySplitMode}
+          onBack={() => setSplitModeReview(false)}
+          onCancel={() => {
+            setSplitModeReview(false);
+            setSplitMode(false);
+            setSplitPositions({});
+            setSelectedPages(new Set());
+          }}
+          applying={splitModeApplying}
+        />
       )}
 
     </div>

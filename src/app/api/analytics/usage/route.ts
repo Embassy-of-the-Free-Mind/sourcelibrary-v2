@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     const cutoffMs = Date.now() - days * 24 * 60 * 60 * 1000;
     const cutoffDate = new Date(cutoffMs);
 
-    // Get book and page counts
+    // Get book and page counts (these are fast)
     const [
       totalBooks,
       totalPages,
@@ -61,154 +61,196 @@ export async function GET(request: NextRequest) {
       db.collection('pages').countDocuments({ 'translation.data': { $exists: true, $ne: '' } }),
     ]);
 
-    // Get unique visitors and total hits from loading_metrics
-    const visitorStats = await db.collection('loading_metrics').aggregate([
-      { $match: { timestamp: { $gte: cutoffMs } } },
-      {
-        $group: {
-          _id: null,
-          totalHits: { $sum: 1 },
-          uniqueIps: { $addToSet: '$ip' },
-        },
-      },
-    ]).toArray();
-
-    const totalHits = visitorStats[0]?.totalHits || 0;
-    const uniqueVisitors = visitorStats[0]?.uniqueIps?.length || 0;
-
-    // Get hits by day for chart
-    const hitsByDay = await db.collection('loading_metrics').aggregate([
-      { $match: { timestamp: { $gte: cutoffMs } } },
-      {
-        $group: {
-          _id: {
-            $dateToString: {
-              format: '%Y-%m-%d',
-              date: { $toDate: '$timestamp' },
-            },
+    // Get visitor stats - with fallback if loading_metrics doesn't exist or times out
+    let totalHits = 0;
+    let uniqueVisitors = 0;
+    try {
+      const visitorStats = await db.collection('loading_metrics').aggregate([
+        { $match: { timestamp: { $gte: cutoffMs } } },
+        {
+          $group: {
+            _id: null,
+            totalHits: { $sum: 1 },
+            uniqueIps: { $addToSet: '$ip' },
           },
-          hits: { $sum: 1 },
-          uniqueIps: { $addToSet: '$ip' },
         },
-      },
-      { $sort: { _id: 1 } },
-      {
-        $project: {
-          date: '$_id',
-          hits: 1,
-          uniqueVisitors: { $size: '$uniqueIps' },
-        },
-      },
-    ]).toArray();
+      ]).toArray();
+      totalHits = visitorStats[0]?.totalHits || 0;
+      uniqueVisitors = visitorStats[0]?.uniqueIps?.length || 0;
+    } catch (e) {
+      console.error('Error fetching visitor stats:', e);
+    }
 
-    // Get OCR/translation activity by day
-    const processingByDay = await db.collection('loading_metrics').aggregate([
-      {
-        $match: {
-          timestamp: { $gte: cutoffMs },
-          name: { $in: ['ocr_processing', 'ocr_processing_batch', 'translation_processing'] },
-        },
-      },
-      {
-        $group: {
-          _id: {
-            date: {
+    // Get hits by day for chart - with fallback
+    let hitsByDay: Array<{ date: string; hits: number; uniqueVisitors: number }> = [];
+    let processingMap: Record<string, { ocr: number; translation: number }> = {};
+    let visitorsByCountry: Array<{ country: string; countryCode: string; hits: number; visitors: number }> = [];
+    let visitorLocations: Array<{ city: string; country: string; countryCode: string; hits: number; lat: number; lon: number }> = [];
+
+    try {
+      const hitsByDayResult = await db.collection('loading_metrics').aggregate([
+        { $match: { timestamp: { $gte: cutoffMs } } },
+        {
+          $group: {
+            _id: {
               $dateToString: {
                 format: '%Y-%m-%d',
                 date: { $toDate: '$timestamp' },
               },
             },
-            type: {
-              $cond: [
-                { $in: ['$name', ['ocr_processing', 'ocr_processing_batch']] },
-                'ocr',
-                'translation',
-              ],
-            },
+            hits: { $sum: 1 },
+            uniqueIps: { $addToSet: '$ip' },
           },
-          count: { $sum: 1 },
         },
-      },
-      { $sort: { '_id.date': 1 } },
-    ]).toArray();
-
-    // Reshape processing data by day
-    const processingMap: Record<string, { ocr: number; translation: number }> = {};
-    for (const item of processingByDay) {
-      const date = item._id.date;
-      if (!processingMap[date]) {
-        processingMap[date] = { ocr: 0, translation: 0 };
-      }
-      processingMap[date][item._id.type as 'ocr' | 'translation'] = item.count;
+        { $sort: { _id: 1 } },
+        {
+          $project: {
+            date: '$_id',
+            hits: 1,
+            uniqueVisitors: { $size: '$uniqueIps' },
+          },
+        },
+      ]).toArray();
+      hitsByDay = hitsByDayResult.map(d => ({ date: d.date, hits: d.hits, uniqueVisitors: d.uniqueVisitors }));
+    } catch (e) {
+      console.error('Error fetching hits by day:', e);
     }
 
-    // Get unique IPs for geolocation
-    const uniqueIps = await db.collection('loading_metrics').aggregate([
-      { $match: { timestamp: { $gte: cutoffMs }, ip: { $ne: 'unknown' } } },
-      {
-        $group: {
-          _id: '$ip',
-          count: { $sum: 1 },
+    try {
+      // Get OCR/translation activity by day
+      const processingByDay = await db.collection('loading_metrics').aggregate([
+        {
+          $match: {
+            timestamp: { $gte: cutoffMs },
+            name: { $in: ['ocr_processing', 'ocr_processing_batch', 'translation_processing'] },
+          },
         },
-      },
-      { $sort: { count: -1 } },
-      { $limit: 30 }, // Limit to avoid rate limiting on geo API
-    ]).toArray();
+        {
+          $group: {
+            _id: {
+              date: {
+                $dateToString: {
+                  format: '%Y-%m-%d',
+                  date: { $toDate: '$timestamp' },
+                },
+              },
+              type: {
+                $cond: [
+                  { $in: ['$name', ['ocr_processing', 'ocr_processing_batch']] },
+                  'ocr',
+                  'translation',
+                ],
+              },
+            },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { '_id.date': 1 } },
+      ]).toArray();
 
-    // Get geolocation for top IPs (in parallel, but limited)
-    const visitorLocations = await Promise.all(
-      uniqueIps.map(async (v) => {
-        const geo = await getGeoLocation(v._id);
-        return {
-          ip: v._id,
-          hits: v.count,
-          ...geo,
-        };
-      })
-    );
-
-    // Aggregate by country
-    const countryMap: Record<string, { country: string; countryCode: string; hits: number; visitors: number }> = {};
-    for (const v of visitorLocations) {
-      if (!countryMap[v.countryCode]) {
-        countryMap[v.countryCode] = { country: v.country, countryCode: v.countryCode, hits: 0, visitors: 0 };
+      // Reshape processing data by day
+      for (const item of processingByDay) {
+        const date = item._id.date;
+        if (!processingMap[date]) {
+          processingMap[date] = { ocr: 0, translation: 0 };
+        }
+        processingMap[date][item._id.type as 'ocr' | 'translation'] = item.count;
       }
-      countryMap[v.countryCode].hits += v.hits;
-      countryMap[v.countryCode].visitors += 1;
+    } catch (e) {
+      console.error('Error fetching processing by day:', e);
     }
-    const visitorsByCountry = Object.values(countryMap).sort((a, b) => b.hits - a.hits);
+
+    try {
+      // Get unique IPs for geolocation
+      const uniqueIps = await db.collection('loading_metrics').aggregate([
+        { $match: { timestamp: { $gte: cutoffMs }, ip: { $ne: 'unknown' } } },
+        {
+          $group: {
+            _id: '$ip',
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+        { $limit: 30 }, // Limit to avoid rate limiting on geo API
+      ]).toArray();
+
+      // Get geolocation for top IPs (in parallel, but limited)
+      visitorLocations = await Promise.all(
+        uniqueIps.map(async (v) => {
+          const geo = await getGeoLocation(v._id);
+          return {
+            ip: v._id,
+            hits: v.count,
+            city: geo.city,
+            country: geo.country,
+            countryCode: geo.countryCode,
+            lat: geo.lat,
+            lon: geo.lon,
+          };
+        })
+      );
+
+      // Aggregate by country
+      const countryMap: Record<string, { country: string; countryCode: string; hits: number; visitors: number }> = {};
+      for (const v of visitorLocations) {
+        if (!countryMap[v.countryCode]) {
+          countryMap[v.countryCode] = { country: v.country, countryCode: v.countryCode, hits: 0, visitors: 0 };
+        }
+        countryMap[v.countryCode].hits += v.hits;
+        countryMap[v.countryCode].visitors += 1;
+      }
+      visitorsByCountry = Object.values(countryMap).sort((a, b) => b.hits - a.hits);
+    } catch (e) {
+      console.error('Error fetching visitor locations:', e);
+    }
 
     // Get recent books added
-    const recentBooks = await db.collection('books')
-      .find({ created_at: { $gte: cutoffDate } })
-      .sort({ created_at: -1 })
-      .limit(10)
-      .project({ title: 1, author: 1, created_at: 1, pages_count: 1 })
-      .toArray();
+    let recentBooks: Array<{ title: string; author: string; created_at: Date; pages_count: number }> = [];
+    let modelUsage: Array<{ _id: string; count: number }> = [];
+    let promptUsage: Array<{ _id: string; count: number }> = [];
 
-    // Get model usage breakdown
-    const modelUsage = await db.collection('pages').aggregate([
-      { $match: { 'ocr.model': { $exists: true } } },
-      {
-        $group: {
-          _id: '$ocr.model',
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { count: -1 } },
-    ]).toArray();
+    try {
+      recentBooks = await db.collection('books')
+        .find({ created_at: { $gte: cutoffDate } })
+        .sort({ created_at: -1 })
+        .limit(10)
+        .project({ title: 1, author: 1, created_at: 1, pages_count: 1 })
+        .toArray() as Array<{ title: string; author: string; created_at: Date; pages_count: number }>;
+    } catch (e) {
+      console.error('Error fetching recent books:', e);
+    }
 
-    // Get prompt usage breakdown
-    const promptUsage = await db.collection('pages').aggregate([
-      { $match: { 'ocr.prompt_name': { $exists: true } } },
-      {
-        $group: {
-          _id: '$ocr.prompt_name',
-          count: { $sum: 1 },
+    try {
+      // Get model usage breakdown
+      modelUsage = await db.collection('pages').aggregate([
+        { $match: { 'ocr.model': { $exists: true } } },
+        {
+          $group: {
+            _id: '$ocr.model',
+            count: { $sum: 1 },
+          },
         },
-      },
-      { $sort: { count: -1 } },
-    ]).toArray();
+        { $sort: { count: -1 } },
+      ]).toArray() as Array<{ _id: string; count: number }>;
+    } catch (e) {
+      console.error('Error fetching model usage:', e);
+    }
+
+    try {
+      // Get prompt usage breakdown
+      promptUsage = await db.collection('pages').aggregate([
+        { $match: { 'ocr.prompt_name': { $exists: true } } },
+        {
+          $group: {
+            _id: '$ocr.prompt_name',
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { count: -1 } },
+      ]).toArray() as Array<{ _id: string; count: number }>;
+    } catch (e) {
+      console.error('Error fetching prompt usage:', e);
+    }
 
     return NextResponse.json({
       summary: {
