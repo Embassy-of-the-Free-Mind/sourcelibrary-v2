@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function Footer() {
   return (
     <footer className="bg-stone-100 border-t border-stone-200 py-4 mt-auto">
@@ -13,6 +15,13 @@ export default function Footer() {
           >
             derek@ancientwisdomtrust.org
           </a>
+          <span className="hidden sm:inline">•</span>
+          <Link
+            href="/analytics"
+            className="text-stone-400 hover:text-stone-600 transition-colors"
+          >
+            Analytics
+          </Link>
         </div>
       </div>
     </footer>
