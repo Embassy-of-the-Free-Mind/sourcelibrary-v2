@@ -59,11 +59,20 @@ export async function PATCH(
 
     const result = await db.collection('pages').updateOne(
       { id },
-      { $set: updateData }
+      { $set: updateData, $inc: { edit_count: 1 } }
     );
 
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    // Track edit for the book
+    const page = await db.collection('pages').findOne({ id });
+    if (page?.book_id) {
+      await db.collection('books').updateOne(
+        { id: page.book_id },
+        { $inc: { edit_count: 1 } }
+      );
     }
 
     const updatedPage = await db.collection('pages').findOne({ id });
