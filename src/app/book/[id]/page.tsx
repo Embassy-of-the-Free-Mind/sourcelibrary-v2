@@ -7,6 +7,7 @@ import { Book, Page } from '@/lib/types';
 import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
+import BookChat from '@/components/BookChat';
 import BookAnalytics from '@/components/BookAnalytics';
 
 interface PageProps {
@@ -192,6 +193,9 @@ async function BookInfo({ id }: { id: string }) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <BookPagesSection bookId={book.id} pages={pages} />
       </main>
+
+      {/* Chat with Book */}
+      <BookChat bookId={book.id} bookTitle={book.display_title || book.title} />
     </>
   );
 }
