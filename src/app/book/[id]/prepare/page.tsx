@@ -853,15 +853,25 @@ export default function PreparePage({ params }: PageProps) {
             </div>
           ) : (
             /* Linear Workflow Steps */
-            <div className="flex items-center gap-6">
-              {/* Step 1: Prepare/Split */}
-              <div className="flex items-center gap-2">
-                <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  pages.some(p => !p.split_from && p.photo_original) ? 'bg-amber-100 text-amber-700' : 'bg-stone-100 text-stone-400'
-                }`}>1</div>
-                <span className="text-sm text-stone-600">Prepare</span>
-                <span className="text-xs text-stone-400">(click ✂️ to split spreads)</span>
-              </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                {/* Select All button */}
+                <button
+                  onClick={selectAll}
+                  className="text-sm text-amber-600 hover:text-amber-800 font-medium"
+                >
+                  Select All
+                </button>
+
+                <div className="w-px h-5 bg-stone-200" />
+
+                {/* Step 1: Prepare/Split */}
+                <div className="flex items-center gap-2">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                    pages.some(p => !p.split_from && p.photo_original) ? 'bg-amber-100 text-amber-700' : 'bg-stone-100 text-stone-400'
+                  }`}>1</div>
+                  <span className="text-sm text-stone-600">Prepare</span>
+                </div>
 
               {/* Arrow */}
               <div className="text-stone-300">→</div>
@@ -930,6 +940,7 @@ export default function PreparePage({ params }: PageProps) {
                 ) : (
                   <span className="text-sm text-green-600">✓ Complete</span>
                 )}
+              </div>
               </div>
             </div>
           )}
