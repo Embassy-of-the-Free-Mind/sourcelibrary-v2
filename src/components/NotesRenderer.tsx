@@ -82,9 +82,17 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
     return '';
   });
 
-  // Extract summary (page summary from translation)
-  result = result.replace(/\[\[summary:\s*(.*?)\]\]/gi, (match, content) => {
-    metadata.summary = content.trim();
+  // Extract summary (page summary from translation) - handles multiline
+  result = result.replace(/\[\[summary:\s*([\s\S]*?)\]\]/gi, (match, content) => {
+    metadata.summary = content.trim().replace(/\s+/g, ' '); // Normalize whitespace
+    return '';
+  });
+
+  // Also catch plain "Summary:" lines without brackets (legacy/non-compliant output)
+  result = result.replace(/^Summary:\s*(.+?)(?=\n\n|\n\[\[|$)/gim, (match, content) => {
+    if (!metadata.summary) {
+      metadata.summary = content.trim().replace(/\s+/g, ' ');
+    }
     return '';
   });
 
