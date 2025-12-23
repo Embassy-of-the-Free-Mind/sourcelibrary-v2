@@ -48,18 +48,26 @@ export async function GET(request: NextRequest) {
     const cutoffMs = Date.now() - days * 24 * 60 * 60 * 1000;
     const cutoffDate = new Date(cutoffMs);
 
-    // Get book and page counts (these are fast)
-    const [
-      totalBooks,
-      totalPages,
-      pagesWithOcr,
-      pagesWithTranslation,
-    ] = await Promise.all([
-      db.collection('books').countDocuments(),
-      db.collection('pages').countDocuments(),
-      db.collection('pages').countDocuments({ 'ocr.data': { $exists: true, $ne: '' } }),
-      db.collection('pages').countDocuments({ 'translation.data': { $exists: true, $ne: '' } }),
-    ]);
+    // Get book and page counts with fallbacks
+    let totalBooks = 0;
+    let totalPages = 0;
+    let pagesWithOcr = 0;
+    let pagesWithTranslation = 0;
+
+    try {
+      const results = await Promise.all([
+        db.collection('books').countDocuments(),
+        db.collection('pages').countDocuments(),
+        db.collection('pages').countDocuments({ 'ocr.data': { $exists: true, $ne: '' } }),
+        db.collection('pages').countDocuments({ 'translation.data': { $exists: true, $ne: '' } }),
+      ]);
+      totalBooks = results[0];
+      totalPages = results[1];
+      pagesWithOcr = results[2];
+      pagesWithTranslation = results[3];
+    } catch (e) {
+      console.error('Error fetching counts:', e);
+    }
 
     // Get visitor stats - with fallback if loading_metrics doesn't exist or times out
     let totalHits = 0;
@@ -300,7 +308,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching usage analytics:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch usage analytics' },
+      { error: 'Failed to fetch usage analytics', details: String(error) },
       { status: 500 }
     );
   }
