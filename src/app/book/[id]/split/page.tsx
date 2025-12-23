@@ -29,6 +29,7 @@ export default function SplitPage({ params }: PageProps) {
   const [splitPositions, setSplitPositions] = useState<Record<string, number>>({});
   const [splitWarnings, setSplitWarnings] = useState<Record<string, string>>({});
   const [detectingPages, setDetectingPages] = useState<Set<string>>(new Set());
+  const [useAutoDetect, setUseAutoDetect] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
   const [splitting, setSplitting] = useState(false);
   const [reviewingSplits, setReviewingSplits] = useState<Page[]>([]);
@@ -112,8 +113,12 @@ export default function SplitPage({ params }: PageProps) {
         });
       } else {
         next.add(pageId);
-        // Auto-detect split position
-        autoDetectSplit(pageId);
+        // Auto-detect or use 50%
+        if (useAutoDetect) {
+          autoDetectSplit(pageId);
+        } else {
+          setSplitPositions(p => ({ ...p, [pageId]: 500 }));
+        }
       }
       return next;
     });
@@ -122,10 +127,16 @@ export default function SplitPage({ params }: PageProps) {
   const selectAll = async () => {
     const allIds = new Set(splittablePages.map(p => p.id));
     setSelectedPages(allIds);
-    // Auto-detect for all pages that don't have a position yet
-    const pagesToDetect = splittablePages.filter(p => splitPositions[p.id] === undefined);
-    for (const page of pagesToDetect) {
-      autoDetectSplit(page.id);
+    // Auto-detect or set 50% for all pages that don't have a position yet
+    const pagesToSet = splittablePages.filter(p => splitPositions[p.id] === undefined);
+    if (useAutoDetect) {
+      for (const page of pagesToSet) {
+        autoDetectSplit(page.id);
+      }
+    } else {
+      const positions: Record<string, number> = { ...splitPositions };
+      pagesToSet.forEach(p => { positions[p.id] = 500; });
+      setSplitPositions(positions);
     }
   };
 
@@ -322,6 +333,20 @@ export default function SplitPage({ params }: PageProps) {
                   </span>
                 )}
               </span>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-100 rounded-lg">
+                <button
+                  onClick={() => setUseAutoDetect(true)}
+                  className={`px-3 py-1 text-xs font-medium rounded ${useAutoDetect ? 'bg-blue-600 text-white' : 'text-stone-600 hover:bg-stone-200'}`}
+                >
+                  Auto-detect
+                </button>
+                <button
+                  onClick={() => setUseAutoDetect(false)}
+                  className={`px-3 py-1 text-xs font-medium rounded ${!useAutoDetect ? 'bg-stone-600 text-white' : 'text-stone-600 hover:bg-stone-200'}`}
+                >
+                  50%
+                </button>
+              </div>
               <button
                 onClick={selectAll}
                 className="px-4 py-2 text-sm font-medium bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200"
