@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Clock, Zap, TrendingUp } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, Activity, BarChart3 } from 'lucide-react';
 
 interface MetricStat {
   name: string;
@@ -21,26 +21,57 @@ interface RecentSample {
   metadata?: Record<string, unknown>;
 }
 
-interface AnalyticsData {
+interface PerformanceData {
   stats: MetricStat[];
   recentSamples: RecentSample[];
   query: { hours: number; metricName: string | null };
 }
 
+interface UsageData {
+  summary: {
+    totalBooks: number;
+    totalPages: number;
+    pagesWithOcr: number;
+    pagesWithTranslation: number;
+    ocrPercentage: number;
+    translationPercentage: number;
+    totalHits: number;
+    uniqueVisitors: number;
+  };
+  hitsByDay: Array<{ date: string; hits: number; uniqueVisitors: number }>;
+  processingByDay: Array<{ date: string; ocr: number; translation: number }>;
+  modelUsage: Array<{ model: string; count: number }>;
+  promptUsage: Array<{ prompt: string; count: number }>;
+  recentBooks: Array<{ title: string; author: string; created_at: string; pages_count: number }>;
+}
+
 export default function AnalyticsPage() {
-  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [perfData, setPerfData] = useState<PerformanceData | null>(null);
+  const [usageData, setUsageData] = useState<UsageData | null>(null);
   const [loading, setLoading] = useState(true);
   const [hours, setHours] = useState(24);
+  const [days, setDays] = useState(30);
+  const [activeTab, setActiveTab] = useState<'usage' | 'performance'>('usage');
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/analytics/loading?hours=${hours}`);
-      if (!res.ok) throw new Error('Failed to fetch analytics');
-      const json = await res.json();
-      setData(json);
+      const [perfRes, usageRes] = await Promise.all([
+        fetch(`/api/analytics/loading?hours=${hours}`),
+        fetch(`/api/analytics/usage?days=${days}`),
+      ]);
+
+      if (!perfRes.ok || !usageRes.ok) throw new Error('Failed to fetch analytics');
+
+      const [perfJson, usageJson] = await Promise.all([
+        perfRes.json(),
+        usageRes.json(),
+      ]);
+
+      setPerfData(perfJson);
+      setUsageData(usageJson);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
@@ -50,7 +81,7 @@ export default function AnalyticsPage() {
 
   useEffect(() => {
     fetchData();
-  }, [hours]);
+  }, [hours, days]);
 
   const formatDuration = (ms: number) => {
     if (ms < 1000) return `${Math.round(ms)}ms`;
@@ -59,6 +90,10 @@ export default function AnalyticsPage() {
 
   const formatTime = (timestamp: number) => {
     return new Date(timestamp).toLocaleString();
+  };
+
+  const formatNumber = (n: number) => {
+    return n.toLocaleString();
   };
 
   return (
@@ -75,18 +110,56 @@ export default function AnalyticsPage() {
             </h1>
           </div>
           <div className="flex items-center gap-4">
-            <select
-              value={hours}
-              onChange={(e) => setHours(parseInt(e.target.value))}
-              className="px-3 py-1.5 rounded-lg text-sm"
-              style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
-            >
-              <option value={1}>Last hour</option>
-              <option value={6}>Last 6 hours</option>
-              <option value={24}>Last 24 hours</option>
-              <option value={72}>Last 3 days</option>
-              <option value={168}>Last week</option>
-            </select>
+            {/* Tab toggle */}
+            <div className="flex rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
+              <button
+                onClick={() => setActiveTab('usage')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'usage' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'usage' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'usage' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Usage
+              </button>
+              <button
+                onClick={() => setActiveTab('performance')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'performance' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'performance' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'performance' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Performance
+              </button>
+            </div>
+
+            {activeTab === 'usage' ? (
+              <select
+                value={days}
+                onChange={(e) => setDays(parseInt(e.target.value))}
+                className="px-3 py-1.5 rounded-lg text-sm"
+                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+              >
+                <option value={7}>Last 7 days</option>
+                <option value={30}>Last 30 days</option>
+                <option value={90}>Last 90 days</option>
+              </select>
+            ) : (
+              <select
+                value={hours}
+                onChange={(e) => setHours(parseInt(e.target.value))}
+                className="px-3 py-1.5 rounded-lg text-sm"
+                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+              >
+                <option value={1}>Last hour</option>
+                <option value={6}>Last 6 hours</option>
+                <option value={24}>Last 24 hours</option>
+                <option value={72}>Last 3 days</option>
+                <option value={168}>Last week</option>
+              </select>
+            )}
+
             <button
               onClick={fetchData}
               disabled={loading}
@@ -107,104 +180,285 @@ export default function AnalyticsPage() {
           </div>
         )}
 
-        {/* Stats Grid */}
-        {data?.stats && data.stats.length > 0 ? (
-          <div className="space-y-6">
-            <h2 className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
-              Performance Metrics
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {data.stats.map((stat) => (
-                <div
-                  key={stat.name}
-                  className="p-4 rounded-xl"
-                  style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>
-                      {stat.name.replace(/_/g, ' ')}
-                    </h3>
-                    <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
-                      {stat.count} calls
-                    </span>
+        {loading ? (
+          <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+            <RefreshCw className="w-8 h-8 mx-auto mb-4 animate-spin opacity-30" />
+            <p>Loading analytics...</p>
+          </div>
+        ) : activeTab === 'usage' ? (
+          /* Usage Tab */
+          <div className="space-y-8">
+            {/* Summary Cards */}
+            {usageData?.summary && (
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Books</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div>
-                      <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Avg</div>
-                      <div className="text-sm font-medium" style={{ color: 'var(--accent-sage)' }}>
-                        {formatDuration(stat.avg)}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>P50</div>
-                      <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
-                        {stat.p50 ? formatDuration(stat.p50) : '-'}
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>P95</div>
-                      <div className="text-sm font-medium" style={{ color: 'var(--accent-rust)' }}>
-                        {stat.p95 ? formatDuration(stat.p95) : '-'}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-3 pt-3 flex justify-between text-xs" style={{ borderTop: '1px solid var(--border-light)', color: 'var(--text-faint)' }}>
-                    <span>Min: {formatDuration(stat.min)}</span>
-                    <span>Max: {formatDuration(stat.max)}</span>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.totalBooks)}
                   </div>
                 </div>
-              ))}
+
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Pages OCR'd</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.pagesWithOcr)}
+                    <span className="text-sm font-normal ml-1" style={{ color: 'var(--text-muted)' }}>
+                      / {formatNumber(usageData.summary.totalPages)}
+                    </span>
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--accent-sage)' }}>
+                    {usageData.summary.ocrPercentage}% complete
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Languages className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Translated</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.pagesWithTranslation)}
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--accent-rust)' }}>
+                    {usageData.summary.translationPercentage}% complete
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Visitors</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.uniqueVisitors)}
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                    {formatNumber(usageData.summary.totalHits)} total hits
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Traffic Chart */}
+            {usageData?.hitsByDay && usageData.hitsByDay.length > 0 && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                  Traffic Over Time
+                </h2>
+                <div className="h-48 flex items-end gap-1">
+                  {usageData.hitsByDay.map((day, i) => {
+                    const maxHits = Math.max(...usageData.hitsByDay.map(d => d.hits));
+                    const height = maxHits > 0 ? (day.hits / maxHits) * 100 : 0;
+                    return (
+                      <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                        <div
+                          className="w-full rounded-t transition-all hover:opacity-80"
+                          style={{
+                            height: `${height}%`,
+                            minHeight: day.hits > 0 ? '4px' : '0',
+                            background: 'var(--accent-sage)',
+                          }}
+                          title={`${day.date}: ${day.hits} hits, ${day.uniqueVisitors} visitors`}
+                        />
+                        {i % Math.ceil(usageData.hitsByDay.length / 7) === 0 && (
+                          <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                            {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Model & Prompt Usage */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {usageData?.modelUsage && usageData.modelUsage.length > 0 && (
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                    Model Usage
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.modelUsage.map((m, i) => {
+                      const total = usageData.modelUsage.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (m.count / total) * 100 : 0;
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: 'var(--text-primary)' }}>{m.model}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(m.count)}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: 'var(--accent-sage)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {usageData?.promptUsage && usageData.promptUsage.length > 0 && (
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                    Prompt Usage
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.promptUsage.slice(0, 5).map((p, i) => {
+                      const total = usageData.promptUsage.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (p.count / total) * 100 : 0;
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="truncate" style={{ color: 'var(--text-primary)' }}>{p.prompt}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(p.count)}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: 'var(--accent-rust)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Recent Samples */}
-            {data.recentSamples && data.recentSamples.length > 0 && (
-              <div className="mt-8">
+            {/* Recent Books */}
+            {usageData?.recentBooks && usageData.recentBooks.length > 0 && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
                 <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
-                  Recent Activity
+                  Recently Added Books
                 </h2>
-                <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr style={{ background: 'var(--bg-warm)' }}>
-                        <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Metric</th>
-                        <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Duration</th>
-                        <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Time</th>
-                        <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Details</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.recentSamples.map((sample, i) => (
-                        <tr key={i} style={{ borderTop: '1px solid var(--border-light)' }}>
-                          <td className="px-4 py-2" style={{ color: 'var(--text-primary)' }}>
-                            {sample.name.replace(/_/g, ' ')}
-                          </td>
-                          <td className="px-4 py-2 font-mono" style={{ color: 'var(--accent-sage)' }}>
-                            {formatDuration(sample.duration)}
-                          </td>
-                          <td className="px-4 py-2" style={{ color: 'var(--text-muted)' }}>
-                            {formatTime(sample.timestamp)}
-                          </td>
-                          <td className="px-4 py-2 text-xs" style={{ color: 'var(--text-faint)' }}>
-                            {sample.metadata ? Object.entries(sample.metadata).slice(0, 2).map(([k, v]) => `${k}: ${v}`).join(', ') : '-'}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                <div className="space-y-3">
+                  {usageData.recentBooks.map((book, i) => (
+                    <div key={i} className="flex items-center justify-between py-2" style={{ borderBottom: i < usageData.recentBooks.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                      <div>
+                        <div className="font-medium" style={{ color: 'var(--text-primary)' }}>{book.title}</div>
+                        <div className="text-sm" style={{ color: 'var(--text-muted)' }}>{book.author}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm" style={{ color: 'var(--text-muted)' }}>{book.pages_count || 0} pages</div>
+                        <div className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                          {new Date(book.created_at).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
           </div>
-        ) : !loading ? (
-          <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
-            <Clock className="w-12 h-12 mx-auto mb-4 opacity-30" />
-            <p>No analytics data yet</p>
-            <p className="text-sm mt-1">Metrics will appear here as the site is used</p>
-          </div>
         ) : (
-          <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
-            <RefreshCw className="w-8 h-8 mx-auto mb-4 animate-spin opacity-30" />
-            <p>Loading analytics...</p>
+          /* Performance Tab */
+          <div className="space-y-6">
+            {perfData?.stats && perfData.stats.length > 0 ? (
+              <>
+                <h2 className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
+                  Performance Metrics
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {perfData.stats.map((stat) => (
+                    <div
+                      key={stat.name}
+                      className="p-4 rounded-xl"
+                      style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>
+                          {stat.name.replace(/_/g, ' ')}
+                        </h3>
+                        <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
+                          {stat.count} calls
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Avg</div>
+                          <div className="text-sm font-medium" style={{ color: 'var(--accent-sage)' }}>
+                            {formatDuration(stat.avg)}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>P50</div>
+                          <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                            {stat.p50 ? formatDuration(stat.p50) : '-'}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>P95</div>
+                          <div className="text-sm font-medium" style={{ color: 'var(--accent-rust)' }}>
+                            {stat.p95 ? formatDuration(stat.p95) : '-'}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 flex justify-between text-xs" style={{ borderTop: '1px solid var(--border-light)', color: 'var(--text-faint)' }}>
+                        <span>Min: {formatDuration(stat.min)}</span>
+                        <span>Max: {formatDuration(stat.max)}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Recent Samples */}
+                {perfData.recentSamples && perfData.recentSamples.length > 0 && (
+                  <div className="mt-8">
+                    <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                      Recent Activity
+                    </h2>
+                    <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr style={{ background: 'var(--bg-warm)' }}>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Metric</th>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Duration</th>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Time</th>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {perfData.recentSamples.map((sample, i) => (
+                            <tr key={i} style={{ borderTop: '1px solid var(--border-light)' }}>
+                              <td className="px-4 py-2" style={{ color: 'var(--text-primary)' }}>
+                                {sample.name.replace(/_/g, ' ')}
+                              </td>
+                              <td className="px-4 py-2 font-mono" style={{ color: 'var(--accent-sage)' }}>
+                                {formatDuration(sample.duration)}
+                              </td>
+                              <td className="px-4 py-2" style={{ color: 'var(--text-muted)' }}>
+                                {formatTime(sample.timestamp)}
+                              </td>
+                              <td className="px-4 py-2 text-xs" style={{ color: 'var(--text-faint)' }}>
+                                {sample.metadata ? Object.entries(sample.metadata).slice(0, 2).map(([k, v]) => `${k}: ${v}`).join(', ') : '-'}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+                <Clock className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p>No performance data yet</p>
+                <p className="text-sm mt-1">Metrics will appear here as the site is used</p>
+              </div>
+            )}
           </div>
         )}
       </main>
