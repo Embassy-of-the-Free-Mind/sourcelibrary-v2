@@ -346,12 +346,21 @@ Important: Write as a scholar would for an educated general audience. Integrate 
 
   const parsed = JSON.parse(jsonMatch[0]);
 
-  // Ensure sections array exists
-  if (!parsed.sections) {
-    parsed.sections = [];
-  }
+  // Ensure all fields are strings (AI sometimes returns objects or arrays)
+  const ensureString = (val: unknown): string => {
+    if (typeof val === 'string') return val;
+    if (val === null || val === undefined) return '';
+    if (Array.isArray(val)) return val.join('\n\n');
+    if (typeof val === 'object') return JSON.stringify(val);
+    return String(val);
+  };
 
-  return parsed;
+  return {
+    brief: ensureString(parsed.brief),
+    abstract: ensureString(parsed.abstract),
+    detailed: ensureString(parsed.detailed),
+    sections: Array.isArray(parsed.sections) ? parsed.sections : [],
+  };
 }
 
 // GET /api/books/[id]/index - Get or generate book index
@@ -484,15 +493,14 @@ export async function POST(
     const { id } = await params;
     const db = await getDb();
 
-    // Clear cached index
+    // Clear cached index and summary
     await db.collection('books').updateOne(
       { id },
-      { $unset: { index: '' } }
+      { $unset: { index: '', summary: '' } }
     );
 
-    // Redirect to GET to generate fresh
-    const url = new URL(request.url);
-    return NextResponse.redirect(url, 303);
+    // Return success - client will call GET to generate fresh
+    return NextResponse.json({ success: true, message: 'Cache cleared' });
   } catch (error) {
     console.error('Error regenerating index:', error);
     return NextResponse.json(

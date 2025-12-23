@@ -39,6 +39,12 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Strip markdown code fence wrappers if present (AI sometimes wraps output)
   result = result.replace(/^```(?:markdown)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
 
+  // Strip AI preamble phrases (e.g., "Here is the translation...")
+  result = result.replace(/^(?:Here (?:is|are) (?:the |my )?(?:translation|transcription|OCR|summary|text)[^:]*:\s*\n*)/i, '');
+  result = result.replace(/^(?:Below is (?:the |my )?(?:translation|transcription|OCR|summary)[^:]*:\s*\n*)/i, '');
+  result = result.replace(/^(?:I have (?:translated|transcribed|completed)[^:]*:\s*\n*)/i, '');
+  result = result.replace(/^(?:The following is[^:]*:\s*\n*)/i, '');
+
   // Extract language (hidden from reader)
   result = result.replace(/\[\[language:\s*(.*?)\]\]/gi, (match, lang) => {
     metadata.language = lang.trim();

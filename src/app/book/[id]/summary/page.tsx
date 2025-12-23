@@ -80,16 +80,33 @@ export default function BookSummaryPage() {
 
   const regenerateIndex = async () => {
     setGenerating(true);
+    setError(null);
     try {
-      // Force regenerate
-      await fetch(`/api/books/${bookId}/index`, { method: 'POST' });
-      // Fetch fresh
+      // Force clear cache
+      const clearRes = await fetch(`/api/books/${bookId}/index`, { method: 'POST' });
+      if (!clearRes.ok) {
+        const errData = await clearRes.json();
+        throw new Error(errData.error || 'Failed to clear cache');
+      }
+
+      // Fetch fresh (this triggers generation)
       const res = await fetch(`/api/books/${bookId}/index`);
       if (res.ok) {
-        setIndex(await res.json());
+        const newIndex = await res.json();
+        console.log('Generated index:', newIndex);
+        setIndex(newIndex);
+
+        // Check if summary was actually generated
+        if (!newIndex.bookSummary?.brief && !newIndex.bookSummary?.abstract) {
+          setError('Summary generation completed but no content was produced. The book title/author may not have been found in research.');
+        }
+      } else {
+        const errData = await res.json();
+        throw new Error(errData.error || 'Failed to generate index');
       }
     } catch (e) {
       console.error('Failed to regenerate:', e);
+      setError(e instanceof Error ? e.message : 'Failed to generate summary');
     } finally {
       setGenerating(false);
     }
@@ -254,11 +271,16 @@ export default function BookSummaryPage() {
                 Researching the book and generating summary... This may take a minute.
               </p>
             )}
+            {error && !generating && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm max-w-md mx-auto">
+                {error}
+              </div>
+            )}
           </div>
         ) : activeTab === 'summary' ? (
           <div className="space-y-8">
             {/* Brief Summary */}
-            {index?.bookSummary?.brief && (
+            {index?.bookSummary?.brief && typeof index.bookSummary.brief === 'string' && (
               <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
                 <h2 className="text-sm font-semibold text-amber-800 uppercase tracking-wide mb-2">
                   In Brief
@@ -270,7 +292,7 @@ export default function BookSummaryPage() {
             )}
 
             {/* Abstract */}
-            {index?.bookSummary?.abstract && (
+            {index?.bookSummary?.abstract && typeof index.bookSummary.abstract === 'string' && (
               <div className="bg-white border border-stone-200 rounded-lg p-6">
                 <h2 className="text-lg font-semibold text-stone-900 mb-4">Abstract</h2>
                 <p className="text-stone-700 leading-relaxed">
@@ -280,7 +302,7 @@ export default function BookSummaryPage() {
             )}
 
             {/* Detailed Summary */}
-            {index?.bookSummary?.detailed && (
+            {index?.bookSummary?.detailed && typeof index.bookSummary.detailed === 'string' && (
               <div className="bg-white border border-stone-200 rounded-lg p-6">
                 <h2 className="text-lg font-semibold text-stone-900 mb-4">Detailed Summary</h2>
                 <div className="prose prose-stone max-w-none">
