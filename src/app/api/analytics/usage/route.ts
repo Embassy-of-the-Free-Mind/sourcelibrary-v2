@@ -1,6 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+// Simple in-memory cache for IP geolocation (persists for serverless function lifetime)
+const geoCache: Record<string, { country: string; countryCode: string; city: string; lat: number; lon: number }> = {};
+
+async function getGeoLocation(ip: string) {
+  if (ip === 'unknown' || ip === '::1' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.')) {
+    return { country: 'Local', countryCode: 'XX', city: 'Local', lat: 0, lon: 0 };
+  }
+
+  if (geoCache[ip]) {
+    return geoCache[ip];
+  }
+
+  try {
+    // Using ip-api.com (free, no API key needed, 45 requests/minute limit)
+    const res = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode,city,lat,lon`, {
+      next: { revalidate: 86400 } // Cache for 24 hours
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.status === 'success') {
+        const geo = {
+          country: data.country || 'Unknown',
+          countryCode: data.countryCode || 'XX',
+          city: data.city || 'Unknown',
+          lat: data.lat || 0,
+          lon: data.lon || 0,
+        };
+        geoCache[ip] = geo;
+        return geo;
+      }
+    }
+  } catch (e) {
+    console.error('Geo lookup failed for', ip, e);
+  }
+
+  return { country: 'Unknown', countryCode: 'XX', city: 'Unknown', lat: 0, lon: 0 };
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -104,8 +142,8 @@ export async function GET(request: NextRequest) {
       processingMap[date][item._id.type as 'ocr' | 'translation'] = item.count;
     }
 
-    // Get visitor locations (country from IP - simplified, just group by IP prefix)
-    const ipPrefixes = await db.collection('loading_metrics').aggregate([
+    // Get unique IPs for geolocation
+    const uniqueIps = await db.collection('loading_metrics').aggregate([
       { $match: { timestamp: { $gte: cutoffMs }, ip: { $ne: 'unknown' } } },
       {
         $group: {
@@ -114,8 +152,31 @@ export async function GET(request: NextRequest) {
         },
       },
       { $sort: { count: -1 } },
-      { $limit: 50 },
+      { $limit: 30 }, // Limit to avoid rate limiting on geo API
     ]).toArray();
+
+    // Get geolocation for top IPs (in parallel, but limited)
+    const visitorLocations = await Promise.all(
+      uniqueIps.map(async (v) => {
+        const geo = await getGeoLocation(v._id);
+        return {
+          ip: v._id,
+          hits: v.count,
+          ...geo,
+        };
+      })
+    );
+
+    // Aggregate by country
+    const countryMap: Record<string, { country: string; countryCode: string; hits: number; visitors: number }> = {};
+    for (const v of visitorLocations) {
+      if (!countryMap[v.countryCode]) {
+        countryMap[v.countryCode] = { country: v.country, countryCode: v.countryCode, hits: 0, visitors: 0 };
+      }
+      countryMap[v.countryCode].hits += v.hits;
+      countryMap[v.countryCode].visitors += 1;
+    }
+    const visitorsByCountry = Object.values(countryMap).sort((a, b) => b.hits - a.hits);
 
     // Get recent books added
     const recentBooks = await db.collection('books')
@@ -169,9 +230,14 @@ export async function GET(request: NextRequest) {
         date,
         ...data,
       })),
-      topVisitors: ipPrefixes.map((v) => ({
-        ip: v._id,
-        hits: v.count,
+      visitorsByCountry,
+      visitorLocations: visitorLocations.filter(v => v.lat !== 0 && v.lon !== 0).map(v => ({
+        city: v.city,
+        country: v.country,
+        countryCode: v.countryCode,
+        hits: v.hits,
+        lat: v.lat,
+        lon: v.lon,
       })),
       recentBooks: recentBooks.map((b) => ({
         title: b.title,

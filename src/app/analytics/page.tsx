@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, Activity, BarChart3 } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe } from 'lucide-react';
 
 interface MetricStat {
   name: string;
@@ -43,6 +43,8 @@ interface UsageData {
   modelUsage: Array<{ model: string; count: number }>;
   promptUsage: Array<{ prompt: string; count: number }>;
   recentBooks: Array<{ title: string; author: string; created_at: string; pages_count: number }>;
+  visitorsByCountry: Array<{ country: string; countryCode: string; hits: number; visitors: number }>;
+  visitorLocations: Array<{ city: string; country: string; countryCode: string; hits: number; lat: number; lon: number }>;
 }
 
 export default function AnalyticsPage() {
@@ -274,6 +276,91 @@ export default function AnalyticsPage() {
                       </div>
                     );
                   })}
+                </div>
+              </div>
+            )}
+
+            {/* Visitors by Country */}
+            {usageData?.visitorsByCountry && usageData.visitorsByCountry.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* World Map */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <Globe className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+                    Visitor Locations
+                  </h2>
+                  <div className="relative bg-stone-100 rounded-lg overflow-hidden" style={{ aspectRatio: '2/1' }}>
+                    {/* Simple world map background */}
+                    <svg viewBox="0 0 360 180" className="w-full h-full" style={{ background: 'var(--bg-warm)' }}>
+                      {/* Simplified continent outlines */}
+                      <path d="M80,40 Q100,30 120,35 L140,40 Q160,45 150,60 L130,70 Q110,75 90,65 L80,50 Z" fill="var(--border-light)" />
+                      <path d="M150,45 Q180,40 210,50 L240,55 Q260,60 250,80 L220,90 Q190,95 160,85 L145,70 Z" fill="var(--border-light)" />
+                      <path d="M250,50 Q280,45 310,55 L330,65 Q340,80 320,100 L290,110 Q260,115 240,100 L235,80 Z" fill="var(--border-light)" />
+                      <path d="M85,90 Q100,85 115,95 L120,110 Q115,130 95,135 L80,125 Q75,110 85,90 Z" fill="var(--border-light)" />
+                      <path d="M155,95 Q170,100 180,115 L175,135 Q160,145 145,135 L140,115 Q145,100 155,95 Z" fill="var(--border-light)" />
+                      <path d="M280,130 Q310,125 330,140 L325,160 Q300,170 275,160 L270,145 Z" fill="var(--border-light)" />
+
+                      {/* Visitor location dots */}
+                      {usageData.visitorLocations?.map((loc, i) => {
+                        // Convert lat/lon to SVG coordinates (simple equirectangular)
+                        const x = ((loc.lon + 180) / 360) * 360;
+                        const y = ((90 - loc.lat) / 180) * 180;
+                        const size = Math.min(8, Math.max(3, Math.log(loc.hits + 1) * 2));
+                        return (
+                          <g key={i}>
+                            <circle
+                              cx={x}
+                              cy={y}
+                              r={size}
+                              fill="var(--accent-rust)"
+                              opacity={0.7}
+                            >
+                              <title>{`${loc.city}, ${loc.country}: ${loc.hits} hits`}</title>
+                            </circle>
+                            <circle
+                              cx={x}
+                              cy={y}
+                              r={size + 3}
+                              fill="var(--accent-rust)"
+                              opacity={0.2}
+                            />
+                          </g>
+                        );
+                      })}
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Country List */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <MapPin className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+                    Visitors by Country
+                  </h2>
+                  <div className="space-y-3 max-h-64 overflow-y-auto">
+                    {usageData.visitorsByCountry.slice(0, 10).map((c, i) => {
+                      const total = usageData.visitorsByCountry.reduce((a, b) => a + b.hits, 0);
+                      const pct = total > 0 ? (c.hits / total) * 100 : 0;
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: 'var(--text-primary)' }}>
+                              {c.country}
+                            </span>
+                            <span style={{ color: 'var(--text-muted)' }}>
+                              {formatNumber(c.hits)} hits • {c.visitors} visitors
+                            </span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: 'var(--accent-rust)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             )}
