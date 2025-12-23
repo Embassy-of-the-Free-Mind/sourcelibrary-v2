@@ -145,6 +145,7 @@ async function BookInfo({ id }: { id: string }) {
                 </div>
                 <BookAnalytics bookId={book.id} />
                 <SearchPanel bookId={book.id} />
+                <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
               </div>
             </div>
           </div>
@@ -193,9 +194,6 @@ async function BookInfo({ id }: { id: string }) {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <BookPagesSection bookId={book.id} pages={pages} />
       </main>
-
-      {/* Chat with Book */}
-      <BookChat bookId={book.id} bookTitle={book.display_title || book.title} />
     </>
   );
 }

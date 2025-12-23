@@ -12,9 +12,10 @@ interface Message {
 interface BookChatProps {
   bookId: string;
   bookTitle: string;
+  inline?: boolean; // If true, render button inline instead of floating
 }
 
-export default function BookChat({ bookId, bookTitle }: BookChatProps) {
+export default function BookChat({ bookId, bookTitle, inline = false }: BookChatProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -138,13 +139,23 @@ export default function BookChat({ bookId, bookTitle }: BookChatProps) {
   return (
     <>
       {/* Chat Toggle Button */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-full shadow-lg hover:bg-amber-700 transition-all ${isOpen ? 'hidden' : ''}`}
-      >
-        <MessageCircle className="w-5 h-5" />
-        <span className="font-medium">Ask about this book</span>
-      </button>
+      {inline ? (
+        <button
+          onClick={() => setIsOpen(true)}
+          className={`flex items-center gap-1.5 text-stone-300 hover:text-white transition-colors ${isOpen ? 'hidden' : ''}`}
+        >
+          <MessageCircle className="w-4 h-4" />
+          <span>Ask AI</span>
+        </button>
+      ) : (
+        <button
+          onClick={() => setIsOpen(true)}
+          className={`fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-full shadow-lg hover:bg-amber-700 transition-all ${isOpen ? 'hidden' : ''}`}
+        >
+          <MessageCircle className="w-5 h-5" />
+          <span className="font-medium">Ask about this book</span>
+        </button>
+      )}
 
       {/* Chat Panel */}
       {isOpen && (
