@@ -753,6 +753,23 @@ export default function PreparePage({ params }: PageProps) {
                 <span className="text-sm font-medium text-amber-700">
                   Split Mode: {Object.keys(splitPositions).length} pages selected
                 </span>
+                <button
+                  onClick={() => {
+                    // Select all splittable pages (not already split)
+                    const splittable = pages.filter(p => !p.split_from);
+                    const newPositions: Record<string, number> = {};
+                    const newSelected = new Set<string>();
+                    splittable.forEach(p => {
+                      newPositions[p.id] = splitPositions[p.id] ?? 500;
+                      newSelected.add(p.id);
+                    });
+                    setSplitPositions(newPositions);
+                    setSelectedPages(newSelected);
+                  }}
+                  className="text-sm text-amber-600 hover:text-amber-800"
+                >
+                  Select All
+                </button>
                 {Object.keys(splitPositions).length > 0 && (
                   <button
                     onClick={() => { setSplitPositions({}); setSelectedPages(new Set()); }}
