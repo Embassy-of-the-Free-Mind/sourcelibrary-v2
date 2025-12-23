@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { BookOpen, Eye, Edit3 } from 'lucide-react';
+import Link from 'next/link';
+import { BookOpen, Eye, Edit3, BarChart3 } from 'lucide-react';
 
 interface GlobalStats {
   totalReads: number;
@@ -34,8 +35,11 @@ export default function GlobalFooter() {
   return (
     <footer className="bg-stone-900 text-stone-400 py-8 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Stats row */}
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm">
+        {/* Stats row with link */}
+        <Link
+          href="/analytics"
+          className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm hover:text-stone-300 transition-colors group"
+        >
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-amber-600" />
             <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalBooks) : '—'}</span>
@@ -51,7 +55,11 @@ export default function GlobalFooter() {
             <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.pagesTranslated) : '—'}</span>
             <span>pages translated</span>
           </div>
-        </div>
+          <div className="flex items-center gap-1.5 text-amber-600 group-hover:text-amber-500">
+            <BarChart3 className="w-4 h-4" />
+            <span className="text-xs">View Analytics</span>
+          </div>
+        </Link>
 
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
