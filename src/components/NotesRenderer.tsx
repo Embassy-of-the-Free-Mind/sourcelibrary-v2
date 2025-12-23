@@ -273,8 +273,8 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
 
   return (
     <div className={`prose-manuscript ${className}`}>
-      {/* Collapsible metadata panel */}
-      {showMetadata && <MetadataPanel metadata={metadata} />}
+      {/* Collapsible metadata panel - hidden when showMetadata is false */}
+      {showMetadata ? <MetadataPanel metadata={metadata} /> : null}
 
       {/* Main text rendered as markdown */}
       <ReactMarkdown

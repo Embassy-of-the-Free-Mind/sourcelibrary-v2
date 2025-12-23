@@ -700,13 +700,16 @@ export default function TranslationEditor({
                     {translationText && (
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={() => setShowNotes(!showNotes)}
-                          className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100 ${showNotes ? '' : 'opacity-50'}`}
-                          style={{ color: showNotes ? 'var(--accent-amber, #b45309)' : 'var(--text-muted)' }}
-                          title="Toggle inline notes and annotations"
+                          onClick={() => setShowNotes(prev => !prev)}
+                          className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${
+                            showNotes
+                              ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                              : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
+                          }`}
+                          title={showNotes ? "Hide notes and metadata" : "Show notes and metadata"}
                         >
                           <MessageSquare className="w-3 h-3" />
-                          Notes
+                          {showNotes ? 'Notes' : 'Notes Off'}
                         </button>
                         <button
                           onClick={() => copyToClipboard(translationText)}
