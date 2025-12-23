@@ -42,33 +42,8 @@ async function researchBook(title: string, author: string): Promise<string> {
     console.log('Wikipedia title search failed:', e);
   }
 
-  // Use Gemini to research if we don't have Wikipedia results
-  if (searchResults.length === 0) {
-    try {
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
-      const researchPrompt = `You are a scholarly research assistant. Provide brief factual background on:
-
-Title: "${title}"
-Author: ${author}
-
-Include (if known):
-- Who was the author? (dates, background, other works)
-- When and where was this text written?
-- What genre/tradition does it belong to?
-- Why is it historically significant?
-- What intellectual/religious/philosophical context shaped it?
-
-Keep response to 2-3 paragraphs. If you're uncertain about details, say so. Focus on established scholarly consensus.`;
-
-      const result = await model.generateContent(researchPrompt);
-      const researchText = result.response.text();
-      if (researchText && researchText.length > 100) {
-        searchResults.push(`Scholarly context:\n${researchText}`);
-      }
-    } catch (e) {
-      console.log('Gemini research failed:', e);
-    }
-  }
+  // Skip Gemini research - too prone to hallucination
+  // Only use Wikipedia results which are more reliable
 
   return searchResults.join('\n\n');
 }
@@ -272,54 +247,57 @@ async function generateBookSummary(
   const languageContext = bookLanguage ? ` The original text is in ${bookLanguage}.` : '';
 
   const researchSection = researchContext ? `
-## Background Research
-The following information was gathered about the book and author:
-
+## Wikipedia Context (verified)
 ${researchContext}
-
-Use this research to provide accurate historical context in your summaries.
 ` : '';
 
   const pageSummarySection = summaryText ? `
-## Page Summaries
+## Page Contents
 ${summaryText}
-` : `
-## Note
-No page-by-page summaries are available yet. Generate the summary based on the background research above.
-`;
+` : '';
 
   const sectionsInstructions = summaryText ? `
-4. **SECTIONS**: Identify the natural divisions in this text (3-8 sections based on thematic shifts). For each section provide:
-   - A descriptive title
-   - The approximate page range
-   - A brief summary (2-3 sentences)` : `
-4. **SECTIONS**: Since no page summaries are available, return an empty array for sections.`;
+4. **SECTIONS**: Group the pages into 3-8 thematic sections. For each:
+   - A descriptive title based on the content
+   - The page range
+   - What the section covers (2-3 sentences)` : `
+4. **SECTIONS**: Return an empty array since no page content is available.`;
 
-  const prompt = `You are a scholarly summarizer working on a historical text: "${bookTitle}" by ${bookAuthor}.${languageContext}
-${researchSection}${pageSummarySection}
-## Task
-Generate a comprehensive analysis with these components:
+  // If no page content, we can't generate a meaningful summary
+  if (!summaryText) {
+    return {
+      brief: researchContext ? `A text by ${bookAuthor}. ${researchContext.substring(0, 200)}...` : `A text by ${bookAuthor}. Process page translations to generate a detailed summary.`,
+      abstract: researchContext || 'No page content available yet. Process translations to generate a summary based on the actual text.',
+      detailed: researchContext || 'This book has not been processed yet. Generate OCR and translations for the pages, then regenerate this summary to see content-based analysis.',
+      sections: [],
+    };
+  }
 
-1. **BRIEF** (2-3 sentences): A concise description for browsing that includes:
-   - What type of text this is (treatise, dialogue, commentary, etc.)
-   - The approximate historical period/context (be specific if research provides dates)
-   - The main subject matter
+  const prompt = `Summarize this text based ONLY on the page contents provided below. Do not invent or assume information not present in the text.
 
-2. **ABSTRACT** (1 paragraph, 5-8 sentences): A scholarly abstract that includes:
-   - Historical context: When and where this text originated (use research data)
-   - Who the author was and their significance
-   - The author's purpose and intended audience
-   - The main themes and arguments (if known from research)
-   - The text's significance in its field or tradition
-   - Any notable methodology or structure
+**Title:** ${bookTitle}
+**Author:** ${bookAuthor}${languageContext}
+${researchSection}
+${pageSummarySection}
 
-3. **DETAILED** (3-5 paragraphs): A fuller summary that:
-   - Opens with detailed historical and intellectual context (use research data)
-   - Places the author in their historical moment
-   - Describes the text's known contents and structure
-   - Discusses key themes or concepts the work addresses
-   - Notes the text's place in broader intellectual history
-   - Concludes with the text's lasting significance and influence
+## Instructions
+Generate a summary based STRICTLY on what appears in the page contents above.
+
+1. **BRIEF** (2-3 sentences):
+   - What is this text actually about based on the content?
+   - What topics or themes appear in it?
+
+2. **ABSTRACT** (1 paragraph, 4-6 sentences):
+   - Summarize the main content and arguments found in the text
+   - What subjects does it cover?
+   - What is the author's approach or style?
+   - Only mention historical context if it's explicitly stated in the text
+
+3. **DETAILED** (2-4 paragraphs):
+   - Describe what the text contains, section by section
+   - What are the key ideas, arguments, or teachings?
+   - What figures, concepts, or terms are discussed?
+   - Stick to what's actually in the pages - don't speculate
 ${sectionsInstructions}
 
 Output as JSON:
@@ -333,7 +311,7 @@ Output as JSON:
   ]
 }
 
-Important: Write as a scholar would for an educated general audience. Integrate the research naturally - don't just repeat it, but use it to enrich your analysis. If research is available, prefer it over speculation.`;
+IMPORTANT: Only describe what is actually in the text. If you're unsure about something, leave it out. Do not hallucinate historical context, dates, or claims not supported by the page contents.`;
 
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();

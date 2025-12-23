@@ -27,10 +27,45 @@ export default function SplitPage({ params }: PageProps) {
   // Split state
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [splitPositions, setSplitPositions] = useState<Record<string, number>>({});
+  const [splitWarnings, setSplitWarnings] = useState<Record<string, string>>({});
+  const [detectingPages, setDetectingPages] = useState<Set<string>>(new Set());
   const [showConfirm, setShowConfirm] = useState(false);
   const [splitting, setSplitting] = useState(false);
   const [reviewingSplits, setReviewingSplits] = useState<Page[]>([]);
   const [resettingPage, setResettingPage] = useState<string | null>(null);
+
+  // Auto-detect split position for a page
+  const autoDetectSplit = async (pageId: string) => {
+    setDetectingPages(prev => new Set(prev).add(pageId));
+    try {
+      const res = await fetch(`/api/pages/${pageId}/auto-split`);
+      if (res.ok) {
+        const data = await res.json();
+        setSplitPositions(prev => ({ ...prev, [pageId]: data.splitPosition }));
+        if (data.hasTextAtSplit) {
+          setSplitWarnings(prev => ({ ...prev, [pageId]: data.textWarning || 'Text detected at split' }));
+        } else {
+          setSplitWarnings(prev => {
+            const updated = { ...prev };
+            delete updated[pageId];
+            return updated;
+          });
+        }
+      } else {
+        // Fallback to 500 if detection fails
+        setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
+      }
+    } catch (error) {
+      console.error('Auto-detect failed:', error);
+      setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
+    } finally {
+      setDetectingPages(prev => {
+        const next = new Set(prev);
+        next.delete(pageId);
+        return next;
+      });
+    }
+  };
 
   useEffect(() => {
     params.then(({ id }) => setBookId(id));
@@ -70,35 +105,41 @@ export default function SplitPage({ params }: PageProps) {
           delete updated[pageId];
           return updated;
         });
+        setSplitWarnings(p => {
+          const updated = { ...p };
+          delete updated[pageId];
+          return updated;
+        });
       } else {
         next.add(pageId);
-        setSplitPositions(p => ({ ...p, [pageId]: 500 }));
+        // Auto-detect split position
+        autoDetectSplit(pageId);
       }
       return next;
     });
   };
 
-  const selectAll = () => {
+  const selectAll = async () => {
     const allIds = new Set(splittablePages.map(p => p.id));
     setSelectedPages(allIds);
-    const positions: Record<string, number> = {};
-    splittablePages.forEach(p => {
-      positions[p.id] = splitPositions[p.id] ?? 500;
-    });
-    setSplitPositions(positions);
+    // Auto-detect for all pages that don't have a position yet
+    const pagesToDetect = splittablePages.filter(p => splitPositions[p.id] === undefined);
+    for (const page of pagesToDetect) {
+      autoDetectSplit(page.id);
+    }
   };
 
   const clearSelection = () => {
     setSelectedPages(new Set());
     setSplitPositions({});
+    setSplitWarnings({});
   };
 
-  const resetAllPositions = () => {
-    const positions: Record<string, number> = {};
+  const redetectAllPositions = () => {
+    // Re-run auto-detection for all selected pages
     selectedPages.forEach(id => {
-      positions[id] = 500;
+      autoDetectSplit(id);
     });
-    setSplitPositions(positions);
   };
 
   const adjustSplitPosition = (pageId: string, delta: number) => {
@@ -243,8 +284,8 @@ export default function SplitPage({ params }: PageProps) {
               <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-blue-800">
                 <p className="font-medium mb-1">How page splitting works:</p>
-                <p>Click pages to select them. Drag the red line or click the grey zones to adjust.
-                Each page becomes two. <strong>Originals are safe</strong> — we create cropped views with 2% overlap.</p>
+                <p>Click pages to select them — split position is <strong>auto-detected</strong>. Adjust manually if needed.
+                Each page becomes two. <strong>Originals are safe</strong> — we create cropped views with 1% overlap.</p>
               </div>
             </div>
           </div>
@@ -275,6 +316,11 @@ export default function SplitPage({ params }: PageProps) {
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium text-amber-700">
                 {selectedPages.size} page{selectedPages.size !== 1 ? 's' : ''} selected
+                {detectingPages.size > 0 && (
+                  <span className="ml-2 text-blue-600">
+                    ({detectingPages.size} detecting...)
+                  </span>
+                )}
               </span>
               <button
                 onClick={selectAll}
@@ -288,11 +334,12 @@ export default function SplitPage({ params }: PageProps) {
                     Clear
                   </button>
                   <button
-                    onClick={resetAllPositions}
-                    className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-700"
+                    onClick={redetectAllPositions}
+                    disabled={detectingPages.size > 0}
+                    className="flex items-center gap-1 text-sm text-stone-500 hover:text-stone-700 disabled:opacity-50"
                   >
                     <RotateCcw className="w-3 h-3" />
-                    Reset to 50%
+                    Re-detect All
                   </button>
                 </>
               )}
@@ -346,9 +393,17 @@ export default function SplitPage({ params }: PageProps) {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-stone-600">Page {page.page_number}</span>
                   {isSelected ? (
-                    <span className="text-xs text-amber-600 font-medium">
-                      {((splitPositions[page.id] ?? 500) / 10).toFixed(1)}%
-                    </span>
+                    detectingPages.has(page.id) ? (
+                      <span className="flex items-center gap-1 text-xs text-blue-600">
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                        Detecting...
+                      </span>
+                    ) : (
+                      <span className={`text-xs font-medium ${splitWarnings[page.id] ? 'text-orange-600' : 'text-green-600'}`}>
+                        {((splitPositions[page.id] ?? 500) / 10).toFixed(1)}%
+                        {splitWarnings[page.id] ? ' ⚠️' : ' ✓'}
+                      </span>
+                    )
                   ) : page.crop ? (
                     <button
                       onClick={(e) => {
@@ -388,18 +443,28 @@ export default function SplitPage({ params }: PageProps) {
 
       {/* Floating Split Button */}
       {selectedPages.size > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
+          {Object.keys(splitWarnings).length > 0 && (
+            <div className="px-3 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
+              ⚠️ {Object.keys(splitWarnings).length} page{Object.keys(splitWarnings).length !== 1 ? 's' : ''} may have text at split line
+            </div>
+          )}
           <button
             onClick={() => setShowConfirm(true)}
-            disabled={splitting}
+            disabled={splitting || detectingPages.size > 0}
             className="flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-full shadow-lg hover:bg-amber-700 disabled:opacity-50 text-sm font-medium"
           >
             {splitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />
+            ) : detectingPages.size > 0 ? (
+              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               <Scissors className="w-5 h-5" />
             )}
-            Split {selectedPages.size} Page{selectedPages.size !== 1 ? 's' : ''}
+            {detectingPages.size > 0
+              ? `Detecting ${detectingPages.size}...`
+              : `Split ${selectedPages.size} Page${selectedPages.size !== 1 ? 's' : ''}`
+            }
           </button>
         </div>
       )}

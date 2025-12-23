@@ -57,8 +57,8 @@ export async function POST(request: NextRequest) {
       const page = pages.find(p => p.id === split.pageId);
       if (!page || !page.photo) continue;
 
-      // Add 2% overlap (20 on 0-1000 scale) on each side
-      const overlap = 20;
+      // Add 1% overlap (10 on 0-1000 scale) on each side
+      const overlap = 10;
       const leftCrop = { xStart: 0, xEnd: Math.min(1000, split.splitPosition + overlap) };
       const rightCrop = { xStart: Math.max(0, split.splitPosition - overlap), xEnd: 1000 };
 
