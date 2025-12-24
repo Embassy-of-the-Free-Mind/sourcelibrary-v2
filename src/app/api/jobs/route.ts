@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
       model,
       prompt_name,
       language,
+      initiated_by,
     } = body as {
       type: JobType;
       book_id?: string;
@@ -60,6 +61,7 @@ export async function POST(request: NextRequest) {
       model?: string;
       prompt_name?: string;
       language?: string;
+      initiated_by?: string;
     };
 
     if (!type || !page_ids || !Array.isArray(page_ids) || page_ids.length === 0) {
@@ -83,6 +85,7 @@ export async function POST(request: NextRequest) {
       },
       book_id,
       book_title,
+      initiated_by,
       created_at: new Date(),
       updated_at: new Date(),
       results: [],

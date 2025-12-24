@@ -26,6 +26,7 @@ export interface Job {
   progress: JobProgress;
   book_id?: string;
   book_title?: string;
+  initiated_by?: string;  // Name/email of user who started the job
   created_at: Date;
   updated_at: Date;
   started_at?: Date;

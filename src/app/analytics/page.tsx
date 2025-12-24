@@ -64,6 +64,7 @@ interface JobLog {
   };
   book_id?: string;
   book_title?: string;
+  initiated_by?: string;
   created_at: string;
   updated_at: string;
   started_at?: string;

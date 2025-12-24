@@ -273,31 +273,32 @@ ${summaryText}
     };
   }
 
-  const prompt = `Summarize this text based ONLY on the page contents provided below. Do not invent or assume information not present in the text.
+  const prompt = `You're writing compelling copy to help readers discover "${bookTitle}" by ${bookAuthor}.${languageContext}
 
-**Title:** ${bookTitle}
-**Author:** ${bookAuthor}${languageContext}
 ${researchSection}
 ${pageSummarySection}
 
-## Instructions
-Generate a summary based STRICTLY on what appears in the page contents above.
+## Your Task
+Write summaries that make readers WANT to explore this text. Be engaging, highlight what's fascinating, but stay grounded in what's actually in the pages above.
 
-1. **BRIEF** (2-3 sentences):
-   - What is this text actually about based on the content?
-   - What topics or themes appear in it?
+1. **BRIEF** (2-3 punchy sentences):
+   - Hook the reader - what's compelling about this text?
+   - What questions does it tackle? What will readers discover?
+   - Write like a book jacket, not an encyclopedia
 
 2. **ABSTRACT** (1 paragraph, 4-6 sentences):
-   - Summarize the main content and arguments found in the text
-   - What subjects does it cover?
-   - What is the author's approach or style?
-   - Only mention historical context if it's explicitly stated in the text
+   - Open with what makes this text worth reading
+   - What bold claims or intriguing ideas does it contain?
+   - What's the author's unique perspective or approach?
+   - What will readers learn or encounter?
+   - End with why someone should dive in
 
 3. **DETAILED** (2-4 paragraphs):
-   - Describe what the text contains, section by section
-   - What are the key ideas, arguments, or teachings?
-   - What figures, concepts, or terms are discussed?
-   - Stick to what's actually in the pages - don't speculate
+   - Paint a picture of the journey through this text
+   - Highlight the most striking passages, ideas, or arguments
+   - What surprising or thought-provoking content appears?
+   - What concepts or figures play key roles?
+   - Convey the texture and flavor of the writing
 ${sectionsInstructions}
 
 Output as JSON:
@@ -311,7 +312,7 @@ Output as JSON:
   ]
 }
 
-IMPORTANT: Only describe what is actually in the text. If you're unsure about something, leave it out. Do not hallucinate historical context, dates, or claims not supported by the page contents.`;
+IMPORTANT: Be engaging and interesting, but only describe what's actually in the text. Don't invent historical claims or content not in the pages. If something is genuinely fascinating in the text, highlight it!`;
 
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
