@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
 import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText } from 'lucide-react';
@@ -9,6 +8,7 @@ import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookChat from '@/components/BookChat';
 import BookAnalytics from '@/components/BookAnalytics';
+import CoverImagePicker from '@/components/CoverImagePicker';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -98,24 +98,14 @@ async function BookInfo({ id }: { id: string }) {
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
-            {/* Thumbnail - priority loading */}
+            {/* Thumbnail - clickable to change */}
             <div className="flex-shrink-0 flex justify-center sm:justify-start">
-              <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
-                {book.thumbnail ? (
-                  <Image
-                    src={book.thumbnail}
-                    alt={book.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 128px, 192px"
-                    priority
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />
-                  </div>
-                )}
-              </div>
+              <CoverImagePicker
+                bookId={book.id}
+                currentThumbnail={book.thumbnail}
+                bookTitle={book.title}
+                pages={pages}
+              />
             </div>
 
             {/* Details */}
