@@ -96,8 +96,7 @@ export default function SplitPage({ params }: PageProps) {
     }
 
     // Second pass: pick position just to the right of the darkest column
-    // Look 0-3% to the right of darkest
-    const offsetPixels = Math.floor(width * 0.02); // ~2% offset to the right
+    const offsetPixels = Math.floor(width * 0.005); // ~0.5% offset to the right
     let bestIdx = Math.min(darkestIdx + offsetPixels, searchEnd - 1);
 
     // Find the column data for this position
