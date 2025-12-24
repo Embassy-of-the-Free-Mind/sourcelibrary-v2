@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { performOCR, performTranslation, generateSummary } from '@/lib/ai';
+import { performOCR, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 
 // Helper to record processing metrics
@@ -57,6 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     const results: { ocr?: string; translation?: string; summary?: string } = {};
+    let totalUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 };
 
     // Process based on action (with timing)
     if (action === 'ocr' || action === 'all') {
@@ -64,18 +65,27 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'imageUrl required for OCR' }, { status: 400 });
       }
       const ocrStart = performance.now();
-      results.ocr = await performOCR(
+      const ocrResult = await performOCR(
         imageUrl,
         language || 'Latin',
         previousPage?.ocr,
         customPrompts?.ocr,
         model
       );
+      results.ocr = ocrResult.text;
+      totalUsage.inputTokens += ocrResult.usage.inputTokens;
+      totalUsage.outputTokens += ocrResult.usage.outputTokens;
+      totalUsage.totalTokens += ocrResult.usage.totalTokens;
+      totalUsage.costUsd += ocrResult.usage.costUsd;
+
       const ocrDuration = performance.now() - ocrStart;
       await recordProcessingMetric(db, 'ocr_processing', ocrDuration, {
         pageId,
         language: language || 'Latin',
         textLength: results.ocr?.length || 0,
+        inputTokens: ocrResult.usage.inputTokens,
+        outputTokens: ocrResult.usage.outputTokens,
+        costUsd: ocrResult.usage.costUsd,
       });
     }
 
@@ -85,7 +95,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'ocrText required for translation' }, { status: 400 });
       }
       const translationStart = performance.now();
-      results.translation = await performTranslation(
+      const translationResult = await performTranslation(
         textToTranslate,
         language || 'Latin',
         targetLanguage,
@@ -93,6 +103,12 @@ export async function POST(request: NextRequest) {
         customPrompts?.translation,
         model
       );
+      results.translation = translationResult.text;
+      totalUsage.inputTokens += translationResult.usage.inputTokens;
+      totalUsage.outputTokens += translationResult.usage.outputTokens;
+      totalUsage.totalTokens += translationResult.usage.totalTokens;
+      totalUsage.costUsd += translationResult.usage.costUsd;
+
       const translationDuration = performance.now() - translationStart;
       await recordProcessingMetric(db, 'translation_processing', translationDuration, {
         pageId,
@@ -100,6 +116,9 @@ export async function POST(request: NextRequest) {
         targetLanguage,
         inputLength: textToTranslate.length,
         outputLength: results.translation?.length || 0,
+        inputTokens: translationResult.usage.inputTokens,
+        outputTokens: translationResult.usage.outputTokens,
+        costUsd: translationResult.usage.costUsd,
       });
     }
 
@@ -109,17 +128,26 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'translatedText required for summary' }, { status: 400 });
       }
       const summaryStart = performance.now();
-      results.summary = await generateSummary(
+      const summaryResult = await generateSummary(
         textToSummarize,
         previousPage?.summary,
         customPrompts?.summary,
         model
       );
+      results.summary = summaryResult.text;
+      totalUsage.inputTokens += summaryResult.usage.inputTokens;
+      totalUsage.outputTokens += summaryResult.usage.outputTokens;
+      totalUsage.totalTokens += summaryResult.usage.totalTokens;
+      totalUsage.costUsd += summaryResult.usage.costUsd;
+
       const summaryDuration = performance.now() - summaryStart;
       await recordProcessingMetric(db, 'summary_processing', summaryDuration, {
         pageId,
         inputLength: textToSummarize.length,
         outputLength: results.summary?.length || 0,
+        inputTokens: summaryResult.usage.inputTokens,
+        outputTokens: summaryResult.usage.outputTokens,
+        costUsd: summaryResult.usage.costUsd,
       });
     }
 
@@ -162,7 +190,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json(results);
+    // Track total cost in a separate collection for analytics
+    if (totalUsage.costUsd > 0) {
+      try {
+        await db.collection('cost_tracking').insertOne({
+          pageId,
+          bookId: pageId ? (await db.collection('pages').findOne({ id: pageId }))?.book_id : null,
+          action,
+          model,
+          ...totalUsage,
+          timestamp: Date.now(),
+          created_at: new Date(),
+        });
+      } catch (e) {
+        console.error('Failed to track cost:', e);
+      }
+    }
+
+    return NextResponse.json({ ...results, usage: totalUsage });
   } catch (error) {
     console.error('Error processing:', error);
     const errorMessage = error instanceof Error ? error.message : 'Processing failed';

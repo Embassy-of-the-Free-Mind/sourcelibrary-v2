@@ -216,6 +216,7 @@ export async function GET(request: NextRequest) {
     let recentBooks: Array<{ title: string; author: string; created_at: Date; pages_count: number }> = [];
     let modelUsage: Array<{ _id: string; count: number }> = [];
     let promptUsage: Array<{ _id: string; count: number }> = [];
+    let costStats = { totalCost: 0, totalTokens: 0, costByDay: [] as Array<{ date: string; cost: number; tokens: number }>, costByAction: [] as Array<{ action: string; cost: number; count: number }> };
 
     try {
       recentBooks = await db.collection('books')
@@ -258,6 +259,71 @@ export async function GET(request: NextRequest) {
       ]).toArray() as Array<{ _id: string; count: number }>;
     } catch (e) {
       console.error('Error fetching prompt usage:', e);
+    }
+
+    // Get cost tracking stats
+    try {
+      // Total costs
+      const totalCostResult = await db.collection('cost_tracking').aggregate([
+        { $match: { timestamp: { $gte: cutoffMs } } },
+        {
+          $group: {
+            _id: null,
+            totalCost: { $sum: '$costUsd' },
+            totalTokens: { $sum: '$totalTokens' },
+          },
+        },
+      ]).toArray();
+
+      if (totalCostResult[0]) {
+        costStats.totalCost = totalCostResult[0].totalCost || 0;
+        costStats.totalTokens = totalCostResult[0].totalTokens || 0;
+      }
+
+      // Cost by day
+      const costByDayResult = await db.collection('cost_tracking').aggregate([
+        { $match: { timestamp: { $gte: cutoffMs } } },
+        {
+          $group: {
+            _id: {
+              $dateToString: {
+                format: '%Y-%m-%d',
+                date: { $toDate: '$timestamp' },
+              },
+            },
+            cost: { $sum: '$costUsd' },
+            tokens: { $sum: '$totalTokens' },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]).toArray();
+
+      costStats.costByDay = costByDayResult.map(d => ({
+        date: d._id,
+        cost: d.cost || 0,
+        tokens: d.tokens || 0,
+      }));
+
+      // Cost by action type
+      const costByActionResult = await db.collection('cost_tracking').aggregate([
+        { $match: { timestamp: { $gte: cutoffMs } } },
+        {
+          $group: {
+            _id: '$action',
+            cost: { $sum: '$costUsd' },
+            count: { $sum: 1 },
+          },
+        },
+        { $sort: { cost: -1 } },
+      ]).toArray();
+
+      costStats.costByAction = costByActionResult.map(a => ({
+        action: a._id || 'unknown',
+        cost: a.cost || 0,
+        count: a.count || 0,
+      }));
+    } catch (e) {
+      console.error('Error fetching cost stats:', e);
     }
 
     return NextResponse.json({
@@ -303,6 +369,12 @@ export async function GET(request: NextRequest) {
         prompt: p._id,
         count: p.count,
       })),
+      costStats: {
+        totalCost: costStats.totalCost,
+        totalTokens: costStats.totalTokens,
+        costByDay: costStats.costByDay,
+        costByAction: costStats.costByAction,
+      },
       query: { days },
     });
   } catch (error) {

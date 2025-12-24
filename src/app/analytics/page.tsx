@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins } from 'lucide-react';
 
 interface MetricStat {
   name: string;
@@ -45,6 +45,12 @@ interface UsageData {
   recentBooks: Array<{ title: string; author: string; created_at: string; pages_count: number }>;
   visitorsByCountry: Array<{ country: string; countryCode: string; hits: number; visitors: number }>;
   visitorLocations: Array<{ city: string; country: string; countryCode: string; hits: number; lat: number; lon: number }>;
+  costStats?: {
+    totalCost: number;
+    totalTokens: number;
+    costByDay: Array<{ date: string; cost: number; tokens: number }>;
+    costByAction: Array<{ action: string; cost: number; count: number }>;
+  };
 }
 
 export default function AnalyticsPage() {
@@ -96,6 +102,18 @@ export default function AnalyticsPage() {
 
   const formatNumber = (n: number) => {
     return n.toLocaleString();
+  };
+
+  const formatCost = (cost: number) => {
+    if (cost < 0.01) return `$${cost.toFixed(4)}`;
+    if (cost < 1) return `$${cost.toFixed(3)}`;
+    return `$${cost.toFixed(2)}`;
+  };
+
+  const formatTokens = (tokens: number) => {
+    if (tokens >= 1000000) return `${(tokens / 1000000).toFixed(1)}M`;
+    if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}K`;
+    return tokens.toString();
   };
 
   return (
@@ -192,7 +210,7 @@ export default function AnalyticsPage() {
           <div className="space-y-8">
             {/* Summary Cards */}
             {usageData?.summary && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
                   <div className="flex items-center gap-2 mb-2">
                     <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
@@ -242,6 +260,20 @@ export default function AnalyticsPage() {
                   </div>
                   <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                     {formatNumber(usageData.summary.totalHits)} total hits
+                  </div>
+                </div>
+
+                {/* API Cost Card */}
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <DollarSign className="w-4 h-4" style={{ color: '#22c55e' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>API Cost</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {usageData.costStats ? formatCost(usageData.costStats.totalCost) : '$0.00'}
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: '#22c55e' }}>
+                    {usageData.costStats ? formatTokens(usageData.costStats.totalTokens) : '0'} tokens
                   </div>
                 </div>
               </div>
@@ -423,6 +455,75 @@ export default function AnalyticsPage() {
                 </div>
               )}
             </div>
+
+            {/* Cost Breakdown */}
+            {usageData?.costStats && usageData.costStats.costByAction.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Cost by Action */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <DollarSign className="w-5 h-5" style={{ color: '#22c55e' }} />
+                    Cost by Action
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.costStats.costByAction.map((a, i) => {
+                      const totalCost = usageData.costStats!.costByAction.reduce((acc, b) => acc + b.cost, 0);
+                      const pct = totalCost > 0 ? (a.cost / totalCost) * 100 : 0;
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="capitalize" style={{ color: 'var(--text-primary)' }}>{a.action}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>
+                              {formatCost(a.cost)} ({a.count} calls)
+                            </span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: '#22c55e' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Cost Over Time */}
+                {usageData.costStats.costByDay.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <Coins className="w-5 h-5" style={{ color: '#22c55e' }} />
+                      Daily Cost
+                    </h2>
+                    <div className="h-48 flex items-end gap-1">
+                      {usageData.costStats.costByDay.map((day, i) => {
+                        const maxCost = Math.max(...usageData.costStats!.costByDay.map(d => d.cost));
+                        const height = maxCost > 0 ? (day.cost / maxCost) * 100 : 0;
+                        return (
+                          <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                            <div
+                              className="w-full rounded-t transition-all hover:opacity-80"
+                              style={{
+                                height: `${height}%`,
+                                minHeight: day.cost > 0 ? '4px' : '0',
+                                background: '#22c55e',
+                              }}
+                              title={`${day.date}: ${formatCost(day.cost)} (${formatTokens(day.tokens)} tokens)`}
+                            />
+                            {i % Math.ceil(usageData.costStats!.costByDay.length / 7) === 0 && (
+                              <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                                {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Recent Books */}
             {usageData?.recentBooks && usageData.recentBooks.length > 0 && (

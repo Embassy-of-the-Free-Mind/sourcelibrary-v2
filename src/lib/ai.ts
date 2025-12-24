@@ -3,13 +3,42 @@ import { DEFAULT_PROMPTS, DEFAULT_MODEL } from './types';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
+// Model pricing per 1M tokens (USD)
+export const MODEL_PRICING: Record<string, { input: number; output: number }> = {
+  'gemini-2.0-flash': { input: 0.10, output: 0.40 },
+  'gemini-2.0-flash-exp': { input: 0.10, output: 0.40 },
+  'gemini-1.5-flash': { input: 0.075, output: 0.30 },
+  'gemini-1.5-pro': { input: 1.25, output: 5.00 },
+  // Fallback for unknown models
+  'default': { input: 0.10, output: 0.40 },
+};
+
+export interface TokenUsage {
+  inputTokens: number;
+  outputTokens: number;
+  totalTokens: number;
+  costUsd: number;
+}
+
+export interface AIResult {
+  text: string;
+  usage: TokenUsage;
+}
+
+function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
+  const inputCost = (inputTokens / 1_000_000) * pricing.input;
+  const outputCost = (outputTokens / 1_000_000) * pricing.output;
+  return inputCost + outputCost;
+}
+
 export async function performOCR(
   imageUrl: string,
   language: string,
   previousPageOcr?: string,
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
-): Promise<string> {
+): Promise<AIResult> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set');
   }
@@ -69,7 +98,20 @@ export async function performOCR(
       },
     ]);
     console.log('Gemini API response received');
-    return result.response.text();
+
+    const usageMetadata = result.response.usageMetadata;
+    const inputTokens = usageMetadata?.promptTokenCount || 0;
+    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+    return {
+      text: result.response.text(),
+      usage: {
+        inputTokens,
+        outputTokens,
+        totalTokens: inputTokens + outputTokens,
+        costUsd: calculateCost(inputTokens, outputTokens, modelId),
+      },
+    };
   } catch (geminiError) {
     console.error('Gemini API error:', geminiError);
     throw new Error(`Gemini API error: ${geminiError instanceof Error ? geminiError.message : 'Unknown error'}`);
@@ -83,7 +125,7 @@ export async function performTranslation(
   previousPageTranslation?: string,
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
-): Promise<string> {
+): Promise<AIResult> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set');
   }
@@ -100,7 +142,20 @@ export async function performTranslation(
   }
 
   const result = await model.generateContent(prompt);
-  return result.response.text();
+
+  const usageMetadata = result.response.usageMetadata;
+  const inputTokens = usageMetadata?.promptTokenCount || 0;
+  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+  return {
+    text: result.response.text(),
+    usage: {
+      inputTokens,
+      outputTokens,
+      totalTokens: inputTokens + outputTokens,
+      costUsd: calculateCost(inputTokens, outputTokens, modelId),
+    },
+  };
 }
 
 export async function generateSummary(
@@ -108,7 +163,7 @@ export async function generateSummary(
   previousPageSummary?: string,
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
-): Promise<string> {
+): Promise<AIResult> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY environment variable is not set');
   }
@@ -122,7 +177,20 @@ export async function generateSummary(
   }
 
   const result = await model.generateContent(prompt);
-  return result.response.text();
+
+  const usageMetadata = result.response.usageMetadata;
+  const inputTokens = usageMetadata?.promptTokenCount || 0;
+  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+  return {
+    text: result.response.text(),
+    usage: {
+      inputTokens,
+      outputTokens,
+      totalTokens: inputTokens + outputTokens,
+      costUsd: calculateCost(inputTokens, outputTokens, modelId),
+    },
+  };
 }
 
 export async function processPageComplete(
@@ -144,9 +212,10 @@ export async function processPageComplete(
   ocr: string;
   translation: string;
   summary: string;
+  usage: TokenUsage;
 }> {
   // Step 1: OCR
-  const ocr = await performOCR(
+  const ocrResult = await performOCR(
     imageUrl,
     language,
     previousPage?.ocr,
@@ -155,8 +224,8 @@ export async function processPageComplete(
   );
 
   // Step 2: Translation
-  const translation = await performTranslation(
-    ocr,
+  const translationResult = await performTranslation(
+    ocrResult.text,
     language,
     targetLanguage,
     previousPage?.translation,
@@ -165,12 +234,25 @@ export async function processPageComplete(
   );
 
   // Step 3: Summary
-  const summary = await generateSummary(
-    translation,
+  const summaryResult = await generateSummary(
+    translationResult.text,
     previousPage?.summary,
     customPrompts?.summary,
     modelId
   );
 
-  return { ocr, translation, summary };
+  // Combine usage stats
+  const totalUsage: TokenUsage = {
+    inputTokens: ocrResult.usage.inputTokens + translationResult.usage.inputTokens + summaryResult.usage.inputTokens,
+    outputTokens: ocrResult.usage.outputTokens + translationResult.usage.outputTokens + summaryResult.usage.outputTokens,
+    totalTokens: ocrResult.usage.totalTokens + translationResult.usage.totalTokens + summaryResult.usage.totalTokens,
+    costUsd: ocrResult.usage.costUsd + translationResult.usage.costUsd + summaryResult.usage.costUsd,
+  };
+
+  return {
+    ocr: ocrResult.text,
+    translation: translationResult.text,
+    summary: summaryResult.text,
+    usage: totalUsage,
+  };
 }

@@ -15,7 +15,8 @@ import {
   Wand2,
   X,
   Download,
-  Settings
+  Settings,
+  DollarSign
 } from 'lucide-react';
 import DownloadButton from './DownloadButton';
 import type { Page, Prompt } from '@/lib/types';
@@ -34,7 +35,16 @@ interface ProcessingState {
   totalPages: number;
   completed: string[];
   failed: string[];
+  totalCost: number;
+  totalTokens: number;
 }
+
+// Estimated costs per page (based on Gemini 2.0 Flash pricing)
+const ESTIMATED_COSTS = {
+  ocr: 0.0003,        // ~1000 input tokens (image) + ~500 output tokens
+  translation: 0.0002, // ~500 input tokens + ~500 output tokens
+  summary: 0.0001,    // ~300 input tokens + ~100 output tokens
+};
 
 // Format relative time
 function formatRelativeTime(date: Date | string | undefined): string {
@@ -84,7 +94,9 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     currentIndex: 0,
     totalPages: 0,
     completed: [],
-    failed: []
+    failed: [],
+    totalCost: 0,
+    totalTokens: 0,
   });
   const [stopRequested, setStopRequested] = useState(false);
 
@@ -182,11 +194,15 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
       currentIndex: 0,
       totalPages: pageIds.length,
       completed: [],
-      failed: []
+      failed: [],
+      totalCost: 0,
+      totalTokens: 0,
     });
 
     const completed: string[] = [];
     const failed: string[] = [];
+    let runningCost = 0;
+    let runningTokens = 0;
 
     for (let i = 0; i < pageIds.length; i++) {
       if (stopRequested) break;
@@ -223,6 +239,11 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
         });
 
         if (response.ok) {
+          const data = await response.json();
+          if (data.usage) {
+            runningCost += data.usage.costUsd || 0;
+            runningTokens += data.usage.totalTokens || 0;
+          }
           completed.push(pageId);
         } else {
           failed.push(pageId);
@@ -232,7 +253,13 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
         failed.push(pageId);
       }
 
-      setProcessing(prev => ({ ...prev, completed: [...completed], failed: [...failed] }));
+      setProcessing(prev => ({
+        ...prev,
+        completed: [...completed],
+        failed: [...failed],
+        totalCost: runningCost,
+        totalTokens: runningTokens,
+      }));
 
       if (i < pageIds.length - 1 && !stopRequested) {
         await new Promise(r => setTimeout(r, 1000));
@@ -251,6 +278,13 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
 
   const selectedCount = selectedPages.size;
   const estimatedTimeMinutes = Math.ceil(selectedCount * 0.5);
+  const estimatedCost = selectedCount * ESTIMATED_COSTS[action];
+
+  const formatCost = (cost: number) => {
+    if (cost < 0.01) return `$${cost.toFixed(4)}`;
+    if (cost < 1) return `$${cost.toFixed(3)}`;
+    return `$${cost.toFixed(2)}`;
+  };
 
   const getImageUrl = (page: Page) => {
     const baseUrl = page.photo_original || page.photo;
@@ -361,12 +395,20 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
                     {actionConfig[action].label} · Page {processing.currentIndex} of {processing.totalPages}
                   </span>
                 </div>
-                <button
-                  onClick={() => setStopRequested(true)}
-                  className="text-xs text-stone-500 hover:text-stone-700 flex items-center gap-1"
-                >
-                  <Square className="w-3 h-3" /> Stop
-                </button>
+                <div className="flex items-center gap-4">
+                  {processing.totalCost > 0 && (
+                    <span className="text-xs text-green-600 flex items-center gap-1">
+                      <DollarSign className="w-3 h-3" />
+                      {formatCost(processing.totalCost)}
+                    </span>
+                  )}
+                  <button
+                    onClick={() => setStopRequested(true)}
+                    className="text-xs text-stone-500 hover:text-stone-700 flex items-center gap-1"
+                  >
+                    <Square className="w-3 h-3" /> Stop
+                  </button>
+                </div>
               </div>
               <div className="h-1.5 bg-stone-200 rounded-full overflow-hidden">
                 <div
@@ -376,7 +418,12 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
               </div>
               <div className="flex justify-between mt-1 text-xs text-stone-500">
                 <span>{processing.completed.length} done</span>
-                {processing.failed.length > 0 && <span className="text-red-500">{processing.failed.length} failed</span>}
+                <div className="flex gap-3">
+                  {processing.totalTokens > 0 && (
+                    <span className="text-stone-400">{(processing.totalTokens / 1000).toFixed(1)}K tokens</span>
+                  )}
+                  {processing.failed.length > 0 && <span className="text-red-500">{processing.failed.length} failed</span>}
+                </div>
               </div>
             </div>
           )}
@@ -472,9 +519,20 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
 
           {/* Run button */}
           <div className="flex items-center justify-between pt-2">
-            <span className="text-sm text-stone-500">
-              {selectedCount > 0 ? `~${estimatedTimeMinutes} min for ${selectedCount} pages` : 'Select pages to process'}
-            </span>
+            <div className="flex items-center gap-3 text-sm text-stone-500">
+              {selectedCount > 0 ? (
+                <>
+                  <span>~{estimatedTimeMinutes} min for {selectedCount} pages</span>
+                  <span className="text-stone-300">·</span>
+                  <span className="text-green-600 flex items-center gap-1">
+                    <DollarSign className="w-3 h-3" />
+                    ~{formatCost(estimatedCost)} est.
+                  </span>
+                </>
+              ) : (
+                <span>Select pages to process</span>
+              )}
+            </div>
             <button
               onClick={runBatchProcess}
               disabled={selectedCount === 0 || processing.active}
