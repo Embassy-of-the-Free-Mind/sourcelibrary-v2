@@ -157,12 +157,22 @@ export interface Page {
   cropped_photo?: string;       // Local path to cropped image
   crop?: CropData;              // Crop coordinates used
   split_from?: string;          // ID of parent page if this was split from another
-  split_detection?: {           // AI detection result
+  split_detection?: {           // Pixel analysis result
     isTwoPageSpread: boolean;
-    confidence: string;
-    reasoning?: string;
-    leftPage?: CropData;
-    rightPage?: CropData;
+    confidence: 'high' | 'medium' | 'low';
+    splitPosition: number;      // 0-1000 scale
+    splitPositionPercent: number;
+    hasTextAtSplit: boolean;
+    textWarning?: string;
+    metrics: {
+      aspectRatio: number;
+      gutterScore: number;
+      maxDarkRunAtSplit: number;
+      transitionsAtSplit: number;
+      windowAvgDarkRun: number;
+      windowAvgTransitions: number;
+    };
+    detected_at?: Date;
   };
 }
 

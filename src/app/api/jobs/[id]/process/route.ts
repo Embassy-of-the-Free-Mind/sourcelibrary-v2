@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation } from '@/lib/ai';
+import { detectSplitFromBuffer } from '@/lib/splitDetection';
 import type { Job, JobResult } from '@/lib/types';
 
 const CHUNK_SIZE = 5; // Process 5 pages per request to stay within timeout
@@ -182,6 +183,44 @@ export async function POST(
           );
 
           previousTranslation = translation;
+          results.push({
+            pageId,
+            success: true,
+            duration: performance.now() - itemStart,
+          });
+
+        } else if (job.type === 'batch_split') {
+          // Fetch the image and run split detection
+          const imageUrl = page.photo;
+          if (!imageUrl) {
+            results.push({ pageId, success: false, error: 'No image URL' });
+            continue;
+          }
+
+          // Fetch image
+          const imageResponse = await fetch(imageUrl);
+          if (!imageResponse.ok) {
+            results.push({ pageId, success: false, error: 'Failed to fetch image' });
+            continue;
+          }
+
+          const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+          const splitResult = await detectSplitFromBuffer(imageBuffer);
+
+          // Save split detection result to page
+          await db.collection('pages').updateOne(
+            { id: pageId },
+            {
+              $set: {
+                split_detection: {
+                  ...splitResult,
+                  detected_at: new Date(),
+                },
+                updated_at: new Date(),
+              },
+            }
+          );
+
           results.push({
             pageId,
             success: true,

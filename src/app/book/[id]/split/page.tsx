@@ -309,27 +309,8 @@ export default function SplitPage({ params }: PageProps) {
         body: JSON.stringify({ splits })
       });
 
-      // Fetch updated book and show results
-      const res = await fetch(`/api/books/${bookId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setBook(data);
-        setPages(data.pages || []);
-
-        // Find all pages from the splits
-        const allSplitPages = (data.pages || []).filter((p: Page) =>
-          originalIds.has(p.id) || (p.split_from && originalIds.has(p.split_from))
-        );
-
-        if (allSplitPages.length > 0) {
-          allSplitPages.sort((a: Page, b: Page) => a.page_number - b.page_number);
-          setReviewingSplits(allSplitPages);
-        }
-      }
-
-      // Clear selection
-      setSelectedPages(new Set());
-      setSplitPositions({});
+      // Go to book page
+      window.location.href = `/book/${bookId}`;
     } catch (error) {
       console.error('Batch split failed:', error);
     } finally {
