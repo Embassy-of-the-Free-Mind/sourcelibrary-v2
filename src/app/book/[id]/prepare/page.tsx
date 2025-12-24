@@ -24,6 +24,7 @@ import {
   Wand2,
   Eye
 } from 'lucide-react';
+import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import type { Book, Page, Prompt } from '@/lib/types';
 import ImageWithMagnifier from '@/components/ImageWithMagnifier';
 import SplitEditor from '@/components/SplitEditor';
@@ -96,6 +97,7 @@ export default function PreparePage({ params }: PageProps) {
   const [prompts, setPrompts] = useState<{ ocr: Prompt | null; translation: Prompt | null; summary: Prompt | null }>({
     ocr: null, translation: null, summary: null
   });
+  const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
 
 
   useEffect(() => {
@@ -465,7 +467,8 @@ export default function PreparePage({ params }: PageProps) {
               translation: prompts.translation?.content,
               summary: prompts.summary?.content
             },
-            autoSave: true
+            autoSave: true,
+            model: selectedModel
           })
         });
 
@@ -1080,6 +1083,24 @@ export default function PreparePage({ params }: PageProps) {
               <p className="text-sm text-stone-600 mb-4">
                 These prompts will be used for batch processing. Select a prompt template or edit the content.
               </p>
+
+              {/* Model selector */}
+              <div className="border border-stone-200 rounded-lg p-4 bg-stone-50">
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium text-stone-700">AI Model</label>
+                  <select
+                    value={selectedModel}
+                    onChange={(e) => setSelectedModel(e.target.value)}
+                    className="px-3 py-1.5 text-sm bg-white border border-stone-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  >
+                    {GEMINI_MODELS.map(model => (
+                      <option key={model.id} value={model.id}>
+                        {model.name} - {model.description}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
               {['ocr', 'translation', 'summary'].map((type) => (
                 <div key={type} className="border border-stone-200 rounded-lg p-4">
