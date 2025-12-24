@@ -193,6 +193,76 @@ export async function generateSummary(
   };
 }
 
+// Default prompt for modernizing translations
+const MODERNIZATION_PROMPT = `You are rewriting a scholarly translation into clear, accessible modern English.
+
+**Goal:** Make the text easy to read while preserving the author's meaning and ideas. This is NOT a summary - keep all the content but reorganize and clarify it.
+
+**Your task:**
+1. **Break up long sentences** - Renaissance prose often has very long periods. Split into digestible sentences.
+2. **Use modern vocabulary** - Replace archaic terms with modern equivalents (but keep key technical terms with brief inline explanations)
+3. **Add paragraph breaks** - Create logical paragraph structure even if the original is a wall of text
+4. **Clarify references** - When the text says "as we discussed" or "the aforementioned", briefly restate what's being referred to
+5. **Preserve meaning** - Never change the author's ideas, just how they're expressed
+6. **Maintain flow** - If the previous page ended mid-thought, continue naturally
+
+**What to keep:**
+- All substantive content (don't summarize or skip anything)
+- Key terms and names (with brief context if needed)
+- The author's arguments and reasoning
+- Any quoted passages (can paraphrase but note it)
+
+**What to modernize:**
+- Sentence structure (shorter, clearer)
+- Vocabulary (modern equivalents)
+- Paragraph organization (logical groupings)
+- Pronouns and references (make explicit when unclear)
+
+**Format:** Clean prose with paragraph breaks. No markdown headers, bullet points, or annotations. Just flowing, readable text.
+
+**IMPORTANT:** If the translation has [[notes: ...]] or [[term: ...]] or other [[tags]], incorporate that information naturally into the text rather than preserving the markup. Remove all [[...]] tags from output.`;
+
+export async function performModernization(
+  translationText: string,
+  previousContext?: {
+    translation?: string;
+    modernized?: string;
+  },
+  customPrompt?: string,
+  modelId: string = DEFAULT_MODEL
+): Promise<AIResult> {
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY environment variable is not set');
+  }
+  const model = genAI.getGenerativeModel({ model: modelId });
+
+  let prompt = customPrompt || MODERNIZATION_PROMPT;
+  prompt += `\n\n**Text to modernize:**\n${translationText}`;
+
+  if (previousContext?.modernized) {
+    prompt += `\n\n**Previous page (modernized) for continuity:**\n${previousContext.modernized.slice(0, 2000)}...`;
+  }
+  if (previousContext?.translation) {
+    prompt += `\n\n**Previous page (original translation) for reference:**\n${previousContext.translation.slice(0, 2000)}...`;
+  }
+
+  const result = await model.generateContent(prompt);
+
+  const usageMetadata = result.response.usageMetadata;
+  const inputTokens = usageMetadata?.promptTokenCount || 0;
+  const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+  return {
+    text: result.response.text(),
+    usage: {
+      inputTokens,
+      outputTokens,
+      totalTokens: inputTokens + outputTokens,
+      costUsd: calculateCost(inputTokens, outputTokens, modelId),
+    },
+  };
+}
+
 export async function processPageComplete(
   imageUrl: string,
   language: string,

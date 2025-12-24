@@ -590,7 +590,23 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 6. Capture ALL text including margins, boxes, and annotations.
 7. END with [[vocabulary: ...]] listing key terms, names, and concepts on this page.
 
-**Important:** This page may have been split from a two-page spread. You may see partial text from the adjacent page at the left or right edge. Focus on transcribing the MAIN text block of this page. Ignore any partial/cut-off text at the edges that clearly belongs to the facing page.
+**CRITICAL - Adjacent Page Bleed:**
+This page was likely split from a two-page book spread. Text from the FACING PAGE may be visible at the left or right edge of the image. You MUST:
+- IGNORE any partial/cut-off text at the far left or right edges
+- Look for the gutter shadow, binding crease, or page edge to identify where this page ends
+- Only transcribe text that is clearly part of THIS page's main text block
+- Text appearing at an angle, upside down, or vertically near edges is from the adjacent page - SKIP IT
+- When in doubt, exclude edge text rather than include wrong-page content
+
+**Quality Warning:**
+If any of these conditions significantly affect readability, add [[warning: reason]] near the start:
+- Faded, stained, or water-damaged text
+- Very low resolution or motion blur
+- Heavy ink bleed-through from the reverse side
+- Significant portions cut off or missing from the scan
+- Text obscured by tight binding, fingers, or shadows
+- Fire damage, tears, or holes in the page
+Example: [[warning: Faded ink in lower third, several words illegible]]
 
 **Language:** {language}
 

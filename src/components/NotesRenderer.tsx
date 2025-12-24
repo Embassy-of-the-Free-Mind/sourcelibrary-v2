@@ -18,6 +18,7 @@ interface ExtractedMetadata {
   language?: string;
   pageNumber?: string;
   folio?: string;
+  warning?: string;         // [[warning: ...]] - OCR quality issues
   meta: string[];           // [[meta: ...]] entries
   abbreviations: string[];  // [[abbrev: ...]] entries
   vocabulary: string[];     // [[vocabulary: ...]] - key terms from OCR
@@ -60,6 +61,12 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract folio references
   result = result.replace(/\[\[folio:\s*(.*?)\]\]/gi, (match, folio) => {
     metadata.folio = folio.trim();
+    return '';
+  });
+
+  // Extract warning (OCR quality issues)
+  result = result.replace(/\[\[warning:\s*(.*?)\]\]/gi, (match, warning) => {
+    metadata.warning = warning.trim();
     return '';
   });
 
@@ -108,7 +115,7 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
 
   // Catch-all: remove any remaining [[tag: ...]] patterns (handles multiline)
   // This ensures no metadata tags slip through to the reader
-  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
+  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
 
   // Final aggressive cleanup: remove ANY remaining [[something: ...]] patterns
   // This catches any malformed or unexpected tags
@@ -187,13 +194,21 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const hasMetadata = metadata.language || metadata.pageNumber || metadata.folio ||
-    metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
+    metadata.warning || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
     metadata.vocabulary.length > 0 || metadata.summary || metadata.keywords.length > 0;
 
   if (!hasMetadata) return null;
 
   return (
     <div className="mb-4 border border-stone-200 rounded-lg overflow-hidden bg-stone-50/50">
+      {/* Warning displayed prominently if present */}
+      {metadata.warning && (
+        <div className="px-3 py-2 bg-red-50 border-b border-red-200 text-sm text-red-800 flex items-start gap-2">
+          <span className="text-red-500 font-bold">⚠</span>
+          <span><span className="font-medium">Quality Warning: </span>{metadata.warning}</span>
+        </div>
+      )}
+
       {/* Summary displayed prominently if present */}
       {metadata.summary && (
         <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-900">
