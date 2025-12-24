@@ -70,3 +70,47 @@ export async function DELETE(
     return NextResponse.json({ error: 'Failed to delete book' }, { status: 500 });
   }
 }
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const db = await getDb();
+
+    // Find book
+    let book = await db.collection('books').findOne({ id });
+    if (!book && ObjectId.isValid(id)) {
+      book = await db.collection('books').findOne({ _id: new ObjectId(id) });
+    }
+
+    if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Allowed fields to update
+    const allowedFields = [
+      'title', 'display_title', 'author', 'language', 'published',
+      'thumbnail', 'categories', 'status', 'summary', 'dublin_core'
+    ];
+
+    const updates: Record<string, unknown> = { updated_at: new Date() };
+    for (const field of allowedFields) {
+      if (body[field] !== undefined) {
+        updates[field] = body[field];
+      }
+    }
+
+    await db.collection('books').updateOne(
+      { _id: book._id },
+      { $set: updates }
+    );
+
+    return NextResponse.json({ success: true, updated: Object.keys(updates) });
+  } catch (error) {
+    console.error('Error updating book:', error);
+    return NextResponse.json({ error: 'Failed to update book' }, { status: 500 });
+  }
+}
