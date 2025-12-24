@@ -139,6 +139,14 @@ export default function PageEditorPage({ params }: PageProps) {
       currentIndex={currentIndex}
       onNavigate={handleNavigate}
       onSave={handleSave}
+      onRefresh={async () => {
+        const res = await fetch(`/api/books/${bookId}`);
+        if (res.ok) {
+          const data = await res.json();
+          setBook(data);
+          setPages(data.pages || []);
+        }
+      }}
     />
   );
 }

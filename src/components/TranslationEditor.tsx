@@ -19,7 +19,9 @@ import {
   Image as ImageIcon,
   FileText,
   Languages,
-  MessageSquare
+  MessageSquare,
+  RotateCcw,
+  Scissors
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
@@ -34,6 +36,7 @@ interface TranslationEditorProps {
   currentIndex: number;
   onNavigate: (pageId: string) => void;
   onSave: (data: { ocr?: string; translation?: string; summary?: string }) => Promise<void>;
+  onRefresh?: () => Promise<void>;
 }
 
 interface SettingsModalProps {
@@ -282,10 +285,52 @@ export default function TranslationEditor({
   currentIndex,
   onNavigate,
   onSave,
+  onRefresh,
 }: TranslationEditorProps) {
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
+
+  // Reset split state
+  const [showResetSplitConfirm, setShowResetSplitConfirm] = useState(false);
+  const [resettingSplit, setResettingSplit] = useState(false);
+
+  // Check if this page is part of a split
+  const isSplitPage = !!(page.crop || page.split_from);
+  const originalPageId = page.split_from || page.id;
+  const siblingPage = page.split_from
+    ? pages.find(p => p.id === page.split_from) // This is the right half, find the left
+    : pages.find(p => p.split_from === page.id); // This is the left half, find the right
+
+  // Check if OCR/translation exists on either half (data loss warning)
+  const hasDataOnSplit = !!(
+    page.ocr?.data ||
+    page.translation?.data ||
+    siblingPage?.ocr?.data ||
+    siblingPage?.translation?.data
+  );
+
+  // Reset the split
+  const handleResetSplit = async () => {
+    setResettingSplit(true);
+    try {
+      await fetch(`/api/pages/${originalPageId}/reset`, { method: 'POST' });
+
+      // Refresh the book data
+      if (onRefresh) {
+        await onRefresh();
+      }
+
+      // Navigate to the original (now unsplit) page or go back to book
+      window.location.href = `/book/${book.id}/split`;
+    } catch (error) {
+      console.error('Reset split error:', error);
+      alert('Failed to reset split. Please try again.');
+    } finally {
+      setResettingSplit(false);
+      setShowResetSplitConfirm(false);
+    }
+  };
 
   const [processing, setProcessing] = useState<'ocr' | 'translation' | 'summary' | 'all' | null>(null);
   const [mode, setMode] = useState<'read' | 'edit'>('read');
@@ -576,6 +621,18 @@ export default function TranslationEditor({
                 English
               </button>
             </div>
+
+            {isSplitPage && (
+              <button
+                onClick={() => setShowResetSplitConfirm(true)}
+                className="flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium hover:bg-red-50 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0"
+                style={{ color: 'var(--text-muted)' }}
+                title="Reset this split back to original two-page spread"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span className="hidden sm:inline">Reset Split</span>
+              </button>
+            )}
 
             <button
               onClick={() => setMode('edit')}
@@ -1125,6 +1182,70 @@ export default function TranslationEditor({
                 style={{ background: 'var(--accent-rust, #c45d3a)' }}
               >
                 Got it
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reset Split Confirmation Modal */}
+      {showResetSplitConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
+                <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} />
+              </div>
+              <h3 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                Reset Split?
+              </h3>
+            </div>
+
+            <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+              This will merge this page back with its other half into a single two-page spread.
+            </p>
+
+            {hasDataOnSplit && (
+              <div className="rounded-lg p-3 mb-4" style={{ background: 'rgb(254 243 199)', border: '1px solid rgb(251 191 36)' }}>
+                <p className="text-sm font-medium" style={{ color: 'rgb(146 64 14)' }}>
+                  ⚠️ Warning: OCR or translation data exists
+                </p>
+                <p className="text-xs mt-1" style={{ color: 'rgb(180 83 9)' }}>
+                  Resetting will delete the right page and its OCR/translation. The left page data will remain but may not match the full image.
+                </p>
+              </div>
+            )}
+
+            <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+              You&apos;ll be taken to the Split page where you can re-split with a different position if needed.
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowResetSplitConfirm(false)}
+                disabled={resettingSplit}
+                className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:bg-stone-100"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleResetSplit}
+                disabled={resettingSplit}
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:opacity-90 disabled:opacity-50"
+                style={{ background: 'rgb(220 38 38)' }}
+              >
+                {resettingSplit ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Resetting...
+                  </>
+                ) : (
+                  <>
+                    <RotateCcw className="w-4 h-4" />
+                    Reset Split
+                  </>
+                )}
               </button>
             </div>
           </div>
