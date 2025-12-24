@@ -16,7 +16,8 @@ import {
   X,
   Download,
   Settings,
-  DollarSign
+  DollarSign,
+  ImageIcon
 } from 'lucide-react';
 import DownloadButton from './DownloadButton';
 import type { Page, Prompt } from '@/lib/types';
@@ -298,6 +299,36 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     if (cost < 0.01) return `$${cost.toFixed(4)}`;
     if (cost < 1) return `$${cost.toFixed(3)}`;
     return `$${cost.toFixed(2)}`;
+  };
+
+  const [settingCover, setSettingCover] = useState<string | null>(null);
+
+  const setCoverImage = async (page: Page) => {
+    setSettingCover(page.id);
+    try {
+      const baseUrl = page.photo_original || page.photo;
+      // Use a higher quality thumbnail for the cover
+      let thumbnailUrl = baseUrl;
+      if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+        thumbnailUrl = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+      } else {
+        thumbnailUrl = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80`;
+      }
+
+      const res = await fetch(`/api/books/${bookId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ thumbnail: thumbnailUrl })
+      });
+
+      if (res.ok) {
+        router.refresh();
+      }
+    } catch (error) {
+      console.error('Error setting cover:', error);
+    } finally {
+      setSettingCover(null);
+    }
   };
 
   const getImageUrl = (page: Page) => {
@@ -608,23 +639,42 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
               }
 
               return (
-                <a key={page.id} href={`/book/${bookId}/page/${page.id}`} className="group relative">
-                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                    {imageUrl && (
-                      <img
-                        src={imageUrl}
-                        alt={`Page ${page.page_number}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                      />
-                    )}
-                    <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
-                      {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" title="OCR" />}
-                      {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" title="Translated" />}
-                      {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" title="Summarized" />}
+                <div key={page.id} className="group relative">
+                  <a href={`/book/${bookId}/page/${page.id}`}>
+                    <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                      {imageUrl && (
+                        <img
+                          src={imageUrl}
+                          alt={`Page ${page.page_number}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        />
+                      )}
+                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
+                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" title="OCR" />}
+                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" title="Translated" />}
+                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" title="Summarized" />}
+                      </div>
                     </div>
-                  </div>
+                  </a>
+                  {/* Set as Cover button */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setCoverImage(page);
+                    }}
+                    disabled={settingCover === page.id}
+                    className="absolute top-1 right-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 disabled:opacity-50"
+                    title="Set as cover image"
+                  >
+                    {settingCover === page.id ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <ImageIcon className="w-3 h-3" />
+                    )}
+                  </button>
                   <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
-                </a>
+                </div>
               );
             })}
           </div>
