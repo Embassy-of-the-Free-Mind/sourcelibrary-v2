@@ -37,8 +37,19 @@ export default function SplitPage({ params }: PageProps) {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   // Detection algorithm options
-  type DetectionAlgo = 'auto' | 'dark' | 'bright' | 'center';
+  type DetectionAlgo = 'auto' | 'dark' | 'bright' | 'center' | 'ml';
   const [detectionAlgo, setDetectionAlgo] = useState<DetectionAlgo>('auto');
+  const [mlModelAvailable, setMlModelAvailable] = useState<boolean>(false);
+
+  // Check if ML model is available on mount
+  useEffect(() => {
+    fetch('/api/split-ml/train')
+      .then(res => res.json())
+      .then(data => {
+        setMlModelAvailable(data.hasActiveModel === true);
+      })
+      .catch(() => setMlModelAvailable(false));
+  }, []);
 
   // Client-side split detection using already-loaded image
   const detectSplitFromImage = (img: HTMLImageElement, algo: DetectionAlgo = 'auto'): { splitPosition: number; hasText: boolean } => {
@@ -149,9 +160,43 @@ export default function SplitPage({ params }: PageProps) {
     return { splitPosition, hasText };
   };
 
-  // Auto-detect split position for a page (client-side, instant)
-  const autoDetectSplit = (pageId: string) => {
+  // Auto-detect split position for a page (client-side, instant, or ML via API)
+  const autoDetectSplit = async (pageId: string) => {
     setDetectingPages(prev => new Set(prev).add(pageId));
+
+    // If ML model selected, use API
+    if (detectionAlgo === 'ml') {
+      try {
+        const res = await fetch('/api/split-ml/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pageId }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setSplitPositions(prev => ({ ...prev, [pageId]: data.position }));
+          setDetectedPositions(prev => ({ ...prev, [pageId]: data.position }));
+          setSplitWarnings(prev => {
+            const updated = { ...prev };
+            delete updated[pageId];
+            return updated;
+          });
+        } else {
+          // Fallback to center if ML fails
+          setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
+        }
+      } catch (error) {
+        console.error('ML prediction failed:', error);
+        setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
+      } finally {
+        setDetectingPages(prev => {
+          const next = new Set(prev);
+          next.delete(pageId);
+          return next;
+        });
+      }
+      return;
+    }
 
     const runDetection = (img: HTMLImageElement) => {
       try {
@@ -512,6 +557,7 @@ export default function SplitPage({ params }: PageProps) {
                 <option value="dark">Dark Gutter</option>
                 <option value="bright">Bright Gutter</option>
                 <option value="center">Center 50%</option>
+                {mlModelAvailable && <option value="ml">ML Model</option>}
               </select>
               <button
                 onClick={selectAll}
