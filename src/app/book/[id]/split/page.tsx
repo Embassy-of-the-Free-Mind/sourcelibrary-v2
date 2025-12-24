@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import {
   ArrowLeft,
@@ -212,7 +212,31 @@ export default function SplitPage({ params }: PageProps) {
     }
   };
 
-  const togglePageSelection = (pageId: string) => {
+  const togglePageSelection = (pageId: string, index: number, event?: React.MouseEvent) => {
+    // Handle shift-click for range selection
+    if (event?.shiftKey && lastSelectedIndexRef.current !== null) {
+      const start = Math.min(lastSelectedIndexRef.current, index);
+      const end = Math.max(lastSelectedIndexRef.current, index);
+      setSelectedPages(prev => {
+        const next = new Set(prev);
+        for (let i = start; i <= end; i++) {
+          const page = splittablePages[i];
+          if (page && !next.has(page.id)) {
+            next.add(page.id);
+            if (useAutoDetect) {
+              autoDetectSplit(page.id);
+            } else {
+              setSplitPositions(p => ({ ...p, [page.id]: 500 }));
+            }
+          }
+        }
+        return next;
+      });
+      lastSelectedIndexRef.current = index;
+      return;
+    }
+
+    // Normal toggle
     setSelectedPages(prev => {
       const next = new Set(prev);
       if (next.has(pageId)) {
@@ -238,6 +262,7 @@ export default function SplitPage({ params }: PageProps) {
       }
       return next;
     });
+    lastSelectedIndexRef.current = index;
   };
 
   const selectAll = async () => {
@@ -285,6 +310,7 @@ export default function SplitPage({ params }: PageProps) {
 
   // Track detected vs chosen positions for learning
   const [detectedPositions, setDetectedPositions] = useState<Record<string, number>>({});
+  const lastSelectedIndexRef = useRef<number | null>(null);
 
   const applySplits = async () => {
     const pagesToSplit = Array.from(selectedPages);
@@ -489,7 +515,7 @@ export default function SplitPage({ params }: PageProps) {
       {/* Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {splittablePages.map((page) => {
+          {splittablePages.map((page, index) => {
             const isSelected = selectedPages.has(page.id);
             const imageUrl = getImageUrl(page, 400);
 
@@ -501,7 +527,7 @@ export default function SplitPage({ params }: PageProps) {
                     ? 'border-amber-400 ring-2 ring-amber-200'
                     : 'border-stone-200 hover:border-stone-300'
                 }`}
-                onClick={() => togglePageSelection(page.id)}
+                onClick={(e) => togglePageSelection(page.id, index, e)}
               >
                 {/* Image */}
                 <div className="relative aspect-[3/4] rounded overflow-hidden mb-2 bg-stone-100">

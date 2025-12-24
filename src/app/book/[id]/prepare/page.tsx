@@ -76,6 +76,7 @@ export default function PreparePage({ params }: PageProps) {
   const [splitPositions, setSplitPositions] = useState<Record<string, number>>({});
   const [splitModeReview, setSplitModeReview] = useState(false);
   const [splitModeApplying, setSplitModeApplying] = useState(false);
+  const lastSelectedIndexRef = useRef<number | null>(null);
 
   // Processing state
   const [processing, setProcessing] = useState<ProcessingState>({
@@ -168,16 +169,29 @@ export default function PreparePage({ params }: PageProps) {
   const pagesNeedingSummary = pages.filter(p => p.translation?.data && !p.summary?.data);
   const pagesWithSplits = pages.filter(p => detectionResults[p.id]?.isTwoPageSpread);
 
-  const togglePageSelection = (pageId: string) => {
+  const togglePageSelection = (pageId: string, index: number, event?: React.MouseEvent) => {
     setSelectedPages(prev => {
       const next = new Set(prev);
-      if (next.has(pageId)) {
-        next.delete(pageId);
+
+      // Handle shift-click for range selection
+      if (event?.shiftKey && lastSelectedIndexRef.current !== null) {
+        const start = Math.min(lastSelectedIndexRef.current, index);
+        const end = Math.max(lastSelectedIndexRef.current, index);
+        for (let i = start; i <= end; i++) {
+          next.add(pages[i].id);
+        }
       } else {
-        next.add(pageId);
+        // Normal toggle
+        if (next.has(pageId)) {
+          next.delete(pageId);
+        } else {
+          next.add(pageId);
+        }
       }
+
       return next;
     });
+    lastSelectedIndexRef.current = index;
   };
 
   const selectAll = () => {
@@ -1160,7 +1174,8 @@ export default function PreparePage({ params }: PageProps) {
                     <input
                       type="checkbox"
                       checked={isSelected}
-                      onChange={() => togglePageSelection(page.id)}
+                      onClick={(e) => togglePageSelection(page.id, index, e)}
+                      onChange={() => {}} // Handled by onClick for shift-select
                       className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
                     />
                   )}

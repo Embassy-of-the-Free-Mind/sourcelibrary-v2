@@ -35,7 +35,7 @@ async function processChunk(
   const promises = chunk.map(async (page) => {
     const startTime = performance.now();
     try {
-      const ocr = await performOCR(
+      const ocrResult = await performOCR(
         page.imageUrl,
         page.language || 'Latin',
         page.previousOcr,
@@ -53,7 +53,7 @@ async function processChunk(
         metadata: {
           pageId: page.pageId,
           language: page.language || 'Latin',
-          textLength: ocr?.length || 0,
+          textLength: ocrResult.text?.length || 0,
           batchSize: chunk.length,
           model,
         },
@@ -67,7 +67,7 @@ async function processChunk(
           {
             $set: {
               ocr: {
-                data: ocr,
+                data: ocrResult.text,
                 language: page.language || 'Latin',
                 model,
                 updated_at: new Date(),
@@ -81,7 +81,7 @@ async function processChunk(
       return {
         pageId: page.pageId,
         success: true,
-        ocr,
+        ocr: ocrResult.text,
         duration,
       };
     } catch (error) {

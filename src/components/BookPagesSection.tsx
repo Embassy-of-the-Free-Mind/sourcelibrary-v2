@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -99,6 +99,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     totalTokens: 0,
   });
   const [stopRequested, setStopRequested] = useState(false);
+  const lastSelectedIndexRef = useRef<number | null>(null);
 
   // Calculate stats
   const pagesWithOcr = pages.filter(p => p.ocr?.data).length;
@@ -162,17 +163,30 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     }
   };
 
-  const togglePage = useCallback((pageId: string) => {
+  const togglePage = useCallback((pageId: string, index: number, event?: React.MouseEvent) => {
     setSelectedPages(prev => {
       const next = new Set(prev);
-      if (next.has(pageId)) {
-        next.delete(pageId);
+
+      // Handle shift-click for range selection
+      if (event?.shiftKey && lastSelectedIndexRef.current !== null) {
+        const start = Math.min(lastSelectedIndexRef.current, index);
+        const end = Math.max(lastSelectedIndexRef.current, index);
+        for (let i = start; i <= end; i++) {
+          next.add(pages[i].id);
+        }
       } else {
-        next.add(pageId);
+        // Normal toggle
+        if (next.has(pageId)) {
+          next.delete(pageId);
+        } else {
+          next.add(pageId);
+        }
       }
+
       return next;
     });
-  }, []);
+    lastSelectedIndexRef.current = index;
+  }, [pages]);
 
   const selectAll = () => setSelectedPages(new Set(pages.map(p => p.id)));
   const clearSelection = () => setSelectedPages(new Set());
@@ -557,7 +571,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
           </div>
         ) : (
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
-            {pages.map((page) => {
+            {pages.map((page, index) => {
               const isSelected = selectedPages.has(page.id);
               const imageUrl = getImageUrl(page);
               const hasOcr = !!page.ocr?.data;
@@ -568,7 +582,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
                 return (
                   <button
                     key={page.id}
-                    onClick={() => togglePage(page.id)}
+                    onClick={(e) => togglePage(page.id, index, e)}
                     className="group relative text-left"
                   >
                     <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${

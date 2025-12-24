@@ -118,7 +118,7 @@ export async function POST(
         );
 
         if (job.type === 'batch_ocr') {
-          const ocr = await performOCR(
+          const ocrResult = await performOCR(
             page.photo,
             job.config.language || 'Latin',
             previousOcr,
@@ -132,7 +132,7 @@ export async function POST(
             {
               $set: {
                 ocr: {
-                  data: ocr,
+                  data: ocrResult.text,
                   language: job.config.language || 'Latin',
                   model: job.config.model || 'gemini-2.0-flash',
                   prompt_name: job.config.prompt_name || 'Default',
@@ -143,7 +143,7 @@ export async function POST(
             }
           );
 
-          previousOcr = ocr;
+          previousOcr = ocrResult.text;
           results.push({
             pageId,
             success: true,
@@ -156,7 +156,7 @@ export async function POST(
             continue;
           }
 
-          const translation = await performTranslation(
+          const translationResult = await performTranslation(
             page.ocr.data,
             job.config.language || 'Latin',
             'English',
@@ -171,7 +171,7 @@ export async function POST(
             {
               $set: {
                 translation: {
-                  data: translation,
+                  data: translationResult.text,
                   language: 'English',
                   model: job.config.model || 'gemini-2.0-flash',
                   prompt_name: job.config.prompt_name || 'Default',
@@ -182,7 +182,7 @@ export async function POST(
             }
           );
 
-          previousTranslation = translation;
+          previousTranslation = translationResult.text;
           results.push({
             pageId,
             success: true,
