@@ -35,16 +35,87 @@ export default function SplitPage({ params }: PageProps) {
   const [reviewingSplits, setReviewingSplits] = useState<Page[]>([]);
   const [resettingPage, setResettingPage] = useState<string | null>(null);
 
-  // Auto-detect split position for a page
-  const autoDetectSplit = async (pageId: string) => {
+  // Client-side split detection using already-loaded image
+  const detectSplitFromImage = (img: HTMLImageElement): { splitPosition: number; hasText: boolean } => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return { splitPosition: 500, hasText: false };
+
+    // Resize to 500px width for analysis
+    const scale = 500 / img.naturalWidth;
+    canvas.width = 500;
+    canvas.height = Math.round(img.naturalHeight * scale);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Analyze columns in center 35-65% region
+    const searchStart = Math.floor(width * 0.35);
+    const searchEnd = Math.floor(width * 0.65);
+    const darkThreshold = 180;
+
+    let bestScore = -Infinity;
+    let bestIdx = Math.floor(width / 2);
+    let bestDarkRun = 0;
+    let bestTransitions = 0;
+
+    for (let x = searchStart; x < searchEnd; x++) {
+      // Get grayscale values for this column
+      const pixels: number[] = [];
+      for (let y = 0; y < height; y++) {
+        const i = (y * width + x) * 4;
+        const gray = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        pixels.push(gray);
+      }
+
+      // Sort for P10
+      const sorted = [...pixels].sort((a, b) => a - b);
+      const p10 = sorted[Math.floor(height * 0.1)];
+
+      // Max dark run
+      let maxDarkRun = 0, currentRun = 0;
+      for (const p of pixels) {
+        if (p < darkThreshold) { currentRun++; maxDarkRun = Math.max(maxDarkRun, currentRun); }
+        else { currentRun = 0; }
+      }
+      const darkRunPercent = (maxDarkRun / height) * 100;
+
+      // Transitions
+      let transitions = 0;
+      for (let i = 1; i < pixels.length; i++) {
+        if ((pixels[i - 1] < darkThreshold) !== (pixels[i] < darkThreshold)) transitions++;
+      }
+
+      // Score: low P10 + high dark run + low transitions
+      const score = (255 - p10) / 2.55 * 0.3 + darkRunPercent * 0.35 + Math.max(0, 100 - transitions / 5) * 0.2;
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestIdx = x;
+        bestDarkRun = darkRunPercent;
+        bestTransitions = transitions;
+      }
+    }
+
+    const splitPosition = Math.round((bestIdx / width) * 1000);
+    const hasText = bestTransitions > 30 && bestDarkRun < 40;
+
+    return { splitPosition, hasText };
+  };
+
+  // Auto-detect split position for a page (client-side, instant)
+  const autoDetectSplit = (pageId: string) => {
     setDetectingPages(prev => new Set(prev).add(pageId));
-    try {
-      const res = await fetch(`/api/pages/${pageId}/auto-split`);
-      if (res.ok) {
-        const data = await res.json();
-        setSplitPositions(prev => ({ ...prev, [pageId]: data.splitPosition }));
-        if (data.hasTextAtSplit) {
-          setSplitWarnings(prev => ({ ...prev, [pageId]: data.textWarning || 'Text detected at split' }));
+
+    const runDetection = (img: HTMLImageElement) => {
+      try {
+        const result = detectSplitFromImage(img);
+        setSplitPositions(prev => ({ ...prev, [pageId]: result.splitPosition }));
+        if (result.hasText) {
+          setSplitWarnings(prev => ({ ...prev, [pageId]: 'Text detected at split line' }));
         } else {
           setSplitWarnings(prev => {
             const updated = { ...prev };
@@ -52,20 +123,37 @@ export default function SplitPage({ params }: PageProps) {
             return updated;
           });
         }
-      } else {
-        // Fallback to 500 if detection fails
+      } catch (error) {
+        console.error('Auto-detect failed:', error);
         setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
+      } finally {
+        setDetectingPages(prev => {
+          const next = new Set(prev);
+          next.delete(pageId);
+          return next;
+        });
       }
-    } catch (error) {
-      console.error('Auto-detect failed:', error);
-      setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
-    } finally {
-      setDetectingPages(prev => {
-        const next = new Set(prev);
-        next.delete(pageId);
-        return next;
-      });
-    }
+    };
+
+    // Use requestAnimationFrame to allow UI to update
+    requestAnimationFrame(() => {
+      const img = document.querySelector(`img[data-page-id="${pageId}"]`) as HTMLImageElement;
+
+      if (img && img.complete && img.naturalWidth > 0) {
+        runDetection(img);
+      } else if (img) {
+        // Image not loaded yet, wait for it
+        img.onload = () => runDetection(img);
+      } else {
+        // Image element not found, fallback to 500
+        setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
+        setDetectingPages(prev => {
+          const next = new Set(prev);
+          next.delete(pageId);
+          return next;
+        });
+      }
+    });
   };
 
   useEffect(() => {
@@ -397,6 +485,8 @@ export default function SplitPage({ params }: PageProps) {
                     src={imageUrl}
                     alt={`Page ${page.page_number}`}
                     className="w-full h-full object-contain"
+                    data-page-id={page.id}
+                    crossOrigin="anonymous"
                   />
                   {/* Already split indicator */}
                   {page.crop && !isSelected && (
