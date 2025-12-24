@@ -38,8 +38,8 @@ export async function GET(request: NextRequest) {
       }
       buffer = fs.readFileSync(localPath);
     } else {
-      // Only allow S3 URLs for security
-      const allowedHosts = ['amazonaws.com'];
+      // Only allow trusted image hosts for security
+      const allowedHosts = ['amazonaws.com', 'archive.org'];
       const urlObj = new URL(url);
       if (!allowedHosts.some(host => urlObj.hostname.endsWith(host))) {
         return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
