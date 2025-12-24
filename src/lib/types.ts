@@ -103,6 +103,9 @@ export interface Book {
 
   // Dublin Core metadata for library interoperability
   dublin_core?: DublinCoreMetadata;
+
+  // Reading dashboard sections
+  reading_sections?: Section[];
 }
 
 export interface OcrData {
@@ -129,6 +132,26 @@ export interface SummaryData {
   prompt_name?: string;
 }
 
+// Modernized text for reading dashboard
+export interface ModernizedData {
+  data: string;
+  model: string;
+  updated_at?: Date;
+  prompt_name?: string;
+  source_translation_hash?: string;  // Hash of translation.data to detect changes
+}
+
+// Section/chapter grouping for reading view
+export interface Section {
+  id: string;
+  title: string;
+  startPage: number;
+  endPage: number;
+  summary?: string;
+  detected_at?: Date;
+  detection_method: 'ai' | 'manual';
+}
+
 // Crop coordinates for split pages (0-1000 scale)
 export interface CropData {
   xStart: number;
@@ -149,6 +172,7 @@ export interface Page {
   ocr: OcrData;
   translation: TranslationData;
   summary?: SummaryData;
+  modernized?: ModernizedData;  // Modernized text for reading dashboard
   created_at?: Date;
   updated_at?: Date;
 

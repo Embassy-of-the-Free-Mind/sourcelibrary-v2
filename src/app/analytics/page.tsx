@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins, ListChecks, CheckCircle, XCircle, Pause, Loader2 } from 'lucide-react';
 
 interface MetricStat {
   name: string;
@@ -53,13 +53,41 @@ interface UsageData {
   };
 }
 
+interface JobLog {
+  id: string;
+  type: 'batch_ocr' | 'batch_translate' | 'batch_split' | 'book_import';
+  status: 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
+  progress: {
+    total: number;
+    completed: number;
+    failed: number;
+  };
+  book_id?: string;
+  book_title?: string;
+  created_at: string;
+  updated_at: string;
+  started_at?: string;
+  completed_at?: string;
+  error?: string;
+  config: {
+    model?: string;
+    prompt_name?: string;
+    language?: string;
+    page_ids?: string[];
+  };
+}
+
 export default function AnalyticsPage() {
   const [perfData, setPerfData] = useState<PerformanceData | null>(null);
   const [usageData, setUsageData] = useState<UsageData | null>(null);
+  const [jobLogs, setJobLogs] = useState<JobLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [hours, setHours] = useState(24);
   const [days, setDays] = useState(30);
-  const [activeTab, setActiveTab] = useState<'usage' | 'performance'>('usage');
+  const [jobLimit, setJobLimit] = useState(50);
+  const [jobTypeFilter, setJobTypeFilter] = useState<string>('');
+  const [jobStatusFilter, setJobStatusFilter] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<'usage' | 'performance' | 'logs'>('usage');
   const [error, setError] = useState<string | null>(null);
 
   const fetchData = async () => {
@@ -87,9 +115,35 @@ export default function AnalyticsPage() {
     }
   };
 
+  const fetchJobLogs = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const params = new URLSearchParams({ limit: jobLimit.toString() });
+      if (jobTypeFilter) params.set('type', jobTypeFilter);
+      if (jobStatusFilter) params.set('status', jobStatusFilter);
+
+      const res = await fetch(`/api/jobs?${params}`);
+      if (!res.ok) throw new Error('Failed to fetch job logs');
+
+      const data = await res.json();
+      setJobLogs(data.jobs || []);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, [hours, days]);
+
+  useEffect(() => {
+    if (activeTab === 'logs') {
+      fetchJobLogs();
+    }
+  }, [activeTab, jobLimit, jobTypeFilter, jobStatusFilter]);
 
   const formatDuration = (ms: number) => {
     if (ms < 1000) return `${Math.round(ms)}ms`;
@@ -114,6 +168,38 @@ export default function AnalyticsPage() {
     if (tokens >= 1000000) return `${(tokens / 1000000).toFixed(1)}M`;
     if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}K`;
     return tokens.toString();
+  };
+
+  const formatJobType = (type: string) => {
+    const labels: Record<string, string> = {
+      batch_ocr: 'OCR',
+      batch_translate: 'Translate',
+      batch_split: 'Split',
+      book_import: 'Import',
+    };
+    return labels[type] || type;
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed': return <CheckCircle className="w-4 h-4" style={{ color: '#22c55e' }} />;
+      case 'failed': return <XCircle className="w-4 h-4" style={{ color: '#ef4444' }} />;
+      case 'processing': return <Loader2 className="w-4 h-4 animate-spin" style={{ color: 'var(--accent-sage)' }} />;
+      case 'paused': return <Pause className="w-4 h-4" style={{ color: '#f59e0b' }} />;
+      case 'cancelled': return <XCircle className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />;
+      default: return <Clock className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed': return '#22c55e';
+      case 'failed': return '#ef4444';
+      case 'processing': return 'var(--accent-sage)';
+      case 'paused': return '#f59e0b';
+      case 'cancelled': return 'var(--text-muted)';
+      default: return 'var(--text-muted)';
+    }
   };
 
   return (
@@ -152,9 +238,19 @@ export default function AnalyticsPage() {
               >
                 Performance
               </button>
+              <button
+                onClick={() => setActiveTab('logs')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'logs' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'logs' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'logs' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Logs
+              </button>
             </div>
 
-            {activeTab === 'usage' ? (
+            {activeTab === 'usage' && (
               <select
                 value={days}
                 onChange={(e) => setDays(parseInt(e.target.value))}
@@ -165,7 +261,8 @@ export default function AnalyticsPage() {
                 <option value={30}>Last 30 days</option>
                 <option value={90}>Last 90 days</option>
               </select>
-            ) : (
+            )}
+            {activeTab === 'performance' && (
               <select
                 value={hours}
                 onChange={(e) => setHours(parseInt(e.target.value))}
@@ -179,9 +276,50 @@ export default function AnalyticsPage() {
                 <option value={168}>Last week</option>
               </select>
             )}
+            {activeTab === 'logs' && (
+              <>
+                <select
+                  value={jobTypeFilter}
+                  onChange={(e) => setJobTypeFilter(e.target.value)}
+                  className="px-3 py-1.5 rounded-lg text-sm"
+                  style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+                >
+                  <option value="">All Types</option>
+                  <option value="batch_ocr">OCR</option>
+                  <option value="batch_translate">Translate</option>
+                  <option value="batch_split">Split</option>
+                  <option value="book_import">Import</option>
+                </select>
+                <select
+                  value={jobStatusFilter}
+                  onChange={(e) => setJobStatusFilter(e.target.value)}
+                  className="px-3 py-1.5 rounded-lg text-sm"
+                  style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+                >
+                  <option value="">All Status</option>
+                  <option value="completed">Completed</option>
+                  <option value="failed">Failed</option>
+                  <option value="processing">Processing</option>
+                  <option value="paused">Paused</option>
+                  <option value="pending">Pending</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+                <select
+                  value={jobLimit}
+                  onChange={(e) => setJobLimit(parseInt(e.target.value))}
+                  className="px-3 py-1.5 rounded-lg text-sm"
+                  style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+                >
+                  <option value={25}>Last 25</option>
+                  <option value={50}>Last 50</option>
+                  <option value={100}>Last 100</option>
+                  <option value={200}>Last 200</option>
+                </select>
+              </>
+            )}
 
             <button
-              onClick={fetchData}
+              onClick={activeTab === 'logs' ? fetchJobLogs : fetchData}
               disabled={loading}
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium hover:opacity-70 transition-opacity"
               style={{ color: 'var(--accent-rust)' }}
@@ -550,7 +688,7 @@ export default function AnalyticsPage() {
               </div>
             )}
           </div>
-        ) : (
+        ) : activeTab === 'performance' ? (
           /* Performance Tab */
           <div className="space-y-6">
             {perfData?.stats && perfData.stats.length > 0 ? (
@@ -648,7 +786,106 @@ export default function AnalyticsPage() {
               </div>
             )}
           </div>
-        )}
+        ) : activeTab === 'logs' ? (
+          /* Logs Tab */
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <ListChecks className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                Batch Job History
+              </h2>
+              <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                {jobLogs.length} jobs
+              </span>
+            </div>
+
+            {jobLogs.length > 0 ? (
+              <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr style={{ background: 'var(--bg-warm)' }}>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Status</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Type</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Book</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Pages</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Model / Prompt</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Started</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {jobLogs.map((job) => {
+                        const startTime = job.started_at ? new Date(job.started_at) : new Date(job.created_at);
+                        const endTime = job.completed_at ? new Date(job.completed_at) : new Date();
+                        const durationMs = job.started_at ? endTime.getTime() - startTime.getTime() : 0;
+                        const durationStr = durationMs > 0 ? formatDuration(durationMs) : '-';
+
+                        return (
+                          <tr key={job.id} style={{ borderTop: '1px solid var(--border-light)' }} className="hover:bg-stone-50 transition-colors">
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-2">
+                                {getStatusIcon(job.status)}
+                                <span className="capitalize text-xs font-medium" style={{ color: getStatusColor(job.status) }}>
+                                  {job.status}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-3">
+                              <span className="px-2 py-1 rounded-md text-xs font-medium" style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)' }}>
+                                {formatJobType(job.type)}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 max-w-[200px]">
+                              <div className="truncate" style={{ color: 'var(--text-primary)' }} title={job.book_title || '-'}>
+                                {job.book_title || '-'}
+                              </div>
+                            </td>
+                            <td className="px-4 py-3">
+                              <div style={{ color: 'var(--text-primary)' }}>
+                                {job.progress.completed}
+                                <span style={{ color: 'var(--text-muted)' }}> / {job.progress.total}</span>
+                              </div>
+                              {job.progress.failed > 0 && (
+                                <div className="text-xs" style={{ color: '#ef4444' }}>
+                                  {job.progress.failed} failed
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-4 py-3 text-xs">
+                              <div style={{ color: 'var(--text-primary)' }}>{job.config.model || '-'}</div>
+                              {job.config.prompt_name && (
+                                <div style={{ color: 'var(--text-muted)' }}>{job.config.prompt_name}</div>
+                              )}
+                            </td>
+                            <td className="px-4 py-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+                              {new Date(job.created_at).toLocaleDateString()}
+                              <br />
+                              {new Date(job.created_at).toLocaleTimeString()}
+                            </td>
+                            <td className="px-4 py-3 font-mono text-xs" style={{ color: 'var(--text-muted)' }}>
+                              {job.status === 'processing' ? (
+                                <span style={{ color: 'var(--accent-sage)' }}>In progress...</span>
+                              ) : (
+                                durationStr
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+                <ListChecks className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p>No batch jobs found</p>
+                <p className="text-sm mt-1">Jobs will appear here when you run batch operations</p>
+              </div>
+            )}
+          </div>
+        ) : null}
       </main>
     </div>
   );

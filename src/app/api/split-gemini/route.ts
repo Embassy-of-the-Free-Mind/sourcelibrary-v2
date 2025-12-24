@@ -35,26 +35,35 @@ export async function POST(request: NextRequest) {
     let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
     mimeType = mimeType.split(';')[0].trim();
 
-    // Use Gemini 2.0 Flash for vision
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-exp' });
+    // Use Gemini 2.5 Flash for vision
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-05-20' });
 
-    const prompt = `You are analyzing a scanned book page that shows TWO pages side by side (a two-page spread from an open book).
+    const prompt = `You are an expert at analyzing scanned book spreads to find the optimal vertical split line.
 
-Your task is to find the EXACT vertical position where these two pages meet - this is called the "gutter" or "binding" of the book.
+TASK: Find the exact vertical position to split this two-page book scan into left and right pages.
 
-Look for:
-1. A vertical line or shadow running from top to bottom where the book binding creates a crease
-2. The point where text/content from the LEFT page ends and the RIGHT page begins
-3. Any visible book spine or binding shadow
+CRITICAL RULES:
+1. NEVER cut through text - the split must fall in a gap between text columns
+2. The book may not be perfectly vertical - follow the natural angle of the binding
+3. Gutter appearance varies widely:
+   - Dark shadow (common in phone/camera scans)
+   - Bright gap (common in flatbed scans)
+   - Curved distortion near binding
+   - No visible gutter at all (just margin between text blocks)
 
-Return ONLY a single number between 0 and 1000, representing the horizontal position of the split:
-- 0 = far left edge
-- 500 = exact center
-- 1000 = far right edge
+ANALYSIS APPROACH:
+1. First, identify the text blocks on left and right pages
+2. Find the gap/margin between them - this is where to split
+3. If there's a visible gutter line (dark or light), use it as a guide
+4. If the book is tilted, the split line should follow the tilt
+5. Prefer erring slightly toward margins rather than cutting text
 
-For most scanned books, the gutter is near 500 (center) but may be slightly off due to scanning.
+OUTPUT: Return ONLY a single integer from 0-1000:
+- 0 = left edge
+- 500 = center
+- 1000 = right edge
 
-IMPORTANT: Return ONLY the number, nothing else. Example: 485`;
+Example output: 487`;
 
     const result = await model.generateContent([
       prompt,

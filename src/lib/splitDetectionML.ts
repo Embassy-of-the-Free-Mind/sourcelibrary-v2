@@ -67,24 +67,32 @@ export async function detectSplitWithGemini(
 
   const model = genAI.getGenerativeModel({ model: modelId });
 
-  const prompt = `You are analyzing a scanned book image that contains two facing pages (a two-page spread).
+  const prompt = `You are an expert at analyzing scanned book spreads to find the optimal vertical split line.
 
-Your task is to find the EXACT vertical line where the book's gutter (center binding) is located - this is where we should split the image into left and right pages.
+TASK: Find the exact vertical position to split this two-page book scan into left and right pages.
 
-Look for these visual cues:
-1. A dark shadow or bright gap running vertically down the center
-2. Where the text margins from both pages meet
-3. The natural fold line of the book
-4. Any visible binding or spine
+CRITICAL RULES:
+1. NEVER cut through text - the split must fall in a gap between text columns
+2. The book may not be perfectly vertical - follow the natural angle of the binding
+3. Gutter appearance varies widely:
+   - Dark shadow (common in phone/camera scans)
+   - Bright gap (common in flatbed scans)
+   - Curved distortion near binding
+   - No visible gutter at all (just margin between text blocks)
+
+ANALYSIS APPROACH:
+1. First, identify the text blocks on left and right pages
+2. Find the gap/margin between them - this is where to split
+3. If there's a visible gutter line (dark or light), use it as a guide
+4. If the book is tilted, the split line should follow the tilt
+5. Prefer erring slightly toward margins rather than cutting text
 
 Return your answer in this EXACT JSON format:
 {
-  "splitPosition": <number from 0-1000 where 0=left edge, 1000=right edge, 500=exact center>,
+  "splitPosition": <integer from 0-1000 where 0=left edge, 500=center, 1000=right edge>,
   "confidence": "<high|medium|low>",
-  "reasoning": "<brief explanation of what visual cues you used>"
-}
-
-Be precise - even a few percentage points matter for clean page separation.`;
+  "reasoning": "<brief explanation: what visual cues you used, any challenges>"
+}`;
 
   // Fetch and encode the image
   const imageResponse = await fetch(imageUrl);
