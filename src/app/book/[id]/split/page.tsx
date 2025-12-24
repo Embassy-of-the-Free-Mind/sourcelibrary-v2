@@ -29,7 +29,6 @@ export default function SplitPage({ params }: PageProps) {
   const [splitPositions, setSplitPositions] = useState<Record<string, number>>({});
   const [splitWarnings, setSplitWarnings] = useState<Record<string, string>>({});
   const [detectingPages, setDetectingPages] = useState<Set<string>>(new Set());
-  const [useAutoDetect, setUseAutoDetect] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
   const [splitting, setSplitting] = useState(false);
   const [reviewingSplits, setReviewingSplits] = useState<Page[]>([]);
@@ -37,8 +36,12 @@ export default function SplitPage({ params }: PageProps) {
   const [resettingAll, setResettingAll] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
+  // Detection algorithm options
+  type DetectionAlgo = 'auto' | 'dark' | 'bright' | 'center';
+  const [detectionAlgo, setDetectionAlgo] = useState<DetectionAlgo>('auto');
+
   // Client-side split detection using already-loaded image
-  const detectSplitFromImage = (img: HTMLImageElement): { splitPosition: number; hasText: boolean } => {
+  const detectSplitFromImage = (img: HTMLImageElement, algo: DetectionAlgo = 'auto'): { splitPosition: number; hasText: boolean } => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     if (!ctx) return { splitPosition: 500, hasText: false };
@@ -107,15 +110,32 @@ export default function SplitPage({ params }: PageProps) {
     const centerP10 = columnData[Math.floor(columnData.length / 2)].p10;
     const isInvertedGutter = centerP10 > edgeP10 + 30; // Center is significantly brighter
 
-    // Pick position based on gutter type
+    // Pick position based on selected algorithm
     let bestIdx: number;
-    if (isInvertedGutter) {
-      // Bright gutter (flat-bed scan): use brightest column
-      bestIdx = brightestIdx;
-    } else {
-      // Dark gutter (traditional scan): use darkest column + small offset right
-      const offsetPixels = Math.floor(width * 0.005);
-      bestIdx = Math.min(darkestIdx + offsetPixels, searchEnd - 1);
+    const offsetPixels = Math.floor(width * 0.005); // 0.5% offset
+
+    switch (algo) {
+      case 'center':
+        // Simple center split
+        bestIdx = Math.floor(width / 2);
+        break;
+      case 'dark':
+        // Always use darkest column + offset
+        bestIdx = Math.min(darkestIdx + offsetPixels, searchEnd - 1);
+        break;
+      case 'bright':
+        // Always use brightest column
+        bestIdx = brightestIdx;
+        break;
+      case 'auto':
+      default:
+        // Auto-detect based on gutter type
+        if (isInvertedGutter) {
+          bestIdx = brightestIdx;
+        } else {
+          bestIdx = Math.min(darkestIdx + offsetPixels, searchEnd - 1);
+        }
+        break;
     }
 
     // Find the column data for this position
@@ -135,7 +155,7 @@ export default function SplitPage({ params }: PageProps) {
 
     const runDetection = (img: HTMLImageElement) => {
       try {
-        const result = detectSplitFromImage(img);
+        const result = detectSplitFromImage(img, detectionAlgo);
         setSplitPositions(prev => ({ ...prev, [pageId]: result.splitPosition }));
         // Save detected position for learning comparison
         setDetectedPositions(prev => ({ ...prev, [pageId]: result.splitPosition }));
@@ -244,10 +264,10 @@ export default function SplitPage({ params }: PageProps) {
           const page = splittablePages[i];
           if (page && !next.has(page.id)) {
             next.add(page.id);
-            if (useAutoDetect) {
-              autoDetectSplit(page.id);
-            } else {
+            if (detectionAlgo === 'center') {
               setSplitPositions(p => ({ ...p, [page.id]: 500 }));
+            } else {
+              autoDetectSplit(page.id);
             }
           }
         }
@@ -274,11 +294,11 @@ export default function SplitPage({ params }: PageProps) {
         });
       } else {
         next.add(pageId);
-        // Auto-detect or use 50%
-        if (useAutoDetect) {
-          autoDetectSplit(pageId);
-        } else {
+        // Detect or use center based on algorithm
+        if (detectionAlgo === 'center') {
           setSplitPositions(p => ({ ...p, [pageId]: 500 }));
+        } else {
+          autoDetectSplit(pageId);
         }
       }
       return next;
@@ -289,16 +309,16 @@ export default function SplitPage({ params }: PageProps) {
   const selectAll = async () => {
     const allIds = new Set(splittablePages.map(p => p.id));
     setSelectedPages(allIds);
-    // Auto-detect or set 50% for all pages that don't have a position yet
+    // Detect or set center for all pages that don't have a position yet
     const pagesToSet = splittablePages.filter(p => splitPositions[p.id] === undefined);
-    if (useAutoDetect) {
-      for (const page of pagesToSet) {
-        autoDetectSplit(page.id);
-      }
-    } else {
+    if (detectionAlgo === 'center') {
       const positions: Record<string, number> = { ...splitPositions };
       pagesToSet.forEach(p => { positions[p.id] = 500; });
       setSplitPositions(positions);
+    } else {
+      for (const page of pagesToSet) {
+        autoDetectSplit(page.id);
+      }
     }
   };
 
@@ -483,20 +503,16 @@ export default function SplitPage({ params }: PageProps) {
                   </span>
                 )}
               </span>
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-100 rounded-lg">
-                <button
-                  onClick={() => setUseAutoDetect(true)}
-                  className={`px-3 py-1 text-xs font-medium rounded ${useAutoDetect ? 'bg-blue-600 text-white' : 'text-stone-600 hover:bg-stone-200'}`}
-                >
-                  Auto-detect
-                </button>
-                <button
-                  onClick={() => setUseAutoDetect(false)}
-                  className={`px-3 py-1 text-xs font-medium rounded ${!useAutoDetect ? 'bg-stone-600 text-white' : 'text-stone-600 hover:bg-stone-200'}`}
-                >
-                  50%
-                </button>
-              </div>
+              <select
+                value={detectionAlgo}
+                onChange={(e) => setDetectionAlgo(e.target.value as DetectionAlgo)}
+                className="px-3 py-1.5 text-sm font-medium bg-stone-100 border border-stone-200 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option value="auto">Auto Detect</option>
+                <option value="dark">Dark Gutter</option>
+                <option value="bright">Bright Gutter</option>
+                <option value="center">Center 50%</option>
+              </select>
               <button
                 onClick={selectAll}
                 className="px-4 py-2 text-sm font-medium bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200"
