@@ -35,8 +35,8 @@ export async function POST(request: NextRequest) {
     let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
     mimeType = mimeType.split(';')[0].trim();
 
-    // Use Gemini 2.5 Flash for vision
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-05-20' });
+    // Use Gemini 3 Flash for vision
+    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const prompt = `You are an expert at analyzing scanned book spreads to find the optimal vertical split line.
 
