@@ -17,6 +17,13 @@ export default function Footer() {
           </a>
           <span className="hidden sm:inline">•</span>
           <Link
+            href="/jobs"
+            className="text-stone-400 hover:text-stone-600 transition-colors"
+          >
+            Jobs
+          </Link>
+          <span className="hidden sm:inline">•</span>
+          <Link
             href="/analytics"
             className="text-stone-400 hover:text-stone-600 transition-colors"
           >

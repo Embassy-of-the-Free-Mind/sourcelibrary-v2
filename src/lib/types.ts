@@ -1,5 +1,46 @@
 export type BookStatus = 'draft' | 'in_progress' | 'complete' | 'published';
 
+// Job management for long-running tasks
+export type JobType = 'batch_ocr' | 'batch_translate' | 'book_import';
+export type JobStatus = 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
+
+export interface JobProgress {
+  total: number;
+  completed: number;
+  failed: number;
+  currentItem?: string;
+}
+
+export interface JobResult {
+  pageId: string;
+  success: boolean;
+  error?: string;
+  duration?: number;
+}
+
+export interface Job {
+  _id?: unknown;
+  id: string;
+  type: JobType;
+  status: JobStatus;
+  progress: JobProgress;
+  book_id?: string;
+  book_title?: string;
+  created_at: Date;
+  updated_at: Date;
+  started_at?: Date;
+  completed_at?: Date;
+  error?: string;
+  results: JobResult[];
+  config: {
+    model?: string;
+    prompt_name?: string;
+    language?: string;
+    page_ids?: string[];
+    [key: string]: unknown;
+  };
+}
+
 // Available Gemini models for processing
 export const GEMINI_MODELS = [
   { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash' },

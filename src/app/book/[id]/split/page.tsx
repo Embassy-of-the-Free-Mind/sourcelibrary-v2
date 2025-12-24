@@ -189,7 +189,7 @@ export default function SplitPage({ params }: PageProps) {
   // Get already-split page pairs (original left pages that have a crop)
   const alreadySplitPages = pages.filter(p => p.crop && !p.split_from);
 
-  // Reset all split pages
+  // Reset all split pages (batch - much faster)
   const resetAllSplits = async () => {
     if (alreadySplitPages.length === 0) return;
 
@@ -197,9 +197,11 @@ export default function SplitPage({ params }: PageProps) {
     setShowResetConfirm(false);
 
     try {
-      for (const page of alreadySplitPages) {
-        await fetch(`/api/pages/${page.id}/reset`, { method: 'POST' });
-      }
+      await fetch('/api/pages/batch-reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageIds: alreadySplitPages.map(p => p.id) })
+      });
       await fetchBook();
     } catch (error) {
       console.error('Reset all error:', error);
