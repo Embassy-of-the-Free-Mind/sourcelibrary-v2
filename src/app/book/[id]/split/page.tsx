@@ -34,6 +34,9 @@ export default function SplitPage({ params }: PageProps) {
   const [splitting, setSplitting] = useState(false);
   const [reviewingSplits, setReviewingSplits] = useState<Page[]>([]);
   const [resettingPage, setResettingPage] = useState<string | null>(null);
+  const [resettingAll, setResettingAll] = useState(false);
+  const [selectedForReset, setSelectedForReset] = useState<Set<string>>(new Set());
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   // Client-side split detection using already-loaded image
   const detectSplitFromImage = (img: HTMLImageElement): { splitPosition: number; hasText: boolean } => {
@@ -184,6 +187,9 @@ export default function SplitPage({ params }: PageProps) {
   // Filter to only show pages that can be split (not already split)
   const splittablePages = pages.filter(p => !p.split_from);
 
+  // Get already-split page pairs (original left pages that have a crop)
+  const alreadySplitPages = pages.filter(p => p.crop && !p.split_from);
+
   const togglePageSelection = (pageId: string) => {
     setSelectedPages(prev => {
       const next = new Set(prev);
@@ -320,10 +326,61 @@ export default function SplitPage({ params }: PageProps) {
       // Refresh
       await fetchBook();
       setReviewingSplits(prev => prev.filter(p => p.id !== pageId && p.id !== siblingId && p.id !== originalId));
+      setSelectedForReset(prev => {
+        const next = new Set(prev);
+        next.delete(pageId);
+        return next;
+      });
     } catch (error) {
       console.error('Reset error:', error);
     } finally {
       setResettingPage(null);
+    }
+  };
+
+  // Toggle selection for reset
+  const toggleResetSelection = (pageId: string) => {
+    setSelectedForReset(prev => {
+      const next = new Set(prev);
+      if (next.has(pageId)) {
+        next.delete(pageId);
+      } else {
+        next.add(pageId);
+      }
+      return next;
+    });
+  };
+
+  // Select all split pages for reset
+  const selectAllForReset = () => {
+    setSelectedForReset(new Set(alreadySplitPages.map(p => p.id)));
+  };
+
+  // Clear reset selection
+  const clearResetSelection = () => {
+    setSelectedForReset(new Set());
+  };
+
+  // Reset all selected pages
+  const resetSelectedPages = async () => {
+    if (selectedForReset.size === 0) return;
+
+    setResettingAll(true);
+    setShowResetConfirm(false);
+
+    try {
+      // Reset each page sequentially to avoid race conditions
+      for (const pageId of selectedForReset) {
+        await fetch(`/api/pages/${pageId}/reset`, { method: 'POST' });
+      }
+
+      // Refresh and clear selection
+      await fetchBook();
+      setSelectedForReset(new Set());
+    } catch (error) {
+      console.error('Batch reset error:', error);
+    } finally {
+      setResettingAll(false);
     }
   };
 
@@ -543,15 +600,123 @@ export default function SplitPage({ params }: PageProps) {
           })}
         </div>
 
-        {splittablePages.length === 0 && (
+        {splittablePages.length === 0 && alreadySplitPages.length === 0 && (
           <div className="text-center py-16 bg-white rounded-lg border border-stone-200">
-            <p className="text-stone-500">All pages have been split</p>
+            <p className="text-stone-500">No pages to split</p>
             <Link
               href={`/book/${bookId}/prepare`}
               className="inline-block mt-4 text-amber-600 hover:text-amber-800"
             >
               Continue to OCR & Translation →
             </Link>
+          </div>
+        )}
+
+        {/* Already Split Pages Section */}
+        {alreadySplitPages.length > 0 && (
+          <div className="mt-12">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-lg font-semibold text-stone-900">Already Split ({alreadySplitPages.length})</h2>
+                <p className="text-sm text-stone-500">Click to select pages for reset, or use the buttons below</p>
+              </div>
+              <div className="flex items-center gap-3">
+                {selectedForReset.size > 0 && (
+                  <>
+                    <span className="text-sm text-stone-600">
+                      {selectedForReset.size} selected
+                    </span>
+                    <button
+                      onClick={clearResetSelection}
+                      className="text-sm text-stone-500 hover:text-stone-700"
+                    >
+                      Clear
+                    </button>
+                    <button
+                      onClick={() => setShowResetConfirm(true)}
+                      disabled={resettingAll}
+                      className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-red-100 text-red-700 rounded-lg hover:bg-red-200 disabled:opacity-50"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                      Reset Selected
+                    </button>
+                  </>
+                )}
+                {selectedForReset.size === 0 && (
+                  <button
+                    onClick={selectAllForReset}
+                    className="px-4 py-2 text-sm font-medium bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200"
+                  >
+                    Select All
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {alreadySplitPages.map((page) => {
+                const rightPage = pages.find(p => p.split_from === page.id);
+                const isSelectedForReset = selectedForReset.has(page.id);
+                const isResetting = resettingPage === page.id || resettingAll;
+
+                return (
+                  <div
+                    key={page.id}
+                    className={`bg-white rounded-lg border p-3 transition-all cursor-pointer ${
+                      isSelectedForReset
+                        ? 'border-red-400 ring-2 ring-red-200'
+                        : 'border-stone-200 hover:border-stone-300'
+                    } ${isResetting ? 'opacity-50' : ''}`}
+                    onClick={() => !isResetting && toggleResetSelection(page.id)}
+                  >
+                    {/* Split pair preview */}
+                    <div className="flex gap-1 mb-2">
+                      <div className="flex-1 aspect-[3/4] rounded overflow-hidden bg-stone-100">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={getImageUrl(page, 200)}
+                          alt={`Page ${page.page_number} (left)`}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      {rightPage && (
+                        <div className="flex-1 aspect-[3/4] rounded overflow-hidden bg-stone-100">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={getImageUrl(rightPage, 200)}
+                            alt={`Page ${rightPage.page_number} (right)`}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Page info */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-stone-600">
+                        Pages {page.page_number}{rightPage ? ` & ${rightPage.page_number}` : ''}
+                      </span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          resetSplitPage(page.id);
+                        }}
+                        disabled={isResetting}
+                        className="flex items-center gap-1 px-2 py-1 text-xs text-stone-500 hover:text-red-600 hover:bg-red-50 rounded disabled:opacity-50"
+                        title="Reset this split"
+                      >
+                        {isResetting ? (
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                        ) : (
+                          <RotateCcw className="w-3 h-3" />
+                        )}
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </main>
@@ -621,6 +786,47 @@ export default function SplitPage({ params }: PageProps) {
           <div className="bg-white rounded-xl shadow-2xl p-8 text-center">
             <Loader2 className="w-12 h-12 animate-spin text-amber-600 mx-auto mb-4" />
             <p className="text-lg font-medium text-stone-900">Splitting pages...</p>
+            <p className="text-sm text-stone-500 mt-2">This may take a moment</p>
+          </div>
+        </div>
+      )}
+
+      {/* Reset Confirmation Dialog */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
+            <h3 className="text-lg font-semibold text-stone-900 mb-2">Confirm Reset</h3>
+            <p className="text-sm text-stone-600 mb-4">
+              You&apos;re about to reset <strong>{selectedForReset.size} split page{selectedForReset.size !== 1 ? 's' : ''}</strong> back to their original state.
+            </p>
+            <p className="text-sm text-stone-500 mb-6">
+              This will merge each pair back into a single two-page spread. You can split them again if needed.
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="px-4 py-2 text-sm text-stone-600 hover:text-stone-900"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={resetSelectedPages}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Reset Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Resetting Progress */}
+      {resettingAll && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-2xl p-8 text-center">
+            <Loader2 className="w-12 h-12 animate-spin text-amber-600 mx-auto mb-4" />
+            <p className="text-lg font-medium text-stone-900">Resetting pages...</p>
             <p className="text-sm text-stone-500 mt-2">This may take a moment</p>
           </div>
         </div>
