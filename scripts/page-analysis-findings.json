@@ -1,0 +1,171 @@
+{
+  "analysisDate": "2024-12-24",
+  "bookId": "6867c831aadfee9e955ecc6a",
+  "bookTitle": "Anleitung zur primitiven gabalistischen Wissenschaft",
+  "totalPages": 129,
+  "sampledPages": [10, 30, 50, 70, 90],
+
+  "imageDimensions": {
+    "summary": "All images are high-resolution scans of book spreads (two pages)",
+    "pages": [
+      {"page": 10, "width": 8420, "height": 7022, "aspectRatio": 1.1991},
+      {"page": 30, "width": 8460, "height": 7022, "aspectRatio": 1.2048},
+      {"page": 50, "width": 8520, "height": 7000, "aspectRatio": 1.2171},
+      {"page": 70, "width": 8562, "height": 7038, "aspectRatio": 1.2165},
+      {"page": 90, "width": 8598, "height": 6986, "aspectRatio": 1.2307}
+    ],
+    "avgWidth": 8512,
+    "avgHeight": 7014,
+    "avgAspectRatio": 1.2136,
+    "note": "Aspect ratio ~1.2 indicates landscape scans of book spreads (left+right pages)"
+  },
+
+  "centerRegionAnalysis": {
+    "regionDefinition": "40-60% of image width",
+    "purpose": "Find book gutter/spine for split detection",
+
+    "keyFinding": "UNEXPECTED PATTERN - No traditional center gutter detected",
+
+    "brightnessProfile": {
+      "description": "P10 values indicate the 10th percentile brightness (darker = lower value)",
+      "averageByPosition": [
+        {"position": "40%", "avgP10": 102.4},
+        {"position": "41%", "avgP10": 125.8},
+        {"position": "42%", "avgP10": 122.8},
+        {"position": "43%", "avgP10": 133.2},
+        {"position": "44%", "avgP10": 118.2},
+        {"position": "45%", "avgP10": 117.0},
+        {"position": "46%", "avgP10": 112.8},
+        {"position": "47%", "avgP10": 105.6},
+        {"position": "48%", "avgP10": 129.8},
+        {"position": "49%", "avgP10": 196.8},
+        {"position": "50%", "avgP10": 196.0},
+        {"position": "51%", "avgP10": 187.4},
+        {"position": "52%", "avgP10": 202.0},
+        {"position": "53%", "avgP10": 207.8},
+        {"position": "54%", "avgP10": 204.0},
+        {"position": "55%", "avgP10": 136.0},
+        {"position": "56%", "avgP10": 137.2},
+        {"position": "57%", "avgP10": 150.4},
+        {"position": "58%", "avgP10": 118.6},
+        {"position": "59%", "avgP10": 112.0}
+      ]
+    },
+
+    "darkestColumnsByPage": [
+      {"page": 10, "position": "54.89%", "p10": 84},
+      {"page": 30, "position": "48.16%", "p10": 73},
+      {"page": 50, "position": "48.45%", "p10": 70},
+      {"page": 70, "position": "54.51%", "p10": 76},
+      {"page": 90, "position": "49.34%", "p10": 85}
+    ],
+    "avgDarkestPosition": "51.07%",
+    "positionVariance": 8.95
+  },
+
+  "unusualPatterns": {
+    "invertedGutterPattern": {
+      "description": "CENTER IS LIGHTER THAN EDGES - opposite of typical book scans",
+      "gutterRegionAvgP10": 163.1,
+      "edgeRegionAvgP10": 116.3,
+      "gutterDepth": -46.8,
+      "interpretation": "The 49-54% region is significantly BRIGHTER (higher P10) than edges. This suggests the book binding creates a shadow at the TEXT EDGES rather than at the center spine."
+    },
+
+    "textBlockPattern": {
+      "description": "Dark regions at 40-48% and 55-60% correspond to text blocks on each page",
+      "leftTextBlock": "40-48% of width",
+      "rightTextBlock": "55-60% of width",
+      "centerGap": "49-54% - this is the exposed paper between page text blocks"
+    },
+
+    "variablePositioning": {
+      "description": "Darkest column position varies significantly between pages (48-55%)",
+      "cause": "Text density varies per page; the darkest column follows where text is densest",
+      "implication": "Split detection should NOT rely solely on darkest column"
+    }
+  },
+
+  "recommendations": {
+    "splitDetectionStrategy": {
+      "approach": "Use BRIGHTEST region in center, not darkest",
+      "reason": "This book's scans show the gutter/gap as a LIGHT strip around 49-52% width",
+      "suggestedSearchWindow": "47-53% of width",
+      "metric": "Find column with HIGHEST P10 or average brightness"
+    },
+
+    "alternativeApproach": {
+      "method": "Edge detection on vertical lines",
+      "reason": "The transition from text to margin creates vertical edges that may be more reliable"
+    },
+
+    "robustApproach": {
+      "method": "Use aspect ratio to confirm two-page spread, then split at 50%",
+      "reason": "All pages have aspect ratio ~1.2, strongly suggesting landscape spread",
+      "threshold": "If aspectRatio > 1.1, assume two-page spread and split at center"
+    }
+  },
+
+  "perPageDetails": [
+    {
+      "page": 10,
+      "dimensions": "8420x7022",
+      "aspectRatio": 1.1991,
+      "darkestByP10": {"position": "54.89%", "p10": 84},
+      "darkestByMin": {"position": "42.09%", "min": 1},
+      "darkestByAvg": {"position": "50.45%", "avg": 178.5},
+      "centerRegionAvgP10": 137.6,
+      "centerRegionStdDev": 52.2,
+      "p10Samples": {"40%": 103, "42%": 96, "44%": 97, "46%": 98, "48%": 214, "50%": 197, "52%": 209, "54%": 210, "56%": 104, "58%": 96},
+      "notes": "Sharp transition at 48% from dark (96-98) to light (197-214)"
+    },
+    {
+      "page": 30,
+      "dimensions": "8460x7022",
+      "aspectRatio": 1.2048,
+      "darkestByP10": {"position": "48.16%", "p10": 73},
+      "darkestByMin": {"position": "49.26%", "min": 0},
+      "darkestByAvg": {"position": "48.14%", "avg": 150.1},
+      "centerRegionAvgP10": 144.7,
+      "centerRegionStdDev": 43.9,
+      "p10Samples": {"40%": 106, "42%": 116, "44%": 148, "46%": 126, "48%": 79, "50%": 192, "52%": 210, "54%": 202, "56%": 105, "58%": 95},
+      "notes": "Darkest P10 at 48% (79), very dark text at edge of left page"
+    },
+    {
+      "page": 50,
+      "dimensions": "8520x7000",
+      "aspectRatio": 1.2171,
+      "darkestByP10": {"position": "48.45%", "p10": 70},
+      "darkestByMin": {"position": "41.71%", "min": 0},
+      "darkestByAvg": {"position": "48.36%", "avg": 135.9},
+      "centerRegionAvgP10": 133.9,
+      "centerRegionStdDev": 46.0,
+      "p10Samples": {"40%": 96, "42%": 105, "44%": 99, "46%": 92, "48%": 78, "50%": 191, "52%": 205, "54%": 189, "56%": 156, "58%": 159},
+      "notes": "Lowest overall P10 (70) at 48.45%, significant local minimum at 55.25%"
+    },
+    {
+      "page": 70,
+      "dimensions": "8562x7038",
+      "aspectRatio": 1.2165,
+      "darkestByP10": {"position": "54.51%", "p10": 76},
+      "darkestByMin": {"position": "41.79%", "min": 1},
+      "darkestByAvg": {"position": "54.50%", "avg": 147.5},
+      "centerRegionAvgP10": 154.7,
+      "centerRegionStdDev": 35.3,
+      "p10Samples": {"40%": 93, "42%": 175, "44%": 121, "46%": 135, "48%": 149, "50%": 199, "52%": 201, "54%": 210, "56%": 114, "58%": 119},
+      "notes": "Darkest at 54.51% (right side of center), 20 dark columns clustered at 54.34-54.57%"
+    },
+    {
+      "page": 90,
+      "dimensions": "8598x6986",
+      "aspectRatio": 1.2307,
+      "darkestByP10": {"position": "49.34%", "p10": 85},
+      "darkestByMin": {"position": "40.00%", "min": 1},
+      "darkestByAvg": {"position": "51.73%", "avg": 170.2},
+      "centerRegionAvgP10": 155.0,
+      "centerRegionStdDev": 40.6,
+      "p10Samples": {"40%": 114, "42%": 122, "44%": 126, "46%": 113, "48%": 129, "50%": 201, "52%": 185, "54%": 209, "56%": 207, "58%": 124},
+      "notes": "Most uniform brightness profile, center region is consistently light"
+    }
+  ]
+}

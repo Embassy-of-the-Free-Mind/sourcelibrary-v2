@@ -59,9 +59,11 @@ export default function SplitPage({ params }: PageProps) {
     const searchEnd = Math.floor(width * 0.60);
     const darkThreshold = 180;
 
-    // First pass: analyze all columns and find darkest
+    // First pass: analyze all columns
     let darkestIdx = Math.floor(width / 2);
     let darkestP10 = 255;
+    let brightestIdx = Math.floor(width / 2);
+    let brightestP10 = 0;
     const columnData: Array<{ x: number; p10: number; darkRun: number; transitions: number }> = [];
 
     for (let x = searchStart; x < searchEnd; x++) {
@@ -93,11 +95,28 @@ export default function SplitPage({ params }: PageProps) {
         darkestP10 = p10;
         darkestIdx = x;
       }
+      if (p10 > brightestP10) {
+        brightestP10 = p10;
+        brightestIdx = x;
+      }
     }
 
-    // Second pass: pick position just to the right of the darkest column
-    const offsetPixels = Math.floor(width * 0.005); // ~0.5% offset to the right
-    let bestIdx = Math.min(darkestIdx + offsetPixels, searchEnd - 1);
+    // Determine if gutter is dark (shadow) or bright (gap between pages)
+    // Compare edge brightness to center brightness
+    const edgeP10 = (columnData[0].p10 + columnData[columnData.length - 1].p10) / 2;
+    const centerP10 = columnData[Math.floor(columnData.length / 2)].p10;
+    const isInvertedGutter = centerP10 > edgeP10 + 30; // Center is significantly brighter
+
+    // Pick position based on gutter type
+    let bestIdx: number;
+    if (isInvertedGutter) {
+      // Bright gutter (flat-bed scan): use brightest column
+      bestIdx = brightestIdx;
+    } else {
+      // Dark gutter (traditional scan): use darkest column + small offset right
+      const offsetPixels = Math.floor(width * 0.005);
+      bestIdx = Math.min(darkestIdx + offsetPixels, searchEnd - 1);
+    }
 
     // Find the column data for this position
     const bestCol = columnData.find(c => c.x === bestIdx) || columnData[Math.floor(columnData.length / 2)];
