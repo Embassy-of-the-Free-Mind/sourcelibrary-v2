@@ -25,18 +25,19 @@ export async function POST(request: NextRequest) {
     // Train the model
     const model = trainModel(examples);
 
-    // Save the trained model
-    await db.collection('split_models').insertOne({
-      ...model,
-      version: Date.now(),
-      isActive: true,
-    });
-
-    // Deactivate previous models
+    // Deactivate all existing models first
     await db.collection('split_models').updateMany(
-      { version: { $ne: Date.now() } },
+      {},
       { $set: { isActive: false } }
     );
+
+    // Save the trained model as active
+    const version = Date.now();
+    await db.collection('split_models').insertOne({
+      ...model,
+      version,
+      isActive: true,
+    });
 
     return NextResponse.json({
       success: true,
