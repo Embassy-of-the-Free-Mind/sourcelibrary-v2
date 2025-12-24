@@ -808,6 +808,7 @@ export default function AnalyticsPage() {
                       <tr style={{ background: 'var(--bg-warm)' }}>
                         <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Status</th>
                         <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Type</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>User</th>
                         <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Book</th>
                         <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Pages</th>
                         <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Model / Prompt</th>
@@ -836,6 +837,9 @@ export default function AnalyticsPage() {
                               <span className="px-2 py-1 rounded-md text-xs font-medium" style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)' }}>
                                 {formatJobType(job.type)}
                               </span>
+                            </td>
+                            <td className="px-4 py-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+                              {job.initiated_by || '-'}
                             </td>
                             <td className="px-4 py-3 max-w-[200px]">
                               <div className="truncate" style={{ color: 'var(--text-primary)' }} title={job.book_title || '-'}>

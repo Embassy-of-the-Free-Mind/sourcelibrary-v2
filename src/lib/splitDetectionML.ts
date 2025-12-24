@@ -254,39 +254,54 @@ export interface SplitModel {
 }
 
 /**
+ * Check if features are valid for training
+ */
+function isValidExample(example: TrainingExample): boolean {
+  const f = example.features;
+  if (!f) return false;
+  if (typeof example.geminiPosition !== 'number') return false;
+  if (typeof f.centerDarkestIdx !== 'number' || isNaN(f.centerDarkestIdx)) return false;
+  if (typeof f.centerBrightestIdx !== 'number' || isNaN(f.centerBrightestIdx)) return false;
+  if (typeof f.edgeCenterDiff !== 'number' || isNaN(f.edgeCenterDiff)) return false;
+  if (typeof f.aspectRatio !== 'number' || isNaN(f.aspectRatio)) return false;
+  return true;
+}
+
+/**
  * Train a simple model from labeled examples
  */
 export function trainModel(examples: TrainingExample[]): SplitModel {
-  if (examples.length < 10) {
-    throw new Error('Need at least 10 training examples');
+  // Filter to valid examples only
+  const validExamples = examples.filter(isValidExample);
+
+  if (validExamples.length < 10) {
+    throw new Error(`Need at least 10 valid examples to train. Have ${validExamples.length} valid out of ${examples.length} total.`);
   }
 
   // Split into train/validation
-  const shuffled = [...examples].sort(() => Math.random() - 0.5);
+  const shuffled = [...validExamples].sort(() => Math.random() - 0.5);
   const trainSize = Math.floor(shuffled.length * 0.8);
   const train = shuffled.slice(0, trainSize);
   const validation = shuffled.slice(trainSize);
 
-  // Normalize target to center region offset (0 = start of center region)
-  // Center region is 40-60%, so we map 400-600 → 0-200
-  const normalizeTarget = (pos: number) => pos - 400;
-  const denormalizeTarget = (offset: number) => offset + 400;
+  // Simple approach: use median of geminiPosition as baseline, learn offsets from features
+  const positions = validExamples.map(e => e.geminiPosition);
+  const medianPosition = positions.sort((a, b) => a - b)[Math.floor(positions.length / 2)];
 
-  // Simple gradient descent to learn weights
+  // Learn weights using gradient descent
   const weights = {
-    bias: 100, // Start at center of search region
-    centerDarkestIdx: 0.5,
-    centerBrightestIdx: 0.5,
-    edgeCenterDiff: 0.1,
+    bias: medianPosition,
+    centerDarkestIdx: 0,
+    centerBrightestIdx: 0,
+    edgeCenterDiff: 0,
     invertedGutterOffset: 0,
     aspectRatioOffset: 0,
   };
 
-  const learningRate = 0.001;
-  const epochs = 1000;
+  const learningRate = 0.0001;
+  const epochs = 500;
 
   for (let epoch = 0; epoch < epochs; epoch++) {
-    let totalLoss = 0;
     const gradients = {
       bias: 0,
       centerDarkestIdx: 0,
@@ -298,27 +313,27 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
 
     for (const example of train) {
       const f = example.features;
-      const target = normalizeTarget(example.geminiPosition);
+      const target = example.geminiPosition;
 
-      // Prediction
+      // Prediction - use simpler features that are more robust
       const pred =
         weights.bias +
-        weights.centerDarkestIdx * f.centerDarkestIdx +
-        weights.centerBrightestIdx * f.centerBrightestIdx +
-        weights.edgeCenterDiff * (f.edgeCenterDiff / 100) +
+        weights.centerDarkestIdx * (f.centerDarkestIdx - 50) + // Normalize around center
+        weights.centerBrightestIdx * (f.centerBrightestIdx - 50) +
+        weights.edgeCenterDiff * (f.edgeCenterDiff / 50) + // Scale down
         weights.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
         weights.aspectRatioOffset * (f.aspectRatio - 1.5);
 
       const error = pred - target;
-      totalLoss += error * error;
 
-      // Gradients
-      gradients.bias += error;
-      gradients.centerDarkestIdx += error * f.centerDarkestIdx;
-      gradients.centerBrightestIdx += error * f.centerBrightestIdx;
-      gradients.edgeCenterDiff += error * (f.edgeCenterDiff / 100);
-      gradients.invertedGutterOffset += error * (f.hasInvertedGutter ? 1 : 0);
-      gradients.aspectRatioOffset += error * (f.aspectRatio - 1.5);
+      // Gradients (with clipping to prevent explosion)
+      const clip = (x: number) => Math.max(-10, Math.min(10, x));
+      gradients.bias += clip(error);
+      gradients.centerDarkestIdx += clip(error * (f.centerDarkestIdx - 50));
+      gradients.centerBrightestIdx += clip(error * (f.centerBrightestIdx - 50));
+      gradients.edgeCenterDiff += clip(error * (f.edgeCenterDiff / 50));
+      gradients.invertedGutterOffset += clip(error * (f.hasInvertedGutter ? 1 : 0));
+      gradients.aspectRatioOffset += clip(error * (f.aspectRatio - 1.5));
     }
 
     // Update weights
@@ -337,18 +352,17 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     const f = example.features;
     const target = example.geminiPosition;
 
-    const predOffset =
+    const pred =
       weights.bias +
-      weights.centerDarkestIdx * f.centerDarkestIdx +
-      weights.centerBrightestIdx * f.centerBrightestIdx +
-      weights.edgeCenterDiff * (f.edgeCenterDiff / 100) +
+      weights.centerDarkestIdx * (f.centerDarkestIdx - 50) +
+      weights.centerBrightestIdx * (f.centerBrightestIdx - 50) +
+      weights.edgeCenterDiff * (f.edgeCenterDiff / 50) +
       weights.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
       weights.aspectRatioOffset * (f.aspectRatio - 1.5);
 
-    const pred = denormalizeTarget(predOffset);
     validationMSE += Math.pow(pred - target, 2);
   }
-  validationMSE /= validation.length;
+  validationMSE = validation.length > 0 ? validationMSE / validation.length : 0;
 
   return {
     weights,
@@ -365,17 +379,15 @@ export function predictWithModel(features: SplitFeatures, model: SplitModel): nu
   const f = features;
   const w = model.weights;
 
-  const predOffset =
+  // Use same normalization as training
+  const position =
     w.bias +
-    w.centerDarkestIdx * f.centerDarkestIdx +
-    w.centerBrightestIdx * f.centerBrightestIdx +
-    w.edgeCenterDiff * (f.edgeCenterDiff / 100) +
+    w.centerDarkestIdx * (f.centerDarkestIdx - 50) +
+    w.centerBrightestIdx * (f.centerBrightestIdx - 50) +
+    w.edgeCenterDiff * (f.edgeCenterDiff / 50) +
     w.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
     w.aspectRatioOffset * (f.aspectRatio - 1.5);
 
-  // Convert back to 0-1000 scale
-  const position = Math.round(predOffset + 400);
-
-  // Clamp to valid range
-  return Math.max(400, Math.min(600, position));
+  // Clamp to valid range (center region 350-650)
+  return Math.max(350, Math.min(650, Math.round(position)));
 }

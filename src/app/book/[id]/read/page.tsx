@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, ChevronLeft, ChevronRight, Menu, X, Loader2 } from 'lucide-react';
+import { ArrowLeft, BookOpen, ChevronLeft, ChevronRight, Menu, Loader2, List } from 'lucide-react';
 import { Book, Page, Section } from '@/lib/types';
 import ReadingSidebar from '@/components/ReadingSidebar';
 import ModernizedReader from '@/components/ModernizedReader';
@@ -19,9 +19,10 @@ export default function ReadPage({ params }: ReadPageProps) {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Closed by default on mobile
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const contentRef = useRef<HTMLDivElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Resolve params
   useEffect(() => {
@@ -116,6 +117,32 @@ export default function ReadPage({ params }: ReadPageProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [goToPrevSection, goToNextSection]);
 
+  // Swipe navigation for mobile
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartRef.current) return;
+
+    const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
+    const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
+
+    // Only trigger if horizontal swipe is dominant and significant
+    if (Math.abs(deltaX) > 80 && Math.abs(deltaX) > Math.abs(deltaY) * 2) {
+      if (deltaX > 0) {
+        goToPrevSection();
+      } else {
+        goToNextSection();
+      }
+    }
+
+    touchStartRef.current = null;
+  }, [goToPrevSection, goToNextSection]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
@@ -149,52 +176,68 @@ export default function ReadPage({ params }: ReadPageProps) {
   return (
     <div className="min-h-screen bg-stone-50 flex flex-col">
       {/* Header */}
-      <header className="bg-white border-b border-stone-200 sticky top-0 z-20">
-        <div className="flex items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-4">
+      <header className="bg-white border-b border-stone-200 sticky top-0 z-20 safe-area-inset-top">
+        <div className="flex items-center justify-between px-2 sm:px-4 py-2 sm:py-3">
+          {/* Left side - Back + Menu */}
+          <div className="flex items-center gap-1 sm:gap-3">
             <Link
               href={`/book/${bookId}`}
-              className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900"
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg"
+              aria-label="Back to book"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Back</span>
+              <ArrowLeft className="w-5 h-5" />
             </Link>
 
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-lg hover:bg-stone-100 text-stone-600"
-              title={sidebarOpen ? 'Hide sections' : 'Show sections'}
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-stone-100 text-stone-600"
+              aria-label={sidebarOpen ? 'Hide contents' : 'Show contents'}
             >
-              {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              <List className="w-5 h-5" />
             </button>
-
-            <div className="hidden sm:block">
-              <h1 className="font-serif font-semibold text-stone-900 truncate max-w-md">
-                {book.display_title || book.title}
-              </h1>
-            </div>
           </div>
 
-          {/* Section navigation */}
-          <div className="flex items-center gap-2">
+          {/* Center - Section selector (tap to open sidebar on mobile) */}
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="flex-1 mx-2 sm:mx-4 text-center sm:hidden"
+          >
+            <p className="text-sm font-medium text-stone-900 truncate">
+              {currentSection?.title || book.display_title || book.title}
+            </p>
+            <p className="text-xs text-stone-500">
+              {sections.length > 1 ? `Section ${currentSectionIndex + 1} of ${sections.length}` : `Page ${currentPageNumber}`}
+            </p>
+          </button>
+
+          {/* Desktop title */}
+          <div className="hidden sm:flex flex-1 mx-4 items-center justify-center">
+            <h1 className="font-serif font-semibold text-stone-900 truncate max-w-md text-center">
+              {book.display_title || book.title}
+            </h1>
+          </div>
+
+          {/* Right side - Section navigation */}
+          <div className="flex items-center">
             <button
               onClick={goToPrevSection}
               disabled={currentSectionIndex === 0}
-              className="p-2 rounded-lg hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed"
-              title="Previous section (Alt+←)"
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed"
+              aria-label="Previous section"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
 
-            <span className="text-sm text-stone-600 min-w-[120px] text-center">
-              {currentSection?.title || 'All Pages'}
+            {/* Section indicator - desktop only */}
+            <span className="hidden sm:block text-sm text-stone-600 min-w-[100px] text-center">
+              {sections.length > 1 ? `${currentSectionIndex + 1} / ${sections.length}` : ''}
             </span>
 
             <button
               onClick={goToNextSection}
               disabled={currentSectionIndex >= sections.length - 1}
-              className="p-2 rounded-lg hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed"
-              title="Next section (Alt+→)"
+              className="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-stone-100 disabled:opacity-30 disabled:cursor-not-allowed"
+              aria-label="Next section"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -224,22 +267,22 @@ export default function ReadPage({ params }: ReadPageProps) {
         {/* Reading content */}
         <main
           ref={contentRef}
-          className={`flex-1 overflow-y-auto transition-all duration-300 ${
-            sidebarOpen ? 'lg:ml-0' : ''
-          }`}
+          className="flex-1 overflow-y-auto"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
-          <div className="max-w-3xl mx-auto px-4 sm:px-8 py-8">
+          <div className="max-w-3xl mx-auto px-4 sm:px-8 py-6 sm:py-8">
             {/* Section header */}
             {currentSection && (
-              <div className="mb-8 pb-6 border-b border-stone-200">
-                <h2 className="text-2xl font-serif font-bold text-stone-900">
+              <div className="mb-6 sm:mb-8 pb-4 sm:pb-6 border-b border-stone-200">
+                <h2 className="text-xl sm:text-2xl font-serif font-bold text-stone-900">
                   {currentSection.title}
                 </h2>
-                <p className="text-sm text-stone-500 mt-1">
+                <p className="text-xs sm:text-sm text-stone-500 mt-1">
                   Pages {currentSection.startPage}–{currentSection.endPage}
                 </p>
                 {currentSection.summary && (
-                  <p className="text-stone-600 mt-3 leading-relaxed">
+                  <p className="text-sm sm:text-base text-stone-600 mt-3 leading-relaxed">
                     {currentSection.summary}
                   </p>
                 )}
@@ -251,15 +294,30 @@ export default function ReadPage({ params }: ReadPageProps) {
               pages={sectionPages}
               onPageVisible={handlePageVisible}
             />
+
+            {/* Swipe hint on mobile */}
+            {sections.length > 1 && (
+              <div className="sm:hidden mt-8 text-center text-xs text-stone-400">
+                Swipe left/right to change sections
+              </div>
+            )}
           </div>
         </main>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-stone-200 px-4 py-2">
-        <div className="flex items-center justify-between text-sm text-stone-600">
+      {/* Footer - compact on mobile */}
+      <footer className="bg-white border-t border-stone-200 px-4 py-2 safe-area-inset-bottom">
+        <div className="flex items-center justify-between text-xs sm:text-sm text-stone-600">
           <span>Page {currentPageNumber} of {totalPages}</span>
-          <span>{Math.round(progress)}% complete</span>
+          <div className="flex items-center gap-2">
+            <div className="w-24 sm:w-32 h-1.5 bg-stone-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-amber-500 transition-all duration-300 rounded-full"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <span>{Math.round(progress)}%</span>
+          </div>
         </div>
       </footer>
     </div>

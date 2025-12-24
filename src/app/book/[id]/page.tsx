@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page } from '@/lib/types';
-import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText, Glasses } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookChat from '@/components/BookChat';
@@ -133,6 +133,13 @@ async function BookInfo({ id }: { id: string }) {
                   <FileText className="w-4 h-4" />
                   {pages.length} pages
                 </div>
+                <Link
+                  href={`/book/${book.id}/read`}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors text-sm"
+                >
+                  <Glasses className="w-4 h-4" />
+                  Read
+                </Link>
                 <BookAnalytics bookId={book.id} />
                 <SearchPanel bookId={book.id} />
                 <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
