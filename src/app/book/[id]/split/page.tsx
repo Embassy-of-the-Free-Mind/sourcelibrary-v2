@@ -116,6 +116,8 @@ export default function SplitPage({ params }: PageProps) {
       try {
         const result = detectSplitFromImage(img);
         setSplitPositions(prev => ({ ...prev, [pageId]: result.splitPosition }));
+        // Save detected position for learning comparison
+        setDetectedPositions(prev => ({ ...prev, [pageId]: result.splitPosition }));
         if (result.hasText) {
           setSplitWarnings(prev => ({ ...prev, [pageId]: 'Text detected at split line' }));
         } else {
@@ -281,6 +283,9 @@ export default function SplitPage({ params }: PageProps) {
     }));
   };
 
+  // Track detected vs chosen positions for learning
+  const [detectedPositions, setDetectedPositions] = useState<Record<string, number>>({});
+
   const applySplits = async () => {
     const pagesToSplit = Array.from(selectedPages);
     if (pagesToSplit.length === 0) return;
@@ -292,7 +297,10 @@ export default function SplitPage({ params }: PageProps) {
     try {
       const splits = pagesToSplit.map(pageId => ({
         pageId,
-        splitPosition: splitPositions[pageId] ?? 500
+        splitPosition: splitPositions[pageId] ?? 500,
+        detectedPosition: detectedPositions[pageId],
+        wasAdjusted: detectedPositions[pageId] !== undefined &&
+                     detectedPositions[pageId] !== splitPositions[pageId]
       }));
 
       await fetch('/api/pages/batch-split', {

@@ -5,6 +5,8 @@ import { ObjectId } from 'mongodb';
 interface SplitRequest {
   pageId: string;
   splitPosition: number; // 0-1000 scale
+  detectedPosition?: number; // What the algorithm detected
+  wasAdjusted?: boolean; // Whether user manually adjusted
 }
 
 export async function POST(request: NextRequest) {
@@ -123,10 +125,31 @@ export async function POST(request: NextRequest) {
       { $set: { pages: allPages.length } }
     );
 
+    // Log adjustments for algorithm learning (non-blocking)
+    const adjustments = splits
+      .filter(s => s.wasAdjusted && s.detectedPosition !== undefined)
+      .map(s => ({
+        pageId: s.pageId,
+        bookId,
+        detectedPosition: s.detectedPosition,
+        chosenPosition: s.splitPosition,
+        delta: s.splitPosition - (s.detectedPosition ?? 500),
+        timestamp: new Date()
+      }));
+
+    if (adjustments.length > 0) {
+      // Don't await - fire and forget
+      db.collection('split_adjustments').insertMany(adjustments).catch(() => {});
+      console.log(`[Split Learning] ${adjustments.length} adjustments logged:`,
+        adjustments.map(a => `${a.detectedPosition} → ${a.chosenPosition} (Δ${a.delta > 0 ? '+' : ''}${a.delta})`).join(', ')
+      );
+    }
+
     return NextResponse.json({
       success: true,
       splitCount: newPages.length,
-      totalPages: allPages.length
+      totalPages: allPages.length,
+      adjustmentsLogged: adjustments.length
     });
   } catch (error) {
     console.error('Error batch splitting pages:', error);
