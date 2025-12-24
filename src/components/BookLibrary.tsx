@@ -353,6 +353,11 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
                   {book.language && <span>{book.language}</span>}
                   {book.pages_count && <span>{book.pages_count} pages</span>}
+                  {book.translation_percent !== undefined && (
+                    <span className={book.translation_percent === 100 ? 'text-green-600' : 'text-amber-600'}>
+                      {book.translation_percent === 100 ? '✓ Translated' : `${book.translation_percent}% translated`}
+                    </span>
+                  )}
                 </div>
               </div>
 

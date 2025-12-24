@@ -78,6 +78,32 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               <span>{book.pages_count} pages</span>
             )}
           </div>
+
+          {/* Translation Progress */}
+          {book.pages_count !== undefined && book.pages_count > 0 && (
+            <div className="mt-3">
+              <div className="flex items-center justify-between text-xs mb-1">
+                <span className={book.translation_percent === 100 ? 'text-green-600 font-medium' : 'text-stone-500'}>
+                  {book.translation_percent === 100 ? 'Translated' : `${book.translation_percent || 0}% translated`}
+                </span>
+                {book.pages_translated !== undefined && book.translation_percent !== 100 && (
+                  <span className="text-stone-400">{book.pages_translated}/{book.pages_count}</span>
+                )}
+              </div>
+              <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                <div
+                  className={`h-full transition-all duration-300 ${
+                    book.translation_percent === 100
+                      ? 'bg-green-500'
+                      : book.translation_percent && book.translation_percent > 0
+                        ? 'bg-amber-500'
+                        : 'bg-stone-200'
+                  }`}
+                  style={{ width: `${book.translation_percent || 0}%` }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Link>

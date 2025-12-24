@@ -27,7 +27,47 @@ async function getBooks(): Promise<Book[]> {
       },
       {
         $addFields: {
-          pages_count: { $size: '$pages_array' }
+          pages_count: { $size: '$pages_array' },
+          pages_translated: {
+            $size: {
+              $filter: {
+                input: '$pages_array',
+                as: 'page',
+                cond: {
+                  $and: [
+                    { $ne: ['$$page.translation', null] },
+                    { $ne: ['$$page.translation.data', null] },
+                    { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
+                  ]
+                }
+              }
+            }
+          },
+          pages_ocr: {
+            $size: {
+              $filter: {
+                input: '$pages_array',
+                as: 'page',
+                cond: {
+                  $and: [
+                    { $ne: ['$$page.ocr', null] },
+                    { $ne: ['$$page.ocr.data', null] }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        $addFields: {
+          translation_percent: {
+            $cond: {
+              if: { $gt: ['$pages_count', 0] },
+              then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+              else: 0
+            }
+          }
         }
       },
       {

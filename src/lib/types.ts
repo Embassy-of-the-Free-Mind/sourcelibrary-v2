@@ -91,6 +91,9 @@ export interface Book {
   thumbnail?: string;
   categories?: string[];
   pages_count?: number;
+  pages_translated?: number;  // Number of pages with translations
+  pages_ocr?: number;         // Number of pages with OCR
+  translation_percent?: number; // Percentage of pages translated (0-100)
   created_at?: Date;
   updated_at?: Date;
 
@@ -497,10 +500,13 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
    - Mystical: Gelassenheit → "releasement/letting-be (*Gelassenheit*)"
    - Keep German + English on first use, English thereafter
 
-4. **Mixed Latin/German:**
-   - Common in learned texts
-   - Translate both, noting the switch
-   - Latin quotes: translate with [[notes: Latin original: "..."]]
+4. **TRANSLATE ALL LANGUAGES TO ENGLISH:**
+   - Latin phrases embedded in German → MUST be translated to English
+   - Greek phrases → translate to English
+   - Hebrew/Aramaic terms → translate to English
+   - The reader should understand EVERYTHING without knowing Latin, Greek, or Hebrew
+   - Use [[notes: original: "..."]] to preserve significant original phrases for scholars
+   - Example: "per aspera ad astra" → "through hardships to the stars" [[notes: Latin: "per aspera ad astra"]]
 
 5. **Syntax:**
    - German sentence structure differs significantly
@@ -638,14 +644,23 @@ Example: [[warning: Faded ink in lower third, several words illegible]]
 **Do NOT use:**
 - Code blocks or backticks - this is prose
 
+**IMPORTANT - Translate ALL languages to English:**
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, etc.). You MUST translate EVERYTHING to English:
+- Latin quotes embedded in German → translate to English
+- Greek phrases → translate to English
+- Hebrew or Aramaic terms → translate to English
+- ANY non-English text → translate to English
+Use [[notes: original: "..."]] to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
 **Instructions:**
 1. Start with [[meta: ...]] if noting continuity with previous page (hidden from readers).
 2. Mirror the source layout - headings, paragraphs, tables, centered text.
 3. Translate ALL text including [[margin:]], [[insert:]], [[gloss:]] - keep the markup tags.
-4. Add [[notes: ...]] inline to explain historical references or difficult phrases.
-5. Style: warm museum label - explain rather than assume knowledge.
-6. Preserve the voice and spirit of the original.
-7. END with [[summary:]] and [[keywords:]] for indexing.
+4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
+5. Add [[notes: ...]] inline to explain historical references or difficult phrases.
+6. Style: warm museum label - explain rather than assume knowledge.
+7. Preserve the voice and spirit of the original.
+8. END with [[summary:]] and [[keywords:]] for indexing.
 
 **Source language:** {source_language}
 **Target language:** {target_language}
