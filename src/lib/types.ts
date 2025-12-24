@@ -44,9 +44,9 @@ export interface Job {
 
 // Available Gemini models for processing
 export const GEMINI_MODELS = [
-  { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash' },
-  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash' },
-  { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash (Preview)' },
+  { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Latest, best quality' },
+  { id: 'gemini-2.5-flash-preview-05-20', name: 'Gemini 2.5 Flash', description: 'Fast & capable' },
+  { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', description: 'Fastest, lowest cost' },
 ] as const;
 
 export const DEFAULT_MODEL = 'gemini-2.0-flash';

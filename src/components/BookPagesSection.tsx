@@ -20,6 +20,7 @@ import {
   ImageIcon
 } from 'lucide-react';
 import DownloadButton from './DownloadButton';
+import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import type { Page, Prompt } from '@/lib/types';
 
 interface BookPagesSectionProps {
@@ -69,6 +70,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
   const [batchMode, setBatchMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [action, setAction] = useState<ActionType>('ocr');
+  const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
 
   // Prompt library state
@@ -249,7 +251,8 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
               translation: editedPrompts.translation,
               summary: editedPrompts.summary
             },
-            autoSave: true
+            autoSave: true,
+            model: selectedModel
           })
         });
 
@@ -496,6 +499,24 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
                   );
                 })}
               </div>
+            </div>
+
+            <div className="h-6 w-px bg-amber-300" />
+
+            {/* Model selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Model:</span>
+              <select
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                {GEMINI_MODELS.map(model => (
+                  <option key={model.id} value={model.id}>
+                    {model.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="h-6 w-px bg-amber-300" />
