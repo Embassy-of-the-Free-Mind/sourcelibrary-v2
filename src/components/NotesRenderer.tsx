@@ -18,6 +18,7 @@ interface ExtractedMetadata {
   language?: string;
   pageNumber?: string;
   folio?: string;
+  signature?: string;       // [[signature: ...]] - printer's signature marks
   warning?: string;         // [[warning: ...]] - OCR quality issues
   meta: string[];           // [[meta: ...]] entries
   abbreviations: string[];  // [[abbrev: ...]] entries
@@ -70,6 +71,12 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
     return '';
   });
 
+  // Extract signature marks (printer's signatures like A2, B1, etc.)
+  result = result.replace(/\[\[signature:\s*(.*?)\]\]/gi, (match, sig) => {
+    metadata.signature = sig.trim();
+    return '';
+  });
+
   // Extract meta notes (page descriptions, image quality, etc.)
   result = result.replace(/\[\[meta:\s*(.*?)\]\]/gi, (match, content) => {
     metadata.meta.push(content.trim());
@@ -115,7 +122,7 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
 
   // Catch-all: remove any remaining [[tag: ...]] patterns (handles multiline)
   // This ensures no metadata tags slip through to the reader
-  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
+  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|signature|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
 
   // Final aggressive cleanup: remove ANY remaining [[something: ...]] patterns
   // This catches any malformed or unexpected tags
@@ -194,7 +201,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const hasMetadata = metadata.language || metadata.pageNumber || metadata.folio ||
-    metadata.warning || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
+    metadata.signature || metadata.warning || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
     metadata.vocabulary.length > 0 || metadata.summary || metadata.keywords.length > 0;
 
   if (!hasMetadata) return null;
@@ -232,6 +239,11 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
         {(metadata.pageNumber || metadata.folio) && (
           <span className="px-1.5 py-0.5 bg-stone-200 rounded text-stone-600">
             {metadata.folio ? `f. ${metadata.folio}` : `p. ${metadata.pageNumber}`}
+          </span>
+        )}
+        {metadata.signature && (
+          <span className="px-1.5 py-0.5 bg-stone-200 rounded text-stone-600">
+            sig. {metadata.signature}
           </span>
         )}
       </button>

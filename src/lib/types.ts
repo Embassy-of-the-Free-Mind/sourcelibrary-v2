@@ -572,17 +572,26 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 **Annotations:**
 - [[meta: ...]] for page metadata (image quality, layout) — hidden from readers
 - [[notes: ...]] for interpretive notes readers should see
-- [[margin: ...]] for text in the margins
+- [[margin: ...]] for marginal notes (biblical citations, references, annotations in margins)
 - [[gloss: ...]] for interlinear annotations above/below words
 - [[insert: ...]] for text in boxes, cartouches, or later additions
 - [[unclear: ...]] for illegible or uncertain readings
 - [[page number: N]] for visible page numbers
 - [[header: ...]] for running headers/page headings
+- [[signature: X]] for printer's signature marks (A, A2, B, B1, etc.)
 
-**IMPORTANT - Exclude from main text:**
-- Page numbers: Capture ONLY in [[page number: N]], do NOT include in the body text
-- Running headers/page headings: Capture ONLY in [[header: ...]], do NOT include in the body text
-- These elements should appear in metadata annotations only, never in the main transcription
+**CRITICAL - Exclude from main text body:**
+These elements must ONLY appear in metadata tags, NEVER in the body text:
+- **Page numbers**: Use [[page number: N]] only, never write "3" or "Page 3" in the body
+- **Running headers**: Use [[header: ...]] only, never repeat in body
+- **Signature marks**: Printer's marks like "A 2.", "B 1.", "C ij" → use [[signature: A2]] only
+- **Catchwords**: Words at bottom of page matching next page → use [[meta: catchword: ...]]
+
+**Marginalia - mark clearly:**
+Handwritten or printed notes in the margins are important! Use [[margin: ...]]:
+- Biblical citations in margins: [[margin: John 1:7-10]]
+- Handwritten marginalia: [[margin: ...content...]]
+- Place the [[margin:]] tag inline where the margin note corresponds to the main text
 
 **Do NOT use:**
 - Code blocks (\`\`\`) or inline code - this is prose, not code
