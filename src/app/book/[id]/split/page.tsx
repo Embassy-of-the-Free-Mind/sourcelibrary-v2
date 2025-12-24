@@ -54,18 +54,17 @@ export default function SplitPage({ params }: PageProps) {
     const width = canvas.width;
     const height = canvas.height;
 
-    // Analyze columns in center 35-65% region
-    const searchStart = Math.floor(width * 0.35);
-    const searchEnd = Math.floor(width * 0.65);
+    // Analyze columns in center 20% region (40-60%)
+    const searchStart = Math.floor(width * 0.40);
+    const searchEnd = Math.floor(width * 0.60);
     const darkThreshold = 180;
 
-    let bestScore = -Infinity;
-    let bestIdx = Math.floor(width / 2);
-    let bestDarkRun = 0;
-    let bestTransitions = 0;
+    // First pass: analyze all columns and find darkest
+    let darkestIdx = Math.floor(width / 2);
+    let darkestP10 = 255;
+    const columnData: Array<{ x: number; p10: number; darkRun: number; transitions: number }> = [];
 
     for (let x = searchStart; x < searchEnd; x++) {
-      // Get grayscale values for this column
       const pixels: number[] = [];
       for (let y = 0; y < height; y++) {
         const i = (y * width + x) * 4;
@@ -73,11 +72,9 @@ export default function SplitPage({ params }: PageProps) {
         pixels.push(gray);
       }
 
-      // Sort for P10
       const sorted = [...pixels].sort((a, b) => a - b);
       const p10 = sorted[Math.floor(height * 0.1)];
 
-      // Max dark run
       let maxDarkRun = 0, currentRun = 0;
       for (const p of pixels) {
         if (p < darkThreshold) { currentRun++; maxDarkRun = Math.max(maxDarkRun, currentRun); }
@@ -85,22 +82,28 @@ export default function SplitPage({ params }: PageProps) {
       }
       const darkRunPercent = (maxDarkRun / height) * 100;
 
-      // Transitions
       let transitions = 0;
       for (let i = 1; i < pixels.length; i++) {
         if ((pixels[i - 1] < darkThreshold) !== (pixels[i] < darkThreshold)) transitions++;
       }
 
-      // Score: low P10 + high dark run + low transitions
-      const score = (255 - p10) / 2.55 * 0.3 + darkRunPercent * 0.35 + Math.max(0, 100 - transitions / 5) * 0.2;
+      columnData.push({ x, p10, darkRun: darkRunPercent, transitions });
 
-      if (score > bestScore) {
-        bestScore = score;
-        bestIdx = x;
-        bestDarkRun = darkRunPercent;
-        bestTransitions = transitions;
+      if (p10 < darkestP10) {
+        darkestP10 = p10;
+        darkestIdx = x;
       }
     }
+
+    // Second pass: pick position just to the right of the darkest column
+    // Look 0-3% to the right of darkest
+    const offsetPixels = Math.floor(width * 0.02); // ~2% offset to the right
+    let bestIdx = Math.min(darkestIdx + offsetPixels, searchEnd - 1);
+
+    // Find the column data for this position
+    const bestCol = columnData.find(c => c.x === bestIdx) || columnData[Math.floor(columnData.length / 2)];
+    const bestTransitions = bestCol?.transitions || 0;
+    const bestDarkRun = bestCol?.darkRun || 0;
 
     const splitPosition = Math.round((bestIdx / width) * 1000);
     const hasText = bestTransitions > 30 && bestDarkRun < 40;

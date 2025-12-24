@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "npx ts-node --project tests/tsconfig.json tests/cli.ts run",
+    "test:api": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --api-only",
+    "test:api:fast": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --api-only --skip-expensive --skip-slow",
+    "test:e2e": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --e2e-only",
+    "test:visual": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --visual-only",
+    "test:list": "npx ts-node --project tests/tsconfig.json tests/cli.ts list",
+    "test:clean": "npx ts-node --project tests/tsconfig.json tests/cli.ts clean"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
@@ -31,12 +38,18 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pngjs": "^6.0.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
+    "commander": "^14.0.2",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.57.0",
+    "pngjs": "^7.0.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }
