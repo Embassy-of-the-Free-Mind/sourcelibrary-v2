@@ -3,6 +3,9 @@ import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 
+// Increase timeout for AI processing (max 60s for Pro, 10s for Hobby)
+export const maxDuration = 60;
+
 // Helper to record processing metrics
 async function recordProcessingMetric(
   db: Awaited<ReturnType<typeof getDb>>,

@@ -17,7 +17,9 @@ import {
   Download,
   Settings,
   DollarSign,
-  ImageIcon
+  ImageIcon,
+  RotateCcw,
+  AlertCircle
 } from 'lucide-react';
 import DownloadButton from './DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
@@ -38,6 +40,26 @@ const actionToJobType: Record<ActionType, JobType> = {
   translation: 'batch_translate',
   summary: 'batch_summary',
 };
+
+// Retry settings
+const MAX_RETRIES = 3;
+const INITIAL_RETRY_DELAY = 1000; // 1 second
+const FETCH_TIMEOUT = 120000; // 2 minutes per page
+
+// Fetch with timeout helper
+async function fetchWithTimeout(url: string, options: RequestInit, timeout: number): Promise<Response> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    return response;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+// Sleep helper
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 interface ProcessingState {
   active: boolean;
@@ -299,7 +321,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages }: BookPages
       }
     };
 
-    // Process a single page
+    // Process a single page with retry logic
     const processPage = async (pageId: string): Promise<void> => {
       if (stopRequestedRef.current) return;
 
@@ -309,41 +331,64 @@ export default function BookPagesSection({ bookId, bookTitle, pages }: BookPages
         return;
       }
 
-      try {
-        const response = await fetch('/api/process', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            pageId,
-            action,
-            imageUrl: page.photo,
-            language: 'Latin',
-            targetLanguage: 'English',
-            ocrText: action === 'translation' ? page.ocr?.data : undefined,
-            translatedText: action === 'summary' ? page.translation?.data : undefined,
-            // Note: skipping previousPageId for parallel processing
-            customPrompts: {
-              ocr: editedPrompts.ocr,
-              translation: editedPrompts.translation,
-              summary: editedPrompts.summary
-            },
-            autoSave: true,
-            model: selectedModel
-          })
-        });
+      let lastError: Error | null = null;
 
-        if (response.ok) {
-          const data = await response.json();
-          if (data.usage) {
-            runningCost += data.usage.costUsd || 0;
-            runningTokens += data.usage.totalTokens || 0;
+      for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+        if (stopRequestedRef.current) return;
+
+        try {
+          const response = await fetchWithTimeout('/api/process', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              pageId,
+              action,
+              imageUrl: page.photo,
+              language: 'Latin',
+              targetLanguage: 'English',
+              ocrText: action === 'translation' ? page.ocr?.data : undefined,
+              translatedText: action === 'summary' ? page.translation?.data : undefined,
+              customPrompts: {
+                ocr: editedPrompts.ocr,
+                translation: editedPrompts.translation,
+                summary: editedPrompts.summary
+              },
+              autoSave: true,
+              model: selectedModel
+            })
+          }, FETCH_TIMEOUT);
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.usage) {
+              runningCost += data.usage.costUsd || 0;
+              runningTokens += data.usage.totalTokens || 0;
+            }
+            completed.push(pageId);
+            lastError = null;
+            break; // Success, exit retry loop
+          } else {
+            const errorText = await response.text().catch(() => 'Unknown error');
+            lastError = new Error(`HTTP ${response.status}: ${errorText}`);
+            // Don't retry on 4xx errors (client errors)
+            if (response.status >= 400 && response.status < 500) {
+              break;
+            }
           }
-          completed.push(pageId);
-        } else {
-          failed.push(pageId);
+        } catch (error) {
+          lastError = error instanceof Error ? error : new Error('Unknown error');
+          console.warn(`Attempt ${attempt + 1}/${MAX_RETRIES} failed for page ${pageId}:`, lastError.message);
         }
-      } catch (error) {
-        console.error(`Error processing page ${pageId}:`, error);
+
+        // Wait before retrying (exponential backoff)
+        if (attempt < MAX_RETRIES - 1 && lastError) {
+          const delay = INITIAL_RETRY_DELAY * Math.pow(2, attempt);
+          await sleep(delay);
+        }
+      }
+
+      if (lastError) {
+        console.error(`All ${MAX_RETRIES} attempts failed for page ${pageId}:`, lastError.message);
         failed.push(pageId);
       }
 
@@ -361,12 +406,17 @@ export default function BookPagesSection({ bookId, bookTitle, pages }: BookPages
       updateJobProgress();
     };
 
-    // Process in parallel batches
+    // Process in parallel batches with delay between batches
     for (let i = 0; i < pageIds.length; i += concurrency) {
       if (stopRequestedRef.current) break;
 
       const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
       await Promise.all(batch.map(processPage));
+
+      // Small delay between batches to avoid rate limiting
+      if (i + concurrency < pageIds.length && !stopRequestedRef.current) {
+        await sleep(500);
+      }
     }
 
     // Final job update
@@ -579,6 +629,70 @@ export default function BookPagesSection({ bookId, bookTitle, pages }: BookPages
                     <span className="text-stone-400">{(processing.totalTokens / 1000).toFixed(1)}K tokens</span>
                   )}
                   {processing.failed.length > 0 && <span className="text-red-500">{processing.failed.length} failed</span>}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Completion message with retry option */}
+          {!processing.active && processing.totalPages > 0 && (
+            <div className={`rounded-lg p-4 border ${processing.failed.length > 0 ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'}`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  {processing.failed.length > 0 ? (
+                    <AlertCircle className="w-5 h-5 text-red-500" />
+                  ) : (
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                  )}
+                  <span className={`text-sm font-medium ${processing.failed.length > 0 ? 'text-red-700' : 'text-green-700'}`}>
+                    {processing.failed.length > 0
+                      ? `Completed with ${processing.failed.length} failed (${processing.completed.length} succeeded)`
+                      : `All ${processing.completed.length} pages processed successfully`}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {processing.totalCost > 0 && (
+                    <span className="text-xs text-stone-500">
+                      Cost: {formatCost(processing.totalCost)}
+                    </span>
+                  )}
+                  {processing.failed.length > 0 && (
+                    <button
+                      onClick={() => {
+                        // Select failed pages and start new batch
+                        setSelectedPages(new Set(processing.failed));
+                        setProcessing({
+                          active: false,
+                          type: null,
+                          currentIndex: 0,
+                          totalPages: 0,
+                          completed: [],
+                          failed: [],
+                          totalCost: 0,
+                          totalTokens: 0,
+                        });
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 text-xs font-medium"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      Retry {processing.failed.length} Failed
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setProcessing({
+                      active: false,
+                      type: null,
+                      currentIndex: 0,
+                      totalPages: 0,
+                      completed: [],
+                      failed: [],
+                      totalCost: 0,
+                      totalTokens: 0,
+                    })}
+                    className="text-xs text-stone-500 hover:text-stone-700"
+                  >
+                    Dismiss
+                  </button>
                 </div>
               </div>
             </div>
