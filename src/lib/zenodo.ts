@@ -67,6 +67,27 @@ function getAccessToken(): string {
 }
 
 /**
+ * Helper to handle Zenodo API errors (may return HTML on auth failure)
+ */
+async function handleZenodoError(response: Response, context: string): Promise<never> {
+  const contentType = response.headers.get('content-type') || '';
+
+  if (contentType.includes('application/json')) {
+    const error: ZenodoError = await response.json();
+    throw new Error(`Zenodo ${context}: ${error.message}${error.errors ? ` - ${error.errors.map(e => e.message).join(', ')}` : ''}`);
+  } else {
+    // HTML error page (likely auth failure or server error)
+    const text = await response.text();
+    if (response.status === 401) {
+      throw new Error(`Zenodo ${context}: Unauthorized - check your access token`);
+    } else if (response.status === 403) {
+      throw new Error(`Zenodo ${context}: Forbidden - token may lack required permissions`);
+    }
+    throw new Error(`Zenodo ${context}: HTTP ${response.status} - ${text.substring(0, 200)}`);
+  }
+}
+
+/**
  * Create a new Zenodo deposit (draft)
  */
 export async function createDeposit(): Promise<ZenodoDeposit> {
@@ -80,8 +101,7 @@ export async function createDeposit(): Promise<ZenodoDeposit> {
   });
 
   if (!response.ok) {
-    const error: ZenodoError = await response.json();
-    throw new Error(`Zenodo API error: ${error.message}`);
+    await handleZenodoError(response, 'create deposit');
   }
 
   return response.json();
@@ -162,8 +182,7 @@ export async function updateDepositMetadata(
   });
 
   if (!response.ok) {
-    const error: ZenodoError = await response.json();
-    throw new Error(`Zenodo API error: ${error.message}`);
+    await handleZenodoError(response, 'update metadata');
   }
 
   return response.json();
@@ -189,8 +208,7 @@ export async function uploadFile(
   });
 
   if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Zenodo file upload error: ${error}`);
+    await handleZenodoError(response, 'file upload');
   }
 
   return response.json();
@@ -208,8 +226,7 @@ export async function publishDeposit(depositId: number): Promise<ZenodoDeposit> 
   });
 
   if (!response.ok) {
-    const error: ZenodoError = await response.json();
-    throw new Error(`Zenodo publish error: ${error.message}`);
+    await handleZenodoError(response, 'publish');
   }
 
   return response.json();
@@ -226,8 +243,7 @@ export async function getDeposit(depositId: number): Promise<ZenodoDeposit> {
   });
 
   if (!response.ok) {
-    const error: ZenodoError = await response.json();
-    throw new Error(`Zenodo API error: ${error.message}`);
+    await handleZenodoError(response, 'get deposit');
   }
 
   return response.json();
@@ -245,8 +261,7 @@ export async function createNewVersion(depositId: number): Promise<ZenodoDeposit
   });
 
   if (!response.ok) {
-    const error: ZenodoError = await response.json();
-    throw new Error(`Zenodo new version error: ${error.message}`);
+    await handleZenodoError(response, 'new version');
   }
 
   const result = await response.json();
