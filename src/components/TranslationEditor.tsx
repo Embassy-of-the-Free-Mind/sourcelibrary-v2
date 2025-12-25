@@ -362,6 +362,10 @@ export default function TranslationEditor({
 
   // Build image URL with crop if available
   const getImageUrl = (p: Page, forThumbnail = false) => {
+    // If we have a pre-generated compressed photo for a cropped page, use it
+    if (p.crop && p.compressed_photo) {
+      return p.compressed_photo;
+    }
     const baseUrl = p.photo_original || p.photo;
     if (!baseUrl) return '';
     if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
@@ -371,7 +375,8 @@ export default function TranslationEditor({
     return baseUrl;
   };
   const pageImageUrl = getImageUrl(page);
-  const pageThumbnailUrl = page.crop ? getImageUrl(page, true) : (page.thumbnail || page.compressed_photo);
+  // For thumbnails, prefer pre-generated compressed photo, then dynamic crop
+  const pageThumbnailUrl = page.compressed_photo || (page.crop ? getImageUrl(page, true) : page.thumbnail);
 
   // Keyboard navigation
   useEffect(() => {
@@ -944,8 +949,8 @@ export default function TranslationEditor({
           </div>
           <div className="flex-1 overflow-auto p-4">
             <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-              {page.photo ? (
-                <ImageWithMagnifier src={page.photo} thumbnail={page.thumbnail || page.compressed_photo} alt={`Page ${page.page_number}`} scrollable />
+              {pageImageUrl ? (
+                <ImageWithMagnifier src={pageImageUrl} thumbnail={pageThumbnailUrl} alt={`Page ${page.page_number}`} scrollable />
               ) : (
                 <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                   No image available

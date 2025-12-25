@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { nanoid } from 'nanoid';
 
 interface SplitRequest {
   pageId: string;
@@ -124,6 +125,40 @@ export async function POST(request: NextRequest) {
       { id: bookId },
       { $set: { pages: allPages.length } }
     );
+
+    // Queue job to generate cropped images for all split pages
+    const splitPageIds = [
+      ...splits.map(s => s.pageId),  // Original pages (left side)
+      ...newPages.map(p => p.id),     // New pages (right side)
+    ];
+
+    if (splitPageIds.length > 0) {
+      const jobId = nanoid(12);
+      await db.collection('jobs').insertOne({
+        id: jobId,
+        type: 'generate_cropped_images',
+        status: 'pending',
+        progress: {
+          total: splitPageIds.length,
+          completed: 0,
+          failed: 0,
+        },
+        book_id: bookId,
+        created_at: new Date(),
+        updated_at: new Date(),
+        results: [],
+        config: {
+          page_ids: splitPageIds,
+        },
+      });
+
+      // Fire off the first chunk processing (non-blocking)
+      fetch(`${process.env.NEXT_PUBLIC_URL || ''}/api/jobs/${jobId}/process`, {
+        method: 'POST',
+      }).catch(() => {
+        // Ignore errors - job will be picked up later
+      });
+    }
 
     // Log adjustments for algorithm learning (non-blocking)
     const adjustments = splits

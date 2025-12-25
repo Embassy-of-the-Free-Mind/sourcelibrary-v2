@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation } from '@/lib/ai';
 import { detectSplitFromBuffer } from '@/lib/splitDetection';
+import { put } from '@vercel/blob';
+import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
 
 const CHUNK_SIZE = 5; // Process 5 pages per request to stay within timeout
@@ -216,6 +218,72 @@ export async function POST(
                   ...splitResult,
                   detected_at: new Date(),
                 },
+                updated_at: new Date(),
+              },
+            }
+          );
+
+          results.push({
+            pageId,
+            success: true,
+            duration: performance.now() - itemStart,
+          });
+
+        } else if (job.type === 'generate_cropped_images') {
+          // Generate and upload cropped images for split pages
+          if (!page.crop || page.crop.xStart === undefined || page.crop.xEnd === undefined) {
+            results.push({ pageId, success: false, error: 'No crop data' });
+            continue;
+          }
+
+          const imageUrl = page.photo_original || page.photo;
+          if (!imageUrl) {
+            results.push({ pageId, success: false, error: 'No image URL' });
+            continue;
+          }
+
+          // Fetch the original image
+          const imageResponse = await fetch(imageUrl);
+          if (!imageResponse.ok) {
+            results.push({ pageId, success: false, error: 'Failed to fetch image' });
+            continue;
+          }
+
+          const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+
+          // Get image dimensions and calculate crop
+          const metadata = await sharp(imageBuffer).metadata();
+          const imgWidth = metadata.width || 1000;
+          const imgHeight = metadata.height || 1000;
+
+          const left = Math.round((page.crop.xStart / 1000) * imgWidth);
+          const cropWidth = Math.round(((page.crop.xEnd - page.crop.xStart) / 1000) * imgWidth);
+
+          // Crop and compress the image
+          const croppedBuffer = await sharp(imageBuffer)
+            .extract({
+              left,
+              top: 0,
+              width: Math.min(cropWidth, imgWidth - left),
+              height: imgHeight,
+            })
+            .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
+            .jpeg({ quality: 80, progressive: true })
+            .toBuffer();
+
+          // Upload to Vercel Blob
+          const filename = `cropped/${page.book_id}/${page.id}.jpg`;
+          const blob = await put(filename, croppedBuffer, {
+            access: 'public',
+            contentType: 'image/jpeg',
+          });
+
+          // Update page with new compressed photo URL
+          await db.collection('pages').updateOne(
+            { id: pageId },
+            {
+              $set: {
+                compressed_photo: blob.url,
                 updated_at: new Date(),
               },
             }

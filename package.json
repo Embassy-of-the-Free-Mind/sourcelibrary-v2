@@ -14,6 +14,7 @@
     "@auth/mongodb-adapter": "^3.11.1",
     "@google/generative-ai": "^0.24.1",
     "@types/archiver": "^7.0.0",
+    "@vercel/blob": "^2.0.0",
     "archiver": "^7.0.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",

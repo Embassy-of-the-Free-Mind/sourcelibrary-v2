@@ -1,7 +1,7 @@
 export type BookStatus = 'draft' | 'in_progress' | 'complete' | 'published';
 
 // Job management for long-running tasks
-export type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_split' | 'book_import';
+export type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_split' | 'book_import' | 'generate_cropped_images';
 export type JobStatus = 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
 
 export interface JobProgress {
@@ -100,8 +100,8 @@ export interface PipelineState {
 
 // Available Gemini models for processing
 export const GEMINI_MODELS = [
-  { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Latest, best quality' },
-  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Best balance of quality & cost' },
+  { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Best for tables, symbols, complex layouts (5x cost)' },
+  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Good for normal text (recommended default)' },
 ] as const;
 
 export const DEFAULT_MODEL = 'gemini-2.5-flash';
