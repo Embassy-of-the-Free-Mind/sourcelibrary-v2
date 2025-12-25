@@ -13,6 +13,7 @@ import {
   ChevronRight,
   AlertCircle,
   Settings,
+  RotateCcw,
 } from 'lucide-react';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import type { Page, Prompt } from '@/lib/types';
@@ -59,6 +60,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
   const [showSettings, setShowSettings] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState<WorkflowStep | null>(null);
+  const [failedPageIds, setFailedPageIds] = useState<{ ocr: string[]; translation: string[] }>({ ocr: [], translation: [] });
   const stopRequestedRef = useRef(false);
 
   // Prompts

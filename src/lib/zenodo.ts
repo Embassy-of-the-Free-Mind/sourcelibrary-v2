@@ -157,9 +157,10 @@ export async function updateDepositMetadata(
     ],
     related_identifiers: [
       // Link to the original work if we have an identifier
+      // Note: 'isDerivedFrom' is used since Zenodo doesn't have 'isTranslationOf'
       ...(book.ustc_id ? [{
-        identifier: book.ustc_id,
-        relation: 'isTranslationOf',
+        identifier: `USTC ${book.ustc_id}`,
+        relation: 'isDerivedFrom',
         scheme: 'other',
       }] : []),
       // Link to previous version if exists
