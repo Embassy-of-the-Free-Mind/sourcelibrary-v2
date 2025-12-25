@@ -28,9 +28,11 @@ interface ProcessBookWizardProps {
 }
 
 type WorkflowStep = 'ocr' | 'translation';
+type ProcessingMode = 'missing' | 'all';
 
 interface StepStatus {
   enabled: boolean;
+  mode: ProcessingMode;
   total: number;
   pending: number;
   completed: number;
@@ -83,6 +85,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
   const [steps, setSteps] = useState<Record<WorkflowStep, StepStatus>>({
     ocr: {
       enabled: pagesWithoutOcr.length > 0,
+      mode: 'missing',
       total: pages.length,
       pending: pagesWithoutOcr.length,
       completed: 0,
@@ -91,6 +94,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
     },
     translation: {
       enabled: pagesWithoutTranslation.length > 0 || pagesWithoutOcr.length > 0,
+      mode: 'missing',
       total: pages.length,
       pending: pagesWithoutTranslation.length + pagesWithoutOcr.length, // Will translate OCR'd pages
       completed: 0,
@@ -98,6 +102,27 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
       status: 'idle',
     },
   });
+
+  // Update pending counts when mode changes
+  const updateStepMode = (step: WorkflowStep, mode: ProcessingMode) => {
+    if (isProcessing) return;
+    setSteps(prev => {
+      const newPending = mode === 'all'
+        ? pages.length
+        : step === 'ocr'
+          ? pagesWithoutOcr.length
+          : pagesWithoutTranslation.length + (prev.ocr.mode === 'all' ? pages.length : pagesWithoutOcr.length);
+      return {
+        ...prev,
+        [step]: {
+          ...prev[step],
+          mode,
+          pending: newPending,
+          enabled: newPending > 0 || mode === 'all',
+        },
+      };
+    });
+  };
 
   // Fetch prompts
   useEffect(() => {
@@ -254,8 +279,8 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
       }));
 
       // Sort pages by page number for proper continuity
-      const pagesToOcr = pages
-        .filter(p => !p.ocr?.data)
+      // In 'all' mode, process all pages; in 'missing' mode, only pages without OCR
+      const pagesToOcr = (steps.ocr.mode === 'all' ? pages : pages.filter(p => !p.ocr?.data))
         .sort((a, b) => (a.page_number || 0) - (b.page_number || 0));
 
       let completed = 0;
@@ -370,12 +395,14 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
       }));
 
       // Translate pages that have OCR (existing or just processed)
+      // In 'all' mode, translate all pages with OCR; in 'missing' mode, only pages without translation
       // Sort by page number for proper continuity
       const pagesToTranslate = pages
         .filter(p => {
           const hasOcr = p.ocr?.data || ocrResults[p.id];
-          const needsTranslation = !p.translation?.data;
-          return hasOcr && needsTranslation;
+          if (!hasOcr) return false;
+          // In 'all' mode, translate everything with OCR; in 'missing' mode, only untranslated
+          return steps.translation.mode === 'all' || !p.translation?.data;
         })
         .sort((a, b) => (a.page_number || 0) - (b.page_number || 0));
 
@@ -596,7 +623,24 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
                         )}
                       </div>
                       <div className="text-xs text-stone-500">
-                        {status.status === 'idle' && `${status.pending} pages to process`}
+                        {status.status === 'idle' && (
+                          <span className="flex items-center gap-1.5">
+                            <span>{status.pending} pages</span>
+                            <select
+                              value={status.mode}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                updateStepMode(step, e.target.value as ProcessingMode);
+                              }}
+                              onClick={(e) => e.stopPropagation()}
+                              disabled={isProcessing}
+                              className="px-1.5 py-0.5 text-xs border border-stone-300 rounded bg-white hover:border-stone-400 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                            >
+                              <option value="missing">only missing</option>
+                              <option value="all">all (overwrite)</option>
+                            </select>
+                          </span>
+                        )}
                         {status.status === 'running' && (
                           <span>
                             {status.completed} done, {status.pending} remaining
