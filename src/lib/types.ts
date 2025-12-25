@@ -225,6 +225,9 @@ export interface Book {
   // Reading dashboard sections
   reading_sections?: Section[];
 
+  // Table of contents extracted from OCR headings
+  chapters?: Chapter[];
+
   // Book-level reading summary (whole-book overview)
   reading_summary?: {
     overview: string;
@@ -296,6 +299,14 @@ export interface Section {
   concepts?: string[];  // Key concepts/terms introduced
   generated_at?: Date;
   detection_method: 'ai' | 'manual';
+}
+
+// Chapter/heading extracted from OCR for table of contents
+export interface Chapter {
+  title: string;
+  pageId: string;
+  pageNumber: number;
+  level: number;  // 1 = #, 2 = ##, 3 = ###
 }
 
 // Crop coordinates for split pages (0-1000 scale)

@@ -476,6 +476,12 @@ export default function SplitPage({ params }: PageProps) {
     const page = pages.find(p => p.id === pageId);
     if (!page) return;
 
+    // Warn user about data loss
+    const confirmed = window.confirm(
+      'Reset this split?\n\nWarning: All OCR and translation data on these pages will be permanently deleted.'
+    );
+    if (!confirmed) return;
+
     setResettingPage(pageId);
     try {
       // Find the original page and its split sibling
@@ -810,6 +816,11 @@ export default function SplitPage({ params }: PageProps) {
             <p className="text-sm text-stone-600 mb-4">
               You&apos;re about to reset <strong>{alreadySplitPages.length} split page{alreadySplitPages.length !== 1 ? 's' : ''}</strong> back to their original state.
             </p>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+              <p className="text-sm text-amber-800 font-medium">
+                Warning: All OCR and translation data on the split pages will be permanently deleted.
+              </p>
+            </div>
             <p className="text-sm text-stone-500 mb-6">
               This will merge each pair back into a single two-page spread. You can split them again if needed.
             </p>

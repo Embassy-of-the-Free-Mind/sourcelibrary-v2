@@ -70,7 +70,10 @@ async function executeSplitCheck(bookId: string): Promise<{ status: 'completed' 
   };
 }
 
-// Step: OCR
+// Step: OCR - 5 pages per batch, 4 concurrent batches
+const OCR_BATCH_SIZE = 5;
+const OCR_CONCURRENT_BATCHES = 4;
+
 async function executeOcr(
   bookId: string,
   config: PipelineConfig,
@@ -94,26 +97,39 @@ async function executeOcr(
     return { status: 'completed', result: { pagesProcessed: 0, message: 'All pages already have OCR' } };
   }
 
+  // Run batches concurrently for faster processing
   while (remaining > 0) {
-    const res = await fetch(`${baseUrl}/api/books/${bookId}/batch-ocr`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        limit: 25,
-        model: config.model,
-        language: config.language,
-      }),
-    });
+    // Calculate how many concurrent batches to run
+    const batchesToRun = Math.min(OCR_CONCURRENT_BATCHES, Math.ceil(remaining / OCR_BATCH_SIZE));
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      return { status: 'failed', error: errorData.error || 'OCR batch failed' };
+    // Create batch promises
+    const batchPromises = Array.from({ length: batchesToRun }, () =>
+      fetch(`${baseUrl}/api/books/${bookId}/batch-ocr`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          limit: OCR_BATCH_SIZE,
+          model: config.model,
+          language: config.language,
+        }),
+      })
+    );
+
+    // Run all batches concurrently
+    const results = await Promise.all(batchPromises);
+
+    // Process results
+    for (const res of results) {
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        return { status: 'failed', error: errorData.error || 'OCR batch failed' };
+      }
+
+      const data = await res.json();
+      totalProcessed += data.successful || 0;
+      totalFailed += data.failed || 0;
+      remaining = data.remaining || 0;
     }
-
-    const data = await res.json();
-    totalProcessed += data.successful || 0;
-    totalFailed += data.failed || 0;
-    remaining = data.remaining || 0;
 
     await onProgress({ completed: totalProcessed, total });
   }
@@ -128,7 +144,9 @@ async function executeOcr(
   };
 }
 
-// Step: Translate
+// Step: Translate - 5 pages per batch, sequential for context continuity
+const TRANSLATE_BATCH_SIZE = 5;
+
 async function executeTranslate(
   bookId: string,
   config: PipelineConfig,
@@ -152,12 +170,13 @@ async function executeTranslate(
     return { status: 'completed', result: { pagesTranslated: 0, message: 'All pages already translated' } };
   }
 
+  // Run batches sequentially for context continuity (uses previous page as context)
   while (remaining > 0) {
     const res = await fetch(`${baseUrl}/api/books/${bookId}/batch-translate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        limit: 50,
+        limit: TRANSLATE_BATCH_SIZE,
         model: config.model,
       }),
     });
