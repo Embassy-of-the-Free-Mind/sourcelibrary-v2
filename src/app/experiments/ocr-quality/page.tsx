@@ -173,6 +173,43 @@ export default function OCRQualityExperimentPage() {
           </div>
         </div>
 
+        {/* Motivation */}
+        <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl border border-purple-200 p-6 mb-6">
+          <h2 className="font-semibold text-purple-900 mb-3">Why This Experiment?</h2>
+
+          <div className="space-y-3 text-sm text-purple-900">
+            <p>
+              <strong>The problem:</strong> We want high-quality OCR while minimizing API costs and time.
+              Batching multiple pages per request is faster and cheaper, but does it hurt accuracy?
+            </p>
+
+            <div className="bg-white/60 rounded-lg p-3">
+              <p className="font-medium mb-2">Competing theories:</p>
+              <ul className="space-y-1 text-purple-800">
+                <li>
+                  <strong>"Lost in the Middle"</strong> (Liu et al., 2023): LLMs attend well to the
+                  beginning and end of context, but information in the middle gets less attention.
+                  Larger batches → middle pages may degrade.
+                </li>
+                <li>
+                  <strong>Context helps continuity:</strong> Historical texts have words spanning page
+                  breaks, consistent terminology, and unusual letterforms. Seeing multiple pages
+                  together might improve consistency.
+                </li>
+                <li>
+                  <strong>Prompt specificity:</strong> Detailed prompts with rules for abbreviations,
+                  letterforms, and structure might improve accuracy—or might confuse the model.
+                </li>
+              </ul>
+            </div>
+
+            <p>
+              <strong>The tension:</strong> Efficiency (large batches, simple prompts) vs. Quality
+              (small batches, detailed prompts). This experiment finds the sweet spot.
+            </p>
+          </div>
+        </div>
+
         {/* Experiment Design Summary */}
         <div className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
           <h2 className="font-semibold text-stone-900 mb-4">Experiment Design</h2>
