@@ -12,6 +12,46 @@ const CONDITION_LABELS: Record<string, string> = {
   'b20_elaborate': 'Batch 20 + Elaborate',
 };
 
+// ELO rating calculation
+function calculateELO(judgments: Array<{ condition_a: string; condition_b: string; winner: string }>) {
+  const K = 32; // K-factor
+  const ratings: Record<string, number> = {};
+
+  // Initialize all conditions at 1500
+  const conditions = new Set<string>();
+  judgments.forEach(j => {
+    conditions.add(j.condition_a);
+    conditions.add(j.condition_b);
+  });
+  conditions.forEach(c => { ratings[c] = 1500; });
+
+  // Process each judgment
+  judgments.forEach(j => {
+    const rA = ratings[j.condition_a];
+    const rB = ratings[j.condition_b];
+
+    // Expected scores
+    const eA = 1 / (1 + Math.pow(10, (rB - rA) / 400));
+    const eB = 1 / (1 + Math.pow(10, (rA - rB) / 400));
+
+    // Actual scores
+    let sA: number, sB: number;
+    if (j.winner === 'a') {
+      sA = 1; sB = 0;
+    } else if (j.winner === 'b') {
+      sA = 0; sB = 1;
+    } else {
+      sA = 0.5; sB = 0.5;
+    }
+
+    // Update ratings
+    ratings[j.condition_a] = rA + K * (sA - eA);
+    ratings[j.condition_b] = rB + K * (sB - eB);
+  });
+
+  return ratings;
+}
+
 // Simple binomial test (two-tailed) using normal approximation
 function binomialPValue(wins: number, n: number): number {
   if (n === 0) return 1;
@@ -145,6 +185,13 @@ export async function GET(
       }
     });
 
+    // Calculate ELO ratings
+    const eloRatings = calculateELO(judgments.map(j => ({
+      condition_a: j.condition_a,
+      condition_b: j.condition_b,
+      winner: j.winner,
+    })));
+
     const conditions = Object.entries(conditionStats)
       .filter(([_, stats]) => stats.comparisons > 0)
       .map(([cond, stats]) => {
@@ -157,15 +204,19 @@ export async function GET(
           total_ties: stats.ties,
           total_comparisons: stats.comparisons,
           win_rate: nonTies > 0 ? stats.wins / nonTies : 0.5,
+          elo: Math.round(eloRatings[cond] || 1500),
         };
       });
 
+    // Sort by ELO for ranking
+    const rankedConditions = [...conditions].sort((a, b) => b.elo - a.elo);
+
     // Generate recommendation
-    const bestCondition = conditions.sort((a, b) => b.win_rate - a.win_rate)[0];
+    const bestCondition = rankedConditions[0];
     let recommendation = `Based on ${judgments.length} judgments, `;
 
     if (bestCondition) {
-      recommendation += `**${bestCondition.label}** performed best with a ${(bestCondition.win_rate * 100).toFixed(0)}% win rate. `;
+      recommendation += `**${bestCondition.label}** performed best (ELO: ${bestCondition.elo}). `;
 
       // Check if elaborate vs simple matters
       const promptComp = comparisons.find(c => c.comparison_type.includes('Simple vs Elaborate'));
@@ -187,7 +238,7 @@ export async function GET(
 
     return NextResponse.json({
       comparisons,
-      conditions,
+      conditions: rankedConditions,
       recommendation,
       total_judgments: judgments.length,
     });
