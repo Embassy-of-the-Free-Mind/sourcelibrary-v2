@@ -115,7 +115,7 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
           ol: ({ children }) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
           li: ({ children }) => <li className="mb-1">{children}</li>,
           blockquote: ({ children }) => (
-            <blockquote className="border-l-2 border-amber-400 pl-3 my-2 italic text-stone-600 bg-amber-50/50 py-1 pr-2 rounded-r">
+            <blockquote className="border-l-2 border-amber-400 pl-3 my-2 italic bg-amber-50 py-1 pr-2 rounded-r [&_p]:text-stone-700 [&_p]:mb-0">
               {children}
             </blockquote>
           ),
@@ -190,11 +190,11 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
                     className={`max-w-[85%] px-4 py-2 rounded-2xl text-sm ${
                       msg.role === 'user'
                         ? 'bg-amber-600 text-white rounded-br-md'
-                        : 'bg-stone-100 text-stone-800 rounded-bl-md'
+                        : 'bg-stone-100 rounded-bl-md'
                     }`}
                   >
                     {msg.role === 'assistant' ? (
-                      <div className="prose prose-sm prose-stone max-w-none">
+                      <div className="text-stone-800 [&_p]:text-stone-800 [&_li]:text-stone-800 [&_strong]:text-stone-900">
                         {renderContent(msg.content)}
                       </div>
                     ) : (

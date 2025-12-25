@@ -20,13 +20,27 @@ function extractHeadingsFromOcr(ocrText: string): Array<{ title: string; level: 
       // Remove centering markers
       title = title.replace(/^->/, '').replace(/<-$/, '').trim();
 
+      // Remove bold markers
+      title = title.replace(/^\*\*/, '').replace(/\*\*$/, '').trim();
+
       // Skip if it's just a page number or meta tag
       if (title.startsWith('[[') || title.match(/^page\s*\d+$/i)) {
         continue;
       }
 
-      // Skip very short titles (likely not real chapters)
-      if (title.length < 3) {
+      // Skip very short titles (likely drop caps or fragments)
+      if (title.length < 5) {
+        continue;
+      }
+
+      // Skip if it looks like a sentence fragment (starts lowercase, or is just one word with no caps)
+      if (/^[a-z]/.test(title) && !title.includes(' ')) {
+        continue;
+      }
+
+      // Skip lines that are clearly continuation text (start with common Latin words mid-sentence)
+      const continuationPatterns = /^(et|uel|aut|sed|nam|cum|si|in|de|ad|ex|per|pro|quod|quia|quam|tum|tunc|enim|autem|uero|ergo|igitur|itaque)\s/i;
+      if (continuationPatterns.test(title)) {
         continue;
       }
 
