@@ -412,16 +412,110 @@ export default function BookPagesSection({ bookId, bookTitle, pages }: BookPages
       updateJobProgress();
     };
 
-    // Process in parallel batches with delay between batches
-    for (let i = 0; i < pageIds.length; i += concurrency) {
-      if (stopRequestedRef.current) break;
+    // For translation, use batch API with context (5 pages per request)
+    // For OCR/summary, use parallel per-page processing
+    if (action === 'translation') {
+      const TRANSLATION_BATCH_SIZE = 5;
+      let previousContext = '';
 
-      const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
-      await Promise.all(batch.map(processPage));
+      // Sort pages by page number for proper continuity
+      const sortedPageIds = [...pageIds].sort((a, b) => {
+        const pageA = pages.find(p => p.id === a);
+        const pageB = pages.find(p => p.id === b);
+        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
+      });
 
-      // Small delay between batches to avoid rate limiting
-      if (i + concurrency < pageIds.length && !stopRequestedRef.current) {
-        await sleep(500);
+      for (let i = 0; i < sortedPageIds.length; i += TRANSLATION_BATCH_SIZE) {
+        if (stopRequestedRef.current) break;
+
+        const batchIds = sortedPageIds.slice(i, Math.min(i + TRANSLATION_BATCH_SIZE, sortedPageIds.length));
+        const batchPages = batchIds
+          .map(id => pages.find(p => p.id === id))
+          .filter((p): p is Page => p !== undefined && !!p.ocr?.data);
+
+        if (batchPages.length === 0) {
+          batchIds.forEach(id => failed.push(id));
+          processedCount += batchIds.length;
+          continue;
+        }
+
+        try {
+          const response = await fetchWithTimeout('/api/process/batch-translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              pages: batchPages.map(p => ({
+                pageId: p.id,
+                ocrText: p.ocr?.data || '',
+                pageNumber: p.page_number,
+              })),
+              sourceLanguage: 'Latin',
+              targetLanguage: 'English',
+              customPrompt: editedPrompts.translation,
+              model: selectedModel,
+              previousContext,
+            }),
+          }, FETCH_TIMEOUT * 3); // Longer timeout for batch
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.usage) {
+              runningCost += data.usage.costUsd || 0;
+              runningTokens += data.usage.totalTokens || 0;
+            }
+
+            // Track which pages were translated
+            const translatedIds = Object.keys(data.translations || {});
+            translatedIds.forEach(id => completed.push(id));
+
+            // Mark untranslated pages as failed
+            batchIds.forEach(id => {
+              if (!translatedIds.includes(id)) {
+                failed.push(id);
+              }
+            });
+
+            // Use last translation as context for next batch
+            if (translatedIds.length > 0) {
+              const lastId = batchPages[batchPages.length - 1].id;
+              previousContext = data.translations[lastId] || '';
+            }
+          } else {
+            batchIds.forEach(id => failed.push(id));
+          }
+        } catch (error) {
+          console.error('Batch translation error:', error);
+          batchIds.forEach(id => failed.push(id));
+        }
+
+        processedCount += batchIds.length;
+        setProcessing(prev => ({
+          ...prev,
+          currentIndex: processedCount,
+          completed: [...completed],
+          failed: [...failed],
+          totalCost: runningCost,
+          totalTokens: runningTokens,
+        }));
+        updateJobProgress();
+
+        // Small delay between batches
+        if (i + TRANSLATION_BATCH_SIZE < sortedPageIds.length && !stopRequestedRef.current) {
+          await sleep(500);
+        }
+      }
+    } else {
+      // OCR and Summary: parallel per-page processing
+      for (let i = 0; i < pageIds.length; i += concurrency) {
+        if (stopRequestedRef.current) break;
+
+        const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
+        await Promise.all(batch.map(processPage));
+
+        // Small delay between batches to avoid rate limiting
+        if (i + concurrency < pageIds.length && !stopRequestedRef.current) {
+          await sleep(500);
+        }
       }
     }
 

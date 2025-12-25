@@ -299,40 +299,70 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
       }));
 
       // Translate pages that have OCR (existing or just processed)
-      const pagesToTranslate = pages.filter(p => {
-        const hasOcr = p.ocr?.data || ocrResults[p.id];
-        const needsTranslation = !p.translation?.data;
-        return hasOcr && needsTranslation;
-      });
+      // Sort by page number for proper continuity
+      const pagesToTranslate = pages
+        .filter(p => {
+          const hasOcr = p.ocr?.data || ocrResults[p.id];
+          const needsTranslation = !p.translation?.data;
+          return hasOcr && needsTranslation;
+        })
+        .sort((a, b) => (a.page_number || 0) - (b.page_number || 0));
 
       let completed = 0;
       let failed = 0;
 
-      // Process a single translation page
-      const processTranslatePage = async (page: Page) => {
-        if (stopRequestedRef.current) return;
+      // Process in batches of 5 with context continuity
+      const TRANSLATION_BATCH_SIZE = 5;
+      let previousContext = '';
 
-        const ocrText = ocrResults[page.id] || page.ocr?.data;
-        const result = await processPage(page, 'translation', ocrText);
+      for (let i = 0; i < pagesToTranslate.length; i += TRANSLATION_BATCH_SIZE) {
+        if (stopRequestedRef.current) break;
 
-        if (result.success) {
-          completed++;
-        } else {
-          failed++;
+        const batch = pagesToTranslate.slice(i, Math.min(i + TRANSLATION_BATCH_SIZE, pagesToTranslate.length));
+
+        try {
+          const response = await fetchWithTimeout('/api/process/batch-translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              pages: batch.map(p => ({
+                pageId: p.id,
+                ocrText: ocrResults[p.id] || p.ocr?.data || '',
+                pageNumber: p.page_number,
+              })),
+              sourceLanguage: 'Latin',
+              targetLanguage: 'English',
+              customPrompt: getPromptContent('translation'),
+              model: selectedModel,
+              previousContext,
+            }),
+          }, FETCH_TIMEOUT * 3);
+
+          if (response.ok) {
+            const data = await response.json();
+            const translatedIds = Object.keys(data.translations || {});
+            completed += translatedIds.length;
+            failed += batch.length - translatedIds.length;
+
+            // Use last translation as context for next batch
+            if (translatedIds.length > 0) {
+              const lastId = batch[batch.length - 1].id;
+              previousContext = data.translations[lastId] || '';
+            }
+          } else {
+            failed += batch.length;
+          }
+        } catch (error) {
+          console.error('Batch translation error:', error);
+          failed += batch.length;
         }
 
         setSteps(prev => ({
           ...prev,
           translation: { ...prev.translation, completed, failed, pending: pagesToTranslate.length - completed - failed },
         }));
-      };
 
-      // Process in parallel batches
-      for (let i = 0; i < pagesToTranslate.length; i += concurrency) {
-        if (stopRequestedRef.current) break;
-        const batch = pagesToTranslate.slice(i, Math.min(i + concurrency, pagesToTranslate.length));
-        await Promise.all(batch.map(processTranslatePage));
-        if (i + concurrency < pagesToTranslate.length) await sleep(300);
+        if (i + TRANSLATION_BATCH_SIZE < pagesToTranslate.length) await sleep(300);
       }
 
       totalCompleted += completed;

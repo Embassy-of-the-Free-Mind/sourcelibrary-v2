@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { TranslationEdition } from '@/lib/types';
-import { BookMarked, ChevronDown, ChevronUp, ExternalLink, Copy, Check, Calendar, FileText, Users, Hash } from 'lucide-react';
+import { BookMarked, ChevronDown, ChevronUp, ExternalLink, Copy, Check, Calendar, FileText, Users, Hash, Sparkles, Loader2 } from 'lucide-react';
 
 interface EditionsPanelProps {
   bookId: string;
@@ -10,12 +10,15 @@ interface EditionsPanelProps {
   onDoiAdded?: (editionId: string, doi: string) => void;
 }
 
-export default function EditionsPanel({ bookId, editions, onDoiAdded }: EditionsPanelProps) {
+export default function EditionsPanel({ bookId, editions: initialEditions, onDoiAdded }: EditionsPanelProps) {
+  const [editions, setEditions] = useState(initialEditions);
   const [isExpanded, setIsExpanded] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [addingDoiFor, setAddingDoiFor] = useState<string | null>(null);
   const [doiInput, setDoiInput] = useState('');
   const [isSavingDoi, setIsSavingDoi] = useState(false);
+  const [isMintingDoi, setIsMintingDoi] = useState(false);
+  const [mintError, setMintError] = useState<string | null>(null);
 
   if (!editions || editions.length === 0) {
     return null;
@@ -52,6 +55,37 @@ export default function EditionsPanel({ bookId, editions, onDoiAdded }: Editions
 }`;
   };
 
+  const handleMintDoi = async (editionId: string) => {
+    setIsMintingDoi(true);
+    setMintError(null);
+
+    try {
+      const response = await fetch(`/api/books/${bookId}/editions/mint-doi`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ edition_id: editionId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to mint DOI');
+      }
+
+      // Update local state
+      setEditions(prev => prev.map(e =>
+        e.id === editionId
+          ? { ...e, doi: data.doi, doi_url: data.doi_url, zenodo_id: data.zenodo_id, zenodo_url: data.zenodo_url }
+          : e
+      ));
+      onDoiAdded?.(editionId, data.doi);
+    } catch (error) {
+      setMintError(error instanceof Error ? error.message : 'Failed to mint DOI');
+    } finally {
+      setIsMintingDoi(false);
+    }
+  };
+
   const handleSaveDoi = async (editionId: string) => {
     if (!doiInput.trim()) return;
 
@@ -69,6 +103,9 @@ export default function EditionsPanel({ bookId, editions, onDoiAdded }: Editions
       });
 
       if (response.ok) {
+        setEditions(prev => prev.map(e =>
+          e.id === editionId ? { ...e, doi, doi_url: `https://doi.org/${doi}` } : e
+        ));
         onDoiAdded?.(editionId, doi);
         setAddingDoiFor(null);
         setDoiInput('');
@@ -146,15 +183,27 @@ export default function EditionsPanel({ bookId, editions, onDoiAdded }: Editions
                     </div>
                   </div>
                   {currentEdition.doi ? (
-                    <a
-                      href={currentEdition.doi_url || `https://doi.org/${currentEdition.doi}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm hover:bg-amber-200 transition-colors"
-                    >
-                      DOI: {currentEdition.doi}
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={currentEdition.doi_url || `https://doi.org/${currentEdition.doi}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm hover:bg-amber-200 transition-colors"
+                      >
+                        DOI: {currentEdition.doi}
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                      {currentEdition.zenodo_url && (
+                        <a
+                          href={currentEdition.zenodo_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-stone-500 hover:text-stone-700"
+                        >
+                          Zenodo
+                        </a>
+                      )}
+                    </div>
                   ) : addingDoiFor === currentEdition.id ? (
                     <div className="flex items-center gap-2">
                       <input
@@ -179,14 +228,40 @@ export default function EditionsPanel({ bookId, editions, onDoiAdded }: Editions
                       </button>
                     </div>
                   ) : (
-                    <button
-                      onClick={() => setAddingDoiFor(currentEdition.id)}
-                      className="px-3 py-1 text-sm text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
-                    >
-                      + Add DOI
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => handleMintDoi(currentEdition.id)}
+                        disabled={isMintingDoi}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 disabled:opacity-50 transition-all shadow-sm"
+                      >
+                        {isMintingDoi ? (
+                          <>
+                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                            Minting...
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-3.5 h-3.5" />
+                            Mint DOI via Zenodo
+                          </>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => setAddingDoiFor(currentEdition.id)}
+                        className="px-2 py-1 text-xs text-stone-500 hover:text-stone-700"
+                      >
+                        or enter manually
+                      </button>
+                    </div>
                   )}
                 </div>
+
+                {/* Mint error */}
+                {mintError && (
+                  <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                    {mintError}
+                  </div>
+                )}
 
                 {/* Metadata grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm pt-2">
