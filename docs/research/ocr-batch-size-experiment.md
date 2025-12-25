@@ -285,6 +285,15 @@ This matches our current production pipeline and validates that architecture.
 | **Caching** | Cache repeated patterns | Reduce redundant calls |
 | **Confidence Scoring** | Flag uncertain passages | Prioritize human review |
 
+#### Reading Experience Improvements
+
+| Feature | Description | Implementation |
+|---------|-------------|----------------|
+| **Chapter/Section TOC** | Auto-generate table of contents from headings | Parse OCR markdown for `#`, `##`, `###`; store as `{ chapters: [{ title, pageId, level }] }`; render as clickable nav |
+| **Rolling Context Summary** | Cumulative book context for better translation | After each page, generate ~200 token summary of key facts, characters, terminology; pass to subsequent translations |
+| **Reading Progress** | Track user's position in book | Store last-read page, show progress bar |
+| **Heading Navigation** | Jump between sections while reading | Use extracted headings for in-page navigation |
+
 #### Infrastructure Improvements
 
 - **A/B Testing Framework:** Production experiments with real users
