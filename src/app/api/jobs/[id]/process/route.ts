@@ -6,7 +6,90 @@ import { put } from '@vercel/blob';
 import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
 
-const CHUNK_SIZE = 5; // Process 5 pages per request to stay within timeout
+const CHUNK_SIZE = 5; // Process 5 pages per request for AI jobs
+const CROP_CHUNK_SIZE = 20; // Process more for cropping (no AI, just image manipulation)
+const CROP_PARALLEL = 5; // Number of crops to run in parallel
+
+// Helper function to process a single cropped image
+async function processCroppedImage(
+  page: { id: string; book_id: string; crop: { xStart: number; xEnd: number }; photo_original?: string; photo?: string },
+  db: Awaited<ReturnType<typeof getDb>>
+): Promise<JobResult> {
+  const startTime = performance.now();
+  const pageId = page.id;
+
+  try {
+    if (!page.crop || page.crop.xStart === undefined || page.crop.xEnd === undefined) {
+      return { pageId, success: false, error: 'No crop data' };
+    }
+
+    const imageUrl = page.photo_original || page.photo;
+    if (!imageUrl) {
+      return { pageId, success: false, error: 'No image URL' };
+    }
+
+    // Fetch the original image
+    const imageResponse = await fetch(imageUrl);
+    if (!imageResponse.ok) {
+      return { pageId, success: false, error: 'Failed to fetch image' };
+    }
+
+    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+
+    // Get image dimensions and calculate crop
+    const metadata = await sharp(imageBuffer).metadata();
+    const imgWidth = metadata.width || 1000;
+    const imgHeight = metadata.height || 1000;
+
+    const left = Math.round((page.crop.xStart / 1000) * imgWidth);
+    const cropWidth = Math.round(((page.crop.xEnd - page.crop.xStart) / 1000) * imgWidth);
+
+    // Crop and compress the image
+    const croppedBuffer = await sharp(imageBuffer)
+      .extract({
+        left,
+        top: 0,
+        width: Math.min(cropWidth, imgWidth - left),
+        height: imgHeight,
+      })
+      .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: 80, progressive: true })
+      .toBuffer();
+
+    // Upload to Vercel Blob
+    const filename = `cropped/${page.book_id}/${page.id}.jpg`;
+    const blob = await put(filename, croppedBuffer, {
+      access: 'public',
+      contentType: 'image/jpeg',
+      allowOverwrite: true,
+    });
+
+    // Update page with new cropped photo URL
+    await db.collection('pages').updateOne(
+      { id: pageId },
+      {
+        $set: {
+          cropped_photo: blob.url,
+          updated_at: new Date(),
+        },
+      }
+    );
+
+    return {
+      pageId,
+      success: true,
+      duration: performance.now() - startTime,
+    };
+  } catch (error) {
+    console.error(`Error processing cropped image ${pageId}:`, error);
+    return {
+      pageId,
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+      duration: performance.now() - startTime,
+    };
+  }
+}
 
 // POST - Process next chunk of the job
 export async function POST(
@@ -83,8 +166,9 @@ export async function POST(
       });
     }
 
-    // Process a chunk
-    const chunkPageIds = remainingPageIds.slice(0, CHUNK_SIZE);
+    // Process a chunk - use larger chunk size for cropping jobs
+    const chunkSize = job.type === 'generate_cropped_images' ? CROP_CHUNK_SIZE : CHUNK_SIZE;
+    const chunkPageIds = remainingPageIds.slice(0, chunkSize);
     const results: JobResult[] = [];
 
     // Get page data
@@ -94,11 +178,41 @@ export async function POST(
 
     const pageMap = new Map(pages.map(p => [p.id, p]));
 
-    // Get previous page for context (if processing sequentially)
-    let previousOcr: string | undefined;
-    let previousTranslation: string | undefined;
+    // Handle cropped image generation with parallel processing
+    if (job.type === 'generate_cropped_images') {
+      console.log(`[CropJob ${id}] Processing ${pages.length} pages in parallel (${CROP_PARALLEL} at a time)`);
 
-    for (const pageId of chunkPageIds) {
+      // Update job status
+      await db.collection('jobs').updateOne(
+        { id },
+        {
+          $set: {
+            'progress.currentItem': `Processing ${pages.length} cropped images...`,
+            updated_at: new Date(),
+          },
+        }
+      );
+
+      // Process in batches of CROP_PARALLEL
+      for (let i = 0; i < pages.length; i += CROP_PARALLEL) {
+        const batch = pages.slice(i, i + CROP_PARALLEL);
+        const batchResults = await Promise.all(
+          batch.map(page => processCroppedImage(page as unknown as { id: string; book_id: string; crop: { xStart: number; xEnd: number }; photo_original?: string; photo?: string }, db))
+        );
+        results.push(...batchResults);
+
+        // Log progress
+        const completed = results.filter(r => r.success).length;
+        console.log(`[CropJob ${id}] Batch ${Math.floor(i / CROP_PARALLEL) + 1}: ${batchResults.filter(r => r.success).length}/${batch.length} succeeded (total: ${completed}/${pages.length})`);
+      }
+
+      // Skip the main for loop for cropped images
+    } else {
+      // Get previous page for context (if processing sequentially)
+      let previousOcr: string | undefined;
+      let previousTranslation: string | undefined;
+
+      for (const pageId of chunkPageIds) {
       const page = pageMap.get(pageId);
       if (!page) {
         results.push({ pageId, success: false, error: 'Page not found' });
@@ -229,73 +343,8 @@ export async function POST(
             duration: performance.now() - itemStart,
           });
 
-        } else if (job.type === 'generate_cropped_images') {
-          // Generate and upload cropped images for split pages
-          if (!page.crop || page.crop.xStart === undefined || page.crop.xEnd === undefined) {
-            results.push({ pageId, success: false, error: 'No crop data' });
-            continue;
-          }
-
-          const imageUrl = page.photo_original || page.photo;
-          if (!imageUrl) {
-            results.push({ pageId, success: false, error: 'No image URL' });
-            continue;
-          }
-
-          // Fetch the original image
-          const imageResponse = await fetch(imageUrl);
-          if (!imageResponse.ok) {
-            results.push({ pageId, success: false, error: 'Failed to fetch image' });
-            continue;
-          }
-
-          const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
-
-          // Get image dimensions and calculate crop
-          const metadata = await sharp(imageBuffer).metadata();
-          const imgWidth = metadata.width || 1000;
-          const imgHeight = metadata.height || 1000;
-
-          const left = Math.round((page.crop.xStart / 1000) * imgWidth);
-          const cropWidth = Math.round(((page.crop.xEnd - page.crop.xStart) / 1000) * imgWidth);
-
-          // Crop and compress the image
-          const croppedBuffer = await sharp(imageBuffer)
-            .extract({
-              left,
-              top: 0,
-              width: Math.min(cropWidth, imgWidth - left),
-              height: imgHeight,
-            })
-            .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
-            .jpeg({ quality: 80, progressive: true })
-            .toBuffer();
-
-          // Upload to Vercel Blob
-          const filename = `cropped/${page.book_id}/${page.id}.jpg`;
-          const blob = await put(filename, croppedBuffer, {
-            access: 'public',
-            contentType: 'image/jpeg',
-            allowOverwrite: true,
-          });
-
-          // Update page with new cropped photo URL
-          await db.collection('pages').updateOne(
-            { id: pageId },
-            {
-              $set: {
-                cropped_photo: blob.url,
-                updated_at: new Date(),
-              },
-            }
-          );
-
-          results.push({
-            pageId,
-            success: true,
-            duration: performance.now() - itemStart,
-          });
         }
+        // Note: generate_cropped_images is handled separately above with parallel processing
       } catch (error) {
         console.error(`Error processing page ${pageId}:`, error);
         results.push({
@@ -305,7 +354,8 @@ export async function POST(
           duration: performance.now() - itemStart,
         });
       }
-    }
+      }
+    } // Close else block for non-crop jobs
 
     // Update job with results
     const successCount = results.filter(r => r.success).length;
