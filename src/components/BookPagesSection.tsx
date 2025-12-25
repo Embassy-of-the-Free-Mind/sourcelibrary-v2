@@ -19,7 +19,10 @@ import {
   DollarSign,
   ImageIcon,
   RotateCcw,
-  AlertCircle
+  AlertCircle,
+  GripVertical,
+  ArrowUpDown,
+  RefreshCw
 } from 'lucide-react';
 import DownloadButton from './DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
@@ -105,14 +108,27 @@ function formatRelativeTime(date: Date | string | undefined): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export default function BookPagesSection({ bookId, bookTitle, pages }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages }: BookPagesSectionProps) {
   const router = useRouter();
+  const [pages, setPages] = useState(initialPages);
   const [batchMode, setBatchMode] = useState(false);
+  const [reorderMode, setReorderMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [action, setAction] = useState<ActionType>('ocr');
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [concurrency, setConcurrency] = useState(5); // Parallel requests
   const [showPromptSettings, setShowPromptSettings] = useState(false);
+
+  // Reorder mode state
+  const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
+  const [dragOverPageId, setDragOverPageId] = useState<string | null>(null);
+  const [savingOrder, setSavingOrder] = useState(false);
+  const [orderChanged, setOrderChanged] = useState(false);
+
+  // Update pages when initialPages changes
+  useEffect(() => {
+    setPages(initialPages);
+  }, [initialPages]);
 
   // Prompt library state
   const [prompts, setPrompts] = useState<Record<ActionType, Prompt[]>>({
