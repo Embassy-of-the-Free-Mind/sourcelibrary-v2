@@ -96,6 +96,7 @@ export interface DublinCoreMetadata {
 
 // Image source providers
 export type ImageSourceProvider =
+  | 'efm'  // Embassy of the Free Mind (Bibliotheca Philosophica Hermetica)
   | 'internet_archive'
   | 'google_books'
   | 'hathi_trust'

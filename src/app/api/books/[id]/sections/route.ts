@@ -77,7 +77,7 @@ export async function GET(
               startPage: currentSection.startPage,
               endPage: page.page_number - 1,
               detection_method: 'ai',
-              detected_at: new Date()
+              generated_at: new Date()
             });
           }
 
@@ -100,7 +100,7 @@ export async function GET(
         startPage: currentSection.startPage,
         endPage: pages[pages.length - 1].page_number,
         detection_method: 'ai',
-        detected_at: new Date()
+        generated_at: new Date()
       });
     }
 
@@ -112,7 +112,7 @@ export async function GET(
         startPage: 1,
         endPage: pages[pages.length - 1].page_number,
         detection_method: 'ai',
-        detected_at: new Date()
+        generated_at: new Date()
       });
     }
 
@@ -164,7 +164,7 @@ export async function POST(
         endPage,
         summary: s.summary,
         detection_method: 'manual' as const,
-        detected_at: new Date()
+        generated_at: new Date()
       };
     });
 

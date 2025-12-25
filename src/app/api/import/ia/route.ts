@@ -135,6 +135,14 @@ export async function POST(request: NextRequest) {
         dc_identifier: [`IA:${ia_identifier}`],
         dc_source: `https://archive.org/details/${ia_identifier}`
       },
+      image_source: {
+        provider: 'internet_archive',
+        provider_name: 'Internet Archive',
+        source_url: `https://archive.org/details/${ia_identifier}`,
+        identifier: ia_identifier,
+        license: 'publicdomain',
+        access_date: new Date(),
+      },
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date()

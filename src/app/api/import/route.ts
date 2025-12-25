@@ -31,7 +31,8 @@ export async function POST(request: NextRequest) {
       pagesDir,
       categories,
       ia_identifier,
-      dublin_core
+      dublin_core,
+      image_source,
     } = body;
 
     // Validate required fields
@@ -95,6 +96,7 @@ export async function POST(request: NextRequest) {
       categories: categories || [],
       ia_identifier: ia_identifier || null,
       dublin_core: dublin_core || null,
+      image_source: image_source || null,
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date()
