@@ -270,7 +270,7 @@ export async function GET(request: NextRequest) {
     const bookId = searchParams.get('book_id'); // Get keywords for specific book
 
     // Check for cached graph (stored in a separate collection)
-    const cache = await db.collection('keyword_graph').findOne({ _id: 'current' });
+    const cache = await db.collection('keyword_graph').findOne({ cache_id: 'current' });
 
     let graph: KeywordGraph;
 
@@ -293,8 +293,8 @@ export async function GET(request: NextRequest) {
 
       // Cache the result
       await db.collection('keyword_graph').updateOne(
-        { _id: 'current' },
-        { $set: { ...graph, _id: 'current' } },
+        { cache_id: 'current' },
+        { $set: { ...graph, cache_id: 'current' } },
         { upsert: true }
       );
     }
@@ -368,8 +368,8 @@ export async function POST(request: NextRequest) {
 
     // Cache the result
     await db.collection('keyword_graph').updateOne(
-      { _id: 'current' },
-      { $set: { ...graph, _id: 'current' } },
+      { cache_id: 'current' },
+      { $set: { ...graph, cache_id: 'current' } },
       { upsert: true }
     );
 
