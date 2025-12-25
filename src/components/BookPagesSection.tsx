@@ -504,8 +504,101 @@ export default function BookPagesSection({ bookId, bookTitle, pages }: BookPages
           await sleep(500);
         }
       }
+    } else if (action === 'ocr') {
+      // OCR: batch of 5 images with context continuity
+      const OCR_BATCH_SIZE = 5;
+      let previousContext = '';
+
+      // Sort pages by page number for proper continuity
+      const sortedPageIds = [...pageIds].sort((a, b) => {
+        const pageA = pages.find(p => p.id === a);
+        const pageB = pages.find(p => p.id === b);
+        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
+      });
+
+      for (let i = 0; i < sortedPageIds.length; i += OCR_BATCH_SIZE) {
+        if (stopRequestedRef.current) break;
+
+        const batchIds = sortedPageIds.slice(i, Math.min(i + OCR_BATCH_SIZE, sortedPageIds.length));
+        const batchPages = batchIds
+          .map(id => pages.find(p => p.id === id))
+          .filter((p): p is Page => p !== undefined);
+
+        if (batchPages.length === 0) {
+          batchIds.forEach(id => failed.push(id));
+          processedCount += batchIds.length;
+          continue;
+        }
+
+        try {
+          const response = await fetchWithTimeout('/api/process/batch-ocr', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              pages: batchPages.map(p => ({
+                pageId: p.id,
+                imageUrl: p.photo,
+                pageNumber: p.page_number,
+              })),
+              language: 'Latin',
+              customPrompt: editedPrompts.ocr,
+              model: selectedModel,
+              previousContext,
+            }),
+          }, FETCH_TIMEOUT * 5); // Longer timeout for batch with images
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.usage) {
+              runningCost += data.usage.costUsd || 0;
+              runningTokens += data.usage.totalTokens || 0;
+            }
+
+            // Track which pages were OCR'd
+            const ocrIds = Object.keys(data.ocrResults || {});
+            ocrIds.forEach(id => completed.push(id));
+
+            // Add failed fetches
+            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+
+            // Mark un-OCR'd pages as failed
+            batchIds.forEach(id => {
+              if (!ocrIds.includes(id) && !(data.failedPageIds || []).includes(id)) {
+                failed.push(id);
+              }
+            });
+
+            // Use last OCR as context for next batch
+            if (ocrIds.length > 0) {
+              const lastId = batchPages[batchPages.length - 1].id;
+              previousContext = data.ocrResults[lastId] || '';
+            }
+          } else {
+            batchIds.forEach(id => failed.push(id));
+          }
+        } catch (error) {
+          console.error('Batch OCR error:', error);
+          batchIds.forEach(id => failed.push(id));
+        }
+
+        processedCount += batchIds.length;
+        setProcessing(prev => ({
+          ...prev,
+          currentIndex: processedCount,
+          completed: [...completed],
+          failed: [...failed],
+          totalCost: runningCost,
+          totalTokens: runningTokens,
+        }));
+        updateJobProgress();
+
+        // Small delay between batches
+        if (i + OCR_BATCH_SIZE < sortedPageIds.length && !stopRequestedRef.current) {
+          await sleep(500);
+        }
+      }
     } else {
-      // OCR and Summary: parallel per-page processing
+      // Summary: parallel per-page processing (text only, simpler)
       for (let i = 0; i < pageIds.length; i += concurrency) {
         if (stopRequestedRef.current) break;
 

@@ -249,36 +249,71 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
         ocr: { ...prev.ocr, status: 'running' },
       }));
 
-      const pagesToOcr = pages.filter(p => !p.ocr?.data);
+      // Sort pages by page number for proper continuity
+      const pagesToOcr = pages
+        .filter(p => !p.ocr?.data)
+        .sort((a, b) => (a.page_number || 0) - (b.page_number || 0));
+
       let completed = 0;
       let failed = 0;
 
-      // Process a single OCR page
-      const processOcrPage = async (page: Page) => {
-        if (stopRequestedRef.current) return;
+      // Process in batches of 5 images with context continuity
+      const OCR_BATCH_SIZE = 5;
+      let previousContext = '';
 
-        const result = await processPage(page, 'ocr');
-        if (result.success) {
-          completed++;
-          if (result.ocrResult) {
-            ocrResults[page.id] = result.ocrResult;
+      for (let i = 0; i < pagesToOcr.length; i += OCR_BATCH_SIZE) {
+        if (stopRequestedRef.current) break;
+
+        const batch = pagesToOcr.slice(i, Math.min(i + OCR_BATCH_SIZE, pagesToOcr.length));
+
+        try {
+          const response = await fetchWithTimeout('/api/process/batch-ocr', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              pages: batch.map(p => ({
+                pageId: p.id,
+                imageUrl: p.photo,
+                pageNumber: p.page_number,
+              })),
+              language: 'Latin',
+              customPrompt: getPromptContent('ocr'),
+              model: selectedModel,
+              previousContext,
+            }),
+          }, FETCH_TIMEOUT * 5);
+
+          if (response.ok) {
+            const data = await response.json();
+            const ocrIds = Object.keys(data.ocrResults || {});
+
+            // Store OCR results for translation step
+            ocrIds.forEach(id => {
+              ocrResults[id] = data.ocrResults[id];
+            });
+
+            completed += ocrIds.length;
+            failed += batch.length - ocrIds.length;
+
+            // Use last OCR as context for next batch
+            if (ocrIds.length > 0) {
+              const lastId = batch[batch.length - 1].id;
+              previousContext = data.ocrResults[lastId] || '';
+            }
+          } else {
+            failed += batch.length;
           }
-        } else {
-          failed++;
+        } catch (error) {
+          console.error('Batch OCR error:', error);
+          failed += batch.length;
         }
 
         setSteps(prev => ({
           ...prev,
           ocr: { ...prev.ocr, completed, failed, pending: pagesToOcr.length - completed - failed },
         }));
-      };
 
-      // Process in parallel batches
-      for (let i = 0; i < pagesToOcr.length; i += concurrency) {
-        if (stopRequestedRef.current) break;
-        const batch = pagesToOcr.slice(i, Math.min(i + concurrency, pagesToOcr.length));
-        await Promise.all(batch.map(processOcrPage));
-        if (i + concurrency < pagesToOcr.length) await sleep(300);
+        if (i + OCR_BATCH_SIZE < pagesToOcr.length) await sleep(300);
       }
 
       totalCompleted += completed;
