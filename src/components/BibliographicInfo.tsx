@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Copy, Check, ExternalLink } from 'lucide-react';
-import type { Book } from '@/lib/types';
+import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon } from 'lucide-react';
+import type { Book, ImageSource } from '@/lib/types';
+import { IMAGE_LICENSES } from '@/lib/types';
 
 interface BibliographicInfoProps {
   book: Book;
@@ -156,6 +157,50 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
               </div>
             )}
           </div>
+
+          {/* Image Source & License */}
+          {book.image_source && (
+            <div className="mt-4 pt-4 border-t border-stone-700">
+              <div className="flex items-center gap-2 mb-3">
+                <ImageIcon className="w-4 h-4 text-stone-400" />
+                <span className="text-sm font-medium text-stone-300">Image Source</span>
+              </div>
+              <div className="space-y-2 text-sm">
+                {book.image_source.provider_name && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Source:</span>
+                    {book.image_source.source_url ? (
+                      <a
+                        href={book.image_source.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-amber-400 hover:text-amber-300 flex items-center gap-1"
+                      >
+                        {book.image_source.provider_name}
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    ) : (
+                      <span className="text-stone-200">{book.image_source.provider_name}</span>
+                    )}
+                  </div>
+                )}
+                {book.image_source.license && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">License:</span>
+                    <span className="text-stone-200">
+                      {IMAGE_LICENSES.find(l => l.id === book.image_source?.license)?.name || book.image_source.license}
+                    </span>
+                  </div>
+                )}
+                {book.image_source.attribution && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Credit:</span>
+                    <span className="text-stone-200">{book.image_source.attribution}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Copy citation button */}
           <div className="mt-4 pt-3 border-t border-stone-700">

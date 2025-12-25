@@ -51,7 +51,8 @@ export async function POST(request: NextRequest) {
       publisher,
       place_of_publication,
       printer,
-      ia_identifier
+      ia_identifier,
+      image_source
     } = body;
 
     if (!title) {
@@ -73,6 +74,7 @@ export async function POST(request: NextRequest) {
       place_of_publication: place_of_publication || null,
       printer: printer || null,
       ia_identifier: ia_identifier || null,
+      image_source: image_source || null,
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date(),

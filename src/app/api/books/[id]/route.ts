@@ -95,7 +95,9 @@ export async function PATCH(
       'title', 'display_title', 'author', 'language', 'published',
       'thumbnail', 'categories', 'status', 'summary', 'dublin_core',
       // USTC catalog fields
-      'ustc_id', 'place_published', 'publisher', 'format'
+      'ustc_id', 'place_published', 'publisher', 'format',
+      // Image source and licensing
+      'image_source', 'license', 'doi'
     ];
 
     const updates: Record<string, unknown> = { updated_at: new Date() };

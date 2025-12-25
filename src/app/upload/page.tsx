@@ -14,7 +14,9 @@ import {
   AlertCircle,
   Search,
   ExternalLink,
+  Info,
 } from 'lucide-react';
+import { IMAGE_LICENSES, type ImageSourceProvider } from '@/lib/types';
 
 interface UploadedPage {
   id: string;
@@ -61,6 +63,12 @@ export default function UploadPage() {
   const [printer, setPrinter] = useState('');
   const [iaIdentifier, setIaIdentifier] = useState('');
 
+  // Image source & license
+  const [imageSourceProvider, setImageSourceProvider] = useState<ImageSourceProvider>('internet_archive');
+  const [imageSourceUrl, setImageSourceUrl] = useState('');
+  const [imageLicense, setImageLicense] = useState('publicdomain');
+  const [imageAttribution, setImageAttribution] = useState('');
+
   // Upload state
   const [bookId, setBookId] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
@@ -90,6 +98,18 @@ export default function UploadPage() {
           place_of_publication: placeOfPublication || undefined,
           printer: printer || undefined,
           ia_identifier: iaIdentifier || undefined,
+          image_source: {
+            provider: imageSourceProvider,
+            provider_name: imageSourceProvider === 'internet_archive' ? 'Internet Archive' :
+                          imageSourceProvider === 'google_books' ? 'Google Books' :
+                          imageSourceProvider === 'hathi_trust' ? 'HathiTrust' :
+                          imageSourceProvider === 'user_upload' ? 'User Upload' : undefined,
+            source_url: imageSourceUrl || undefined,
+            identifier: iaIdentifier || undefined,
+            license: imageLicense,
+            attribution: imageAttribution || undefined,
+            access_date: new Date(),
+          },
         }),
       });
 
@@ -138,6 +158,15 @@ export default function UploadPage() {
     setPrinter(item.printer || '');
     if (item.iaIdentifier) {
       setIaIdentifier(item.iaIdentifier);
+      setImageSourceUrl(`https://archive.org/details/${item.iaIdentifier}`);
+    }
+    // Set image source based on catalog source
+    if (item.source === 'ia') {
+      setImageSourceProvider('internet_archive');
+      setImageLicense('publicdomain'); // IA items are typically public domain
+    } else if (item.source === 'bph') {
+      setImageSourceProvider('biodiversity_heritage_library');
+      setImageLicense('publicdomain');
     }
     setSearchResults([]);
     setSearchQuery('');
@@ -503,6 +532,81 @@ export default function UploadPage() {
                   placeholder="e.g., Johann Froben"
                   className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                 />
+              </div>
+
+              {/* Image Source & License Section */}
+              <div className="border-t border-stone-200 pt-6 mt-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Info className="w-4 h-4 text-stone-400" />
+                  <h3 className="text-sm font-medium text-stone-700">Image Source & License</h3>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                      Image Source
+                    </label>
+                    <select
+                      value={imageSourceProvider}
+                      onChange={(e) => setImageSourceProvider(e.target.value as ImageSourceProvider)}
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    >
+                      <option value="internet_archive">Internet Archive</option>
+                      <option value="google_books">Google Books</option>
+                      <option value="hathi_trust">HathiTrust</option>
+                      <option value="biodiversity_heritage_library">Biodiversity Heritage Library</option>
+                      <option value="gallica">Gallica (BnF)</option>
+                      <option value="e_rara">e-rara.ch</option>
+                      <option value="mdz">MDZ (Munich)</option>
+                      <option value="library">Library/Archive</option>
+                      <option value="user_upload">My Own Scans</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                      Image License
+                    </label>
+                    <select
+                      value={imageLicense}
+                      onChange={(e) => setImageLicense(e.target.value)}
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    >
+                      {IMAGE_LICENSES.map(lic => (
+                        <option key={lic.id} value={lic.id}>{lic.name} - {lic.description}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-stone-700 mb-1">
+                    Source URL
+                  </label>
+                  <input
+                    type="url"
+                    value={imageSourceUrl}
+                    onChange={(e) => setImageSourceUrl(e.target.value)}
+                    placeholder="e.g., https://archive.org/details/..."
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  />
+                  <p className="text-xs text-stone-500 mt-1">Link to the original source of the scans</p>
+                </div>
+
+                <div className="mt-4">
+                  <label className="block text-sm font-medium text-stone-700 mb-1">
+                    Attribution Text <span className="text-stone-400">(optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={imageAttribution}
+                    onChange={(e) => setImageAttribution(e.target.value)}
+                    placeholder="e.g., Scans courtesy of British Library"
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                  />
+                  <p className="text-xs text-stone-500 mt-1">Required credit text (if any)</p>
+                </div>
               </div>
 
               <button

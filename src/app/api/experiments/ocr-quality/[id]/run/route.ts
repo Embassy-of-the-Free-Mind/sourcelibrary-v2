@@ -295,7 +295,7 @@ Return each transcription clearly separated:
     await db.collection('ocr_experiments').updateOne(
       { id },
       {
-        $push: { conditions_run: condition_id },
+        $push: { conditions_run: condition_id } as unknown as Record<string, unknown>,
         $set: {
           status: 'running',
           updated_at: now,
