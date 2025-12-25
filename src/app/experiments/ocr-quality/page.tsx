@@ -88,10 +88,36 @@ export default function OCRQualityExperimentPage() {
   const [runningCondition, setRunningCondition] = useState<string | null>(null);
   const [experimentId, setExperimentId] = useState<string | null>(null);
   const [conditionResults, setConditionResults] = useState<Record<string, { success: boolean; pages?: number; error?: string }>>({});
+  const [conditionProgress, setConditionProgress] = useState<Record<string, ConditionProgress>>({});
 
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  // Poll for progress while running
+  useEffect(() => {
+    if (!experimentId || !runningCondition) return;
+
+    const pollProgress = async () => {
+      try {
+        const res = await fetch(`/api/experiments/ocr-quality/${experimentId}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.progress) {
+            setConditionProgress(data.progress);
+          }
+        }
+      } catch (error) {
+        console.error('Error polling progress:', error);
+      }
+    };
+
+    // Poll every 2 seconds
+    const interval = setInterval(pollProgress, 2000);
+    pollProgress(); // Initial poll
+
+    return () => clearInterval(interval);
+  }, [experimentId, runningCondition]);
 
   const fetchBooks = async () => {
     try {
@@ -440,10 +466,27 @@ export default function OCRQualityExperimentPage() {
                 />
               </div>
               {runningCondition && (
-                <p className="text-sm text-purple-600 mt-2 flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Running: {CONDITIONS.find(c => c.id === runningCondition)?.label}...
-                </p>
+                <div className="mt-2">
+                  <p className="text-sm text-purple-600 flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Running: {CONDITIONS.find(c => c.id === runningCondition)?.label}
+                    {conditionProgress[runningCondition] && (
+                      <span className="font-mono">
+                        ({conditionProgress[runningCondition].processed}/{conditionProgress[runningCondition].total} pages)
+                      </span>
+                    )}
+                  </p>
+                  {conditionProgress[runningCondition] && conditionProgress[runningCondition].total > 0 && (
+                    <div className="mt-1 h-1.5 bg-purple-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-purple-500 transition-all duration-300"
+                        style={{
+                          width: `${(conditionProgress[runningCondition].processed / conditionProgress[runningCondition].total) * 100}%`
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
               )}
             </div>
 
@@ -453,6 +496,7 @@ export default function OCRQualityExperimentPage() {
                 const isRunning = runningCondition === condition.id;
                 const result = conditionResults[condition.id];
                 const hasFailed = result && !result.success;
+                const progress = conditionProgress[condition.id];
 
                 return (
                   <div
@@ -484,7 +528,12 @@ export default function OCRQualityExperimentPage() {
                     <p className="text-[10px] text-stone-500">
                       {condition.promptType}
                     </p>
-                    {result && (
+                    {isRunning && progress && (
+                      <p className="text-[10px] mt-1 text-purple-600 font-mono">
+                        {progress.processed}/{progress.total}
+                      </p>
+                    )}
+                    {result && !isRunning && (
                       <p className={`text-[10px] mt-1 ${hasFailed ? 'text-red-600' : 'text-green-600'}`}>
                         {hasFailed ? 'Error' : `${result.pages} pages`}
                       </p>

@@ -1,22 +1,31 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, ChevronRight, Quote } from 'lucide-react';
-import { Book, Page, Section } from '@/lib/types';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
+import { Book, Page } from '@/lib/types';
 
 interface ReadPageProps {
   params: Promise<{ id: string }>;
+}
+
+interface BookSummary {
+  overview: string;
+  quotes: Array<{ text: string; page: number }>;
+  themes: string[];
+  generated_at?: Date;
 }
 
 export default function ReadPage({ params }: ReadPageProps) {
   const [bookId, setBookId] = useState<string | null>(null);
   const [book, setBook] = useState<Book | null>(null);
   const [pages, setPages] = useState<Page[]>([]);
-  const [sections, setSections] = useState<Section[]>([]);
+  const [summary, setSummary] = useState<BookSummary | null>(null);
   const [loading, setLoading] = useState(true);
-  const [generatingSection, setGeneratingSection] = useState<string | null>(null);
+  const [generatingSummary, setGeneratingSummary] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showFullText, setShowFullText] = useState(false);
+  const textRef = useRef<HTMLDivElement>(null);
 
   // Resolve params
   useEffect(() => {
@@ -38,11 +47,9 @@ export default function ReadPage({ params }: ReadPageProps) {
         setBook(bookData);
         setPages(bookData.pages || []);
 
-        // Fetch sections
-        const sectionsRes = await fetch(`/api/books/${bookId}/sections`);
-        if (sectionsRes.ok) {
-          const sectionsData = await sectionsRes.json();
-          setSections(sectionsData.sections || []);
+        // Check if book has a reading summary
+        if (bookData.reading_summary) {
+          setSummary(bookData.reading_summary);
         }
 
         setError(null);
@@ -56,19 +63,14 @@ export default function ReadPage({ params }: ReadPageProps) {
     fetchData();
   }, [bookId]);
 
-  // Generate summary for a section
-  const generateSectionSummary = async (section: Section) => {
-    setGeneratingSection(section.id);
+  // Generate book summary
+  const generateSummary = async () => {
+    setGeneratingSummary(true);
 
     try {
-      const response = await fetch(`/api/books/${bookId}/sections/summarize`, {
+      const response = await fetch(`/api/books/${bookId}/summarize`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          sectionId: section.id,
-          startPage: section.startPage,
-          endPage: section.endPage
-        }),
       });
 
       if (!response.ok) {
@@ -77,39 +79,33 @@ export default function ReadPage({ params }: ReadPageProps) {
       }
 
       const data = await response.json();
-
-      // Update local state
-      setSections(prev => prev.map(s =>
-        s.id === section.id
-          ? { ...s, summary: data.summary, quotes: data.quotes, concepts: data.concepts, generated_at: new Date() }
-          : s
-      ));
+      setSummary(data);
     } catch (err) {
       console.error('Error generating summary:', err);
     } finally {
-      setGeneratingSection(null);
+      setGeneratingSummary(false);
     }
   };
 
-  // Generate all missing summaries
-  const generateAllSummaries = async () => {
-    for (const section of sections) {
-      if (!section.summary) {
-        await generateSectionSummary(section);
-      }
-    }
-  };
+  // Get translated pages
+  const translatedPages = pages.filter(p => p.translation?.data);
+  const translationProgress = pages.length > 0
+    ? Math.round((translatedPages.length / pages.length) * 100)
+    : 0;
 
-  // Count translated pages per section
-  const getTranslatedCount = (section: Section) => {
-    return pages.filter(
-      p => p.page_number >= section.startPage &&
-           p.page_number <= section.endPage &&
-           p.translation?.data
-    ).length;
-  };
+  // Render translation text with basic formatting
+  const renderTranslation = (text: string) => {
+    // Remove [[tags]] and clean up
+    const cleaned = text
+      .replace(/\[\[[^\]]+\]\]/g, '')
+      .trim();
 
-  const sectionsNeedingSummaries = sections.filter(s => !s.summary).length;
+    return cleaned.split('\n\n').map((paragraph, i) => (
+      <p key={i} className="mb-4 leading-relaxed">
+        {paragraph}
+      </p>
+    ));
+  };
 
   if (loading) {
     return (
@@ -137,7 +133,7 @@ export default function ReadPage({ params }: ReadPageProps) {
     <div className="min-h-screen bg-stone-50">
       {/* Header */}
       <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-3xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <Link
               href={`/book/${bookId}`}
@@ -146,160 +142,200 @@ export default function ReadPage({ params }: ReadPageProps) {
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Back to Book</span>
             </Link>
-
-            {sectionsNeedingSummaries > 0 && (
-              <button
-                onClick={generateAllSummaries}
-                disabled={!!generatingSection}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 text-sm"
-              >
-                <Sparkles className="w-4 h-4" />
-                Generate All Summaries
-              </button>
-            )}
+            <span className="text-sm text-stone-500">
+              {translatedPages.length}/{pages.length} pages translated
+            </span>
           </div>
         </div>
       </header>
 
       {/* Book info */}
-      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto px-4 text-center">
+      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-8 sm:py-10">
+        <div className="max-w-3xl mx-auto px-4 text-center">
           <h1 className="text-2xl sm:text-3xl font-serif font-bold">
             {book.display_title || book.title}
           </h1>
           <p className="text-stone-300 mt-2">{book.author}</p>
-          <p className="text-stone-400 text-sm mt-4">
-            Reading Guide · {sections.length} section{sections.length !== 1 ? 's' : ''} · {pages.length} pages
-          </p>
+          {book.year && (
+            <p className="text-stone-400 text-sm mt-1">{book.year}</p>
+          )}
         </div>
       </div>
 
-      {/* Sections */}
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="space-y-6">
-          {sections.map((section, index) => {
-            const translatedCount = getTranslatedCount(section);
-            const totalPages = section.endPage - section.startPage + 1;
-            const isGenerating = generatingSection === section.id;
-            const hasSummary = !!section.summary;
-
-            return (
-              <div
-                key={section.id}
-                className="bg-white rounded-xl border border-stone-200 overflow-hidden"
-              >
-                {/* Section header */}
-                <div className="p-4 sm:p-6 border-b border-stone-100">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="text-xs text-stone-400 mb-1">
-                        Section {index + 1}
-                      </div>
-                      <h2 className="text-lg sm:text-xl font-serif font-semibold text-stone-900">
-                        {section.title}
-                      </h2>
-                      <p className="text-sm text-stone-500 mt-1">
-                        Pages {section.startPage}–{section.endPage}
-                        {translatedCount > 0 && (
-                          <span className="ml-2 text-green-600">
-                            · {translatedCount}/{totalPages} translated
-                          </span>
-                        )}
-                      </p>
-                    </div>
-
-                    <Link
-                      href={`/book/${bookId}/page/${pages.find(p => p.page_number === section.startPage)?.id || ''}`}
-                      className="flex-shrink-0 inline-flex items-center gap-1 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
-                    >
-                      Read
-                      <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  </div>
+      <main className="max-w-3xl mx-auto px-4 py-8">
+        {/* Summary Section */}
+        <section className="mb-8">
+          {summary ? (
+            <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+              <div className="p-6">
+                <h2 className="text-lg font-semibold text-stone-900 mb-4">Overview</h2>
+                <div className="prose prose-stone prose-sm max-w-none">
+                  {summary.overview.split('\n\n').map((p, i) => (
+                    <p key={i} className="text-stone-700 leading-relaxed mb-3">{p}</p>
+                  ))}
                 </div>
 
-                {/* Summary content */}
-                <div className="p-4 sm:p-6">
-                  {isGenerating ? (
-                    <div className="flex items-center gap-3 text-stone-500 py-4">
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>Generating summary...</span>
-                    </div>
-                  ) : hasSummary ? (
+                {/* Key Quotes */}
+                {summary.quotes && summary.quotes.length > 0 && (
+                  <div className="mt-6 pt-6 border-t border-stone-100">
+                    <h3 className="text-sm font-semibold text-stone-600 mb-4">Notable Passages</h3>
                     <div className="space-y-4">
-                      {/* Summary text */}
-                      <div className="prose prose-stone prose-sm max-w-none">
-                        {section.summary!.split('\n\n').map((p, i) => (
-                          <p key={i} className="text-stone-700 leading-relaxed">{p}</p>
-                        ))}
-                      </div>
-
-                      {/* Key quotes */}
-                      {section.quotes && section.quotes.length > 0 && (
-                        <div className="mt-6 space-y-3">
-                          <h3 className="text-xs font-semibold text-stone-500 uppercase tracking-wide">
-                            Key Quotes
-                          </h3>
-                          {section.quotes.map((quote, i) => (
-                            <blockquote
-                              key={i}
-                              className="relative pl-4 border-l-2 border-amber-300 text-stone-600 italic"
-                            >
-                              <Quote className="absolute -left-1.5 -top-1 w-3 h-3 text-amber-400 bg-white" />
-                              <p className="text-sm leading-relaxed">&ldquo;{quote.text}&rdquo;</p>
-                              <cite className="block text-xs text-stone-400 mt-1 not-italic">
-                                — Page {quote.page}
-                              </cite>
-                            </blockquote>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Key concepts */}
-                      {section.concepts && section.concepts.length > 0 && (
-                        <div className="mt-4">
-                          <h3 className="text-xs font-semibold text-stone-500 uppercase tracking-wide mb-2">
-                            Key Concepts
-                          </h3>
-                          <div className="flex flex-wrap gap-2">
-                            {section.concepts.map((concept, i) => (
-                              <span
-                                key={i}
-                                className="px-2 py-1 bg-stone-100 text-stone-700 text-xs rounded-full"
-                              >
-                                {concept}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      )}
+                      {summary.quotes.map((quote, i) => (
+                        <blockquote
+                          key={i}
+                          className="relative pl-4 border-l-2 border-amber-300"
+                        >
+                          <Quote className="absolute -left-1.5 -top-0.5 w-3 h-3 text-amber-400 bg-white" />
+                          <p className="text-stone-600 italic text-sm leading-relaxed">
+                            &ldquo;{quote.text}&rdquo;
+                          </p>
+                          <Link
+                            href={`/book/${bookId}/page/${pages.find(p => p.page_number === quote.page)?.id || ''}`}
+                            className="text-xs text-amber-600 hover:text-amber-700 mt-1 inline-flex items-center gap-1"
+                          >
+                            Page {quote.page}
+                            <ExternalLink className="w-3 h-3" />
+                          </Link>
+                        </blockquote>
+                      ))}
                     </div>
-                  ) : translatedCount > 0 ? (
-                    <button
-                      onClick={() => generateSectionSummary(section)}
-                      className="inline-flex items-center gap-2 px-4 py-2 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      Generate Summary
-                    </button>
-                  ) : (
-                    <p className="text-sm text-stone-400 italic">
-                      Translate pages to generate a summary
-                    </p>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+                  </div>
+                )}
 
-          {sections.length === 0 && (
-            <div className="text-center py-12 text-stone-500">
-              <BookOpen className="w-12 h-12 mx-auto mb-4 text-stone-300" />
-              <p>No sections detected yet.</p>
-              <p className="text-sm mt-1">Sections are auto-detected from chapter headings in the OCR.</p>
+                {/* Themes */}
+                {summary.themes && summary.themes.length > 0 && (
+                  <div className="mt-6 pt-6 border-t border-stone-100">
+                    <h3 className="text-sm font-semibold text-stone-600 mb-3">Key Themes</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {summary.themes.map((theme, i) => (
+                        <span
+                          key={i}
+                          className="px-3 py-1 bg-amber-50 text-amber-800 text-sm rounded-full"
+                        >
+                          {theme}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : translatedPages.length > 0 ? (
+            <div className="bg-white rounded-xl border border-stone-200 p-6 text-center">
+              <Sparkles className="w-8 h-8 text-amber-500 mx-auto mb-3" />
+              <h2 className="text-lg font-semibold text-stone-900 mb-2">Generate Reading Guide</h2>
+              <p className="text-stone-600 text-sm mb-4">
+                Create an overview of this text with key quotes and themes.
+              </p>
+              <button
+                onClick={generateSummary}
+                disabled={generatingSummary}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
+              >
+                {generatingSummary ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-4 h-4" />
+                    Generate Overview
+                  </>
+                )}
+              </button>
+            </div>
+          ) : (
+            <div className="bg-stone-100 rounded-xl p-6 text-center">
+              <BookOpen className="w-8 h-8 text-stone-400 mx-auto mb-3" />
+              <p className="text-stone-600">
+                Translate pages to generate a reading guide.
+              </p>
+              <div className="mt-3">
+                <div className="w-full bg-stone-200 rounded-full h-2 max-w-xs mx-auto">
+                  <div
+                    className="bg-amber-500 h-2 rounded-full transition-all"
+                    style={{ width: `${translationProgress}%` }}
+                  />
+                </div>
+                <p className="text-xs text-stone-500 mt-1">{translationProgress}% translated</p>
+              </div>
             </div>
           )}
-        </div>
+        </section>
+
+        {/* Full Text Section */}
+        {translatedPages.length > 0 && (
+          <section>
+            <button
+              onClick={() => setShowFullText(!showFullText)}
+              className="w-full flex items-center justify-between p-4 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors"
+            >
+              <span className="font-semibold text-stone-900">
+                Full Translation ({translatedPages.length} pages)
+              </span>
+              {showFullText ? (
+                <ChevronUp className="w-5 h-5 text-stone-500" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-stone-500" />
+              )}
+            </button>
+
+            {showFullText && (
+              <div
+                ref={textRef}
+                className="mt-4 bg-white rounded-xl border border-stone-200 p-6 sm:p-8"
+              >
+                <div className="prose prose-stone max-w-none font-serif text-lg leading-relaxed">
+                  {translatedPages.map((page, index) => (
+                    <div key={page.id} className="mb-8">
+                      {index > 0 && (
+                        <div className="flex items-center gap-4 my-8 text-stone-400">
+                          <div className="flex-1 h-px bg-stone-200" />
+                          <Link
+                            href={`/book/${bookId}/page/${page.id}`}
+                            className="text-xs hover:text-amber-600 transition-colors"
+                          >
+                            Page {page.page_number}
+                          </Link>
+                          <div className="flex-1 h-px bg-stone-200" />
+                        </div>
+                      )}
+                      {renderTranslation(page.translation?.data || '')}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Quick Navigation */}
+        {pages.length > 0 && (
+          <section className="mt-8 pt-8 border-t border-stone-200">
+            <h3 className="text-sm font-semibold text-stone-600 mb-4">Jump to Page</h3>
+            <div className="flex flex-wrap gap-2">
+              {pages.slice(0, 20).map(page => (
+                <Link
+                  key={page.id}
+                  href={`/book/${bookId}/page/${page.id}`}
+                  className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-colors ${
+                    page.translation?.data
+                      ? 'bg-amber-100 text-amber-800 hover:bg-amber-200'
+                      : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
+                  }`}
+                >
+                  {page.page_number}
+                </Link>
+              ))}
+              {pages.length > 20 && (
+                <span className="w-10 h-10 flex items-center justify-center text-stone-400 text-sm">
+                  +{pages.length - 20}
+                </span>
+              )}
+            </div>
+          </section>
+        )}
       </main>
     </div>
   );

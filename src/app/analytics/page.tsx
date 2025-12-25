@@ -550,7 +550,7 @@ export default function AnalyticsPage() {
                       return (
                         <div key={i}>
                           <div className="flex justify-between text-sm mb-1">
-                            <span style={{ color: 'var(--text-primary)' }}>{m.model}</span>
+                            <span style={{ color: 'var(--text-primary)' }}>{m.model || 'Unknown'}</span>
                             <span style={{ color: 'var(--text-muted)' }}>{formatNumber(m.count)}</span>
                           </div>
                           <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
