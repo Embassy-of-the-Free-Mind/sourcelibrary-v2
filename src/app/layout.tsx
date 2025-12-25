@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import GlobalFooter from "@/components/GlobalFooter";
+import Providers from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Source Library",
@@ -28,10 +29,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased min-h-screen flex flex-col">
-        <div className="flex-1">
-          {children}
-        </div>
-        <GlobalFooter />
+        <Providers>
+          <div className="flex-1">
+            {children}
+          </div>
+          <GlobalFooter />
+        </Providers>
       </body>
     </html>
   );

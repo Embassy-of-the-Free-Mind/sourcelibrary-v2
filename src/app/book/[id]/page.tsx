@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Book, Page } from '@/lib/types';
+import { Book, Page, TranslationEdition } from '@/lib/types';
 import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText, Glasses } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
@@ -13,6 +13,9 @@ import ProcessBookButton from '@/components/ProcessBookButton';
 import CoverImagePicker from '@/components/CoverImagePicker';
 import DownloadButton from '@/components/DownloadButton';
 import BibliographicInfo from '@/components/BibliographicInfo';
+import PublishEditionButton from '@/components/PublishEditionButton';
+import EditionsPanel from '@/components/EditionsPanel';
+import SchemaOrgMetadata from '@/components/SchemaOrgMetadata';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -95,9 +98,19 @@ async function BookInfo({ id }: { id: string }) {
   }
 
   const { book, pages } = data;
+  const translatedCount = pages.filter(p => p.translation?.data).length;
+  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
 
   return (
     <>
+      {/* Schema.org JSON-LD for Google Scholar */}
+      <SchemaOrgMetadata
+        book={book}
+        pageCount={pages.length}
+        translatedCount={translatedCount}
+        currentEdition={currentEdition}
+      />
+
       {/* Book Info */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -156,6 +169,13 @@ async function BookInfo({ id }: { id: string }) {
                   hasImages={pages.length > 0}
                   variant="header"
                 />
+                <PublishEditionButton
+                  bookId={book.id}
+                  bookTitle={book.display_title || book.title}
+                  translatedCount={translatedCount}
+                  totalPages={pages.length}
+                  currentEdition={currentEdition}
+                />
                 <BookAnalytics bookId={book.id} />
                 <SearchPanel bookId={book.id} />
                 <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
@@ -202,6 +222,14 @@ async function BookInfo({ id }: { id: string }) {
                 </p>
               )}
             </div>
+
+            {/* Editions Panel */}
+            {book.editions?.length ? (
+              <EditionsPanel
+                bookId={book.id}
+                editions={book.editions as TranslationEdition[]}
+              />
+            ) : null}
           </div>
         );
       })()}

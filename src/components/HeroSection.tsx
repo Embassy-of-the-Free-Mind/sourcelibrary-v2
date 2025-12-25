@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { recordLoadingMetric } from '@/lib/analytics';
+import UserMenu from './UserMenu';
 
 export default function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -57,15 +58,18 @@ export default function HeroSection() {
             <span className="font-light text-white">Library</span>
           </span>
         </Link>
-        <Link
-          href="/upload"
-          className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Add Book
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/upload"
+            className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Add Book
+          </Link>
+          <UserMenu variant="hero" />
+        </div>
       </header>
 
       {/* Hero Content - text visible immediately, no delay */}

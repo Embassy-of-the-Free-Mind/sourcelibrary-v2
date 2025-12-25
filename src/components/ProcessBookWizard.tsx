@@ -55,6 +55,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }: ProcessBookWizardProps) {
   const router = useRouter();
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
+  const [concurrency, setConcurrency] = useState(5);
   const [showSettings, setShowSettings] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState<WorkflowStep | null>(null);
@@ -252,12 +253,11 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
       let completed = 0;
       let failed = 0;
 
-      for (let i = 0; i < pagesToOcr.length; i++) {
-        if (stopRequestedRef.current) break;
+      // Process a single OCR page
+      const processOcrPage = async (page: Page) => {
+        if (stopRequestedRef.current) return;
 
-        const page = pagesToOcr[i];
         const result = await processPage(page, 'ocr');
-
         if (result.success) {
           completed++;
           if (result.ocrResult) {
@@ -271,9 +271,14 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
           ...prev,
           ocr: { ...prev.ocr, completed, failed, pending: pagesToOcr.length - completed - failed },
         }));
+      };
 
-        // Small delay between pages
-        if (i < pagesToOcr.length - 1) await sleep(200);
+      // Process in parallel batches
+      for (let i = 0; i < pagesToOcr.length; i += concurrency) {
+        if (stopRequestedRef.current) break;
+        const batch = pagesToOcr.slice(i, Math.min(i + concurrency, pagesToOcr.length));
+        await Promise.all(batch.map(processOcrPage));
+        if (i + concurrency < pagesToOcr.length) await sleep(300);
       }
 
       totalCompleted += completed;
@@ -303,10 +308,10 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
       let completed = 0;
       let failed = 0;
 
-      for (let i = 0; i < pagesToTranslate.length; i++) {
-        if (stopRequestedRef.current) break;
+      // Process a single translation page
+      const processTranslatePage = async (page: Page) => {
+        if (stopRequestedRef.current) return;
 
-        const page = pagesToTranslate[i];
         const ocrText = ocrResults[page.id] || page.ocr?.data;
         const result = await processPage(page, 'translation', ocrText);
 
@@ -320,8 +325,14 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
           ...prev,
           translation: { ...prev.translation, completed, failed, pending: pagesToTranslate.length - completed - failed },
         }));
+      };
 
-        if (i < pagesToTranslate.length - 1) await sleep(200);
+      // Process in parallel batches
+      for (let i = 0; i < pagesToTranslate.length; i += concurrency) {
+        if (stopRequestedRef.current) break;
+        const batch = pagesToTranslate.slice(i, Math.min(i + concurrency, pagesToTranslate.length));
+        await Promise.all(batch.map(processTranslatePage));
+        if (i + concurrency < pagesToTranslate.length) await sleep(300);
       }
 
       totalCompleted += completed;
@@ -515,6 +526,22 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
                       {model.name}
                     </option>
                   ))}
+                </select>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <label className="text-sm text-stone-600 w-16">Parallel:</label>
+                <select
+                  value={concurrency}
+                  onChange={e => setConcurrency(Number(e.target.value))}
+                  disabled={isProcessing}
+                  className="flex-1 px-2 py-1.5 text-sm border border-stone-300 rounded-lg"
+                >
+                  <option value={1}>1x (sequential)</option>
+                  <option value={3}>3x</option>
+                  <option value={5}>5x (default)</option>
+                  <option value={10}>10x</option>
+                  <option value={15}>15x (max free)</option>
                 </select>
               </div>
 

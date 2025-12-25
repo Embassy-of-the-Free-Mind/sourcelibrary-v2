@@ -16,6 +16,7 @@
     "test:clean": "npx ts-node --project tests/tsconfig.json tests/cli.ts clean"
   },
   "dependencies": {
+    "@auth/mongodb-adapter": "^3.11.1",
     "@google/generative-ai": "^0.24.1",
     "@types/archiver": "^7.0.0",
     "archiver": "^7.0.1",
@@ -25,6 +26,7 @@
     "lucide-react": "^0.560.0",
     "mongodb": "^7.0.0",
     "next": "16.0.10",
+    "next-auth": "^5.0.0-beta.30",
     "openai": "^6.10.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
