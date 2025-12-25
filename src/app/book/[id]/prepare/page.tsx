@@ -1192,13 +1192,17 @@ export default function PreparePage({ params }: PageProps) {
                       className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
                     />
                   ) : (
-                    <input
-                      type="checkbox"
-                      checked={isSelected}
+                    <button
+                      type="button"
                       onClick={(e) => togglePageSelection(page.id, index, e)}
-                      onChange={() => {}} // Handled by onClick for shift-select
-                      className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500 disabled:opacity-50"
-                    />
+                      className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+                        isSelected
+                          ? 'bg-amber-500 border-amber-500 text-white'
+                          : 'border-stone-300 hover:border-stone-400'
+                      }`}
+                    >
+                      {isSelected && <Check className="w-3 h-3" />}
+                    </button>
                   )}
 
                   {/* Thumbnail with magnifier and split overlay */}
