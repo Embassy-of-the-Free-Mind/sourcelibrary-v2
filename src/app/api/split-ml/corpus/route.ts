@@ -188,8 +188,12 @@ export async function POST(request: NextRequest) {
           // Get Gemini ground truth
           const geminiResult = await detectSplitWithGemini(imageUrl);
 
-          // Extract features
-          const imageResponse = await fetch(imageUrl);
+          // Extract features - use smaller version for speed
+          let fetchUrl = imageUrl;
+          if (fetchUrl.includes('archive.org') && fetchUrl.includes('pct:50')) {
+            fetchUrl = fetchUrl.replace('pct:50', 'pct:25');
+          }
+          const imageResponse = await fetch(fetchUrl);
           if (!imageResponse.ok) {
             bookErrors++;
             continue;

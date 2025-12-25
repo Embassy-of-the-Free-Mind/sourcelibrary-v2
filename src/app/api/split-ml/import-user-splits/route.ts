@@ -136,8 +136,13 @@ export async function POST(request: NextRequest) {
           continue;
         }
 
-        // Fetch image and extract features
-        const imageResponse = await fetch(page.photo_original);
+        // Fetch image and extract features - use smaller version for speed
+        // Archive.org IIIF format: pct:50 -> pct:25 for 25% size (faster download)
+        let imageUrl = page.photo_original;
+        if (imageUrl.includes('archive.org') && imageUrl.includes('pct:50')) {
+          imageUrl = imageUrl.replace('pct:50', 'pct:25');
+        }
+        const imageResponse = await fetch(imageUrl);
         if (!imageResponse.ok) {
           errors++;
           const br = bookResults.get(page.book_id) || { imported: 0, errors: 0 };

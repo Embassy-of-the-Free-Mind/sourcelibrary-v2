@@ -151,7 +151,7 @@ Return your answer in this EXACT JSON format:
  */
 export async function extractFeatures(
   imageBuffer: Buffer,
-  analysisWidth: number = 1000
+  analysisWidth: number = 500
 ): Promise<SplitFeatures> {
   const sharp = (await import('sharp')).default;
 
