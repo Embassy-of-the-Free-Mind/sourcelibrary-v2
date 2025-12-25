@@ -176,6 +176,8 @@ export async function updateDepositMetadata(
     ...(related_identifiers.length > 0 && { related_identifiers }),
   };
 
+  console.log('Zenodo metadata:', JSON.stringify(metadata, null, 2));
+
   const response = await fetch(`${ZENODO_API}/deposit/depositions/${depositId}`, {
     method: 'PUT',
     headers: {
@@ -186,7 +188,16 @@ export async function updateDepositMetadata(
   });
 
   if (!response.ok) {
-    await handleZenodoError(response, 'update metadata');
+    const text = await response.text();
+    console.error('Zenodo error response:', text);
+    // Re-parse to get structured error
+    try {
+      const error = JSON.parse(text);
+      const fieldErrors = error.errors?.map((e: { field: string; message: string }) => `${e.field}: ${e.message}`).join('; ');
+      throw new Error(`Zenodo update metadata: ${error.message}${fieldErrors ? ` - Fields: ${fieldErrors}` : ''}`);
+    } catch {
+      throw new Error(`Zenodo update metadata: HTTP ${response.status} - ${text.substring(0, 500)}`);
+    }
   }
 
   return response.json();
