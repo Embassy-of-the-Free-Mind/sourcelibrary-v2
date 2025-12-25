@@ -84,8 +84,19 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { limit = 100, bookIds } = await request.json().catch(() => ({}));
+    const { limit = 100, bookIds, clearAndReimport = false } = await request.json().catch(() => ({}));
     const db = await getDb();
+
+    // If clearAndReimport is true, delete all existing training examples first
+    if (clearAndReimport) {
+      await db.collection('split_training_examples').deleteMany({});
+      await db.collection('pages').updateMany(
+        { ml_split_label: { $exists: true } },
+        { $unset: { ml_split_label: '' } }
+      );
+      // Clear the cache
+      bookPageCounts.clear();
+    }
 
     // Build query for left pages (xStart=0)
     const query: Record<string, unknown> = {
