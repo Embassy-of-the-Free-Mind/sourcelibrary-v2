@@ -82,7 +82,10 @@ export async function GET(
     });
 
     // Build results with condition metadata
-    const conditionMap = new Map(experiment.conditions.map((c: { id: string; type: string; label: string }) => [c.id, c]));
+    interface ConditionMeta { id: string; type: string; label: string }
+    const conditionMap = new Map<string, ConditionMeta>(
+      experiment.conditions.map((c: ConditionMeta) => [c.id, c])
+    );
 
     const conditions = Object.entries(conditionStats)
       .map(([condId, stats]) => {

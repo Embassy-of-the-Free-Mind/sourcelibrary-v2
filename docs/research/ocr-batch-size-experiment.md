@@ -158,11 +158,26 @@ Expected cost: ~$0.0003/page
 
 ## Future Research
 
-1. **Prompt optimization for batches** — Can we design a batch-specific elaborate prompt that doesn't degrade?
-2. **Context window testing** — Does passing previous page context help or hurt?
-3. **Model comparison** — Test Claude, GPT-4o for OCR (not just judging)
-4. **Image resolution** — Does higher resolution improve accuracy enough to justify cost?
-5. **Fine-tuning batch 1-5 range** — Is B2 or B3 a better sweet spot?
+### Next Experiment: Single-Pass vs Two-Pass Pipeline
+
+**Status:** Infrastructure built, pending deployment
+
+Compare:
+- **Two-pass:** Image → OCR → Latin → Translate → English (2 API calls)
+- **Single-pass:** Image → OCR+Translate → English (1 API call)
+
+Endpoints created:
+- `POST /api/pipeline-experiments` - Create experiment
+- `POST /api/pipeline-experiments/[id]/run` - Run conditions
+- `POST /api/pipeline-experiments/[id]/judge` - AI judging with random matchups
+- `GET /api/pipeline-experiments/[id]/results` - ELO rankings
+
+### Other Experiments
+
+1. **Context window testing** — Does passing previous page context help or hurt?
+2. **Model comparison** — Test Claude, GPT-4o for OCR (not just judging)
+3. **Image resolution** — Does higher resolution improve accuracy enough to justify cost?
+4. **Fine-tuning batch 1-5 range** — Is B2 or B3 a better sweet spot?
 
 ## Experiment Metadata
 

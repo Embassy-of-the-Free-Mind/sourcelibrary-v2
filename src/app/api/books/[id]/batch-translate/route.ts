@@ -48,7 +48,7 @@ export async function POST(
     const pagesToProcess = await db.collection('pages')
       .find({
         book_id: bookId,
-        'ocr.data': { $exists: true, $ne: null, $ne: '' },
+        'ocr.data': { $exists: true, $nin: [null, ''] },
         'translation.data': { $exists: false }
       })
       .sort({ page_number: 1 })
