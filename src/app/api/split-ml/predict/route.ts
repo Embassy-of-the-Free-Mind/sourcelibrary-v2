@@ -65,6 +65,10 @@ export async function POST(request: NextRequest) {
         hasInvertedGutter: features.hasInvertedGutter,
         edgeCenterDiff: Math.round(features.edgeCenterDiff),
         gutterWidth: features.gutterWidth,
+        textGapCenter: Math.round(features.textGapCenter),
+        textGapWidth: Math.round(features.textGapWidth),
+        leftTextEndIdx: Math.round(features.leftTextEndIdx),
+        rightTextStartIdx: Math.round(features.rightTextStartIdx),
       },
       modelInfo: {
         trainingSize: model.trainingSize,

@@ -473,6 +473,6 @@ export function predictWithModel(features: SplitFeatures, model: SplitModel): nu
     (w.textGapCenterWeight ?? 0) * (textGapCenterDev / 100) +
     (w.bookSizeOffset ?? 0) * (bookSize - 1);
 
-  // Clamp to valid range (center region 350-650)
-  return Math.max(350, Math.min(650, Math.round(position)));
+  // Clamp to valid range (allow wider range for off-center splits)
+  return Math.max(200, Math.min(800, Math.round(position)));
 }

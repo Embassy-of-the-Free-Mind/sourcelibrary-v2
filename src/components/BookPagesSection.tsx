@@ -263,6 +263,84 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     setShowPromptSettings(false);
   };
 
+  // Reorder mode functions
+  const enterReorderMode = () => {
+    setReorderMode(true);
+    setBatchMode(false);
+    setOrderChanged(false);
+  };
+
+  const exitReorderMode = () => {
+    setReorderMode(false);
+    setDraggedPageId(null);
+    setDragOverPageId(null);
+    // Reset to original order if not saved
+    if (orderChanged) {
+      setPages(initialPages);
+      setOrderChanged(false);
+    }
+  };
+
+  const handleDragStart = (pageId: string) => {
+    setDraggedPageId(pageId);
+  };
+
+  const handleDragOver = (e: React.DragEvent, pageId: string) => {
+    e.preventDefault();
+    if (pageId !== draggedPageId) {
+      setDragOverPageId(pageId);
+    }
+  };
+
+  const handleDragEnd = () => {
+    if (draggedPageId && dragOverPageId && draggedPageId !== dragOverPageId) {
+      const newPages = [...pages];
+      const draggedIndex = newPages.findIndex(p => p.id === draggedPageId);
+      const dropIndex = newPages.findIndex(p => p.id === dragOverPageId);
+
+      if (draggedIndex !== -1 && dropIndex !== -1) {
+        const [draggedPage] = newPages.splice(draggedIndex, 1);
+        newPages.splice(dropIndex, 0, draggedPage);
+
+        // Update page numbers
+        newPages.forEach((page, idx) => {
+          page.page_number = idx + 1;
+        });
+
+        setPages(newPages);
+        setOrderChanged(true);
+      }
+    }
+    setDraggedPageId(null);
+    setDragOverPageId(null);
+  };
+
+  const savePageOrder = async () => {
+    setSavingOrder(true);
+    try {
+      const pageOrder = pages.map((p, idx) => ({
+        id: p.id,
+        page_number: idx + 1
+      }));
+
+      const res = await fetch(`/api/books/${bookId}/reorder`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pages: pageOrder })
+      });
+
+      if (res.ok) {
+        setOrderChanged(false);
+        setReorderMode(false);
+        router.refresh();
+      }
+    } catch (error) {
+      console.error('Failed to save order:', error);
+    } finally {
+      setSavingOrder(false);
+    }
+  };
+
   const runBatchProcess = async () => {
     if (selectedPages.size === 0) return;
 
@@ -762,7 +840,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {!batchMode ? (
+            {!batchMode && !reorderMode ? (
               <>
                 <button
                   onClick={() => setBatchMode(true)}
@@ -770,6 +848,13 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 >
                   <Wand2 className="w-4 h-4" />
                   Batch Process
+                </button>
+                <button
+                  onClick={enterReorderMode}
+                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
+                >
+                  <ArrowUpDown className="w-4 h-4" />
+                  Reorder
                 </button>
                 <Link
                   href={`/book/${bookId}/split`}
@@ -784,7 +869,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   hasOcr={pagesWithOcr > 0}
                 />
               </>
-            ) : (
+            ) : batchMode ? (
               <button
                 onClick={exitBatchMode}
                 className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors text-sm"
@@ -792,7 +877,27 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 <X className="w-4 h-4" />
                 Exit
               </button>
-            )}
+            ) : reorderMode ? (
+              <div className="flex items-center gap-2">
+                {orderChanged && (
+                  <button
+                    onClick={savePageOrder}
+                    disabled={savingOrder}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium disabled:opacity-50"
+                  >
+                    {savingOrder ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
+                    Save Order
+                  </button>
+                )}
+                <button
+                  onClick={exitReorderMode}
+                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors text-sm"
+                >
+                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
@@ -1058,6 +1163,22 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         </div>
       )}
 
+      {/* Reorder Mode Info */}
+      {reorderMode && (
+        <div className="bg-blue-50 rounded-xl border border-blue-200 p-4">
+          <div className="flex items-center gap-3">
+            <GripVertical className="w-5 h-5 text-blue-600" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-blue-800">Drag pages to reorder them</p>
+              <p className="text-xs text-blue-600">Click and drag any page to move it to a new position</p>
+            </div>
+            {orderChanged && (
+              <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Unsaved changes</span>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Pages Grid */}
       <div>
         <h2 className="text-lg font-semibold text-stone-900 mb-4">Pages</h2>
@@ -1076,6 +1197,41 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               const hasOcr = !!page.ocr?.data;
               const hasTranslation = !!page.translation?.data;
               const hasSummary = !!page.summary?.data;
+
+              // Reorder mode - draggable pages
+              if (reorderMode) {
+                const isDragging = draggedPageId === page.id;
+                const isDragOver = dragOverPageId === page.id;
+
+                return (
+                  <div
+                    key={page.id}
+                    draggable
+                    onDragStart={() => handleDragStart(page.id)}
+                    onDragOver={(e) => handleDragOver(e, page.id)}
+                    onDragEnd={handleDragEnd}
+                    className={`group relative cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-50' : ''}`}
+                  >
+                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${
+                      isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
+                    }`}>
+                      {imageUrl && (
+                        <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover pointer-events-none" />
+                      )}
+                      {/* Drag handle indicator */}
+                      <div className="absolute top-1 left-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <GripVertical className="w-3 h-3" />
+                      </div>
+                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
+                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
+                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
+                      </div>
+                    </div>
+                    <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
+                  </div>
+                );
+              }
 
               if (batchMode) {
                 return (
