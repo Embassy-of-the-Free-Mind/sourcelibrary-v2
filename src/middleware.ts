@@ -1,39 +1,13 @@
-import { auth } from '@/lib/auth';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
-export default auth((req) => {
-  const isLoggedIn = !!req.auth;
-  const isOnAuthPage = req.nextUrl.pathname.startsWith('/auth');
-  const isOnApiAuth = req.nextUrl.pathname.startsWith('/api/auth');
-  const isPublicPage = req.nextUrl.pathname === '/' ||
-                       req.nextUrl.pathname.startsWith('/book/') ||
-                       req.nextUrl.pathname.startsWith('/experiments') ||
-                       req.nextUrl.pathname.startsWith('/analytics') ||
-                       req.nextUrl.pathname.startsWith('/api/');
-
-  // Allow auth API routes
-  if (isOnApiAuth) {
-    return NextResponse.next();
-  }
-
-  // Allow public pages
-  if (isPublicPage) {
-    return NextResponse.next();
-  }
-
-  // Redirect to sign-in if not logged in
-  if (!isLoggedIn && !isOnAuthPage) {
-    return NextResponse.redirect(new URL('/auth/signin', req.url));
-  }
-
-  // Redirect to home if logged in and on auth page
-  if (isLoggedIn && isOnAuthPage) {
-    return NextResponse.redirect(new URL('/', req.url));
-  }
-
+// Simple middleware that doesn't use auth/database in edge runtime
+// Auth is handled by individual routes as needed
+export function middleware(request: NextRequest) {
+  // All pages are public - auth is handled at the route level
   return NextResponse.next();
-});
+}
 
 export const config = {
+  // Only match specific paths if needed, otherwise let everything through
   matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)'],
 };

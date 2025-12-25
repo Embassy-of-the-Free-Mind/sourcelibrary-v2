@@ -1227,6 +1227,523 @@ body { background: #1a1a1a; display: flex; align-items: center; justify-content:
   });
 }
 
+// CSS for scholarly EPUB
+const SCHOLARLY_CSS = `
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.65;
+  margin: 0;
+  padding: 1.5em;
+  color: #333;
+  max-width: 100%;
+}
+h1 {
+  font-size: 1.6em;
+  color: #1a1a1a;
+  text-align: center;
+  margin: 1.5em 0 1em;
+  font-variant: small-caps;
+}
+h2 {
+  font-size: 1.3em;
+  color: #8b0000;
+  margin: 1.5em 0 0.8em;
+  border-bottom: 1px solid #d4c4a8;
+  padding-bottom: 0.3em;
+}
+h3 { font-size: 1.1em; color: #333; margin: 1em 0 0.5em; }
+p { margin: 0.8em 0; text-align: justify; }
+.title-page { text-align: center; padding: 2em 1em; }
+.title-page h1 { font-size: 1.8em; margin-top: 2em; font-variant: normal; }
+.subtitle { font-size: 1.1em; color: #666; margin: 1em 0; font-style: italic; }
+.author { font-size: 1.2em; margin: 1.5em 0; }
+.edition-info {
+  margin-top: 3em;
+  padding-top: 1em;
+  border-top: 1px solid #ccc;
+  font-size: 0.9em;
+  color: #666;
+}
+.copyright-page { font-size: 0.85em; padding: 2em 1em; }
+.copyright-page p { text-align: left; margin: 0.5em 0; }
+.toc { padding: 1em; }
+.toc ol { margin: 0; padding-left: 1.5em; }
+.toc li { margin: 0.5em 0; }
+.toc a { color: #333; text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.front-matter { padding: 1em; }
+.front-matter p { text-indent: 1.5em; }
+.front-matter p:first-of-type { text-indent: 0; }
+.page-content { padding: 1em; }
+.page-header {
+  font-size: 0.85em;
+  color: #8b0000;
+  text-align: center;
+  font-variant: small-caps;
+  border-bottom: 1px solid #8b0000;
+  padding-bottom: 0.5em;
+  margin-bottom: 1em;
+}
+.image-container {
+  text-align: center;
+  margin: 1em 0;
+}
+.image-container img {
+  max-width: 100%;
+  max-height: 80vh;
+  border: 1px solid #ddd;
+}
+.note {
+  background: #f9f5e9;
+  border-left: 3px solid #d4a656;
+  padding: 0.5em 1em;
+  margin: 1em 0;
+  font-size: 0.9em;
+  font-style: italic;
+}
+.summary-section { padding: 1em; }
+.glossary { padding: 1em; }
+.glossary-term {
+  margin: 0.8em 0;
+  padding-left: 1em;
+  border-left: 2px solid #d4c4a8;
+}
+.glossary-term strong { color: #8b0000; }
+.glossary-term .definition { font-style: italic; color: #666; }
+.glossary-term .pages { font-size: 0.85em; color: #888; }
+.index-section { padding: 1em; }
+.index-entry { margin: 0.4em 0; }
+.index-entry .pages { color: #666; font-size: 0.9em; }
+.colophon {
+  padding: 2em 1em;
+  font-size: 0.9em;
+  color: #666;
+  border-top: 1px solid #ccc;
+  margin-top: 2em;
+}
+.doi-badge {
+  display: inline-block;
+  background: #0066cc;
+  color: white;
+  padding: 0.3em 0.8em;
+  border-radius: 3px;
+  font-size: 0.85em;
+  margin: 0.5em 0;
+}
+`;
+
+// Generate scholarly EPUB with full front and back matter
+async function generateScholarlyEpubDownload(
+  book: Book,
+  pages: Page[],
+  edition?: TranslationEdition | null,
+  bookIndex?: BookIndex | null,
+  bookSummary?: BookSummaryData | null
+): Promise<Buffer> {
+  const now = new Date().toISOString().split('T')[0];
+  const bookTitle = book.display_title || book.title;
+  const bookId = `urn:uuid:${book.id}`;
+
+  // Collect pages with translation and photo
+  const validPages = pages.filter(p => p.translation?.data && (p.photo || p.compressed_photo));
+
+  return new Promise(async (resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const archive = archiver('zip', { zlib: { level: 9 } });
+
+    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
+    archive.on('end', () => resolve(Buffer.concat(chunks)));
+    archive.on('error', reject);
+
+    // 1. mimetype
+    archive.append('application/epub+zip', { name: 'mimetype', store: true });
+
+    // 2. container.xml
+    archive.append(`<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`, { name: 'META-INF/container.xml' });
+
+    // Build manifest and spine
+    const spineItems: string[] = [];
+    const manifestItems: string[] = [];
+    const navItems: string[] = [];
+
+    // Track chapter order
+    let chapterNum = 0;
+
+    // ========== FRONT MATTER ==========
+
+    // Title Page
+    manifestItems.push(`<item id="title-page" href="title-page.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="title-page"/>`);
+    navItems.push(`<li><a href="title-page.xhtml">Title Page</a></li>`);
+
+    // Copyright Page
+    manifestItems.push(`<item id="copyright" href="copyright.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="copyright"/>`);
+    navItems.push(`<li><a href="copyright.xhtml">Copyright</a></li>`);
+
+    // Introduction (if available)
+    if (edition?.front_matter?.introduction) {
+      manifestItems.push(`<item id="introduction" href="introduction.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="introduction"/>`);
+      navItems.push(`<li><a href="introduction.xhtml">Introduction</a></li>`);
+    }
+
+    // Methodology (if available)
+    if (edition?.front_matter?.methodology) {
+      manifestItems.push(`<item id="methodology" href="methodology.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="methodology"/>`);
+      navItems.push(`<li><a href="methodology.xhtml">Translation Methodology</a></li>`);
+    }
+
+    // ========== MAIN CONTENT ==========
+    navItems.push(`<li><a href="content-start.xhtml">Translation</a><ol>`);
+
+    // Content start marker
+    manifestItems.push(`<item id="content-start" href="content-start.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="content-start"/>`);
+
+    // Content pages with images
+    for (const page of validPages) {
+      const imgId = `img-${page.page_number}`;
+      const pageId = `page-${page.page_number}`;
+      manifestItems.push(`<item id="${imgId}" href="images/${imgId}.jpg" media-type="image/jpeg"/>`);
+      manifestItems.push(`<item id="${pageId}" href="${pageId}.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="${pageId}"/>`);
+      navItems.push(`<li><a href="${pageId}.xhtml">Page ${page.page_number}</a></li>`);
+    }
+
+    navItems.push(`</ol></li>`);
+
+    // ========== BACK MATTER ==========
+
+    // Book Summary (if available)
+    if (bookSummary?.detailed || bookSummary?.abstract) {
+      manifestItems.push(`<item id="summary" href="summary.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="summary"/>`);
+      navItems.push(`<li><a href="summary.xhtml">Summary</a></li>`);
+    }
+
+    // Glossary (from vocabulary)
+    if (bookIndex?.vocabulary && bookIndex.vocabulary.length > 0) {
+      manifestItems.push(`<item id="glossary" href="glossary.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="glossary"/>`);
+      navItems.push(`<li><a href="glossary.xhtml">Glossary</a></li>`);
+    }
+
+    // Index (from keywords, concepts, people)
+    const hasIndex = (bookIndex?.keywords?.length || 0) + (bookIndex?.concepts?.length || 0) + (bookIndex?.people?.length || 0) > 0;
+    if (hasIndex) {
+      manifestItems.push(`<item id="index" href="index.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="index"/>`);
+      navItems.push(`<li><a href="index.xhtml">Index</a></li>`);
+    }
+
+    // Colophon
+    manifestItems.push(`<item id="colophon" href="colophon.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="colophon"/>`);
+    navItems.push(`<li><a href="colophon.xhtml">About This Edition</a></li>`);
+
+    // Add nav and CSS
+    manifestItems.push(`<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`);
+    manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
+
+    // Build contributors list
+    const contributors = edition?.contributors || [
+      { name: 'Source Library', role: 'translator', type: 'ai' as const, model: 'Gemini AI' }
+    ];
+
+    // OPF
+    const opf = `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">${edition?.doi ? `doi:${edition.doi}` : bookId}</dc:identifier>
+    <dc:title>${escapeXml(bookTitle)}</dc:title>
+    <dc:creator>${escapeXml(book.author)}</dc:creator>
+    ${contributors.map(c => `<dc:contributor>${escapeXml(c.name)} (${c.role})</dc:contributor>`).join('\n    ')}
+    <dc:publisher>Source Library</dc:publisher>
+    <dc:language>en</dc:language>
+    <dc:date>${edition?.published_at ? new Date(edition.published_at).toISOString().split('T')[0] : now}</dc:date>
+    <dc:rights>${edition?.license || 'CC-BY-4.0'}</dc:rights>
+    ${edition?.doi ? `<dc:source>https://doi.org/${edition.doi}</dc:source>` : ''}
+    <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
+  </metadata>
+  <manifest>
+    ${manifestItems.join('\n    ')}
+  </manifest>
+  <spine>
+    ${spineItems.join('\n    ')}
+  </spine>
+</package>`;
+    archive.append(opf, { name: 'OEBPS/content.opf' });
+
+    // Navigation
+    const nav = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Contents</title>
+  <link rel="stylesheet" type="text/css" href="styles.css"/>
+</head>
+<body>
+  <nav epub:type="toc" id="toc">
+    <h1>Contents</h1>
+    <ol>
+      ${navItems.join('\n      ')}
+    </ol>
+  </nav>
+</body>
+</html>`;
+    archive.append(nav, { name: 'OEBPS/nav.xhtml' });
+
+    // CSS
+    archive.append(SCHOLARLY_CSS, { name: 'OEBPS/styles.css' });
+
+    // ========== CREATE PAGES ==========
+
+    // Title Page
+    const titlePageHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Title Page</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="title-page">
+    <h1>${escapeXml(bookTitle)}</h1>
+    <p class="subtitle">English Translation</p>
+    <p class="author">by ${escapeXml(book.author)}</p>
+    ${book.published ? `<p>(${escapeXml(book.published)})</p>` : ''}
+    ${edition?.doi ? `<p class="doi-badge">DOI: ${edition.doi}</p>` : ''}
+    <div class="edition-info">
+      <p>${edition?.version_label || 'First Edition'}</p>
+      <p>Source Library · ${now}</p>
+    </div>
+  </div>
+</body>
+</html>`;
+    archive.append(titlePageHtml, { name: 'OEBPS/title-page.xhtml' });
+
+    // Copyright Page
+    const copyrightHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Copyright</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="copyright-page">
+    <h2>Copyright and License</h2>
+    <p><strong>${escapeXml(bookTitle)}</strong></p>
+    <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${book.published})` : ''}</p>
+    <p>English translation prepared by Source Library</p>
+    <p>&nbsp;</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-4.0'} (Creative Commons Attribution 4.0 International)</p>
+    <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit.</p>
+    ${edition?.doi ? `<p>&nbsp;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
+    <p>&nbsp;</p>
+    <p><strong>Contributors:</strong></p>
+    ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})${c.type === 'ai' && c.model ? ` - ${c.model}` : ''}</p>`).join('\n    ')}
+    <p>&nbsp;</p>
+    <p>Source Library is a project of the Ancient Wisdom Trust.</p>
+    <p>Preserving humanity's wisdom for the digital age.</p>
+    <p>&nbsp;</p>
+    <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
+  </div>
+</body>
+</html>`;
+    archive.append(copyrightHtml, { name: 'OEBPS/copyright.xhtml' });
+
+    // Introduction (if available)
+    if (edition?.front_matter?.introduction) {
+      const introHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Introduction</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="front-matter">
+    <h1>Introduction</h1>
+    ${markdownToHtml(edition.front_matter.introduction)}
+  </div>
+</body>
+</html>`;
+      archive.append(introHtml, { name: 'OEBPS/introduction.xhtml' });
+    }
+
+    // Methodology (if available)
+    if (edition?.front_matter?.methodology) {
+      const methodHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Translation Methodology</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="front-matter">
+    <h1>Translation Methodology</h1>
+    ${markdownToHtml(edition.front_matter.methodology)}
+  </div>
+</body>
+</html>`;
+      archive.append(methodHtml, { name: 'OEBPS/methodology.xhtml' });
+    }
+
+    // Content start marker
+    const contentStartHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Translation</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="page-content">
+    <h1>${escapeXml(bookTitle)}</h1>
+    <h2>English Translation</h2>
+    <p style="text-align:center;font-style:italic;">The following pages present the original manuscript images alongside English translations.</p>
+  </div>
+</body>
+</html>`;
+    archive.append(contentStartHtml, { name: 'OEBPS/content-start.xhtml' });
+
+    // Fetch and add images, create content pages
+    console.log(`Fetching ${validPages.length} images for scholarly EPUB...`);
+    for (const page of validPages) {
+      const imageUrl = page.compressed_photo || page.photo;
+      const imageBuffer = await fetchAndCompressImage(imageUrl);
+
+      if (imageBuffer) {
+        archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
+      }
+
+      const translationHtml = markdownToHtml(page.translation.data);
+
+      const pageHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Page ${page.page_number}</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="page-content">
+    <div class="page-header">Page ${page.page_number}</div>
+    ${imageBuffer ? `<div class="image-container"><img src="images/img-${page.page_number}.jpg" alt="Original manuscript page ${page.page_number}"/></div>` : ''}
+    <h3>Translation</h3>
+    ${translationHtml}
+  </div>
+</body>
+</html>`;
+      archive.append(pageHtml, { name: `OEBPS/page-${page.page_number}.xhtml` });
+    }
+
+    // Summary (if available)
+    if (bookSummary?.detailed || bookSummary?.abstract) {
+      const summaryContent = bookSummary.detailed || bookSummary.abstract || '';
+      const summaryHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Summary</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="summary-section">
+    <h1>Summary</h1>
+    ${markdownToHtml(summaryContent)}
+  </div>
+</body>
+</html>`;
+      archive.append(summaryHtml, { name: 'OEBPS/summary.xhtml' });
+    }
+
+    // Glossary (from vocabulary)
+    if (bookIndex?.vocabulary && bookIndex.vocabulary.length > 0) {
+      const glossaryEntries = bookIndex.vocabulary
+        .sort((a, b) => a.term.localeCompare(b.term))
+        .map(entry => `
+          <div class="glossary-term">
+            <strong>${escapeXml(entry.term)}</strong>
+            ${entry.definition ? `<span class="definition"> — ${escapeXml(entry.definition)}</span>` : ''}
+            ${entry.pages?.length ? `<span class="pages"> (pp. ${entry.pages.join(', ')})</span>` : ''}
+          </div>
+        `).join('\n');
+
+      const glossaryHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Glossary</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="glossary">
+    <h1>Glossary</h1>
+    <p>Technical terms and vocabulary from the original ${escapeXml(book.language)} text.</p>
+    ${glossaryEntries}
+  </div>
+</body>
+</html>`;
+      archive.append(glossaryHtml, { name: 'OEBPS/glossary.xhtml' });
+    }
+
+    // Index (keywords, concepts, people)
+    if (hasIndex) {
+      let indexContent = '';
+
+      if (bookIndex?.people && bookIndex.people.length > 0) {
+        const peopleEntries = bookIndex.people
+          .sort((a, b) => a.term.localeCompare(b.term))
+          .map(entry => `<div class="index-entry">${escapeXml(entry.term)} <span class="pages">${entry.pages?.join(', ') || ''}</span></div>`)
+          .join('\n');
+        indexContent += `<h2>People</h2>${peopleEntries}`;
+      }
+
+      if (bookIndex?.concepts && bookIndex.concepts.length > 0) {
+        const conceptEntries = bookIndex.concepts
+          .sort((a, b) => a.term.localeCompare(b.term))
+          .map(entry => `<div class="index-entry">${escapeXml(entry.term)} <span class="pages">${entry.pages?.join(', ') || ''}</span></div>`)
+          .join('\n');
+        indexContent += `<h2>Concepts</h2>${conceptEntries}`;
+      }
+
+      if (bookIndex?.keywords && bookIndex.keywords.length > 0) {
+        const keywordEntries = bookIndex.keywords
+          .sort((a, b) => a.term.localeCompare(b.term))
+          .slice(0, 100) // Limit to top 100 keywords
+          .map(entry => `<div class="index-entry">${escapeXml(entry.term)} <span class="pages">${entry.pages?.join(', ') || ''}</span></div>`)
+          .join('\n');
+        indexContent += `<h2>Keywords</h2>${keywordEntries}`;
+      }
+
+      const indexHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>Index</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="index-section">
+    <h1>Index</h1>
+    ${indexContent}
+  </div>
+</body>
+</html>`;
+      archive.append(indexHtml, { name: 'OEBPS/index.xhtml' });
+    }
+
+    // Colophon
+    const colophonHtml = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta charset="UTF-8"/><title>About This Edition</title><link rel="stylesheet" href="styles.css"/></head>
+<body>
+  <div class="colophon">
+    <h1>About This Edition</h1>
+    <p>This scholarly edition was prepared by the <strong>Source Library</strong>, a project dedicated to digitizing, transcribing, and translating rare Hermetic, esoteric, and humanist texts.</p>
+    <p>The translation was created using AI-assisted transcription and translation, with human editorial oversight. Our goal is to make these important historical texts accessible to scholars, students, and seekers worldwide.</p>
+    ${edition?.doi ? `<p><strong>Permanent Citation:</strong> ${edition.doi_url || `https://doi.org/${edition.doi}`}</p>` : ''}
+    <p><strong>Online Version:</strong> ${BASE_URL}/book/${book.id}</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-4.0'}</p>
+    <p>&nbsp;</p>
+    <p>Source Library is a project of the Ancient Wisdom Trust.</p>
+    <p><em>Preserving humanity's wisdom for the digital age.</em></p>
+    <p>&nbsp;</p>
+    <p style="font-size:0.85em;color:#888;">Generated: ${now}</p>
+  </div>
+</body>
+</html>`;
+    archive.append(colophonHtml, { name: 'OEBPS/colophon.xhtml' });
+
+    archive.finalize();
+  });
+}
+
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params;
@@ -1234,7 +1751,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const format = searchParams.get('format') || 'translation';
 
     // Valid formats: TXT, EPUB, and ZIP
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'images-zip'];
+    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'epub-scholarly', 'images-zip'];
     if (!validFormats.includes(format)) {
       return NextResponse.json(
         { error: 'Invalid format' },
@@ -1242,10 +1759,14 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
     }
 
+    // Get optional edition_id for scholarly format
+    const editionId = searchParams.get('edition_id');
+
     const isEpub = format.startsWith('epub-');
     const isLoeb = format === 'epub-parallel';
     const isFacsimile = format === 'epub-facsimile';
     const isImagesOnly = format === 'epub-images';
+    const isScholarly = format === 'epub-scholarly';
     const isImagesZip = format === 'images-zip';
 
     const db = await getDb();
@@ -1309,6 +1830,55 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           pages as unknown as Page[]
         );
         filename = `${safeTitle}-parallel.epub`;
+      } else if (isScholarly) {
+        // Generate scholarly EPUB with front/back matter
+        // Fetch additional data: edition, index, summary
+        let edition: TranslationEdition | null = null;
+        let bookIndex: BookIndex | null = null;
+        let bookSummary: BookSummaryData | null = null;
+
+        // Get edition if specified, or current edition, or first draft
+        if (editionId) {
+          const editions = (book as unknown as Book).editions || [];
+          edition = editions.find((e: TranslationEdition) => e.id === editionId) || null;
+        } else if ((book as unknown as Book).current_edition_id) {
+          const editions = (book as unknown as Book).editions || [];
+          edition = editions.find((e: TranslationEdition) => e.id === (book as unknown as Book).current_edition_id) || null;
+        } else {
+          const editions = (book as unknown as Book).editions || [];
+          edition = editions[0] || null;
+        }
+
+        // Get book index
+        const indexDoc = await db.collection('book_indexes').findOne({ book_id: id });
+        if (indexDoc) {
+          bookIndex = {
+            vocabulary: indexDoc.vocabulary || [],
+            keywords: indexDoc.keywords || [],
+            people: indexDoc.people || [],
+            places: indexDoc.places || [],
+            concepts: indexDoc.concepts || [],
+          };
+        }
+
+        // Get book summary
+        const summaryDoc = await db.collection('book_summaries').findOne({ book_id: id });
+        if (summaryDoc) {
+          bookSummary = {
+            brief: summaryDoc.brief,
+            abstract: summaryDoc.abstract,
+            detailed: summaryDoc.detailed,
+          };
+        }
+
+        epubBuffer = await generateScholarlyEpubDownload(
+          book as unknown as Book,
+          pages as unknown as Page[],
+          edition,
+          bookIndex,
+          bookSummary
+        );
+        filename = `${safeTitle}-scholarly.epub`;
       } else {
         // Generate standard EPUB
         epubBuffer = await generateEpubDownload(
