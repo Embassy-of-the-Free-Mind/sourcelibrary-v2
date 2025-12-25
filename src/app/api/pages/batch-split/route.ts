@@ -132,10 +132,11 @@ export async function POST(request: NextRequest) {
       ...newPages.map(p => p.id),     // New pages (right side)
     ];
 
+    let cropJobId: string | null = null;
     if (splitPageIds.length > 0) {
-      const jobId = nanoid(12);
+      cropJobId = nanoid(12);
       await db.collection('jobs').insertOne({
-        id: jobId,
+        id: cropJobId,
         type: 'generate_cropped_images',
         status: 'pending',
         progress: {
@@ -153,7 +154,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Fire off the first chunk processing (non-blocking)
-      fetch(`${process.env.NEXT_PUBLIC_URL || ''}/api/jobs/${jobId}/process`, {
+      fetch(`${process.env.NEXT_PUBLIC_URL || ''}/api/jobs/${cropJobId}/process`, {
         method: 'POST',
       }).catch(() => {
         // Ignore errors - job will be picked up later
@@ -184,7 +185,12 @@ export async function POST(request: NextRequest) {
       success: true,
       splitCount: newPages.length,
       totalPages: allPages.length,
-      adjustmentsLogged: adjustments.length
+      adjustmentsLogged: adjustments.length,
+      cropJobId,
+      cropJobPagesCount: splitPageIds.length,
+      message: cropJobId
+        ? `Split complete. Generating cropped images for ${splitPageIds.length} pages...`
+        : 'Split complete.'
     });
   } catch (error) {
     console.error('Error batch splitting pages:', error);

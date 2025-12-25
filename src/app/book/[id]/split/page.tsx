@@ -36,6 +36,11 @@ export default function SplitPage({ params }: PageProps) {
   const [resettingAll, setResettingAll] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
+  // Cropped image generation job tracking
+  const [cropJobId, setCropJobId] = useState<string | null>(null);
+  const [cropJobProgress, setCropJobProgress] = useState<{ total: number; completed: number; failed: number } | null>(null);
+  const [cropJobStatus, setCropJobStatus] = useState<'pending' | 'processing' | 'completed' | 'failed' | null>(null);
+
   // Detection algorithm options
   type DetectionAlgo = 'auto' | 'dark' | 'bright' | 'center' | 'ml' | 'gemini';
   const [detectionAlgo, setDetectionAlgo] = useState<DetectionAlgo>('auto');
@@ -443,7 +448,6 @@ export default function SplitPage({ params }: PageProps) {
     const pagesToSplit = Array.from(selectedPages);
     if (pagesToSplit.length === 0) return;
 
-    const originalIds = new Set(pagesToSplit);
     setSplitting(true);
     setShowConfirm(false);
 
@@ -456,19 +460,63 @@ export default function SplitPage({ params }: PageProps) {
                      detectedPositions[pageId] !== splitPositions[pageId]
       }));
 
-      await fetch('/api/pages/batch-split', {
+      const response = await fetch('/api/pages/batch-split', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ splits })
       });
 
-      // Go to book page
-      window.location.href = `/book/${bookId}`;
+      const data = await response.json();
+
+      // If a crop job was created, track it
+      if (data.cropJobId) {
+        setCropJobId(data.cropJobId);
+        setCropJobProgress({ total: data.cropJobPagesCount || splits.length * 2, completed: 0, failed: 0 });
+        setCropJobStatus('pending');
+        // Start polling the job
+        pollCropJob(data.cropJobId);
+      } else {
+        // No job needed, go to book page
+        window.location.href = `/book/${bookId}`;
+      }
     } catch (error) {
       console.error('Batch split failed:', error);
-    } finally {
       setSplitting(false);
     }
+  };
+
+  // Poll crop job status
+  const pollCropJob = async (jobId: string) => {
+    const poll = async () => {
+      try {
+        // Process next chunk
+        await fetch(`/api/jobs/${jobId}/process`, { method: 'POST' });
+
+        // Get job status
+        const res = await fetch(`/api/jobs/${jobId}`);
+        if (res.ok) {
+          const job = await res.json();
+          setCropJobProgress(job.progress);
+          setCropJobStatus(job.status);
+
+          if (job.status === 'completed' || job.status === 'failed') {
+            // Job done, redirect after a short delay
+            setTimeout(() => {
+              window.location.href = `/book/${bookId}`;
+            }, 1500);
+          } else {
+            // Continue polling
+            setTimeout(poll, 1000);
+          }
+        }
+      } catch (error) {
+        console.error('Error polling crop job:', error);
+        // Retry after delay
+        setTimeout(poll, 2000);
+      }
+    };
+
+    poll();
   };
 
   // Reset a split page back to original (delete it and its sibling, restore original)
@@ -800,10 +848,43 @@ export default function SplitPage({ params }: PageProps) {
       {/* Splitting Progress */}
       {splitting && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl shadow-2xl p-8 text-center">
+          <div className="bg-white rounded-xl shadow-2xl p-8 text-center max-w-md w-full mx-4">
             <Loader2 className="w-12 h-12 animate-spin text-amber-600 mx-auto mb-4" />
-            <p className="text-lg font-medium text-stone-900">Splitting pages...</p>
-            <p className="text-sm text-stone-500 mt-2">This may take a moment</p>
+
+            {!cropJobId ? (
+              <>
+                <p className="text-lg font-medium text-stone-900">Splitting pages...</p>
+                <p className="text-sm text-stone-500 mt-2">Creating page splits</p>
+              </>
+            ) : (
+              <>
+                <p className="text-lg font-medium text-stone-900">Generating cropped images...</p>
+                <p className="text-sm text-stone-500 mt-2">
+                  {cropJobStatus === 'completed'
+                    ? 'Complete! Redirecting...'
+                    : cropJobStatus === 'failed'
+                    ? 'Some images failed, redirecting...'
+                    : `${cropJobProgress?.completed || 0} of ${cropJobProgress?.total || 0} images`}
+                </p>
+
+                {/* Progress bar */}
+                {cropJobProgress && cropJobProgress.total > 0 && (
+                  <div className="mt-4 w-full bg-stone-200 rounded-full h-2 overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-300 ${
+                        cropJobStatus === 'completed' ? 'bg-green-500' :
+                        cropJobStatus === 'failed' ? 'bg-red-500' : 'bg-amber-500'
+                      }`}
+                      style={{ width: `${Math.round((cropJobProgress.completed / cropJobProgress.total) * 100)}%` }}
+                    />
+                  </div>
+                )}
+
+                <p className="text-xs text-stone-400 mt-4">
+                  This ensures OCR uses the correct cropped images
+                </p>
+              </>
+            )}
           </div>
         </div>
       )}
