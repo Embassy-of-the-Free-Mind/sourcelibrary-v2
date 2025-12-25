@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import DownloadButton from './DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
+import { MODEL_PRICING } from '@/lib/ai';
 import type { Page, Prompt } from '@/lib/types';
 
 interface BookPagesSectionProps {
@@ -41,12 +42,21 @@ interface ProcessingState {
   totalTokens: number;
 }
 
-// Estimated costs per page (based on Gemini 2.0 Flash pricing)
-const ESTIMATED_COSTS = {
-  ocr: 0.0003,        // ~1000 input tokens (image) + ~500 output tokens
-  translation: 0.0002, // ~500 input tokens + ~500 output tokens
-  summary: 0.0001,    // ~300 input tokens + ~100 output tokens
+// Estimated token usage per action
+const ESTIMATED_TOKENS = {
+  ocr: { input: 1500, output: 800 },        // Image (~1000) + prompt (~500), output ~800
+  translation: { input: 1000, output: 1000 }, // Input text + prompt, similar output
+  summary: { input: 800, output: 200 },      // Shorter input/output
 };
+
+// Calculate cost per page based on model
+function getEstimatedCost(action: 'ocr' | 'translation' | 'summary', model: string): number {
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
+  const tokens = ESTIMATED_TOKENS[action];
+  const inputCost = (tokens.input / 1_000_000) * pricing.input;
+  const outputCost = (tokens.output / 1_000_000) * pricing.output;
+  return inputCost + outputCost;
+}
 
 // Format relative time
 function formatRelativeTime(date: Date | string | undefined): string {
@@ -296,7 +306,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
 
   const selectedCount = selectedPages.size;
   const estimatedTimeMinutes = Math.ceil(selectedCount * 0.5);
-  const estimatedCost = selectedCount * ESTIMATED_COSTS[action];
+  const estimatedCost = selectedCount * getEstimatedCost(action, selectedModel);
 
   const formatCost = (cost: number) => {
     if (cost < 0.01) return `$${cost.toFixed(4)}`;
