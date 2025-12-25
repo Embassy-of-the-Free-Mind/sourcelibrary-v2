@@ -120,10 +120,40 @@ export default function OCRQualityExperimentPage() {
         const data = await res.json();
         setExperimentId(data.experiment_id);
         setStatus(prev => ({ ...prev, phase: 'running', totalJudgments }));
+
+        // Auto-run all conditions sequentially
+        runAllConditions(data.experiment_id);
       }
     } catch (error) {
       console.error('Error creating experiment:', error);
     }
+  };
+
+  const runAllConditions = async (expId: string) => {
+    for (const condition of CONDITIONS) {
+      setRunningCondition(condition.id);
+
+      try {
+        const res = await fetch(`/api/experiments/ocr-quality/${expId}/run`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ condition_id: condition.id }),
+        });
+
+        if (res.ok) {
+          setStatus(prev => ({
+            ...prev,
+            conditionsRun: [...prev.conditionsRun, condition.id],
+          }));
+        } else {
+          console.error('Failed to run condition:', condition.id);
+        }
+      } catch (error) {
+        console.error('Error running condition:', condition.id, error);
+      }
+    }
+
+    setRunningCondition(null);
   };
 
   const runCondition = async (conditionId: string) => {
@@ -353,12 +383,30 @@ export default function OCRQualityExperimentPage() {
         {/* Running Phase */}
         {status.phase === 'running' && (
           <div className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
-            <h2 className="font-semibold text-stone-900 mb-4">2. Run OCR Conditions</h2>
-            <p className="text-sm text-stone-600 mb-4">
-              Run each condition to generate OCR outputs. You can run them in any order.
-            </p>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-semibold text-stone-900">2. Running OCR Conditions</h2>
+              <span className="text-sm text-stone-500">
+                {status.conditionsRun.length} / {CONDITIONS.length} complete
+              </span>
+            </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            {/* Overall progress bar */}
+            <div className="mb-6">
+              <div className="h-3 bg-stone-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-purple-600 transition-all duration-500"
+                  style={{ width: `${(status.conditionsRun.length / CONDITIONS.length) * 100}%` }}
+                />
+              </div>
+              {runningCondition && (
+                <p className="text-sm text-purple-600 mt-2 flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Running: {CONDITIONS.find(c => c.id === runningCondition)?.label}...
+                </p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-4 gap-2">
               {CONDITIONS.map(condition => {
                 const isRun = status.conditionsRun.includes(condition.id);
                 const isRunning = runningCondition === condition.id;
@@ -366,49 +414,52 @@ export default function OCRQualityExperimentPage() {
                 return (
                   <div
                     key={condition.id}
-                    className={`p-3 rounded-lg border ${
+                    className={`p-2 rounded-lg border text-center ${
                       isRun
                         ? 'bg-green-50 border-green-200'
-                        : 'bg-stone-50 border-stone-200'
+                        : isRunning
+                          ? 'bg-purple-50 border-purple-300'
+                          : 'bg-stone-50 border-stone-200'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-sm">{condition.label}</p>
-                        <p className="text-xs text-stone-500">
-                          {condition.batchSize} page{condition.batchSize > 1 ? 's' : ''} per batch
-                        </p>
-                      </div>
+                    <div className="flex items-center justify-center gap-1 mb-1">
                       {isRun ? (
-                        <CheckCircle2 className="w-5 h-5 text-green-600" />
+                        <CheckCircle2 className="w-4 h-4 text-green-600" />
+                      ) : isRunning ? (
+                        <Loader2 className="w-4 h-4 text-purple-600 animate-spin" />
                       ) : (
-                        <button
-                          onClick={() => runCondition(condition.id)}
-                          disabled={isRunning || runningCondition !== null}
-                          className="px-3 py-1 text-sm bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
-                        >
-                          {isRunning ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                          ) : (
-                            'Run'
-                          )}
-                        </button>
+                        <div className="w-4 h-4 rounded-full border-2 border-stone-300" />
                       )}
                     </div>
+                    <p className="text-xs font-medium text-stone-700">
+                      B{condition.batchSize}
+                    </p>
+                    <p className="text-[10px] text-stone-500">
+                      {condition.promptType}
+                    </p>
                   </div>
                 );
               })}
             </div>
 
             {allConditionsRun && (
-              <button
-                onClick={() => setStatus(prev => ({ ...prev, phase: 'judging' }))}
-                className="mt-4 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-              >
-                <Eye className="w-4 h-4" />
-                Start Judging
-                <ChevronRight className="w-4 h-4" />
-              </button>
+              <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <span className="font-semibold text-green-900">All conditions complete!</span>
+                </div>
+                <p className="text-sm text-green-700 mb-3">
+                  Ready to judge quality. You'll compare outputs side-by-side.
+                </p>
+                <Link
+                  href={`/experiments/ocr-quality/${experimentId}/judge`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                >
+                  <Eye className="w-4 h-4" />
+                  Start Judging
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+              </div>
             )}
           </div>
         )}

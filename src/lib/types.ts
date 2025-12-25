@@ -175,6 +175,9 @@ export interface Book {
   // Image source and licensing (for scans/digitizations)
   image_source?: ImageSource;
 
+  // Internet Archive identifier (for reimport)
+  ia_identifier?: string;
+
   // Reading dashboard sections
   reading_sections?: Section[];
 
