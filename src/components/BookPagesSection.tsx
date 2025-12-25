@@ -111,7 +111,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     totalCost: 0,
     totalTokens: 0,
   });
-  const [stopRequested, setStopRequested] = useState(false);
+  const stopRequestedRef = useRef(false);
   const lastSelectedIndexRef = useRef<number | null>(null);
 
   // Calculate stats
@@ -214,7 +214,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     if (selectedPages.size === 0) return;
 
     const pageIds = Array.from(selectedPages);
-    setStopRequested(false);
+    stopRequestedRef.current = false;
     setProcessing({
       active: true,
       type: action,
@@ -232,7 +232,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     let runningTokens = 0;
 
     for (let i = 0; i < pageIds.length; i++) {
-      if (stopRequested) break;
+      if (stopRequestedRef.current) break;
 
       const pageId = pageIds[i];
       const page = pages.find(p => p.id === pageId);
@@ -289,7 +289,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
         totalTokens: runningTokens,
       }));
 
-      if (i < pageIds.length - 1 && !stopRequested) {
+      if (i < pageIds.length - 1 && !stopRequestedRef.current) {
         await new Promise(r => setTimeout(r, 1000));
       }
     }
@@ -461,7 +461,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
                     </span>
                   )}
                   <button
-                    onClick={() => setStopRequested(true)}
+                    onClick={() => { stopRequestedRef.current = true; }}
                     className="text-xs text-stone-500 hover:text-stone-700 flex items-center gap-1"
                   >
                     <Square className="w-3 h-3" /> Stop
