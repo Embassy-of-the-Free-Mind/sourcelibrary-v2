@@ -83,11 +83,23 @@ export interface Book {
   id: string;
   _id?: string;
   tenant_id: string;
-  title: string;
-  display_title?: string;
+
+  // Title fields
+  title: string;              // Original language title (USTC-aligned, fixed)
+  display_title?: string;     // English title for display (editable)
+
+  // Author and publication
   author: string;
-  language: string;
-  published: string;
+  language: string;           // Original language of the text
+  published: string;          // Publication year
+
+  // USTC catalog fields
+  ustc_id?: string;           // USTC catalog number (e.g., "2029384")
+  place_published?: string;   // City of publication (e.g., "Hamburg")
+  publisher?: string;         // Printer/Publisher name
+  format?: string;            // Book format (folio, quarto, octavo, etc.)
+
+  // Display and categorization
   thumbnail?: string;
   categories?: string[];
   pages_count?: number;
