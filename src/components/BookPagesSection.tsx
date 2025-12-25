@@ -208,28 +208,34 @@ export default function BookPagesSection({ bookId, bookTitle, pages }: BookPages
   };
 
   const togglePage = useCallback((pageId: string, index: number, event?: React.MouseEvent) => {
-    setSelectedPages(prev => {
-      const next = new Set(prev);
+    const isShiftClick = event?.shiftKey === true;
+    const hasAnchor = lastSelectedIndexRef.current !== null;
 
-      // Handle shift-click for range selection
-      if (event?.shiftKey && lastSelectedIndexRef.current !== null) {
-        const start = Math.min(lastSelectedIndexRef.current, index);
-        const end = Math.max(lastSelectedIndexRef.current, index);
+    if (isShiftClick && hasAnchor) {
+      // Shift-click: select range
+      const start = Math.min(lastSelectedIndexRef.current!, index);
+      const end = Math.max(lastSelectedIndexRef.current!, index);
+      setSelectedPages(prev => {
+        const next = new Set(prev);
         for (let i = start; i <= end; i++) {
           next.add(pages[i].id);
         }
-      } else {
-        // Normal toggle
+        return next;
+      });
+    } else {
+      // Normal click: toggle single page
+      setSelectedPages(prev => {
+        const next = new Set(prev);
         if (next.has(pageId)) {
           next.delete(pageId);
         } else {
           next.add(pageId);
         }
-      }
-
-      return next;
-    });
-    lastSelectedIndexRef.current = index;
+        return next;
+      });
+      // Only update anchor on non-shift clicks
+      lastSelectedIndexRef.current = index;
+    }
   }, [pages]);
 
   const selectAll = () => setSelectedPages(new Set(pages.map(p => p.id)));
