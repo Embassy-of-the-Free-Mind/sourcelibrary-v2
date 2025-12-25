@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText, Glasses } from 'lucide-react';
+import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText, Glasses, Workflow, MessageCircle, BookMarked } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookHistory from '@/components/BookHistory';
@@ -99,8 +99,17 @@ async function BookInfo({ id }: { id: string }) {
   }
 
   const { book, pages } = data;
+  const ocrCount = pages.filter(p => p.ocr?.data).length;
   const translatedCount = pages.filter(p => p.translation?.data).length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
+
+  // Progression: OCR → Translation → Summary → Ask AI / Publish
+  const hasOcr = ocrCount > 0;
+  const hasTranslations = translatedCount > 0;
+  const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
+  const summaryText = indexBrief || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
+  const hasSummary = !!summaryText;
+  const isComplete = ocrCount === pages.length && translatedCount === pages.length && hasSummary;
 
   return (
     <>
@@ -134,6 +143,7 @@ async function BookInfo({ id }: { id: string }) {
               )}
               <p className="text-lg sm:text-xl text-stone-300 mt-2">{book.author}</p>
 
+              {/* Book metadata */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-6 mt-4 sm:mt-6 text-sm text-stone-400">
                 {book.language && (
                   <div className="flex items-center gap-2">
@@ -151,9 +161,14 @@ async function BookInfo({ id }: { id: string }) {
                   <FileText className="w-4 h-4" />
                   {pages.length} pages
                 </div>
+              </div>
+
+              {/* Actions - organized by progression */}
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-4 text-sm">
+                {/* Always available */}
                 <Link
                   href={`/book/${book.id}/read`}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors text-sm"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
                 >
                   <Glasses className="w-4 h-4" />
                   Read
@@ -163,23 +178,51 @@ async function BookInfo({ id }: { id: string }) {
                   bookTitle={book.display_title || book.title}
                   pages={pages}
                 />
+
+                {/* Unlocks after translation */}
+                {hasTranslations ? (
+                  <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
+                ) : (
+                  <span className="flex items-center gap-1.5 px-3 py-1.5 text-stone-500 cursor-not-allowed" title="Translate pages first">
+                    <MessageCircle className="w-4 h-4" />
+                    <span className="opacity-60">Ask AI</span>
+                  </span>
+                )}
+
+                {/* Unlocks after complete */}
+                {isComplete ? (
+                  <PublishEditionButton
+                    bookId={book.id}
+                    bookTitle={book.display_title || book.title}
+                    translatedCount={translatedCount}
+                    totalPages={pages.length}
+                    currentEdition={currentEdition}
+                  />
+                ) : (
+                  <span className="flex items-center gap-1.5 px-3 py-1.5 text-stone-500 cursor-not-allowed" title="Complete OCR, translation & summary first">
+                    <BookMarked className="w-4 h-4" />
+                    <span className="opacity-60">Publish</span>
+                  </span>
+                )}
+
+                {/* Utilities - always available */}
+                <span className="hidden sm:inline text-stone-600">|</span>
+                <Link
+                  href={`/book/${book.id}/pipeline`}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <Workflow className="w-4 h-4" />
+                  Pipeline
+                </Link>
                 <DownloadButton
                   bookId={book.id}
-                  hasTranslations={pages.some(p => p.translation?.data)}
-                  hasOcr={pages.some(p => p.ocr?.data)}
+                  hasTranslations={hasTranslations}
+                  hasOcr={hasOcr}
                   hasImages={pages.length > 0}
                   variant="header"
                 />
-                <PublishEditionButton
-                  bookId={book.id}
-                  bookTitle={book.display_title || book.title}
-                  translatedCount={translatedCount}
-                  totalPages={pages.length}
-                  currentEdition={currentEdition}
-                />
                 <BookAnalytics bookId={book.id} />
                 <SearchPanel bookId={book.id} />
-                <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
               </div>
 
               {/* Bibliographic Info */}
@@ -191,23 +234,25 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Book Summary */}
       {(() => {
-        // Get summary from index.bookSummary.brief or fall back to book.summary
-        const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
-        const summaryText = indexBrief || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
-        const hasSummary = !!summaryText;
-
         return (
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="bg-white rounded-lg border border-stone-200 p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-stone-900">About This Book</h2>
-                <Link
-                  href={`/book/${book.id}/summary`}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
-                >
-                  <BookText className="w-4 h-4" />
-                  {hasSummary ? 'Full Summary & Index' : 'Generate Summary'}
-                </Link>
+                {hasTranslations ? (
+                  <Link
+                    href={`/book/${book.id}/summary`}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
+                  >
+                    <BookText className="w-4 h-4" />
+                    {hasSummary ? 'Full Summary & Index' : 'Generate Summary'}
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-stone-400 cursor-not-allowed" title="Translate pages first">
+                    <BookText className="w-4 h-4" />
+                    <span className="opacity-60">Generate Summary</span>
+                  </span>
+                )}
               </div>
 
               {/* Categories */}
@@ -225,9 +270,13 @@ async function BookInfo({ id }: { id: string }) {
                     </p>
                   ))}
                 </div>
+              ) : hasTranslations ? (
+                <p className="text-stone-500 text-sm">
+                  No summary yet. Generate a summary to unlock the full book index.
+                </p>
               ) : (
                 <p className="text-stone-500 text-sm">
-                  No summary yet. Process page summaries and generate a book summary to see it here.
+                  Translate pages to unlock summary generation.
                 </p>
               )}
             </div>

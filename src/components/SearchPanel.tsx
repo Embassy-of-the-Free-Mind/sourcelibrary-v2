@@ -202,7 +202,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
                 {results.map((result) => (
                   <Link
                     key={result.pageId}
-                    href={`/book/${bookId}/page/${result.pageId}`}
+                    href={`/book/${bookId}/page/${result.pageId}?highlight=${encodeURIComponent(query.trim())}`}
                     onClick={() => {
                       setIsOpen(false);
                       setQuery('');

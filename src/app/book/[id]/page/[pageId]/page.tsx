@@ -1,14 +1,21 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import TranslationEditor from '@/components/TranslationEditor';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
+import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;
+}
+
+// Component that handles search highlighting (needs Suspense)
+function SearchHighlighter() {
+  useSearchHighlight({ delay: 800 });
+  return null;
 }
 
 export default function PageEditorPage({ params }: PageProps) {
@@ -132,21 +139,28 @@ export default function PageEditorPage({ params }: PageProps) {
   }
 
   return (
-    <TranslationEditor
-      book={book}
-      page={currentPage}
-      pages={pages}
-      currentIndex={currentIndex}
-      onNavigate={handleNavigate}
-      onSave={handleSave}
-      onRefresh={async () => {
-        const res = await fetch(`/api/books/${bookId}`);
-        if (res.ok) {
-          const data = await res.json();
-          setBook(data);
-          setPages(data.pages || []);
-        }
-      }}
-    />
+    <>
+      {/* Search highlighting - wrapped in Suspense for useSearchParams */}
+      <Suspense fallback={null}>
+        <SearchHighlighter />
+      </Suspense>
+
+      <TranslationEditor
+        book={book}
+        page={currentPage}
+        pages={pages}
+        currentIndex={currentIndex}
+        onNavigate={handleNavigate}
+        onSave={handleSave}
+        onRefresh={async () => {
+          const res = await fetch(`/api/books/${bookId}`);
+          if (res.ok) {
+            const data = await res.json();
+            setBook(data);
+            setPages(data.pages || []);
+          }
+        }}
+      />
+    </>
   );
 }

@@ -241,7 +241,16 @@ export interface Book {
   pipeline?: PipelineState;
 }
 
-export interface OcrData {
+// Processing metadata for reproducibility and cost tracking
+export interface ProcessingMetadata {
+  input_tokens?: number;
+  output_tokens?: number;
+  cost_usd?: number;
+  processing_ms?: number;
+  prompt_hash?: string;  // SHA-256 hash of prompt text for version tracking
+}
+
+export interface OcrData extends ProcessingMetadata {
   language: string;
   model: string;
   data: string;
@@ -250,7 +259,7 @@ export interface OcrData {
   prompt_name?: string;
 }
 
-export interface TranslationData {
+export interface TranslationData extends ProcessingMetadata {
   language: string;
   model: string;
   data: string;
@@ -258,7 +267,7 @@ export interface TranslationData {
   prompt_name?: string;
 }
 
-export interface SummaryData {
+export interface SummaryData extends ProcessingMetadata {
   data: string;
   model: string;
   updated_at?: Date;

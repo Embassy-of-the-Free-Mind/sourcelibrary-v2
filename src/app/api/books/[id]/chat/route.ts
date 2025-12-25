@@ -14,23 +14,120 @@ interface PageData {
   translation?: { data: string };
 }
 
-// Build context from book data
-async function buildBookContext(bookId: string): Promise<string> {
+interface BookData {
+  id: string;
+  title: string;
+  display_title?: string;
+  author?: string;
+  language?: string;
+  pages_count?: number;
+  index?: {
+    bookSummary?: {
+      abstract?: string;
+      detailed?: string;
+    };
+  };
+}
+
+// Clean translation text by removing metadata tags
+function cleanText(text: string): string {
+  return text
+    .replace(/\[\[[^\]]+\]\]/g, '')
+    .replace(/^```(?:markdown)?\s*\n?/i, '')
+    .replace(/\n?```\s*$/i, '')
+    .trim();
+}
+
+// Extract keywords from a query for searching
+function extractKeywords(query: string): string[] {
+  // Remove common stop words and split into keywords
+  const stopWords = new Set([
+    'a', 'an', 'the', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
+    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
+    'may', 'might', 'must', 'shall', 'can', 'need', 'dare', 'ought', 'used',
+    'to', 'of', 'in', 'for', 'on', 'with', 'at', 'by', 'from', 'as', 'into',
+    'through', 'during', 'before', 'after', 'above', 'below', 'between',
+    'and', 'but', 'or', 'nor', 'so', 'yet', 'both', 'either', 'neither',
+    'not', 'only', 'own', 'same', 'than', 'too', 'very', 'just',
+    'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those',
+    'i', 'me', 'my', 'we', 'our', 'you', 'your', 'he', 'him', 'his',
+    'she', 'her', 'it', 'its', 'they', 'them', 'their',
+    'about', 'tell', 'says', 'said', 'does', 'mean', 'book', 'text', 'author',
+    'page', 'pages', 'read', 'write', 'wrote', 'written'
+  ]);
+
+  return query
+    .toLowerCase()
+    .replace(/[^\w\s]/g, ' ')
+    .split(/\s+/)
+    .filter(word => word.length > 2 && !stopWords.has(word));
+}
+
+// Search pages within a book for relevant content
+async function searchBookPages(
+  bookId: string,
+  query: string,
+  limit: number = 15
+): Promise<PageData[]> {
   const db = await getDb();
+  const keywords = extractKeywords(query);
 
-  const book = await db.collection('books').findOne({ id: bookId });
-  if (!book) throw new Error('Book not found');
+  if (keywords.length === 0) {
+    // No meaningful keywords - return first few pages
+    return await db.collection('pages')
+      .find({ book_id: bookId, 'translation.data': { $exists: true } })
+      .sort({ page_number: 1 })
+      .limit(limit)
+      .toArray() as unknown as PageData[];
+  }
 
+  // Build regex patterns for each keyword
+  const regexPatterns = keywords.map(k => new RegExp(k, 'i'));
+
+  // Search for pages containing any of the keywords
   const pages = await db.collection('pages')
-    .find({ book_id: bookId })
-    .sort({ page_number: 1 })
+    .find({
+      book_id: bookId,
+      'translation.data': { $exists: true },
+      $or: regexPatterns.map(r => ({ 'translation.data': r }))
+    })
     .toArray() as unknown as PageData[];
 
-  // Build context string
+  // Score pages by keyword matches
+  const scoredPages = pages.map(page => {
+    const text = (page.translation?.data || '').toLowerCase();
+    let score = 0;
+    for (const keyword of keywords) {
+      const matches = (text.match(new RegExp(keyword, 'gi')) || []).length;
+      score += matches;
+    }
+    return { page, score };
+  });
+
+  // Sort by score and return top matches
+  scoredPages.sort((a, b) => b.score - a.score);
+  return scoredPages.slice(0, limit).map(sp => sp.page);
+}
+
+// Build context from book data with RAG-based page retrieval
+async function buildBookContext(
+  bookId: string,
+  userQuery: string
+): Promise<{ context: string; pageCount: number }> {
+  const db = await getDb();
+
+  const book = await db.collection('books').findOne({ id: bookId }) as unknown as BookData | null;
+  if (!book) throw new Error('Book not found');
+
+  // Get total page count for reference
+  const totalPages = book.pages_count || 0;
+
+  // Build context string with book info
   let context = `# Book Information
 Title: ${book.display_title || book.title}
 Author: ${book.author || 'Unknown'}
 Language: ${book.language || 'Unknown'}
+Total Pages: ${totalPages}
 `;
 
   // Add summary if available
@@ -42,45 +139,29 @@ Language: ${book.language || 'Unknown'}
     context += `\n## Detailed Overview\n${book.index.bookSummary.detailed}\n`;
   }
 
-  // Add page translations (limit to avoid token overflow)
-  const translatedPages = pages.filter(p => p.translation?.data);
+  // Use RAG to find relevant pages based on the user's query
+  const relevantPages = await searchBookPages(bookId, userQuery, 15);
 
-  if (translatedPages.length > 0) {
-    context += `\n## Page Contents\n`;
+  if (relevantPages.length > 0) {
+    context += `\n## Relevant Pages (based on your question)\n`;
+    context += `The following pages from the book are most relevant to your question:\n`;
 
-    // For shorter books, include all pages
-    // For longer books, include first/last pages and summaries
-    const maxPages = 50;
-    const pagesToInclude = translatedPages.length <= maxPages
-      ? translatedPages
-      : [
-          ...translatedPages.slice(0, 20),
-          ...translatedPages.slice(-10)
-        ];
+    // Sort by page number for readability
+    relevantPages.sort((a, b) => a.page_number - b.page_number);
 
-    for (const page of pagesToInclude) {
-      // Clean translation text (remove metadata tags)
-      const cleanText = (page.translation?.data || '')
-        .replace(/\[\[[^\]]+\]\]/g, '')
-        .replace(/^```(?:markdown)?\s*\n?/i, '')
-        .replace(/\n?```\s*$/i, '')
-        .trim();
-
-      if (cleanText.length > 50) {
-        // Limit each page to ~500 chars to fit more pages
-        const truncated = cleanText.length > 500
-          ? cleanText.substring(0, 500) + '...'
-          : cleanText;
-        context += `\n### Page ${page.page_number}\n${truncated}\n`;
+    for (const page of relevantPages) {
+      const cleaned = cleanText(page.translation?.data || '');
+      if (cleaned.length > 50) {
+        // Include full page content (up to 2000 chars per page)
+        const content = cleaned.length > 2000
+          ? cleaned.substring(0, 2000) + '...'
+          : cleaned;
+        context += `\n### Page ${page.page_number}\n${content}\n`;
       }
-    }
-
-    if (translatedPages.length > maxPages) {
-      context += `\n(Note: ${translatedPages.length - 30} middle pages omitted for brevity)\n`;
     }
   }
 
-  return context;
+  return { context, pageCount: totalPages };
 }
 
 // POST /api/books/[id]/chat - Chat with the book
@@ -99,8 +180,12 @@ export async function POST(
       );
     }
 
-    // Build book context
-    const bookContext = await buildBookContext(id);
+    // Get the user's current question to find relevant pages
+    const lastMessage = messages[messages.length - 1];
+    const userQuery = lastMessage.content;
+
+    // Build book context with RAG-based page retrieval
+    const { context: bookContext, pageCount } = await buildBookContext(id, userQuery);
 
     // Create the model
     const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
@@ -111,16 +196,16 @@ export async function POST(
 ${bookContext}
 
 ## Instructions
-- Answer questions based on the book's actual content
+- Answer questions based on the book's actual content shown above
+- The pages shown are the most relevant to the user's question (searched from the full ${pageCount}-page book)
 - **IMPORTANT**: When referencing the text, include direct quotes and cite like this:
   > "quoted text from the source" [Page 5]
 - Use blockquotes (>) for direct quotes from the text
 - Always include the page number after quotes: [Page X]
-- If asked about something not in the text, say so honestly
+- If the answer isn't in the pages shown, say you couldn't find it in the relevant sections and suggest the user ask differently
 - Explain archaic or technical terms in modern language
 - Be conversational but scholarly
 - Keep responses concise unless asked for detail
-- If the user hasn't asked a question yet, give a brief welcome and ask what they'd like to explore
 
 ## Quote Format Example
 When the text says something relevant, quote it like:
@@ -134,8 +219,6 @@ This helps readers verify and explore further.`;
       parts: [{ text: msg.content }],
     }));
 
-    const lastMessage = messages[messages.length - 1];
-
     // Start chat with history
     const chat = model.startChat({
       history: [
@@ -146,7 +229,7 @@ This helps readers verify and explore further.`;
     });
 
     // Send the latest message
-    const result = await chat.sendMessage(lastMessage.content);
+    const result = await chat.sendMessage(userQuery);
     const response = result.response.text();
 
     return NextResponse.json({

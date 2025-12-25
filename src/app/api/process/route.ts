@@ -60,6 +60,11 @@ export async function POST(request: NextRequest) {
     }
 
     const results: { ocr?: string; translation?: string; summary?: string } = {};
+    const metadata: {
+      ocr?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
+      translation?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
+      summary?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
+    } = {};
     let totalUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 };
 
     // Process based on action (with timing)
@@ -103,6 +108,12 @@ export async function POST(request: NextRequest) {
       totalUsage.costUsd += ocrResult.usage.costUsd;
 
       const ocrDuration = performance.now() - ocrStart;
+      metadata.ocr = {
+        inputTokens: ocrResult.usage.inputTokens,
+        outputTokens: ocrResult.usage.outputTokens,
+        costUsd: ocrResult.usage.costUsd,
+        durationMs: Math.round(ocrDuration),
+      };
       await recordProcessingMetric(db, 'ocr_processing', ocrDuration, {
         pageId,
         language: language || 'Latin',
@@ -134,6 +145,12 @@ export async function POST(request: NextRequest) {
       totalUsage.costUsd += translationResult.usage.costUsd;
 
       const translationDuration = performance.now() - translationStart;
+      metadata.translation = {
+        inputTokens: translationResult.usage.inputTokens,
+        outputTokens: translationResult.usage.outputTokens,
+        costUsd: translationResult.usage.costUsd,
+        durationMs: Math.round(translationDuration),
+      };
       await recordProcessingMetric(db, 'translation_processing', translationDuration, {
         pageId,
         sourceLanguage: language || 'Latin',
@@ -165,6 +182,12 @@ export async function POST(request: NextRequest) {
       totalUsage.costUsd += summaryResult.usage.costUsd;
 
       const summaryDuration = performance.now() - summaryStart;
+      metadata.summary = {
+        inputTokens: summaryResult.usage.inputTokens,
+        outputTokens: summaryResult.usage.outputTokens,
+        costUsd: summaryResult.usage.costUsd,
+        durationMs: Math.round(summaryDuration),
+      };
       await recordProcessingMetric(db, 'summary_processing', summaryDuration, {
         pageId,
         inputLength: textToSummarize.length,
@@ -185,7 +208,12 @@ export async function POST(request: NextRequest) {
           language: language || 'Latin',
           model,
           prompt_name: promptInfo?.ocr || 'Default',
-          updated_at: new Date()
+          updated_at: new Date(),
+          // Processing metadata for reproducibility
+          input_tokens: metadata.ocr?.inputTokens,
+          output_tokens: metadata.ocr?.outputTokens,
+          cost_usd: metadata.ocr?.costUsd,
+          processing_ms: metadata.ocr?.durationMs,
         };
       }
 
@@ -195,7 +223,12 @@ export async function POST(request: NextRequest) {
           language: targetLanguage,
           model,
           prompt_name: promptInfo?.translation || 'Default',
-          updated_at: new Date()
+          updated_at: new Date(),
+          // Processing metadata
+          input_tokens: metadata.translation?.inputTokens,
+          output_tokens: metadata.translation?.outputTokens,
+          cost_usd: metadata.translation?.costUsd,
+          processing_ms: metadata.translation?.durationMs,
         };
       }
 
@@ -204,7 +237,12 @@ export async function POST(request: NextRequest) {
           data: results.summary,
           model,
           prompt_name: promptInfo?.summary || 'Default',
-          updated_at: new Date()
+          updated_at: new Date(),
+          // Processing metadata
+          input_tokens: metadata.summary?.inputTokens,
+          output_tokens: metadata.summary?.outputTokens,
+          cost_usd: metadata.summary?.costUsd,
+          processing_ms: metadata.summary?.durationMs,
         };
       }
 

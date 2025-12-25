@@ -56,6 +56,7 @@ export async function GET(request: NextRequest) {
     const dateTo = searchParams.get('date_to');
     const hasDoi = searchParams.get('has_doi');
     const hasTranslation = searchParams.get('has_translation');
+    const bookId = searchParams.get('book_id'); // Filter to specific book
     const searchContent = searchParams.get('search_content') !== 'false'; // Default true
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
     const offset = parseInt(searchParams.get('offset') || '0');
@@ -72,77 +73,89 @@ export async function GET(request: NextRequest) {
     const results: SearchResult[] = [];
     const seenBooks = new Set<string>();
 
-    // Build book filter
-    const bookFilter: Record<string, unknown> = {};
-
-    // Text search on books (title, author, display_title)
+    // Build regex for text search
     const queryRegex = new RegExp(escapeRegex(query), 'i');
-    bookFilter.$or = [
-      { title: queryRegex },
-      { display_title: queryRegex },
-      { author: queryRegex },
-      { 'summary.data': queryRegex },
-      { summary: queryRegex }, // For string summaries
-    ];
 
-    if (language) {
-      bookFilter.language = language;
-    }
+    // When searching within a specific book, skip book-level search
+    // and only search page content
+    if (!bookId) {
+      // Build book filter
+      const bookFilter: Record<string, unknown> = {};
 
-    if (dateFrom || dateTo) {
-      bookFilter.published = {};
-      if (dateFrom) (bookFilter.published as Record<string, string>).$gte = dateFrom;
-      if (dateTo) (bookFilter.published as Record<string, string>).$lte = dateTo;
-    }
+      // Text search on books (title, author, display_title)
+      bookFilter.$or = [
+        { title: queryRegex },
+        { display_title: queryRegex },
+        { author: queryRegex },
+        { 'summary.data': queryRegex },
+        { summary: queryRegex }, // For string summaries
+      ];
 
-    if (hasDoi === 'true') {
-      bookFilter.doi = { $exists: true, $ne: null };
-    }
+      if (language) {
+        bookFilter.language = language;
+      }
 
-    if (hasTranslation === 'true') {
-      bookFilter.pages_translated = { $gt: 0 };
-    }
+      if (dateFrom || dateTo) {
+        bookFilter.published = {};
+        if (dateFrom) (bookFilter.published as Record<string, string>).$gte = dateFrom;
+        if (dateTo) (bookFilter.published as Record<string, string>).$lte = dateTo;
+      }
 
-    // Search books
-    const books = await db.collection('books')
-      .find(bookFilter)
-      .limit(limit)
-      .toArray();
+      if (hasDoi === 'true') {
+        bookFilter.doi = { $exists: true, $ne: null };
+      }
 
-    for (const book of books) {
-      const typedBook = book as unknown as Book;
-      const summaryText = typeof typedBook.summary === 'string'
-        ? typedBook.summary
-        : typedBook.summary?.data;
+      if (hasTranslation === 'true') {
+        bookFilter.pages_translated = { $gt: 0 };
+      }
 
-      results.push({
-        id: typedBook.id,
-        type: 'book',
-        book_id: typedBook.id,
-        title: typedBook.title,
-        display_title: typedBook.display_title,
-        author: typedBook.author,
-        language: typedBook.language,
-        published: typedBook.published,
-        page_count: typedBook.pages_count,
-        translated_count: typedBook.pages_translated,
-        has_doi: !!typedBook.doi,
-        doi: typedBook.doi,
-        summary: summaryText ? extractSnippet(summaryText, query) : undefined,
-        snippet_type: summaryText ? 'summary' : undefined,
-      });
-      seenBooks.add(typedBook.id);
+      // Search books
+      const books = await db.collection('books')
+        .find(bookFilter)
+        .limit(limit)
+        .toArray();
+
+      for (const book of books) {
+        const typedBook = book as unknown as Book;
+        const summaryText = typeof typedBook.summary === 'string'
+          ? typedBook.summary
+          : typedBook.summary?.data;
+
+        results.push({
+          id: typedBook.id,
+          type: 'book',
+          book_id: typedBook.id,
+          title: typedBook.title,
+          display_title: typedBook.display_title,
+          author: typedBook.author,
+          language: typedBook.language,
+          published: typedBook.published,
+          page_count: typedBook.pages_count,
+          translated_count: typedBook.pages_translated,
+          has_doi: !!typedBook.doi,
+          doi: typedBook.doi,
+          summary: summaryText ? extractSnippet(summaryText, query) : undefined,
+          snippet_type: summaryText ? 'summary' : undefined,
+        });
+        seenBooks.add(typedBook.id);
+      }
     }
 
     // Search page translations if requested and we have room
-    if (searchContent && results.length < limit) {
+    // When searching within a specific book, always search content
+    if (searchContent && (bookId || results.length < limit)) {
       const pageFilter: Record<string, unknown> = {
         'translation.data': queryRegex,
       };
 
+      // If searching within a specific book, filter to that book only
+      if (bookId) {
+        pageFilter.book_id = bookId;
+      }
+
       // Apply book-level filters via lookup or pre-fetch book IDs
       let allowedBookIds: string[] | null = null;
-      if (language || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true') {
+      if (!bookId && (language || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true')) {
         const bookIdFilter: Record<string, unknown> = {};
         if (language) bookIdFilter.language = language;
         if (dateFrom || dateTo) {
@@ -241,6 +254,7 @@ export async function GET(request: NextRequest) {
         date_to: dateTo,
         has_doi: hasDoi,
         has_translation: hasTranslation,
+        book_id: bookId,
       },
     });
   } catch (error) {
