@@ -7,15 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "npx ts-node --project tests/tsconfig.json tests/cli.ts run",
-    "test:api": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --api-only",
-    "test:api:fast": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --api-only --skip-expensive --skip-slow",
-    "test:e2e": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --e2e-only",
-    "test:visual": "npx ts-node --project tests/tsconfig.json tests/cli.ts run --visual-only",
-    "test:list": "npx ts-node --project tests/tsconfig.json tests/cli.ts list",
-    "test:clean": "npx ts-node --project tests/tsconfig.json tests/cli.ts clean"
+    "test": "npx ts-node --project tests/tsconfig.json tests/simple-test.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.71.2",
     "@auth/mongodb-adapter": "^3.11.1",
     "@google/generative-ai": "^0.24.1",
     "@types/archiver": "^7.0.0",

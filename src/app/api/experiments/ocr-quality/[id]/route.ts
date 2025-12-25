@@ -40,9 +40,13 @@ export async function GET(
       page_count: experiment.page_count,
       conditions_run: experiment.conditions_run || [],
       progress: experiment.progress || {},
+      judging_progress: experiment.judging_progress || null,
+      judgments_complete: experiment.judgments_complete || 0,
+      total_judgments: experiment.total_judgments || 0,
       results_by_condition: resultsByCondition,
       total_cost: experiment.total_cost || 0,
       total_tokens: experiment.total_tokens || 0,
+      judging_cost: experiment.judging_cost || 0,
       created_at: experiment.created_at,
       updated_at: experiment.updated_at,
     });

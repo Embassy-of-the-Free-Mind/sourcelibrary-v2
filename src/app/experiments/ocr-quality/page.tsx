@@ -89,14 +89,16 @@ export default function OCRQualityExperimentPage() {
   const [experimentId, setExperimentId] = useState<string | null>(null);
   const [conditionResults, setConditionResults] = useState<Record<string, { success: boolean; pages?: number; error?: string }>>({});
   const [conditionProgress, setConditionProgress] = useState<Record<string, ConditionProgress>>({});
+  const [judging, setJudging] = useState(false);
+  const [judgingProgress, setJudgingProgress] = useState<{ processed: number; total: number } | null>(null);
 
   useEffect(() => {
     fetchBooks();
   }, []);
 
-  // Poll for progress while running
+  // Poll for progress while running or judging
   useEffect(() => {
-    if (!experimentId || !runningCondition) return;
+    if (!experimentId || (!runningCondition && !judging)) return;
 
     const pollProgress = async () => {
       try {
@@ -105,6 +107,12 @@ export default function OCRQualityExperimentPage() {
           const data = await res.json();
           if (data.progress) {
             setConditionProgress(data.progress);
+          }
+          if (data.judging_progress) {
+            setJudgingProgress({
+              processed: data.judging_progress.processed || 0,
+              total: data.judging_progress.total || 0,
+            });
           }
         }
       } catch (error) {
@@ -117,7 +125,7 @@ export default function OCRQualityExperimentPage() {
     pollProgress(); // Initial poll
 
     return () => clearInterval(interval);
-  }, [experimentId, runningCondition]);
+  }, [experimentId, runningCondition, judging]);
 
   const fetchBooks = async () => {
     try {
@@ -241,6 +249,37 @@ export default function OCRQualityExperimentPage() {
   };
 
   const allConditionsRun = status.conditionsRun.length === CONDITIONS.length;
+
+  const runAutoJudge = async () => {
+    if (!experimentId) return;
+    setJudging(true);
+    setJudgingProgress({ processed: 0, total: totalJudgments });
+
+    try {
+      const res = await fetch(`/api/experiments/ocr-quality/${experimentId}/auto-judge`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log('Auto-judge complete:', data);
+        if (data.is_complete) {
+          setStatus(prev => ({ ...prev, phase: 'results' }));
+        }
+      } else {
+        setError(`Auto-judge failed: ${data.error}`);
+        console.error('Auto-judge failed:', data);
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unknown error';
+      setError(`Auto-judge error: ${msg}`);
+      console.error('Auto-judge error:', err);
+    } finally {
+      setJudging(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -557,23 +596,58 @@ export default function OCRQualityExperimentPage() {
               </div>
             )}
 
-            {allConditionsRun && (
+            {allConditionsRun && !judging && (
               <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
                   <CheckCircle2 className="w-5 h-5 text-green-600" />
                   <span className="font-semibold text-green-900">All conditions complete!</span>
                 </div>
                 <p className="text-sm text-green-700 mb-3">
-                  Ready to judge quality. You'll compare outputs side-by-side.
+                  Ready for AI to judge quality by comparing OCR outputs against the original images.
                 </p>
-                <Link
-                  href={`/experiments/ocr-quality/${experimentId}/judge`}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                >
-                  <Eye className="w-4 h-4" />
-                  Start Judging
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
+                <div className="flex gap-3">
+                  <button
+                    onClick={runAutoJudge}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                  >
+                    <FlaskConical className="w-4 h-4" />
+                    Run AI Judging
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                  <Link
+                    href={`/experiments/ocr-quality/${experimentId}/judge`}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200"
+                  >
+                    <Eye className="w-4 h-4" />
+                    Manual Judge
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            {judging && (
+              <div className="mt-6 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                <div className="flex items-center gap-2 mb-3">
+                  <Loader2 className="w-5 h-5 text-purple-600 animate-spin" />
+                  <span className="font-semibold text-purple-900">AI Judging in Progress...</span>
+                </div>
+                <p className="text-sm text-purple-700 mb-3">
+                  The AI is comparing each OCR output against the original manuscript images.
+                </p>
+                {judgingProgress && (
+                  <div>
+                    <div className="flex justify-between text-sm text-purple-600 mb-1">
+                      <span>Comparisons judged</span>
+                      <span className="font-mono">{judgingProgress.processed}/{judgingProgress.total}</span>
+                    </div>
+                    <div className="h-2 bg-purple-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-purple-600 transition-all duration-300"
+                        style={{ width: `${judgingProgress.total > 0 ? (judgingProgress.processed / judgingProgress.total) * 100 : 0}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
