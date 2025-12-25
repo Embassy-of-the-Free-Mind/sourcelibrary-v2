@@ -14,11 +14,22 @@ import {
   ArrowLeft,
 } from 'lucide-react';
 
+interface ExperimentVariant {
+  method: string;
+  model: string;
+  use_context?: boolean;
+}
+
 interface Experiment {
   id: string;
   name: string;
   description: string;
   book_id: string;
+  variant_a: ExperimentVariant | null;
+  variant_b: ExperimentVariant | null;
+  page_selection: 'first_n' | 'sample' | 'all';
+  page_count: number;
+  // Legacy
   method: string;
   settings: {
     model: string;
@@ -50,9 +61,17 @@ export default function ExperimentsPage() {
     name: '',
     description: '',
     book_id: '',
-    method: 'single_ocr',
-    model: 'gemini-2.0-flash',
-    use_context: true,
+    // Variant A
+    method_a: 'batch_ocr',
+    model_a: 'gemini-2.0-flash',
+    context_a: true,
+    // Variant B
+    method_b: 'single_ocr',
+    model_b: 'gemini-2.0-flash',
+    context_b: false,
+    // Page selection
+    page_selection: 'first_n' as 'first_n' | 'sample' | 'all',
+    page_count: 10,
   });
 
   useEffect(() => {
@@ -98,11 +117,18 @@ export default function ExperimentsPage() {
           name: newExperiment.name,
           description: newExperiment.description,
           book_id: newExperiment.book_id,
-          method: newExperiment.method,
-          settings: {
-            model: newExperiment.model,
-            use_context: newExperiment.use_context,
+          variant_a: {
+            method: newExperiment.method_a,
+            model: newExperiment.model_a,
+            use_context: newExperiment.context_a,
           },
+          variant_b: {
+            method: newExperiment.method_b,
+            model: newExperiment.model_b,
+            use_context: newExperiment.context_b,
+          },
+          page_selection: newExperiment.page_selection,
+          page_count: newExperiment.page_count,
         }),
       });
 
@@ -112,9 +138,14 @@ export default function ExperimentsPage() {
           name: '',
           description: '',
           book_id: '',
-          method: 'single_ocr',
-          model: 'gemini-2.0-flash',
-          use_context: true,
+          method_a: 'batch_ocr',
+          model_a: 'gemini-2.0-flash',
+          context_a: true,
+          method_b: 'single_ocr',
+          model_b: 'gemini-2.0-flash',
+          context_b: false,
+          page_selection: 'first_n',
+          page_count: 10,
         });
         fetchExperiments();
       }
@@ -188,15 +219,17 @@ export default function ExperimentsPage() {
         {/* New Experiment Form */}
         {showNewForm && (
           <div className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
-            <h2 className="text-lg font-semibold text-stone-900 mb-4">Create Experiment</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <h2 className="text-lg font-semibold text-stone-900 mb-4">Create A/B Experiment</h2>
+
+            {/* Basic info */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-1">Name</label>
                 <input
                   type="text"
                   value={newExperiment.name}
                   onChange={e => setNewExperiment(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder="e.g., Gemini 3 Flash vs 2.0 Flash OCR"
+                  placeholder="e.g., Batch vs Single OCR"
                   className="w-full px-3 py-2 border border-stone-300 rounded-lg"
                 />
               </div>
@@ -215,32 +248,6 @@ export default function ExperimentsPage() {
                   ))}
                 </select>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Method</label>
-                <select
-                  value={newExperiment.method}
-                  onChange={e => setNewExperiment(prev => ({ ...prev, method: e.target.value }))}
-                  className="w-full px-3 py-2 border border-stone-300 rounded-lg"
-                >
-                  <option value="single_ocr">Single-page OCR</option>
-                  <option value="batch_ocr">Batch OCR (5 pages)</option>
-                  <option value="single_translate">Single-page Translation</option>
-                  <option value="batch_translate">Batch Translation (5 pages)</option>
-                  <option value="combined">Combined OCR + Translation</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">Model</label>
-                <select
-                  value={newExperiment.model}
-                  onChange={e => setNewExperiment(prev => ({ ...prev, model: e.target.value }))}
-                  className="w-full px-3 py-2 border border-stone-300 rounded-lg"
-                >
-                  <option value="gemini-3-flash-preview">Gemini 3 Flash</option>
-                  <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
-                  <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
-                </select>
-              </div>
               <div className="col-span-2">
                 <label className="block text-sm font-medium text-stone-700 mb-1">
                   Description (optional)
@@ -248,29 +255,134 @@ export default function ExperimentsPage() {
                 <input
                   type="text"
                   value={newExperiment.description}
-                  onChange={e =>
-                    setNewExperiment(prev => ({ ...prev, description: e.target.value }))
-                  }
+                  onChange={e => setNewExperiment(prev => ({ ...prev, description: e.target.value }))}
                   placeholder="What are you testing?"
                   className="w-full px-3 py-2 border border-stone-300 rounded-lg"
                 />
               </div>
-              <div className="col-span-2 flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="use_context"
-                  checked={newExperiment.use_context}
-                  onChange={e =>
-                    setNewExperiment(prev => ({ ...prev, use_context: e.target.checked }))
-                  }
-                  className="rounded"
-                />
-                <label htmlFor="use_context" className="text-sm text-stone-700">
-                  Use previous page context for continuity
-                </label>
+            </div>
+
+            {/* A/B Comparison */}
+            <div className="grid grid-cols-2 gap-6 mb-6">
+              {/* Variant A */}
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <h3 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm">A</span>
+                  Variant A
+                </h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-medium text-blue-800 mb-1">Method</label>
+                    <select
+                      value={newExperiment.method_a}
+                      onChange={e => setNewExperiment(prev => ({ ...prev, method_a: e.target.value }))}
+                      className="w-full px-2 py-1.5 border border-blue-300 rounded text-sm"
+                    >
+                      <option value="single_ocr">Single-page OCR</option>
+                      <option value="batch_ocr">Batch OCR (5 pages)</option>
+                      <option value="single_translate">Single-page Translation</option>
+                      <option value="batch_translate">Batch Translation (5 pages)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-blue-800 mb-1">Model</label>
+                    <select
+                      value={newExperiment.model_a}
+                      onChange={e => setNewExperiment(prev => ({ ...prev, model_a: e.target.value }))}
+                      className="w-full px-2 py-1.5 border border-blue-300 rounded text-sm"
+                    >
+                      <option value="gemini-2.5-flash-preview-05-20">Gemini 2.5 Flash</option>
+                      <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                    </select>
+                  </div>
+                  <label className="flex items-center gap-2 text-sm text-blue-800">
+                    <input
+                      type="checkbox"
+                      checked={newExperiment.context_a}
+                      onChange={e => setNewExperiment(prev => ({ ...prev, context_a: e.target.checked }))}
+                      className="rounded"
+                    />
+                    Use context
+                  </label>
+                </div>
+              </div>
+
+              {/* Variant B */}
+              <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+                <h3 className="font-semibold text-amber-900 mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-amber-600 text-white rounded-full flex items-center justify-center text-sm">B</span>
+                  Variant B
+                </h3>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-medium text-amber-800 mb-1">Method</label>
+                    <select
+                      value={newExperiment.method_b}
+                      onChange={e => setNewExperiment(prev => ({ ...prev, method_b: e.target.value }))}
+                      className="w-full px-2 py-1.5 border border-amber-300 rounded text-sm"
+                    >
+                      <option value="single_ocr">Single-page OCR</option>
+                      <option value="batch_ocr">Batch OCR (5 pages)</option>
+                      <option value="single_translate">Single-page Translation</option>
+                      <option value="batch_translate">Batch Translation (5 pages)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-amber-800 mb-1">Model</label>
+                    <select
+                      value={newExperiment.model_b}
+                      onChange={e => setNewExperiment(prev => ({ ...prev, model_b: e.target.value }))}
+                      className="w-full px-2 py-1.5 border border-amber-300 rounded text-sm"
+                    >
+                      <option value="gemini-2.5-flash-preview-05-20">Gemini 2.5 Flash</option>
+                      <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+                    </select>
+                  </div>
+                  <label className="flex items-center gap-2 text-sm text-amber-800">
+                    <input
+                      type="checkbox"
+                      checked={newExperiment.context_b}
+                      onChange={e => setNewExperiment(prev => ({ ...prev, context_b: e.target.checked }))}
+                      className="rounded"
+                    />
+                    Use context
+                  </label>
+                </div>
               </div>
             </div>
-            <div className="flex justify-end gap-2 mt-4">
+
+            {/* Page Selection */}
+            <div className="bg-stone-50 rounded-lg p-4 border border-stone-200 mb-4">
+              <h3 className="font-semibold text-stone-900 mb-3">Pages to Test</h3>
+              <div className="flex items-center gap-4">
+                <select
+                  value={newExperiment.page_selection}
+                  onChange={e => setNewExperiment(prev => ({ ...prev, page_selection: e.target.value as 'first_n' | 'sample' | 'all' }))}
+                  className="px-3 py-2 border border-stone-300 rounded-lg"
+                >
+                  <option value="first_n">First N pages</option>
+                  <option value="sample">Sample (every Nth page)</option>
+                  <option value="all">All pages</option>
+                </select>
+                {newExperiment.page_selection !== 'all' && (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      value={newExperiment.page_count}
+                      onChange={e => setNewExperiment(prev => ({ ...prev, page_count: parseInt(e.target.value) || 10 }))}
+                      min={1}
+                      max={100}
+                      className="w-20 px-3 py-2 border border-stone-300 rounded-lg"
+                    />
+                    <span className="text-sm text-stone-500">
+                      {newExperiment.page_selection === 'first_n' ? 'pages' : '% sample'}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowNewForm(false)}
                 className="px-4 py-2 text-stone-600 hover:bg-stone-100 rounded-lg"
@@ -346,16 +458,33 @@ export default function ExperimentsPage() {
                     {exp.description && (
                       <p className="text-sm text-stone-500 mb-2">{exp.description}</p>
                     )}
-                    <div className="flex items-center gap-4 text-xs text-stone-400">
-                      <span className="flex items-center gap-1">
-                        <FileText className="w-3 h-3" />
-                        {methodLabels[exp.method] || exp.method}
-                      </span>
-                      <span>{exp.settings.model}</span>
+                    <div className="flex items-center gap-4 text-xs text-stone-400 flex-wrap">
+                      {/* A vs B info */}
+                      {exp.variant_a && exp.variant_b ? (
+                        <span className="flex items-center gap-1">
+                          <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded text-[10px] font-medium">A</span>
+                          {methodLabels[exp.variant_a.method] || exp.variant_a.method}
+                          <span className="text-stone-300 mx-1">vs</span>
+                          <span className="px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded text-[10px] font-medium">B</span>
+                          {methodLabels[exp.variant_b.method] || exp.variant_b.method}
+                        </span>
+                      ) : (
+                        <span className="flex items-center gap-1">
+                          <FileText className="w-3 h-3" />
+                          {methodLabels[exp.method] || exp.method}
+                        </span>
+                      )}
+                      {/* Page count */}
+                      {exp.page_count && (
+                        <span className="text-stone-500">
+                          {exp.page_selection === 'first_n' ? `First ${exp.page_count}` :
+                           exp.page_selection === 'sample' ? `${exp.page_count}% sample` : 'All'} pages
+                        </span>
+                      )}
                       {exp.results_count > 0 && (
                         <span className="flex items-center gap-1">
                           <BarChart3 className="w-3 h-3" />
-                          {exp.results_count} pages
+                          {exp.results_count} processed
                         </span>
                       )}
                       {exp.total_cost > 0 && (

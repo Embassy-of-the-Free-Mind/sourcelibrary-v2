@@ -3,18 +3,130 @@ import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation } from '@/lib/ai';
 import crypto from 'crypto';
 
-// POST /api/experiments/[id]/run - Run experiment on specified pages
+interface ExperimentVariant {
+  method: string;
+  model: string;
+  use_context?: boolean;
+}
+
+interface ProcessResult {
+  page_id: string;
+  page_number: number;
+  ocr?: string;
+  translation?: string;
+  success: boolean;
+  error?: string;
+  cost: number;
+  tokens: number;
+}
+
+async function processVariant(
+  variant: ExperimentVariant,
+  pages: Array<{ id: string; page_number: number; photo: string; ocr?: { data?: string } }>,
+): Promise<{ results: ProcessResult[]; totalCost: number; totalTokens: number }> {
+  const results: ProcessResult[] = [];
+  let totalCost = 0;
+  let totalTokens = 0;
+  const useContext = variant.use_context !== false;
+
+  if (variant.method === 'single_ocr' || variant.method === 'batch_ocr') {
+    let previousOcr = '';
+
+    for (const page of pages) {
+      try {
+        const result = await performOCR(
+          page.photo,
+          'Latin',
+          useContext ? previousOcr : undefined,
+          undefined,
+          variant.model
+        );
+
+        previousOcr = result.text;
+        totalCost += result.usage.costUsd;
+        totalTokens += result.usage.totalTokens;
+
+        results.push({
+          page_id: page.id,
+          page_number: page.page_number,
+          ocr: result.text,
+          success: true,
+          cost: result.usage.costUsd,
+          tokens: result.usage.totalTokens,
+        });
+      } catch (error) {
+        results.push({
+          page_id: page.id,
+          page_number: page.page_number,
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          cost: 0,
+          tokens: 0,
+        });
+      }
+    }
+  } else if (variant.method === 'single_translate' || variant.method === 'batch_translate') {
+    let previousTranslation = '';
+
+    for (const page of pages) {
+      if (!page.ocr?.data) {
+        results.push({
+          page_id: page.id,
+          page_number: page.page_number,
+          success: false,
+          error: 'No OCR data available',
+          cost: 0,
+          tokens: 0,
+        });
+        continue;
+      }
+
+      try {
+        const result = await performTranslation(
+          page.ocr.data,
+          'Latin',
+          'English',
+          useContext ? previousTranslation : undefined,
+          undefined,
+          variant.model
+        );
+
+        previousTranslation = result.text;
+        totalCost += result.usage.costUsd;
+        totalTokens += result.usage.totalTokens;
+
+        results.push({
+          page_id: page.id,
+          page_number: page.page_number,
+          translation: result.text,
+          success: true,
+          cost: result.usage.costUsd,
+          tokens: result.usage.totalTokens,
+        });
+      } catch (error) {
+        results.push({
+          page_id: page.id,
+          page_number: page.page_number,
+          success: false,
+          error: error instanceof Error ? error.message : 'Unknown error',
+          cost: 0,
+          tokens: 0,
+        });
+      }
+    }
+  }
+
+  return { results, totalCost, totalTokens };
+}
+
+// POST /api/experiments/[id]/run - Run A/B experiment on pages
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const { page_ids }: { page_ids: string[] } = await request.json();
-
-    if (!page_ids || page_ids.length === 0) {
-      return NextResponse.json({ error: 'page_ids required' }, { status: 400 });
-    }
+    const { page_ids }: { page_ids?: string[] } = await request.json();
 
     const db = await getDb();
 
@@ -24,15 +136,31 @@ export async function POST(
       return NextResponse.json({ error: 'Experiment not found' }, { status: 404 });
     }
 
-    // Get pages
-    const pages = await db
+    // Get book pages
+    const bookPages = await db
       .collection('pages')
-      .find({ id: { $in: page_ids } })
+      .find({ book_id: experiment.book_id })
       .sort({ page_number: 1 })
       .toArray();
 
-    if (pages.length === 0) {
+    if (bookPages.length === 0) {
       return NextResponse.json({ error: 'No pages found' }, { status: 404 });
+    }
+
+    // Select pages based on experiment settings or explicit page_ids
+    let selectedPages = bookPages;
+    if (page_ids && page_ids.length > 0) {
+      selectedPages = bookPages.filter(p => page_ids.includes(p.id));
+    } else if (experiment.page_selection === 'first_n') {
+      selectedPages = bookPages.slice(0, experiment.page_count || 10);
+    } else if (experiment.page_selection === 'sample') {
+      const sampleRate = Math.max(1, Math.floor(100 / (experiment.page_count || 10)));
+      selectedPages = bookPages.filter((_, i) => i % sampleRate === 0);
+    }
+    // 'all' uses all pages
+
+    if (selectedPages.length === 0) {
+      return NextResponse.json({ error: 'No pages selected' }, { status: 400 });
     }
 
     // Mark experiment as running
@@ -41,178 +169,86 @@ export async function POST(
       { $set: { status: 'running' } }
     );
 
-    const results: Array<{
-      page_id: string;
-      page_number: number;
-      ocr?: string;
-      translation?: string;
-      success: boolean;
-      error?: string;
-    }> = [];
-
+    const now = new Date().toISOString();
     let totalCost = 0;
     let totalTokens = 0;
-    const model = experiment.settings.model;
-    const useContext = experiment.settings.use_context !== false;
+    let resultsCount = 0;
 
-    // Process based on method
-    if (experiment.method === 'single_ocr' || experiment.method === 'batch_ocr') {
-      // OCR processing
-      let previousOcr = '';
+    // Process variant A
+    if (experiment.variant_a) {
+      const variantA = experiment.variant_a as ExperimentVariant;
+      const { results, totalCost: costA, totalTokens: tokensA } = await processVariant(variantA, selectedPages);
 
-      for (const page of pages) {
-        try {
-          const result = await performOCR(
-            page.photo,
-            'Latin',
-            useContext ? previousOcr : undefined,
-            experiment.settings.prompt,
-            model
-          );
+      totalCost += costA;
+      totalTokens += tokensA;
 
-          previousOcr = result.text;
-          totalCost += result.usage.costUsd;
-          totalTokens += result.usage.totalTokens;
+      // Save results for variant A
+      const resultDocs = results.map(r => ({
+        id: crypto.randomUUID(),
+        experiment_id: id,
+        variant: 'a',
+        page_id: r.page_id,
+        page_number: r.page_number,
+        ocr: r.ocr || null,
+        translation: r.translation || null,
+        success: r.success,
+        error: r.error || null,
+        cost: r.cost,
+        tokens: r.tokens,
+        method: variantA.method,
+        model: variantA.model,
+        use_context: variantA.use_context,
+        created_at: now,
+      }));
 
-          results.push({
-            page_id: page.id,
-            page_number: page.page_number,
-            ocr: result.text,
-            success: true,
-          });
-        } catch (error) {
-          results.push({
-            page_id: page.id,
-            page_number: page.page_number,
-            success: false,
-            error: error instanceof Error ? error.message : 'Unknown error',
-          });
-        }
-      }
-    } else if (experiment.method === 'single_translate' || experiment.method === 'batch_translate') {
-      // Translation processing
-      let previousTranslation = '';
-
-      for (const page of pages) {
-        if (!page.ocr?.data) {
-          results.push({
-            page_id: page.id,
-            page_number: page.page_number,
-            success: false,
-            error: 'No OCR data available',
-          });
-          continue;
-        }
-
-        try {
-          const result = await performTranslation(
-            page.ocr.data,
-            'Latin',
-            'English',
-            useContext ? previousTranslation : undefined,
-            experiment.settings.prompt,
-            model
-          );
-
-          previousTranslation = result.text;
-          totalCost += result.usage.costUsd;
-          totalTokens += result.usage.totalTokens;
-
-          results.push({
-            page_id: page.id,
-            page_number: page.page_number,
-            translation: result.text,
-            success: true,
-          });
-        } catch (error) {
-          results.push({
-            page_id: page.id,
-            page_number: page.page_number,
-            success: false,
-            error: error instanceof Error ? error.message : 'Unknown error',
-          });
-        }
-      }
-    } else if (experiment.method === 'combined') {
-      // Combined OCR + Translation in one pass
-      // For now, do them sequentially but in single experiment
-      let previousOcr = '';
-      let previousTranslation = '';
-
-      for (const page of pages) {
-        try {
-          // OCR first
-          const ocrResult = await performOCR(
-            page.photo,
-            'Latin',
-            useContext ? previousOcr : undefined,
-            experiment.settings.prompt,
-            model
-          );
-
-          previousOcr = ocrResult.text;
-          totalCost += ocrResult.usage.costUsd;
-          totalTokens += ocrResult.usage.totalTokens;
-
-          // Then translate
-          const transResult = await performTranslation(
-            ocrResult.text,
-            'Latin',
-            'English',
-            useContext ? previousTranslation : undefined,
-            undefined,
-            model
-          );
-
-          previousTranslation = transResult.text;
-          totalCost += transResult.usage.costUsd;
-          totalTokens += transResult.usage.totalTokens;
-
-          results.push({
-            page_id: page.id,
-            page_number: page.page_number,
-            ocr: ocrResult.text,
-            translation: transResult.text,
-            success: true,
-          });
-        } catch (error) {
-          results.push({
-            page_id: page.id,
-            page_number: page.page_number,
-            success: false,
-            error: error instanceof Error ? error.message : 'Unknown error',
-          });
-        }
+      if (resultDocs.length > 0) {
+        await db.collection('experiment_results').insertMany(resultDocs);
+        resultsCount += results.filter(r => r.success).length;
       }
     }
 
-    // Save results
-    const now = new Date().toISOString();
-    const resultDocs = results.map(r => ({
-      id: crypto.randomUUID(),
-      experiment_id: id,
-      page_id: r.page_id,
-      page_number: r.page_number,
-      ocr: r.ocr || null,
-      translation: r.translation || null,
-      success: r.success,
-      error: r.error || null,
-      created_at: now,
-    }));
+    // Process variant B
+    if (experiment.variant_b) {
+      const variantB = experiment.variant_b as ExperimentVariant;
+      const { results, totalCost: costB, totalTokens: tokensB } = await processVariant(variantB, selectedPages);
 
-    if (resultDocs.length > 0) {
-      await db.collection('experiment_results').insertMany(resultDocs);
+      totalCost += costB;
+      totalTokens += tokensB;
+
+      // Save results for variant B
+      const resultDocs = results.map(r => ({
+        id: crypto.randomUUID(),
+        experiment_id: id,
+        variant: 'b',
+        page_id: r.page_id,
+        page_number: r.page_number,
+        ocr: r.ocr || null,
+        translation: r.translation || null,
+        success: r.success,
+        error: r.error || null,
+        cost: r.cost,
+        tokens: r.tokens,
+        method: variantB.method,
+        model: variantB.model,
+        use_context: variantB.use_context,
+        created_at: now,
+      }));
+
+      if (resultDocs.length > 0) {
+        await db.collection('experiment_results').insertMany(resultDocs);
+        resultsCount += results.filter(r => r.success).length;
+      }
     }
 
     // Update experiment status
-    const successCount = results.filter(r => r.success).length;
     await db.collection('experiments').updateOne(
       { id },
       {
         $set: {
-          status: successCount === 0 ? 'failed' : 'completed',
+          status: resultsCount === 0 ? 'failed' : 'completed',
           completed_at: now,
-          results_count: successCount,
+          results_count: resultsCount,
+          pages_processed: selectedPages.length,
           total_cost: totalCost,
           total_tokens: totalTokens,
         },
@@ -221,8 +257,8 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
-      results_count: successCount,
-      failed_count: results.length - successCount,
+      pages_processed: selectedPages.length,
+      results_count: resultsCount,
       total_cost: totalCost,
       total_tokens: totalTokens,
     });
