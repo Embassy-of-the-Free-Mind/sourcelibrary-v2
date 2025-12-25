@@ -229,10 +229,25 @@ export async function GET(request: NextRequest) {
       console.error('Error fetching recent books:', e);
     }
 
+    // Count pages with OCR but no model info (historical data before model tracking)
+    let pagesWithOcrNoModel = 0;
     try {
-      // Get model usage breakdown
+      pagesWithOcrNoModel = await db.collection('pages').countDocuments({
+        'ocr.data': { $exists: true, $ne: '' },
+        $or: [
+          { 'ocr.model': { $exists: false } },
+          { 'ocr.model': null },
+          { 'ocr.model': '' },
+        ],
+      });
+    } catch (e) {
+      console.error('Error counting pages without model:', e);
+    }
+
+    try {
+      // Get model usage breakdown (exclude null/empty values from historical data)
       modelUsage = await db.collection('pages').aggregate([
-        { $match: { 'ocr.model': { $exists: true } } },
+        { $match: { 'ocr.model': { $exists: true, $ne: null, $nin: ['', null] } } },
         {
           $group: {
             _id: '$ocr.model',
@@ -241,14 +256,19 @@ export async function GET(request: NextRequest) {
         },
         { $sort: { count: -1 } },
       ]).toArray() as Array<{ _id: string; count: number }>;
+
+      // Add untracked count as a special entry if there are any
+      if (pagesWithOcrNoModel > 0) {
+        modelUsage.push({ _id: '__untracked__', count: pagesWithOcrNoModel });
+      }
     } catch (e) {
       console.error('Error fetching model usage:', e);
     }
 
     try {
-      // Get prompt usage breakdown
+      // Get prompt usage breakdown (exclude null/empty values from historical data)
       promptUsage = await db.collection('pages').aggregate([
-        { $match: { 'ocr.prompt_name': { $exists: true } } },
+        { $match: { 'ocr.prompt_name': { $exists: true, $ne: null, $nin: ['', null] } } },
         {
           $group: {
             _id: '$ocr.prompt_name',

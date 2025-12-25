@@ -182,6 +182,16 @@ export interface Book {
   // Reading dashboard sections
   reading_sections?: Section[];
 
+  // Book-level reading summary (whole-book overview)
+  reading_summary?: {
+    overview: string;
+    quotes: Array<{ text: string; page: number }>;
+    themes: string[];
+    generated_at?: Date;
+    model?: string;
+    pages_analyzed?: number;
+  };
+
   // Published editions (immutable snapshots for citation)
   editions?: TranslationEdition[];
   current_edition_id?: string;    // Most recent published edition

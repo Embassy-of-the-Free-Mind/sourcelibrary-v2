@@ -547,16 +547,20 @@ export default function AnalyticsPage() {
                     {usageData.modelUsage.map((m, i) => {
                       const total = usageData.modelUsage.reduce((a, b) => a + b.count, 0);
                       const pct = total > 0 ? (m.count / total) * 100 : 0;
+                      const isUntracked = m.model === '__untracked__';
+                      const displayName = isUntracked ? 'Untracked (historical)' : (m.model || 'Unknown');
                       return (
                         <div key={i}>
                           <div className="flex justify-between text-sm mb-1">
-                            <span style={{ color: 'var(--text-primary)' }}>{m.model || 'Unknown'}</span>
+                            <span style={{ color: isUntracked ? 'var(--text-muted)' : 'var(--text-primary)', fontStyle: isUntracked ? 'italic' : 'normal' }}>
+                              {displayName}
+                            </span>
                             <span style={{ color: 'var(--text-muted)' }}>{formatNumber(m.count)}</span>
                           </div>
                           <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
                             <div
                               className="h-full rounded-full"
-                              style={{ width: `${pct}%`, background: 'var(--accent-sage)' }}
+                              style={{ width: `${pct}%`, background: isUntracked ? 'var(--text-faint)' : 'var(--accent-sage)' }}
                             />
                           </div>
                         </div>

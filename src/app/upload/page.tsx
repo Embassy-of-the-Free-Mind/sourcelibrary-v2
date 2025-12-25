@@ -15,6 +15,7 @@ import {
   Search,
   ExternalLink,
   Info,
+  Camera,
 } from 'lucide-react';
 import { IMAGE_LICENSES, type ImageSourceProvider } from '@/lib/types';
 
@@ -673,6 +674,27 @@ export default function UploadPage() {
                 Supports JPG, PNG, TIFF. Files will be sorted by name.
               </p>
             </div>
+
+            {/* Camera capture option */}
+            <div className="relative my-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-stone-200" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="px-3 bg-white text-sm text-stone-500">or</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => router.push(`/book/${bookId}/capture`)}
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-stone-900 text-white rounded-xl font-medium hover:bg-stone-800 transition-colors"
+            >
+              <Camera className="w-6 h-6" />
+              <span>Capture with Camera</span>
+            </button>
+            <p className="text-center text-sm text-stone-500 mt-2">
+              Photograph book pages directly with your device camera
+            </p>
 
             {/* File list */}
             {files.length > 0 && (

@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter } from 'lucide-react';
 import { Book, Page } from '@/lib/types';
+import HighlightSelection from '@/components/HighlightSelection';
+import HighlightsPanel from '@/components/HighlightsPanel';
 
 interface ReadPageProps {
   params: Promise<{ id: string }>;
@@ -25,12 +27,34 @@ export default function ReadPage({ params }: ReadPageProps) {
   const [generatingSummary, setGeneratingSummary] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showFullText, setShowFullText] = useState(false);
+  const [showHighlights, setShowHighlights] = useState(false);
+  const [highlightCount, setHighlightCount] = useState(0);
   const textRef = useRef<HTMLDivElement>(null);
 
   // Resolve params
   useEffect(() => {
     params.then(p => setBookId(p.id));
   }, [params]);
+
+  // Fetch highlight count
+  const fetchHighlightCount = async () => {
+    if (!bookId) return;
+    try {
+      const res = await fetch(`/api/highlights?book_id=${bookId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setHighlightCount(data.length);
+      }
+    } catch (e) {
+      console.error('Failed to fetch highlights:', e);
+    }
+  };
+
+  useEffect(() => {
+    if (bookId) {
+      fetchHighlightCount();
+    }
+  }, [bookId]);
 
   // Fetch book data
   useEffect(() => {
@@ -142,9 +166,23 @@ export default function ReadPage({ params }: ReadPageProps) {
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Back to Book</span>
             </Link>
-            <span className="text-sm text-stone-500">
-              {translatedPages.length}/{pages.length} pages translated
-            </span>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setShowHighlights(true)}
+                className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-600 transition-colors"
+              >
+                <Highlighter className="w-4 h-4" />
+                <span className="hidden sm:inline">Highlights</span>
+                {highlightCount > 0 && (
+                  <span className="bg-amber-100 text-amber-700 text-xs px-1.5 py-0.5 rounded-full">
+                    {highlightCount}
+                  </span>
+                )}
+              </button>
+              <span className="text-sm text-stone-500">
+                {translatedPages.length}/{pages.length} pages
+              </span>
+            </div>
           </div>
         </div>
       </header>
@@ -156,8 +194,8 @@ export default function ReadPage({ params }: ReadPageProps) {
             {book.display_title || book.title}
           </h1>
           <p className="text-stone-300 mt-2">{book.author}</p>
-          {book.year && (
-            <p className="text-stone-400 text-sm mt-1">{book.year}</p>
+          {book.published && (
+            <p className="text-stone-400 text-sm mt-1">{book.published}</p>
           )}
         </div>
       </div>
@@ -286,23 +324,35 @@ export default function ReadPage({ params }: ReadPageProps) {
                 ref={textRef}
                 className="mt-4 bg-white rounded-xl border border-stone-200 p-6 sm:p-8"
               >
+                <p className="text-xs text-stone-400 mb-4 text-center">
+                  Select text to save highlights
+                </p>
                 <div className="prose prose-stone max-w-none font-serif text-lg leading-relaxed">
                   {translatedPages.map((page, index) => (
-                    <div key={page.id} className="mb-8">
-                      {index > 0 && (
-                        <div className="flex items-center gap-4 my-8 text-stone-400">
-                          <div className="flex-1 h-px bg-stone-200" />
-                          <Link
-                            href={`/book/${bookId}/page/${page.id}`}
-                            className="text-xs hover:text-amber-600 transition-colors"
-                          >
-                            Page {page.page_number}
-                          </Link>
-                          <div className="flex-1 h-px bg-stone-200" />
-                        </div>
-                      )}
-                      {renderTranslation(page.translation?.data || '')}
-                    </div>
+                    <HighlightSelection
+                      key={page.id}
+                      bookId={bookId!}
+                      pageId={page.id}
+                      pageNumber={page.page_number}
+                      bookTitle={book?.display_title || book?.title || ''}
+                      onHighlightSaved={fetchHighlightCount}
+                    >
+                      <div className="mb-8">
+                        {index > 0 && (
+                          <div className="flex items-center gap-4 my-8 text-stone-400">
+                            <div className="flex-1 h-px bg-stone-200" />
+                            <Link
+                              href={`/book/${bookId}/page/${page.id}`}
+                              className="text-xs hover:text-amber-600 transition-colors"
+                            >
+                              Page {page.page_number}
+                            </Link>
+                            <div className="flex-1 h-px bg-stone-200" />
+                          </div>
+                        )}
+                        {renderTranslation(page.translation?.data || '')}
+                      </div>
+                    </HighlightSelection>
                   ))}
                 </div>
               </div>
@@ -337,6 +387,14 @@ export default function ReadPage({ params }: ReadPageProps) {
           </section>
         )}
       </main>
+
+      {/* Highlights Panel */}
+      <HighlightsPanel
+        bookId={bookId || undefined}
+        isOpen={showHighlights}
+        onClose={() => setShowHighlights(false)}
+        onHighlightDeleted={fetchHighlightCount}
+      />
     </div>
   );
 }
