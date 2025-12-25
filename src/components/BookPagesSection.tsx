@@ -683,12 +683,21 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
                   if (pr.status === 'skipped_has_ocr') {
                     console.log(`[OCR] ${pr.message}`);
+                  } else if (pr.status === 'skipped_needs_crop') {
+                    console.warn(`[OCR] ${pr.message}`);
                   } else if (pr.status.startsWith('failed')) {
                     console.error(`[OCR] ${pr.message}`);
                   } else {
                     console.log(`[OCR] ${pr.message}`);
                   }
                 });
+              }
+
+              // Show warning if pages need cropped images
+              if (data.needsCropCount > 0) {
+                const cropMsg = `${data.needsCropCount} pages need cropped images. Go to Prepare tab and run "Generate Cropped Images" first.`;
+                console.warn(`[OCR] ${cropMsg}`);
+                setProcessing(prev => ({ ...prev, lastError: cropMsg }));
               }
             } else {
               const errorData = await response.json().catch(() => ({}));

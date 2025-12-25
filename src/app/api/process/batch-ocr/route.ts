@@ -8,7 +8,7 @@ import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemi
 export const maxDuration = 300;
 
 // Page result status for detailed logging
-type PageStatus = 'processed' | 'skipped_has_ocr' | 'failed_image_fetch' | 'failed_parse';
+type PageStatus = 'processed' | 'skipped_has_ocr' | 'skipped_needs_crop' | 'failed_image_fetch' | 'failed_parse';
 
 interface PageResult {
   pageId: string;
@@ -89,10 +89,14 @@ export async function POST(request: NextRequest) {
     const skippedPageIds: string[] = [];
     const failedPageIds: string[] = [];
 
-    // Filter out pages that already have OCR
+    // Filter out pages that already have OCR or need cropped images
     const pagesToProcess: PageInput[] = [];
+    const needsCropPageIds: string[] = [];
+
     for (const page of pages) {
       const dbPage = dbPageMap.get(page.pageId);
+
+      // Check if page already has OCR
       if (dbPage?.ocr?.data && dbPage.ocr.data.length > 0) {
         skippedPageIds.push(page.pageId);
         pageResults.push({
@@ -101,25 +105,48 @@ export async function POST(request: NextRequest) {
           message: `Page ${page.pageNumber} already has OCR (${dbPage.ocr.data.length} chars)`,
         });
         console.log(`[batch-ocr] Skipping page ${page.pageNumber} - already has OCR`);
-      } else {
-        pagesToProcess.push(page);
+        continue;
       }
+
+      // Check if page was split but cropped image not yet generated
+      // This prevents OCR from using the full unsplit image
+      if (dbPage?.crop && !dbPage?.cropped_photo) {
+        needsCropPageIds.push(page.pageId);
+        failedPageIds.push(page.pageId);
+        pageResults.push({
+          pageId: page.pageId,
+          status: 'skipped_needs_crop',
+          message: `Page ${page.pageNumber} was split but cropped image not generated yet. Run "Generate Cropped Images" first.`,
+        });
+        console.warn(`[batch-ocr] Skipping page ${page.pageNumber} - split page without cropped_photo`);
+        continue;
+      }
+
+      pagesToProcess.push(page);
     }
 
-    // If all pages already have OCR, return early with success
+    // If no pages to process, return early
     if (pagesToProcess.length === 0) {
-      console.log(`[batch-ocr] All ${pages.length} pages already have OCR, nothing to process`);
+      const hasNeedsCrop = needsCropPageIds.length > 0;
+      const message = hasNeedsCrop
+        ? `${needsCropPageIds.length} pages need cropped images generated first. Run "Generate Cropped Images" before OCR.`
+        : 'All pages already have OCR';
+
+      console.log(`[batch-ocr] Nothing to process: ${skippedPageIds.length} have OCR, ${needsCropPageIds.length} need crops`);
+
       return NextResponse.json({
         ocrResults: {},
         processedCount: 0,
         skippedCount: skippedPageIds.length,
+        needsCropCount: needsCropPageIds.length,
         requestedCount: pages.length,
         skippedPageIds,
-        failedPageIds: [],
+        needsCropPageIds,
+        failedPageIds,
         pageResults,
-        message: 'All pages already have OCR',
+        message,
         usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 },
-      });
+      }, { status: hasNeedsCrop ? 400 : 200 });
     }
 
     // Build image URLs - prefer pre-generated cropped images over dynamic cropping
@@ -388,14 +415,16 @@ Return each transcription clearly separated with the exact format:
       console.error('Failed to track cost:', e);
     }
 
-    console.log(`[batch-ocr] Complete: ${Object.keys(ocrResults).length} processed, ${skippedPageIds.length} skipped, ${failedPageIds.length} failed`);
+    console.log(`[batch-ocr] Complete: ${Object.keys(ocrResults).length} processed, ${skippedPageIds.length} skipped (OCR exists), ${needsCropPageIds.length} need crops, ${failedPageIds.length} failed`);
 
     return NextResponse.json({
       ocrResults,
       processedCount: Object.keys(ocrResults).length,
       skippedCount: skippedPageIds.length,
+      needsCropCount: needsCropPageIds.length,
       requestedCount: pages.length,
       skippedPageIds,
+      needsCropPageIds,
       failedPageIds,
       pageResults,
       usage: {
