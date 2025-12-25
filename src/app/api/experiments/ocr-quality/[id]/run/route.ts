@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { LATIN_PROMPTS, DEFAULT_PROMPTS, DEFAULT_MODEL } from '@/lib/types';
+import { LATIN_PROMPTS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import crypto from 'crypto';
+
+// Allow long-running OCR processing
+export const maxDuration = 300; // 5 minutes
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
