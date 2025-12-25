@@ -15,23 +15,6 @@ interface PageInput {
   pageNumber: number;
 }
 
-// Build image URL with crop parameters if page has crop data
-function buildImageUrl(baseUrl: string, crop?: { xStart: number; xEnd: number }): string {
-  if (!crop) return baseUrl;
-
-  // Use /api/image endpoint for cropping
-  const params = new URLSearchParams({
-    url: baseUrl,
-    w: '2000', // High quality for OCR
-    q: '95',
-    cx: crop.xStart.toString(),
-    cw: crop.xEnd.toString(),
-  });
-
-  // Return absolute URL for the image API
-  return `/api/image?${params.toString()}`;
-}
-
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
   const inputCost = (inputTokens / 1_000_000) * pricing.input;
@@ -98,20 +81,21 @@ export async function POST(request: NextRequest) {
     const dbPages = await db.collection('pages').find({ id: { $in: pageIds } }).toArray();
     const dbPageMap = new Map(dbPages.map(p => [p.id, p]));
 
-    // Build image URLs with crop parameters if needed
+    // Build image URLs - prefer pre-generated cropped images over dynamic cropping
     const getImageUrl = (page: PageInput): string => {
       const dbPage = dbPageMap.get(page.pageId);
-      if (dbPage?.crop) {
-        // Page has crop data - use /api/image for cropping
-        // Need to use photo_original if available, otherwise photo
-        const baseUrl = dbPage.photo_original || dbPage.photo || page.imageUrl;
-        const cropUrl = buildImageUrl(baseUrl, dbPage.crop);
-        // Make it absolute for server-side fetch
-        const baseApiUrl = process.env.VERCEL_URL
-          ? `https://${process.env.VERCEL_URL}`
-          : process.env.NEXTAUTH_URL || 'http://localhost:3000';
-        return `${baseApiUrl}${cropUrl}`;
+
+      // Priority 1: Use pre-generated cropped image if available (Vercel Blob URL)
+      if (dbPage?.cropped_photo) {
+        return dbPage.cropped_photo;
       }
+
+      // Priority 2: Use the page's photo field (may be updated after split)
+      if (dbPage?.photo) {
+        return dbPage.photo;
+      }
+
+      // Priority 3: Fall back to the input imageUrl
       return page.imageUrl;
     };
 
@@ -262,16 +246,21 @@ Return each transcription clearly separated with the exact format:
     const costUsd = calculateCost(inputTokens, outputTokens, modelId);
 
     // Save OCR results to database (db already defined above)
-    const now = new Date().toISOString();
+    // Set the entire ocr object to handle cases where ocr is null
+    const now = new Date();
 
-    const updatePromises = Object.entries(ocrResults).map(([pageId, ocr]) =>
+    const updatePromises = Object.entries(ocrResults).map(([pageId, ocrText]) =>
       db.collection('pages').updateOne(
         { id: pageId },
         {
           $set: {
-            'ocr.data': ocr,
-            'ocr.updated_at': now,
-            'ocr.model': modelId,
+            ocr: {
+              data: ocrText,
+              updated_at: now,
+              model: modelId,
+              language: language,
+            },
+            updated_at: now,
           },
         }
       )
