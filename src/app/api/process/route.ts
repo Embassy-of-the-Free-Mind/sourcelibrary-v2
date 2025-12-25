@@ -79,23 +79,16 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'imageUrl required for OCR' }, { status: 400 });
       }
 
-      // Check if page has crop data and apply it
+      // Use pre-generated cropped image if available, otherwise fall back to photo or imageUrl
       let finalImageUrl = imageUrl;
       if (pageId) {
         const currentPage = await db.collection('pages').findOne({ id: pageId });
-        if (currentPage?.crop) {
-          const baseUrl = currentPage.photo_original || currentPage.photo || imageUrl;
-          const params = new URLSearchParams({
-            url: baseUrl,
-            w: '2000',
-            q: '95',
-            cx: currentPage.crop.xStart.toString(),
-            cw: currentPage.crop.xEnd.toString(),
-          });
-          const baseApiUrl = process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}`
-            : process.env.NEXTAUTH_URL || 'http://localhost:3000';
-          finalImageUrl = `${baseApiUrl}/api/image?${params.toString()}`;
+        if (currentPage?.cropped_photo) {
+          // Use pre-generated cropped image (Vercel Blob URL)
+          finalImageUrl = currentPage.cropped_photo;
+        } else if (currentPage?.photo) {
+          // Use the page's photo field
+          finalImageUrl = currentPage.photo;
         }
       }
 

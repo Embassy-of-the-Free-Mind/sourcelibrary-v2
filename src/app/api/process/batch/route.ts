@@ -32,11 +32,20 @@ async function processChunk(
   db: Awaited<ReturnType<typeof getDb>>,
   model: string
 ): Promise<BatchResult[]> {
+  // Look up pages to get cropped_photo if available
+  const pageIds = chunk.map(p => p.pageId);
+  const dbPages = await db.collection('pages').find({ id: { $in: pageIds } }).toArray();
+  const dbPageMap = new Map(dbPages.map(p => [p.id, p]));
+
   const promises = chunk.map(async (page) => {
     const startTime = performance.now();
     try {
+      // Use cropped_photo if available, otherwise fall back to photo or input imageUrl
+      const dbPage = dbPageMap.get(page.pageId);
+      const finalImageUrl = dbPage?.cropped_photo || dbPage?.photo || page.imageUrl;
+
       const ocrResult = await performOCR(
-        page.imageUrl,
+        finalImageUrl,
         page.language || 'Latin',
         page.previousOcr,
         page.customPrompt,
