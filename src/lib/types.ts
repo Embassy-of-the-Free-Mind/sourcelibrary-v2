@@ -57,6 +57,47 @@ export interface Job {
   };
 }
 
+// ============================================
+// Pipeline - Automated book processing workflow
+// ============================================
+
+export type PipelineStep = 'split_check' | 'ocr' | 'translate' | 'summarize' | 'edition';
+export type PipelineStatus = 'idle' | 'running' | 'paused' | 'completed' | 'failed';
+
+export interface PipelineStepState {
+  status: 'pending' | 'running' | 'completed' | 'skipped' | 'failed';
+  progress?: { completed: number; total: number };
+  started_at?: Date;
+  completed_at?: Date;
+  error?: string;
+  result?: Record<string, unknown>;
+}
+
+export interface PipelineConfig {
+  model: string;
+  language: string;
+  license: string;
+}
+
+export interface PipelineState {
+  status: PipelineStatus;
+  currentStep: PipelineStep | null;
+
+  steps: {
+    split_check: PipelineStepState;
+    ocr: PipelineStepState;
+    translate: PipelineStepState;
+    summarize: PipelineStepState;
+    edition: PipelineStepState;
+  };
+
+  started_at?: Date;
+  completed_at?: Date;
+  error?: string;
+
+  config: PipelineConfig;
+}
+
 // Available Gemini models for processing
 export const GEMINI_MODELS = [
   { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Latest, best quality' },
@@ -195,6 +236,9 @@ export interface Book {
   // Published editions (immutable snapshots for citation)
   editions?: TranslationEdition[];
   current_edition_id?: string;    // Most recent published edition
+
+  // Automated processing pipeline state
+  pipeline?: PipelineState;
 }
 
 export interface OcrData {
@@ -439,9 +483,13 @@ export const LATIN_PROMPTS = {
 
 **Layout markup:**
 - ->centered text<- for centered lines
-- | tables | for columnar data, parallel text
 - > blockquotes for quotations, prayers
 - --- for decorative dividers
+
+**Tables:** Use markdown tables for ANY columnar data, charts, lists:
+| Column 1 | Column 2 |
+|----------|----------|
+| data | data |
 
 **Annotations:**
 - [[meta: ...]] for page metadata (image quality, script type) — hidden from readers
@@ -454,6 +502,7 @@ export const LATIN_PROMPTS = {
 - [[header: ...]] for running headers/page headings
 - [[abbrev: X → expansion]] for abbreviation expansions (collected in metadata)
 - [[term: word]] or [[term: word → meaning]] for technical vocabulary
+- [[image: description]] for illustrations, diagrams, charts, woodcuts, printer's devices
 
 **IMPORTANT - Exclude from main text:**
 - Page numbers: Capture ONLY in [[page number: N]] or [[folio:]], do NOT include in the body text
@@ -471,7 +520,8 @@ export const LATIN_PROMPTS = {
 4. Expand abbreviations consistently, marking first occurrence.
 5. Flag all technical/esoteric vocabulary with [[term:]].
 6. Capture ALL text including margins and annotations.
-7. END with [[vocabulary: ...]] listing key Latin terms, names, and concepts on this page.
+7. Describe any illustrations, diagrams, or charts with [[image: ...]].
+8. END with [[vocabulary: ...]] listing key Latin terms, names, and concepts on this page.
 
 **Important:** This page may have been split from a two-page spread. Focus on the MAIN text block. Ignore partial text at edges from facing pages.
 
@@ -718,92 +768,66 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
 [[keywords: key concepts, names, themes in English — for indexing]]`
 };
 
+// Streamlined OCR prompt - same features, fewer tokens (~200 tokens)
+export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript page to Markdown.
+
+**Format:** # headings, **bold**, *italic*, ->centered<-, | tables |, > blockquotes, ---
+
+**Annotations (use inline):**
+[[language: X]] [[page number: N]] [[header: X]] [[signature: X]]
+[[margin: X]] [[gloss: X]] [[insert: X]] [[unclear: X]]
+[[notes: X]] [[meta: X]] [[warning: X]]
+[[image: brief description]] — for illustrations, diagrams, charts, printer's marks
+
+**Tables:** Use markdown tables for any columnar data, lists, charts. Preserve structure.
+
+**Rules:**
+- Page numbers, headers, signatures → metadata tags ONLY, not in body text
+- Preserve original spelling, punctuation, line breaks
+- IGNORE partial text at page edges (from facing page)
+- End with [[vocabulary: key terms, names, concepts]]
+
+**If quality issues:** Add [[warning: reason]] at start.`;
+
 // Default prompts with [[notes]] support
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
-  ocr: `You are transcribing a historical manuscript page.
+  ocr: `Transcribe this {language} manuscript page to Markdown.
 
-**Input:** The page image and (if available) the previous page's transcription for context.
+**Format:**
+- # ## ### for headings (bigger text = bigger heading)
+- **bold**, *italic* for emphasis
+- ->centered<- for centered lines
+- > blockquotes for quotes/prayers
+- --- for dividers
 
-**Output:** A faithful transcription in Markdown format that visually resembles the original.
+**Tables:** Use markdown tables for ANY columnar data, lists, charts, or structured content:
+| Column 1 | Column 2 | Column 3 |
+|----------|----------|----------|
+| data | data | data |
 
-**First:** Detect and note the language with [[language: detected language]]
+**Annotations (use inline where relevant):**
+- [[language: detected]] — confirm the language
+- [[page number: N]] — visible page/folio numbers (NOT in body text)
+- [[header: X]] — running headers (NOT in body text)
+- [[signature: X]] — printer's marks like A2, B1 (NOT in body text)
+- [[margin: X]] — marginal notes, citations
+- [[gloss: X]] — interlinear annotations
+- [[insert: X]] — boxed text, later additions
+- [[unclear: X]] — illegible readings
+- [[notes: X]] — interpretive notes for readers
+- [[meta: X]] — hidden metadata (image quality, catchwords)
+- [[warning: X]] — quality issues (faded, damaged, blurry)
+- [[image: description]] — brief description of illustrations, diagrams, charts, woodcuts, printer's devices
 
-**Representing text styles:**
-- # Large title → use # heading (biggest)
-- ## Section heading → use ## heading
-- ### Subsection → use ### heading
-- **Bold text** → use **bold**
-- *Italic text* → use *italic*
-- LARGER TEXT should use BIGGER HEADINGS - match the visual hierarchy
-- Preserve line breaks and paragraph structure
+**Critical rules:**
+1. Preserve original spelling, capitalization, punctuation
+2. Page numbers/headers/signatures go in tags only, never in body
+3. IGNORE partial text at left/right edges (from facing page in spread)
+4. Capture ALL text including margins and annotations
+5. Describe any images/diagrams with [[image: ...]]
+6. End with [[vocabulary: key terms, names, concepts on this page]]
 
-**Layout markup:**
-- ->centered text<- for centered lines (titles, headers)
-- | tables | for columnar data, parallel text, lists in columns
-- > blockquotes for prayers, quotes, set-apart passages
-- --- for decorative dividers or section breaks
-
-**Annotations:**
-- [[meta: ...]] for page metadata (image quality, layout) — hidden from readers
-- [[notes: ...]] for interpretive notes readers should see
-- [[margin: ...]] for marginal notes (biblical citations, references, annotations in margins)
-- [[gloss: ...]] for interlinear annotations above/below words
-- [[insert: ...]] for text in boxes, cartouches, or later additions
-- [[unclear: ...]] for illegible or uncertain readings
-- [[page number: N]] for visible page numbers
-- [[header: ...]] for running headers/page headings
-- [[signature: X]] for printer's signature marks (A, A2, B, B1, etc.)
-
-**CRITICAL - Exclude from main text body:**
-These elements must ONLY appear in metadata tags, NEVER in the body text:
-- **Page numbers**: Use [[page number: N]] only, never write "3" or "Page 3" in the body
-- **Running headers**: Use [[header: ...]] only, never repeat in body
-- **Signature marks**: Printer's marks like "A 2.", "B 1.", "C ij" → use [[signature: A2]] only
-- **Catchwords**: Words at bottom of page matching next page → use [[meta: catchword: ...]]
-
-**Marginalia - mark clearly:**
-Handwritten or printed notes in the margins are important! Use [[margin: ...]]:
-- Biblical citations in margins: [[margin: John 1:7-10]]
-- Handwritten marginalia: [[margin: ...content...]]
-- Place the [[margin:]] tag inline where the margin note corresponds to the main text
-
-**Do NOT use:**
-- Code blocks (\`\`\`) or inline code - this is prose, not code
-- If markdown can't capture the layout, add a [[meta: ...]] explaining it
-
-**Instructions:**
-1. Begin with [[meta: ...]] summarizing image quality, layout, and any special features.
-2. Include [[page number: N]] if visible.
-3. Preserve original spelling, capitalization, punctuation, line breaks, and paragraphs.
-4. Bold text → **bold**. Italic → *italic*. Larger text → bigger heading.
-5. Recreate tables in markdown when you see columnar layouts.
-6. Capture ALL text including margins, boxes, and annotations.
-7. END with [[vocabulary: ...]] listing key terms, names, and concepts on this page.
-
-**CRITICAL - Adjacent Page Bleed:**
-This page was likely split from a two-page book spread. Text from the FACING PAGE may be visible at the left or right edge of the image. You MUST:
-- IGNORE any partial/cut-off text at the far left or right edges
-- Look for the gutter shadow, binding crease, or page edge to identify where this page ends
-- Only transcribe text that is clearly part of THIS page's main text block
-- Text appearing at an angle, upside down, or vertically near edges is from the adjacent page - SKIP IT
-- When in doubt, exclude edge text rather than include wrong-page content
-
-**Quality Warning:**
-If any of these conditions significantly affect readability, add [[warning: reason]] near the start:
-- Faded, stained, or water-damaged text
-- Very low resolution or motion blur
-- Heavy ink bleed-through from the reverse side
-- Significant portions cut off or missing from the scan
-- Text obscured by tight binding, fingers, or shadows
-- Fire damage, tears, or holes in the page
-Example: [[warning: Faded ink in lower third, several words illegible]]
-
-**Language:** {language}
-
-**Final output format:**
-[page transcription]
-
-[[vocabulary: term1, term2, Person Name, Concept, ...]]`,
+**If image has quality issues**, start with [[warning: describe issue]]`,
 
   translation: `You are translating a manuscript transcription into accessible English.
 
