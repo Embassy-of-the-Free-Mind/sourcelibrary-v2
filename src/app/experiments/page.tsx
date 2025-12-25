@@ -79,7 +79,8 @@ export default function ExperimentsPage() {
       const res = await fetch('/api/books');
       if (res.ok) {
         const data = await res.json();
-        setBooks(data.books || []);
+        // API returns array directly, not { books: [...] }
+        setBooks(Array.isArray(data) ? data : data.books || []);
       }
     } catch (error) {
       console.error('Error fetching books:', error);
