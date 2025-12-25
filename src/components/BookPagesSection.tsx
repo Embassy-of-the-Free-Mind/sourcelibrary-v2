@@ -656,19 +656,30 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               runningTokens += data.usage.totalTokens || 0;
             }
 
-            // Track which pages were OCR'd
+            // Track which pages were OCR'd (newly processed)
             const ocrIds = Object.keys(data.ocrResults || {});
             ocrIds.forEach(id => completed.push(id));
 
-            // Add failed fetches
+            // Skipped pages (already have OCR) count as completed
+            (data.skippedPageIds || []).forEach((id: string) => {
+              if (!completed.includes(id)) completed.push(id);
+            });
+
+            // Add failed pages
             (data.failedPageIds || []).forEach((id: string) => failed.push(id));
 
-            // Mark un-OCR'd pages as failed
-            batchIds.forEach(id => {
-              if (!ocrIds.includes(id) && !(data.failedPageIds || []).includes(id)) {
-                failed.push(id);
-              }
-            });
+            // Log detailed results if available
+            if (data.pageResults) {
+              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
+                if (pr.status === 'skipped_has_ocr') {
+                  console.log(`[OCR] ${pr.message}`);
+                } else if (pr.status.startsWith('failed')) {
+                  console.error(`[OCR] ${pr.message}`);
+                } else {
+                  console.log(`[OCR] ${pr.message}`);
+                }
+              });
+            }
 
             // Use last OCR as context for next batch
             if (ocrIds.length > 0) {
