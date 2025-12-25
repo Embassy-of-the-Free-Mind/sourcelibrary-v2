@@ -4,6 +4,24 @@ import { program } from 'commander';
 import { TestOrchestrator } from './agents/orchestrator';
 import { allAPIScenarios } from './scenarios/api/index';
 import { Scenario } from './types';
+import * as fs from 'fs';
+import * as path from 'path';
+
+// Load .env.local if it exists
+function loadEnvLocal() {
+  const envPath = path.join(process.cwd(), '.env.local');
+  if (fs.existsSync(envPath)) {
+    const content = fs.readFileSync(envPath, 'utf-8');
+    for (const line of content.split('\n')) {
+      const match = line.match(/^([^=]+)=(.*)$/);
+      if (match && !process.env[match[1]]) {
+        process.env[match[1]] = match[2];
+      }
+    }
+  }
+}
+
+loadEnvLocal();
 
 // Load environment variables
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
@@ -26,7 +44,7 @@ program
   .option('--skip-expensive', 'Skip scenarios tagged as expensive')
   .option('--skip-slow', 'Skip scenarios tagged as slow')
   .option('--cost-limit <usd>', 'Gemini API cost limit in USD', '10')
-  .option('--db <name>', 'Test database name', 'sl_test')
+  .option('--db <name>', 'Test database name', MONGODB_DB)
   .option('--api-url <url>', 'API base URL', API_BASE_URL)
   .action(async (options) => {
     console.log('\n🧪 Source Library Test Runner\n');
@@ -144,7 +162,7 @@ program
 program
   .command('clean')
   .description('Clean up test data from database')
-  .option('--db <name>', 'Test database name', 'sl_test')
+  .option('--db <name>', 'Test database name', MONGODB_DB)
   .action(async (options) => {
     const { DBManager } = await import('./tools/db-manager');
 

@@ -39,6 +39,15 @@ interface ExperimentStatus {
   totalJudgments: number;
 }
 
+interface ConditionProgress {
+  status: 'running' | 'complete';
+  processed: number;
+  total: number;
+  started_at?: string;
+  completed_at?: string;
+  last_update?: string;
+}
+
 const CONDITIONS = [
   { id: 'b1_simple', batchSize: 1, promptType: 'simple' as const, label: 'Batch 1 + Simple' },
   { id: 'b1_elaborate', batchSize: 1, promptType: 'elaborate' as const, label: 'Batch 1 + Elaborate' },

@@ -156,70 +156,181 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * Auto-fill image_source for books that have ia_identifier but no image_source
+ * Auto-fill image_source for books based on URL patterns or ia_identifier
  *
  * PATCH /api/admin/set-image-source
- * Body: { action: 'auto_fill_ia' }
+ * Body: { action: 'auto_fill_ia' | 'auto_detect' }
  */
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json();
     const { action } = body as { action: string };
 
-    if (action !== 'auto_fill_ia') {
-      return NextResponse.json(
-        { error: 'Invalid action. Use: auto_fill_ia' },
-        { status: 400 }
-      );
-    }
-
     const db = await getDb();
 
-    // Find books with ia_identifier but no image_source
-    const books = await db.collection('books')
-      .find({
-        ia_identifier: { $exists: true, $ne: null },
-        image_source: { $exists: false },
-      })
-      .project({ id: 1, ia_identifier: 1 })
-      .toArray();
+    if (action === 'auto_fill_ia') {
+      // Find books with ia_identifier but no image_source
+      const books = await db.collection('books')
+        .find({
+          ia_identifier: { $exists: true, $ne: null },
+          image_source: { $exists: false },
+        })
+        .project({ id: 1, ia_identifier: 1 })
+        .toArray();
 
-    if (books.length === 0) {
+      if (books.length === 0) {
+        return NextResponse.json({
+          success: true,
+          message: 'No books to update',
+          updated: 0,
+        });
+      }
+
+      // Update each book with IA image_source
+      const bulkOps = books.map(book => ({
+        updateOne: {
+          filter: { id: book.id },
+          update: {
+            $set: {
+              image_source: {
+                provider: 'internet_archive' as ImageSourceProvider,
+                provider_name: 'Internet Archive',
+                source_url: `https://archive.org/details/${book.ia_identifier}`,
+                identifier: book.ia_identifier,
+                license: 'publicdomain',
+                access_date: new Date(),
+              },
+              updated_at: new Date(),
+            },
+          },
+        },
+      }));
+
+      const result = await db.collection('books').bulkWrite(bulkOps);
+
       return NextResponse.json({
         success: true,
-        message: 'No books to update',
-        updated: 0,
+        matched: result.matchedCount,
+        modified: result.modifiedCount,
+        message: `Updated ${result.modifiedCount} books with IA image_source`,
       });
     }
 
-    // Update each book with IA image_source
-    const bulkOps = books.map(book => ({
-      updateOne: {
-        filter: { id: book.id },
-        update: {
-          $set: {
-            image_source: {
-              provider: 'internet_archive' as ImageSourceProvider,
-              provider_name: 'Internet Archive',
-              source_url: `https://archive.org/details/${book.ia_identifier}`,
-              identifier: book.ia_identifier,
-              license: 'publicdomain',
-              access_date: new Date(),
+    if (action === 'auto_detect') {
+      // Find all books without image_source
+      const books = await db.collection('books')
+        .find({ image_source: { $exists: false } })
+        .project({ id: 1, title: 1, thumbnail: 1, ia_identifier: 1 })
+        .toArray();
+
+      if (books.length === 0) {
+        return NextResponse.json({
+          success: true,
+          message: 'No books to update',
+          updated: 0,
+          by_provider: {},
+        });
+      }
+
+      const bulkOps: Array<{
+        updateOne: {
+          filter: { id: string };
+          update: { $set: Record<string, unknown> };
+        };
+      }> = [];
+      const byProvider: Record<string, number> = {};
+      const unknown: Array<{ id: string; title: string; thumbnail: string | null }> = [];
+
+      for (const book of books) {
+        const checkUrl = book.thumbnail || '';
+
+        let provider: ImageSourceProvider | null = null;
+        let providerName: string | null = null;
+        let sourceUrl: string | null = null;
+        let identifier: string | null = null;
+
+        // Detect source from URL patterns
+        if (checkUrl.includes('archive.org')) {
+          provider = 'internet_archive';
+          providerName = 'Internet Archive';
+          const match = checkUrl.match(/archive\.org\/download\/([^/]+)/);
+          if (match) {
+            identifier = match[1];
+            sourceUrl = `https://archive.org/details/${identifier}`;
+          }
+        } else if (checkUrl.includes('books.google')) {
+          provider = 'google_books';
+          providerName = 'Google Books';
+          const match = checkUrl.match(/id=([^&]+)/);
+          if (match) {
+            identifier = match[1];
+            sourceUrl = `https://books.google.com/books?id=${identifier}`;
+          }
+        } else if (checkUrl.includes('s3.amazonaws.com') || checkUrl.includes('.s3.')) {
+          // S3 URLs are likely EFM scans
+          provider = 'efm';
+          providerName = 'Embassy of the Free Mind';
+        } else if (checkUrl.startsWith('/Users/') || checkUrl.startsWith('/home/')) {
+          // Local file paths - likely EFM scans
+          provider = 'efm';
+          providerName = 'Embassy of the Free Mind';
+        } else if (book.ia_identifier) {
+          // Has ia_identifier but thumbnail doesn't match
+          provider = 'internet_archive';
+          providerName = 'Internet Archive';
+          identifier = book.ia_identifier;
+          sourceUrl = `https://archive.org/details/${book.ia_identifier}`;
+        }
+
+        if (provider) {
+          byProvider[provider] = (byProvider[provider] || 0) + 1;
+
+          bulkOps.push({
+            updateOne: {
+              filter: { id: book.id },
+              update: {
+                $set: {
+                  image_source: {
+                    provider,
+                    provider_name: providerName,
+                    source_url: sourceUrl,
+                    identifier: identifier || book.ia_identifier,
+                    license: 'publicdomain',
+                    access_date: new Date(),
+                  },
+                  updated_at: new Date(),
+                },
+              },
             },
-            updated_at: new Date(),
-          },
-        },
-      },
-    }));
+          });
+        } else {
+          unknown.push({
+            id: book.id,
+            title: book.title,
+            thumbnail: book.thumbnail,
+          });
+        }
+      }
 
-    const result = await db.collection('books').bulkWrite(bulkOps);
+      let result = { matchedCount: 0, modifiedCount: 0 };
+      if (bulkOps.length > 0) {
+        result = await db.collection('books').bulkWrite(bulkOps);
+      }
 
-    return NextResponse.json({
-      success: true,
-      matched: result.matchedCount,
-      modified: result.modifiedCount,
-      message: `Updated ${result.modifiedCount} books with IA image_source`,
-    });
+      return NextResponse.json({
+        success: true,
+        matched: result.matchedCount,
+        modified: result.modifiedCount,
+        by_provider: byProvider,
+        unknown_count: unknown.length,
+        unknown_samples: unknown.slice(0, 10),
+      });
+    }
+
+    return NextResponse.json(
+      { error: 'Invalid action. Use: auto_fill_ia or auto_detect' },
+      { status: 400 }
+    );
   } catch (error) {
     console.error('Error auto-filling image source:', error);
     return NextResponse.json(

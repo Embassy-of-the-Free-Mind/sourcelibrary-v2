@@ -108,6 +108,21 @@ export async function POST(
     let totalCost = 0;
     let totalTokens = 0;
 
+    // Initialize progress tracking
+    await db.collection('ocr_experiments').updateOne(
+      { id },
+      {
+        $set: {
+          [`progress.${condition_id}`]: {
+            status: 'running',
+            processed: 0,
+            total: pages.length,
+            started_at: new Date().toISOString(),
+          },
+        },
+      }
+    );
+
     // Process in batches
     for (let i = 0; i < pages.length; i += batchSize) {
       const batch = pages.slice(i, i + batchSize);
@@ -274,7 +289,30 @@ Return each transcription clearly separated:
           });
         }
       }
+
+      // Update progress after each batch
+      await db.collection('ocr_experiments').updateOne(
+        { id },
+        {
+          $set: {
+            [`progress.${condition_id}.processed`]: results.length,
+            [`progress.${condition_id}.last_update`]: new Date().toISOString(),
+          },
+        }
+      );
     }
+
+    // Mark condition as complete
+    await db.collection('ocr_experiments').updateOne(
+      { id },
+      {
+        $set: {
+          [`progress.${condition_id}.status`]: 'complete',
+          [`progress.${condition_id}.processed`]: results.length,
+          [`progress.${condition_id}.completed_at`]: new Date().toISOString(),
+        },
+      }
+    );
 
     // Save results
     const now = new Date().toISOString();

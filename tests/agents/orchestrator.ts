@@ -30,18 +30,25 @@ export class TestOrchestrator {
   async initialize(): Promise<void> {
     console.log('\n[Orchestrator] Initializing test system...');
 
-    // Initialize database
-    this.dbManager = new DBManager(this.config.mongoUri, this.config.testDbName);
-    await this.dbManager.connect();
-    await this.dbManager.seedPrompts();
+    // Try to initialize database (optional - tests can run HTTP-only)
+    try {
+      this.dbManager = new DBManager(this.config.mongoUri, this.config.testDbName);
+      await this.dbManager.connect();
+      await this.dbManager.seedPrompts();
+      console.log('[Orchestrator] Database connected');
+    } catch (error) {
+      console.log('[Orchestrator] Database connection failed - running in HTTP-only mode');
+      console.log('[Orchestrator] (Scenarios with setup/teardown will be skipped)');
+      this.dbManager = null;
+    }
 
     // Create test context
     this.context = {
-      db: this.dbManager.getDb(),
+      db: this.dbManager?.getDb() as any,
       config: this.config,
       saved: {},
       warnings: [],
-      fixtures: this.dbManager.createFixtureManager()
+      fixtures: this.dbManager?.createFixtureManager() as any
     };
 
     // Initialize agents
@@ -83,6 +90,18 @@ export class TestOrchestrator {
       console.log('-'.repeat(40));
 
       for (const scenario of apiScenarios) {
+        // Skip scenarios that require DB if we're in HTTP-only mode
+        if (!this.dbManager && (scenario.setup || scenario.teardown)) {
+          console.log(`\n○ ${scenario.name} (skipped - requires DB)`);
+          this.results.push({
+            scenario: scenario.name,
+            agent: 'api',
+            status: 'skipped',
+            duration: 0
+          });
+          continue;
+        }
+
         // Reset context warnings for each scenario
         this.context!.warnings = [];
         this.context!.saved = {};
