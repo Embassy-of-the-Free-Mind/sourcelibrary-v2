@@ -9,6 +9,7 @@ import BookPagesSection from '@/components/BookPagesSection';
 import BookHistory from '@/components/BookHistory';
 import BookChat from '@/components/BookChat';
 import BookAnalytics from '@/components/BookAnalytics';
+import ProcessBookButton from '@/components/ProcessBookButton';
 import CoverImagePicker from '@/components/CoverImagePicker';
 import DownloadButton from '@/components/DownloadButton';
 import BibliographicInfo from '@/components/BibliographicInfo';
@@ -143,6 +144,11 @@ async function BookInfo({ id }: { id: string }) {
                   <Glasses className="w-4 h-4" />
                   Read
                 </Link>
+                <ProcessBookButton
+                  bookId={book.id}
+                  bookTitle={book.display_title || book.title}
+                  pages={pages}
+                />
                 <DownloadButton
                   bookId={book.id}
                   hasTranslations={pages.some(p => p.translation?.data)}
