@@ -4,6 +4,9 @@ import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 
+// Increase timeout for batch OCR (5 images)
+export const maxDuration = 300;
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 interface PageInput {

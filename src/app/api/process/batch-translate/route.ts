@@ -4,6 +4,9 @@ import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 
+// Increase timeout for batch translation
+export const maxDuration = 180;
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 interface PageInput {
