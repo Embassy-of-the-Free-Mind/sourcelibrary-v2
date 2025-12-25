@@ -349,6 +349,19 @@ export async function POST(
 
     const finalJob = await db.collection('jobs').findOne({ id });
 
+    // Auto-continue if there's more work (non-blocking)
+    if (!allProcessed && remainingPageIds.length > results.length) {
+      const baseUrl = process.env.NEXT_PUBLIC_URL || (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : 'http://localhost:3000');
+
+      fetch(`${baseUrl}/api/jobs/${id}/process`, {
+        method: 'POST',
+      }).catch(() => {
+        // Ignore - will be picked up by next poll
+      });
+    }
+
     return NextResponse.json({
       job: finalJob,
       processed: results.length,
