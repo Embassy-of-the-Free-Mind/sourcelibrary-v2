@@ -607,101 +607,111 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         }
       }
     } else if (action === 'ocr') {
-      // OCR: batch of 5 images with context continuity
+      // OCR: batches of 5 images, run multiple batches in parallel for speed
       const OCR_BATCH_SIZE = 5;
-      let previousContext = '';
+      const PARALLEL_BATCHES = 2; // Run 2 batches in parallel (uses 2 API keys)
 
-      // Sort pages by page number for proper continuity
+      // Sort pages by page number
       const sortedPageIds = [...pageIds].sort((a, b) => {
         const pageA = pages.find(p => p.id === a);
         const pageB = pages.find(p => p.id === b);
         return (pageA?.page_number || 0) - (pageB?.page_number || 0);
       });
 
+      // Create all batches upfront
+      const allBatches: { batchIds: string[]; batchPages: Page[] }[] = [];
       for (let i = 0; i < sortedPageIds.length; i += OCR_BATCH_SIZE) {
-        if (stopRequestedRef.current) break;
-
         const batchIds = sortedPageIds.slice(i, Math.min(i + OCR_BATCH_SIZE, sortedPageIds.length));
         const batchPages = batchIds
           .map(id => pages.find(p => p.id === id))
           .filter((p): p is Page => p !== undefined);
+        allBatches.push({ batchIds, batchPages });
+      }
 
-        if (batchPages.length === 0) {
-          batchIds.forEach(id => failed.push(id));
-          processedCount += batchIds.length;
-          continue;
-        }
+      console.log(`[OCR] Starting parallel processing: ${allBatches.length} batches, ${PARALLEL_BATCHES} at a time`);
 
-        try {
-          const response = await fetchWithTimeout('/api/process/batch-ocr', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              pages: batchPages.map(p => ({
-                pageId: p.id,
-                imageUrl: p.photo,
-                pageNumber: p.page_number,
-              })),
-              language: 'Latin',
-              customPrompt: editedPrompts.ocr,
-              model: selectedModel,
-              previousContext,
-            }),
-          }, FETCH_TIMEOUT * 5); // Longer timeout for batch with images
+      // Process batches in parallel groups
+      for (let i = 0; i < allBatches.length; i += PARALLEL_BATCHES) {
+        if (stopRequestedRef.current) break;
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data.usage) {
-              runningCost += data.usage.costUsd || 0;
-              runningTokens += data.usage.totalTokens || 0;
-            }
+        const parallelBatches = allBatches.slice(i, Math.min(i + PARALLEL_BATCHES, allBatches.length));
 
-            // Track which pages were OCR'd (newly processed)
-            const ocrIds = Object.keys(data.ocrResults || {});
-            ocrIds.forEach(id => completed.push(id));
+        // Process this group of batches in parallel
+        const batchPromises = parallelBatches.map(async ({ batchIds, batchPages }) => {
+          if (batchPages.length === 0) {
+            batchIds.forEach(id => failed.push(id));
+            return { processedCount: batchIds.length };
+          }
 
-            // Skipped pages (already have OCR) count as completed
-            (data.skippedPageIds || []).forEach((id: string) => {
-              if (!completed.includes(id)) completed.push(id);
-            });
+          try {
+            const response = await fetchWithTimeout('/api/process/batch-ocr', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                pages: batchPages.map(p => ({
+                  pageId: p.id,
+                  imageUrl: p.photo,
+                  pageNumber: p.page_number,
+                })),
+                language: 'Latin',
+                customPrompt: editedPrompts.ocr,
+                model: selectedModel,
+              }),
+            }, FETCH_TIMEOUT * 5);
 
-            // Add failed pages
-            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+            if (response.ok) {
+              const data = await response.json();
+              if (data.usage) {
+                runningCost += data.usage.costUsd || 0;
+                runningTokens += data.usage.totalTokens || 0;
+              }
 
-            // Log detailed results if available
-            if (data.pageResults) {
-              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
-                if (pr.status === 'skipped_has_ocr') {
-                  console.log(`[OCR] ${pr.message}`);
-                } else if (pr.status.startsWith('failed')) {
-                  console.error(`[OCR] ${pr.message}`);
-                } else {
-                  console.log(`[OCR] ${pr.message}`);
-                }
+              // Track which pages were OCR'd (newly processed)
+              const ocrIds = Object.keys(data.ocrResults || {});
+              ocrIds.forEach(id => completed.push(id));
+
+              // Skipped pages (already have OCR) count as completed
+              (data.skippedPageIds || []).forEach((id: string) => {
+                if (!completed.includes(id)) completed.push(id);
               });
-            }
 
-            // Use last OCR as context for next batch
-            if (ocrIds.length > 0) {
-              const lastId = batchPages[batchPages.length - 1].id;
-              previousContext = data.ocrResults[lastId] || '';
+              // Add failed pages
+              (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+
+              // Log detailed results if available
+              if (data.pageResults) {
+                data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
+                  if (pr.status === 'skipped_has_ocr') {
+                    console.log(`[OCR] ${pr.message}`);
+                  } else if (pr.status.startsWith('failed')) {
+                    console.error(`[OCR] ${pr.message}`);
+                  } else {
+                    console.log(`[OCR] ${pr.message}`);
+                  }
+                });
+              }
+            } else {
+              const errorData = await response.json().catch(() => ({}));
+              const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
+              console.error('Batch OCR error:', errorMsg);
+              batchIds.forEach(id => failed.push(id));
+              setProcessing(prev => ({ ...prev, lastError: errorMsg }));
             }
-          } else {
-            // Parse error from response
-            const errorData = await response.json().catch(() => ({}));
-            const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
+          } catch (error) {
+            const errorMsg = error instanceof Error ? error.message : 'Network error';
             console.error('Batch OCR error:', errorMsg);
             batchIds.forEach(id => failed.push(id));
             setProcessing(prev => ({ ...prev, lastError: errorMsg }));
           }
-        } catch (error) {
-          const errorMsg = error instanceof Error ? error.message : 'Network error';
-          console.error('Batch OCR error:', errorMsg);
-          batchIds.forEach(id => failed.push(id));
-          setProcessing(prev => ({ ...prev, lastError: errorMsg }));
-        }
 
-        processedCount += batchIds.length;
+          return { processedCount: batchIds.length };
+        });
+
+        // Wait for all parallel batches to complete
+        const results = await Promise.all(batchPromises);
+        const batchProcessedCount = results.reduce((sum, r) => sum + r.processedCount, 0);
+        processedCount += batchProcessedCount;
+
         setProcessing(prev => ({
           ...prev,
           currentIndex: processedCount,
@@ -712,11 +722,13 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         }));
         updateJobProgress();
 
-        // Small delay between batches
-        if (i + OCR_BATCH_SIZE < sortedPageIds.length && !stopRequestedRef.current) {
-          await sleep(500);
+        // Small delay between parallel groups to avoid overwhelming the API
+        if (i + PARALLEL_BATCHES < allBatches.length && !stopRequestedRef.current) {
+          await sleep(300);
         }
       }
+
+      console.log(`[OCR] Complete: ${completed.length} succeeded, ${failed.length} failed`);
     } else {
       // Summary: parallel per-page processing (text only, simpler)
       for (let i = 0; i < pageIds.length; i += concurrency) {
