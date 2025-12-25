@@ -69,7 +69,19 @@ export default function ImageWithMagnifier({
     setIsLoaded(false);
     setFullImageLoaded(false);
     setFullImageDimensions({ width: 0, height: 0 });
-  }, [src]);
+
+    // Check if image is already cached/loaded (fixes race condition on initial render)
+    // Use a small timeout to let the img element mount first
+    const checkLoaded = setTimeout(() => {
+      if (imgRef.current?.complete && imgRef.current?.naturalHeight > 0) {
+        setIsLoaded(true);
+        const rect = imgRef.current.getBoundingClientRect();
+        setImageDimensions({ width: rect.width, height: rect.height });
+      }
+    }, 50);
+
+    return () => clearTimeout(checkLoaded);
+  }, [src, displaySrc]);
 
   useEffect(() => {
     // Get actual rendered image dimensions (accounting for object-contain)
@@ -184,7 +196,6 @@ export default function ImageWithMagnifier({
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          key={displaySrc}
           ref={imgRef}
           src={displaySrc}
           alt={alt}
