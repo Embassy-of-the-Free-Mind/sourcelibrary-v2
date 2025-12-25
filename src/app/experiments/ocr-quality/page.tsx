@@ -104,7 +104,10 @@ export default function OCRQualityExperimentPage() {
   const estimatedRunTime = (pageCount * CONDITIONS.length * 3) / 60; // ~3 sec per page per condition
   const estimatedJudgeTime = totalJudgments * 0.15; // ~9 sec per judgment
 
+  const [error, setError] = useState<string | null>(null);
+
   const createExperiment = async () => {
+    setError(null);
     try {
       const res = await fetch('/api/experiments/ocr-quality', {
         method: 'POST',
@@ -117,16 +120,24 @@ export default function OCRQualityExperimentPage() {
           comparisons: COMPARISONS,
         }),
       });
+
+      const data = await res.json();
+
       if (res.ok) {
-        const data = await res.json();
+        console.log('Experiment created:', data);
         setExperimentId(data.experiment_id);
         setStatus(prev => ({ ...prev, phase: 'running', totalJudgments }));
 
         // Auto-run all conditions sequentially
         runAllConditions(data.experiment_id);
+      } else {
+        setError(`Failed to create experiment: ${data.error}`);
+        console.error('Create experiment failed:', data);
       }
-    } catch (error) {
-      console.error('Error creating experiment:', error);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Unknown error';
+      setError(`Error: ${msg}`);
+      console.error('Error creating experiment:', err);
     }
   };
 
@@ -391,6 +402,12 @@ export default function OCRQualityExperimentPage() {
                 <AlertCircle className="w-4 h-4 inline mr-1" />
                 Minimum 10 pages recommended for statistical validity
               </p>
+            )}
+
+            {error && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-700">{error}</p>
+              </div>
             )}
           </div>
         )}
