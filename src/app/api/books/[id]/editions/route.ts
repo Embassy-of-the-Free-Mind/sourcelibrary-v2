@@ -49,11 +49,19 @@ export async function POST(request: NextRequest, context: RouteContext) {
       license,
       contributors = [],
       changelog,
+      front_matter,
     } = body as {
       version_label?: string;
       license: string;
       contributors?: Contributor[];
       changelog?: string;
+      front_matter?: {
+        introduction?: string;
+        methodology?: string;
+        acknowledgments?: string;
+        generated_at?: Date;
+        generated_by?: string;
+      };
     };
 
     if (!license) {
@@ -162,6 +170,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
       previous_version_id: previousEdition?.id,
       previous_version_doi: previousEdition?.doi,
       changelog,
+      front_matter,
     };
 
     // Mark previous published edition as superseded
