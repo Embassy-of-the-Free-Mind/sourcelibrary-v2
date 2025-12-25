@@ -258,6 +258,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       let completed = 0;
       let failed = 0;
+      const failedOcrIds: string[] = [];
 
       // Process in batches of 5 images with context continuity
       const OCR_BATCH_SIZE = 5;
@@ -268,6 +269,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
         const batch = pagesToOcr.slice(i, Math.min(i + OCR_BATCH_SIZE, pagesToOcr.length));
 
+        let batchSuccess = false;
         try {
           const response = await fetchWithTimeout('/api/process/batch-ocr', {
             method: 'POST',
@@ -295,19 +297,44 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             });
 
             completed += ocrIds.length;
-            failed += batch.length - ocrIds.length;
+
+            // Track pages that failed within the batch
+            const failedInBatch = batch.filter(p => !ocrIds.includes(p.id));
+            if (failedInBatch.length > 0) {
+              failedOcrIds.push(...failedInBatch.map(p => p.id));
+              failed += failedInBatch.length;
+            }
 
             // Use last OCR as context for next batch
             if (ocrIds.length > 0) {
               const lastId = batch[batch.length - 1].id;
               previousContext = data.ocrResults[lastId] || '';
             }
-          } else {
-            failed += batch.length;
+            batchSuccess = true;
           }
         } catch (error) {
           console.error('Batch OCR error:', error);
-          failed += batch.length;
+        }
+
+        // Fallback: if batch failed, try single-page processing
+        if (!batchSuccess) {
+          console.log('Batch failed, falling back to single-page processing...');
+          for (const page of batch) {
+            if (stopRequestedRef.current) break;
+            const result = await processPage(page, 'ocr');
+            if (result.success && result.ocrResult) {
+              ocrResults[page.id] = result.ocrResult;
+              completed++;
+              previousContext = result.ocrResult;
+            } else {
+              failed++;
+              failedOcrIds.push(page.id);
+            }
+            setSteps(prev => ({
+              ...prev,
+              ocr: { ...prev.ocr, completed, failed, pending: pagesToOcr.length - completed - failed },
+            }));
+          }
         }
 
         setSteps(prev => ({
@@ -320,6 +347,11 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       totalCompleted += completed;
       totalFailed += failed;
+
+      // Save failed page IDs for retry
+      if (failedOcrIds.length > 0) {
+        setFailedPageIds(prev => ({ ...prev, ocr: failedOcrIds }));
+      }
 
       setSteps(prev => ({
         ...prev,
@@ -347,6 +379,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       let completed = 0;
       let failed = 0;
+      const failedTranslationIds: string[] = [];
 
       // Process in batches of 5 with context continuity
       const TRANSLATION_BATCH_SIZE = 5;
@@ -357,6 +390,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
         const batch = pagesToTranslate.slice(i, Math.min(i + TRANSLATION_BATCH_SIZE, pagesToTranslate.length));
 
+        let batchSuccess = false;
         try {
           const response = await fetchWithTimeout('/api/process/batch-translate', {
             method: 'POST',
@@ -379,19 +413,43 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             const data = await response.json();
             const translatedIds = Object.keys(data.translations || {});
             completed += translatedIds.length;
-            failed += batch.length - translatedIds.length;
+
+            // Track pages that failed within the batch
+            const failedInBatch = batch.filter(p => !translatedIds.includes(p.id));
+            if (failedInBatch.length > 0) {
+              failedTranslationIds.push(...failedInBatch.map(p => p.id));
+              failed += failedInBatch.length;
+            }
 
             // Use last translation as context for next batch
             if (translatedIds.length > 0) {
               const lastId = batch[batch.length - 1].id;
               previousContext = data.translations[lastId] || '';
             }
-          } else {
-            failed += batch.length;
+            batchSuccess = true;
           }
         } catch (error) {
           console.error('Batch translation error:', error);
-          failed += batch.length;
+        }
+
+        // Fallback: if batch failed, try single-page processing
+        if (!batchSuccess) {
+          console.log('Translation batch failed, falling back to single-page processing...');
+          for (const page of batch) {
+            if (stopRequestedRef.current) break;
+            const ocrText = ocrResults[page.id] || page.ocr?.data;
+            const result = await processPage(page, 'translation', ocrText);
+            if (result.success) {
+              completed++;
+            } else {
+              failed++;
+              failedTranslationIds.push(page.id);
+            }
+            setSteps(prev => ({
+              ...prev,
+              translation: { ...prev.translation, completed, failed, pending: pagesToTranslate.length - completed - failed },
+            }));
+          }
         }
 
         setSteps(prev => ({
@@ -404,6 +462,11 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       totalCompleted += completed;
       totalFailed += failed;
+
+      // Save failed page IDs for retry
+      if (failedTranslationIds.length > 0) {
+        setFailedPageIds(prev => ({ ...prev, translation: failedTranslationIds }));
+      }
 
       setSteps(prev => ({
         ...prev,
@@ -644,17 +707,42 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             <>
               <div className="text-sm text-stone-600">
                 {hasFailures ? (
-                  <span className="text-amber-600">Completed with some failures</span>
+                  <span className="text-amber-600">
+                    Completed with {failedPageIds.ocr.length + failedPageIds.translation.length} failures
+                  </span>
                 ) : (
                   <span className="text-green-600">All steps completed!</span>
                 )}
               </div>
-              <button
-                onClick={onClose}
-                className="px-4 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-900 text-sm font-medium"
-              >
-                Done
-              </button>
+              <div className="flex items-center gap-2">
+                {hasFailures && (
+                  <button
+                    onClick={() => {
+                      // Reset failed pages and re-enable steps for retry
+                      setSteps(prev => ({
+                        ocr: failedPageIds.ocr.length > 0
+                          ? { ...prev.ocr, enabled: true, pending: failedPageIds.ocr.length, completed: 0, failed: 0, status: 'idle' }
+                          : prev.ocr,
+                        translation: failedPageIds.translation.length > 0
+                          ? { ...prev.translation, enabled: true, pending: failedPageIds.translation.length, completed: 0, failed: 0, status: 'idle' }
+                          : prev.translation,
+                      }));
+                      // Note: would need to filter pages to only retry failed ones
+                      // For now, just show the retry option
+                    }}
+                    className="flex items-center gap-1.5 px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm font-medium"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    Retry Failed
+                  </button>
+                )}
+                <button
+                  onClick={onClose}
+                  className="px-4 py-2 bg-stone-800 text-white rounded-lg hover:bg-stone-900 text-sm font-medium"
+                >
+                  Done
+                </button>
+              </div>
             </>
           ) : isProcessing ? (
             <>

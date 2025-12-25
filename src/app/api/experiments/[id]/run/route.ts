@@ -174,10 +174,18 @@ export async function POST(
     let totalTokens = 0;
     let resultsCount = 0;
 
+    // Map MongoDB documents to expected page type
+    const typedPages = selectedPages.map(p => ({
+      id: p.id as string,
+      page_number: p.page_number as number,
+      photo: p.photo as string,
+      ocr: p.ocr as { data?: string } | undefined,
+    }));
+
     // Process variant A
     if (experiment.variant_a) {
       const variantA = experiment.variant_a as ExperimentVariant;
-      const { results, totalCost: costA, totalTokens: tokensA } = await processVariant(variantA, selectedPages);
+      const { results, totalCost: costA, totalTokens: tokensA } = await processVariant(variantA, typedPages);
 
       totalCost += costA;
       totalTokens += tokensA;
@@ -210,7 +218,7 @@ export async function POST(
     // Process variant B
     if (experiment.variant_b) {
       const variantB = experiment.variant_b as ExperimentVariant;
-      const { results, totalCost: costB, totalTokens: tokensB } = await processVariant(variantB, selectedPages);
+      const { results, totalCost: costB, totalTokens: tokensB } = await processVariant(variantB, typedPages);
 
       totalCost += costB;
       totalTokens += tokensB;
