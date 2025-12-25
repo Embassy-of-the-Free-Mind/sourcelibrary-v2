@@ -11,6 +11,7 @@ import BookChat from '@/components/BookChat';
 import BookAnalytics from '@/components/BookAnalytics';
 import CoverImagePicker from '@/components/CoverImagePicker';
 import DownloadButton from '@/components/DownloadButton';
+import BibliographicInfo from '@/components/BibliographicInfo';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -153,6 +154,9 @@ async function BookInfo({ id }: { id: string }) {
                 <SearchPanel bookId={book.id} />
                 <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
               </div>
+
+              {/* Bibliographic Info */}
+              <BibliographicInfo book={book} pagesCount={pages.length} />
             </div>
           </div>
         </div>
