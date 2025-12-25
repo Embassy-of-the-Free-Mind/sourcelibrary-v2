@@ -93,7 +93,7 @@ export async function GET(
       return NextResponse.json({ error: 'Experiment not found' }, { status: 404 });
     }
 
-    // Get all judgments
+    // Get all judgments (including random matchups)
     const judgments = await db
       .collection('ocr_judgments')
       .find({ experiment_id: id })
@@ -102,6 +102,10 @@ export async function GET(
     if (judgments.length === 0) {
       return NextResponse.json({ error: 'No judgments yet' }, { status: 404 });
     }
+
+    // Separate fixed vs random judgments for reporting
+    const fixedJudgments = judgments.filter(j => j.comparison_type !== 'random');
+    const randomJudgments = judgments.filter(j => j.comparison_type === 'random');
 
     // Aggregate by comparison type
     const comparisonStats: Record<string, {
@@ -241,6 +245,8 @@ export async function GET(
       conditions: rankedConditions,
       recommendation,
       total_judgments: judgments.length,
+      fixed_judgments: fixedJudgments.length,
+      random_judgments: randomJudgments.length,
     });
   } catch (error) {
     console.error('Error fetching results:', error);
