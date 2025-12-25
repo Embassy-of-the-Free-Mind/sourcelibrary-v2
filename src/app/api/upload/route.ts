@@ -88,17 +88,24 @@ export async function POST(request: NextRequest) {
       nextPageNumber++;
     }
 
-    // Update book thumbnail if this is the first page
+    // Update book thumbnail and pages_count
     if (uploadedPages.length > 0) {
       const firstPage = await db.collection('pages')
         .findOne({ book_id: bookId, page_number: 1 });
 
+      const updateFields: Record<string, unknown> = { updated_at: new Date() };
       if (firstPage && !book.thumbnail) {
-        await db.collection('books').updateOne(
-          { id: bookId },
-          { $set: { thumbnail: firstPage.photo, updated_at: new Date() } }
-        );
+        updateFields.thumbnail = firstPage.photo;
       }
+
+      // Update pages_count
+      await db.collection('books').updateOne(
+        { id: bookId },
+        {
+          $set: updateFields,
+          $inc: { pages_count: uploadedPages.length }
+        }
+      );
     }
 
     return NextResponse.json({

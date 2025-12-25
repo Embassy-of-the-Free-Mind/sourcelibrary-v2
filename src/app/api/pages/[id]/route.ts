@@ -117,6 +117,12 @@ export async function DELETE(
       await db.collection('pages').bulkWrite(bulkOps);
     }
 
+    // Update book pages_count
+    await db.collection('books').updateOne(
+      { id: page.book_id },
+      { $set: { pages_count: remainingPages.length, updated_at: new Date() } }
+    );
+
     return NextResponse.json({ success: true, deleted: id });
   } catch (error) {
     console.error('Error deleting page:', error);

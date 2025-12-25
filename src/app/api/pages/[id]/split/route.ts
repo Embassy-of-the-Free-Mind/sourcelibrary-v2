@@ -137,7 +137,7 @@ export async function POST(
     // Update book page count
     await db.collection('books').updateOne(
       { id: currentPage.book_id },
-      { $set: { pages: updatedPages.length } }
+      { $set: { pages_count: updatedPages.length, updated_at: new Date() } }
     );
 
     return NextResponse.json({
