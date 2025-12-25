@@ -2,264 +2,244 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Page } from '@/lib/types';
-import { Loader2, Sparkles, AlertCircle, RefreshCw } from 'lucide-react';
+import { Loader2, Sparkles, AlertCircle } from 'lucide-react';
 
 interface ModernizedReaderProps {
   pages: Page[];
   onPageVisible?: (pageNumber: number) => void;
 }
 
-interface PageState {
-  modernized: string | null;
-  loading: boolean;
-  error: string | null;
-  isStale: boolean;
+// Simple markdown renderer for modernized text
+function renderMarkdown(text: string): string {
+  let html = text
+    // Escape HTML
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    // Bold
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // Italic
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/_(.+?)_/g, '<em>$1</em>')
+    // Remove any [[tags]]
+    .replace(/\[\[[^\]]+\]\]/g, '')
+    // Paragraphs (double newline)
+    .split(/\n\n+/)
+    .map(p => p.trim())
+    .filter(p => p.length > 0)
+    .map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`)
+    .join('');
+
+  return html;
 }
 
 export default function ModernizedReader({
   pages,
   onPageVisible,
 }: ModernizedReaderProps) {
-  const [pageStates, setPageStates] = useState<Record<string, PageState>>({});
-  const [generatingAll, setGeneratingAll] = useState(false);
+  const [modernizedTexts, setModernizedTexts] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [currentlyProcessing, setCurrentlyProcessing] = useState<number | null>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const pageRefs = useRef<Map<string, HTMLDivElement>>(new Map());
 
-  // Initialize page states from existing data
+  // Initialize from existing page data
   useEffect(() => {
-    const initialStates: Record<string, PageState> = {};
+    const existing: Record<string, string> = {};
     for (const page of pages) {
-      initialStates[page.id] = {
-        modernized: page.modernized?.data || null,
-        loading: false,
-        error: null,
-        isStale: false,
-      };
+      if (page.modernized?.data) {
+        existing[page.id] = page.modernized.data;
+      }
     }
-    setPageStates(initialStates);
+    setModernizedTexts(existing);
   }, [pages]);
 
   // Setup intersection observer for page visibility tracking
   useEffect(() => {
+    if (!onPageVisible) return;
+
     observerRef.current = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             const pageNumber = parseInt(entry.target.getAttribute('data-page-number') || '0', 10);
-            if (pageNumber && onPageVisible) {
-              onPageVisible(pageNumber);
-            }
+            if (pageNumber) onPageVisible(pageNumber);
           }
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
-    // Observe all page elements
-    pageRefs.current.forEach((element) => {
-      observerRef.current?.observe(element);
-    });
+    pageRefs.current.forEach((el) => observerRef.current?.observe(el));
+    return () => observerRef.current?.disconnect();
+  }, [onPageVisible, pages.length]);
 
-    return () => {
-      observerRef.current?.disconnect();
-    };
-  }, [onPageVisible, pages]);
-
-  // Modernize a single page
-  const modernizePage = useCallback(async (pageId: string, regenerate = false) => {
-    setPageStates(prev => ({
-      ...prev,
-      [pageId]: { ...prev[pageId], loading: true, error: null }
-    }));
-
-    try {
-      const response = await fetch(`/api/pages/${pageId}/modernize`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ regenerate }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to modernize');
-      }
-
-      const data = await response.json();
-      setPageStates(prev => ({
-        ...prev,
-        [pageId]: {
-          modernized: data.modernized,
-          loading: false,
-          error: null,
-          isStale: false,
-        }
-      }));
-    } catch (err) {
-      setPageStates(prev => ({
-        ...prev,
-        [pageId]: {
-          ...prev[pageId],
-          loading: false,
-          error: err instanceof Error ? err.message : 'Failed to modernize',
-        }
-      }));
-    }
-  }, []);
-
-  // Modernize all pages in section
+  // Modernize all pages
   const modernizeAll = useCallback(async () => {
-    setGeneratingAll(true);
+    setLoading(true);
+    setError(null);
 
-    // Process pages sequentially to maintain context continuity
-    for (const page of pages) {
-      const state = pageStates[page.id];
-      if (!state?.modernized && page.translation?.data) {
-        await modernizePage(page.id);
+    const pagesWithTranslation = pages.filter(p => p.translation?.data);
+
+    for (let i = 0; i < pagesWithTranslation.length; i++) {
+      const page = pagesWithTranslation[i];
+
+      // Skip if already modernized
+      if (modernizedTexts[page.id]) continue;
+
+      setCurrentlyProcessing(page.page_number);
+
+      try {
+        const response = await fetch(`/api/pages/${page.id}/modernize`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({}),
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          throw new Error(data.error || 'Failed to modernize');
+        }
+
+        const data = await response.json();
+        setModernizedTexts(prev => ({ ...prev, [page.id]: data.modernized }));
+      } catch (err) {
+        setError(`Failed on page ${page.page_number}: ${err instanceof Error ? err.message : 'Unknown error'}`);
+        break;
       }
     }
 
-    setGeneratingAll(false);
-  }, [pages, pageStates, modernizePage]);
+    setCurrentlyProcessing(null);
+    setLoading(false);
+  }, [pages, modernizedTexts]);
 
-  // Check if we have any pages that need modernization
-  const needsModernization = pages.some(
-    p => !pageStates[p.id]?.modernized && p.translation?.data
-  );
-
-  // Check if any pages are missing translation
-  const missingTranslation = pages.some(p => !p.translation?.data);
+  // Count pages
+  const pagesWithTranslation = pages.filter(p => p.translation?.data);
+  const modernizedCount = Object.keys(modernizedTexts).length;
+  const needsModernization = modernizedCount < pagesWithTranslation.length;
+  const hasAnyTranslation = pagesWithTranslation.length > 0;
 
   return (
-    <div className="space-y-8">
-      {/* Modernize all button */}
-      {needsModernization && !generatingAll && (
-        <div className="flex items-center justify-center p-4 bg-amber-50 rounded-lg border border-amber-200">
-          <button
-            onClick={modernizeAll}
-            className="inline-flex items-center gap-2 px-4 py-3 sm:py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 active:bg-amber-800 transition-colors text-sm sm:text-base min-h-[44px]"
-          >
-            <Sparkles className="w-4 h-4" />
-            Modernize All Pages
-          </button>
-        </div>
-      )}
-
-      {/* Generating all indicator */}
-      {generatingAll && (
-        <div className="flex items-center justify-center p-4 bg-amber-50 rounded-lg border border-amber-200">
-          <Loader2 className="w-5 h-5 animate-spin text-amber-600 mr-2" />
-          <span className="text-amber-800 text-sm sm:text-base">Modernizing pages...</span>
-        </div>
-      )}
-
-      {/* Missing translation warning */}
-      {missingTranslation && (
-        <div className="flex items-start gap-3 p-4 bg-stone-100 rounded-lg text-stone-600">
-          <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
-          <span className="text-sm">Some pages need translations first.</span>
-        </div>
-      )}
-
-      {/* Page content */}
-      {pages.map((page, index) => {
-        const state = pageStates[page.id] || { modernized: null, loading: false, error: null, isStale: false };
-        const hasTranslation = !!page.translation?.data;
-
-        return (
-          <div
-            key={page.id}
-            ref={(el) => {
-              if (el) pageRefs.current.set(page.id, el);
-            }}
-            data-page-number={page.page_number}
-            className="relative"
-          >
-            {/* Page divider (except first page) */}
-            {index > 0 && (
-              <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 text-stone-400">
-                <div className="flex-1 border-t border-stone-200" />
-                <span className="text-[10px] sm:text-xs font-medium whitespace-nowrap">Page {page.page_number}</span>
-                <div className="flex-1 border-t border-stone-200" />
-              </div>
-            )}
-
-            {/* Content */}
-            {state.loading ? (
-              <div className="flex items-center justify-center py-8 sm:py-12 text-stone-500">
-                <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                <span className="text-sm">Modernizing page {page.page_number}...</span>
-              </div>
-            ) : state.error ? (
-              <div className="p-4 bg-red-50 rounded-lg border border-red-200">
-                <div className="flex items-center gap-2 text-red-700 mb-2">
-                  <AlertCircle className="w-5 h-5" />
-                  <span className="font-medium text-sm">Error</span>
-                </div>
-                <p className="text-red-600 text-sm">{state.error}</p>
-                <button
-                  onClick={() => modernizePage(page.id, true)}
-                  className="mt-3 px-3 py-2 text-sm text-red-700 bg-red-100 rounded-lg hover:bg-red-200 active:bg-red-300 min-h-[44px]"
-                >
-                  Try again
-                </button>
-              </div>
-            ) : state.modernized ? (
-              <div className="relative">
-                {/* Stale indicator */}
-                {state.isStale && (
-                  <div className="absolute -top-2 -right-2">
-                    <button
-                      onClick={() => modernizePage(page.id, true)}
-                      className="p-2 bg-amber-100 rounded-full text-amber-700 hover:bg-amber-200 active:bg-amber-300 min-w-[44px] min-h-[44px] flex items-center justify-center"
-                      title="Translation changed. Tap to regenerate."
-                    >
-                      <RefreshCw className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
-
-                {/* Modernized text - optimized for mobile reading */}
-                <div className="prose prose-stone max-w-none prose-p:text-base prose-p:sm:text-lg prose-p:leading-relaxed prose-p:sm:leading-loose">
-                  {state.modernized.split('\n\n').map((paragraph, i) => (
-                    <p key={i} className="text-stone-800 leading-[1.8] sm:leading-loose mb-4 sm:mb-5 last:mb-0 text-[15px] sm:text-lg">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            ) : hasTranslation ? (
-              <div className="p-4 sm:p-6 bg-stone-50 rounded-lg border border-stone-200">
-                <p className="text-stone-600 text-sm mb-4">
-                  Ready to modernize this page.
-                </p>
-                <button
-                  onClick={() => modernizePage(page.id)}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm bg-stone-800 text-white rounded-lg hover:bg-stone-900 active:bg-black transition-colors min-h-[44px] w-full sm:w-auto"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  Modernize This Page
-                </button>
-
-                {/* Show original translation as fallback */}
-                <details className="mt-4">
-                  <summary className="text-sm text-stone-500 cursor-pointer hover:text-stone-700 py-2">
-                    Show original translation
-                  </summary>
-                  <div className="mt-2 p-3 sm:p-4 bg-white rounded border border-stone-200 text-sm text-stone-700 whitespace-pre-wrap leading-relaxed">
-                    {page.translation.data}
-                  </div>
-                </details>
-              </div>
-            ) : (
-              <div className="p-4 sm:p-6 bg-stone-100 rounded-lg text-center">
-                <p className="text-stone-500 text-sm">
-                  Page {page.page_number} needs to be translated first.
-                </p>
-              </div>
-            )}
+    <div className="space-y-6">
+      {/* Action bar - only show if there are translations to modernize */}
+      {hasAnyTranslation && needsModernization && !loading && (
+        <div className="sticky top-0 z-10 bg-amber-50 border border-amber-200 rounded-lg p-4 shadow-sm">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="text-sm text-amber-800 text-center sm:text-left">
+              {modernizedCount > 0
+                ? `${modernizedCount} of ${pagesWithTranslation.length} pages modernized`
+                : `${pagesWithTranslation.length} pages ready to modernize`
+              }
+            </div>
+            <button
+              onClick={modernizeAll}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 active:bg-amber-800 transition-colors text-sm font-medium min-h-[44px]"
+            >
+              <Sparkles className="w-4 h-4" />
+              {modernizedCount > 0 ? 'Continue Modernizing' : 'Modernize for Reading'}
+            </button>
           </div>
-        );
-      })}
+        </div>
+      )}
+
+      {/* Loading state */}
+      {loading && (
+        <div className="sticky top-0 z-10 bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <div className="flex items-center justify-center gap-3">
+            <Loader2 className="w-5 h-5 animate-spin text-amber-600" />
+            <span className="text-amber-800">
+              {currentlyProcessing
+                ? `Modernizing page ${currentlyProcessing}...`
+                : 'Modernizing...'}
+            </span>
+          </div>
+          <div className="mt-2 text-xs text-amber-600 text-center">
+            {modernizedCount} of {pagesWithTranslation.length} complete
+          </div>
+        </div>
+      )}
+
+      {/* Error state */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-red-800 text-sm">{error}</p>
+              <button
+                onClick={modernizeAll}
+                className="mt-2 text-sm text-red-700 underline"
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="reading-content">
+        {pages.map((page, index) => {
+          const modernized = modernizedTexts[page.id];
+          const translation = page.translation?.data;
+          const textToShow = modernized || translation;
+
+          if (!textToShow) {
+            return (
+              <div
+                key={page.id}
+                ref={(el) => { if (el) pageRefs.current.set(page.id, el); }}
+                data-page-number={page.page_number}
+                className="py-4 text-center text-stone-400 text-sm"
+              >
+                Page {page.page_number} — awaiting translation
+              </div>
+            );
+          }
+
+          return (
+            <div
+              key={page.id}
+              ref={(el) => { if (el) pageRefs.current.set(page.id, el); }}
+              data-page-number={page.page_number}
+              className="relative"
+            >
+              {/* Page marker */}
+              {index > 0 && (
+                <div className="flex items-center gap-3 my-6 sm:my-8 text-stone-300">
+                  <div className="flex-1 border-t border-stone-200" />
+                  <span className="text-[10px] sm:text-xs font-medium">
+                    {page.page_number}
+                  </span>
+                  <div className="flex-1 border-t border-stone-200" />
+                </div>
+              )}
+
+              {/* Text content */}
+              <div
+                className={`
+                  prose prose-stone max-w-none
+                  prose-p:text-[15px] prose-p:sm:text-[17px]
+                  prose-p:leading-[1.8] prose-p:sm:leading-[1.9]
+                  prose-p:mb-4 prose-p:sm:mb-5
+                  prose-strong:text-stone-900
+                  prose-em:text-stone-700
+                  ${!modernized ? 'opacity-60' : ''}
+                `}
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(textToShow) }}
+              />
+
+              {/* Indicator if showing original translation */}
+              {!modernized && translation && (
+                <div className="mt-2 text-xs text-stone-400 italic">
+                  (Original translation — tap Modernize above for clearer reading)
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
 
       {/* Empty state */}
       {pages.length === 0 && (

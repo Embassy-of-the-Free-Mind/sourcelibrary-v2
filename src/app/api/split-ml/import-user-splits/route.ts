@@ -21,6 +21,18 @@ interface PageWithCrop {
   };
 }
 
+// Cache for book page counts
+const bookPageCounts = new Map<string, number>();
+
+async function getBookPageCount(db: Awaited<ReturnType<typeof getDb>>, bookId: string): Promise<number> {
+  if (bookPageCounts.has(bookId)) {
+    return bookPageCounts.get(bookId)!;
+  }
+  const count = await db.collection('pages').countDocuments({ book_id: bookId });
+  bookPageCounts.set(bookId, count);
+  return count;
+}
+
 export async function GET() {
   try {
     const db = await getDb();
@@ -125,6 +137,12 @@ export async function POST(request: NextRequest) {
 
         const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
         const features = await extractFeatures(imageBuffer);
+
+        // Add page context features
+        const totalPages = await getBookPageCount(db, page.book_id);
+        features.pageNumber = page.page_number;
+        features.totalPages = totalPages;
+        features.pagePosition = totalPages > 0 ? page.page_number / totalPages : 0.5;
 
         // Store training example with user source
         await db.collection('split_training_examples').insertOne({

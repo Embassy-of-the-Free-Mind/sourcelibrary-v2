@@ -30,6 +30,11 @@ export interface SplitFeatures {
   width: number;
   height: number;
 
+  // Page context (optional - set during import)
+  pageNumber?: number;
+  totalPages?: number;
+  pagePosition?: number; // pageNumber / totalPages (0-1 normalized)
+
   // Center region stats (40-60%)
   centerDarkestP10: number;
   centerDarkestIdx: number;  // relative to center region
@@ -247,6 +252,7 @@ export interface SplitModel {
     edgeCenterDiff: number;
     invertedGutterOffset: number;
     aspectRatioOffset: number;
+    pagePositionOffset: number;  // early/late pages may differ
   };
   trainedAt: Date;
   trainingSize: number;
@@ -296,6 +302,7 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     edgeCenterDiff: 0,
     invertedGutterOffset: 0,
     aspectRatioOffset: 0,
+    pagePositionOffset: 0,
   };
 
   const learningRate = 0.0001;
@@ -309,11 +316,15 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       edgeCenterDiff: 0,
       invertedGutterOffset: 0,
       aspectRatioOffset: 0,
+      pagePositionOffset: 0,
     };
 
     for (const example of train) {
       const f = example.features;
       const target = example.geminiPosition;
+
+      // Page position: 0=start, 0.5=middle, 1=end (default to 0.5 if missing)
+      const pagePos = f.pagePosition ?? 0.5;
 
       // Prediction - use simpler features that are more robust
       const pred =
@@ -322,7 +333,8 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
         weights.centerBrightestIdx * (f.centerBrightestIdx - 50) +
         weights.edgeCenterDiff * (f.edgeCenterDiff / 50) + // Scale down
         weights.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
-        weights.aspectRatioOffset * (f.aspectRatio - 1.5);
+        weights.aspectRatioOffset * (f.aspectRatio - 1.5) +
+        weights.pagePositionOffset * (pagePos - 0.5); // Center around middle of book
 
       const error = pred - target;
 
@@ -334,6 +346,7 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       gradients.edgeCenterDiff += clip(error * (f.edgeCenterDiff / 50));
       gradients.invertedGutterOffset += clip(error * (f.hasInvertedGutter ? 1 : 0));
       gradients.aspectRatioOffset += clip(error * (f.aspectRatio - 1.5));
+      gradients.pagePositionOffset += clip(error * (pagePos - 0.5));
     }
 
     // Update weights
@@ -344,6 +357,7 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     weights.edgeCenterDiff -= learningRate * (gradients.edgeCenterDiff / n);
     weights.invertedGutterOffset -= learningRate * (gradients.invertedGutterOffset / n);
     weights.aspectRatioOffset -= learningRate * (gradients.aspectRatioOffset / n);
+    weights.pagePositionOffset -= learningRate * (gradients.pagePositionOffset / n);
   }
 
   // Compute validation MSE
@@ -351,6 +365,7 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
   for (const example of validation) {
     const f = example.features;
     const target = example.geminiPosition;
+    const pagePos = f.pagePosition ?? 0.5;
 
     const pred =
       weights.bias +
@@ -358,7 +373,8 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       weights.centerBrightestIdx * (f.centerBrightestIdx - 50) +
       weights.edgeCenterDiff * (f.edgeCenterDiff / 50) +
       weights.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
-      weights.aspectRatioOffset * (f.aspectRatio - 1.5);
+      weights.aspectRatioOffset * (f.aspectRatio - 1.5) +
+      weights.pagePositionOffset * (pagePos - 0.5);
 
     validationMSE += Math.pow(pred - target, 2);
   }
@@ -378,6 +394,7 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
 export function predictWithModel(features: SplitFeatures, model: SplitModel): number {
   const f = features;
   const w = model.weights;
+  const pagePos = f.pagePosition ?? 0.5;
 
   // Use same normalization as training
   const position =
@@ -386,7 +403,8 @@ export function predictWithModel(features: SplitFeatures, model: SplitModel): nu
     w.centerBrightestIdx * (f.centerBrightestIdx - 50) +
     w.edgeCenterDiff * (f.edgeCenterDiff / 50) +
     w.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
-    w.aspectRatioOffset * (f.aspectRatio - 1.5);
+    w.aspectRatioOffset * (f.aspectRatio - 1.5) +
+    (w.pagePositionOffset ?? 0) * (pagePos - 0.5);
 
   // Clamp to valid range (center region 350-650)
   return Math.max(350, Math.min(650, Math.round(position)));
