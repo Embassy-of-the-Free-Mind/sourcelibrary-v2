@@ -234,8 +234,27 @@ export async function POST(
         );
 
         if (job.type === 'batch_ocr') {
+          // Get the correct image URL for OCR (respecting crop if present)
+          let imageUrl = page.photo;
+
+          if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+            // Use pre-generated cropped image if available
+            if (page.cropped_photo) {
+              imageUrl = page.cropped_photo;
+            } else {
+              // Skip - cropped image needs to be generated first
+              results.push({
+                pageId,
+                success: false,
+                error: 'Page was split but cropped image not generated. Run "Generate Cropped Images" first.',
+                duration: performance.now() - itemStart,
+              });
+              continue;
+            }
+          }
+
           const ocrResult = await performOCR(
-            page.photo,
+            imageUrl,
             job.config.language || 'Latin',
             previousOcr,
             undefined, // customPrompt - could add prompt lookup here
