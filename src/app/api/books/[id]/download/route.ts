@@ -1,12 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import type { Book, Page } from '@/lib/types';
+import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
 import sharp from 'sharp';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
+
+// Index entry structure (from book index collection)
+interface ConceptEntry {
+  term: string;
+  definition?: string;
+  pages: number[];
+}
+
+interface BookIndex {
+  vocabulary: ConceptEntry[];
+  keywords: ConceptEntry[];
+  people: ConceptEntry[];
+  places: ConceptEntry[];
+  concepts: ConceptEntry[];
+}
+
+interface BookSummaryData {
+  brief?: string;
+  abstract?: string;
+  detailed?: string;
+}
 
 interface RouteParams {
   params: Promise<{ id: string }>;

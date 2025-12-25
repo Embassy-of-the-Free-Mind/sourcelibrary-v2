@@ -6,7 +6,10 @@ export default auth((req) => {
   const isOnAuthPage = req.nextUrl.pathname.startsWith('/auth');
   const isOnApiAuth = req.nextUrl.pathname.startsWith('/api/auth');
   const isPublicPage = req.nextUrl.pathname === '/' ||
-                       req.nextUrl.pathname.startsWith('/books/');
+                       req.nextUrl.pathname.startsWith('/book/') ||
+                       req.nextUrl.pathname.startsWith('/experiments') ||
+                       req.nextUrl.pathname.startsWith('/analytics') ||
+                       req.nextUrl.pathname.startsWith('/api/');
 
   // Allow auth API routes
   if (isOnApiAuth) {
