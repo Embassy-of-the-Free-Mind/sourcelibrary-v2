@@ -226,7 +226,9 @@ export interface Section {
   startPage: number;
   endPage: number;
   summary?: string;
-  detected_at?: Date;
+  quotes?: Array<{ text: string; page: number }>;  // Key quotes with page refs
+  concepts?: string[];  // Key concepts/terms introduced
+  generated_at?: Date;
   detection_method: 'ai' | 'manual';
 }
 
