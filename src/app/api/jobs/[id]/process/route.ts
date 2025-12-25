@@ -276,6 +276,7 @@ export async function POST(
           const blob = await put(filename, croppedBuffer, {
             access: 'public',
             contentType: 'image/jpeg',
+            allowOverwrite: true,
           });
 
           // Update page with new cropped photo URL
