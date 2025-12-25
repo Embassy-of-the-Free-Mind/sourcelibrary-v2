@@ -101,11 +101,13 @@ export interface PipelineState {
 // Available Gemini models for processing
 export const GEMINI_MODELS = [
   { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Latest, best quality' },
-  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Fast & capable' },
-  { id: 'gemini-2.0-flash', name: 'Gemini 2.0 Flash', description: 'Fastest, lowest cost' },
+  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Best balance of quality & cost' },
 ] as const;
 
-export const DEFAULT_MODEL = 'gemini-2.0-flash';
+export const DEFAULT_MODEL = 'gemini-2.5-flash';
+
+// GitHub URL for prompt versioning - links to exact commit for reproducibility
+export const PROMPTS_SOURCE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/src/lib/types.ts';
 
 export interface BookSummary {
   data: string;
@@ -247,7 +249,7 @@ export interface ProcessingMetadata {
   output_tokens?: number;
   cost_usd?: number;
   processing_ms?: number;
-  prompt_hash?: string;  // SHA-256 hash of prompt text for version tracking
+  prompt_url?: string;   // GitHub URL to exact prompt version used
 }
 
 export interface OcrData extends ProcessingMetadata {

@@ -6,6 +6,12 @@ import { DEFAULT_MODEL } from '@/lib/types';
 // Increase timeout for AI processing (max 60s for Pro, 10s for Hobby)
 export const maxDuration = 60;
 
+// Get GitHub URL to exact commit of prompts file for reproducibility
+function getPromptsUrl(): string {
+  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
+  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
+}
+
 // Helper to record processing metrics
 async function recordProcessingMetric(
   db: Awaited<ReturnType<typeof getDb>>,
@@ -208,6 +214,7 @@ export async function POST(request: NextRequest) {
           language: language || 'Latin',
           model,
           prompt_name: promptInfo?.ocr || 'Default',
+          prompt_url: getPromptsUrl(),
           updated_at: new Date(),
           // Processing metadata for reproducibility
           input_tokens: metadata.ocr?.inputTokens,
@@ -223,6 +230,7 @@ export async function POST(request: NextRequest) {
           language: targetLanguage,
           model,
           prompt_name: promptInfo?.translation || 'Default',
+          prompt_url: getPromptsUrl(),
           updated_at: new Date(),
           // Processing metadata
           input_tokens: metadata.translation?.inputTokens,
@@ -237,6 +245,7 @@ export async function POST(request: NextRequest) {
           data: results.summary,
           model,
           prompt_name: promptInfo?.summary || 'Default',
+          prompt_url: getPromptsUrl(),
           updated_at: new Date(),
           // Processing metadata
           input_tokens: metadata.summary?.inputTokens,
