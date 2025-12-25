@@ -67,18 +67,20 @@ We also tested whether detailed OCR instructions ("elaborate prompts") improve a
 | B10 vs B20 (Elaborate) | B10 | 68% | 0.09 | No |
 | Simple vs Elaborate (B5) | Simple | 55% | 0.59 | No |
 
-### Overall Condition Rankings
+### Overall Condition Rankings (ELO)
 
-| Rank | Condition | Win Rate | Notes |
-|------|-----------|----------|-------|
-| 1 | B1 Elaborate | 87% | Best quality |
-| 2 | B10 Simple | 69% | Best large-batch |
-| 3 | B1 Simple | 55% | Good baseline |
-| 4 | B5 Simple | 53% | Efficiency sweet spot |
-| 5 | B5 Elaborate | 50% | No benefit over simple |
-| 6 | B10 Elaborate | 33% | Elaborate hurts here |
-| 7 | B20 Elaborate | 32% | Poor |
-| 8 | B20 Simple | 3% | Unacceptable quality |
+ELO accounts for opponent strength — beating a strong opponent matters more than beating a weak one.
+
+| Rank | Condition | ELO | W-L | Notes |
+|------|-----------|-----|-----|-------|
+| 1 | B1 Elaborate | **1728** | 27-4 | Best quality |
+| 2 | B10 Simple | 1646 | 43-19 | Best large-batch |
+| 3 | B5 Elaborate | 1581 | 46-46 | Middle tier |
+| 4 | B1 Simple | 1562 | 17-14 | Good baseline |
+| 5 | B5 Simple | 1491 | 49-44 | Efficiency sweet spot |
+| 6 | B20 Elaborate | 1378 | 7-15 | Poor |
+| 7 | B10 Elaborate | 1331 | 17-35 | Elaborate hurts here |
+| 8 | B20 Simple | 1283 | 1-30 | Unacceptable quality |
 
 ### Cost Analysis
 
@@ -176,4 +178,4 @@ All data persists in MongoDB for future analysis (e.g., ELO ranking):
 | vs B5 Simple | 14-17 | 45% |
 | **Total** | **46-46** | **50%** |
 
-Note: Raw win rate doesn't account for opponent strength. Future work: implement ELO/Bradley-Terry ranking.
+Despite a 50% raw win rate, ELO ranks B5 Elaborate 3rd (1581) because it beat a strong opponent (B10 Elaborate) decisively and only lost to the top-ranked B1 Elaborate.
