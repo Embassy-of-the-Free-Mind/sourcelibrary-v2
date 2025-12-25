@@ -872,3 +872,54 @@ export function extractPageNumber(text: string): number | null {
   const match = text.match(/\[\[page\s*number:\s*(\d+)\]\]/i);
   return match ? parseInt(match[1], 10) : null;
 }
+
+// ============================================
+// CROSS-BOOK KEYWORD GRAPH
+// ============================================
+
+/**
+ * A keyword that appears across multiple books, enabling discovery of thematic connections
+ */
+export interface CrossBookKeyword {
+  term: string;                    // Normalized keyword (lowercase, trimmed)
+  display_term: string;            // Display version (preserved casing from most common usage)
+  category: 'person' | 'place' | 'concept';
+  books: {
+    book_id: string;
+    book_title: string;
+    author: string;
+    pages: number[];               // Page numbers where this term appears
+    frequency: number;             // Total occurrences in this book
+  }[];
+  total_books: number;             // Number of books containing this term
+  total_occurrences: number;       // Total occurrences across all books
+  related_terms?: string[];        // Other terms that frequently co-occur
+  aliases?: string[];              // Variant spellings/translations that map to this term
+}
+
+/**
+ * The full cross-book keyword index
+ */
+export interface KeywordGraph {
+  keywords: CrossBookKeyword[];
+  books_indexed: number;
+  total_keywords: number;
+  generated_at: Date;
+
+  // Quick lookup structures
+  by_category: {
+    people: CrossBookKeyword[];
+    places: CrossBookKeyword[];
+    concepts: CrossBookKeyword[];
+  };
+
+  // Book connections: which books share the most keywords
+  book_connections: {
+    book_a_id: string;
+    book_a_title: string;
+    book_b_id: string;
+    book_b_title: string;
+    shared_keywords: string[];
+    connection_strength: number;   // Number of shared keywords
+  }[];
+}
