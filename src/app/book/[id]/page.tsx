@@ -189,7 +189,7 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid with Batch Mode */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <BookPagesSection bookId={book.id} pages={pages} />
+        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} />
       </main>
     </>
   );

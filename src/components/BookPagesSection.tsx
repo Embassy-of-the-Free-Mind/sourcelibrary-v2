@@ -26,10 +26,18 @@ import type { Page, Prompt } from '@/lib/types';
 
 interface BookPagesSectionProps {
   bookId: string;
+  bookTitle?: string;
   pages: Page[];
 }
 
 type ActionType = 'ocr' | 'translation' | 'summary';
+type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary';
+
+const actionToJobType: Record<ActionType, JobType> = {
+  ocr: 'batch_ocr',
+  translation: 'batch_translate',
+  summary: 'batch_summary',
+};
 
 interface ProcessingState {
   active: boolean;
@@ -75,7 +83,7 @@ function formatRelativeTime(date: Date | string | undefined): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export default function BookPagesSection({ bookId, pages }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages }: BookPagesSectionProps) {
   const router = useRouter();
   const [batchMode, setBatchMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
@@ -233,6 +241,64 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     let runningTokens = 0;
     let processedCount = 0;
 
+    // Get prompt name for job record
+    const currentPrompt = prompts[action].find(
+      p => (p.id || p._id?.toString()) === selectedPromptIds[action]
+    );
+
+    // Create job record
+    let jobId: string | null = null;
+    try {
+      const jobRes = await fetch('/api/jobs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: actionToJobType[action],
+          book_id: bookId,
+          book_title: bookTitle,
+          page_ids: pageIds,
+          model: selectedModel,
+          prompt_name: currentPrompt?.name,
+        }),
+      });
+      if (jobRes.ok) {
+        const jobData = await jobRes.json();
+        jobId = jobData.job?.id;
+        // Mark as processing
+        if (jobId) {
+          await fetch(`/api/jobs/${jobId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'processing' }),
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Failed to create job record:', error);
+    }
+
+    // Helper to update job progress (throttled)
+    let lastJobUpdate = 0;
+    const updateJobProgress = async () => {
+      if (!jobId) return;
+      const now = Date.now();
+      // Only update every 2 seconds to avoid too many requests
+      if (now - lastJobUpdate < 2000) return;
+      lastJobUpdate = now;
+
+      try {
+        await fetch(`/api/jobs/${jobId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            progress: { completed: completed.length, failed: failed.length },
+          }),
+        });
+      } catch {
+        // Ignore progress update errors
+      }
+    };
+
     // Process a single page
     const processPage = async (pageId: string): Promise<void> => {
       if (stopRequestedRef.current) return;
@@ -290,6 +356,9 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
         totalCost: runningCost,
         totalTokens: runningTokens,
       }));
+
+      // Update job progress
+      updateJobProgress();
     };
 
     // Process in parallel batches
@@ -298,6 +367,28 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
 
       const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
       await Promise.all(batch.map(processPage));
+    }
+
+    // Final job update
+    if (jobId) {
+      try {
+        const finalStatus = stopRequestedRef.current
+          ? 'cancelled'
+          : failed.length === pageIds.length
+          ? 'failed'
+          : 'completed';
+
+        await fetch(`/api/jobs/${jobId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: finalStatus,
+            progress: { completed: completed.length, failed: failed.length },
+          }),
+        });
+      } catch (error) {
+        console.error('Failed to update job status:', error);
+      }
     }
 
     setProcessing(prev => ({ ...prev, active: false }));

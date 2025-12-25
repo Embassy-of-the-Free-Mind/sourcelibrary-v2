@@ -27,7 +27,7 @@ export async function GET(
   }
 }
 
-// PATCH - Update job (pause, resume, cancel)
+// PATCH - Update job (action-based: pause, resume, cancel, or progress updates)
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -35,14 +35,43 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { action } = body as { action: 'pause' | 'resume' | 'cancel' | 'retry' };
-
     const db = await getDb();
     const job = await db.collection('jobs').findOne({ id });
 
     if (!job) {
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });
     }
+
+    // Handle progress/status updates (for batch processing)
+    if (body.status || body.progress !== undefined) {
+      const updates: Record<string, unknown> = { updated_at: new Date() };
+
+      if (body.status) {
+        updates.status = body.status;
+        if (body.status === 'processing' && !job.started_at) {
+          updates.started_at = new Date();
+        }
+        if (body.status === 'completed' || body.status === 'failed') {
+          updates.completed_at = new Date();
+        }
+      }
+
+      if (body.progress) {
+        if (body.progress.completed !== undefined) updates['progress.completed'] = body.progress.completed;
+        if (body.progress.failed !== undefined) updates['progress.failed'] = body.progress.failed;
+      }
+
+      if (body.error) {
+        updates.error = body.error;
+      }
+
+      await db.collection('jobs').updateOne({ id }, { $set: updates });
+      const updatedJob = await db.collection('jobs').findOne({ id });
+      return NextResponse.json({ job: updatedJob });
+    }
+
+    // Handle action-based updates (pause, resume, cancel, retry)
+    const { action } = body as { action: 'pause' | 'resume' | 'cancel' | 'retry' };
 
     let newStatus: JobStatus;
     const updates: Record<string, unknown> = { updated_at: new Date() };

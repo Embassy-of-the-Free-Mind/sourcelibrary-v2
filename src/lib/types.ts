@@ -1,7 +1,7 @@
 export type BookStatus = 'draft' | 'in_progress' | 'complete' | 'published';
 
 // Job management for long-running tasks
-export type JobType = 'batch_ocr' | 'batch_translate' | 'batch_split' | 'book_import';
+export type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_split' | 'book_import';
 export type JobStatus = 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
 
 export interface JobProgress {
