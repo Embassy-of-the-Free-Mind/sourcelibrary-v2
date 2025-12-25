@@ -153,6 +153,27 @@ Expected cost: ~$0.0003/page
 - **Experiment ID:** `39a9c4fd-672c-4a69-8a14-523910267b11`
 - **OCR Model:** Gemini 2.0 Flash
 - **Judge Model:** Claude Sonnet 4
-- **Total OCR cost:** ~$0.08
-- **Total judging cost:** ~$0.85
+- **Total OCR cost:** $0.08
+- **Total judging cost:** $0.53
 - **Runtime:** ~45 minutes
+
+## Raw Data
+
+All data persists in MongoDB for future analysis (e.g., ELO ranking):
+
+| Collection | Records | Contents |
+|------------|---------|----------|
+| `ocr_experiments` | 1 | Experiment config, conditions, comparisons |
+| `ocr_experiment_results` | 248 | OCR text for each page × condition |
+| `ocr_judgments` | 207 | Pairwise judgments with winner (a/b/tie) |
+
+### B5 Elaborate Detailed Record
+
+| Opponent | W-L | Win % |
+|----------|-----|-------|
+| vs B1 Elaborate | 4-27 | 13% |
+| vs B10 Elaborate | 28-2 | 93% |
+| vs B5 Simple | 14-17 | 45% |
+| **Total** | **46-46** | **50%** |
+
+Note: Raw win rate doesn't account for opponent strength. Future work: implement ELO/Bradley-Terry ranking.
