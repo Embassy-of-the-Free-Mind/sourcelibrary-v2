@@ -35,6 +35,9 @@ export interface SplitFeatures {
   totalPages?: number;
   pagePosition?: number; // pageNumber / totalPages (0-1 normalized)
 
+  // Book size category (small <100, medium 100-300, large 300+)
+  bookSizeCategory?: number; // 0=small, 1=medium, 2=large
+
   // Center region stats (40-60%)
   centerDarkestP10: number;
   centerDarkestIdx: number;  // relative to center region
@@ -56,6 +59,12 @@ export interface SplitFeatures {
   // Gutter pattern detection
   hasInvertedGutter: boolean;
   gutterWidth: number;  // approximate width of gutter region in pixels
+
+  // Text boundary detection (where text ends on left, starts on right)
+  leftTextEndIdx: number;   // last column with significant text on left side
+  rightTextStartIdx: number; // first column with significant text on right side
+  textGapWidth: number;     // gap between left text end and right text start
+  textGapCenter: number;    // center of the text gap (ideal split point)
 }
 
 /**
@@ -219,6 +228,34 @@ export async function extractFeatures(
     }
   }
 
+  // Text boundary detection using transitions
+  // Text columns have high transitions (many dark/light switches)
+  // Margins/gutters have low transitions
+  const textThreshold = 20; // columns with >20 transitions likely have text
+  const center = Math.floor(width / 2);
+
+  // Scan left from center to find where text ends (transitions drop)
+  let leftTextEndIdx = center;
+  for (let i = center; i >= 0; i--) {
+    if (columns[i].transitions > textThreshold) {
+      leftTextEndIdx = i;
+      break;
+    }
+  }
+
+  // Scan right from center to find where text starts (transitions rise)
+  let rightTextStartIdx = center;
+  for (let i = center; i < width; i++) {
+    if (columns[i].transitions > textThreshold) {
+      rightTextStartIdx = i;
+      break;
+    }
+  }
+
+  // Calculate gap metrics (normalized to 0-100 range relative to center region)
+  const textGapWidth = rightTextStartIdx - leftTextEndIdx;
+  const textGapCenter = (leftTextEndIdx + rightTextStartIdx) / 2;
+
   return {
     aspectRatio: width / height,
     width,
@@ -237,6 +274,10 @@ export async function extractFeatures(
     predictedP10: predictedCol.p10,
     hasInvertedGutter,
     gutterWidth,
+    leftTextEndIdx: (leftTextEndIdx / width) * 100, // normalize to 0-100
+    rightTextStartIdx: (rightTextStartIdx / width) * 100,
+    textGapWidth: (textGapWidth / width) * 100,
+    textGapCenter: (textGapCenter / width) * 1000, // scale to 0-1000 like split position
   };
 }
 
@@ -253,6 +294,8 @@ export interface SplitModel {
     invertedGutterOffset: number;
     aspectRatioOffset: number;
     pagePositionOffset: number;  // early/late pages may differ
+    textGapCenterWeight: number; // weight for text gap center feature
+    bookSizeOffset: number;      // adjustment for book size
   };
   trainedAt: Date;
   trainingSize: number;

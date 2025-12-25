@@ -74,7 +74,9 @@ async function handleZenodoError(response: Response, context: string): Promise<n
 
   if (contentType.includes('application/json')) {
     const error: ZenodoError = await response.json();
-    throw new Error(`Zenodo ${context}: ${error.message}${error.errors ? ` - ${error.errors.map(e => e.message).join(', ')}` : ''}`);
+    // Include full field-level error details
+    const fieldErrors = error.errors?.map(e => `${e.field}: ${e.message}`).join('; ');
+    throw new Error(`Zenodo ${context}: ${error.message}${fieldErrors ? ` - Fields: ${fieldErrors}` : ''}`);
   } else {
     // HTML error page (likely auth failure or server error)
     const text = await response.text();
@@ -136,6 +138,22 @@ export async function updateDepositMetadata(
     creators.unshift({ name: 'Source Library', affiliation: 'https://sourcelibrary.org' });
   }
 
+  // Build description with content hash included
+  const description = buildDescription(book, edition) +
+    `\n\n<p><strong>Content hash:</strong> <code>${edition.content_hash}</code></p>`;
+
+  // Build related identifiers (only include if using valid schemes)
+  const related_identifiers: { identifier: string; relation: string; scheme: string }[] = [];
+
+  // Link to previous version if exists
+  if (edition.previous_version_doi) {
+    related_identifiers.push({
+      identifier: edition.previous_version_doi,
+      relation: 'isNewVersionOf',
+      scheme: 'doi',
+    });
+  }
+
   const metadata = {
     title: edition.citation.title,
     upload_type: 'publication',
@@ -143,7 +161,7 @@ export async function updateDepositMetadata(
     publication_date: edition.published_at
       ? new Date(edition.published_at).toISOString().split('T')[0]
       : new Date().toISOString().split('T')[0],
-    description: buildDescription(book, edition),
+    description,
     access_right: 'open',
     license: licenseMap[edition.license] || 'cc-by-4.0',
     creators,
@@ -154,23 +172,8 @@ export async function updateDepositMetadata(
       'historical text',
       book.language,
       ...(book.categories || []),
-    ],
-    related_identifiers: [
-      // Link to the original work if we have an identifier
-      // Note: 'isDerivedFrom' is used since Zenodo doesn't have 'isTranslationOf'
-      ...(book.ustc_id ? [{
-        identifier: `USTC ${book.ustc_id}`,
-        relation: 'isDerivedFrom',
-        scheme: 'other',
-      }] : []),
-      // Link to previous version if exists
-      ...(edition.previous_version_doi ? [{
-        identifier: edition.previous_version_doi,
-        relation: 'isNewVersionOf',
-        scheme: 'doi',
-      }] : []),
-    ],
-    notes: `Content hash: ${edition.content_hash}`,
+    ].filter(Boolean),
+    ...(related_identifiers.length > 0 && { related_identifiers }),
   };
 
   const response = await fetch(`${ZENODO_API}/deposit/depositions/${depositId}`, {
