@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { PipelineStep, PipelineState, PipelineConfig } from '@/lib/types';
+import { PipelineStep, PipelineState, PipelineConfig, Job } from '@/lib/types';
+import { nanoid } from 'nanoid';
 
 // Increase timeout for long-running steps
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 // Helper to update pipeline state
 async function updatePipeline(
@@ -17,262 +18,262 @@ async function updatePipeline(
   );
 }
 
-// Helper to get internal API base URL
-function getBaseUrl() {
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-  return process.env.NEXTAUTH_URL || 'http://localhost:3000';
-}
+// Step: Split Check - runs inline since it's quick
+async function executeSplitCheck(bookId: string, db: Awaited<ReturnType<typeof getDb>>): Promise<{
+  status: 'completed' | 'skipped' | 'failed';
+  result?: Record<string, unknown>;
+  error?: string
+}> {
+  // Check if any pages might need splitting (no crop data yet)
+  const pagesNeedingSplit = await db.collection('pages')
+    .countDocuments({ book_id: bookId, crop: { $exists: false } });
 
-// Step: Split Check
-async function executeSplitCheck(bookId: string): Promise<{ status: 'completed' | 'skipped' | 'failed'; result?: Record<string, unknown>; error?: string }> {
-  const baseUrl = getBaseUrl();
-
-  // Check if any pages need splitting
-  const checkRes = await fetch(`${baseUrl}/api/books/${bookId}/auto-split-ml`, {
-    method: 'GET',
-  });
-
-  if (!checkRes.ok) {
-    // If no ML model trained, skip split check
-    const errorData = await checkRes.json().catch(() => ({}));
-    if (errorData.error?.includes('No active model')) {
-      return { status: 'skipped', result: { message: 'No split detection model trained' } };
-    }
-    return { status: 'failed', error: 'Failed to check split status' };
+  if (pagesNeedingSplit === 0) {
+    return { status: 'skipped', result: { message: 'All pages already have crop data' } };
   }
 
-  const { needsSplitting } = await checkRes.json();
-
-  if (needsSplitting === 0) {
-    return { status: 'skipped', result: { message: 'No two-page spreads detected' } };
-  }
-
-  // Run auto-split
-  const splitRes = await fetch(`${baseUrl}/api/books/${bookId}/auto-split-ml`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ limit: 200 }),
-  });
-
-  if (!splitRes.ok) {
-    return { status: 'failed', error: 'Failed to auto-split pages' };
-  }
-
-  const splitData = await splitRes.json();
+  // For now, skip auto-split - user should use prepare page manually
   return {
-    status: 'completed',
+    status: 'skipped',
     result: {
-      pagesSplit: splitData.processed || 0,
-      message: `Split ${splitData.processed || 0} two-page spreads`,
-    },
+      message: `${pagesNeedingSplit} pages may need splitting - use Prepare page`,
+      pagesNeedingSplit
+    }
   };
 }
 
-// Step: OCR - 5 pages per batch, 4 concurrent batches
-const OCR_BATCH_SIZE = 5;
-const OCR_CONCURRENT_BATCHES = 4;
-
-async function executeOcr(
+// Create a job for OCR processing
+async function createOcrJob(
   bookId: string,
   config: PipelineConfig,
-  onProgress: (progress: { completed: number; total: number }) => Promise<void>
-): Promise<{ status: 'completed' | 'failed'; result?: Record<string, unknown>; error?: string }> {
-  const baseUrl = getBaseUrl();
-  let totalProcessed = 0;
-  let totalFailed = 0;
-  let remaining = Infinity;
-  let total = 0;
+  db: Awaited<ReturnType<typeof getDb>>
+): Promise<{ jobId: string; total: number } | { error: string }> {
+  // Get pages that need OCR
+  const pages = await db.collection('pages')
+    .find({
+      book_id: bookId,
+      $or: [
+        { 'ocr.data': { $exists: false } },
+        { 'ocr.data': '' }
+      ]
+    })
+    .sort({ page_number: 1 })
+    .project({ id: 1, page_number: 1 })
+    .toArray();
 
-  // Get initial count
-  const statusRes = await fetch(`${baseUrl}/api/books/${bookId}/batch-ocr`, { method: 'GET' });
-  if (statusRes.ok) {
-    const statusData = await statusRes.json();
-    total = statusData.pagesNeedingOcr || 0;
-    remaining = total;
+  if (pages.length === 0) {
+    return { error: 'no_pages' };
   }
 
-  if (total === 0) {
-    return { status: 'completed', result: { pagesProcessed: 0, message: 'All pages already have OCR' } };
-  }
+  const book = await db.collection('books').findOne({ id: bookId });
+  const jobId = nanoid(12);
 
-  // Run batches concurrently for faster processing
-  while (remaining > 0) {
-    // Calculate how many concurrent batches to run
-    const batchesToRun = Math.min(OCR_CONCURRENT_BATCHES, Math.ceil(remaining / OCR_BATCH_SIZE));
-
-    // Create batch promises
-    const batchPromises = Array.from({ length: batchesToRun }, () =>
-      fetch(`${baseUrl}/api/books/${bookId}/batch-ocr`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          limit: OCR_BATCH_SIZE,
-          model: config.model,
-          language: config.language,
-        }),
-      })
-    );
-
-    // Run all batches concurrently
-    const results = await Promise.all(batchPromises);
-
-    // Process results
-    for (const res of results) {
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        return { status: 'failed', error: errorData.error || 'OCR batch failed' };
-      }
-
-      const data = await res.json();
-      totalProcessed += data.successful || 0;
-      totalFailed += data.failed || 0;
-      remaining = data.remaining || 0;
-    }
-
-    await onProgress({ completed: totalProcessed, total });
-  }
-
-  return {
-    status: 'completed',
-    result: {
-      pagesProcessed: totalProcessed,
-      pagesFailed: totalFailed,
-      message: `OCR completed: ${totalProcessed} pages${totalFailed > 0 ? `, ${totalFailed} failed` : ''}`,
+  const job: Job = {
+    id: jobId,
+    type: 'batch_ocr',
+    status: 'pending',
+    progress: {
+      total: pages.length,
+      completed: 0,
+      failed: 0,
+    },
+    book_id: bookId,
+    book_title: book?.display_title || book?.title,
+    initiated_by: 'pipeline',
+    created_at: new Date(),
+    updated_at: new Date(),
+    results: [],
+    config: {
+      model: config.model,
+      language: config.language,
+      page_ids: pages.map(p => p.id),
     },
   };
+
+  await db.collection('jobs').insertOne(job as unknown as Record<string, unknown>);
+
+  return { jobId, total: pages.length };
 }
 
-// Step: Translate - 5 pages per batch, sequential for context continuity
-const TRANSLATE_BATCH_SIZE = 5;
-
-async function executeTranslate(
+// Create a job for translation processing
+async function createTranslateJob(
   bookId: string,
   config: PipelineConfig,
-  onProgress: (progress: { completed: number; total: number }) => Promise<void>
-): Promise<{ status: 'completed' | 'failed'; result?: Record<string, unknown>; error?: string }> {
-  const baseUrl = getBaseUrl();
-  let totalProcessed = 0;
-  let totalFailed = 0;
-  let remaining = Infinity;
-  let total = 0;
+  db: Awaited<ReturnType<typeof getDb>>
+): Promise<{ jobId: string; total: number } | { error: string }> {
+  // Get pages that have OCR but no translation
+  const pages = await db.collection('pages')
+    .find({
+      book_id: bookId,
+      'ocr.data': { $exists: true, $ne: '' },
+      $or: [
+        { 'translation.data': { $exists: false } },
+        { 'translation.data': '' }
+      ]
+    })
+    .sort({ page_number: 1 })
+    .project({ id: 1, page_number: 1 })
+    .toArray();
 
-  // Get initial count
-  const statusRes = await fetch(`${baseUrl}/api/books/${bookId}/batch-translate`, { method: 'GET' });
-  if (statusRes.ok) {
-    const statusData = await statusRes.json();
-    total = statusData.pagesNeedingTranslation || 0;
-    remaining = total;
+  if (pages.length === 0) {
+    return { error: 'no_pages' };
   }
 
-  if (total === 0) {
-    return { status: 'completed', result: { pagesTranslated: 0, message: 'All pages already translated' } };
-  }
+  const book = await db.collection('books').findOne({ id: bookId });
+  const jobId = nanoid(12);
 
-  // Run batches sequentially for context continuity (uses previous page as context)
-  while (remaining > 0) {
-    const res = await fetch(`${baseUrl}/api/books/${bookId}/batch-translate`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        limit: TRANSLATE_BATCH_SIZE,
-        model: config.model,
-      }),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      return { status: 'failed', error: errorData.error || 'Translation batch failed' };
-    }
-
-    const data = await res.json();
-    totalProcessed += data.successful || 0;
-    totalFailed += data.failed || 0;
-    remaining = data.remaining || 0;
-
-    await onProgress({ completed: totalProcessed, total });
-  }
-
-  return {
-    status: 'completed',
-    result: {
-      pagesTranslated: totalProcessed,
-      pagesFailed: totalFailed,
-      message: `Translation completed: ${totalProcessed} pages${totalFailed > 0 ? `, ${totalFailed} failed` : ''}`,
+  const job: Job = {
+    id: jobId,
+    type: 'batch_translate',
+    status: 'pending',
+    progress: {
+      total: pages.length,
+      completed: 0,
+      failed: 0,
+    },
+    book_id: bookId,
+    book_title: book?.display_title || book?.title,
+    initiated_by: 'pipeline',
+    created_at: new Date(),
+    updated_at: new Date(),
+    results: [],
+    config: {
+      model: config.model,
+      language: config.language,
+      page_ids: pages.map(p => p.id),
     },
   };
+
+  await db.collection('jobs').insertOne(job as unknown as Record<string, unknown>);
+
+  return { jobId, total: pages.length };
 }
 
-// Step: Summarize
+// Step: Summarize - runs inline since it's one API call
 async function executeSummarize(
   bookId: string,
-  config: PipelineConfig
+  config: PipelineConfig,
+  db: Awaited<ReturnType<typeof getDb>>
 ): Promise<{ status: 'completed' | 'failed'; result?: Record<string, unknown>; error?: string }> {
-  const baseUrl = getBaseUrl();
+  // Get translated pages for summary
+  const translatedPages = await db.collection('pages')
+    .find({
+      book_id: bookId,
+      'translation.data': { $exists: true, $ne: '' }
+    })
+    .sort({ page_number: 1 })
+    .limit(50) // Limit for context window
+    .toArray();
 
-  const res = await fetch(`${baseUrl}/api/books/${bookId}/summarize`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: config.model }),
-  });
-
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => ({}));
-    return { status: 'failed', error: errorData.error || 'Failed to generate summary' };
+  if (translatedPages.length === 0) {
+    return { status: 'failed', error: 'No translated pages to summarize' };
   }
 
-  const data = await res.json();
-  return {
-    status: 'completed',
-    result: {
-      pagesAnalyzed: data.pages_analyzed || 0,
-      message: 'Book summary generated',
-    },
-  };
+  // Combine translations for summary
+  const combinedText = translatedPages
+    .map(p => `[Page ${p.page_number}]\n${p.translation.data}`)
+    .join('\n\n---\n\n');
+
+  // Import and use generateSummary - simplified version
+  const { generateSummary } = await import('@/lib/ai');
+
+  try {
+    const summaryResult = await generateSummary(
+      combinedText.slice(0, 50000), // Limit input
+      undefined,
+      undefined,
+      config.model
+    );
+
+    // Save summary to book
+    await db.collection('books').updateOne(
+      { id: bookId },
+      {
+        $set: {
+          reading_summary: {
+            overview: summaryResult.text,
+            quotes: [],
+            themes: [],
+            generated_at: new Date(),
+            model: config.model,
+            pages_analyzed: translatedPages.length,
+          },
+          updated_at: new Date(),
+        },
+      }
+    );
+
+    return {
+      status: 'completed',
+      result: {
+        pagesAnalyzed: translatedPages.length,
+        message: 'Book summary generated',
+      },
+    };
+  } catch (error) {
+    return {
+      status: 'failed',
+      error: error instanceof Error ? error.message : 'Failed to generate summary'
+    };
+  }
 }
 
 // Step: Create Edition
 async function executeEdition(
   bookId: string,
-  config: PipelineConfig
+  config: PipelineConfig,
+  db: Awaited<ReturnType<typeof getDb>>
 ): Promise<{ status: 'completed' | 'failed'; result?: Record<string, unknown>; error?: string }> {
-  const baseUrl = getBaseUrl();
-
-  // Create edition
-  const editionRes = await fetch(`${baseUrl}/api/books/${bookId}/editions`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ license: config.license }),
-  });
-
-  if (!editionRes.ok) {
-    const errorData = await editionRes.json().catch(() => ({}));
-    return { status: 'failed', error: errorData.error || 'Failed to create edition' };
+  const book = await db.collection('books').findOne({ id: bookId });
+  if (!book) {
+    return { status: 'failed', error: 'Book not found' };
   }
 
-  const editionData = await editionRes.json();
-  const editionId = editionData.id;
-
-  // Generate front matter
-  const frontMatterRes = await fetch(`${baseUrl}/api/books/${bookId}/editions/front-matter`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ edition_id: editionId }),
+  // Count translated pages
+  const translatedCount = await db.collection('pages').countDocuments({
+    book_id: bookId,
+    'translation.data': { $exists: true, $ne: '' }
   });
 
-  // Front matter is optional - don't fail if it doesn't work
-  if (!frontMatterRes.ok) {
-    console.warn('Failed to generate front matter, continuing anyway');
+  if (translatedCount === 0) {
+    return { status: 'failed', error: 'No translated pages for edition' };
   }
+
+  // Create edition directly
+  const { nanoid } = await import('nanoid');
+  const editionId = nanoid(12);
+
+  // Get existing editions count for version number
+  const existingEditions = book.editions || [];
+  const version = `1.${existingEditions.length}`;
+
+  const edition = {
+    id: editionId,
+    version,
+    status: 'draft',
+    license: config.license || 'CC0-1.0',
+    created_at: new Date(),
+    pages_count: translatedCount,
+  };
+
+  // Add edition to array and update current edition
+  await db.collection('books').updateOne(
+    { id: bookId },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { $push: { editions: edition } } as any
+  );
+  await db.collection('books').updateOne(
+    { id: bookId },
+    { $set: { current_edition_id: editionId, updated_at: new Date() } }
+  );
 
   return {
     status: 'completed',
     result: {
       editionId,
-      version: editionData.version,
+      version,
       reviewUrl: `/book/${bookId}/edition/${editionId}/review`,
-      message: `Edition ${editionData.version} created - ready for review`,
+      message: `Edition ${version} created - ready for review`,
     },
   };
 }
@@ -315,71 +316,121 @@ export async function POST(
       [`pipeline.steps.${step}.started_at`]: new Date(),
     });
 
-    // Progress callback
-    const onProgress = async (progress: { completed: number; total: number }) => {
-      await updatePipeline(db, bookId, {
-        [`pipeline.steps.${step}.progress`]: progress,
-      });
-    };
-
     // Execute the step
-    let stepResult: { status: 'completed' | 'skipped' | 'failed'; result?: Record<string, unknown>; error?: string };
+    let stepResult: {
+      status: 'completed' | 'skipped' | 'failed' | 'job_created';
+      result?: Record<string, unknown>;
+      error?: string;
+      jobId?: string;
+    };
 
     switch (step) {
       case 'split_check':
-        stepResult = await executeSplitCheck(bookId);
+        stepResult = await executeSplitCheck(bookId, db);
         break;
-      case 'ocr':
-        stepResult = await executeOcr(bookId, pipeline.config, onProgress);
+
+      case 'ocr': {
+        const ocrResult = await createOcrJob(bookId, pipeline.config, db);
+        if ('error' in ocrResult) {
+          if (ocrResult.error === 'no_pages') {
+            stepResult = { status: 'completed', result: { message: 'All pages already have OCR' } };
+          } else {
+            stepResult = { status: 'failed', error: ocrResult.error };
+          }
+        } else {
+          stepResult = {
+            status: 'job_created',
+            jobId: ocrResult.jobId,
+            result: {
+              jobId: ocrResult.jobId,
+              total: ocrResult.total,
+              message: `Created OCR job for ${ocrResult.total} pages`
+            }
+          };
+        }
         break;
-      case 'translate':
-        stepResult = await executeTranslate(bookId, pipeline.config, onProgress);
+      }
+
+      case 'translate': {
+        const translateResult = await createTranslateJob(bookId, pipeline.config, db);
+        if ('error' in translateResult) {
+          if (translateResult.error === 'no_pages') {
+            stepResult = { status: 'completed', result: { message: 'All pages already translated' } };
+          } else {
+            stepResult = { status: 'failed', error: translateResult.error };
+          }
+        } else {
+          stepResult = {
+            status: 'job_created',
+            jobId: translateResult.jobId,
+            result: {
+              jobId: translateResult.jobId,
+              total: translateResult.total,
+              message: `Created translation job for ${translateResult.total} pages`
+            }
+          };
+        }
         break;
+      }
+
       case 'summarize':
-        stepResult = await executeSummarize(bookId, pipeline.config);
+        stepResult = await executeSummarize(bookId, pipeline.config, db);
         break;
+
       case 'edition':
-        stepResult = await executeEdition(bookId, pipeline.config);
+        stepResult = await executeEdition(bookId, pipeline.config, db);
         break;
+
       default:
         return NextResponse.json({ error: 'Invalid step' }, { status: 400 });
     }
 
     // Update step with result
-    const stepUpdates: Record<string, unknown> = {
-      [`pipeline.steps.${step}.status`]: stepResult.status,
-      [`pipeline.steps.${step}.completed_at`]: new Date(),
-    };
+    const stepUpdates: Record<string, unknown> = {};
 
-    if (stepResult.result) {
+    if (stepResult.status === 'job_created') {
+      // Job created - step stays running, frontend will poll job
+      stepUpdates[`pipeline.steps.${step}.jobId`] = stepResult.jobId;
       stepUpdates[`pipeline.steps.${step}.result`] = stepResult.result;
-    }
-    if (stepResult.error) {
-      stepUpdates[`pipeline.steps.${step}.error`] = stepResult.error;
-    }
+    } else {
+      // Step completed inline
+      stepUpdates[`pipeline.steps.${step}.status`] = stepResult.status;
+      stepUpdates[`pipeline.steps.${step}.completed_at`] = new Date();
 
-    // Check if this was the last step or if step failed
-    const stepOrder: PipelineStep[] = ['split_check', 'ocr', 'translate', 'summarize', 'edition'];
-    const isLastStep = step === 'edition';
-    const stepFailed = stepResult.status === 'failed';
+      if (stepResult.result) {
+        stepUpdates[`pipeline.steps.${step}.result`] = stepResult.result;
+      }
+      if (stepResult.error) {
+        stepUpdates[`pipeline.steps.${step}.error`] = stepResult.error;
+      }
 
-    if (isLastStep || stepFailed) {
-      stepUpdates['pipeline.status'] = stepFailed ? 'failed' : 'completed';
-      stepUpdates['pipeline.completed_at'] = new Date();
-      stepUpdates['pipeline.currentStep'] = null;
+      // Check if this was the last step or if step failed
+      const isLastStep = step === 'edition';
+      const stepFailed = stepResult.status === 'failed';
 
-      if (stepFailed) {
-        stepUpdates['pipeline.error'] = stepResult.error;
+      if (isLastStep || stepFailed) {
+        stepUpdates['pipeline.status'] = stepFailed ? 'failed' : 'completed';
+        stepUpdates['pipeline.completed_at'] = new Date();
+        stepUpdates['pipeline.currentStep'] = null;
+
+        if (stepFailed) {
+          stepUpdates['pipeline.error'] = stepResult.error;
+        }
       }
     }
 
     await updatePipeline(db, bookId, stepUpdates);
 
     // Determine next step
+    const stepOrder: PipelineStep[] = ['split_check', 'ocr', 'translate', 'summarize', 'edition'];
     let nextStep: PipelineStep | null = null;
-    if (!isLastStep && !stepFailed) {
-      const currentIndex = stepOrder.indexOf(step);
-      nextStep = stepOrder[currentIndex + 1];
+
+    if (stepResult.status !== 'failed' && stepResult.status !== 'job_created') {
+      const isLastStep = step === 'edition';
+      if (!isLastStep) {
+        const currentIndex = stepOrder.indexOf(step);
+        nextStep = stepOrder[currentIndex + 1];
+      }
     }
 
     return NextResponse.json({

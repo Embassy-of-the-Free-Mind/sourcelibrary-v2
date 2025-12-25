@@ -77,6 +77,61 @@ export function usePipeline(bookId: string): UsePipelineResult {
     return null;
   }, []);
 
+  // Poll job until complete
+  const pollJob = useCallback(async (jobId: string, step: PipelineStep): Promise<boolean> => {
+    while (!shouldStopRef.current) {
+      // Process next chunk
+      const processRes = await fetch(`/api/jobs/${jobId}/process`, {
+        method: 'POST',
+      });
+
+      if (!processRes.ok) {
+        console.error('Job processing failed');
+        return false;
+      }
+
+      const processData = await processRes.json();
+
+      // Update pipeline with job progress
+      await fetch(`/api/books/${bookId}/pipeline`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          step,
+          progress: processData.job?.progress,
+        }),
+      });
+
+      // Refresh UI
+      await fetchPipeline();
+
+      // Check if done
+      if (processData.done) {
+        // Mark step as completed
+        await fetch(`/api/books/${bookId}/pipeline`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            step,
+            status: processData.job?.progress?.failed > 0 && processData.job?.progress?.completed === 0
+              ? 'failed'
+              : 'completed',
+          }),
+        });
+        return true;
+      }
+
+      if (processData.paused) {
+        return false;
+      }
+
+      // Small delay between chunks
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
+    return false;
+  }, [bookId, fetchPipeline]);
+
   // Execute steps sequentially
   const runSteps = useCallback(async () => {
     if (isExecutingRef.current) return;
@@ -117,6 +172,16 @@ export function usePipeline(bookId: string): UsePipelineResult {
 
         const result = await res.json();
 
+        // If a job was created, poll it until complete
+        if (result.status === 'job_created' && result.jobId) {
+          const jobCompleted = await pollJob(result.jobId, nextStep);
+          if (!jobCompleted) {
+            break;
+          }
+          // Continue to next step
+          continue;
+        }
+
         // If step failed or no next step, stop
         if (result.status === 'failed' || !result.nextStep) {
           break;
@@ -126,7 +191,7 @@ export function usePipeline(bookId: string): UsePipelineResult {
       isExecutingRef.current = false;
       await fetchPipeline();
     }
-  }, [bookId, fetchPipeline, getNextStep]);
+  }, [bookId, fetchPipeline, getNextStep, pollJob]);
 
   // Start pipeline
   const start = useCallback(async (config: Partial<PipelineConfig>) => {
