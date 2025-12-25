@@ -6,6 +6,7 @@ import { Book, Page } from '@/lib/types';
 import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText, Glasses } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
+import BookHistory from '@/components/BookHistory';
 import BookChat from '@/components/BookChat';
 import BookAnalytics from '@/components/BookAnalytics';
 import CoverImagePicker from '@/components/CoverImagePicker';
@@ -188,8 +189,9 @@ async function BookInfo({ id }: { id: string }) {
       })()}
 
       {/* Stats + Pages Grid with Batch Mode */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
         <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} />
+        <BookHistory bookId={book.id} />
       </main>
     </>
   );
