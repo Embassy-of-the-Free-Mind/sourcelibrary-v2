@@ -256,12 +256,41 @@ This matches our current production pipeline and validates that architecture.
 1. **OCR Batch Size** (above) — B1 Simple is best; never exceed batch 10
 2. **Single-Pass vs Two-Pass** (above) — Two-pass wins decisively
 
-### Upcoming Experiments
+### Optimization Opportunities
 
-1. **Context window testing** — Does passing previous page context help or hurt?
-2. **Model comparison** — Test Claude, GPT-4o for OCR (not just judging)
-3. **Image resolution** — Does higher resolution improve accuracy enough to justify cost?
-4. **Fine-tuning batch 1-5 range** — Is B2 or B3 a better sweet spot?
+#### High Priority (Expected High Impact)
+
+| Experiment | Question | Hypothesis |
+|------------|----------|------------|
+| **OCR Model Comparison** | Claude vs GPT-4o vs Gemini for OCR | Claude may handle Latin abbreviations better |
+| **Translation Model** | Flash vs Pro vs Claude for translation | Higher-tier models may produce more fluent prose |
+| **Domain Prompts** | Add paleography/Latin hints to OCR prompt | May help with abbreviations (q̃ → que, ꝑ → per) |
+| **Context Window** | Pass previous page text | May help with running sentences, consistent terminology |
+
+#### Medium Priority (Potential Impact)
+
+| Experiment | Question | Hypothesis |
+|------------|----------|------------|
+| **Image Resolution** | 800px vs 1200px vs 2000px | Higher res may help with small/degraded text |
+| **Batch Size 2-5** | Is B2 or B3 the sweet spot? | May get 2-3x efficiency with minimal quality loss |
+| **Translation Prompts** | Scholarly vs accessible style | Different prompts for different audiences |
+| **Source Language** | Explicit Latin vs auto-detect | Explicit may improve accuracy |
+
+#### Lower Priority (Efficiency Gains)
+
+| Experiment | Question | Hypothesis |
+|------------|----------|------------|
+| **Parallel Processing** | Concurrent page processing | Reduce wall-clock time |
+| **Blank Page Detection** | Skip blank/title pages | Save 5-10% of API costs |
+| **Caching** | Cache repeated patterns | Reduce redundant calls |
+| **Confidence Scoring** | Flag uncertain passages | Prioritize human review |
+
+#### Infrastructure Improvements
+
+- **A/B Testing Framework:** Production experiments with real users
+- **Quality Dashboard:** Track OCR/translation quality over time
+- **Cost Monitoring:** Per-book and per-page cost tracking
+- **Human Review Queue:** UI for correcting flagged passages
 
 ## Experiment Metadata
 
