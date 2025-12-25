@@ -81,6 +81,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [action, setAction] = useState<ActionType>('ocr');
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
+  const [concurrency, setConcurrency] = useState(5); // Parallel requests
   const [showPromptSettings, setShowPromptSettings] = useState(false);
 
   // Prompt library state
@@ -230,20 +231,19 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
     const failed: string[] = [];
     let runningCost = 0;
     let runningTokens = 0;
+    let processedCount = 0;
 
-    for (let i = 0; i < pageIds.length; i++) {
-      if (stopRequestedRef.current) break;
+    // Process a single page
+    const processPage = async (pageId: string): Promise<void> => {
+      if (stopRequestedRef.current) return;
 
-      const pageId = pageIds[i];
       const page = pages.find(p => p.id === pageId);
-      if (!page) continue;
-
-      setProcessing(prev => ({ ...prev, currentIndex: i + 1 }));
+      if (!page) {
+        failed.push(pageId);
+        return;
+      }
 
       try {
-        const pageIndex = pages.findIndex(p => p.id === pageId);
-        const previousPage = pageIndex > 0 ? pages[pageIndex - 1] : null;
-
         const response = await fetch('/api/process', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -255,7 +255,7 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
             targetLanguage: 'English',
             ocrText: action === 'translation' ? page.ocr?.data : undefined,
             translatedText: action === 'summary' ? page.translation?.data : undefined,
-            previousPageId: previousPage?.id,
+            // Note: skipping previousPageId for parallel processing
             customPrompts: {
               ocr: editedPrompts.ocr,
               translation: editedPrompts.translation,
@@ -281,17 +281,23 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
         failed.push(pageId);
       }
 
+      processedCount++;
       setProcessing(prev => ({
         ...prev,
+        currentIndex: processedCount,
         completed: [...completed],
         failed: [...failed],
         totalCost: runningCost,
         totalTokens: runningTokens,
       }));
+    };
 
-      if (i < pageIds.length - 1 && !stopRequestedRef.current) {
-        await new Promise(r => setTimeout(r, 1000));
-      }
+    // Process in parallel batches
+    for (let i = 0; i < pageIds.length; i += concurrency) {
+      if (stopRequestedRef.current) break;
+
+      const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
+      await Promise.all(batch.map(processPage));
     }
 
     setProcessing(prev => ({ ...prev, active: false }));
@@ -305,7 +311,8 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
   };
 
   const selectedCount = selectedPages.size;
-  const estimatedTimeMinutes = Math.ceil(selectedCount * 0.5);
+  // ~30 seconds per page, divided by concurrency
+  const estimatedTimeMinutes = Math.ceil((selectedCount * 0.5) / concurrency);
   const estimatedCost = selectedCount * getEstimatedCost(action, selectedModel);
 
   const formatCost = (cost: number) => {
@@ -526,6 +533,22 @@ export default function BookPagesSection({ bookId, pages }: BookPagesSectionProp
                     {model.name}
                   </option>
                 ))}
+              </select>
+            </div>
+
+            {/* Concurrency selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Parallel:</span>
+              <select
+                value={concurrency}
+                onChange={(e) => setConcurrency(Number(e.target.value))}
+                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option value={1}>1x (sequential)</option>
+                <option value={3}>3x</option>
+                <option value={5}>5x</option>
+                <option value={10}>10x</option>
+                <option value={15}>15x (max free)</option>
               </select>
             </div>
 
