@@ -93,6 +93,15 @@ src/
   format: string;       // folio, quarto, octavo, etc.
   thumbnail: string;
   editions: TranslationEdition[];
+
+  // Image source and licensing
+  image_source?: {
+    provider: 'internet_archive' | 'google_books' | 'user_upload' | ...;
+    provider_name: string;  // "Internet Archive"
+    source_url: string;     // Link to original
+    license: string;        // SPDX: "publicdomain", "CC-BY-4.0"
+    attribution?: string;   // Required credit text
+  };
 }
 ```
 

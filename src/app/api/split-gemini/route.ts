@@ -34,6 +34,10 @@ export async function POST(request: NextRequest) {
     const base64Image = Buffer.from(imageBuffer).toString('base64');
     let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
     mimeType = mimeType.split(';')[0].trim();
+    // S3 often returns application/octet-stream for images
+    if (mimeType === 'application/octet-stream') {
+      mimeType = 'image/jpeg';
+    }
 
     // Use Gemini 3 Flash for vision
     const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });

@@ -15,6 +15,23 @@ interface PageInput {
   pageNumber: number;
 }
 
+// Build image URL with crop parameters if page has crop data
+function buildImageUrl(baseUrl: string, crop?: { xStart: number; xEnd: number }): string {
+  if (!crop) return baseUrl;
+
+  // Use /api/image endpoint for cropping
+  const params = new URLSearchParams({
+    url: baseUrl,
+    w: '2000', // High quality for OCR
+    q: '95',
+    cx: crop.xStart.toString(),
+    cw: crop.xEnd.toString(),
+  });
+
+  // Return absolute URL for the image API
+  return `/api/image?${params.toString()}`;
+}
+
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
   const inputCost = (inputTokens / 1_000_000) * pricing.input;
@@ -75,8 +92,31 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'GEMINI_API_KEY not configured' }, { status: 500 });
     }
 
-    // Fetch all images in parallel
-    const imagePromises = pages.map(p => fetchImageAsBase64(p.imageUrl));
+    // Look up pages from database to get crop data
+    const db = await getDb();
+    const pageIds = pages.map(p => p.pageId);
+    const dbPages = await db.collection('pages').find({ id: { $in: pageIds } }).toArray();
+    const dbPageMap = new Map(dbPages.map(p => [p.id, p]));
+
+    // Build image URLs with crop parameters if needed
+    const getImageUrl = (page: PageInput): string => {
+      const dbPage = dbPageMap.get(page.pageId);
+      if (dbPage?.crop) {
+        // Page has crop data - use /api/image for cropping
+        // Need to use photo_original if available, otherwise photo
+        const baseUrl = dbPage.photo_original || dbPage.photo || page.imageUrl;
+        const cropUrl = buildImageUrl(baseUrl, dbPage.crop);
+        // Make it absolute for server-side fetch
+        const baseApiUrl = process.env.VERCEL_URL
+          ? `https://${process.env.VERCEL_URL}`
+          : process.env.NEXTAUTH_URL || 'http://localhost:3000';
+        return `${baseApiUrl}${cropUrl}`;
+      }
+      return page.imageUrl;
+    };
+
+    // Fetch all images in parallel (with cropping applied)
+    const imagePromises = pages.map(p => fetchImageAsBase64(getImageUrl(p)));
     const images = await Promise.all(imagePromises);
 
     // Filter out failed fetches
@@ -169,8 +209,7 @@ Return each transcription clearly separated with the exact format:
     const outputTokens = usageMetadata?.candidatesTokenCount || 0;
     const costUsd = calculateCost(inputTokens, outputTokens, modelId);
 
-    // Save OCR results to database
-    const db = await getDb();
+    // Save OCR results to database (db already defined above)
     const now = new Date().toISOString();
 
     const updatePromises = Object.entries(ocrResults).map(([pageId, ocr]) =>
