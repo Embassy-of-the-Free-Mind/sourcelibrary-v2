@@ -38,6 +38,10 @@ export async function POST(request: NextRequest) {
 
     const db = await getDb();
 
+    // Debug: Check book exists
+    const book = await db.collection('books').findOne({ id: book_id });
+    console.log('Book lookup:', { book_id, found: !!book, title: book?.title });
+
     // Get pages in range
     const pages = await db
       .collection('pages')
@@ -48,8 +52,17 @@ export async function POST(request: NextRequest) {
       .sort({ page_number: 1 })
       .toArray();
 
+    console.log('Pages query:', { book_id, start_page, end_page, found: pages.length });
+
     if (pages.length === 0) {
-      return NextResponse.json({ error: 'No pages found in range' }, { status: 404 });
+      // Debug: Check if any pages exist for this book at all
+      const allPages = await db.collection('pages').countDocuments({ book_id });
+      const samplePage = await db.collection('pages').findOne({ book_id });
+      console.log('Debug pages:', { allPages, samplePageNumber: samplePage?.page_number });
+
+      return NextResponse.json({
+        error: `No pages found in range ${start_page}-${end_page}. Book has ${allPages} pages total.`
+      }, { status: 404 });
     }
 
     const experimentId = crypto.randomUUID();
