@@ -18,7 +18,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
-import type { Page, Prompt } from '@/lib/types';
+import type { Page, Prompt, Job, WorkflowState } from '@/lib/types';
 
 interface ProcessBookWizardProps {
   bookId: string;
@@ -66,6 +66,15 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
   const [currentStep, setCurrentStep] = useState<WorkflowStep | null>(null);
   const [failedPageIds, setFailedPageIds] = useState<{ ocr: string[]; translation: string[] }>({ ocr: [], translation: [] });
   const stopRequestedRef = useRef(false);
+
+  // Resumable job state
+  const [incompleteJob, setIncompleteJob] = useState<Job | null>(null);
+  const [checkingForJob, setCheckingForJob] = useState(true);
+  const [resumeJobId, setResumeJobId] = useState<string | null>(null);
+  const processedIdsRef = useRef<{ ocr: Set<string>; translation: Set<string> }>({
+    ocr: new Set(),
+    translation: new Set(),
+  });
 
   // Prompts
   const [prompts, setPrompts] = useState<Record<WorkflowStep, Prompt[]>>({
@@ -161,6 +170,93 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
     fetchPrompts();
   }, []);
 
+  // Check for incomplete jobs on mount
+  useEffect(() => {
+    const checkForIncompleteJob = async () => {
+      try {
+        const res = await fetch(`/api/jobs?book_id=${bookId}&status=processing&limit=1`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.jobs?.length > 0) {
+            const job = data.jobs[0] as Job;
+            if (job.workflow_state) {
+              setIncompleteJob(job);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error checking for incomplete job:', error);
+      } finally {
+        setCheckingForJob(false);
+      }
+    };
+    checkForIncompleteJob();
+  }, [bookId]);
+
+  // Resume an incomplete job
+  const resumeJob = (job: Job) => {
+    if (!job.workflow_state) return;
+
+    const ws = job.workflow_state;
+
+    // Restore settings
+    setSelectedModel(ws.selectedModel);
+    if (ws.ocrPromptId) setSelectedPromptIds(prev => ({ ...prev, ocr: ws.ocrPromptId! }));
+    if (ws.translationPromptId) setSelectedPromptIds(prev => ({ ...prev, translation: ws.translationPromptId! }));
+
+    // Restore processed IDs
+    processedIdsRef.current = {
+      ocr: new Set(ws.ocrProcessedIds),
+      translation: new Set(ws.translationProcessedIds),
+    };
+
+    // Calculate remaining pages
+    const ocrRemaining = ws.stepsEnabled.ocr
+      ? (ws.ocrMode === 'all' ? pages : pages.filter(p => !p.ocr?.data))
+          .filter(p => !ws.ocrProcessedIds.includes(p.id) && !ws.ocrFailedIds.includes(p.id)).length
+      : 0;
+    const transRemaining = ws.stepsEnabled.translation
+      ? pages.filter(p => {
+          const hasOcr = p.ocr?.data || ws.ocrProcessedIds.includes(p.id);
+          const needsTrans = ws.translationMode === 'all' || !p.translation?.data;
+          const notDone = !ws.translationProcessedIds.includes(p.id) && !ws.translationFailedIds.includes(p.id);
+          return hasOcr && needsTrans && notDone;
+        }).length
+      : 0;
+
+    // Restore step states
+    setSteps({
+      ocr: {
+        enabled: ws.stepsEnabled.ocr && (ocrRemaining > 0 || ws.ocrFailedIds.length > 0),
+        mode: ws.ocrMode,
+        total: pages.length,
+        pending: ocrRemaining,
+        completed: ws.ocrProcessedIds.length,
+        failed: ws.ocrFailedIds.length,
+        status: ocrRemaining > 0 || ws.ocrFailedIds.length > 0 ? 'idle' : 'done',
+      },
+      translation: {
+        enabled: ws.stepsEnabled.translation && (transRemaining > 0 || ws.translationFailedIds.length > 0),
+        mode: ws.translationMode,
+        total: pages.length,
+        pending: transRemaining,
+        completed: ws.translationProcessedIds.length,
+        failed: ws.translationFailedIds.length,
+        status: transRemaining > 0 || ws.translationFailedIds.length > 0 ? 'idle' : 'done',
+      },
+    });
+
+    // Restore failed IDs
+    setFailedPageIds({
+      ocr: ws.ocrFailedIds,
+      translation: ws.translationFailedIds,
+    });
+
+    // Set the job ID for resuming
+    setResumeJobId(job.id);
+    setIncompleteJob(null);
+  };
+
   const toggleStep = (step: WorkflowStep) => {
     if (isProcessing) return;
     setSteps(prev => ({
@@ -227,42 +323,79 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
     return { success: false };
   };
 
+  // Helper to save workflow state to the job
+  const saveWorkflowState = async (
+    jobId: string,
+    currentStep: 'ocr' | 'translation' | null,
+    ocrProcessedIds: string[],
+    translationProcessedIds: string[],
+    ocrFailedIds: string[],
+    translationFailedIds: string[]
+  ) => {
+    const workflowState: WorkflowState = {
+      currentStep,
+      ocrMode: steps.ocr.mode,
+      translationMode: steps.translation.mode,
+      ocrProcessedIds,
+      translationProcessedIds,
+      ocrFailedIds,
+      translationFailedIds,
+      selectedModel,
+      ocrPromptId: selectedPromptIds.ocr,
+      translationPromptId: selectedPromptIds.translation,
+      stepsEnabled: { ocr: steps.ocr.enabled, translation: steps.translation.enabled },
+    };
+
+    try {
+      await fetch(`/api/jobs/${jobId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ workflow_state: workflowState }),
+      });
+    } catch (error) {
+      console.error('Failed to save workflow state:', error);
+    }
+  };
+
   const runWorkflow = async () => {
     setIsProcessing(true);
     stopRequestedRef.current = false;
 
-    // Create job record
-    let jobId: string | null = null;
+    // Use existing job ID if resuming, or create a new one
+    let jobId: string | null = resumeJobId;
     const enabledSteps = Object.entries(steps)
       .filter(([, s]) => s.enabled)
       .map(([k]) => k);
 
-    try {
-      const jobRes = await fetch('/api/jobs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'batch_ocr', // Primary type
-          book_id: bookId,
-          book_title: bookTitle,
-          page_ids: pages.map(p => p.id),
-          model: selectedModel,
-          prompt_name: `Workflow: ${enabledSteps.join(' → ')}`,
-        }),
-      });
-      if (jobRes.ok) {
-        const jobData = await jobRes.json();
-        jobId = jobData.job?.id;
-        if (jobId) {
-          await fetch(`/api/jobs/${jobId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'processing' }),
-          });
+    if (!jobId) {
+      try {
+        const jobRes = await fetch('/api/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'batch_ocr', // Primary type
+            book_id: bookId,
+            book_title: bookTitle,
+            page_ids: pages.map(p => p.id),
+            model: selectedModel,
+            prompt_name: `Workflow: ${enabledSteps.join(' → ')}`,
+          }),
+        });
+        if (jobRes.ok) {
+          const jobData = await jobRes.json();
+          jobId = jobData.job?.id;
         }
+      } catch (error) {
+        console.error('Failed to create job:', error);
       }
-    } catch (error) {
-      console.error('Failed to create job:', error);
+    }
+
+    if (jobId) {
+      await fetch(`/api/jobs/${jobId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: 'processing' }),
+      });
     }
 
     // Track OCR results for translation step
@@ -280,12 +413,16 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       // Sort pages by page number for proper continuity
       // In 'all' mode, process all pages; in 'missing' mode, only pages without OCR
+      // Skip pages that were already processed (when resuming)
       const pagesToOcr = (steps.ocr.mode === 'all' ? pages : pages.filter(p => !p.ocr?.data))
+        .filter(p => !processedIdsRef.current.ocr.has(p.id))
         .sort((a, b) => (a.page_number || 0) - (b.page_number || 0));
 
-      let completed = 0;
-      let failed = 0;
-      const failedOcrIds: string[] = [];
+      // Start with existing counts from resume
+      let completed = processedIdsRef.current.ocr.size;
+      let failed = failedPageIds.ocr.length;
+      const failedOcrIds: string[] = [...failedPageIds.ocr];
+      const allOcrProcessedIds: string[] = [...processedIdsRef.current.ocr];
 
       // Process in batches of 5 images with context continuity
       const OCR_BATCH_SIZE = 5;
@@ -318,9 +455,11 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             const data = await response.json();
             const ocrIds = Object.keys(data.ocrResults || {});
 
-            // Store OCR results for translation step
+            // Store OCR results for translation step and track processed IDs
             ocrIds.forEach(id => {
               ocrResults[id] = data.ocrResults[id];
+              allOcrProcessedIds.push(id);
+              processedIdsRef.current.ocr.add(id);
             });
 
             completed += ocrIds.length;
@@ -351,6 +490,8 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             const result = await processPage(page, 'ocr');
             if (result.success && result.ocrResult) {
               ocrResults[page.id] = result.ocrResult;
+              allOcrProcessedIds.push(page.id);
+              processedIdsRef.current.ocr.add(page.id);
               completed++;
               previousContext = result.ocrResult;
             } else {
@@ -359,20 +500,25 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             }
             setSteps(prev => ({
               ...prev,
-              ocr: { ...prev.ocr, completed, failed, pending: pagesToOcr.length - completed - failed },
+              ocr: { ...prev.ocr, completed, failed, pending: pagesToOcr.length - completed - failed + processedIdsRef.current.ocr.size },
             }));
           }
         }
 
         setSteps(prev => ({
           ...prev,
-          ocr: { ...prev.ocr, completed, failed, pending: pagesToOcr.length - completed - failed },
+          ocr: { ...prev.ocr, completed, failed, pending: pagesToOcr.length - (completed - processedIdsRef.current.ocr.size + allOcrProcessedIds.length) - failed },
         }));
+
+        // Save workflow state after each batch
+        if (jobId) {
+          await saveWorkflowState(jobId, 'ocr', allOcrProcessedIds, [], failedOcrIds, []);
+        }
 
         if (i + OCR_BATCH_SIZE < pagesToOcr.length) await sleep(300);
       }
 
-      totalCompleted += completed;
+      totalCompleted += completed - processedIdsRef.current.ocr.size + allOcrProcessedIds.length;
       totalFailed += failed;
 
       // Save failed page IDs for retry
@@ -382,11 +528,14 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       setSteps(prev => ({
         ...prev,
-        ocr: { ...prev.ocr, status: failed === pagesToOcr.length ? 'error' : 'done' },
+        ocr: { ...prev.ocr, status: failed === pagesToOcr.length && allOcrProcessedIds.length === 0 ? 'error' : 'done' },
       }));
     }
 
     // Step 2: Translation
+    // Get the OCR processed IDs from this session for workflow state saving
+    const allOcrProcessedIds = [...processedIdsRef.current.ocr];
+
     if (steps.translation.enabled && !stopRequestedRef.current) {
       setCurrentStep('translation');
       setSteps(prev => ({
@@ -396,19 +545,23 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       // Translate pages that have OCR (existing or just processed)
       // In 'all' mode, translate all pages with OCR; in 'missing' mode, only pages without translation
+      // Skip pages that were already translated (when resuming)
       // Sort by page number for proper continuity
       const pagesToTranslate = pages
         .filter(p => {
           const hasOcr = p.ocr?.data || ocrResults[p.id];
           if (!hasOcr) return false;
+          if (processedIdsRef.current.translation.has(p.id)) return false;  // Skip already translated
           // In 'all' mode, translate everything with OCR; in 'missing' mode, only untranslated
           return steps.translation.mode === 'all' || !p.translation?.data;
         })
         .sort((a, b) => (a.page_number || 0) - (b.page_number || 0));
 
-      let completed = 0;
-      let failed = 0;
-      const failedTranslationIds: string[] = [];
+      // Start with existing counts from resume
+      let completed = processedIdsRef.current.translation.size;
+      let failed = failedPageIds.translation.length;
+      const failedTranslationIds: string[] = [...failedPageIds.translation];
+      const allTranslationProcessedIds: string[] = [...processedIdsRef.current.translation];
 
       // Process in batches of 5 with context continuity
       const TRANSLATION_BATCH_SIZE = 5;
@@ -441,6 +594,13 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
           if (response.ok) {
             const data = await response.json();
             const translatedIds = Object.keys(data.translations || {});
+
+            // Track processed IDs
+            translatedIds.forEach(id => {
+              allTranslationProcessedIds.push(id);
+              processedIdsRef.current.translation.add(id);
+            });
+
             completed += translatedIds.length;
 
             // Track pages that failed within the batch
@@ -469,6 +629,8 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             const ocrText = ocrResults[page.id] || page.ocr?.data;
             const result = await processPage(page, 'translation', ocrText);
             if (result.success) {
+              allTranslationProcessedIds.push(page.id);
+              processedIdsRef.current.translation.add(page.id);
               completed++;
             } else {
               failed++;
@@ -476,20 +638,25 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             }
             setSteps(prev => ({
               ...prev,
-              translation: { ...prev.translation, completed, failed, pending: pagesToTranslate.length - completed - failed },
+              translation: { ...prev.translation, completed, failed, pending: pagesToTranslate.length - completed - failed + processedIdsRef.current.translation.size },
             }));
           }
         }
 
         setSteps(prev => ({
           ...prev,
-          translation: { ...prev.translation, completed, failed, pending: pagesToTranslate.length - completed - failed },
+          translation: { ...prev.translation, completed, failed, pending: pagesToTranslate.length - (completed - processedIdsRef.current.translation.size + allTranslationProcessedIds.length) - failed },
         }));
+
+        // Save workflow state after each batch
+        if (jobId) {
+          await saveWorkflowState(jobId, 'translation', allOcrProcessedIds, allTranslationProcessedIds, failedPageIds.ocr, failedTranslationIds);
+        }
 
         if (i + TRANSLATION_BATCH_SIZE < pagesToTranslate.length) await sleep(300);
       }
 
-      totalCompleted += completed;
+      totalCompleted += completed - processedIdsRef.current.translation.size + allTranslationProcessedIds.length;
       totalFailed += failed;
 
       // Save failed page IDs for retry
@@ -499,7 +666,7 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
       setSteps(prev => ({
         ...prev,
-        translation: { ...prev.translation, status: failed === pagesToTranslate.length ? 'error' : 'done' },
+        translation: { ...prev.translation, status: failed === pagesToTranslate.length && allTranslationProcessedIds.length === 0 ? 'error' : 'done' },
       }));
     }
 
@@ -558,6 +725,47 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
 
         {/* Content */}
         <div className="p-4 space-y-4">
+          {/* Resume banner for incomplete jobs */}
+          {incompleteJob && !checkingForJob && (
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <RotateCcw className="w-4 h-4 text-amber-600" />
+                  <div>
+                    <p className="text-sm font-medium text-amber-800">Resume previous session?</p>
+                    <p className="text-xs text-amber-600">
+                      {incompleteJob.workflow_state?.ocrProcessedIds?.length || 0} OCR,{' '}
+                      {incompleteJob.workflow_state?.translationProcessedIds?.length || 0} translations done
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setIncompleteJob(null)}
+                    className="px-2 py-1 text-xs text-stone-600 hover:text-stone-800"
+                  >
+                    Start Fresh
+                  </button>
+                  <button
+                    onClick={() => resumeJob(incompleteJob)}
+                    className="px-3 py-1.5 text-xs bg-amber-600 text-white rounded-lg hover:bg-amber-700"
+                  >
+                    Resume
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Resuming indicator */}
+          {resumeJobId && !isProcessing && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-2 text-center">
+              <p className="text-xs text-green-700">
+                Resuming session - {processedIdsRef.current.ocr.size} OCR, {processedIdsRef.current.translation.size} translations already done
+              </p>
+            </div>
+          )}
+
           {/* Book stats */}
           <div className="bg-stone-50 rounded-lg p-3 text-sm">
             <div className="flex items-center justify-between text-stone-600">

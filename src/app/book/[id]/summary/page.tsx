@@ -259,7 +259,7 @@ export default function BookSummaryPage() {
                 )}
               </button>
               <Link
-                href={`/book/${bookId}/prepare`}
+                href={`/book/${bookId}`}
                 className="inline-flex items-center gap-2 px-4 py-2 text-stone-600 hover:text-stone-800 hover:bg-stone-100 rounded-lg transition-colors"
               >
                 <FileText className="w-4 h-4" />

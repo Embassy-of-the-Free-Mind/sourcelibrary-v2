@@ -644,10 +644,10 @@ export default function UploadPage() {
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
-                href={`/book/${bookId}/prepare`}
+                href={`/book/${bookId}/split`}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors"
               >
-                Prepare Pages
+                Split Pages
               </Link>
               <Link
                 href={`/book/${bookId}`}

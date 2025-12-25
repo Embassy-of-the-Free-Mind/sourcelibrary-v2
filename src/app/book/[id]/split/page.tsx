@@ -535,10 +535,10 @@ export default function SplitPage({ params }: PageProps) {
             </div>
             <div className="flex items-center gap-3">
               <Link
-                href={`/book/${bookId}/prepare`}
+                href={`/book/${bookId}`}
                 className="flex items-center gap-2 px-3 py-2 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg"
               >
-                OCR & Translation →
+                Back to Book →
               </Link>
             </div>
           </div>
@@ -723,10 +723,10 @@ export default function SplitPage({ params }: PageProps) {
           <div className="text-center py-16 bg-white rounded-lg border border-stone-200">
             <p className="text-stone-500">All pages have been split</p>
             <Link
-              href={`/book/${bookId}/prepare`}
+              href={`/book/${bookId}`}
               className="inline-block mt-4 text-amber-600 hover:text-amber-800"
             >
-              Continue to OCR & Translation →
+              Back to Book →
             </Link>
           </div>
         )}

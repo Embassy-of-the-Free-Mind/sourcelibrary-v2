@@ -18,6 +18,20 @@ export interface JobResult {
   duration?: number;
 }
 
+export interface WorkflowState {
+  currentStep: 'ocr' | 'translation' | null;
+  ocrMode: 'missing' | 'all';
+  translationMode: 'missing' | 'all';
+  ocrProcessedIds: string[];
+  translationProcessedIds: string[];
+  ocrFailedIds: string[];
+  translationFailedIds: string[];
+  selectedModel: string;
+  ocrPromptId?: string;
+  translationPromptId?: string;
+  stepsEnabled: { ocr: boolean; translation: boolean };
+}
+
 export interface Job {
   _id?: unknown;
   id: string;
@@ -33,6 +47,7 @@ export interface Job {
   completed_at?: Date;
   error?: string;
   results: JobResult[];
+  workflow_state?: WorkflowState;  // For resumable processing
   config: {
     model?: string;
     prompt_name?: string;

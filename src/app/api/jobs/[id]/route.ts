@@ -42,8 +42,8 @@ export async function PATCH(
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });
     }
 
-    // Handle progress/status updates (for batch processing)
-    if (body.status || body.progress !== undefined) {
+    // Handle progress/status/workflow_state updates (for batch processing)
+    if (body.status || body.progress !== undefined || body.workflow_state !== undefined) {
       const updates: Record<string, unknown> = { updated_at: new Date() };
 
       if (body.status) {
@@ -59,6 +59,10 @@ export async function PATCH(
       if (body.progress) {
         if (body.progress.completed !== undefined) updates['progress.completed'] = body.progress.completed;
         if (body.progress.failed !== undefined) updates['progress.failed'] = body.progress.failed;
+      }
+
+      if (body.workflow_state) {
+        updates.workflow_state = body.workflow_state;
       }
 
       if (body.error) {
