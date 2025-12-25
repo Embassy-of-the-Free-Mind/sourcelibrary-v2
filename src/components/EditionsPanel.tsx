@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { TranslationEdition } from '@/lib/types';
-import { BookMarked, ChevronDown, ChevronUp, ExternalLink, Copy, Check, Calendar, FileText, Users, Hash, Sparkles, Loader2 } from 'lucide-react';
+import { BookMarked, ChevronDown, ChevronUp, ExternalLink, Copy, Check, Calendar, FileText, Users, Hash, Sparkles, Loader2, Eye } from 'lucide-react';
+import Link from 'next/link';
 
 interface EditionsPanelProps {
   bookId: string;
@@ -229,28 +230,18 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleMintDoi(currentEdition.id)}
-                        disabled={isMintingDoi}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 disabled:opacity-50 transition-all shadow-sm"
+                      <Link
+                        href={`/book/${bookId}/edition/${currentEdition.id}/review`}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all shadow-sm"
                       >
-                        {isMintingDoi ? (
-                          <>
-                            <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                            Minting...
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles className="w-3.5 h-3.5" />
-                            Mint DOI via Zenodo
-                          </>
-                        )}
-                      </button>
+                        <Eye className="w-3.5 h-3.5" />
+                        Review & Publish
+                      </Link>
                       <button
                         onClick={() => setAddingDoiFor(currentEdition.id)}
                         className="px-2 py-1 text-xs text-stone-500 hover:text-stone-700"
                       >
-                        or enter manually
+                        or enter DOI
                       </button>
                     </div>
                   )}

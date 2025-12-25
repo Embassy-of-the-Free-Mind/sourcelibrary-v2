@@ -291,18 +291,19 @@ Return each transcription clearly separated:
       await db.collection('ocr_experiment_results').insertMany(resultDocs);
     }
 
-    // Update experiment
+    // Update experiment - get current and update
+    const currentExp = await db.collection('ocr_experiments').findOne({ id });
+    const updatedConditionsRun = [...(currentExp?.conditions_run || []), condition_id];
+
     await db.collection('ocr_experiments').updateOne(
       { id },
       {
-        $push: { conditions_run: condition_id } as unknown as Record<string, unknown>,
         $set: {
+          conditions_run: updatedConditionsRun,
           status: 'running',
           updated_at: now,
-        },
-        $inc: {
-          total_cost: totalCost,
-          total_tokens: totalTokens,
+          total_cost: (currentExp?.total_cost || 0) + totalCost,
+          total_tokens: (currentExp?.total_tokens || 0) + totalTokens,
         },
       }
     );
