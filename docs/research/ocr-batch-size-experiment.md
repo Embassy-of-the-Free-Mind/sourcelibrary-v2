@@ -198,6 +198,30 @@ Hypothesis: Separating the tasks allows the model to focus on one cognitive task
 
 When combined, the model may make compromises — for example, "translating" a misread word rather than carefully transcribing it first.
 
+### Qualitative Analysis
+
+**Example 1: Agrippa's Dedication Letter (Page 10)**
+
+| Aspect | Single-pass | Two-pass |
+|--------|-------------|----------|
+| Syntax | "I would dare to say, attempted until now by no one to restore" | "I dare say, has thus far been attempted by none to restore" |
+| Flow | "I am about to offer you all my vows" (clunky) | "I shall offer you all my prayers" (idiomatic) |
+| Style | Mechanical, awkward constructions | Natural Renaissance epistolary style |
+
+**Example 2: Table of Contents (Page 15)**
+
+| Aspect | Single-pass | Two-pass |
+|--------|-------------|----------|
+| Formatting | Plain unformatted text | Markdown with **bold** headers, numbered lists |
+| Structure | Loses table layout | Preserves `[Page]` indicators and hierarchy |
+| Readability | Dense, hard to scan | Clean, scannable |
+
+**Observations:**
+1. **Prose quality:** Two-pass produces more natural, readable English
+2. **Document structure:** Two-pass better preserves tables, lists, and formatting
+3. **Scholarly suitability:** Two-pass output requires less post-editing
+4. **OCR consistency:** Both approaches produce nearly identical OCR — the difference is purely in translation quality
+
 ### Cost Analysis
 
 | Condition | API Calls | Token Cost | Quality |

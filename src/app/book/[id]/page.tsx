@@ -16,6 +16,7 @@ import BibliographicInfo from '@/components/BibliographicInfo';
 import PublishEditionButton from '@/components/PublishEditionButton';
 import EditionsPanel from '@/components/EditionsPanel';
 import SchemaOrgMetadata from '@/components/SchemaOrgMetadata';
+import CategoryPicker from '@/components/CategoryPicker';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -207,6 +208,14 @@ async function BookInfo({ id }: { id: string }) {
                   <BookText className="w-4 h-4" />
                   {hasSummary ? 'Full Summary & Index' : 'Generate Summary'}
                 </Link>
+              </div>
+
+              {/* Categories */}
+              <div className="mb-4 pb-4 border-b border-stone-100">
+                <CategoryPicker
+                  bookId={book.id}
+                  currentCategories={book.categories || []}
+                />
               </div>
               {hasSummary ? (
                 <div className="prose prose-stone prose-sm max-w-none">
