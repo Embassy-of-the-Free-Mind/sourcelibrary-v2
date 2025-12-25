@@ -156,23 +156,83 @@ Expected cost: ~$0.0003/page
 - Elaborate prompts with batch size >1 (counterproductive)
 - B10 Elaborate specifically (worst performer after B20)
 
+---
+
+# Single-Pass vs Two-Pass Pipeline Experiment
+
+**Date:** December 2024
+**Status:** Completed
+**Book:** De occulta philosophia libri III (Agrippa, 1533)
+**Pages tested:** 11 (pages 10-20)
+**Total judgments:** 48
+
+## Research Question
+
+When using vision LLMs for OCR and translation of historical manuscripts, should we combine OCR and translation into a single API call, or keep them separate?
+
+### Conditions
+
+| Condition | Type | Model | Description |
+|-----------|------|-------|-------------|
+| Single-pass (Flash) | single_pass | Gemini 2.0 Flash | OCR + Translate in one call |
+| Two-pass (Flash+Flash) | two_pass | Gemini 2.0 Flash | OCR first, then Translate separately |
+
+## Results
+
+| Condition | ELO | W-L | Win Rate |
+|-----------|-----|-----|----------|
+| **Two-pass (Flash+Flash)** | **1672** | **41-7** | **85%** |
+| Single-pass (Flash) | 1328 | 7-41 | 15% |
+
+**ELO difference:** 344 points (highly significant)
+
+### Key Finding
+
+**Two-pass wins decisively.** Separating OCR from translation produces significantly better results. The 344 ELO difference indicates the two-pass approach is clearly superior.
+
+### Why Two-Pass Wins
+
+Hypothesis: Separating the tasks allows the model to focus on one cognitive task at a time:
+1. **OCR pass:** Focus entirely on reading historical letterforms accurately
+2. **Translation pass:** Focus on understanding Latin grammar and producing fluent English
+
+When combined, the model may make compromises — for example, "translating" a misread word rather than carefully transcribing it first.
+
+### Cost Analysis
+
+| Condition | API Calls | Token Cost | Quality |
+|-----------|-----------|------------|---------|
+| Two-pass | 2 per page | $0.0006/page | Best |
+| Single-pass | 1 per page | $0.0006/page | Significantly worse |
+
+Cost is virtually identical, but quality differs dramatically.
+
+### Recommendation
+
+**Always use the two-pass pipeline:**
+1. OCR first → Extract Latin text
+2. Translate second → Latin to English
+
+This matches our current production pipeline and validates that architecture.
+
+### Experiment Metadata
+
+- **Experiment ID:** `8dca8b5f-372e-4752-b4be-915828a8f8fa`
+- **OCR/Translate Model:** Gemini 2.0 Flash
+- **Judge Model:** Claude Sonnet 4
+- **Pipeline cost:** $0.012
+- **Judging cost:** $0.32
+
+---
+
 ## Future Research
 
-### Next Experiment: Single-Pass vs Two-Pass Pipeline
+### Completed Experiments
 
-**Status:** Infrastructure built, pending deployment
+1. **OCR Batch Size** (above) — B1 Simple is best; never exceed batch 10
+2. **Single-Pass vs Two-Pass** (above) — Two-pass wins decisively
 
-Compare:
-- **Two-pass:** Image → OCR → Latin → Translate → English (2 API calls)
-- **Single-pass:** Image → OCR+Translate → English (1 API call)
-
-Endpoints created:
-- `POST /api/pipeline-experiments` - Create experiment
-- `POST /api/pipeline-experiments/[id]/run` - Run conditions
-- `POST /api/pipeline-experiments/[id]/judge` - AI judging with random matchups
-- `GET /api/pipeline-experiments/[id]/results` - ELO rankings
-
-### Other Experiments
+### Upcoming Experiments
 
 1. **Context window testing** — Does passing previous page context help or hurt?
 2. **Model comparison** — Test Claude, GPT-4o for OCR (not just judging)
