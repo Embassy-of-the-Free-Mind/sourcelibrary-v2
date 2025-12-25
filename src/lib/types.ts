@@ -306,6 +306,15 @@ export interface TranslationEdition {
   // Release notes
   changelog?: string;          // What changed from previous version
 
+  // Scholarly front matter
+  front_matter?: {
+    introduction?: string;     // Historical context, significance, authorship
+    methodology?: string;      // Translation approach, AI-assisted process, editorial conventions
+    acknowledgments?: string;  // Contributors, institutions, sources
+    generated_at?: Date;
+    generated_by?: string;     // Model used to generate
+  };
+
   // Archived exports (S3 URLs)
   exports?: {
     pdf_a?: string;            // Archival PDF
