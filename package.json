@@ -24,7 +24,7 @@
     "date-fns": "^4.1.0",
     "epub-gen-memory": "^1.1.2",
     "lucide-react": "^0.560.0",
-    "mongodb": "^7.0.0",
+    "mongodb": "^6.12.0",
     "next": "16.0.10",
     "next-auth": "^5.0.0-beta.30",
     "openai": "^6.10.0",
