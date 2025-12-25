@@ -76,13 +76,7 @@ export async function POST(
         const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
         const features = await extractFeatures(imageBuffer);
 
-        // Check if it's actually a two-page spread (landscape)
-        if (features.aspectRatio < 1.0) {
-          // Portrait image - skip, not a two-page spread
-          continue;
-        }
-
-        // Predict split position
+        // Predict split position using ML
         const position = predictWithModel(features, model);
 
         splits.push({
@@ -98,7 +92,7 @@ export async function POST(
 
     if (splits.length === 0) {
       return NextResponse.json({
-        message: 'No two-page spreads found (all pages are portrait)',
+        message: 'No pages to split',
         processed: 0,
         errors
       });
