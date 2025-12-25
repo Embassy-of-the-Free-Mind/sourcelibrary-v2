@@ -198,6 +198,15 @@ export async function POST(request: NextRequest) {
           const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
           const features = await extractFeatures(imageBuffer);
 
+          // Get page count for this book
+          const totalPagesCount = await db.collection('pages').countDocuments({ book_id: book.id });
+
+          // Add page context features
+          features.pageNumber = page.page_number || 0;
+          features.totalPages = totalPagesCount;
+          features.pagePosition = totalPagesCount > 0 ? (page.page_number || 0) / totalPagesCount : 0.5;
+          features.bookSizeCategory = totalPagesCount < 100 ? 0 : totalPagesCount < 300 ? 1 : 2;
+
           // Store training example
           const trainingExample = {
             pageId: page.id,

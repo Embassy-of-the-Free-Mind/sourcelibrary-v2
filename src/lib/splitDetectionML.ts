@@ -346,6 +346,8 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     invertedGutterOffset: 0,
     aspectRatioOffset: 0,
     pagePositionOffset: 0,
+    textGapCenterWeight: 0,
+    bookSizeOffset: 0,
   };
 
   const learningRate = 0.0001;
@@ -360,6 +362,8 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       invertedGutterOffset: 0,
       aspectRatioOffset: 0,
       pagePositionOffset: 0,
+      textGapCenterWeight: 0,
+      bookSizeOffset: 0,
     };
 
     for (const example of train) {
@@ -369,6 +373,12 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       // Page position: 0=start, 0.5=middle, 1=end (default to 0.5 if missing)
       const pagePos = f.pagePosition ?? 0.5;
 
+      // Book size category: 0=small (<100), 1=medium (100-300), 2=large (300+)
+      const bookSize = f.bookSizeCategory ?? 1;
+
+      // Text gap center (normalized to deviation from 500)
+      const textGapCenterDev = (f.textGapCenter ?? 500) - 500;
+
       // Prediction - use simpler features that are more robust
       const pred =
         weights.bias +
@@ -377,7 +387,9 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
         weights.edgeCenterDiff * (f.edgeCenterDiff / 50) + // Scale down
         weights.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
         weights.aspectRatioOffset * (f.aspectRatio - 1.5) +
-        weights.pagePositionOffset * (pagePos - 0.5); // Center around middle of book
+        weights.pagePositionOffset * (pagePos - 0.5) + // Center around middle of book
+        weights.textGapCenterWeight * (textGapCenterDev / 100) + // Text gap center contribution
+        weights.bookSizeOffset * (bookSize - 1); // Center around medium books
 
       const error = pred - target;
 
@@ -390,6 +402,8 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       gradients.invertedGutterOffset += clip(error * (f.hasInvertedGutter ? 1 : 0));
       gradients.aspectRatioOffset += clip(error * (f.aspectRatio - 1.5));
       gradients.pagePositionOffset += clip(error * (pagePos - 0.5));
+      gradients.textGapCenterWeight += clip(error * (textGapCenterDev / 100));
+      gradients.bookSizeOffset += clip(error * (bookSize - 1));
     }
 
     // Update weights
@@ -401,6 +415,8 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     weights.invertedGutterOffset -= learningRate * (gradients.invertedGutterOffset / n);
     weights.aspectRatioOffset -= learningRate * (gradients.aspectRatioOffset / n);
     weights.pagePositionOffset -= learningRate * (gradients.pagePositionOffset / n);
+    weights.textGapCenterWeight -= learningRate * (gradients.textGapCenterWeight / n);
+    weights.bookSizeOffset -= learningRate * (gradients.bookSizeOffset / n);
   }
 
   // Compute validation MSE
@@ -409,6 +425,8 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     const f = example.features;
     const target = example.geminiPosition;
     const pagePos = f.pagePosition ?? 0.5;
+    const bookSize = f.bookSizeCategory ?? 1;
+    const textGapCenterDev = (f.textGapCenter ?? 500) - 500;
 
     const pred =
       weights.bias +
@@ -417,7 +435,9 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       weights.edgeCenterDiff * (f.edgeCenterDiff / 50) +
       weights.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
       weights.aspectRatioOffset * (f.aspectRatio - 1.5) +
-      weights.pagePositionOffset * (pagePos - 0.5);
+      weights.pagePositionOffset * (pagePos - 0.5) +
+      weights.textGapCenterWeight * (textGapCenterDev / 100) +
+      weights.bookSizeOffset * (bookSize - 1);
 
     validationMSE += Math.pow(pred - target, 2);
   }
@@ -438,6 +458,8 @@ export function predictWithModel(features: SplitFeatures, model: SplitModel): nu
   const f = features;
   const w = model.weights;
   const pagePos = f.pagePosition ?? 0.5;
+  const bookSize = f.bookSizeCategory ?? 1;
+  const textGapCenterDev = (f.textGapCenter ?? 500) - 500;
 
   // Use same normalization as training
   const position =
@@ -447,7 +469,9 @@ export function predictWithModel(features: SplitFeatures, model: SplitModel): nu
     w.edgeCenterDiff * (f.edgeCenterDiff / 50) +
     w.invertedGutterOffset * (f.hasInvertedGutter ? 1 : 0) +
     w.aspectRatioOffset * (f.aspectRatio - 1.5) +
-    (w.pagePositionOffset ?? 0) * (pagePos - 0.5);
+    (w.pagePositionOffset ?? 0) * (pagePos - 0.5) +
+    (w.textGapCenterWeight ?? 0) * (textGapCenterDev / 100) +
+    (w.bookSizeOffset ?? 0) * (bookSize - 1);
 
   // Clamp to valid range (center region 350-650)
   return Math.max(350, Math.min(650, Math.round(position)));

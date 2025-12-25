@@ -144,6 +144,9 @@ export async function POST(request: NextRequest) {
         features.totalPages = totalPages;
         features.pagePosition = totalPages > 0 ? page.page_number / totalPages : 0.5;
 
+        // Book size category: 0=small (<100), 1=medium (100-300), 2=large (300+)
+        features.bookSizeCategory = totalPages < 100 ? 0 : totalPages < 300 ? 1 : 2;
+
         // Store training example with user source
         await db.collection('split_training_examples').insertOne({
           pageId: page.id,
