@@ -10,6 +10,7 @@ import BookHistory from '@/components/BookHistory';
 import BookChat from '@/components/BookChat';
 import BookAnalytics from '@/components/BookAnalytics';
 import CoverImagePicker from '@/components/CoverImagePicker';
+import DownloadButton from '@/components/DownloadButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -141,6 +142,13 @@ async function BookInfo({ id }: { id: string }) {
                   <Glasses className="w-4 h-4" />
                   Read
                 </Link>
+                <DownloadButton
+                  bookId={book.id}
+                  hasTranslations={pages.some(p => p.translation?.data)}
+                  hasOcr={pages.some(p => p.ocr?.data)}
+                  hasImages={pages.length > 0}
+                  variant="header"
+                />
                 <BookAnalytics bookId={book.id} />
                 <SearchPanel bookId={book.id} />
                 <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />

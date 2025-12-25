@@ -1022,17 +1022,201 @@ p:first-of-type { text-indent: 0; }
   });
 }
 
+// Generate ZIP of all page images
+async function generateImagesZip(
+  book: Book,
+  pages: Page[]
+): Promise<Buffer> {
+  const validPages = pages.filter(p => p.photo || p.compressed_photo);
+
+  return new Promise(async (resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const archive = archiver('zip', { zlib: { level: 6 } });
+
+    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
+    archive.on('end', () => resolve(Buffer.concat(chunks)));
+    archive.on('error', reject);
+
+    // Fetch and add each image
+    console.log(`Fetching ${validPages.length} images for ZIP...`);
+    for (const page of validPages) {
+      const imageUrl = page.compressed_photo || page.photo;
+      const imageBuffer = await fetchAndCompressImage(imageUrl);
+      if (imageBuffer) {
+        const paddedNum = String(page.page_number).padStart(4, '0');
+        archive.append(imageBuffer, { name: `page-${paddedNum}.jpg` });
+      }
+    }
+
+    archive.finalize();
+  });
+}
+
+// Generate images-only EPUB (no translation, just the processed page images)
+async function generateImagesOnlyEpubDownload(
+  book: Book,
+  pages: Page[]
+): Promise<Buffer> {
+  const now = new Date().toISOString().split('T')[0];
+  const bookTitle = book.display_title || book.title;
+  const bookId = `urn:uuid:${book.id}`;
+
+  const validPages = pages.filter(p => p.photo || p.compressed_photo);
+
+  return new Promise(async (resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const archive = archiver('zip', { zlib: { level: 9 } });
+
+    archive.on('data', (chunk: Buffer) => chunks.push(chunk));
+    archive.on('end', () => resolve(Buffer.concat(chunks)));
+    archive.on('error', reject);
+
+    // mimetype
+    archive.append('application/epub+zip', { name: 'mimetype', store: true });
+
+    // container.xml
+    archive.append(`<?xml version="1.0" encoding="UTF-8"?>
+<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
+  <rootfiles>
+    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
+  </rootfiles>
+</container>`, { name: 'META-INF/container.xml' });
+
+    const spineItems: string[] = [];
+    const manifestItems: string[] = [];
+    const navItems: string[] = [];
+
+    // Title page
+    manifestItems.push(`<item id="title" href="title.xhtml" media-type="application/xhtml+xml"/>`);
+    spineItems.push(`<itemref idref="title"/>`);
+    navItems.push(`<li><a href="title.xhtml">Title Page</a></li>`);
+
+    // Image pages
+    for (const page of validPages) {
+      const imgId = `img-${page.page_number}`;
+      const pageId = `page-${page.page_number}`;
+      manifestItems.push(`<item id="${imgId}" href="images/${imgId}.jpg" media-type="image/jpeg"/>`);
+      manifestItems.push(`<item id="${pageId}" href="${pageId}.xhtml" media-type="application/xhtml+xml"/>`);
+      spineItems.push(`<itemref idref="${pageId}"/>`);
+      navItems.push(`<li><a href="${pageId}.xhtml">Page ${page.page_number}</a></li>`);
+    }
+
+    manifestItems.push(`<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>`);
+    manifestItems.push(`<item id="css" href="styles.css" media-type="text/css"/>`);
+
+    // OPF
+    const opf = `<?xml version="1.0" encoding="UTF-8"?>
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="bookid" prefix="rendition: http://www.idpf.org/vocab/rendition/#">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:identifier id="bookid">${bookId}</dc:identifier>
+    <dc:title>${escapeXml(bookTitle)}</dc:title>
+    <dc:creator>${escapeXml(book.author)}</dc:creator>
+    <dc:publisher>Source Library</dc:publisher>
+    <dc:language>${book.language || 'en'}</dc:language>
+    <dc:date>${now}</dc:date>
+    <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
+    <meta property="rendition:layout">pre-paginated</meta>
+    <meta property="rendition:spread">auto</meta>
+  </metadata>
+  <manifest>
+    ${manifestItems.join('\n    ')}
+  </manifest>
+  <spine>
+    ${spineItems.join('\n    ')}
+  </spine>
+</package>`;
+    archive.append(opf, { name: 'OEBPS/content.opf' });
+
+    // Nav
+    const nav = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+<head><meta charset="UTF-8"/><title>Contents</title></head>
+<body>
+  <nav epub:type="toc" id="toc">
+    <h1>Contents</h1>
+    <ol>${navItems.join('\n')}</ol>
+  </nav>
+</body>
+</html>`;
+    archive.append(nav, { name: 'OEBPS/nav.xhtml' });
+
+    // CSS
+    const css = `
+@page { margin: 0; }
+html, body { margin: 0; padding: 0; width: ${PAGE_WIDTH}px; height: ${PAGE_HEIGHT}px; }
+body { background: #1a1a1a; display: flex; align-items: center; justify-content: center; }
+.page-container { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+.page-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.title-page { text-align: center; color: #fff; padding: 40px; }
+.title-page h1 { font-size: 24px; margin-bottom: 20px; }
+`;
+    archive.append(css, { name: 'OEBPS/styles.css' });
+
+    // Title page
+    const titlePage = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=${PAGE_WIDTH}, height=${PAGE_HEIGHT}"/>
+  <title>Title</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="title-page">
+    <h1>${escapeXml(bookTitle)}</h1>
+    <p>${escapeXml(book.author)}</p>
+    ${book.published ? `<p>${escapeXml(book.published)}</p>` : ''}
+    <p style="margin-top:40px;font-size:12px;color:#888;">Source Library · ${now}</p>
+  </div>
+</body>
+</html>`;
+    archive.append(titlePage, { name: 'OEBPS/title.xhtml' });
+
+    // Fetch images and create pages
+    console.log(`Fetching ${validPages.length} images for images-only EPUB...`);
+    for (const page of validPages) {
+      const imageUrl = page.compressed_photo || page.photo;
+      const imageBuffer = await fetchAndCompressImage(imageUrl);
+
+      if (imageBuffer) {
+        archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
+      }
+
+      const imgPage = `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=${PAGE_WIDTH}, height=${PAGE_HEIGHT}"/>
+  <title>Page ${page.page_number}</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="page-container">
+    ${imageBuffer ? `<img src="images/img-${page.page_number}.jpg" alt="Page ${page.page_number}"/>` : '<p style="color:#666;">Image unavailable</p>'}
+  </div>
+</body>
+</html>`;
+      archive.append(imgPage, { name: `OEBPS/page-${page.page_number}.xhtml` });
+    }
+
+    archive.finalize();
+  });
+}
+
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
     const format = searchParams.get('format') || 'translation';
 
-    // Valid formats: TXT (translation, ocr, both) and EPUB (epub-translation, epub-ocr, epub-both, epub-parallel, epub-facsimile)
-    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile'];
+    // Valid formats: TXT, EPUB, and ZIP
+    const validFormats = ['translation', 'ocr', 'both', 'epub-translation', 'epub-ocr', 'epub-both', 'epub-parallel', 'epub-facsimile', 'epub-images', 'images-zip'];
     if (!validFormats.includes(format)) {
       return NextResponse.json(
-        { error: 'Invalid format. Use: translation, ocr, both, epub-translation, epub-ocr, epub-both, epub-parallel, or epub-facsimile' },
+        { error: 'Invalid format' },
         { status: 400 }
       );
     }
@@ -1040,6 +1224,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const isEpub = format.startsWith('epub-');
     const isLoeb = format === 'epub-parallel';
     const isFacsimile = format === 'epub-facsimile';
+    const isImagesOnly = format === 'epub-images';
+    const isImagesZip = format === 'images-zip';
 
     const db = await getDb();
 
@@ -1062,11 +1248,33 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       .replace(/^-|-$/g, '')
       .substring(0, 50);
 
+    // Handle images ZIP download
+    if (isImagesZip) {
+      const zipBuffer = await generateImagesZip(
+        book as unknown as Book,
+        pages as unknown as Page[]
+      );
+      return new Response(new Uint8Array(zipBuffer), {
+        headers: {
+          'Content-Type': 'application/zip',
+          'Content-Disposition': `attachment; filename="${safeTitle}-images.zip"`,
+          'Cache-Control': 'no-cache',
+        },
+      });
+    }
+
     if (isEpub) {
       let epubBuffer: Buffer;
       let filename: string;
 
-      if (isFacsimile) {
+      if (isImagesOnly) {
+        // Generate images-only EPUB (no translation text)
+        epubBuffer = await generateImagesOnlyEpubDownload(
+          book as unknown as Book,
+          pages as unknown as Page[]
+        );
+        filename = `${safeTitle}-images.epub`;
+      } else if (isFacsimile) {
         // Generate facsimile EPUB (page images + translation)
         epubBuffer = await generateFacsimileEpubDownload(
           book as unknown as Book,

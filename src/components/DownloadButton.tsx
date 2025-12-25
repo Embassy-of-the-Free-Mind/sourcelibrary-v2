@@ -7,9 +7,11 @@ interface DownloadButtonProps {
   bookId: string;
   hasTranslations: boolean;
   hasOcr: boolean;
+  hasImages?: boolean;
+  variant?: 'default' | 'header';
 }
 
-export default function DownloadButton({ bookId, hasTranslations, hasOcr }: DownloadButtonProps) {
+export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasImages = true, variant = 'default' }: DownloadButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [downloading, setDownloading] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -26,7 +28,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr }: Down
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleDownload = async (format: 'translation' | 'ocr' | 'both' | 'epub-translation' | 'epub-ocr' | 'epub-both' | 'epub-parallel' | 'epub-facsimile') => {
+  const handleDownload = async (format: 'translation' | 'ocr' | 'both' | 'epub-translation' | 'epub-ocr' | 'epub-both' | 'epub-parallel' | 'epub-facsimile' | 'epub-images' | 'images-zip') => {
     setDownloading(format);
     try {
       const response = await fetch(`/api/books/${bookId}/download?format=${format}`);
@@ -35,7 +37,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr }: Down
       const blob = await response.blob();
       const contentDisposition = response.headers.get('Content-Disposition');
       const filenameMatch = contentDisposition?.match(/filename="(.+)"/);
-      const defaultExt = format.startsWith('epub-') ? 'epub' : 'txt';
+      const defaultExt = format === 'images-zip' ? 'zip' : format.startsWith('epub-') ? 'epub' : 'txt';
       const filename = filenameMatch ? filenameMatch[1] : `download-${format}.${defaultExt}`;
 
       // Create download link
@@ -58,15 +60,19 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr }: Down
   };
 
   // Don't show if no content available
-  if (!hasTranslations && !hasOcr) {
+  if (!hasTranslations && !hasOcr && !hasImages) {
     return null;
   }
+
+  const buttonClass = variant === 'header'
+    ? "flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg text-sm transition-colors"
+    : "flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium text-sm transition-colors";
 
   return (
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium text-sm transition-colors"
+        className={buttonClass}
       >
         <Download className="w-4 h-4" />
         Download
@@ -202,7 +208,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr }: Down
             </button>
           )}
 
-          {hasTranslations && (
+          {hasTranslations && hasImages && (
             <button
               onClick={() => handleDownload('epub-facsimile')}
               disabled={downloading !== null}
@@ -217,6 +223,44 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr }: Down
                 <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-emerald-500 rounded-full animate-spin" />
               )}
             </button>
+          )}
+
+          {hasImages && (
+            <>
+              <div className="px-3 py-2 text-xs font-medium text-stone-500 uppercase tracking-wide border-t border-stone-100 mt-2">
+                Images Only
+              </div>
+
+              <button
+                onClick={() => handleDownload('epub-images')}
+                disabled={downloading !== null}
+                className="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50"
+              >
+                <BookOpen className="w-4 h-4 text-stone-600" />
+                <div className="text-left">
+                  <div className="text-sm font-medium text-stone-900">EPUB (Images)</div>
+                  <div className="text-xs text-stone-500">Page images as e-book</div>
+                </div>
+                {downloading === 'epub-images' && (
+                  <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-stone-500 rounded-full animate-spin" />
+                )}
+              </button>
+
+              <button
+                onClick={() => handleDownload('images-zip')}
+                disabled={downloading !== null}
+                className="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50"
+              >
+                <Image className="w-4 h-4 text-stone-600" />
+                <div className="text-left">
+                  <div className="text-sm font-medium text-stone-900">ZIP (Images)</div>
+                  <div className="text-xs text-stone-500">All page images as ZIP</div>
+                </div>
+                {downloading === 'images-zip' && (
+                  <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-stone-500 rounded-full animate-spin" />
+                )}
+              </button>
+            </>
           )}
 
           <div className="border-t border-stone-100 mt-2 pt-2 px-3 pb-1">
