@@ -132,10 +132,23 @@ export async function POST(request: NextRequest) {
     });
 
     if (validPages.length === 0) {
-      return NextResponse.json({ error: 'All image fetches failed' }, { status: 500 });
+      return NextResponse.json({
+        error: 'All image fetches failed',
+        details: `Could not fetch images for pages: ${failedPageIds.join(', ')}. Check that image URLs are accessible.`,
+        failedPageIds
+      }, { status: 500 });
     }
 
-    const model = genAI.getGenerativeModel({ model: modelId });
+    let model;
+    try {
+      model = genAI.getGenerativeModel({ model: modelId });
+    } catch (e) {
+      console.error('Failed to initialize Gemini model:', e);
+      return NextResponse.json({
+        error: `Invalid model "${modelId}" or API configuration error`,
+        details: e instanceof Error ? e.message : 'Unknown error'
+      }, { status: 500 });
+    }
 
     // Build the batch OCR prompt
     const basePrompt = customPrompt?.replace('{language}', language) ||
@@ -180,7 +193,46 @@ Return each transcription clearly separated with the exact format:
       });
     });
 
-    const result = await model.generateContent(content);
+    let result;
+    try {
+      result = await model.generateContent(content);
+    } catch (e) {
+      console.error('Gemini API call failed:', e);
+      const errMsg = e instanceof Error ? e.message : 'Unknown error';
+
+      // Parse common Gemini errors
+      if (errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('429')) {
+        return NextResponse.json({
+          error: 'Rate limit exceeded - too many requests',
+          details: 'Wait a moment and try again, or reduce batch size',
+          retryable: true
+        }, { status: 429 });
+      }
+      if (errMsg.includes('INVALID_ARGUMENT')) {
+        return NextResponse.json({
+          error: 'Invalid request to Gemini API',
+          details: errMsg
+        }, { status: 400 });
+      }
+      if (errMsg.includes('PERMISSION_DENIED') || errMsg.includes('API_KEY')) {
+        return NextResponse.json({
+          error: 'Gemini API key invalid or expired',
+          details: 'Check GEMINI_API_KEY configuration'
+        }, { status: 401 });
+      }
+      if (errMsg.includes('SAFETY') || errMsg.includes('blocked')) {
+        return NextResponse.json({
+          error: 'Content blocked by safety filters',
+          details: 'The image content was flagged - try a different page'
+        }, { status: 400 });
+      }
+
+      return NextResponse.json({
+        error: 'Gemini API error',
+        details: errMsg
+      }, { status: 500 });
+    }
+
     const responseText = result.response.text();
 
     // Parse the OCR results from the response
@@ -262,9 +314,32 @@ Return each transcription clearly separated with the exact format:
     });
   } catch (error) {
     console.error('Batch OCR error:', error);
-    return NextResponse.json(
-      { error: 'Batch OCR failed', details: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
-    );
+    const errMsg = error instanceof Error ? error.message : 'Unknown error';
+
+    // Check for common issues
+    if (errMsg.includes('JSON')) {
+      return NextResponse.json({
+        error: 'Invalid request format',
+        details: 'Request body must be valid JSON with pages array'
+      }, { status: 400 });
+    }
+    if (errMsg.includes('ECONNREFUSED') || errMsg.includes('fetch')) {
+      return NextResponse.json({
+        error: 'Network error',
+        details: 'Could not connect to image server or Gemini API'
+      }, { status: 503 });
+    }
+    if (errMsg.includes('timeout') || errMsg.includes('ETIMEDOUT')) {
+      return NextResponse.json({
+        error: 'Request timeout',
+        details: 'Processing took too long - try fewer pages per batch',
+        retryable: true
+      }, { status: 504 });
+    }
+
+    return NextResponse.json({
+      error: 'Batch OCR failed',
+      details: errMsg
+    }, { status: 500 });
   }
 }

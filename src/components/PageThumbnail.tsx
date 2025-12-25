@@ -45,9 +45,10 @@ export default function PageThumbnail({ page, bookId, index }: PageThumbnailProp
 
   // Build image URL with crop if available
   const getImageUrl = () => {
-    // If we have a pre-generated compressed photo for a cropped page, use it
-    if (page.crop && page.compressed_photo) {
-      return page.compressed_photo;
+    // If we have a pre-generated cropped photo, use it
+    const croppedPhoto = (page as unknown as Record<string, unknown>).cropped_photo as string | undefined;
+    if (page.crop && croppedPhoto) {
+      return croppedPhoto;
     }
     const baseUrl = page.photo_original || page.photo;
     if (!baseUrl) return null;

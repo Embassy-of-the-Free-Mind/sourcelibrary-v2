@@ -73,6 +73,7 @@ interface ProcessingState {
   failed: string[];
   totalCost: number;
   totalTokens: number;
+  lastError?: string;  // Most recent error message for display
 }
 
 // Estimated token usage per action
@@ -575,11 +576,18 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               previousContext = data.translations[lastId] || '';
             }
           } else {
+            // Parse error from response
+            const errorData = await response.json().catch(() => ({}));
+            const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
+            console.error('Batch translation error:', errorMsg);
             batchIds.forEach(id => failed.push(id));
+            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
           }
         } catch (error) {
-          console.error('Batch translation error:', error);
+          const errorMsg = error instanceof Error ? error.message : 'Network error';
+          console.error('Batch translation error:', errorMsg);
           batchIds.forEach(id => failed.push(id));
+          setProcessing(prev => ({ ...prev, lastError: errorMsg }));
         }
 
         processedCount += batchIds.length;
@@ -668,11 +676,18 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               previousContext = data.ocrResults[lastId] || '';
             }
           } else {
+            // Parse error from response
+            const errorData = await response.json().catch(() => ({}));
+            const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
+            console.error('Batch OCR error:', errorMsg);
             batchIds.forEach(id => failed.push(id));
+            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
           }
         } catch (error) {
-          console.error('Batch OCR error:', error);
+          const errorMsg = error instanceof Error ? error.message : 'Network error';
+          console.error('Batch OCR error:', errorMsg);
           batchIds.forEach(id => failed.push(id));
+          setProcessing(prev => ({ ...prev, lastError: errorMsg }));
         }
 
         processedCount += batchIds.length;
@@ -958,11 +973,18 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   ) : (
                     <CheckCircle2 className="w-5 h-5 text-green-500" />
                   )}
-                  <span className={`text-sm font-medium ${processing.failed.length > 0 ? 'text-red-700' : 'text-green-700'}`}>
-                    {processing.failed.length > 0
-                      ? `Completed with ${processing.failed.length} failed (${processing.completed.length} succeeded)`
-                      : `All ${processing.completed.length} pages processed successfully`}
-                  </span>
+                  <div className="flex flex-col">
+                    <span className={`text-sm font-medium ${processing.failed.length > 0 ? 'text-red-700' : 'text-green-700'}`}>
+                      {processing.failed.length > 0
+                        ? `Completed with ${processing.failed.length} failed (${processing.completed.length} succeeded)`
+                        : `All ${processing.completed.length} pages processed successfully`}
+                    </span>
+                    {processing.lastError && processing.failed.length > 0 && (
+                      <span className="text-xs text-red-600 mt-1">
+                        Error: {processing.lastError}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   {processing.totalCost > 0 && (

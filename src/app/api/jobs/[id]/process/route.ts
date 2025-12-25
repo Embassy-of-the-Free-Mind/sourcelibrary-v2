@@ -278,12 +278,12 @@ export async function POST(
             contentType: 'image/jpeg',
           });
 
-          // Update page with new compressed photo URL
+          // Update page with new cropped photo URL
           await db.collection('pages').updateOne(
             { id: pageId },
             {
               $set: {
-                compressed_photo: blob.url,
+                cropped_photo: blob.url,
                 updated_at: new Date(),
               },
             }

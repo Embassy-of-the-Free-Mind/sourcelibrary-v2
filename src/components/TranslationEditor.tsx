@@ -362,9 +362,10 @@ export default function TranslationEditor({
 
   // Build image URL with crop if available
   const getImageUrl = (p: Page, forThumbnail = false) => {
-    // If we have a pre-generated compressed photo for a cropped page, use it
-    if (p.crop && p.compressed_photo) {
-      return p.compressed_photo;
+    // If we have a pre-generated cropped photo, use it (stored in cropped_photo field)
+    const croppedPhoto = (p as unknown as Record<string, unknown>).cropped_photo as string | undefined;
+    if (p.crop && croppedPhoto) {
+      return croppedPhoto;
     }
     const baseUrl = p.photo_original || p.photo;
     if (!baseUrl) return '';
@@ -375,8 +376,9 @@ export default function TranslationEditor({
     return baseUrl;
   };
   const pageImageUrl = getImageUrl(page);
-  // For thumbnails, prefer pre-generated compressed photo, then dynamic crop
-  const pageThumbnailUrl = page.compressed_photo || (page.crop ? getImageUrl(page, true) : page.thumbnail);
+  // For thumbnails, prefer pre-generated cropped photo, then dynamic crop, then regular thumbnail
+  const croppedPhoto = (page as unknown as Record<string, unknown>).cropped_photo as string | undefined;
+  const pageThumbnailUrl = (page.crop && croppedPhoto) ? croppedPhoto : (page.crop ? getImageUrl(page, true) : (page.thumbnail || page.compressed_photo));
 
   // Keyboard navigation
   useEffect(() => {
