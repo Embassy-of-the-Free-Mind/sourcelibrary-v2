@@ -1849,26 +1849,45 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           edition = editions[0] || null;
         }
 
-        // Get book index
-        const indexDoc = await db.collection('book_indexes').findOne({ book_id: id });
-        if (indexDoc) {
-          bookIndex = {
-            vocabulary: indexDoc.vocabulary || [],
-            keywords: indexDoc.keywords || [],
-            people: indexDoc.people || [],
-            places: indexDoc.places || [],
-            concepts: indexDoc.concepts || [],
+        // Get book index (stored directly on book.index)
+        const typedBook = book as unknown as Book & {
+          index?: {
+            vocabulary?: ConceptEntry[];
+            keywords?: ConceptEntry[];
+            people?: ConceptEntry[];
+            places?: ConceptEntry[];
+            concepts?: ConceptEntry[];
+            bookSummary?: { brief?: string; abstract?: string; detailed?: string };
           };
+        };
+
+        if (typedBook.index) {
+          bookIndex = {
+            vocabulary: typedBook.index.vocabulary || [],
+            keywords: typedBook.index.keywords || [],
+            people: typedBook.index.people || [],
+            places: typedBook.index.places || [],
+            concepts: typedBook.index.concepts || [],
+          };
+
+          // Book summary is also in the index object
+          if (typedBook.index.bookSummary) {
+            bookSummary = {
+              brief: typedBook.index.bookSummary.brief,
+              abstract: typedBook.index.bookSummary.abstract,
+              detailed: typedBook.index.bookSummary.detailed,
+            };
+          }
         }
 
-        // Get book summary
-        const summaryDoc = await db.collection('book_summaries').findOne({ book_id: id });
-        if (summaryDoc) {
-          bookSummary = {
-            brief: summaryDoc.brief,
-            abstract: summaryDoc.abstract,
-            detailed: summaryDoc.detailed,
-          };
+        // Fallback: Check book.summary for older format
+        if (!bookSummary && typedBook.summary) {
+          const summary = typedBook.summary;
+          if (typeof summary === 'object' && 'data' in summary) {
+            bookSummary = { detailed: (summary as { data: string }).data };
+          } else if (typeof summary === 'string') {
+            bookSummary = { detailed: summary };
+          }
         }
 
         epubBuffer = await generateScholarlyEpubDownload(
