@@ -78,6 +78,7 @@ export default function OCRQualityExperimentPage() {
   });
   const [runningCondition, setRunningCondition] = useState<string | null>(null);
   const [experimentId, setExperimentId] = useState<string | null>(null);
+  const [conditionResults, setConditionResults] = useState<Record<string, { success: boolean; pages?: number; error?: string }>>({});
 
   useEffect(() => {
     fetchBooks();
@@ -140,15 +141,29 @@ export default function OCRQualityExperimentPage() {
           body: JSON.stringify({ condition_id: condition.id }),
         });
 
+        const data = await res.json();
+
         if (res.ok) {
+          setConditionResults(prev => ({
+            ...prev,
+            [condition.id]: { success: true, pages: data.success_count },
+          }));
           setStatus(prev => ({
             ...prev,
             conditionsRun: [...prev.conditionsRun, condition.id],
           }));
         } else {
-          console.error('Failed to run condition:', condition.id);
+          setConditionResults(prev => ({
+            ...prev,
+            [condition.id]: { success: false, error: data.error || 'Unknown error' },
+          }));
+          console.error('Failed to run condition:', condition.id, data.error);
         }
       } catch (error) {
+        setConditionResults(prev => ({
+          ...prev,
+          [condition.id]: { success: false, error: error instanceof Error ? error.message : 'Network error' },
+        }));
         console.error('Error running condition:', condition.id, error);
       }
     }
@@ -410,20 +425,26 @@ export default function OCRQualityExperimentPage() {
               {CONDITIONS.map(condition => {
                 const isRun = status.conditionsRun.includes(condition.id);
                 const isRunning = runningCondition === condition.id;
+                const result = conditionResults[condition.id];
+                const hasFailed = result && !result.success;
 
                 return (
                   <div
                     key={condition.id}
                     className={`p-2 rounded-lg border text-center ${
-                      isRun
-                        ? 'bg-green-50 border-green-200'
-                        : isRunning
-                          ? 'bg-purple-50 border-purple-300'
-                          : 'bg-stone-50 border-stone-200'
+                      hasFailed
+                        ? 'bg-red-50 border-red-200'
+                        : isRun
+                          ? 'bg-green-50 border-green-200'
+                          : isRunning
+                            ? 'bg-purple-50 border-purple-300'
+                            : 'bg-stone-50 border-stone-200'
                     }`}
                   >
                     <div className="flex items-center justify-center gap-1 mb-1">
-                      {isRun ? (
+                      {hasFailed ? (
+                        <AlertCircle className="w-4 h-4 text-red-600" />
+                      ) : isRun ? (
                         <CheckCircle2 className="w-4 h-4 text-green-600" />
                       ) : isRunning ? (
                         <Loader2 className="w-4 h-4 text-purple-600 animate-spin" />
@@ -437,10 +458,29 @@ export default function OCRQualityExperimentPage() {
                     <p className="text-[10px] text-stone-500">
                       {condition.promptType}
                     </p>
+                    {result && (
+                      <p className={`text-[10px] mt-1 ${hasFailed ? 'text-red-600' : 'text-green-600'}`}>
+                        {hasFailed ? 'Error' : `${result.pages} pages`}
+                      </p>
+                    )}
                   </div>
                 );
               })}
             </div>
+
+            {/* Error log */}
+            {Object.entries(conditionResults).some(([, r]) => !r.success) && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm font-medium text-red-800 mb-2">Errors:</p>
+                {Object.entries(conditionResults)
+                  .filter(([, r]) => !r.success)
+                  .map(([id, r]) => (
+                    <p key={id} className="text-xs text-red-700">
+                      {CONDITIONS.find(c => c.id === id)?.label}: {r.error}
+                    </p>
+                  ))}
+              </div>
+            )}
 
             {allConditionsRun && (
               <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
