@@ -71,16 +71,29 @@ We also tested whether detailed OCR instructions ("elaborate prompts") improve a
 
 ELO accounts for opponent strength — beating a strong opponent matters more than beating a weak one.
 
+#### After Random Matchups (421 total judgments)
+
 | Rank | Condition | ELO | W-L | Notes |
 |------|-----------|-----|-----|-------|
-| 1 | B1 Elaborate | **1728** | 27-4 | Best quality |
-| 2 | B10 Simple | 1646 | 43-19 | Best large-batch |
-| 3 | B5 Elaborate | 1581 | 46-46 | Middle tier |
-| 4 | B1 Simple | 1562 | 17-14 | Good baseline |
-| 5 | B5 Simple | 1491 | 49-44 | Efficiency sweet spot |
-| 6 | B20 Elaborate | 1378 | 7-15 | Poor |
-| 7 | B10 Elaborate | 1331 | 17-35 | Elaborate hurts here |
-| 8 | B20 Simple | 1283 | 1-30 | Unacceptable quality |
+| 1 | **B1 Simple** | **1630** | 47-22 | Best overall |
+| 2 | B1 Elaborate | 1601 | 45-20 | Close second |
+| 3 | B10 Simple | 1592 | 59-25 | Best large-batch |
+| 4 | B5 Elaborate | 1571 | 74-62 | Good efficiency |
+| 5 | B5 Simple | 1523 | 71-61 | Solid choice |
+| 6 | B20 Elaborate | 1377 | 9-31 | Poor |
+| 7 | B20 Simple | 1363 | 8-54 | Poor |
+| 8 | B10 Elaborate | 1344 | 19-57 | Elaborate hurts here |
+
+#### Comparison: Fixed vs Random Matchups
+
+| Condition | Fixed Only (207) | +Random (421) | Change |
+|-----------|-----------------|---------------|--------|
+| B1 Simple | 1562 (4th) | 1630 (1st) | ↑ +68 |
+| B1 Elaborate | 1728 (1st) | 1601 (2nd) | ↓ -127 |
+| B10 Simple | 1646 (2nd) | 1592 (3rd) | ↓ -54 |
+| B5 Elaborate | 1581 (3rd) | 1571 (4th) | ↓ -10 |
+
+**Key insight:** The elaborate prompt advantage seen in fixed comparisons was an artifact of limited matchups. With random sampling, B1 Simple emerges as the true winner.
 
 ### Cost Analysis
 
@@ -127,13 +140,13 @@ Quality degradation across batch sizes:
 ### For maximum quality (archival/scholarly editions):
 ```
 Batch size: 1
-Prompt: Elaborate
-Expected cost: ~$0.0006/page
+Prompt: Simple
+Expected cost: ~$0.0005/page
 ```
 
 ### For production use (bulk processing):
 ```
-Batch size: 5
+Batch size: 5-10
 Prompt: Simple
 Expected cost: ~$0.0003/page
 ```
@@ -141,6 +154,7 @@ Expected cost: ~$0.0003/page
 ### Never use:
 - Batch size 20 (unacceptable quality)
 - Elaborate prompts with batch size >1 (counterproductive)
+- B10 Elaborate specifically (worst performer after B20)
 
 ## Future Research
 
