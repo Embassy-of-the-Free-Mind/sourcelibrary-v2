@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   Wand2,
   X,
@@ -14,6 +15,7 @@ import {
   AlertCircle,
   Settings,
   RotateCcw,
+  ExternalLink,
 } from 'lucide-react';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import type { Page, Prompt } from '@/lib/types';
@@ -746,7 +748,22 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
             </>
           ) : isProcessing ? (
             <>
-              <div className="text-sm text-stone-500">Processing...</div>
+              <div className="flex-1 text-sm space-y-1">
+                <div className="flex items-center gap-2 text-stone-600">
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                  <span>Processing... keep this page open</span>
+                </div>
+                <div className="text-stone-500">
+                  <Link
+                    href="/jobs"
+                    target="_blank"
+                    className="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700 underline"
+                  >
+                    View all jobs
+                    <ExternalLink className="w-3 h-3" />
+                  </Link>
+                </div>
+              </div>
               <button
                 onClick={() => {
                   stopRequestedRef.current = true;
