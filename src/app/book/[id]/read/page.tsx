@@ -206,9 +206,10 @@ export default function ReadPage({ params }: ReadPageProps) {
   };
 
   // Format date for display
-  const formatDate = (dateStr: string | undefined) => {
+  const formatDate = (dateStr: string | Date | undefined) => {
     if (!dateStr) return 'Unknown';
-    return new Date(dateStr).toLocaleString();
+    const date = typeof dateStr === 'string' ? new Date(dateStr) : dateStr;
+    return date.toLocaleString();
   };
 
   // Render translation text with full markdown support
