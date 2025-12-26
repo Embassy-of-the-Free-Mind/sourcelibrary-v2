@@ -75,9 +75,17 @@ export default function ReadPage({ params }: ReadPageProps) {
         setBook(bookData);
         setPages(bookData.pages || []);
 
-        // Check if book has a reading summary
+        // Check for summary - prefer reading_summary, fall back to index.bookSummary
         if (bookData.reading_summary) {
           setSummary(bookData.reading_summary);
+        } else if (bookData.index?.bookSummary) {
+          // Convert index summary to reading summary format
+          setSummary({
+            overview: bookData.index.bookSummary.detailed || bookData.index.bookSummary.abstract || bookData.index.bookSummary.brief || '',
+            quotes: [],
+            themes: [],
+            generated_at: bookData.index.generatedAt,
+          });
         }
 
         setError(null);
@@ -91,23 +99,36 @@ export default function ReadPage({ params }: ReadPageProps) {
     fetchData();
   }, [bookId]);
 
-  // Generate book summary
+  // Generate book summary using the index API
   const generateSummary = async () => {
     setGeneratingSummary(true);
 
     try {
-      const response = await fetch(`/api/books/${bookId}/summarize`, {
+      // First clear cached index to force regeneration
+      await fetch(`/api/books/${bookId}/index`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
+
+      // Then fetch fresh index
+      const response = await fetch(`/api/books/${bookId}/index`);
 
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.error || 'Failed to generate');
       }
 
-      const data = await response.json();
-      setSummary(data);
+      const indexData = await response.json();
+
+      // Convert to BookSummary format
+      if (indexData.bookSummary) {
+        setSummary({
+          overview: indexData.bookSummary.detailed || indexData.bookSummary.abstract || indexData.bookSummary.brief || '',
+          quotes: [],
+          themes: [],
+          generated_at: indexData.generatedAt,
+        });
+      }
     } catch (err) {
       console.error('Error generating summary:', err);
     } finally {

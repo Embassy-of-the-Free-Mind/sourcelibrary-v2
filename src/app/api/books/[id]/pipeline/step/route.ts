@@ -185,169 +185,70 @@ async function createTranslateJob(
   return { jobId, total: pages.length };
 }
 
-// Helper to search for academic work on a book
-async function searchAcademicWork(title: string, author: string): Promise<{
-  found: boolean;
-  summary?: string;
-  sources?: { title: string; url: string; snippet: string }[];
-}> {
-  try {
-    // Use Google search with academic focus
-    const searchQuery = `"${title}" ${author} scholarly article OR academic paper OR research`;
-    const encodedQuery = encodeURIComponent(searchQuery);
-
-    // Try Google Scholar via SerpAPI or similar (if configured)
-    const serpApiKey = process.env.SERP_API_KEY;
-    if (serpApiKey) {
-      const response = await fetch(
-        `https://serpapi.com/search.json?engine=google_scholar&q=${encodedQuery}&api_key=${serpApiKey}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        const results = data.organic_results || [];
-        if (results.length > 0) {
-          return {
-            found: true,
-            sources: results.slice(0, 5).map((r: { title: string; link: string; snippet: string }) => ({
-              title: r.title,
-              url: r.link,
-              snippet: r.snippet || ''
-            })),
-            summary: `Found ${results.length} academic references.`
-          };
-        }
-      }
-    }
-
-    // Fallback: try regular Google search for academic content
-    const googleApiKey = process.env.GOOGLE_API_KEY;
-    const googleCx = process.env.GOOGLE_SEARCH_CX;
-    if (googleApiKey && googleCx) {
-      const response = await fetch(
-        `https://www.googleapis.com/customsearch/v1?key=${googleApiKey}&cx=${googleCx}&q=${encodedQuery}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        const items = data.items || [];
-        const academicItems = items.filter((item: { link: string }) =>
-          item.link.includes('jstor.org') ||
-          item.link.includes('scholar.google') ||
-          item.link.includes('academia.edu') ||
-          item.link.includes('researchgate.net') ||
-          item.link.includes('.edu/') ||
-          item.link.includes('doi.org')
-        );
-        if (academicItems.length > 0) {
-          return {
-            found: true,
-            sources: academicItems.slice(0, 5).map((r: { title: string; link: string; snippet: string }) => ({
-              title: r.title,
-              url: r.link,
-              snippet: r.snippet || ''
-            })),
-            summary: `Found ${academicItems.length} potential academic references.`
-          };
-        }
-      }
-    }
-
-    return { found: false };
-  } catch (error) {
-    console.error('Error searching for academic work:', error);
-    return { found: false };
-  }
-}
-
-// Step: Summarize - includes academic research
+// Step: Summarize - generates the engagement-focused index summary
+// This uses the same approach as /api/books/[id]/index to create compelling copy
 async function executeSummarize(
   bookId: string,
-  config: PipelineConfig,
+  _config: PipelineConfig,
   db: Awaited<ReturnType<typeof getDb>>
 ): Promise<{ status: 'completed' | 'failed'; result?: Record<string, unknown>; error?: string }> {
-  // Get book info for research
   const book = await db.collection('books').findOne({ id: bookId });
-  const bookTitle = book?.display_title || book?.title || 'Unknown';
-  const bookAuthor = book?.author || '';
+  if (!book) {
+    return { status: 'failed', error: 'Book not found' };
+  }
 
-  // Get translated pages for summary
-  const translatedPages = await db.collection('pages')
-    .find({
-      book_id: bookId,
-      'translation.data': { $exists: true, $ne: '' }
-    })
-    .sort({ page_number: 1 })
-    .limit(50) // Limit for context window
-    .toArray();
+  const bookTitle = book.display_title || book.title || 'Unknown';
 
-  if (translatedPages.length === 0) {
+  // Check if we have translated pages
+  const translatedCount = await db.collection('pages').countDocuments({
+    book_id: bookId,
+    'translation.data': { $exists: true, $ne: '' }
+  });
+
+  if (translatedCount === 0) {
     return { status: 'failed', error: 'No translated pages to summarize' };
   }
 
-  // Search for academic work on this title (non-blocking, don't fail if it errors)
-  console.log(`[Pipeline] Searching for academic work on "${bookTitle}" by ${bookAuthor}`);
-  const academicResearch = await searchAcademicWork(bookTitle, bookAuthor);
-
-  // Combine translations for summary
-  const combinedText = translatedPages
-    .map(p => `[Page ${p.page_number}]\n${p.translation.data}`)
-    .join('\n\n---\n\n');
-
-  // Build context with academic research if found
-  let researchContext = '';
-  if (academicResearch.found && academicResearch.sources) {
-    researchContext = '\n\n## Existing Academic Work\n' +
-      academicResearch.sources.map(s => `- ${s.title}: ${s.snippet}`).join('\n');
-  }
-
-  // Import and use generateSummary
-  const { generateSummary } = await import('@/lib/ai');
-
   try {
-    const summaryResult = await generateSummary(
-      combinedText.slice(0, 50000) + researchContext, // Include research context
-      undefined,
-      undefined,
-      config.model
-    );
-
-    // Save summary to book with research info
+    // Clear any existing index/summary cache first
     await db.collection('books').updateOne(
       { id: bookId },
-      {
-        $set: {
-          reading_summary: {
-            overview: summaryResult.text,
-            quotes: [],
-            themes: [],
-            generated_at: new Date(),
-            model: config.model,
-            pages_analyzed: translatedPages.length,
-            academic_research: academicResearch.found ? {
-              found: true,
-              sources: academicResearch.sources,
-              searched_at: new Date(),
-            } : {
-              found: false,
-              searched_at: new Date(),
-            },
-          },
-          updated_at: new Date(),
-        },
-      }
+      { $unset: { index: '', summary: '' } }
     );
+
+    // Call the index API to generate the engagement-focused summary
+    // This endpoint generates compelling copy + extracts summaries from [[summary:]] tags
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000';
+
+    const indexResponse = await fetch(`${baseUrl}/api/books/${bookId}/index`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (!indexResponse.ok) {
+      const errorText = await indexResponse.text();
+      console.error('[Pipeline] Index generation failed:', errorText);
+      return { status: 'failed', error: 'Failed to generate book index' };
+    }
+
+    const indexData = await indexResponse.json();
+
+    console.log(`[Pipeline] Generated index for "${bookTitle}" with ${indexData.pagesCovered}/${indexData.totalPages} pages`);
 
     return {
       status: 'completed',
       result: {
-        pagesAnalyzed: translatedPages.length,
-        academicResearchFound: academicResearch.found,
-        academicSourcesCount: academicResearch.sources?.length || 0,
-        message: academicResearch.found
-          ? `Summary generated with ${academicResearch.sources?.length || 0} academic references`
-          : 'Summary generated (no existing academic work found)',
+        pagesCovered: indexData.pagesCovered,
+        totalPages: indexData.totalPages,
+        hasSummary: !!indexData.bookSummary?.brief,
+        sectionsCount: indexData.sectionSummaries?.length || 0,
+        message: `Index generated with ${indexData.pagesCovered} page summaries`,
       },
     };
   } catch (error) {
+    console.error('[Pipeline] Summary generation error:', error);
     return {
       status: 'failed',
       error: error instanceof Error ? error.message : 'Failed to generate summary'
