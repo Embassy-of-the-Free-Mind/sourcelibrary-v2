@@ -62,8 +62,80 @@ const CATEGORY_KEYWORDS: Record<string, string[]> = {
   ],
   'medicine': [
     'medicine', 'medical', 'healing', 'physician', 'cure', 'disease',
-    'remedy', 'herb', 'pharmaceutical', 'iatrochemistry', 'paracelsus',
+    'remedy', 'herb', 'pharmaceutical', 'iatrochemistry',
     'galenical', 'humour', 'anatomy', 'surgery'
+  ],
+  // New expanded categories
+  'gnosticism': [
+    'gnostic', 'gnosis', 'demiurge', 'sophia', 'archon', 'pleroma',
+    'valentinian', 'basilides', 'marcion', 'mandaean', 'manichaean',
+    'nag hammadi', 'pistis sophia', 'apocryphon', 'aeon'
+  ],
+  'theosophy': [
+    'theosophy', 'theosophical', 'blavatsky', 'besant', 'leadbeater',
+    'olcott', 'judge', 'mahatma', 'adyar', 'secret doctrine',
+    'isis unveiled', 'astral', 'etheric', 'devachan', 'karma',
+    'reincarnation', 'root race', 'round', 'chain'
+  ],
+  'pythagoreanism': [
+    'pythagoras', 'pythagorean', 'tetraktys', 'monad', 'dyad', 'triad',
+    'harmony of spheres', 'sacred geometry', 'number mysticism',
+    'philolaus', 'archytas', 'nicomachus', 'iamblichus'
+  ],
+  'divination': [
+    'divination', 'geomancy', 'geomantic', 'prophecy', 'oracle',
+    'omen', 'augury', 'sortilege', 'scrying', 'chiromancy',
+    'physiognomy', 'presage', 'prognostication', 'sibyl', 'lot'
+  ],
+  'ars-notoria': [
+    'ars notoria', 'notory art', 'sworn book', 'liber juratus',
+    'honorius', 'memory art', 'art of memory', 'mnemonic',
+    'angelic language', 'sacred names'
+  ],
+  'paracelsian': [
+    'paracelsus', 'paracelsian', 'hohenheim', 'paramirum', 'archidoxis',
+    'spagyric', 'three principles', 'tria prima', 'iatrochemistry',
+    'tartarus', 'archeus', 'vulcanus', 'iliaster'
+  ],
+  'spiritual-alchemy': [
+    'spiritual alchemy', 'inner alchemy', 'soul transformation',
+    'philosophical gold', 'spiritual gold', 'rebirth', 'regeneration',
+    'purification of soul', 'mystical marriage', 'chymical wedding'
+  ],
+  'christian-mysticism': [
+    'boehme', 'bohme', 'böhme', 'eckhart', 'meister eckhart', 'tauler',
+    'suso', 'ruysbroeck', 'theologia germanica', 'cloud of unknowing',
+    'dark night', 'interior castle', 'mystical theology', 'dionysius',
+    'quietism', 'guyon', 'fenelon', 'molinos'
+  ],
+  'egyptian': [
+    'egypt', 'egyptian', 'pharaoh', 'hieroglyphic', 'pyramid', 'isis',
+    'osiris', 'horus', 'thoth', 'hermes', 'memphis', 'thebes',
+    'book of dead', 'papyrus', 'temple', 'mystery'
+  ],
+  'renaissance': [
+    'ficino', 'pico', 'mirandola', 'renaissance', 'florentine',
+    'medici', 'quattrocento', 'cinquecento', '15th century', '16th century',
+    '1400', '1500', 'humanist', 'revival of learning'
+  ],
+  'reformation': [
+    'reformation', 'protestant', 'luther', 'calvin', 'zwingli',
+    'anabaptist', 'thirty years', 'counter-reformation', 'jesuit',
+    '1517', '1520', '1530', '1540', '1550', '1560', '1570', '1580',
+    '1590', '1600', '1610', '1620', '1630', '1640'
+  ],
+  'enlightenment': [
+    'enlightenment', 'aufklärung', 'reason', 'rationalist',
+    '1650', '1660', '1670', '1680', '1690', '1700', '1710', '1720',
+    '1730', '1740', '1750', '1760', '1770', '1780', '1790', '1800',
+    'encyclopédie', 'voltaire', 'illuminati', 'bavarian'
+  ],
+  '19th-century-revival': [
+    'spiritualism', 'spiritualist', 'séance', 'medium', 'occult revival',
+    'golden dawn', 'hermetic order', 'crowley', 'mathers', 'westcott',
+    '1800s', '1810', '1820', '1830', '1840', '1850', '1860', '1870',
+    '1880', '1890', '19th century', 'victorian', 'eliphas levi',
+    'papus', 'encausse', 'martinism'
   ],
 };
 

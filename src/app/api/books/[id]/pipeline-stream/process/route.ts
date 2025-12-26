@@ -322,7 +322,11 @@ export async function POST(
 
       const result = await processPageFully(
         page as unknown as Parameters<typeof processPageFully>[0],
-        { model: (job.config.model as string) || 'gemini-2.5-flash', language: (job.config.language as string) || 'Latin' },
+        {
+          model: (job.config.model as string) || 'gemini-2.5-flash',
+          language: (job.config.language as string) || 'Latin',
+          overwrite: Boolean(job.config.overwrite),
+        },
         db,
         previousOcr,
         previousTranslation

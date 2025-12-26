@@ -75,6 +75,85 @@ export const LIBRARY_CATEGORIES = [
     description: 'Paracelsian medicine, herbalism, and healing arts',
     icon: '⚕',
   },
+  // New expanded tags
+  {
+    id: 'gnosticism',
+    name: 'Gnosticism',
+    description: 'Ancient and revival texts on gnosis, the demiurge, and divine knowledge',
+    icon: '☯',
+  },
+  {
+    id: 'theosophy',
+    name: 'Theosophy',
+    description: 'Blavatsky, Besant, Leadbeater, and the Theosophical Society',
+    icon: '⊛',
+  },
+  {
+    id: 'pythagoreanism',
+    name: 'Pythagoreanism',
+    description: 'Number mysticism, sacred geometry, and harmonic philosophy',
+    icon: '△',
+  },
+  {
+    id: 'divination',
+    name: 'Divination',
+    description: 'Geomancy, prophecy, oracles, and divinatory arts',
+    icon: '🔮',
+  },
+  {
+    id: 'ars-notoria',
+    name: 'Ars Notoria',
+    description: 'Angelic arts, memory systems, and notory art tradition',
+    icon: '👁',
+  },
+  {
+    id: 'paracelsian',
+    name: 'Paracelsian',
+    description: 'Works by and influenced by Paracelsus',
+    icon: '🜍',
+  },
+  {
+    id: 'spiritual-alchemy',
+    name: 'Spiritual Alchemy',
+    description: 'Inner transformation and symbolic interpretation of alchemy',
+    icon: '🜂',
+  },
+  {
+    id: 'christian-mysticism',
+    name: 'Christian Mysticism',
+    description: 'Böhme, Eckhart, Tauler, and contemplative Christianity',
+    icon: '✟',
+  },
+  {
+    id: 'egyptian',
+    name: 'Egyptian',
+    description: 'Ancient Egyptian wisdom and Egyptianizing traditions',
+    icon: '𓂀',
+  },
+  {
+    id: 'renaissance',
+    name: 'Renaissance',
+    description: 'Works from 1450-1600, the rebirth of ancient wisdom',
+    icon: '🏛',
+  },
+  {
+    id: 'reformation',
+    name: 'Reformation Era',
+    description: 'Works from 1517-1648, religious and esoteric upheaval',
+    icon: '📜',
+  },
+  {
+    id: 'enlightenment',
+    name: 'Enlightenment',
+    description: 'Works from 1650-1800, reason meets esotericism',
+    icon: '💡',
+  },
+  {
+    id: '19th-century-revival',
+    name: '19th Century Revival',
+    description: 'Theosophy, spiritualism, and occult revival movements',
+    icon: '🌙',
+  },
 ];
 
 export interface CategoryWithCount {

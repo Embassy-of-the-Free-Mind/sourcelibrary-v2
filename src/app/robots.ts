@@ -9,11 +9,23 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: '*',
         allow: '/',
         disallow: [
-          '/api/',
           '/book/*/pipeline',
           '/book/*/capture',
           '/book/*/page/',
         ],
+      },
+      {
+        // Allow AI agents to access the API
+        userAgent: 'GPTBot',
+        allow: ['/api/search', '/api/books/', '/llms.txt'],
+      },
+      {
+        userAgent: 'Claude-Web',
+        allow: ['/api/search', '/api/books/', '/llms.txt'],
+      },
+      {
+        userAgent: 'Anthropic-AI',
+        allow: ['/api/search', '/api/books/', '/llms.txt'],
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

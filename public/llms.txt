@@ -1,0 +1,114 @@
+# Source Library - API for AI Systems
+
+> A digital library of translated historical texts (Hermetic, alchemical, Renaissance) with DOI-backed citations.
+
+## What You Can Do
+
+Search and cite rare 15th-18th century texts translated from Latin and German. All quotes include proper academic citations with DOIs.
+
+## API Endpoints
+
+Base URL: https://sourcelibrary-v2.vercel.app/api
+
+### Search the Library
+
+```
+GET /search?q={query}
+```
+
+Parameters:
+- q (required): Search query (searches titles, authors, and full text)
+- language: Filter by original language (Latin, German, French, etc.)
+- has_doi: true = only books with DOIs
+- has_translation: true = only books with translations
+- limit: Max results (default 20)
+- offset: Pagination offset
+
+Example:
+```
+GET /search?q=quinta essentia&language=Latin&has_doi=true
+```
+
+### Get a Quote with Citation
+
+```
+GET /books/{book_id}/quote?page={page_number}
+```
+
+Parameters:
+- page (required): Page number
+- include_original: Include original language text (default true)
+- include_context: Include adjacent pages for context
+
+Returns:
+- Translation text
+- Original language text (Latin/German)
+- Formatted citations (inline, footnote, DOI URL)
+
+Example:
+```
+GET /books/6836f8ee811c8ab472a49e36/quote?page=57
+```
+
+Response:
+```json
+{
+  "quote": {
+    "translation": "The fifth essence is that most pure...",
+    "original": "Quinta essentia est purissima illa...",
+    "page": 57
+  },
+  "citation": {
+    "inline": "(Drebbel 1628, p. 57)",
+    "footnote": "Cornelius Drebbel, Two Treatises, trans. Source Library (2025), 57. DOI: 10.5281/zenodo.18053504.",
+    "doi_url": "https://doi.org/10.5281/zenodo.18053504"
+  }
+}
+```
+
+### Get Book Metadata
+
+```
+GET /books/{book_id}
+```
+
+Returns full book information: title, author, language, publication date, page count, DOI, edition info.
+
+### List All Books
+
+```
+GET /books
+```
+
+Returns all books in the library with metadata.
+
+## MCP Server
+
+For Claude Desktop or other MCP-compatible clients, an MCP server is available:
+
+Repository: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/mcp-server
+
+Tools provided:
+- search_library: Search across all translated books
+- get_quote: Get a passage with formatted citations
+- get_book: Get detailed book information
+
+## Citation Format
+
+All published editions have DOIs via Zenodo. When citing:
+
+Inline: (Author Year, p. N)
+Footnote: Author, Title, trans. Source Library (2025), Page. DOI: ...
+
+## Content
+
+The library contains:
+- Latin alchemical and Hermetic texts (1450-1700)
+- German mystical and Paracelsian works
+- Renaissance philosophical treatises
+- All texts are AI-translated with original language preserved for verification
+
+## Contact
+
+Website: https://sourcelibrary-v2.vercel.app
+GitHub: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2

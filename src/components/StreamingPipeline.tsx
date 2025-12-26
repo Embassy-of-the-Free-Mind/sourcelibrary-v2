@@ -11,9 +11,9 @@ interface StreamingPipelineProps {
 
 interface PipelineStats {
   total: number;
-  needsCrop: number;
   needsOcr: number;
   needsTranslation: number;
+  hasCropSettings: number;
 }
 
 interface JobProgress {
@@ -39,6 +39,7 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
   const [job, setJob] = useState<JobState | null>(null);
   const [model, setModel] = useState('gemini-2.5-flash');
   const [parallelPages, setParallelPages] = useState(3);
+  const [overwrite, setOverwrite] = useState(false);
 
   const fetchStatus = useCallback(async () => {
     try {
@@ -91,7 +92,7 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
       const res = await fetch(`/api/books/${bookId}/pipeline-stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model, language, parallelPages }),
+        body: JSON.stringify({ model, language, parallelPages, overwrite }),
       });
 
       if (res.ok) {
@@ -156,16 +157,16 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
             <div className="text-xs text-stone-500">Total Pages</div>
           </div>
           <div className="bg-stone-50 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold text-blue-600">{stats.needsCrop}</div>
-            <div className="text-xs text-stone-500">Need Crop</div>
-          </div>
-          <div className="bg-stone-50 rounded-lg p-3 text-center">
             <div className="text-2xl font-bold text-purple-600">{stats.needsOcr}</div>
             <div className="text-xs text-stone-500">Need OCR</div>
           </div>
           <div className="bg-stone-50 rounded-lg p-3 text-center">
             <div className="text-2xl font-bold text-green-600">{stats.needsTranslation}</div>
             <div className="text-xs text-stone-500">Need Translation</div>
+          </div>
+          <div className="bg-stone-50 rounded-lg p-3 text-center">
+            <div className="text-2xl font-bold text-blue-600">{stats.hasCropSettings}</div>
+            <div className="text-xs text-stone-500">Split Pages</div>
           </div>
         </div>
       )}
