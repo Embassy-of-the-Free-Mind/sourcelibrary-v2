@@ -5,6 +5,7 @@ import { Book } from '@/lib/types';
 
 // Force dynamic rendering (no static generation)
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 async function getBooks(): Promise<Book[]> {
   try {
@@ -57,8 +58,8 @@ async function getBooks(): Promise<Book[]> {
               }
             }
           },
-          // Get the most recent processing timestamp from any page
-          last_processed: {
+          // Get the most recent processing timestamp from any page (with fallback to book updated_at)
+          _page_max_timestamp: {
             $max: {
               $map: {
                 input: '$pages_array',
@@ -71,6 +72,25 @@ async function getBooks(): Promise<Book[]> {
                 }
               }
             }
+          },
+          last_processed: {
+            $ifNull: [
+              {
+                $max: {
+                  $map: {
+                    input: '$pages_array',
+                    as: 'page',
+                    in: {
+                      $max: [
+                        { $ifNull: ['$$page.ocr.updated_at', null] },
+                        { $ifNull: ['$$page.translation.updated_at', null] }
+                      ]
+                    }
+                  }
+                }
+              },
+              '$updated_at'
+            ]
           }
         }
       },
@@ -87,7 +107,8 @@ async function getBooks(): Promise<Book[]> {
       },
       {
         $project: {
-          pages_array: 0
+          pages_array: 0,
+          _page_max_timestamp: 0
         }
       },
       {
