@@ -6,6 +6,7 @@ import { ArrowLeft, Play, Pause, RotateCcw, Loader2, CheckCircle, AlertCircle } 
 import { usePipeline } from '@/hooks/usePipeline';
 import PipelineProgress from '@/components/PipelineProgress';
 import PipelineConfigForm, { PipelineConfigDisplay } from '@/components/PipelineConfig';
+import StreamingPipeline from '@/components/StreamingPipeline';
 
 interface PipelinePageProps {
   params: Promise<{ id: string }>;
@@ -209,6 +210,25 @@ function PipelineContent({ bookId }: { bookId: string }) {
                 />
               </div>
             )}
+          </div>
+        )}
+
+        {/* Streaming Pipeline - alternative approach */}
+        {!hasStarted && (
+          <div className="mt-8">
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-stone-300" />
+              </div>
+              <div className="relative flex justify-center">
+                <span className="bg-stone-50 px-4 text-sm text-stone-500">or try the experimental option</span>
+              </div>
+            </div>
+            <StreamingPipeline
+              bookId={bookId}
+              bookTitle={bookTitle}
+              language={language}
+            />
           </div>
         )}
 

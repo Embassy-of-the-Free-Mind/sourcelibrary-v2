@@ -34,6 +34,62 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
   return inputCost + outputCost;
 }
 
+/**
+ * Perform OCR with a pre-loaded image buffer.
+ * Faster than performOCR when you already have the image data (e.g., after cropping).
+ */
+export async function performOCRWithBuffer(
+  imageBuffer: Buffer,
+  mimeType: string,
+  language: string,
+  previousPageOcr?: string,
+  customPrompt?: string,
+  modelId: string = DEFAULT_MODEL
+): Promise<AIResult> {
+  if (!process.env.GEMINI_API_KEY) {
+    throw new Error('GEMINI_API_KEY environment variable is not set');
+  }
+
+  const model = genAI.getGenerativeModel({ model: modelId });
+
+  let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
+
+  if (previousPageOcr) {
+    prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
+  }
+
+  const base64Image = imageBuffer.toString('base64');
+
+  try {
+    const result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          mimeType,
+          data: base64Image,
+        },
+      },
+    ]);
+
+    const usageMetadata = result.response.usageMetadata;
+    const inputTokens = usageMetadata?.promptTokenCount || 0;
+    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+    return {
+      text: result.response.text(),
+      usage: {
+        inputTokens,
+        outputTokens,
+        totalTokens: inputTokens + outputTokens,
+        costUsd: calculateCost(inputTokens, outputTokens, modelId),
+      },
+    };
+  } catch (geminiError) {
+    console.error('Gemini API error:', geminiError);
+    throw new Error(`Gemini API error: ${geminiError instanceof Error ? geminiError.message : 'Unknown error'}`);
+  }
+}
+
 export async function performOCR(
   imageUrl: string,
   language: string,

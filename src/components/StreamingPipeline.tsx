@@ -267,7 +267,7 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
 
           <button
             onClick={startPipeline}
-            disabled={starting || (stats && stats.needsCrop + stats.needsOcr + stats.needsTranslation === 0)}
+            disabled={starting || !!(stats && stats.needsCrop + stats.needsOcr + stats.needsTranslation === 0)}
             className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {starting ? (

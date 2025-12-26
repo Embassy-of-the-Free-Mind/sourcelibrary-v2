@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { performOCR, performTranslation } from '@/lib/ai';
+import { performOCR, performOCRWithBuffer, performTranslation } from '@/lib/ai';
 import { detectSplitFromBuffer } from '@/lib/splitDetection';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
@@ -237,34 +237,90 @@ export async function POST(
         );
 
         if (job.type === 'batch_ocr') {
-          // Get the correct image URL for OCR (respecting crop if present)
-          let imageUrl = page.photo;
+          // Get the correct image for OCR (respecting crop if present)
+          let ocrResult;
 
           if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-            // Use pre-generated cropped image if available
+            // Page was split - need cropped image
             if (page.cropped_photo) {
-              imageUrl = page.cropped_photo;
+              // Use pre-generated cropped image
+              ocrResult = await performOCR(
+                page.cropped_photo,
+                job.config.language || 'Latin',
+                previousOcr,
+                undefined,
+                job.config.model || 'gemini-2.0-flash'
+              );
             } else {
-              // Skip - cropped image needs to be generated first
-              results.push({
-                pageId,
-                success: false,
-                error: 'Page was split but cropped image not generated. Run "Generate Cropped Images" first.',
-                duration: performance.now() - itemStart,
+              // No cropped_photo yet - crop inline and use buffer directly (faster!)
+              const originalUrl = page.photo_original || page.photo;
+              const imageResponse = await fetch(originalUrl);
+              if (!imageResponse.ok) {
+                results.push({
+                  pageId,
+                  success: false,
+                  error: 'Failed to fetch image for cropping',
+                  duration: performance.now() - itemStart,
+                });
+                continue;
+              }
+
+              const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+              const metadata = await sharp(imageBuffer).metadata();
+              const imgWidth = metadata.width || 1000;
+              const imgHeight = metadata.height || 1000;
+
+              const left = Math.round((page.crop.xStart / 1000) * imgWidth);
+              const cropWidth = Math.round(((page.crop.xEnd - page.crop.xStart) / 1000) * imgWidth);
+
+              const croppedBuffer = await sharp(imageBuffer)
+                .extract({
+                  left,
+                  top: 0,
+                  width: Math.min(cropWidth, imgWidth - left),
+                  height: imgHeight,
+                })
+                .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
+                .jpeg({ quality: 80, progressive: true })
+                .toBuffer();
+
+              // Do OCR with buffer directly
+              ocrResult = await performOCRWithBuffer(
+                croppedBuffer,
+                'image/jpeg',
+                job.config.language || 'Latin',
+                previousOcr,
+                undefined,
+                job.config.model || 'gemini-2.0-flash'
+              );
+
+              // Upload cropped image in background for future use/viewing
+              const filename = `cropped/${page.book_id}/${pageId}.jpg`;
+              put(filename, croppedBuffer, {
+                access: 'public',
+                contentType: 'image/jpeg',
+                allowOverwrite: true,
+              }).then(blob => {
+                db.collection('pages').updateOne(
+                  { id: pageId },
+                  { $set: { cropped_photo: blob.url, updated_at: new Date() } }
+                );
+              }).catch(() => {
+                // Non-blocking - cropped image will be generated later if needed
               });
-              continue;
             }
+          } else {
+            // No crop data - use full image
+            ocrResult = await performOCR(
+              page.photo,
+              job.config.language || 'Latin',
+              previousOcr,
+              undefined,
+              job.config.model || 'gemini-2.0-flash'
+            );
           }
 
-          const ocrResult = await performOCR(
-            imageUrl,
-            job.config.language || 'Latin',
-            previousOcr,
-            undefined, // customPrompt - could add prompt lookup here
-            job.config.model || 'gemini-2.0-flash'
-          );
-
-          // Save to page
+          // Save OCR result to page
           await db.collection('pages').updateOne(
             { id: pageId },
             {

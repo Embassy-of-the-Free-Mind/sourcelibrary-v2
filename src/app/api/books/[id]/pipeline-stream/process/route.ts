@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { performOCR, performTranslation } from '@/lib/ai';
+import { performOCR, performOCRWithBuffer, performTranslation } from '@/lib/ai';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
@@ -9,6 +9,7 @@ import type { Job, JobResult } from '@/lib/types';
 export const maxDuration = 300;
 
 // Process a single page through the full pipeline: crop → OCR → translate
+// Key: If page has crop data, we MUST use the cropped image for OCR (not full spread)
 async function processPageFully(
   page: {
     id: string;
@@ -37,12 +38,21 @@ async function processPageFully(
   const steps: { crop?: boolean; ocr?: boolean; translate?: boolean } = {};
 
   try {
-    let imageUrl = page.cropped_photo || page.photo;
     let ocrText = page.ocr?.data;
     let translationText = page.translation?.data;
 
-    // Step 1: Generate cropped image if needed
-    if (page.crop && !page.cropped_photo) {
+    // Determine if we need to crop and/or do OCR
+    const needsCrop = page.crop && !page.cropped_photo;
+    const needsOcr = !ocrText;
+    const needsTranslate = !translationText;
+
+    // If page was split but needs OCR, we MUST have or create a cropped image
+    // This ensures OCR only sees the single page, not the full two-page spread
+    let croppedBuffer: Buffer | null = null;
+    let imageUrlForOcr = page.cropped_photo || page.photo;
+
+    // Step 1: Handle cropping (if needed)
+    if (needsCrop) {
       const originalUrl = page.photo_original || page.photo;
 
       // Fetch the original image
@@ -61,10 +71,10 @@ async function processPageFully(
       const imgWidth = metadata.width || 1000;
       const imgHeight = metadata.height || 1000;
 
-      const left = Math.round((page.crop.xStart / 1000) * imgWidth);
-      const cropWidth = Math.round(((page.crop.xEnd - page.crop.xStart) / 1000) * imgWidth);
+      const left = Math.round((page.crop!.xStart / 1000) * imgWidth);
+      const cropWidth = Math.round(((page.crop!.xEnd - page.crop!.xStart) / 1000) * imgWidth);
 
-      const croppedBuffer = await sharp(imageBuffer)
+      croppedBuffer = await sharp(imageBuffer)
         .extract({
           left,
           top: 0,
@@ -75,7 +85,42 @@ async function processPageFully(
         .jpeg({ quality: 80, progressive: true })
         .toBuffer();
 
-      // Upload to Vercel Blob
+      steps.crop = true;
+
+      // If we also need OCR, use the buffer directly (faster - skip upload round-trip)
+      // Upload happens in parallel/after OCR
+      if (needsOcr) {
+        // Do OCR with buffer directly - much faster!
+        const ocrResult = await performOCRWithBuffer(
+          croppedBuffer,
+          'image/jpeg',
+          config.language,
+          previousOcr,
+          undefined,
+          config.model
+        );
+
+        ocrText = ocrResult.text;
+
+        await db.collection('pages').updateOne(
+          { id: page.id },
+          {
+            $set: {
+              ocr: {
+                data: ocrText,
+                language: config.language,
+                model: config.model,
+                updated_at: new Date(),
+              },
+              updated_at: new Date(),
+            },
+          }
+        );
+
+        steps.ocr = true;
+      }
+
+      // Upload cropped image to Vercel Blob (can happen after OCR)
       const filename = `cropped/${page.book_id}/${page.id}.jpg`;
       const blob = await put(filename, croppedBuffer, {
         access: 'public',
@@ -83,20 +128,20 @@ async function processPageFully(
         allowOverwrite: true,
       });
 
-      // Update page
+      // Update page with cropped_photo URL
       await db.collection('pages').updateOne(
         { id: page.id },
         { $set: { cropped_photo: blob.url, updated_at: new Date() } }
       );
 
-      imageUrl = blob.url;
-      steps.crop = true;
+      imageUrlForOcr = blob.url;
     }
 
-    // Step 2: OCR if needed
-    if (!ocrText) {
+    // Step 2: OCR if needed and not already done above
+    if (needsOcr && !steps.ocr) {
+      // Page either has no crop data (full image is fine) or already has cropped_photo
       const ocrResult = await performOCR(
-        imageUrl,
+        imageUrlForOcr,
         config.language,
         previousOcr,
         undefined,
@@ -124,7 +169,7 @@ async function processPageFully(
     }
 
     // Step 3: Translate if needed
-    if (ocrText && !translationText) {
+    if (ocrText && needsTranslate) {
       const translateResult = await performTranslation(
         ocrText,
         config.language,
@@ -212,9 +257,8 @@ export async function POST(
 
     // Get pages that haven't been processed
     const processedPageIds = new Set(job.results.map(r => r.pageId));
-    const remainingPageIds = (job.config.page_ids || []).filter(
-      (id: string) => !processedPageIds.has(id)
-    );
+    const allPageIds: string[] = job.config.page_ids || [];
+    const remainingPageIds = allPageIds.filter(id => !processedPageIds.has(id));
 
     if (remainingPageIds.length === 0) {
       await db.collection('jobs').updateOne(
@@ -226,7 +270,7 @@ export async function POST(
     }
 
     // Get parallel count from config (default 3)
-    const parallelPages = job.config.parallelPages || 3;
+    const parallelPages = (job.config.parallelPages as number) || 3;
 
     // Process pages in parallel, but in order for context
     // We'll process in small batches to maintain some ordering for context
@@ -276,8 +320,8 @@ export async function POST(
       );
 
       const result = await processPageFully(
-        page as Parameters<typeof processPageFully>[0],
-        { model: job.config.model || 'gemini-2.5-flash', language: job.config.language || 'Latin' },
+        page as unknown as Parameters<typeof processPageFully>[0],
+        { model: (job.config.model as string) || 'gemini-2.5-flash', language: (job.config.language as string) || 'Latin' },
         db,
         previousOcr,
         previousTranslation
@@ -310,17 +354,18 @@ export async function POST(
     const successCount = results.filter(r => r.success).length;
     const failCount = results.filter(r => !r.success).length;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await db.collection('jobs').updateOne(
       { id: jobId },
       {
-        $push: { results: { $each: results } } as unknown as Record<string, unknown>,
+        $push: { results: { $each: results } },
         $set: {
           'progress.completed': job.progress.completed + successCount,
           'progress.failed': job.progress.failed + failCount,
           'progress.currentItem': null,
           updated_at: new Date(),
         },
-      }
+      } as any
     );
 
     // Check if complete
