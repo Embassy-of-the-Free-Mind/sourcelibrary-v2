@@ -1,7 +1,5 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { DEFAULT_PROMPTS, DEFAULT_MODEL } from './types';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { getGeminiClient } from './gemini';
 
 // Model pricing per 1M tokens (USD)
 export const MODEL_PRICING: Record<string, { input: number; output: number }> = {
@@ -46,11 +44,7 @@ export async function performOCRWithBuffer(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not set');
-  }
-
-  const model = genAI.getGenerativeModel({ model: modelId });
+  const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
 
@@ -97,15 +91,7 @@ export async function performOCR(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not set');
-  }
-
-  console.log('Starting OCR for image:', imageUrl);
-  console.log('API Key present:', !!process.env.GEMINI_API_KEY);
-  console.log('Using model:', modelId);
-
-  const model = genAI.getGenerativeModel({ model: modelId });
+  const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
 
@@ -114,7 +100,6 @@ export async function performOCR(
   }
 
   // Fetch the image
-  console.log('Fetching image...');
   const imageResponse = await fetch(imageUrl);
   if (!imageResponse.ok) {
     throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
@@ -132,7 +117,6 @@ export async function performOCR(
 
   // If mimeType is not supported, try to infer from URL or default to jpeg
   if (!supportedMimeTypes.includes(mimeType)) {
-    console.log('Unsupported mimeType:', mimeType, '- inferring from URL');
     if (imageUrl.toLowerCase().includes('.png')) {
       mimeType = 'image/png';
     } else if (imageUrl.toLowerCase().includes('.webp')) {
@@ -142,9 +126,6 @@ export async function performOCR(
     }
   }
 
-  console.log('Image fetched, size:', imageBuffer.byteLength, 'mimeType:', mimeType);
-
-  console.log('Calling Gemini API...');
   try {
     const result = await model.generateContent([
       prompt,
@@ -155,7 +136,6 @@ export async function performOCR(
         },
       },
     ]);
-    console.log('Gemini API response received');
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
@@ -184,10 +164,7 @@ export async function performTranslation(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not set');
-  }
-  const model = genAI.getGenerativeModel({ model: modelId });
+  const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
   let prompt = (customPrompt || DEFAULT_PROMPTS.translation)
     .replace('{source_language}', sourceLanguage)
@@ -222,10 +199,7 @@ export async function generateSummary(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not set');
-  }
-  const model = genAI.getGenerativeModel({ model: modelId });
+  const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
   let prompt = customPrompt || DEFAULT_PROMPTS.summary;
   prompt += `\n\n**Translated text:**\n${translatedText}`;
@@ -289,10 +263,7 @@ export async function performModernization(
   customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY environment variable is not set');
-  }
-  const model = genAI.getGenerativeModel({ model: modelId });
+  const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
   let prompt = customPrompt || MODERNIZATION_PROMPT;
   prompt += `\n\n**Text to modernize:**\n${translationText}`;

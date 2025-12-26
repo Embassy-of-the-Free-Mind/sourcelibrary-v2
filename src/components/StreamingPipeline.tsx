@@ -40,8 +40,10 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
   const [model, setModel] = useState('gemini-2.5-flash');
   const [parallelPages, setParallelPages] = useState(3);
   const [overwrite, setOverwrite] = useState(false);
+  const [pollErrors, setPollErrors] = useState(0);
+  const [lastError, setLastError] = useState<string | null>(null);
 
-  const fetchStatus = useCallback(async () => {
+  const fetchStatus = useCallback(async (): Promise<boolean> => {
     try {
       const res = await fetch(`/api/books/${bookId}/pipeline-stream`);
       if (res.ok) {
@@ -53,9 +55,14 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
           setJob(null);
           setStats(data.stats);
         }
+        setPollErrors(0);
+        setLastError(null);
+        return true;
       }
+      return false;
     } catch (error) {
       console.error('Error fetching pipeline status:', error);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -71,23 +78,44 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
       return;
     }
 
-    const interval = setInterval(async () => {
-      // Trigger processing
-      await fetch(`/api/books/${bookId}/pipeline-stream/process`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ jobId: job.id }),
-      }).catch(() => {});
+    // Stop polling after too many consecutive errors
+    if (pollErrors >= 5) {
+      return;
+    }
 
-      // Then fetch status
-      await fetchStatus();
+    const interval = setInterval(async () => {
+      try {
+        // Trigger processing
+        const processRes = await fetch(`/api/books/${bookId}/pipeline-stream/process`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ jobId: job.id }),
+        });
+
+        if (!processRes.ok) {
+          const errorData = await processRes.json().catch(() => ({}));
+          throw new Error(errorData.error || `Processing failed: ${processRes.status}`);
+        }
+
+        // Then fetch status
+        const success = await fetchStatus();
+        if (!success) {
+          throw new Error('Failed to fetch pipeline status');
+        }
+      } catch (error) {
+        const errorMsg = error instanceof Error ? error.message : 'Unknown error';
+        console.error('Pipeline poll error:', errorMsg);
+        setPollErrors(prev => prev + 1);
+        setLastError(errorMsg);
+      }
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [job, bookId, fetchStatus]);
+  }, [job, bookId, fetchStatus, pollErrors]);
 
   const startPipeline = async () => {
     setStarting(true);
+    setLastError(null);
     try {
       const res = await fetch(`/api/books/${bookId}/pipeline-stream`, {
         method: 'POST',
@@ -98,11 +126,13 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
       if (res.ok) {
         await fetchStatus();
       } else {
-        const data = await res.json();
-        alert(data.error || 'Failed to start pipeline');
+        const data = await res.json().catch(() => ({}));
+        setLastError(data.error || 'Failed to start pipeline');
       }
     } catch (error) {
-      console.error('Error starting pipeline:', error);
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Error starting pipeline:', msg);
+      setLastError(msg);
     } finally {
       setStarting(false);
     }
@@ -233,6 +263,31 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
               </div>
             </div>
           )}
+
+          {/* Error state */}
+          {pollErrors >= 5 && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-start gap-2">
+                <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-red-800">Pipeline stalled</p>
+                  <p className="text-xs text-red-600 mt-1">
+                    {lastError || 'Multiple consecutive errors occurred'}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setPollErrors(0);
+                      setLastError(null);
+                      fetchStatus();
+                    }}
+                    className="mt-2 text-xs text-red-700 underline hover:text-red-900"
+                  >
+                    Retry
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -278,6 +333,16 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
               <span className="text-stone-500 ml-1">(re-process all pages)</span>
             </span>
           </label>
+
+          {/* Error message */}
+          {lastError && !job && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-start gap-2">
+                <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-red-700">{lastError}</p>
+              </div>
+            </div>
+          )}
 
           <button
             onClick={startPipeline}

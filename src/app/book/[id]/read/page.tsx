@@ -161,17 +161,22 @@ export default function ReadPage({ params }: ReadPageProps) {
     });
 
     // Convert margin notes to visible styled spans
-    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => {
+    result = result.replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, (match, content) => {
       return `<span class="margin-note">${content.trim()}</span>`;
     });
 
-    // Convert image descriptions to visible blocks
-    result = result.replace(/\[\[image:\s*(.*?)\]\]/gi, (match, content) => {
+    // Convert editorial notes to visible styled spans
+    result = result.replace(/\[\[notes?:\s*([\s\S]*?)\]\]/gi, (match, content) => {
+      return `<span class="editorial-note">${content.trim()}</span>`;
+    });
+
+    // Convert image descriptions to visible blocks (multiline)
+    result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, (match, content) => {
       return `<div class="image-description">${content.trim()}</div>`;
     });
 
     // Remove other [[tags]] that shouldn't be shown (meta, language, page number, etc.)
-    result = result.replace(/\[\[(meta|language|page number|header|signature|vocabulary|summary|keywords|warning|notes):[^\]]*\]\]/gi, '');
+    result = result.replace(/\[\[(meta|language|page number|header|signature|vocabulary|summary|keywords|warning):[^\]]*\]\]/gi, '');
 
     return result.trim();
   };
@@ -181,6 +186,7 @@ export default function ReadPage({ params }: ReadPageProps) {
     const processed = preprocessText(text);
 
     return (
+      <div style={{ fontVariantEmoji: 'text' }}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkBreaks]}
         rehypePlugins={[rehypeRaw]}
@@ -230,11 +236,18 @@ export default function ReadPage({ params }: ReadPageProps) {
           td: ({ children }) => (
             <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
           ),
-          // Custom styling for margin notes and image descriptions
+          // Custom styling for margin notes, editorial notes, and image descriptions
           span: ({ className, children }) => {
             if (className === 'margin-note') {
               return (
                 <span className="inline-block text-sm text-teal-700 bg-teal-50 border-l-2 border-teal-400 px-2 py-0.5 ml-1 rounded-r">
+                  {children}
+                </span>
+              );
+            }
+            if (className === 'editorial-note') {
+              return (
+                <span className="inline-block text-sm text-amber-700 bg-amber-50 border-l-2 border-amber-400 px-2 py-0.5 ml-1 rounded-r">
                   {children}
                 </span>
               );
@@ -260,6 +273,7 @@ export default function ReadPage({ params }: ReadPageProps) {
       >
         {processed}
       </ReactMarkdown>
+      </div>
     );
   };
 

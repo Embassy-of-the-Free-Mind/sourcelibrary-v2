@@ -57,25 +57,25 @@ export async function PATCH(
       updateData['summary.updated_at'] = new Date();
     }
 
-    const result = await db.collection('pages').updateOne(
+    // Use findOneAndUpdate to get updated document in a single query
+    const updatedPage = await db.collection('pages').findOneAndUpdate(
       { id },
-      { $set: updateData, $inc: { edit_count: 1 } }
+      { $set: updateData, $inc: { edit_count: 1 } },
+      { returnDocument: 'after' }
     );
 
-    if (result.matchedCount === 0) {
+    if (!updatedPage) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
-    // Track edit for the book
-    const page = await db.collection('pages').findOne({ id });
-    if (page?.book_id) {
-      await db.collection('books').updateOne(
-        { id: page.book_id },
+    // Track edit for the book (fire and forget - don't block response)
+    if (updatedPage.book_id) {
+      db.collection('books').updateOne(
+        { id: updatedPage.book_id },
         { $inc: { edit_count: 1 } }
-      );
+      ).catch(() => {}); // Non-critical, don't fail the request
     }
 
-    const updatedPage = await db.collection('pages').findOne({ id });
     return NextResponse.json(updatedPage);
   } catch (error) {
     console.error('Error updating page:', error);
