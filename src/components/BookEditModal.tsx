@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Save, Loader2, Search, ExternalLink, Languages } from 'lucide-react';
+import { X, Save, Loader2, Search, ExternalLink, Languages, Sparkles } from 'lucide-react';
 
 interface BookEditModalProps {
   book: {
@@ -54,6 +54,21 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
 
   // Title translation
   const [translating, setTranslating] = useState(false);
+
+  // AI identification
+  const [identifying, setIdentifying] = useState(false);
+  const [identifyResult, setIdentifyResult] = useState<{
+    identified?: {
+      title?: string;
+      title_english?: string;
+      author?: string;
+      year?: string;
+      place?: string;
+      publisher?: string;
+      language?: string;
+    };
+    catalog_matches?: SearchResult[];
+  } | null>(null);
 
   const handleSave = async () => {
     setSaving(true);
@@ -125,6 +140,48 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     setSearchQuery('');
   };
 
+  const identifyBook = async () => {
+    setIdentifying(true);
+    setError(null);
+    setIdentifyResult(null);
+
+    try {
+      const res = await fetch(`/api/books/${book.id}/identify`, {
+        method: 'POST',
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setIdentifyResult(data);
+
+        // Auto-fill fields from AI identification
+        if (data.identified) {
+          const id = data.identified;
+          if (id.title && !title) setTitle(id.title);
+          if (id.title_english && !displayTitle) setDisplayTitle(id.title_english);
+          if (id.author && !author) setAuthor(id.author);
+          if (id.language && !language) setLanguage(id.language);
+          if (id.year && !published) setPublished(id.year);
+          if (id.place && !placePublished) setPlacePublished(id.place);
+          if (id.publisher && !publisher) setPublisher(id.publisher);
+        }
+
+        // If catalog matches found, show them
+        if (data.catalog_matches?.length > 0) {
+          setSearchResults(data.catalog_matches);
+          setSearchDone(true);
+        }
+      } else {
+        const data = await res.json();
+        setError(data.error || 'Identification failed');
+      }
+    } catch {
+      setError('Failed to identify book');
+    } finally {
+      setIdentifying(false);
+    }
+  };
+
   const translateTitle = async () => {
     if (!title.trim()) return;
     setTranslating(true);
@@ -175,10 +232,39 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
           </button>
         </div>
 
-        {/* Catalog Search (EFM, IA, USTC) */}
+        {/* AI Identify + Catalog Search */}
         <div className="p-4 bg-amber-50 border-b border-amber-100">
-          <label className="block text-sm font-medium text-amber-900 mb-2">
-            Search Catalogs (EFM, Internet Archive, USTC)
+          {/* AI Identify Button */}
+          <div className="flex items-center justify-between mb-3">
+            <label className="block text-sm font-medium text-amber-900">
+              Find in Catalogs
+            </label>
+            <button
+              onClick={identifyBook}
+              disabled={identifying}
+              className="flex items-center gap-2 px-3 py-1.5 bg-purple-600 text-white text-sm rounded-lg hover:bg-purple-700 disabled:opacity-50"
+              title="Use AI to identify book from its pages and search catalogs"
+            >
+              {identifying ? <Loader2 className="w-4 h-4 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+              {identifying ? 'Identifying...' : 'Auto-Identify'}
+            </button>
+          </div>
+
+          {/* AI Identification Result */}
+          {identifyResult?.identified && (
+            <div className="mb-3 p-3 bg-purple-50 rounded-lg border border-purple-200 text-sm">
+              <div className="font-medium text-purple-900 mb-1">AI identified:</div>
+              <div className="text-purple-800">
+                {identifyResult.identified.title_english || identifyResult.identified.title}
+                {identifyResult.identified.author && ` by ${identifyResult.identified.author}`}
+                {identifyResult.identified.year && ` (${identifyResult.identified.year})`}
+              </div>
+            </div>
+          )}
+
+          {/* Manual Search */}
+          <label className="block text-xs text-stone-500 mb-2">
+            Or search manually:
           </label>
           <div className="flex gap-2">
             <input

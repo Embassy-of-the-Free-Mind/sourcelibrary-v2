@@ -118,7 +118,7 @@ export async function POST(
       source: string;
     }> = [];
 
-    for (const term of [...new Set(searchTerms)].slice(0, 5)) {
+    for (const term of [...new Set(searchTerms as string[])].slice(0, 5)) {
       if (!term || term.length < 3) continue;
 
       try {
