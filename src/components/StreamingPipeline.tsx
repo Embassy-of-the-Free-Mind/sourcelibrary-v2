@@ -264,6 +264,36 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
             </div>
           )}
 
+          {/* Failed pages details */}
+          {job.results.filter(r => !r.success).length > 0 && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-start gap-2">
+                <XCircle className="w-4 h-4 text-red-600 mt-0.5 flex-shrink-0" />
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-red-800">
+                    {job.results.filter(r => !r.success).length} page(s) failed
+                  </p>
+                  <ul className="mt-2 space-y-1 text-xs text-red-700">
+                    {job.results
+                      .filter(r => !r.success)
+                      .slice(-5)
+                      .map((r, i) => (
+                        <li key={i} className="flex items-start gap-1">
+                          <span className="text-red-400">•</span>
+                          <span>{r.error || 'Unknown error'}</span>
+                        </li>
+                      ))}
+                    {job.results.filter(r => !r.success).length > 5 && (
+                      <li className="text-red-500 italic">
+                        ...and {job.results.filter(r => !r.success).length - 5} more
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Error state */}
           {pollErrors >= 5 && (
             <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">

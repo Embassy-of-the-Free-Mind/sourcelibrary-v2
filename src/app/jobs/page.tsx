@@ -303,6 +303,26 @@ export default function JobsPage() {
                     </div>
                   )}
 
+                  {/* Failed page errors from results */}
+                  {job.results && job.results.filter(r => !r.success && r.error).length > 0 && (
+                    <div className="text-xs p-2 rounded-lg mb-2" style={{ background: '#fef2f2', color: '#991b1b' }}>
+                      <div className="font-medium mb-1">Failed pages:</div>
+                      <ul className="space-y-0.5">
+                        {job.results
+                          .filter(r => !r.success && r.error)
+                          .slice(-5)
+                          .map((r, i) => (
+                            <li key={i}>• {r.error}</li>
+                          ))}
+                        {job.results.filter(r => !r.success).length > 5 && (
+                          <li className="italic opacity-75">
+                            ...and {job.results.filter(r => !r.success).length - 5} more
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+
                   {/* Footer info */}
                   <div className="flex justify-between text-xs" style={{ color: 'var(--text-faint)' }}>
                     <span>Created: {formatDate(job.created_at)}</span>
