@@ -831,39 +831,39 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
                         )}
                       </div>
                       <div className="text-xs text-stone-500">
-                        {status.status === 'idle' && (
-                          <span className="flex items-center gap-1.5">
+                        <span className="flex items-center gap-1.5">
+                          {status.status === 'idle' && (
                             <span>{status.pending} pages</span>
-                            <select
-                              value={status.mode}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                updateStepMode(step, e.target.value as ProcessingMode);
-                              }}
-                              onClick={(e) => e.stopPropagation()}
-                              disabled={isProcessing}
-                              className="px-1.5 py-0.5 text-xs border border-stone-300 rounded bg-white hover:border-stone-400 focus:outline-none focus:ring-1 focus:ring-amber-500"
-                            >
-                              <option value="missing">only missing</option>
-                              <option value="all">all (overwrite)</option>
-                            </select>
-                          </span>
-                        )}
-                        {status.status === 'running' && (
-                          <span>
-                            {status.completed} done, {status.pending} remaining
-                            {status.failed > 0 && <span className="text-red-500"> ({status.failed} failed)</span>}
-                          </span>
-                        )}
-                        {status.status === 'done' && (
-                          <span className="text-green-600">
-                            {status.completed} completed
-                            {status.failed > 0 && <span className="text-red-500"> ({status.failed} failed)</span>}
-                          </span>
-                        )}
-                        {status.status === 'error' && (
-                          <span className="text-red-500">All {status.failed} failed</span>
-                        )}
+                          )}
+                          {status.status === 'running' && (
+                            <span>
+                              {status.completed} done, {status.pending} remaining
+                              {status.failed > 0 && <span className="text-red-500"> ({status.failed} failed)</span>}
+                            </span>
+                          )}
+                          {status.status === 'done' && (
+                            <span className="text-green-600">
+                              {status.completed} completed
+                              {status.failed > 0 && <span className="text-red-500"> ({status.failed} failed)</span>}
+                            </span>
+                          )}
+                          {status.status === 'error' && (
+                            <span className="text-red-500">All {status.failed} failed</span>
+                          )}
+                          <select
+                            value={status.mode}
+                            onChange={(e) => {
+                              e.stopPropagation();
+                              updateStepMode(step, e.target.value as ProcessingMode);
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                            disabled={isProcessing}
+                            className="px-1.5 py-0.5 text-xs border border-stone-300 rounded bg-white hover:border-stone-400 focus:outline-none focus:ring-1 focus:ring-amber-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            <option value="missing">only missing</option>
+                            <option value="all">all (overwrite)</option>
+                          </select>
+                        </span>
                       </div>
                     </div>
 
