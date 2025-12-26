@@ -31,7 +31,7 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('title-asc');
+  const [sortBy, setSortBy] = useState<SortOption>('recent');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
 
   // Catalog search state
@@ -78,11 +78,8 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
         result.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
         break;
       case 'recent':
-        result.sort((a, b) => {
-          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
-          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
-          return dateB - dateA;
-        });
+        // Keep server order - already sorted by last_processed
+        // No client-side re-sort needed
         break;
     }
 
