@@ -41,16 +41,16 @@ First, check what work is needed for a book:
 # Get book and analyze page status
 curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID" > /tmp/book.json
 
-# Count pages by status
+# Count pages by status (IMPORTANT: check length > 0, not just existence - empty strings are truthy!)
 jq '{
   title: .title,
   total_pages: (.pages | length),
   split_pages: [.pages[] | select(.crop)] | length,
   needs_crop: [.pages[] | select(.crop) | select(.cropped_photo | not)] | length,
-  has_ocr: [.pages[] | select(.ocr.data)] | length,
-  needs_ocr: [.pages[] | select(.ocr.data | not)] | length,
-  has_translation: [.pages[] | select(.translation.data)] | length,
-  needs_translation: [.pages[] | select(.ocr.data) | select(.translation.data | not)] | length
+  has_ocr: [.pages[] | select((.ocr.data // "") | length > 0)] | length,
+  needs_ocr: [.pages[] | select((.ocr.data // "") | length == 0)] | length,
+  has_translation: [.pages[] | select((.translation.data // "") | length > 0)] | length,
+  needs_translation: [.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0)] | length
 }' /tmp/book.json
 ```
 
