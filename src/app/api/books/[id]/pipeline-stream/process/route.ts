@@ -42,9 +42,10 @@ async function processPageFully(
     let translationText = page.translation?.data;
 
     // Determine if we need to crop and/or do OCR
+    // With overwrite=true, always re-do OCR and translation
     const needsCrop = page.crop && !page.cropped_photo;
-    const needsOcr = !ocrText;
-    const needsTranslate = !translationText;
+    const needsOcr = config.overwrite || !ocrText;
+    const needsTranslate = config.overwrite || !translationText;
 
     // If page was split but needs OCR, we MUST have or create a cropped image
     // This ensures OCR only sees the single page, not the full two-page spread
