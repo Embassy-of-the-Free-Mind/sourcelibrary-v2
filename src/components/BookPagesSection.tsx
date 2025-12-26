@@ -109,6 +109,8 @@ function formatRelativeTime(date: Date | string | undefined): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
+const PAGES_PER_LOAD = 50;
+
 export default function BookPagesSection({ bookId, bookTitle, pages: initialPages }: BookPagesSectionProps) {
   const router = useRouter();
   const [pages, setPages] = useState(initialPages);
@@ -120,6 +122,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [concurrency, setConcurrency] = useState(5); // Parallel requests
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
+  const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
 
   // Reorder mode state
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
@@ -1251,7 +1254,12 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
       {/* Pages Grid */}
       <div>
-        <h2 className="text-lg font-semibold text-stone-900 mb-4">Pages</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-stone-900">Pages</h2>
+          <span className="text-sm text-stone-500">
+            Showing {Math.min(visibleCount, pages.length)} of {pages.length}
+          </span>
+        </div>
 
         {pages.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-xl border border-stone-200">
@@ -1261,7 +1269,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           </div>
         ) : (
           <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
-            {pages.map((page, index) => {
+            {pages.slice(0, visibleCount).map((page, index) => {
               const isSelected = selectedPages.has(page.id);
               const imageUrl = getImageUrl(page);
               const hasOcr = !!page.ocr?.data;
@@ -1371,6 +1379,19 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Load More Button */}
+        {visibleCount < pages.length && (
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Load more ({pages.length - visibleCount} remaining)
+            </button>
           </div>
         )}
       </div>

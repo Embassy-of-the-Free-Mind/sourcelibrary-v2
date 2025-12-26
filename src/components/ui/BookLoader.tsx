@@ -59,7 +59,7 @@ export function BookLoader({ label = 'Loading...', className }: BookLoaderProps)
       {/* Label */}
       <div className="text-center">
         <p
-          className="text-stone-500 text-sm tracking-wide"
+          className="text-stone-500 text-lg tracking-wide"
           style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
         >
           Opening the source...

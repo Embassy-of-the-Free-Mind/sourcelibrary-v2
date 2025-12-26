@@ -360,25 +360,38 @@ export default function TranslationEditor({
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
 
-  // Build image URL with crop if available
-  const getImageUrl = (p: Page, forThumbnail = false) => {
-    // If we have a pre-generated cropped photo, use it (stored in cropped_photo field)
-    const croppedPhoto = (p as unknown as Record<string, unknown>).cropped_photo as string | undefined;
-    if (p.crop && croppedPhoto) {
-      return croppedPhoto;
-    }
+  // Build image URLs at different quality tiers
+  // Tier 1: Thumbnail (400px) - for navigation, grid views
+  // Tier 2: Display (1200px) - for main reading view
+  // Tier 3: Full (2400px) - for magnifier, fullscreen (high quality but not unlimited)
+  const getImageUrl = (p: Page, tier: 'thumbnail' | 'display' | 'full' = 'display') => {
     const baseUrl = p.photo_original || p.photo;
     if (!baseUrl) return '';
-    if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
-      const width = forThumbnail ? 400 : 1200;
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=80&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
+
+    const widths = { thumbnail: 400, display: 1200, full: 2400 };
+    const qualities = { thumbnail: 70, display: 80, full: 90 };
+    const width = widths[tier];
+    const quality = qualities[tier];
+
+    // If we have a pre-generated cropped photo and it's display tier, use it
+    const croppedPhoto = (p as unknown as Record<string, unknown>).cropped_photo as string | undefined;
+    if (tier === 'display' && p.crop && croppedPhoto) {
+      return croppedPhoto;
     }
-    return baseUrl;
+
+    // Build URL with crop parameters if available
+    if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
+    }
+
+    // No crop - still go through image API for consistent sizing
+    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
   };
-  const pageImageUrl = getImageUrl(page);
-  // For thumbnails, prefer pre-generated cropped photo, then dynamic crop, then regular thumbnail
-  const croppedPhoto = (page as unknown as Record<string, unknown>).cropped_photo as string | undefined;
-  const pageThumbnailUrl = (page.crop && croppedPhoto) ? croppedPhoto : (page.crop ? getImageUrl(page, true) : (page.thumbnail || page.compressed_photo));
+
+  // URLs for current page at different quality tiers
+  const pageFullUrl = getImageUrl(page, 'full');          // For magnifier (2400px, cropped if split)
+  const pageDisplayUrl = getImageUrl(page, 'display');    // For main view (1200px)
+  const pageThumbnailUrl = getImageUrl(page, 'thumbnail'); // For fast loading (400px)
 
   // Keyboard navigation
   useEffect(() => {
@@ -676,8 +689,8 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-2 lg:p-4">
                     <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-                      {pageImageUrl ? (
-                        <ImageWithMagnifier src={pageImageUrl} thumbnail={pageThumbnailUrl} alt={`Page ${page.page_number}`} scrollable />
+                      {pageDisplayUrl ? (
+                        <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
                       ) : (
                         <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                           No image available
@@ -951,8 +964,8 @@ export default function TranslationEditor({
           </div>
           <div className="flex-1 overflow-auto p-4">
             <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-              {pageImageUrl ? (
-                <ImageWithMagnifier src={pageImageUrl} thumbnail={pageThumbnailUrl} alt={`Page ${page.page_number}`} scrollable />
+              {pageDisplayUrl ? (
+                <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
               ) : (
                 <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                   No image available

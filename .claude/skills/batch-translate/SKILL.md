@@ -96,8 +96,8 @@ curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs/JOB_ID/process"
 ### Option A: Using Job System (for large batches)
 
 ```bash
-# Get page IDs needing OCR
-OCR_IDS=$(jq '[.pages[] | select(.ocr.data | not) | .id]' /tmp/book.json)
+# Get page IDs needing OCR (check for empty strings, not just null)
+OCR_IDS=$(jq '[.pages[] | select((.ocr.data // "") | length == 0) | .id]' /tmp/book.json)
 
 # Create OCR job
 curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
@@ -136,8 +136,8 @@ The batch-ocr API automatically uses `cropped_photo` when available.
 ### Option A: Using Job System
 
 ```bash
-# Get page IDs needing translation (must have OCR)
-TRANS_IDS=$(jq '[.pages[] | select(.ocr.data) | select(.translation.data | not) | .id]' /tmp/book.json)
+# Get page IDs needing translation (must have OCR content, check for empty strings)
+TRANS_IDS=$(jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) | .id]' /tmp/book.json)
 
 # Create translation job
 curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
@@ -157,9 +157,9 @@ curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
 For better continuity, translate with previous page context:
 
 ```bash
-# Get pages sorted by page number with OCR text
+# Get pages sorted by page number with OCR text (check for empty strings)
 PAGES=$(jq '[.pages | sort_by(.page_number) | .[] |
-  select(.ocr.data) | select(.translation.data | not) |
+  select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) |
   {pageId: .id, ocrText: .ocr.data, pageNumber: .page_number}]' /tmp/book.json)
 
 # Translate with context (process in batches of 5-10)

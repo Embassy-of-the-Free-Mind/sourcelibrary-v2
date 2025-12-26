@@ -816,37 +816,42 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
   ocr: `Transcribe this {language} manuscript page to Markdown.
 
 **Format:**
-- # ## ### for headings (bigger text = bigger heading)
+- # ## ### for headings (bigger text = bigger heading) — NEVER combine with centering syntax
 - **bold**, *italic* for emphasis
-- ->centered<- for centered lines
+- ->centered text<- for centered lines (NOT for headings)
 - > blockquotes for quotes/prayers
 - --- for dividers
 
-**Tables:** Use markdown tables for ANY columnar data, lists, charts, or structured content:
+**Tables:** Use markdown tables ONLY for actual tabular data with clear rows/columns:
 | Column 1 | Column 2 | Column 3 |
 |----------|----------|----------|
 | data | data | data |
+
+**DO NOT use tables for:**
+- Circular diagrams
+- Charts or graphs
+- Any visual layout that isn't truly tabular
 
 **Annotations (use inline where relevant):**
 - [[language: detected]] — confirm the language
 - [[page number: N]] — visible page/folio numbers (NOT in body text)
 - [[header: X]] — running headers (NOT in body text)
 - [[signature: X]] — printer's marks like A2, B1 (NOT in body text)
-- [[margin: X]] — marginal notes, citations
+- [[margin: X]] — marginal notes, citations (place BEFORE the paragraph they annotate)
 - [[gloss: X]] — interlinear annotations
 - [[insert: X]] — boxed text, later additions
 - [[unclear: X]] — illegible readings
 - [[notes: X]] — interpretive notes for readers
 - [[meta: X]] — hidden metadata (image quality, catchwords)
 - [[warning: X]] — quality issues (faded, damaged, blurry)
-- [[image: description]] — brief description of illustrations, diagrams, charts, woodcuts, printer's devices
+- [[image: description]] — describe illustrations, diagrams, circular charts, woodcuts. Use prose description, NOT tables.
 
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
 2. Page numbers/headers/signatures go in tags only, never in body
 3. IGNORE partial text at left/right edges (from facing page in spread)
 4. Capture ALL text including margins and annotations
-5. Describe any images/diagrams with [[image: ...]]
+5. Describe any images/diagrams with [[image: ...]] using prose, never tables
 6. End with [[vocabulary: key terms, names, concepts on this page]]
 
 **If image has quality issues**, start with [[warning: describe issue]]`,

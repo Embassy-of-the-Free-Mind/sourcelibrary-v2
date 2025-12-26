@@ -3,12 +3,14 @@ import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemini';
+import sharp from 'sharp';
+import { put } from '@vercel/blob';
 
 // Increase timeout for batch OCR (5 images)
 export const maxDuration = 300;
 
 // Page result status for detailed logging
-type PageStatus = 'processed' | 'skipped_has_ocr' | 'skipped_needs_crop' | 'failed_image_fetch' | 'failed_parse';
+type PageStatus = 'processed' | 'skipped_has_ocr' | 'cropped_inline' | 'failed_image_fetch' | 'failed_crop' | 'failed_parse';
 
 interface PageResult {
   pageId: string;
@@ -54,6 +56,62 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
   }
 }
 
+// Fetch image, crop it inline, and return as base64
+// Also uploads to Vercel Blob in background for future use
+async function fetchAndCropImage(
+  url: string,
+  crop: { xStart: number; xEnd: number },
+  pageId: string,
+  bookId: string,
+  db: Awaited<ReturnType<typeof getDb>>
+): Promise<{ data: string; mimeType: string } | null> {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) return null;
+
+    const imageBuffer = Buffer.from(await response.arrayBuffer());
+    const metadata = await sharp(imageBuffer).metadata();
+    const imgWidth = metadata.width || 1000;
+    const imgHeight = metadata.height || 1000;
+
+    const left = Math.round((crop.xStart / 1000) * imgWidth);
+    const cropWidth = Math.round(((crop.xEnd - crop.xStart) / 1000) * imgWidth);
+
+    const croppedBuffer = await sharp(imageBuffer)
+      .extract({
+        left,
+        top: 0,
+        width: Math.min(cropWidth, imgWidth - left),
+        height: imgHeight,
+      })
+      .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: 85, progressive: true })
+      .toBuffer();
+
+    // Upload cropped image to Vercel Blob in background for future use
+    const filename = `cropped/${bookId}/${pageId}.jpg`;
+    put(filename, croppedBuffer, {
+      access: 'public',
+      contentType: 'image/jpeg',
+      allowOverwrite: true,
+    }).then(blob => {
+      db.collection('pages').updateOne(
+        { id: pageId },
+        { $set: { cropped_photo: blob.url, updated_at: new Date() } }
+      );
+      console.log(`[batch-ocr] Saved cropped image for page ${pageId}`);
+    }).catch(err => {
+      console.warn(`[batch-ocr] Failed to save cropped image for ${pageId}:`, err);
+    });
+
+    const base64 = croppedBuffer.toString('base64');
+    return { data: base64, mimeType: 'image/jpeg' };
+  } catch (error) {
+    console.error('Failed to crop image:', url, error);
+    return null;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const {
@@ -91,9 +149,8 @@ export async function POST(request: NextRequest) {
     const skippedPageIds: string[] = [];
     const failedPageIds: string[] = [];
 
-    // Filter out pages that already have OCR or need cropped images
+    // Filter out pages that already have OCR
     const pagesToProcess: PageInput[] = [];
-    const needsCropPageIds: string[] = [];
 
     for (const page of pages) {
       const dbPage = dbPageMap.get(page.pageId);
@@ -110,84 +167,84 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      // Check if page was split but cropped image not yet generated
-      // This prevents OCR from using the full unsplit image
-      if (dbPage?.crop && !dbPage?.cropped_photo) {
-        needsCropPageIds.push(page.pageId);
-        failedPageIds.push(page.pageId);
-        pageResults.push({
-          pageId: page.pageId,
-          status: 'skipped_needs_crop',
-          message: `Page ${page.pageNumber} was split but cropped image not generated yet. Run "Generate Cropped Images" first.`,
-        });
-        console.warn(`[batch-ocr] Skipping page ${page.pageNumber} - split page without cropped_photo`);
-        continue;
-      }
-
+      // Note: Pages with crop settings but no cropped_photo will be cropped inline during image fetch
       pagesToProcess.push(page);
     }
 
     // If no pages to process, return early
     if (pagesToProcess.length === 0) {
-      const hasNeedsCrop = needsCropPageIds.length > 0;
-      const message = hasNeedsCrop
-        ? `${needsCropPageIds.length} pages need cropped images generated first. Run "Generate Cropped Images" before OCR.`
-        : 'All pages already have OCR';
-
-      console.log(`[batch-ocr] Nothing to process: ${skippedPageIds.length} have OCR, ${needsCropPageIds.length} need crops`);
+      console.log(`[batch-ocr] Nothing to process: ${skippedPageIds.length} have OCR`);
 
       return NextResponse.json({
         ocrResults: {},
         processedCount: 0,
         skippedCount: skippedPageIds.length,
-        needsCropCount: needsCropPageIds.length,
         requestedCount: pages.length,
         skippedPageIds,
-        needsCropPageIds,
         failedPageIds,
         pageResults,
-        message,
+        message: 'All pages already have OCR',
         usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 },
-      }, { status: hasNeedsCrop ? 400 : 200 });
+      });
     }
 
-    // Build image URLs - prefer pre-generated cropped images over dynamic cropping
-    const getImageUrl = (page: PageInput): string => {
+    // Fetch all images in parallel - with inline cropping for split pages
+    console.log(`[batch-ocr] Fetching ${pagesToProcess.length} images...`);
+
+    const imagePromises = pagesToProcess.map(async (page) => {
       const dbPage = dbPageMap.get(page.pageId);
 
-      // Priority 1: Use pre-generated cropped image if available (Vercel Blob URL)
-      if (dbPage?.cropped_photo) {
-        return dbPage.cropped_photo;
+      // Check if page needs inline cropping (has crop settings but no pre-generated cropped_photo)
+      const needsInlineCrop = dbPage?.crop?.xStart !== undefined &&
+                               dbPage?.crop?.xEnd !== undefined &&
+                               !dbPage?.cropped_photo;
+
+      if (needsInlineCrop) {
+        // Crop inline and save to blob in background
+        const originalUrl = dbPage?.photo_original || dbPage?.photo || page.imageUrl;
+        console.log(`[batch-ocr] Cropping page ${page.pageNumber} inline...`);
+        const result = await fetchAndCropImage(
+          originalUrl,
+          { xStart: dbPage!.crop!.xStart, xEnd: dbPage!.crop!.xEnd },
+          page.pageId,
+          dbPage?.book_id || '',
+          db
+        );
+        return { image: result, croppedInline: true };
       }
 
-      // Priority 2: Use the page's photo field (may be updated after split)
-      if (dbPage?.photo) {
-        return dbPage.photo;
-      }
+      // Use pre-generated cropped image or original
+      const imageUrl = dbPage?.cropped_photo || dbPage?.photo || page.imageUrl;
+      const result = await fetchImageAsBase64(imageUrl);
+      return { image: result, croppedInline: false };
+    });
 
-      // Priority 3: Fall back to the input imageUrl
-      return page.imageUrl;
-    };
-
-    // Fetch all images in parallel
-    console.log(`[batch-ocr] Fetching ${pagesToProcess.length} images...`);
-    const imagePromises = pagesToProcess.map(p => fetchImageAsBase64(getImageUrl(p)));
-    const images = await Promise.all(imagePromises);
+    const imageResults = await Promise.all(imagePromises);
 
     // Filter out failed fetches
     const validPages: { page: PageInput; image: { data: string; mimeType: string } }[] = [];
 
     pagesToProcess.forEach((page, i) => {
-      if (images[i]) {
-        validPages.push({ page, image: images[i]! });
+      const { image, croppedInline } = imageResults[i];
+      if (image) {
+        validPages.push({ page, image });
+        if (croppedInline) {
+          pageResults.push({
+            pageId: page.pageId,
+            status: 'cropped_inline',
+            message: `Page ${page.pageNumber} - cropped inline (will save for future use)`,
+          });
+        }
       } else {
         failedPageIds.push(page.pageId);
+        const dbPage = dbPageMap.get(page.pageId);
+        const wasCropAttempt = dbPage?.crop?.xStart !== undefined && !dbPage?.cropped_photo;
         pageResults.push({
           pageId: page.pageId,
-          status: 'failed_image_fetch',
-          message: `Page ${page.pageNumber} - failed to fetch image`,
+          status: wasCropAttempt ? 'failed_crop' : 'failed_image_fetch',
+          message: `Page ${page.pageNumber} - failed to ${wasCropAttempt ? 'crop' : 'fetch'} image`,
         });
-        console.error(`[batch-ocr] Failed to fetch image for page ${page.pageNumber}`);
+        console.error(`[batch-ocr] Failed to ${wasCropAttempt ? 'crop' : 'fetch'} image for page ${page.pageNumber}`);
       }
     });
 
@@ -417,16 +474,14 @@ Return each transcription clearly separated with the exact format:
       console.error('Failed to track cost:', e);
     }
 
-    console.log(`[batch-ocr] Complete: ${Object.keys(ocrResults).length} processed, ${skippedPageIds.length} skipped (OCR exists), ${needsCropPageIds.length} need crops, ${failedPageIds.length} failed`);
+    console.log(`[batch-ocr] Complete: ${Object.keys(ocrResults).length} processed, ${skippedPageIds.length} skipped (OCR exists), ${failedPageIds.length} failed`);
 
     return NextResponse.json({
       ocrResults,
       processedCount: Object.keys(ocrResults).length,
       skippedCount: skippedPageIds.length,
-      needsCropCount: needsCropPageIds.length,
       requestedCount: pages.length,
       skippedPageIds,
-      needsCropPageIds,
       failedPageIds,
       pageResults,
       usage: {

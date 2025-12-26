@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Save, Loader2, Search, ExternalLink } from 'lucide-react';
+import { X, Save, Loader2, Search, ExternalLink, Languages } from 'lucide-react';
 
 interface BookEditModalProps {
   book: {
@@ -22,11 +22,13 @@ interface BookEditModalProps {
 interface UstcResult {
   id: string;
   title: string;
+  englishTitle?: string;
   author?: string;
   language?: string;
-  year?: string;
-  place?: string;
-  printer?: string;
+  workType?: string;
+  subjectTags?: string[];
+  religiousTradition?: string;
+  classicalSource?: string;
 }
 
 export default function BookEditModal({ book, onClose, onSave }: BookEditModalProps) {
@@ -47,6 +49,9 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
   const [ustcQuery, setUstcQuery] = useState('');
   const [ustcResults, setUstcResults] = useState<UstcResult[]>([]);
   const [ustcSearching, setUstcSearching] = useState(false);
+
+  // Title translation
+  const [translating, setTranslating] = useState(false);
 
   const handleSave = async () => {
     setSaving(true);
@@ -103,13 +108,51 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
   const applyUstcResult = (result: UstcResult) => {
     setUstcId(result.id);
     if (result.title) setTitle(result.title);
+    // Use pre-translated English title if available
+    if (result.englishTitle) setDisplayTitle(result.englishTitle);
     if (result.author) setAuthor(result.author);
     if (result.language) setLanguage(result.language);
-    if (result.year) setPublished(result.year);
-    if (result.place) setPlacePublished(result.place);
-    if (result.printer) setPublisher(result.printer);
     setUstcResults([]);
     setUstcQuery('');
+  };
+
+  const translateTitle = async () => {
+    if (!title.trim()) return;
+    setTranslating(true);
+    setError(null);
+
+    try {
+      // Detect source language from the language field or default to Latin
+      const sourceLanguage = language?.toLowerCase().includes('latin') ? 'Latin'
+        : language?.toLowerCase().includes('german') ? 'German'
+        : language?.toLowerCase().includes('french') ? 'French'
+        : language?.toLowerCase().includes('italian') ? 'Italian'
+        : language || 'Latin';
+
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: title,
+          sourceLanguage,
+          targetLanguage: 'English',
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.translation) {
+          setDisplayTitle(data.translation);
+        }
+      } else {
+        const data = await res.json();
+        setError(data.error || 'Translation failed');
+      }
+    } catch {
+      setError('Translation failed');
+    } finally {
+      setTranslating(false);
+    }
   };
 
   return (
@@ -149,7 +192,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
 
           {/* USTC Results */}
           {ustcResults.length > 0 && (
-            <div className="mt-3 space-y-2">
+            <div className="mt-3 space-y-2 max-h-64 overflow-y-auto">
               {ustcResults.map((result) => (
                 <button
                   key={result.id}
@@ -157,10 +200,22 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                   className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
                 >
                   <div className="font-medium text-stone-900 text-sm">{result.title}</div>
-                  <div className="text-xs text-stone-500 mt-1">
-                    {[result.author, result.place, result.year].filter(Boolean).join(' · ')}
-                    <span className="ml-2 text-amber-600">USTC {result.id}</span>
+                  {result.englishTitle && (
+                    <div className="text-sm text-blue-700 mt-0.5 italic">{result.englishTitle}</div>
+                  )}
+                  <div className="text-xs text-stone-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
+                    {result.author && <span>{result.author}</span>}
+                    {result.language && <span className="text-stone-400">({result.language})</span>}
+                    {result.workType && <span className="bg-stone-100 px-1 rounded">{result.workType}</span>}
+                    <span className="text-amber-600">USTC {result.id}</span>
                   </div>
+                  {result.subjectTags && result.subjectTags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1.5">
+                      {result.subjectTags.slice(0, 4).map((tag, i) => (
+                        <span key={i} className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">{tag}</span>
+                      ))}
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
@@ -182,15 +237,27 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
 
             <div className="col-span-2">
               <label className="block text-sm font-medium text-stone-700 mb-1">
-                Display Title <span className="text-stone-400 font-normal">(optional, cleaner version)</span>
+                Display Title <span className="text-stone-400 font-normal">(optional, English translation)</span>
               </label>
-              <input
-                type="text"
-                value={displayTitle}
-                onChange={(e) => setDisplayTitle(e.target.value)}
-                placeholder={title}
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={displayTitle}
+                  onChange={(e) => setDisplayTitle(e.target.value)}
+                  placeholder={title}
+                  className="flex-1 px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+                <button
+                  type="button"
+                  onClick={translateTitle}
+                  disabled={translating || !title.trim()}
+                  className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 flex items-center gap-1.5 text-sm whitespace-nowrap"
+                  title="Translate title to English"
+                >
+                  {translating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Languages className="w-4 h-4" />}
+                  Translate
+                </button>
+              </div>
             </div>
 
             <div>

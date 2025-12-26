@@ -17,7 +17,6 @@ import PublishEditionButton from '@/components/PublishEditionButton';
 import EditionsPanel from '@/components/EditionsPanel';
 import SchemaOrgMetadata from '@/components/SchemaOrgMetadata';
 import CategoryPicker from '@/components/CategoryPicker';
-import EditBookButton from '@/components/EditBookButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -225,7 +224,6 @@ async function BookInfo({ id }: { id: string }) {
                 />
                 <BookAnalytics bookId={book.id} />
                 <SearchPanel bookId={book.id} />
-                <EditBookButton book={book} />
               </div>
 
               {/* Bibliographic Info */}

@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, RotateCcw, AlertTriangle, Loader2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, RotateCcw, AlertTriangle, Loader2, Pencil } from 'lucide-react';
 import type { Book, ImageSource } from '@/lib/types';
 import { IMAGE_LICENSES } from '@/lib/types';
+import BookEditModal from './BookEditModal';
+import { useRouter } from 'next/navigation';
 
 interface BibliographicInfoProps {
   book: Book;
@@ -11,12 +13,14 @@ interface BibliographicInfoProps {
 }
 
 export default function BibliographicInfo({ book, pagesCount }: BibliographicInfoProps) {
+  const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showResetModal, setShowResetModal] = useState(false);
   const [resetMode, setResetMode] = useState<'soft' | 'full'>('soft');
   const [resetting, setResetting] = useState(false);
   const [resetResult, setResetResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   // Check if full reimport is available (requires IA source)
   const canFullReimport = book.ia_identifier || book.image_source?.provider === 'internet_archive';
@@ -98,14 +102,24 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
 
   return (
     <div className="mt-4">
-      {/* Toggle button */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="flex items-center gap-2 text-sm text-stone-400 hover:text-stone-200 transition-colors"
-      >
-        {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-        Bibliographic Info
-      </button>
+      {/* Toggle button and Edit */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={() => setExpanded(!expanded)}
+          className="flex items-center gap-2 text-sm text-stone-400 hover:text-stone-200 transition-colors"
+        >
+          {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          Bibliographic Info
+        </button>
+        <button
+          onClick={() => setShowEditModal(true)}
+          className="flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors"
+          title="Edit metadata"
+        >
+          <Pencil className="w-3.5 h-3.5" />
+          Edit
+        </button>
+      </div>
 
       {/* Expanded content */}
       {expanded && (
@@ -401,6 +415,15 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
             </div>
           </div>
         </div>
+      )}
+
+      {/* Edit Modal */}
+      {showEditModal && (
+        <BookEditModal
+          book={book}
+          onClose={() => setShowEditModal(false)}
+          onSave={() => router.refresh()}
+        />
       )}
     </div>
   );
