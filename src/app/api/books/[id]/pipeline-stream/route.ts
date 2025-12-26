@@ -44,9 +44,9 @@ export async function GET(
 
       const stats = {
         total: pages.length,
-        needsCrop: pages.filter(p => p.crop && !p.cropped_photo).length,
         needsOcr: pages.filter(p => !p.ocr?.data).length,
         needsTranslation: pages.filter(p => p.ocr?.data && !p.translation?.data).length,
+        hasCropSettings: pages.filter(p => p.crop).length,
       };
 
       return NextResponse.json({
@@ -84,7 +84,7 @@ export async function POST(
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
 
-    const { model = 'gemini-2.5-flash', language = 'Latin', parallelPages = 3 } = body;
+    const { model = 'gemini-2.5-flash', language = 'Latin', parallelPages = 3, overwrite = false } = body;
 
     // Check for existing active job
     const existingJob = await db.collection('jobs').findOne({
@@ -112,12 +112,14 @@ export async function POST(
       .project({ id: 1, page_number: 1, crop: 1, cropped_photo: 1, ocr: 1, translation: 1 })
       .toArray();
 
-    // Find pages that need any work
-    const pagesToProcess = pages.filter(p =>
-      (p.crop && !p.cropped_photo) ||  // needs crop
-      !p.ocr?.data ||                   // needs OCR
-      !p.translation?.data              // needs translation
-    );
+    // Find pages that need any work (cropping happens inline during OCR)
+    // With overwrite=true, reprocess all pages regardless of existing OCR
+    const pagesToProcess = overwrite
+      ? pages
+      : pages.filter(p =>
+          !p.ocr?.data ||                   // needs OCR
+          !p.translation?.data              // needs translation
+        );
 
     if (pagesToProcess.length === 0) {
       return NextResponse.json({
@@ -148,6 +150,7 @@ export async function POST(
         model,
         language,
         parallelPages,
+        overwrite,
         page_ids: pagesToProcess.map(p => p.id),
       },
     };

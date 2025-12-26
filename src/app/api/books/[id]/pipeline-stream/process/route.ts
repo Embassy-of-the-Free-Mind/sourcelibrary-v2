@@ -22,7 +22,7 @@ async function processPageFully(
     ocr?: { data?: string };
     translation?: { data?: string };
   },
-  config: { model: string; language: string },
+  config: { model: string; language: string; overwrite?: boolean },
   db: Awaited<ReturnType<typeof getDb>>,
   previousOcr?: string,
   previousTranslation?: string

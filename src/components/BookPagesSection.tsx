@@ -701,7 +701,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
               // Show warning if pages need cropped images
               if (data.needsCropCount > 0) {
-                const cropMsg = `${data.needsCropCount} pages need cropped images. Go to Prepare tab and run "Generate Cropped Images" first.`;
+                const cropMsg = `${data.needsCropCount} pages need cropped images. Use the Pipeline to generate them first.`;
                 console.warn(`[OCR] ${cropMsg}`);
                 setProcessing(prev => ({ ...prev, lastError: cropMsg }));
               }

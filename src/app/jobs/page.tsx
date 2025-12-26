@@ -168,7 +168,7 @@ export default function JobsPage() {
           <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
             <Clock className="w-12 h-12 mx-auto mb-4 opacity-30" />
             <p>No jobs yet</p>
-            <p className="text-sm mt-1">Start a batch process from a book's prepare page</p>
+            <p className="text-sm mt-1">Start a batch process from a book page or use the Pipeline</p>
           </div>
         ) : (
           <div className="space-y-4">
