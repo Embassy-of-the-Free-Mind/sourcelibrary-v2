@@ -7,8 +7,8 @@ import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
 
 const CHUNK_SIZE = 5; // Process 5 pages per request for AI jobs
-const CROP_CHUNK_SIZE = 100; // Process more for cropping (no AI, just image manipulation)
-const CROP_PARALLEL = 25; // Number of crops to run in parallel (I/O bound, can go high)
+const CROP_CHUNK_SIZE = 40; // Sweet spot: ~55s per request (just under 60s timeout)
+const CROP_PARALLEL = 10; // 10 parallel operations balances speed vs memory
 
 // Helper function to process a single cropped image
 async function processCroppedImage(
