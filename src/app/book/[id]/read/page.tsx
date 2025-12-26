@@ -3,6 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
+import rehypeRaw from 'rehype-raw';
 import { Book, Page } from '@/lib/types';
 import HighlightSelection from '@/components/HighlightSelection';
 import HighlightsPanel from '@/components/HighlightsPanel';
@@ -117,18 +121,60 @@ export default function ReadPage({ params }: ReadPageProps) {
     ? Math.round((translatedPages.length / pages.length) * 100)
     : 0;
 
-  // Render translation text with basic formatting
+  // Render translation text with full markdown support
   const renderTranslation = (text: string) => {
     // Remove [[tags]] and clean up
     const cleaned = text
       .replace(/\[\[[^\]]+\]\]/g, '')
       .trim();
 
-    return cleaned.split('\n\n').map((paragraph, i) => (
-      <p key={i} className="mb-4 leading-relaxed">
-        {paragraph}
-      </p>
-    ));
+    return (
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm, remarkBreaks]}
+        rehypePlugins={[rehypeRaw]}
+        components={{
+          p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
+          strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+          em: ({ children }) => <em className="italic">{children}</em>,
+          h1: ({ children }) => <h1 className="text-2xl font-serif font-bold mt-6 mb-3">{children}</h1>,
+          h2: ({ children }) => <h2 className="text-xl font-serif font-bold mt-5 mb-2">{children}</h2>,
+          h3: ({ children }) => <h3 className="text-lg font-serif font-semibold mt-4 mb-2">{children}</h3>,
+          h4: ({ children }) => <h4 className="text-base font-serif font-semibold mt-3 mb-1">{children}</h4>,
+          ul: ({ children }) => <ul className="list-disc ml-5 my-3 space-y-1">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal ml-5 my-3 space-y-1">{children}</ol>,
+          li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+          blockquote: ({ children }) => (
+            <blockquote className="border-l-3 border-amber-300 pl-4 my-4 italic text-stone-600 bg-amber-50/30 py-2 pr-2 rounded-r">
+              {children}
+            </blockquote>
+          ),
+          hr: () => <hr className="my-6 border-stone-200" />,
+          a: ({ href, children }) => (
+            <a href={href} className="text-amber-700 underline hover:text-amber-800" target="_blank" rel="noopener noreferrer">
+              {children}
+            </a>
+          ),
+          table: ({ children }) => (
+            <div className="overflow-x-auto my-4">
+              <table className="min-w-full border-collapse border border-stone-200">{children}</table>
+            </div>
+          ),
+          thead: ({ children }) => <thead className="bg-stone-100">{children}</thead>,
+          tbody: ({ children }) => <tbody>{children}</tbody>,
+          tr: ({ children }) => <tr className="border-b border-stone-200">{children}</tr>,
+          th: ({ children }) => (
+            <th className="px-3 py-2 text-left text-sm font-semibold text-stone-700 border border-stone-200">
+              {children}
+            </th>
+          ),
+          td: ({ children }) => (
+            <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
+          ),
+        }}
+      >
+        {cleaned}
+      </ReactMarkdown>
+    );
   };
 
   if (loading) {

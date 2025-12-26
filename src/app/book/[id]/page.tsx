@@ -107,7 +107,8 @@ async function BookInfo({ id }: { id: string }) {
   const hasOcr = ocrCount > 0;
   const hasTranslations = translatedCount > 0;
   const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
-  const summaryText = indexBrief || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
+  const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
+  const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
   const hasSummary = !!summaryText;
   const isComplete = ocrCount === pages.length && translatedCount === pages.length && hasSummary;
 
