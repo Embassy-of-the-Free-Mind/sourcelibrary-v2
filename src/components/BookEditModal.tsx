@@ -50,6 +50,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [searching, setSearching] = useState(false);
+  const [searchDone, setSearchDone] = useState(false);
 
   // Title translation
   const [translating, setTranslating] = useState(false);
@@ -92,6 +93,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     if (!searchQuery.trim()) return;
     setSearching(true);
     setSearchResults([]);
+    setSearchDone(false);
 
     try {
       const res = await fetch(`/api/ustc/search?q=${encodeURIComponent(searchQuery)}`);
@@ -103,6 +105,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
       // Silently fail - search is optional
     } finally {
       setSearching(false);
+      setSearchDone(true);
     }
   };
 

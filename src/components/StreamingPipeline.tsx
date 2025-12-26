@@ -266,9 +266,22 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
             </div>
           </div>
 
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={overwrite}
+              onChange={(e) => setOverwrite(e.target.checked)}
+              className="w-4 h-4 rounded border-stone-300 text-amber-600 focus:ring-amber-500"
+            />
+            <span className="text-sm text-stone-700">
+              Overwrite existing OCR/translation
+              <span className="text-stone-500 ml-1">(re-process all pages)</span>
+            </span>
+          </label>
+
           <button
             onClick={startPipeline}
-            disabled={starting || !!(stats && stats.needsCrop + stats.needsOcr + stats.needsTranslation === 0)}
+            disabled={starting || (!overwrite && !!stats && stats.needsOcr + stats.needsTranslation === 0)}
             className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             {starting ? (
