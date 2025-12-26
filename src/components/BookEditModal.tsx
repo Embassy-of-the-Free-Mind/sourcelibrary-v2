@@ -25,10 +25,10 @@ interface UstcResult {
   englishTitle?: string;
   author?: string;
   language?: string;
+  year?: string;
+  place?: string;
   workType?: string;
   subjectTags?: string[];
-  religiousTradition?: string;
-  classicalSource?: string;
 }
 
 export default function BookEditModal({ book, onClose, onSave }: BookEditModalProps) {
@@ -112,6 +112,8 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     if (result.englishTitle) setDisplayTitle(result.englishTitle);
     if (result.author) setAuthor(result.author);
     if (result.language) setLanguage(result.language);
+    if (result.year) setPublished(result.year);
+    if (result.place) setPlacePublished(result.place);
     setUstcResults([]);
     setUstcQuery('');
   };
@@ -205,6 +207,8 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                   )}
                   <div className="text-xs text-stone-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
                     {result.author && <span>{result.author}</span>}
+                    {result.place && <span>{result.place}</span>}
+                    {result.year && <span>{result.year}</span>}
                     {result.language && <span className="text-stone-400">({result.language})</span>}
                     {result.workType && <span className="bg-stone-100 px-1 rounded">{result.workType}</span>}
                     <span className="text-amber-600">USTC {result.id}</span>
