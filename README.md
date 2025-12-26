@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Source Library v2
+
+A Next.js application for digitizing and translating historical texts. Built for the Embassy of the Free Mind.
+
+## Stack
+
+- **Framework**: Next.js 14 (App Router)
+- **Database**: MongoDB Atlas
+- **AI**: Google Gemini for OCR and translation
+- **Storage**: Vercel Blob for images
+- **Deployment**: Vercel
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Architecture
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Image System
 
-## Learn More
+All page images go through `/api/image` for consistent sizing and cropping:
 
-To learn more about Next.js, take a look at the following resources:
+| Tier | Size | Quality | Use Case |
+|------|------|---------|----------|
+| Thumbnail | 400px | 70% | Grid views, page navigation |
+| Display | 1200px | 80% | Main reading view |
+| Full | 2400px | 90% | Magnifier, fullscreen |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Split Pages
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Books with two-page spreads can be split. Each page stores:
+- `crop.xStart` and `crop.xEnd` (0-1000 scale)
+- `cropped_photo` (optional pre-generated Vercel Blob URL)
 
-## Deploy on Vercel
+Cropping happens on-demand via Sharp. OCR automatically crops inline and saves the result for future use.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Processing Pipeline
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Import** - Upload images or import from Internet Archive
+2. **Split** - Detect and split two-page spreads (ML or manual)
+3. **OCR** - Extract text using Gemini Vision
+4. **Translate** - Translate to English using Gemini
+5. **Summarize** - Generate summaries and key themes
+
+## Key Directories
+
+```
+src/
+├── app/
+│   ├── api/          # API routes
+│   ├── book/         # Book pages (detail, read, pipeline)
+│   └── page.tsx      # Homepage
+├── components/       # React components
+└── lib/              # Utilities (mongodb, ai, types)
+```

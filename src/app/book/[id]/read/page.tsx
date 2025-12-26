@@ -121,12 +121,43 @@ export default function ReadPage({ params }: ReadPageProps) {
     ? Math.round((translatedPages.length / pages.length) * 100)
     : 0;
 
+  // Preprocess text to handle special syntax before markdown parsing
+  const preprocessText = (text: string): string => {
+    let result = text;
+
+    // Handle centered headings: ->## text<- → <h2 class="text-center">text</h2>
+    // Must be done before generic centering to preserve heading semantics
+    result = result.replace(/->\s*(#{1,6})\s*([\s\S]*?)\s*<-/g, (match, hashes, content) => {
+      const level = hashes.length;
+      const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
+      return `<h${level} class="text-center">${cleaned}</h${level}>`;
+    });
+
+    // Handle regular centered text: ->text<-
+    result = result.replace(/->([\s\S]*?)<-/g, (match, content) => {
+      const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
+      return `<div class="text-center">${cleaned}</div>`;
+    });
+
+    // Convert margin notes to visible styled spans
+    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => {
+      return `<span class="margin-note">${content.trim()}</span>`;
+    });
+
+    // Convert image descriptions to visible blocks
+    result = result.replace(/\[\[image:\s*(.*?)\]\]/gi, (match, content) => {
+      return `<div class="image-description">${content.trim()}</div>`;
+    });
+
+    // Remove other [[tags]] that shouldn't be shown (meta, language, page number, etc.)
+    result = result.replace(/\[\[(meta|language|page number|header|signature|vocabulary|summary|keywords|warning|notes):[^\]]*\]\]/gi, '');
+
+    return result.trim();
+  };
+
   // Render translation text with full markdown support
   const renderTranslation = (text: string) => {
-    // Remove [[tags]] and clean up
-    const cleaned = text
-      .replace(/\[\[[^\]]+\]\]/g, '')
-      .trim();
+    const processed = preprocessText(text);
 
     return (
       <ReactMarkdown
@@ -136,10 +167,18 @@ export default function ReadPage({ params }: ReadPageProps) {
           p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
           strong: ({ children }) => <strong className="font-bold">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
-          h1: ({ children }) => <h1 className="text-2xl font-serif font-bold mt-6 mb-3">{children}</h1>,
-          h2: ({ children }) => <h2 className="text-xl font-serif font-bold mt-5 mb-2">{children}</h2>,
-          h3: ({ children }) => <h3 className="text-lg font-serif font-semibold mt-4 mb-2">{children}</h3>,
-          h4: ({ children }) => <h4 className="text-base font-serif font-semibold mt-3 mb-1">{children}</h4>,
+          h1: ({ children, className }) => (
+            <h1 className={`text-2xl font-serif font-bold mt-6 mb-3 ${className || ''}`}>{children}</h1>
+          ),
+          h2: ({ children, className }) => (
+            <h2 className={`text-xl font-serif font-bold mt-5 mb-2 ${className || ''}`}>{children}</h2>
+          ),
+          h3: ({ children, className }) => (
+            <h3 className={`text-lg font-serif font-semibold mt-4 mb-2 ${className || ''}`}>{children}</h3>
+          ),
+          h4: ({ children, className }) => (
+            <h4 className={`text-base font-serif font-semibold mt-3 mb-1 ${className || ''}`}>{children}</h4>
+          ),
           ul: ({ children }) => <ul className="list-disc ml-5 my-3 space-y-1">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal ml-5 my-3 space-y-1">{children}</ol>,
           li: ({ children }) => <li className="leading-relaxed">{children}</li>,
@@ -170,9 +209,35 @@ export default function ReadPage({ params }: ReadPageProps) {
           td: ({ children }) => (
             <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
           ),
+          // Custom styling for margin notes and image descriptions
+          span: ({ className, children }) => {
+            if (className === 'margin-note') {
+              return (
+                <span className="inline-block text-sm text-teal-700 bg-teal-50 border-l-2 border-teal-400 px-2 py-0.5 ml-1 rounded-r">
+                  {children}
+                </span>
+              );
+            }
+            return <span className={className}>{children}</span>;
+          },
+          div: ({ className, children }) => {
+            if (className === 'text-center') {
+              return <div className="text-center">{children}</div>;
+            }
+            if (className === 'image-description') {
+              return (
+                <div className="my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
+                  <span className="text-amber-700 font-medium not-italic">[Image: </span>
+                  {children}
+                  <span className="text-amber-700 font-medium not-italic">]</span>
+                </div>
+              );
+            }
+            return <div className={className}>{children}</div>;
+          },
         }}
       >
-        {cleaned}
+        {processed}
       </ReactMarkdown>
     );
   };
