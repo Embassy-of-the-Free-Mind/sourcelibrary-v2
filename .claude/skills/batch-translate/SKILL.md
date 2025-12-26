@@ -208,11 +208,11 @@ if [ "$NEEDS_CROP" != "0" ]; then
   BOOK=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
 fi
 
-# 3. OCR missing pages
-NEEDS_OCR=$(echo "$BOOK" | jq '[.pages[] | select(.ocr.data | not)] | length')
+# 3. OCR missing pages (check for empty strings, not just null)
+NEEDS_OCR=$(echo "$BOOK" | jq '[.pages[] | select((.ocr.data // "") | length == 0)] | length')
 if [ "$NEEDS_OCR" != "0" ]; then
   echo "OCRing $NEEDS_OCR pages..."
-  OCR_IDS=$(echo "$BOOK" | jq '[.pages[] | select(.ocr.data | not) | .id]')
+  OCR_IDS=$(echo "$BOOK" | jq '[.pages[] | select((.ocr.data // "") | length == 0) | .id]')
 
   TOTAL=$(echo "$OCR_IDS" | jq 'length')
   for ((i=0; i<TOTAL; i+=5)); do
@@ -225,12 +225,12 @@ if [ "$NEEDS_OCR" != "0" ]; then
   BOOK=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
 fi
 
-# 4. Translate with context
-NEEDS_TRANS=$(echo "$BOOK" | jq '[.pages[] | select(.ocr.data) | select(.translation.data | not)] | length')
+# 4. Translate with context (check for empty strings)
+NEEDS_TRANS=$(echo "$BOOK" | jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0)] | length')
 if [ "$NEEDS_TRANS" != "0" ]; then
   echo "Translating $NEEDS_TRANS pages..."
   PAGES=$(echo "$BOOK" | jq '[.pages | sort_by(.page_number) | .[] |
-    select(.ocr.data) | select(.translation.data | not) |
+    select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) |
     {pageId: .id, ocrText: .ocr.data, pageNumber: .page_number}]')
 
   TOTAL=$(echo "$PAGES" | jq 'length')
@@ -308,6 +308,13 @@ curl -s "https://sourcelibrary-v2.vercel.app/api/books" | jq '[.[] | {
 ```
 
 ## Troubleshooting
+
+### Empty Strings vs Null (CRITICAL)
+In jq, empty strings `""` are truthy! This means:
+- `select(.ocr.data)` matches pages with `""` (WRONG)
+- `select(.ocr.data | not)` does NOT match pages with `""` (WRONG)
+- Use `select((.ocr.data // "") | length == 0)` to find missing/empty OCR
+- Use `select((.ocr.data // "") | length > 0)` to find pages WITH OCR content
 
 ### Rate Limits (429 errors)
 - Add `sleep 1` between API calls
