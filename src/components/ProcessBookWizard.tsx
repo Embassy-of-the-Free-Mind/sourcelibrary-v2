@@ -60,7 +60,7 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }: ProcessBookWizardProps) {
   const router = useRouter();
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
-  const [concurrency, setConcurrency] = useState(5);
+  const [concurrency, setConcurrency] = useState(1);
   const [showSettings, setShowSettings] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState<WorkflowStep | null>(null);
@@ -921,9 +921,9 @@ export default function ProcessBookWizard({ bookId, bookTitle, pages, onClose }:
                   disabled={isProcessing}
                   className="flex-1 px-2 py-1.5 text-sm border border-stone-300 rounded-lg"
                 >
-                  <option value={1}>1x (sequential)</option>
-                  <option value={3}>3x</option>
-                  <option value={5}>5x (default)</option>
+                  <option value={1}>1x sequential (default)</option>
+                  <option value={3}>3x parallel</option>
+                  <option value={5}>5x parallel</option>
                   <option value={10}>10x</option>
                   <option value={15}>15x (max free)</option>
                 </select>
