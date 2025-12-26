@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, Info, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -33,6 +33,7 @@ export default function ReadPage({ params }: ReadPageProps) {
   const [showFullText, setShowFullText] = useState(false);
   const [showHighlights, setShowHighlights] = useState(false);
   const [highlightCount, setHighlightCount] = useState(0);
+  const [metadataPageId, setMetadataPageId] = useState<string | null>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
   // Resolve params
@@ -179,6 +180,35 @@ export default function ReadPage({ params }: ReadPageProps) {
     result = result.replace(/\[\[(meta|language|page number|header|signature|vocabulary|summary|keywords|warning):[^\]]*\]\]/gi, '');
 
     return result.trim();
+  };
+
+  // Extract hidden metadata from text for the metadata panel
+  const extractHiddenMetadata = (text: string): Record<string, string> => {
+    const metadata: Record<string, string> = {};
+    const tagPatterns = [
+      'meta', 'language', 'page number', 'header', 'signature',
+      'vocabulary', 'summary', 'keywords', 'warning'
+    ];
+
+    for (const tag of tagPatterns) {
+      const regex = new RegExp(`\\[\\[${tag}:\\s*([\\s\\S]*?)\\]\\]`, 'gi');
+      const matches = text.matchAll(regex);
+      const values: string[] = [];
+      for (const match of matches) {
+        values.push(match[1].trim());
+      }
+      if (values.length > 0) {
+        metadata[tag] = values.join('; ');
+      }
+    }
+
+    return metadata;
+  };
+
+  // Format date for display
+  const formatDate = (dateStr: string | undefined) => {
+    if (!dateStr) return 'Unknown';
+    return new Date(dateStr).toLocaleString();
   };
 
   // Render translation text with full markdown support

@@ -16,10 +16,16 @@ export const LIBRARY_CATEGORIES = [
     icon: '☿',
   },
   {
-    id: 'kabbalah',
-    name: 'Kabbalah',
-    description: 'Jewish mysticism and esoteric interpretation',
+    id: 'jewish-kabbalah',
+    name: 'Jewish Kabbalah',
+    description: 'Zohar, Sefer Yetzirah, and traditional Jewish mysticism',
     icon: '✡',
+  },
+  {
+    id: 'christian-cabala',
+    name: 'Christian Cabala',
+    description: 'Reuchlin, Pico, and Christian adaptations of Kabbalah',
+    icon: '✝✡',
   },
   {
     id: 'neoplatonism',
@@ -52,9 +58,21 @@ export const LIBRARY_CATEGORIES = [
     icon: '★',
   },
   {
-    id: 'magic',
-    name: 'Magic & Theurgy',
-    description: 'Ritual magic, talismans, and divine invocation',
+    id: 'natural-magic',
+    name: 'Natural Magic',
+    description: 'Sympathies, talismans, and occult properties of nature (Ficino, Della Porta)',
+    icon: '🌿',
+  },
+  {
+    id: 'ritual-magic',
+    name: 'Ritual Magic',
+    description: 'Ceremonial magic, grimoires, and conjuration',
+    icon: '🔯',
+  },
+  {
+    id: 'theurgy',
+    name: 'Theurgy',
+    description: 'Divine invocation and ascent of the soul (Iamblichus, Proclus)',
     icon: '✦',
   },
   {
@@ -125,16 +143,22 @@ export const LIBRARY_CATEGORIES = [
     icon: '✟',
   },
   {
-    id: 'egyptian',
-    name: 'Egyptian',
-    description: 'Ancient Egyptian wisdom and Egyptianizing traditions',
-    icon: '𓂀',
+    id: 'prisca-theologia',
+    name: 'Prisca Theologia',
+    description: 'Ancient theology tradition: Moses, Orpheus, Zoroaster as sources of wisdom',
+    icon: '📿',
+  },
+  {
+    id: 'florentine-platonism',
+    name: 'Florentine Platonism',
+    description: 'Ficino, Pico, and the Florentine Academy',
+    icon: '🏛',
   },
   {
     id: 'renaissance',
     name: 'Renaissance',
     description: 'Works from 1450-1600, the rebirth of ancient wisdom',
-    icon: '🏛',
+    icon: '🎨',
   },
   {
     id: 'reformation',

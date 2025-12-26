@@ -295,10 +295,15 @@ export interface Section {
   startPage: number;
   endPage: number;
   summary?: string;
-  quotes?: Array<{ text: string; page: number }>;  // Key quotes with page refs
+  quotes?: Array<{
+    text: string;
+    page: number;
+    significance?: string;  // Why this quote matters
+  }>;
   concepts?: string[];  // Key concepts/terms introduced
+  source_chapter?: string;  // Original chapter heading from OCR (if hybrid detection)
   generated_at?: Date;
-  detection_method: 'ai' | 'manual';
+  detection_method: 'ai' | 'manual' | 'hybrid';
 }
 
 // Chapter/heading extracted from OCR for table of contents

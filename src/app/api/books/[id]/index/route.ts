@@ -221,6 +221,13 @@ interface SectionSummary {
   startPage: number;
   endPage: number;
   summary: string;
+  quotes?: Array<{
+    text: string;
+    page: number;
+    significance?: string;
+  }>;
+  concepts?: string[];
+  source_chapter?: string;  // Original chapter heading from OCR
 }
 
 interface GeneratedSummary {
@@ -230,13 +237,53 @@ interface GeneratedSummary {
   sections: SectionSummary[];
 }
 
+interface ChapterInfo {
+  title: string;
+  pageNumber: number;
+  level: number;
+}
+
+// Build sections from detected chapters (merge if < 3 pages)
+function buildSectionsFromChapters(
+  chapters: ChapterInfo[],
+  totalPages: number
+): Array<{ title: string; startPage: number; endPage: number; source_chapter: string }> {
+  if (chapters.length === 0) return [];
+
+  const sections: Array<{ title: string; startPage: number; endPage: number; source_chapter: string }> = [];
+
+  for (let i = 0; i < chapters.length; i++) {
+    const chapter = chapters[i];
+    const nextChapter = chapters[i + 1];
+    const startPage = chapter.pageNumber;
+    const endPage = nextChapter ? nextChapter.pageNumber - 1 : totalPages;
+
+    // If this section would be < 3 pages and there's a next chapter, merge with next
+    if (endPage - startPage + 1 < 3 && nextChapter && sections.length > 0) {
+      // Extend the previous section instead
+      sections[sections.length - 1].endPage = endPage;
+      continue;
+    }
+
+    sections.push({
+      title: chapter.title,
+      startPage,
+      endPage,
+      source_chapter: chapter.title,
+    });
+  }
+
+  return sections;
+}
+
 // Generate hierarchical book summary using AI
 async function generateBookSummary(
   pageSummaries: { page: number; summary: string }[],
   bookTitle: string,
   bookAuthor: string,
   bookLanguage?: string,
-  researchContext?: string
+  researchContext?: string,
+  chapters?: ChapterInfo[]
 ): Promise<GeneratedSummary> {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
@@ -256,11 +303,30 @@ ${researchContext}
 ${summaryText}
 ` : '';
 
-  const sectionsInstructions = summaryText ? `
-4. **SECTIONS**: Group the pages into 3-8 thematic sections. For each:
+  // Build chapter context if available
+  const hasChapters = chapters && chapters.length > 0;
+  const chapterSection = hasChapters ? `
+## Detected Chapter Structure
+${chapters.map(c => `- Page ${c.pageNumber}: ${c.title}`).join('\n')}
+` : '';
+
+  const sectionsInstructions = summaryText ? (hasChapters ? `
+4. **SECTIONS**: Use the detected chapter structure above as your guide. For each section:
+   - Use the chapter title (or create a descriptive title if merging small chapters)
+   - The page range
+   - What the section covers (2-3 sentences)
+   - Notable quotes from that section with page numbers (include as many as are striking or important)
+   - Key concepts introduced
+
+For each quote, briefly explain its significance.` : `
+4. **SECTIONS**: Group the pages into 5-8 thematic sections. For each:
    - A descriptive title based on the content
    - The page range
-   - What the section covers (2-3 sentences)` : `
+   - What the section covers (2-3 sentences)
+   - Notable quotes from that section with page numbers (include as many as are striking or important)
+   - Key concepts introduced
+
+For each quote, briefly explain its significance.`) : `
 4. **SECTIONS**: Return an empty array since no page content is available.`;
 
   // If no page content, we can't generate a meaningful summary
@@ -276,6 +342,7 @@ ${summaryText}
   const prompt = `You're writing compelling copy to help readers discover "${bookTitle}" by ${bookAuthor}.${languageContext}
 
 ${researchSection}
+${chapterSection}
 ${pageSummarySection}
 
 ## Your Task
@@ -307,12 +374,21 @@ Output as JSON:
   "abstract": "...",
   "detailed": "...",
   "sections": [
-    {"title": "...", "startPage": 1, "endPage": 5, "summary": "..."},
-    ...
+    {
+      "title": "Section Title",
+      "startPage": 1,
+      "endPage": 5,
+      "summary": "What this section covers...",
+      "quotes": [
+        {"text": "Exact quote from the text", "page": 3, "significance": "Why this matters"},
+        {"text": "Another notable quote", "page": 4, "significance": "Key insight"}
+      ],
+      "concepts": ["Key Term", "Important Concept"]
+    }
   ]
 }
 
-IMPORTANT: Be engaging and interesting, but only describe what's actually in the text. Don't invent historical claims or content not in the pages. If something is genuinely fascinating in the text, highlight it!`;
+IMPORTANT: Be engaging and interesting, but only describe what's actually in the text. Don't invent historical claims or content not in the pages. Include as many notable quotes as are genuinely striking or important - there is no limit.`;
 
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
@@ -398,6 +474,14 @@ export async function GET(
       console.error('Research failed:', e);
     }
 
+    // Get chapters for hybrid section detection
+    const chapters: ChapterInfo[] = (book.chapters || []).map((c: { title: string; pageNumber: number; level?: number }) => ({
+      title: c.title,
+      pageNumber: c.pageNumber,
+      level: c.level || 1,
+    }));
+    console.log(`Found ${chapters.length} chapters for section structure`);
+
     // Generate summary if we have at least 1 page summary, or just research
     if (pageSummaries.length >= 1 || researchContext) {
       try {
@@ -406,7 +490,8 @@ export async function GET(
           bookTitle,
           bookAuthor,
           book.language || undefined,
-          researchContext || undefined
+          researchContext || undefined,
+          chapters.length > 0 ? chapters : undefined
         );
         bookSummary = {
           brief: generated.brief,
@@ -414,7 +499,7 @@ export async function GET(
           detailed: generated.detailed,
         };
         sectionSummaries = generated.sections || [];
-        console.log('Summary generated successfully');
+        console.log('Summary generated successfully with', sectionSummaries.length, 'sections');
       } catch (e) {
         console.error('Failed to generate book summary:', e);
       }

@@ -12,19 +12,24 @@ const CATEGORY_KEYWORDS: Record<string, string[]> = {
     'flamel', 'ripley', 'maier', 'khunrath'
   ],
   'hermeticism': [
-    'hermes', 'hermetic', 'trismegistus', 'emerald tablet', 'corpus hermeticum',
-    'poimandres', 'asclepius', 'thrice-great', 'egyptian', 'thoth', 'ficino',
-    'prisca theologia'
+    'hermes trismegistus', 'hermetic', 'trismegistus', 'emerald tablet', 'corpus hermeticum',
+    'poimandres', 'asclepius', 'thrice-great', 'thoth', 'tabula smaragdina',
+    'hermetica', 'hermetic philosophy'
   ],
-  'kabbalah': [
-    'kabbalah', 'kabbalistic', 'cabala', 'qabalah', 'sephiroth', 'sefirot',
-    'tree of life', 'zohar', 'gematria', 'hebrew', 'talmud', 'yetzirah',
-    'bahir', 'abulafia', 'luria', 'cordovero', 'reuchlin', 'pico'
+  'jewish-kabbalah': [
+    'kabbalah', 'kabbalistic', 'qabalah', 'sephiroth', 'sefirot',
+    'tree of life', 'zohar', 'gematria', 'yetzirah', 'sefer yetzirah',
+    'bahir', 'abulafia', 'luria', 'cordovero', 'safed', 'isaac the blind'
+  ],
+  'christian-cabala': [
+    'cabala', 'christian kabbalah', 'christian cabala', 'reuchlin',
+    'pico della mirandola', 'de verbo mirifico', 'de arte cabalistica',
+    'egidio da viterbo', 'agrippa', 'postel', 'kircher', 'knorr von rosenroth'
   ],
   'neoplatonism': [
-    'neoplatonism', 'plato', 'platonic', 'plotinus', 'proclus', 'iamblichus',
-    'porphyry', 'emanation', 'one', 'nous', 'world soul', 'anima mundi',
-    'ficino', 'academy', 'florentine', 'henosis', 'theurgy'
+    'neoplatonism', 'neoplatonic', 'plotinus', 'proclus', 'iamblichus',
+    'porphyry', 'emanation', 'nous', 'world soul', 'anima mundi',
+    'enneads', 'hypostasis', 'damascius', 'simplicius'
   ],
   'rosicrucianism': [
     'rosicrucian', 'rosenkreutz', 'fama', 'confessio', 'chemical wedding',
@@ -45,15 +50,25 @@ const CATEGORY_KEYWORDS: Record<string, string[]> = {
     'celestial', 'natal', 'ptolemy', 'tetrabiblos', 'ephemeris', 'aspect',
     'conjunction', 'influence', 'firmament'
   ],
-  'magic': [
-    'magic', 'magical', 'magick', 'theurgy', 'ritual', 'invocation',
-    'evocation', 'talisman', 'amulet', 'sigil', 'grimoire', 'conjuration',
-    'agrippa', 'picatrix', 'goetia', 'angel', 'demon', 'spirit', 'necromancy'
+  'natural-magic': [
+    'natural magic', 'magia naturalis', 'sympathy', 'sympathies', 'antipathy',
+    'talisman', 'amulet', 'occult properties', 'occult virtues', 'della porta',
+    'giambattista della porta', 'ficino', 'de vita', 'spiritus mundi'
+  ],
+  'ritual-magic': [
+    'ritual magic', 'ceremonial magic', 'grimoire', 'conjuration', 'evocation',
+    'invocation', 'sigil', 'goetia', 'lemegeton', 'solomonic', 'key of solomon',
+    'demon', 'spirit', 'necromancy', 'picatrix', 'agrippa occult philosophy'
+  ],
+  'theurgy': [
+    'theurgy', 'theurgic', 'theurgist', 'divine ascent', 'henosis',
+    'iamblichus mysteries', 'proclus', 'chaldean oracles', 'divine names',
+    'celestial hierarchy', 'pseudo-dionysius'
   ],
   'mysticism': [
     'mysticism', 'mystical', 'mystic', 'contemplation', 'vision', 'ecstasy',
-    'union', 'divine', 'spiritual', 'illumination', 'boehme', 'bohme',
-    'eckhart', 'tauler', 'suso', 'theosophia'
+    'unio mystica', 'mystical union', 'illumination', 'interior life',
+    'theosophia', 'divine spark', 'ground of the soul'
   ],
   'theology': [
     'theology', 'theological', 'god', 'christ', 'christian', 'scripture',
@@ -108,15 +123,20 @@ const CATEGORY_KEYWORDS: Record<string, string[]> = {
     'dark night', 'interior castle', 'mystical theology', 'dionysius',
     'quietism', 'guyon', 'fenelon', 'molinos'
   ],
-  'egyptian': [
-    'egypt', 'egyptian', 'pharaoh', 'hieroglyphic', 'pyramid', 'isis',
-    'osiris', 'horus', 'thoth', 'hermes', 'memphis', 'thebes',
-    'book of dead', 'papyrus', 'temple', 'mystery'
+  'prisca-theologia': [
+    'prisca theologia', 'ancient theology', 'ancient wisdom', 'perennial philosophy',
+    'zoroaster', 'orpheus', 'orphic', 'moses', 'mosaic', 'chaldean',
+    'egyptian wisdom', 'gymnosophist', 'brahmans', 'druids'
+  ],
+  'florentine-platonism': [
+    'ficino', 'marsilio ficino', 'pico della mirandola', 'platonic academy',
+    'florentine academy', 'medici', 'cosimo de medici', 'lorenzo de medici',
+    'de vita', 'platonic theology', 'theologia platonica'
   ],
   'renaissance': [
-    'ficino', 'pico', 'mirandola', 'renaissance', 'florentine',
-    'medici', 'quattrocento', 'cinquecento', '15th century', '16th century',
-    '1400', '1500', 'humanist', 'revival of learning'
+    'renaissance', 'quattrocento', 'cinquecento', '15th century', '16th century',
+    '1400s', '1500s', 'humanist', 'humanism', 'revival of learning',
+    'rebirth', 'rinascimento'
   ],
   'reformation': [
     'reformation', 'protestant', 'luther', 'calvin', 'zwingli',

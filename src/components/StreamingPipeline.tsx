@@ -289,6 +289,24 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
                       </li>
                     )}
                   </ul>
+                  {/* Retry button - only show when job is done */}
+                  {['completed', 'failed', 'cancelled'].includes(job.status) && (
+                    <button
+                      onClick={() => {
+                        setJob(null);
+                        startPipeline();
+                      }}
+                      disabled={starting}
+                      className="mt-3 flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white text-xs rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
+                    >
+                      {starting ? (
+                        <Loader2 className="w-3 h-3 animate-spin" />
+                      ) : (
+                        <Play className="w-3 h-3" />
+                      )}
+                      Retry failed pages
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -10,6 +10,22 @@ interface ConceptEntry {
   pages: number[];
 }
 
+interface SectionQuote {
+  text: string;
+  page: number;
+  significance?: string;
+}
+
+interface SectionSummary {
+  title: string;
+  startPage: number;
+  endPage: number;
+  summary: string;
+  quotes?: SectionQuote[];
+  concepts?: string[];
+  source_chapter?: string;
+}
+
 interface BookIndex {
   vocabulary: ConceptEntry[];
   keywords: ConceptEntry[];
@@ -17,7 +33,7 @@ interface BookIndex {
   places: ConceptEntry[];
   concepts: ConceptEntry[];
   pageSummaries: { page: number; summary: string }[];
-  sectionSummaries?: { title: string; startPage: number; endPage: number; summary: string }[];
+  sectionSummaries?: SectionSummary[];
   bookSummary: {
     brief: string;
     abstract: string;
@@ -315,20 +331,66 @@ export default function BookSummaryPage() {
               </div>
             )}
 
-            {/* Section Summaries */}
+            {/* Section Summaries / Table of Contents */}
             {index?.sectionSummaries && index.sectionSummaries.length > 0 && (
               <div className="bg-white border border-stone-200 rounded-lg p-6">
-                <h2 className="text-lg font-semibold text-stone-900 mb-4">Sections</h2>
-                <div className="space-y-4">
+                <h2 className="text-lg font-semibold text-stone-900 mb-4">Table of Contents</h2>
+                <div className="space-y-6">
                   {index.sectionSummaries.map((section, i) => (
                     <div key={i} className="border-l-2 border-amber-400 pl-4">
-                      <h3 className="font-medium text-stone-900">
-                        {section.title}
-                        <span className="text-stone-400 text-sm ml-2">
-                          (pp. {section.startPage}-{section.endPage})
-                        </span>
-                      </h3>
+                      <Link
+                        href={`/book/${bookId}/page/${section.startPage}`}
+                        className="group"
+                      >
+                        <h3 className="font-medium text-stone-900 group-hover:text-amber-700 transition-colors">
+                          {section.title}
+                          <span className="text-stone-400 text-sm ml-2 font-normal">
+                            (pp. {section.startPage}-{section.endPage})
+                          </span>
+                        </h3>
+                      </Link>
                       <p className="text-stone-600 text-sm mt-1">{section.summary}</p>
+
+                      {/* Quotes */}
+                      {section.quotes && section.quotes.length > 0 && (
+                        <div className="mt-3 space-y-2">
+                          {section.quotes.map((quote, qi) => (
+                            <blockquote
+                              key={qi}
+                              className="border-l-2 border-stone-200 pl-3 py-1"
+                            >
+                              <p className="text-sm italic text-stone-600">
+                                &ldquo;{quote.text}&rdquo;
+                                <Link
+                                  href={`/book/${bookId}/page/${quote.page}`}
+                                  className="not-italic text-stone-400 hover:text-amber-600 ml-2"
+                                >
+                                  (p. {quote.page})
+                                </Link>
+                              </p>
+                              {quote.significance && (
+                                <p className="text-xs text-stone-400 mt-0.5">
+                                  {quote.significance}
+                                </p>
+                              )}
+                            </blockquote>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Concepts */}
+                      {section.concepts && section.concepts.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1">
+                          {section.concepts.map((concept, ci) => (
+                            <span
+                              key={ci}
+                              className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded"
+                            >
+                              {concept}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -9,25 +9,30 @@ const SECTION_SUMMARY_PROMPT = `You are creating a reading guide for a section o
 
 **Your task:** Analyze the translated pages and create:
 1. A clear, engaging summary (2-3 paragraphs) that helps readers understand what this section covers
-2. 2-4 key quotes that capture the essence or most interesting ideas
+2. Notable quotes that are striking, insightful, or essential - include as many as worth highlighting
 3. A list of key concepts/terms introduced in this section
 
 **Format your response as JSON:**
 {
   "summary": "Your 2-3 paragraph summary here...",
   "quotes": [
-    { "text": "Exact quote from the translation", "page": 5 },
-    { "text": "Another notable quote", "page": 8 }
+    { "text": "Exact quote from the translation", "page": 5, "significance": "Why this quote matters" },
+    { "text": "Another notable quote", "page": 8, "significance": "Key argument or insight" }
   ],
   "concepts": ["Concept One", "Concept Two", "Technical Term"]
 }
 
 **Guidelines:**
 - Write the summary for an educated general reader, not a specialist
-- Choose quotes that are memorable, surprising, or essential to understanding
-- Keep quotes concise (1-3 sentences max)
+- Include EVERY quote worth highlighting - there is no limit. Choose quotes that are:
+  - Memorable or surprising
+  - Essential to understanding the argument
+  - Beautifully expressed
+  - Historically significant
+- For each quote, briefly explain its significance (why it matters)
+- Keep individual quotes concise (1-3 sentences max)
 - Include page numbers for quotes so readers can find the original
-- List 3-6 key concepts, especially technical terms or ideas central to the section
+- List 3-8 key concepts, especially technical terms or ideas central to the section
 
 **IMPORTANT:** Return ONLY valid JSON, no markdown formatting or extra text.`;
 
