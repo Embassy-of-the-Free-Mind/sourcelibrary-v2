@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
       customPrompt,
       model: modelId = DEFAULT_MODEL,
       previousContext,
+      overwrite = false,
     }: {
       pages: PageInput[];
       sourceLanguage?: string;
@@ -38,8 +39,38 @@ export async function POST(request: NextRequest) {
       customPrompt?: string;
       model?: string;
       previousContext?: string;
+      overwrite?: boolean;
     } = await request.json();
 
+    // Look up pages to check for existing translations
+    const db = await getDb();
+    const pageIds = pages.map(p => p.pageId);
+    const dbPages = await db.collection('pages').find({ id: { $in: pageIds } }).toArray();
+    const dbPageMap = new Map(dbPages.map(p => [p.id, p]));
+
+    // Filter out pages that already have translations (unless overwrite mode)
+    const pagesToTranslate = overwrite
+      ? pages
+      : pages.filter(page => {
+          const dbPage = dbPageMap.get(page.pageId);
+          if (dbPage?.translation?.data && dbPage.translation.data.length > 0) {
+            console.log(`[batch-translate] Skipping page ${page.pageNumber} - already has translation`);
+            return false;
+          }
+          return true;
+        });
+
+    if (pagesToTranslate.length === 0) {
+      return NextResponse.json({
+        translations: {},
+        processedCount: 0,
+        skippedCount: pages.length,
+        message: 'All pages already have translations',
+        usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 },
+      });
+    }
+
+    // Validate original input
     if (!pages || pages.length === 0) {
       return NextResponse.json({ error: 'No pages provided' }, { status: 400 });
     }
@@ -74,8 +105,8 @@ Translate the following text pages accurately while:
 
 IMPORTANT: Return your translations in the exact format specified below.`;
 
-    // Format pages for the prompt
-    const pagesText = pages
+    // Format pages for the prompt (use filtered pages)
+    const pagesText = pagesToTranslate
       .map((p, i) => `=== PAGE ${i + 1} (ID: ${p.pageId}) ===\n${p.ocrText}`)
       .join('\n\n');
 
@@ -149,8 +180,8 @@ Return each translation clearly separated with the exact format:
       const index = parseInt(parts[i], 10) - 1;
       const translation = parts[i + 1]?.trim();
 
-      if (index >= 0 && index < pages.length && translation) {
-        translations[pages[index].pageId] = translation;
+      if (index >= 0 && index < pagesToTranslate.length && translation) {
+        translations[pagesToTranslate[index].pageId] = translation;
       }
     }
 
@@ -161,15 +192,15 @@ Return each translation clearly separated with the exact format:
       for (let i = 1; i < altParts.length; i += 2) {
         const index = parseInt(altParts[i], 10) - 1;
         const translation = altParts[i + 1]?.trim();
-        if (index >= 0 && index < pages.length && translation) {
-          translations[pages[index].pageId] = translation;
+        if (index >= 0 && index < pagesToTranslate.length && translation) {
+          translations[pagesToTranslate[index].pageId] = translation;
         }
       }
     }
 
     // Last resort: if still no translations parsed, split evenly
-    if (Object.keys(translations).length === 0 && pages.length === 1) {
-      translations[pages[0].pageId] = responseText.trim();
+    if (Object.keys(translations).length === 0 && pagesToTranslate.length === 1) {
+      translations[pagesToTranslate[0].pageId] = responseText.trim();
     }
 
     // Get token usage
@@ -178,8 +209,7 @@ Return each translation clearly separated with the exact format:
     const outputTokens = usageMetadata?.candidatesTokenCount || 0;
     const costUsd = calculateCost(inputTokens, outputTokens, modelId);
 
-    // Save translations to database
-    const db = await getDb();
+    // Save translations to database (db already initialized above)
     const now = new Date().toISOString();
 
     const updatePromises = Object.entries(translations).map(([pageId, translationText]) =>

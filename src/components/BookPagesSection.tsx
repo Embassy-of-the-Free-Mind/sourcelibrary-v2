@@ -119,6 +119,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [concurrency, setConcurrency] = useState(5); // Parallel requests
   const [showPromptSettings, setShowPromptSettings] = useState(false);
+  const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
 
   // Reorder mode state
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
@@ -549,6 +550,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               customPrompt: editedPrompts.translation,
               model: selectedModel,
               previousContext,
+              overwrite: overwriteMode,
             }),
           }, FETCH_TIMEOUT * 3); // Longer timeout for batch
 
@@ -656,6 +658,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 language: 'Latin',
                 customPrompt: editedPrompts.ocr,
                 model: selectedModel,
+                overwrite: overwriteMode,
               }),
             }, FETCH_TIMEOUT * 5);
 
@@ -1122,6 +1125,19 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 <option value={5}>5x</option>
                 <option value={10}>10x</option>
                 <option value={15}>15x (max free)</option>
+              </select>
+            </div>
+
+            {/* Mode selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Mode:</span>
+              <select
+                value={overwriteMode ? 'all' : 'missing'}
+                onChange={(e) => setOverwriteMode(e.target.value === 'all')}
+                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option value="missing">only missing</option>
+                <option value="all">all (overwrite)</option>
               </select>
             </div>
 

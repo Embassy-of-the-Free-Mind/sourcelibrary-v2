@@ -62,12 +62,14 @@ export async function POST(request: NextRequest) {
       customPrompt,
       model: modelId = DEFAULT_MODEL,
       previousContext,
+      overwrite = false,
     }: {
       pages: PageInput[];
       language?: string;
       customPrompt?: string;
       model?: string;
       previousContext?: string;
+      overwrite?: boolean;
     } = await request.json();
 
     if (!pages || pages.length === 0) {
@@ -96,8 +98,8 @@ export async function POST(request: NextRequest) {
     for (const page of pages) {
       const dbPage = dbPageMap.get(page.pageId);
 
-      // Check if page already has OCR
-      if (dbPage?.ocr?.data && dbPage.ocr.data.length > 0) {
+      // Check if page already has OCR (skip unless overwrite mode)
+      if (!overwrite && dbPage?.ocr?.data && dbPage.ocr.data.length > 0) {
         skippedPageIds.push(page.pageId);
         pageResults.push({
           pageId: page.pageId,
