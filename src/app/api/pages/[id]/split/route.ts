@@ -84,13 +84,18 @@ export async function POST(
     const currentCrop = keepLeft ? leftCrop : rightCrop;
     const newCrop = keepLeft ? rightCrop : leftCrop;
 
-    // Update current page with crop info
+    // Update current page with crop info and clear OCR/translation
+    // (content has changed due to cropping, so existing OCR is invalid)
     await db.collection('pages').updateOne(
       { id: pageId },
       {
         $set: {
           crop: currentCrop,
           photo_original: currentPage.photo_original || currentPage.photo,
+          cropped_photo: null,
+          ocr: null,
+          translation: null,
+          summary: null,
           updated_at: new Date()
         }
       }

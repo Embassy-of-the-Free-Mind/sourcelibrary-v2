@@ -19,7 +19,7 @@ interface BookEditModalProps {
   onSave: () => void;
 }
 
-interface UstcResult {
+interface SearchResult {
   id: string;
   title: string;
   englishTitle?: string;
@@ -27,6 +27,7 @@ interface UstcResult {
   language?: string;
   year?: string;
   place?: string;
+  source?: string;
   workType?: string;
   subjectTags?: string[];
 }
@@ -45,10 +46,10 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
   const [publisher, setPublisher] = useState(book.publisher || '');
   const [ustcId, setUstcId] = useState(book.ustc_id || '');
 
-  // USTC search
-  const [ustcQuery, setUstcQuery] = useState('');
-  const [ustcResults, setUstcResults] = useState<UstcResult[]>([]);
-  const [ustcSearching, setUstcSearching] = useState(false);
+  // Catalog search (EFM, IA, USTC)
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searching, setSearching] = useState(false);
 
   // Title translation
   const [translating, setTranslating] = useState(false);
@@ -87,26 +88,29 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     }
   };
 
-  const searchUstc = async () => {
-    if (!ustcQuery.trim()) return;
-    setUstcSearching(true);
-    setUstcResults([]);
+  const searchCatalog = async () => {
+    if (!searchQuery.trim()) return;
+    setSearching(true);
+    setSearchResults([]);
 
     try {
-      const res = await fetch(`/api/ustc/search?q=${encodeURIComponent(ustcQuery)}`);
+      const res = await fetch(`/api/ustc/search?q=${encodeURIComponent(searchQuery)}`);
       if (res.ok) {
         const data = await res.json();
-        setUstcResults(data.results || []);
+        setSearchResults(data.results || []);
       }
     } catch {
-      // Silently fail - USTC search is optional
+      // Silently fail - search is optional
     } finally {
-      setUstcSearching(false);
+      setSearching(false);
     }
   };
 
-  const applyUstcResult = (result: UstcResult) => {
-    setUstcId(result.id);
+  const applySearchResult = (result: SearchResult) => {
+    // Extract USTC ID if it's a USTC result
+    if (result.id.startsWith('USTC-')) {
+      setUstcId(result.id.replace('USTC-', ''));
+    }
     if (result.title) setTitle(result.title);
     // Use pre-translated English title if available
     if (result.englishTitle) setDisplayTitle(result.englishTitle);
@@ -114,8 +118,8 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     if (result.language) setLanguage(result.language);
     if (result.year) setPublished(result.year);
     if (result.place) setPlacePublished(result.place);
-    setUstcResults([]);
-    setUstcQuery('');
+    setSearchResults([]);
+    setSearchQuery('');
   };
 
   const translateTitle = async () => {
@@ -168,37 +172,37 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
           </button>
         </div>
 
-        {/* USTC Search */}
+        {/* Catalog Search (EFM, IA, USTC) */}
         <div className="p-4 bg-amber-50 border-b border-amber-100">
           <label className="block text-sm font-medium text-amber-900 mb-2">
-            Search USTC Catalog
+            Search Catalogs (EFM, Internet Archive, USTC)
           </label>
           <div className="flex gap-2">
             <input
               type="text"
-              value={ustcQuery}
-              onChange={(e) => setUstcQuery(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && searchUstc()}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && searchCatalog()}
               placeholder="Search by title, author, or USTC ID..."
               className="flex-1 px-3 py-2 border border-amber-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
             />
             <button
-              onClick={searchUstc}
-              disabled={ustcSearching}
+              onClick={searchCatalog}
+              disabled={searching}
               className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 flex items-center gap-2"
             >
-              {ustcSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+              {searching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
               Search
             </button>
           </div>
 
-          {/* USTC Results */}
-          {ustcResults.length > 0 && (
+          {/* Search Results */}
+          {searchResults.length > 0 && (
             <div className="mt-3 space-y-2 max-h-64 overflow-y-auto">
-              {ustcResults.map((result) => (
+              {searchResults.map((result, idx) => (
                 <button
-                  key={result.id}
-                  onClick={() => applyUstcResult(result)}
+                  key={`${result.id}-${idx}`}
+                  onClick={() => applySearchResult(result)}
                   className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
                 >
                   <div className="font-medium text-stone-900 text-sm">{result.title}</div>
@@ -211,7 +215,15 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                     {result.year && <span>{result.year}</span>}
                     {result.language && <span className="text-stone-400">({result.language})</span>}
                     {result.workType && <span className="bg-stone-100 px-1 rounded">{result.workType}</span>}
-                    <span className="text-amber-600">USTC {result.id}</span>
+                    {result.source && (
+                      <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                        result.source === 'EFM' ? 'bg-purple-100 text-purple-700' :
+                        result.source === 'IA' ? 'bg-blue-100 text-blue-700' :
+                        'bg-amber-100 text-amber-700'
+                      }`}>
+                        {result.source}
+                      </span>
+                    )}
                   </div>
                   {result.subjectTags && result.subjectTags.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-1.5">

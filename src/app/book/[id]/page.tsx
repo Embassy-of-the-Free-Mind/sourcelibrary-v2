@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
@@ -20,6 +21,57 @@ import CategoryPicker from '@/components/CategoryPicker';
 
 interface PageProps {
   params: Promise<{ id: string }>;
+}
+
+// Lightweight book fetch for metadata (no pages)
+async function getBookForMetadata(id: string): Promise<Book | null> {
+  const db = await getDb();
+
+  let book = await db.collection('books').findOne({ id });
+
+  if (!book) {
+    try {
+      const { ObjectId } = await import('mongodb');
+      if (ObjectId.isValid(id)) {
+        book = await db.collection('books').findOne({ _id: new ObjectId(id) });
+      }
+    } catch {
+      // Invalid ObjectId format
+    }
+  }
+
+  return book as unknown as Book | null;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id } = await params;
+  const book = await getBookForMetadata(id);
+
+  if (!book) {
+    return {
+      title: 'Book Not Found - Source Library',
+    };
+  }
+
+  const title = book.display_title || book.title;
+  const description = `Read the English translation of "${title}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized and translated with AI from the original ${book.language || 'manuscript'}.`;
+
+  return {
+    title: `${title} - Source Library`,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      siteName: 'Source Library',
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
 }
 
 async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null> {
