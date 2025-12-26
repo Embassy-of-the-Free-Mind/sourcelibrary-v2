@@ -200,43 +200,53 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
           </div>
 
           {/* Search Results */}
+          {searchDone && searchResults.length === 0 && (
+            <div className="mt-3 p-3 bg-stone-100 rounded-lg text-sm text-stone-600">
+              No results found for &quot;{searchQuery}&quot;
+            </div>
+          )}
           {searchResults.length > 0 && (
-            <div className="mt-3 space-y-2 max-h-64 overflow-y-auto">
-              {searchResults.map((result, idx) => (
-                <button
-                  key={`${result.id}-${idx}`}
-                  onClick={() => applySearchResult(result)}
-                  className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
-                >
-                  <div className="font-medium text-stone-900 text-sm">{result.title}</div>
-                  {result.englishTitle && (
-                    <div className="text-sm text-blue-700 mt-0.5 italic">{result.englishTitle}</div>
-                  )}
-                  <div className="text-xs text-stone-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
-                    {result.author && <span>{result.author}</span>}
-                    {result.place && <span>{result.place}</span>}
-                    {result.year && <span>{result.year}</span>}
-                    {result.language && <span className="text-stone-400">({result.language})</span>}
-                    {result.workType && <span className="bg-stone-100 px-1 rounded">{result.workType}</span>}
-                    {result.source && (
-                      <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
-                        result.source === 'EFM' ? 'bg-purple-100 text-purple-700' :
-                        result.source === 'IA' ? 'bg-blue-100 text-blue-700' :
-                        'bg-amber-100 text-amber-700'
-                      }`}>
-                        {result.source}
-                      </span>
+            <div className="mt-3">
+              <div className="text-xs text-stone-500 mb-2">
+                Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} - click to apply
+              </div>
+              <div className="space-y-2 max-h-64 overflow-y-auto">
+                {searchResults.map((result, idx) => (
+                  <button
+                    key={`${result.id}-${idx}`}
+                    onClick={() => applySearchResult(result)}
+                    className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
+                  >
+                    <div className="font-medium text-stone-900 text-sm">{result.title}</div>
+                    {result.englishTitle && (
+                      <div className="text-sm text-blue-700 mt-0.5 italic">{result.englishTitle}</div>
                     )}
-                  </div>
-                  {result.subjectTags && result.subjectTags.length > 0 && (
-                    <div className="flex flex-wrap gap-1 mt-1.5">
-                      {result.subjectTags.slice(0, 4).map((tag, i) => (
-                        <span key={i} className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">{tag}</span>
-                      ))}
+                    <div className="text-xs text-stone-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
+                      {result.author && <span>{result.author}</span>}
+                      {result.place && <span>{result.place}</span>}
+                      {result.year && <span>{result.year}</span>}
+                      {result.language && <span className="text-stone-400">({result.language})</span>}
+                      {result.workType && <span className="bg-stone-100 px-1 rounded">{result.workType}</span>}
+                      {result.source && (
+                        <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                          result.source === 'EFM' ? 'bg-purple-100 text-purple-700' :
+                          result.source === 'IA' ? 'bg-blue-100 text-blue-700' :
+                          'bg-amber-100 text-amber-700'
+                        }`}>
+                          {result.source}
+                        </span>
+                      )}
                     </div>
-                  )}
-                </button>
-              ))}
+                    {result.subjectTags && result.subjectTags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1.5">
+                        {result.subjectTags.slice(0, 4).map((tag, i) => (
+                          <span key={i} className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
