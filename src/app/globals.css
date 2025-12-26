@@ -316,3 +316,19 @@ mark {
 .animate-page-turn {
   animation: page-turn 2s ease-in-out infinite;
 }
+
+/* Emanating rings animation for Source Library logo */
+@keyframes emanate {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.animate-emanate {
+  animation: emanate 2.1s ease-out infinite;
+}

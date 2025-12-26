@@ -9,40 +9,61 @@ interface BookLoaderProps {
 
 export function BookLoader({ label = 'Loading...', className }: BookLoaderProps) {
   return (
-    <div className={cn('flex flex-col items-center justify-center gap-6', className)}>
-      {/* Animated book icon */}
-      <div className="relative w-20 h-24">
-        {/* Book spine */}
-        <div className="absolute left-0 top-0 w-3 h-full bg-amber-700 rounded-l-sm" />
-
-        {/* Book cover */}
-        <div className="absolute left-2 top-0 w-16 h-full bg-amber-600 rounded-r shadow-lg animate-book-open origin-left">
-          {/* Cover decoration */}
-          <div className="absolute inset-2 border border-amber-500/30 rounded-r" />
-          <div className="absolute top-4 left-3 right-3 h-0.5 bg-amber-500/40" />
-          <div className="absolute top-6 left-3 right-3 h-0.5 bg-amber-500/40" />
-          <div className="absolute bottom-4 left-3 right-3 h-0.5 bg-amber-500/40" />
+    <div className={cn('flex flex-col items-center justify-center gap-8', className)}>
+      {/* Animated Source Library logo with emanating rings */}
+      <div className="relative w-20 h-20">
+        {/* Emanating rings that expand outward */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute w-16 h-16 rounded-full border border-stone-400/40 animate-emanate" style={{ animationDelay: '0ms' }} />
+          <div className="absolute w-16 h-16 rounded-full border border-stone-400/40 animate-emanate" style={{ animationDelay: '700ms' }} />
+          <div className="absolute w-16 h-16 rounded-full border border-stone-400/40 animate-emanate" style={{ animationDelay: '1400ms' }} />
         </div>
 
-        {/* Pages (visible behind cover) */}
-        <div className="absolute left-3 top-1 w-14 h-[calc(100%-8px)] bg-stone-100 rounded-r-sm">
-          <div className="absolute inset-y-2 left-2 right-1 space-y-1">
-            <div className="h-0.5 bg-stone-300 animate-pulse" style={{ animationDelay: '0ms' }} />
-            <div className="h-0.5 bg-stone-300 animate-pulse" style={{ animationDelay: '100ms' }} />
-            <div className="h-0.5 bg-stone-300 animate-pulse" style={{ animationDelay: '200ms' }} />
-            <div className="h-0.5 bg-stone-300 animate-pulse" style={{ animationDelay: '300ms' }} />
-            <div className="h-0.5 w-3/4 bg-stone-300 animate-pulse" style={{ animationDelay: '400ms' }} />
-          </div>
-        </div>
-
-        {/* Glow effect */}
-        <div className="absolute -inset-4 bg-amber-500/10 rounded-full blur-xl animate-pulse-glow" />
+        {/* Core logo - concentric circles */}
+        <svg
+          viewBox="0 0 24 24"
+          className="w-20 h-20 relative z-10"
+        >
+          {/* Outer ring */}
+          <circle
+            cx="12" cy="12" r="10"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            className="text-stone-800"
+          />
+          {/* Middle ring */}
+          <circle
+            cx="12" cy="12" r="7"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            className="text-stone-600"
+          />
+          {/* Inner ring */}
+          <circle
+            cx="12" cy="12" r="4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="0.5"
+            className="text-stone-500"
+          />
+          {/* Center dot */}
+          <circle
+            cx="12" cy="12" r="1"
+            className="fill-stone-700"
+          />
+        </svg>
       </div>
 
       {/* Label */}
       <div className="text-center">
-        <p className="text-stone-600 font-medium">{label}</p>
-        <p className="text-stone-400 text-sm mt-1">Preparing your manuscript...</p>
+        <p
+          className="text-stone-500 text-sm tracking-wide"
+          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+        >
+          Opening the source...
+        </p>
       </div>
     </div>
   );

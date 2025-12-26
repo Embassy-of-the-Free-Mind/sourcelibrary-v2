@@ -1,0 +1,300 @@
+'use client';
+
+import { useState } from 'react';
+import { X, Save, Loader2, Search, ExternalLink } from 'lucide-react';
+
+interface BookEditModalProps {
+  book: {
+    id: string;
+    title?: string;
+    display_title?: string;
+    author?: string;
+    language?: string;
+    published?: string;
+    place_published?: string;
+    publisher?: string;
+    ustc_id?: string;
+  };
+  onClose: () => void;
+  onSave: () => void;
+}
+
+interface UstcResult {
+  id: string;
+  title: string;
+  author?: string;
+  language?: string;
+  year?: string;
+  place?: string;
+  printer?: string;
+}
+
+export default function BookEditModal({ book, onClose, onSave }: BookEditModalProps) {
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Form fields
+  const [title, setTitle] = useState(book.title || '');
+  const [displayTitle, setDisplayTitle] = useState(book.display_title || '');
+  const [author, setAuthor] = useState(book.author || '');
+  const [language, setLanguage] = useState(book.language || '');
+  const [published, setPublished] = useState(book.published || '');
+  const [placePublished, setPlacePublished] = useState(book.place_published || '');
+  const [publisher, setPublisher] = useState(book.publisher || '');
+  const [ustcId, setUstcId] = useState(book.ustc_id || '');
+
+  // USTC search
+  const [ustcQuery, setUstcQuery] = useState('');
+  const [ustcResults, setUstcResults] = useState<UstcResult[]>([]);
+  const [ustcSearching, setUstcSearching] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`/api/books/${book.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title,
+          display_title: displayTitle || undefined,
+          author: author || undefined,
+          language: language || undefined,
+          published: published || undefined,
+          place_published: placePublished || undefined,
+          publisher: publisher || undefined,
+          ustc_id: ustcId || undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to save');
+      }
+
+      onSave();
+      onClose();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to save');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const searchUstc = async () => {
+    if (!ustcQuery.trim()) return;
+    setUstcSearching(true);
+    setUstcResults([]);
+
+    try {
+      const res = await fetch(`/api/ustc/search?q=${encodeURIComponent(ustcQuery)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setUstcResults(data.results || []);
+      }
+    } catch {
+      // Silently fail - USTC search is optional
+    } finally {
+      setUstcSearching(false);
+    }
+  };
+
+  const applyUstcResult = (result: UstcResult) => {
+    setUstcId(result.id);
+    if (result.title) setTitle(result.title);
+    if (result.author) setAuthor(result.author);
+    if (result.language) setLanguage(result.language);
+    if (result.year) setPublished(result.year);
+    if (result.place) setPlacePublished(result.place);
+    if (result.printer) setPublisher(result.printer);
+    setUstcResults([]);
+    setUstcQuery('');
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-stone-200">
+          <h2 className="text-lg font-semibold text-stone-900">Edit Book Metadata</h2>
+          <button onClick={onClose} className="p-1 hover:bg-stone-100 rounded">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* USTC Search */}
+        <div className="p-4 bg-amber-50 border-b border-amber-100">
+          <label className="block text-sm font-medium text-amber-900 mb-2">
+            Search USTC Catalog
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={ustcQuery}
+              onChange={(e) => setUstcQuery(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && searchUstc()}
+              placeholder="Search by title, author, or USTC ID..."
+              className="flex-1 px-3 py-2 border border-amber-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            />
+            <button
+              onClick={searchUstc}
+              disabled={ustcSearching}
+              className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 flex items-center gap-2"
+            >
+              {ustcSearching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+              Search
+            </button>
+          </div>
+
+          {/* USTC Results */}
+          {ustcResults.length > 0 && (
+            <div className="mt-3 space-y-2">
+              {ustcResults.map((result) => (
+                <button
+                  key={result.id}
+                  onClick={() => applyUstcResult(result)}
+                  className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
+                >
+                  <div className="font-medium text-stone-900 text-sm">{result.title}</div>
+                  <div className="text-xs text-stone-500 mt-1">
+                    {[result.author, result.place, result.year].filter(Boolean).join(' · ')}
+                    <span className="ml-2 text-amber-600">USTC {result.id}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Form */}
+        <div className="p-4 space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-stone-700 mb-1">Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-stone-700 mb-1">
+                Display Title <span className="text-stone-400 font-normal">(optional, cleaner version)</span>
+              </label>
+              <input
+                type="text"
+                value={displayTitle}
+                onChange={(e) => setDisplayTitle(e.target.value)}
+                placeholder={title}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Author</label>
+              <input
+                type="text"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Language</label>
+              <input
+                type="text"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                placeholder="e.g., Latin, German, English"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Year Published</label>
+              <input
+                type="text"
+                value={published}
+                onChange={(e) => setPublished(e.target.value)}
+                placeholder="e.g., 1548"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Place Published</label>
+              <input
+                type="text"
+                value={placePublished}
+                onChange={(e) => setPlacePublished(e.target.value)}
+                placeholder="e.g., Venice"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Publisher/Printer</label>
+              <input
+                type="text"
+                value={publisher}
+                onChange={(e) => setPublisher(e.target.value)}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">
+                USTC ID
+                {ustcId && (
+                  <a
+                    href={`https://www.ustc.ac.uk/editions/${ustcId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-2 text-amber-600 hover:text-amber-700"
+                  >
+                    <ExternalLink className="w-3 h-3 inline" />
+                  </a>
+                )}
+              </label>
+              <input
+                type="text"
+                value={ustcId}
+                onChange={(e) => setUstcId(e.target.value)}
+                placeholder="e.g., 2029384"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+          </div>
+
+          {error && (
+            <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-end gap-3 p-4 border-t border-stone-200 bg-stone-50">
+          <button
+            onClick={onClose}
+            className="px-4 py-2 text-stone-700 hover:bg-stone-200 rounded-lg transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
+          >
+            {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
