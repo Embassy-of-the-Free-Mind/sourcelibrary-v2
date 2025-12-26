@@ -495,7 +495,8 @@ export default function SplitPage({ params }: PageProps) {
         // Get job status
         const res = await fetch(`/api/jobs/${jobId}`);
         if (res.ok) {
-          const job = await res.json();
+          const data = await res.json();
+          const job = data.job;
           setCropJobProgress(job.progress);
           setCropJobStatus(job.status);
 

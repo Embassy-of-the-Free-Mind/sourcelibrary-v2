@@ -56,6 +56,21 @@ async function getBooks(): Promise<Book[]> {
                 }
               }
             }
+          },
+          // Get the most recent processing timestamp from any page
+          last_processed: {
+            $max: {
+              $map: {
+                input: '$pages_array',
+                as: 'page',
+                in: {
+                  $max: [
+                    { $ifNull: ['$$page.ocr.updated_at', null] },
+                    { $ifNull: ['$$page.translation.updated_at', null] }
+                  ]
+                }
+              }
+            }
           }
         }
       },
@@ -76,7 +91,8 @@ async function getBooks(): Promise<Book[]> {
         }
       },
       {
-        $sort: { title: 1 }
+        // Sort by most recently processed first, then by title for books with no processing
+        $sort: { last_processed: -1, title: 1 }
       }
     ]).toArray();
 

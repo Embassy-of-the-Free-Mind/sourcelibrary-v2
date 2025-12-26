@@ -1,0 +1,372 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+import { performOCR, performTranslation } from '@/lib/ai';
+import { put } from '@vercel/blob';
+import sharp from 'sharp';
+import type { Job, JobResult } from '@/lib/types';
+
+// Extend timeout for processing
+export const maxDuration = 300;
+
+// Process a single page through the full pipeline: crop → OCR → translate
+async function processPageFully(
+  page: {
+    id: string;
+    book_id: string;
+    page_number: number;
+    photo: string;
+    photo_original?: string;
+    crop?: { xStart: number; xEnd: number };
+    cropped_photo?: string;
+    ocr?: { data?: string };
+    translation?: { data?: string };
+  },
+  config: { model: string; language: string },
+  db: Awaited<ReturnType<typeof getDb>>,
+  previousOcr?: string,
+  previousTranslation?: string
+): Promise<{
+  success: boolean;
+  error?: string;
+  duration: number;
+  steps: { crop?: boolean; ocr?: boolean; translate?: boolean };
+  ocrText?: string;
+  translationText?: string;
+}> {
+  const startTime = performance.now();
+  const steps: { crop?: boolean; ocr?: boolean; translate?: boolean } = {};
+
+  try {
+    let imageUrl = page.cropped_photo || page.photo;
+    let ocrText = page.ocr?.data;
+    let translationText = page.translation?.data;
+
+    // Step 1: Generate cropped image if needed
+    if (page.crop && !page.cropped_photo) {
+      const originalUrl = page.photo_original || page.photo;
+
+      // Fetch the original image
+      const imageResponse = await fetch(originalUrl);
+      if (!imageResponse.ok) {
+        return {
+          success: false,
+          error: 'Failed to fetch image for cropping',
+          duration: performance.now() - startTime,
+          steps,
+        };
+      }
+
+      const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+      const metadata = await sharp(imageBuffer).metadata();
+      const imgWidth = metadata.width || 1000;
+      const imgHeight = metadata.height || 1000;
+
+      const left = Math.round((page.crop.xStart / 1000) * imgWidth);
+      const cropWidth = Math.round(((page.crop.xEnd - page.crop.xStart) / 1000) * imgWidth);
+
+      const croppedBuffer = await sharp(imageBuffer)
+        .extract({
+          left,
+          top: 0,
+          width: Math.min(cropWidth, imgWidth - left),
+          height: imgHeight,
+        })
+        .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
+        .jpeg({ quality: 80, progressive: true })
+        .toBuffer();
+
+      // Upload to Vercel Blob
+      const filename = `cropped/${page.book_id}/${page.id}.jpg`;
+      const blob = await put(filename, croppedBuffer, {
+        access: 'public',
+        contentType: 'image/jpeg',
+        allowOverwrite: true,
+      });
+
+      // Update page
+      await db.collection('pages').updateOne(
+        { id: page.id },
+        { $set: { cropped_photo: blob.url, updated_at: new Date() } }
+      );
+
+      imageUrl = blob.url;
+      steps.crop = true;
+    }
+
+    // Step 2: OCR if needed
+    if (!ocrText) {
+      const ocrResult = await performOCR(
+        imageUrl,
+        config.language,
+        previousOcr,
+        undefined,
+        config.model
+      );
+
+      ocrText = ocrResult.text;
+
+      await db.collection('pages').updateOne(
+        { id: page.id },
+        {
+          $set: {
+            ocr: {
+              data: ocrText,
+              language: config.language,
+              model: config.model,
+              updated_at: new Date(),
+            },
+            updated_at: new Date(),
+          },
+        }
+      );
+
+      steps.ocr = true;
+    }
+
+    // Step 3: Translate if needed
+    if (ocrText && !translationText) {
+      const translateResult = await performTranslation(
+        ocrText,
+        config.language,
+        'English',
+        previousTranslation,
+        undefined,
+        config.model
+      );
+
+      translationText = translateResult.text;
+
+      await db.collection('pages').updateOne(
+        { id: page.id },
+        {
+          $set: {
+            translation: {
+              data: translationText,
+              language: 'English',
+              model: config.model,
+              updated_at: new Date(),
+            },
+            updated_at: new Date(),
+          },
+        }
+      );
+
+      steps.translate = true;
+    }
+
+    return {
+      success: true,
+      duration: performance.now() - startTime,
+      steps,
+      ocrText,
+      translationText,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+      duration: performance.now() - startTime,
+      steps,
+    };
+  }
+}
+
+// POST: Process next chunk of pages
+export async function POST(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const startTime = performance.now();
+  const { id: bookId } = await params;
+
+  try {
+    const db = await getDb();
+    const body = await request.json();
+    const { jobId } = body;
+
+    if (!jobId) {
+      return NextResponse.json({ error: 'jobId required' }, { status: 400 });
+    }
+
+    // Get job
+    const job = await db.collection('jobs').findOne({ id: jobId }) as Job | null;
+    if (!job) {
+      return NextResponse.json({ error: 'Job not found' }, { status: 404 });
+    }
+
+    if (job.status === 'completed' || job.status === 'cancelled') {
+      return NextResponse.json({ job, done: true, message: 'Job already finished' });
+    }
+
+    if (job.status === 'paused') {
+      return NextResponse.json({ job, done: false, paused: true });
+    }
+
+    // Update to processing
+    if (job.status === 'pending') {
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        { $set: { status: 'processing', started_at: new Date(), updated_at: new Date() } }
+      );
+    }
+
+    // Get pages that haven't been processed
+    const processedPageIds = new Set(job.results.map(r => r.pageId));
+    const remainingPageIds = (job.config.page_ids || []).filter(
+      (id: string) => !processedPageIds.has(id)
+    );
+
+    if (remainingPageIds.length === 0) {
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        { $set: { status: 'completed', completed_at: new Date(), updated_at: new Date() } }
+      );
+      const updatedJob = await db.collection('jobs').findOne({ id: jobId });
+      return NextResponse.json({ job: updatedJob, done: true, message: 'Job completed' });
+    }
+
+    // Get parallel count from config (default 3)
+    const parallelPages = job.config.parallelPages || 3;
+
+    // Process pages in parallel, but in order for context
+    // We'll process in small batches to maintain some ordering for context
+    const batchSize = Math.min(parallelPages, remainingPageIds.length);
+    const batchPageIds = remainingPageIds.slice(0, batchSize);
+
+    // Get full page data
+    const pages = await db.collection('pages')
+      .find({ id: { $in: batchPageIds } })
+      .sort({ page_number: 1 })
+      .toArray();
+
+    // Get previous page's OCR/translation for context (from the last processed page)
+    let previousOcr: string | undefined;
+    let previousTranslation: string | undefined;
+
+    if (job.results.length > 0) {
+      // Find the last successfully processed page
+      const lastResult = [...job.results].reverse().find(r => r.success);
+      if (lastResult) {
+        const lastPage = await db.collection('pages').findOne({ id: lastResult.pageId });
+        previousOcr = lastPage?.ocr?.data;
+        previousTranslation = lastPage?.translation?.data;
+      }
+    }
+
+    // Process pages - for best context, process sequentially within batch
+    // but allow multiple batches to overlap via the chunked approach
+    const results: JobResult[] = [];
+
+    for (const page of pages) {
+      // Check if job was cancelled mid-processing
+      const currentJob = await db.collection('jobs').findOne({ id: jobId });
+      if (currentJob?.status === 'cancelled' || currentJob?.status === 'paused') {
+        break;
+      }
+
+      // Update current item
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        {
+          $set: {
+            'progress.currentItem': `Page ${page.page_number}`,
+            updated_at: new Date(),
+          },
+        }
+      );
+
+      const result = await processPageFully(
+        page as Parameters<typeof processPageFully>[0],
+        { model: job.config.model || 'gemini-2.5-flash', language: job.config.language || 'Latin' },
+        db,
+        previousOcr,
+        previousTranslation
+      );
+
+      results.push({
+        pageId: page.id,
+        success: result.success,
+        error: result.error,
+        duration: result.duration,
+      });
+
+      // Update context for next page
+      if (result.success) {
+        previousOcr = result.ocrText;
+        previousTranslation = result.translationText;
+      }
+
+      // Log progress
+      const stepsStr = Object.entries(result.steps)
+        .filter(([, done]) => done)
+        .map(([step]) => step)
+        .join('+') || 'skip';
+      console.log(
+        `[StreamPipeline ${jobId}] Page ${page.page_number}: ${result.success ? '✓' : '✗'} (${stepsStr}) ${Math.round(result.duration)}ms`
+      );
+    }
+
+    // Update job with results
+    const successCount = results.filter(r => r.success).length;
+    const failCount = results.filter(r => !r.success).length;
+
+    await db.collection('jobs').updateOne(
+      { id: jobId },
+      {
+        $push: { results: { $each: results } } as unknown as Record<string, unknown>,
+        $set: {
+          'progress.completed': job.progress.completed + successCount,
+          'progress.failed': job.progress.failed + failCount,
+          'progress.currentItem': null,
+          updated_at: new Date(),
+        },
+      }
+    );
+
+    // Check if complete
+    const updatedJob = await db.collection('jobs').findOne({ id: jobId }) as Job | null;
+    const allProcessed = updatedJob &&
+      (updatedJob.progress.completed + updatedJob.progress.failed) >= updatedJob.progress.total;
+
+    if (allProcessed && updatedJob) {
+      const finalStatus = updatedJob.progress.failed > 0 && updatedJob.progress.completed === 0
+        ? 'failed'
+        : 'completed';
+
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        { $set: { status: finalStatus, completed_at: new Date(), updated_at: new Date() } }
+      );
+    }
+
+    const finalJob = await db.collection('jobs').findOne({ id: jobId });
+
+    // Auto-continue if more work
+    if (!allProcessed && remainingPageIds.length > results.length) {
+      const baseUrl = process.env.NEXT_PUBLIC_URL ||
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+
+      fetch(`${baseUrl}/api/books/${bookId}/pipeline-stream/process`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jobId }),
+      }).catch(() => {
+        // Will be picked up by polling
+      });
+    }
+
+    return NextResponse.json({
+      job: finalJob,
+      processed: results.length,
+      remaining: remainingPageIds.length - results.length,
+      done: allProcessed,
+      duration: performance.now() - startTime,
+    });
+  } catch (error) {
+    console.error('Error processing streaming pipeline:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Processing failed' },
+      { status: 500 }
+    );
+  }
+}
