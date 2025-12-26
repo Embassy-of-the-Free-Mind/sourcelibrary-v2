@@ -504,7 +504,11 @@ export default function ReadPage({ params }: ReadPageProps) {
                   Select text to save highlights
                 </p>
                 <div className="prose prose-stone max-w-none font-serif text-lg leading-relaxed">
-                  {translatedPages.map((page, index) => (
+                  {translatedPages.map((page, index) => {
+                    const hiddenMeta = extractHiddenMetadata(page.translation?.data || '');
+                    const isMetadataOpen = metadataPageId === page.id;
+
+                    return (
                     <HighlightSelection
                       key={page.id}
                       bookId={bookId!}
@@ -514,22 +518,102 @@ export default function ReadPage({ params }: ReadPageProps) {
                       onHighlightSaved={fetchHighlightCount}
                     >
                       <div className="mb-8">
-                        {index > 0 && (
-                          <div className="flex items-center gap-4 my-8 text-stone-400">
-                            <div className="flex-1 h-px bg-stone-200" />
-                            <Link
-                              href={`/book/${bookId}/page/${page.id}`}
-                              className="text-xs hover:text-amber-600 transition-colors"
-                            >
-                              Page {page.page_number}
-                            </Link>
-                            <div className="flex-1 h-px bg-stone-200" />
+                        <div className="flex items-center gap-4 my-8 text-stone-400">
+                          <div className="flex-1 h-px bg-stone-200" />
+                          <Link
+                            href={`/book/${bookId}/page/${page.id}`}
+                            className="text-xs hover:text-amber-600 transition-colors"
+                          >
+                            Page {page.page_number}
+                          </Link>
+                          <button
+                            onClick={() => setMetadataPageId(isMetadataOpen ? null : page.id)}
+                            className="text-xs hover:text-amber-600 transition-colors flex items-center gap-1"
+                            title="View metadata"
+                          >
+                            <Info className="w-3 h-3" />
+                          </button>
+                          <div className="flex-1 h-px bg-stone-200" />
+                        </div>
+
+                        {/* Metadata Panel */}
+                        {isMetadataOpen && (
+                          <div className="mb-6 p-4 bg-stone-50 border border-stone-200 rounded-lg text-sm">
+                            <div className="flex justify-between items-start mb-3">
+                              <h4 className="font-semibold text-stone-700">Page {page.page_number} Metadata</h4>
+                              <button
+                                onClick={() => setMetadataPageId(null)}
+                                className="text-stone-400 hover:text-stone-600"
+                              >
+                                <X className="w-4 h-4" />
+                              </button>
+                            </div>
+
+                            {/* Processing Info */}
+                            <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+                              <div className="text-stone-500">OCR Model:</div>
+                              <div className="text-stone-700 font-mono text-xs">{page.ocr?.model || 'Unknown'}</div>
+
+                              <div className="text-stone-500">Translation Model:</div>
+                              <div className="text-stone-700 font-mono text-xs">{page.translation?.model || 'Unknown'}</div>
+
+                              {page.ocr?.prompt_name && (
+                                <>
+                                  <div className="text-stone-500">Prompt:</div>
+                                  <div className="text-stone-700">{page.ocr.prompt_name}</div>
+                                </>
+                              )}
+
+                              <div className="text-stone-500">OCR Updated:</div>
+                              <div className="text-stone-700">{formatDate(page.ocr?.updated_at)}</div>
+
+                              <div className="text-stone-500">Translation Updated:</div>
+                              <div className="text-stone-700">{formatDate(page.translation?.updated_at)}</div>
+
+                              {page.ocr?.input_tokens && (
+                                <>
+                                  <div className="text-stone-500">OCR Tokens:</div>
+                                  <div className="text-stone-700">{page.ocr.input_tokens} in / {page.ocr.output_tokens} out</div>
+                                </>
+                              )}
+
+                              {page.translation?.input_tokens && (
+                                <>
+                                  <div className="text-stone-500">Translation Tokens:</div>
+                                  <div className="text-stone-700">{page.translation.input_tokens} in / {page.translation.output_tokens} out</div>
+                                </>
+                              )}
+
+                              {(page.ocr?.cost_usd || page.translation?.cost_usd) && (
+                                <>
+                                  <div className="text-stone-500">Total Cost:</div>
+                                  <div className="text-stone-700">${((page.ocr?.cost_usd || 0) + (page.translation?.cost_usd || 0)).toFixed(4)}</div>
+                                </>
+                              )}
+                            </div>
+
+                            {/* Hidden Tags */}
+                            {Object.keys(hiddenMeta).length > 0 && (
+                              <div className="border-t border-stone-200 pt-3 mt-3">
+                                <h5 className="font-medium text-stone-600 mb-2">Hidden Tags</h5>
+                                <div className="space-y-2">
+                                  {Object.entries(hiddenMeta).map(([tag, value]) => (
+                                    <div key={tag}>
+                                      <span className="text-stone-500 capitalize">{tag}:</span>{' '}
+                                      <span className="text-stone-700">{value}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
+
                         {renderTranslation(page.translation?.data || '')}
                       </div>
                     </HighlightSelection>
-                  ))}
+                  );
+                  })}
                 </div>
               </div>
             )}
