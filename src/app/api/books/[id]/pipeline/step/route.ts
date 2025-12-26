@@ -18,26 +18,62 @@ async function updatePipeline(
   );
 }
 
-// Step: Split Check - runs inline since it's quick
-async function executeSplitCheck(bookId: string, db: Awaited<ReturnType<typeof getDb>>): Promise<{
-  status: 'completed' | 'skipped' | 'failed';
-  result?: Record<string, unknown>;
-  error?: string
-}> {
-  // Check if any pages might need splitting (no crop data yet)
-  const pagesNeedingSplit = await db.collection('pages')
-    .countDocuments({ book_id: bookId, crop: { $exists: false } });
+// Step: Generate Cropped Images - creates job for pages with crop data but no cropped_photo
+async function createCropJob(
+  bookId: string,
+  db: Awaited<ReturnType<typeof getDb>>
+): Promise<{ status: 'completed' | 'skipped' | 'job_created'; jobId?: string; result?: Record<string, unknown> }> {
+  // Find pages with crop data but no cropped_photo
+  const pages = await db.collection('pages')
+    .find({
+      book_id: bookId,
+      'crop.xStart': { $exists: true },
+      $or: [
+        { cropped_photo: { $exists: false } },
+        { cropped_photo: null },
+        { cropped_photo: '' }
+      ]
+    })
+    .project({ id: 1, page_number: 1 })
+    .toArray();
 
-  if (pagesNeedingSplit === 0) {
-    return { status: 'skipped', result: { message: 'All pages already have crop data' } };
+  if (pages.length === 0) {
+    return { status: 'skipped', result: { message: 'No pages need cropped images' } };
   }
 
-  // For now, skip auto-split - user should use prepare page manually
+  // Create a job to generate cropped images
+  const book = await db.collection('books').findOne({ id: bookId });
+  const jobId = nanoid(12);
+
+  const job: Job = {
+    id: jobId,
+    type: 'generate_cropped_images',
+    status: 'pending',
+    progress: {
+      total: pages.length,
+      completed: 0,
+      failed: 0,
+    },
+    book_id: bookId,
+    book_title: book?.display_title || book?.title,
+    initiated_by: 'pipeline',
+    created_at: new Date(),
+    updated_at: new Date(),
+    results: [],
+    config: {
+      page_ids: pages.map(p => p.id),
+    },
+  };
+
+  await db.collection('jobs').insertOne(job as unknown as Record<string, unknown>);
+
   return {
-    status: 'skipped',
+    status: 'job_created',
+    jobId,
     result: {
-      message: `${pagesNeedingSplit} pages may need splitting - use Prepare page`,
-      pagesNeedingSplit
+      jobId,
+      total: pages.length,
+      message: `Generating cropped images for ${pages.length} pages`
     }
   };
 }
@@ -325,9 +361,19 @@ export async function POST(
     };
 
     switch (step) {
-      case 'split_check':
-        stepResult = await executeSplitCheck(bookId, db);
+      case 'crop': {
+        const cropResult = await createCropJob(bookId, db);
+        if (cropResult.status === 'skipped') {
+          stepResult = { status: 'skipped', result: cropResult.result };
+        } else {
+          stepResult = {
+            status: 'job_created',
+            jobId: cropResult.jobId,
+            result: cropResult.result
+          };
+        }
         break;
+      }
 
       case 'ocr': {
         const ocrResult = await createOcrJob(bookId, pipeline.config, db);
@@ -422,7 +468,7 @@ export async function POST(
     await updatePipeline(db, bookId, stepUpdates);
 
     // Determine next step
-    const stepOrder: PipelineStep[] = ['split_check', 'ocr', 'translate', 'summarize', 'edition'];
+    const stepOrder: PipelineStep[] = ['crop', 'ocr', 'translate', 'summarize', 'edition'];
     let nextStep: PipelineStep | null = null;
 
     if (stepResult.status !== 'failed' && stepResult.status !== 'job_created') {

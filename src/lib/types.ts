@@ -61,7 +61,7 @@ export interface Job {
 // Pipeline - Automated book processing workflow
 // ============================================
 
-export type PipelineStep = 'split_check' | 'ocr' | 'translate' | 'summarize' | 'edition';
+export type PipelineStep = 'crop' | 'ocr' | 'translate' | 'summarize' | 'edition';
 export type PipelineStatus = 'idle' | 'running' | 'paused' | 'completed' | 'failed';
 
 export interface PipelineStepState {
@@ -84,7 +84,7 @@ export interface PipelineState {
   currentStep: PipelineStep | null;
 
   steps: {
-    split_check: PipelineStepState;
+    crop: PipelineStepState;
     ocr: PipelineStepState;
     translate: PipelineStepState;
     summarize: PipelineStepState;

@@ -10,7 +10,7 @@ function createInitialPipelineState(config: Partial<PipelineConfig>): PipelineSt
     status: 'idle',
     currentStep: null,
     steps: {
-      split_check: { ...defaultStep },
+      crop: { ...defaultStep },
       ocr: { ...defaultStep },
       translate: { ...defaultStep },
       summarize: { ...defaultStep },

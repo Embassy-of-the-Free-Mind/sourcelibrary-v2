@@ -10,7 +10,7 @@ interface StepInfo {
 }
 
 const STEPS: StepInfo[] = [
-  { key: 'split_check', label: 'Split Check', description: 'Detect and split two-page spreads' },
+  { key: 'crop', label: 'Crop Images', description: 'Generate cropped images for split pages' },
   { key: 'ocr', label: 'OCR', description: 'Extract text from page images' },
   { key: 'translate', label: 'Translation', description: 'Translate to English' },
   { key: 'summarize', label: 'Summarize', description: 'Generate book overview' },

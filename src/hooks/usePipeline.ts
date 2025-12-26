@@ -23,7 +23,7 @@ interface UsePipelineResult {
   refetch: () => Promise<void>;
 }
 
-const STEP_ORDER: PipelineStep[] = ['split_check', 'ocr', 'translate', 'summarize', 'edition'];
+const STEP_ORDER: PipelineStep[] = ['crop', 'ocr', 'translate', 'summarize', 'edition'];
 
 export function usePipeline(bookId: string): UsePipelineResult {
   const [data, setData] = useState<PipelineData | null>(null);
