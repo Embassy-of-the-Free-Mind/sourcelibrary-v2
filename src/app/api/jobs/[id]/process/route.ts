@@ -6,6 +6,9 @@ import { put } from '@vercel/blob';
 import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
 
+// Extend timeout for job processing (Vercel Pro allows up to 300s)
+export const maxDuration = 300;
+
 const CHUNK_SIZE = 5; // Process 5 pages per request for AI jobs
 const CROP_CHUNK_SIZE = 40; // Sweet spot: ~55s per request (just under 60s timeout)
 const CROP_PARALLEL = 10; // 10 parallel operations balances speed vs memory
