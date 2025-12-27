@@ -8,6 +8,8 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+    const { searchParams } = new URL(request.url);
+    const includeFull = searchParams.get('full') === 'true';
     const db = await getDb();
 
     // Get book
@@ -17,8 +19,15 @@ export async function GET(
     }
 
     // Get pages for this book
+    // By default, exclude large text fields for faster loading
+    // Use ?full=true to include OCR/translation/summary data
+    const projection = includeFull
+      ? {}
+      : { 'ocr.data': 0, 'translation.data': 0, 'summary.data': 0 };
+
     const pages = await db.collection('pages')
       .find({ book_id: id })
+      .project(projection)
       .sort({ page_number: 1 })
       .toArray();
 

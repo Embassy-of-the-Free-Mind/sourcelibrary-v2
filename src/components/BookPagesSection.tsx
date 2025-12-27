@@ -109,7 +109,7 @@ function formatRelativeTime(date: Date | string | undefined): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-const PAGES_PER_LOAD = 50;
+const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
 export default function BookPagesSection({ bookId, bookTitle, pages: initialPages }: BookPagesSectionProps) {
   const router = useRouter();
@@ -123,6 +123,24 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
   const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  // Auto-load more pages when scrolling near the bottom
+  useEffect(() => {
+    if (!loadMoreRef.current || visibleCount >= pages.length) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length));
+        }
+      },
+      { rootMargin: '200px' } // Load 200px before visible
+    );
+
+    observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  }, [visibleCount, pages.length]);
 
   // Reorder mode state
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
@@ -1382,9 +1400,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           </div>
         )}
 
-        {/* Load More Button */}
+        {/* Load More - auto-loads when scrolled into view */}
         {visibleCount < pages.length && (
-          <div className="mt-6 text-center">
+          <div ref={loadMoreRef} className="mt-6 text-center">
             <button
               onClick={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
               className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"

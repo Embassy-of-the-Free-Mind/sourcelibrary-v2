@@ -97,8 +97,10 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
   // Use the book's id field, or fall back to _id string
   const bookId = book.id || book._id?.toString();
 
+  // Exclude large text fields for listing - only need metadata for thumbnails
   const pages = await db.collection('pages')
     .find({ book_id: bookId })
+    .project({ 'ocr.data': 0, 'translation.data': 0, 'summary.data': 0 })
     .sort({ page_number: 1 })
     .toArray();
 

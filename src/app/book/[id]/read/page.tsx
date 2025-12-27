@@ -99,8 +99,8 @@ export default function ReadPage({ params }: ReadPageProps) {
       try {
         setLoading(true);
 
-        // Fetch book with pages
-        const bookRes = await fetch(`/api/books/${bookId}`);
+        // Fetch book with pages (include full text for reader)
+        const bookRes = await fetch(`/api/books/${bookId}?full=true`);
         if (!bookRes.ok) throw new Error('Book not found');
         const bookData = await bookRes.json();
         setBook(bookData);

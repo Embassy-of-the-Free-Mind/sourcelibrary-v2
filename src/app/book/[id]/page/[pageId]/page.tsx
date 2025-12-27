@@ -46,7 +46,7 @@ export default function PageEditorPage({ params }: PageProps) {
       setLoading(true);
       const startTime = performance.now();
       try {
-        const bookRes = await fetch(`/api/books/${bookId}`);
+        const bookRes = await fetch(`/api/books/${bookId}?full=true`);
         if (!bookRes.ok) throw new Error('Book not found');
         const bookData = await bookRes.json();
 
@@ -153,7 +153,7 @@ export default function PageEditorPage({ params }: PageProps) {
         onNavigate={handleNavigate}
         onSave={handleSave}
         onRefresh={async () => {
-          const res = await fetch(`/api/books/${bookId}`);
+          const res = await fetch(`/api/books/${bookId}?full=true`);
           if (res.ok) {
             const data = await res.json();
             setBook(data);
