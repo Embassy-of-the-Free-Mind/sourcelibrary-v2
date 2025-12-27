@@ -29,13 +29,13 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose]);
 
-  const getPageImageUrl = (page: Page, width: number = 200) => {
+  const getPageImageUrl = (page: Page, width: number = 150) => {
     const baseUrl = page.photo_original || page.photo;
     if (!baseUrl) return null;
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
     }
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=80`;
+    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=60`;
   };
 
   const selectCover = async (page: Page) => {

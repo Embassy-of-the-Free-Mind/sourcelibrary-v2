@@ -836,9 +836,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     const baseUrl = page.photo_original || page.photo;
     if (!baseUrl) return null;
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
     }
-    return page.thumbnail || `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
+    return page.thumbnail || `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
   };
 
   return (
