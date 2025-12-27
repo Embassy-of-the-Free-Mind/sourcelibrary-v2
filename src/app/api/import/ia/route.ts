@@ -131,6 +131,7 @@ export async function POST(request: NextRequest) {
       categories: categories || [],
       ia_identifier,
       thumbnail: getThumbnailUrl(0),
+      pageCount,
       dublin_core: dublin_core || {
         dc_identifier: [`IA:${ia_identifier}`],
         dc_source: `https://archive.org/details/${ia_identifier}`

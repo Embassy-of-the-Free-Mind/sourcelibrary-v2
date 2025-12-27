@@ -26,10 +26,10 @@ export async function POST() {
     let updated = 0;
     for (const book of books) {
       const actualCount = countMap.get(book.id) || 0;
-      if (book.pages_count !== actualCount) {
+      if (book.pages_count !== actualCount || book.pageCount !== actualCount) {
         await db.collection('books').updateOne(
           { id: book.id },
-          { $set: { pages_count: actualCount, updated_at: new Date() } }
+          { $set: { pages_count: actualCount, pageCount: actualCount, updated_at: new Date() } }
         );
         updated++;
       }
