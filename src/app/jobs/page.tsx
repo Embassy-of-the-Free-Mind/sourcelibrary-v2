@@ -43,24 +43,31 @@ export default function JobsPage() {
 
   const fetchJobs = useCallback(async () => {
     try {
-      const [jobsRes, statsRes] = await Promise.all([
-        fetch('/api/jobs?limit=100'),
-        fetch('/api/batch-jobs/process-all'),
-      ]);
-
+      // Fetch jobs first - this is fast
+      const jobsRes = await fetch('/api/jobs?limit=100');
       if (jobsRes.ok) {
         const data = await jobsRes.json();
         setJobs(data.jobs);
-      }
-
-      if (statsRes.ok) {
-        const data = await statsRes.json();
-        setPendingStats(data.stats || null);
       }
     } catch (e) {
       console.error('Failed to fetch jobs:', e);
     } finally {
       setLoading(false);
+    }
+
+    // Fetch stats separately - this can be slow, don't block on it
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const statsRes = await fetch('/api/batch-jobs/process-all', { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (statsRes.ok) {
+        const data = await statsRes.json();
+        setPendingStats(data.stats || null);
+      }
+    } catch (e) {
+      // Stats fetch failed or timed out - that's ok
+      console.warn('Stats fetch failed:', e);
     }
   }, []);
 

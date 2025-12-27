@@ -724,7 +724,7 @@ export const LATIN_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format that visually resembles the original.
 
-**First:** Confirm the language with [[language: Latin]] or [[language: Latin with {other} passages]]
+**First:** Confirm the language with <lang>Latin</lang> or <lang>Latin with {other} passages</lang>
 
 **Latin-specific conventions:**
 
@@ -732,14 +732,14 @@ export const LATIN_PROMPTS = {
    - ꝙ, ꝗ → quod | ꝯ → con/com | ꝑ → per/par | ꝓ → pro
    - Macrons over vowels usually indicate missing 'm' or 'n' (ū → um/un)
    - Tildes often mark missing letters
-   - Mark expansions: [[abbrev: ꝙ → quod]] on first occurrence
+   - Mark expansions: <abbrev>ꝙ → quod</abbrev> on first occurrence
 
 2. **Letterforms** - Normalize to modern equivalents:
    - u/v: Transcribe as written (Renaissance texts mix freely)
    - i/j: Transcribe as written
    - Long s (ſ) → s
    - Ligatures: æ, œ → keep as ligatures
-   - Note unusual forms: [[notes: uses archaic ę for ae]]
+   - Note unusual forms: <note>uses archaic ę for ae</note>
 
 3. **Capitalization** - Preserve original:
    - Renaissance Latin often capitalizes Nouns like German
@@ -768,47 +768,47 @@ export const LATIN_PROMPTS = {
 |----------|----------|
 | data | data |
 
-**Metadata tags (hidden from readers, use [[bracket]] syntax):**
-- [[meta: ...]] for page metadata (image quality, script type)
-- [[page number: N]] or [[folio: 12r]] for visible page/folio numbers
-- [[header: ...]] for running headers/page headings
-- [[abbrev: X → expansion]] for abbreviation expansions (collected in metadata)
-- [[vocabulary: ...]] for key terms for indexing
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for page metadata (image quality, script type)
+- <page-num>N</page-num> or <folio>12r</folio> for visible page/folio numbers
+- <header>X</header> for running headers/page headings
+- <abbrev>X → expansion</abbrev> for abbreviation expansions (collected in metadata)
+- <vocab>X</vocab> for key terms for indexing
 
-**Inline annotations (visible to readers, use <xml> tags):**
+**Inline annotations (visible to readers):**
 - <note>X</note> for interpretive notes readers should see
 - <margin>X</margin> for marginalia
 - <gloss>X</gloss> for interlinear annotations
-- <insert>X</insert> for later additions
+- <insert>X</insert> for later additions (inline only)
 - <unclear>X</unclear> for illegible readings
 - <term>word</term> or <term>word → meaning</term> for technical vocabulary
 - <image-desc>description</image-desc> for illustrations, diagrams, charts, woodcuts, printer's devices
 
 **IMPORTANT - Exclude from main text:**
-- Page numbers: Capture ONLY in [[page number: N]] or [[folio:]], do NOT include in the body text
-- Running headers/page headings: Capture ONLY in [[header: ...]], do NOT include in the body text
+- Page numbers: Capture ONLY in <page-num>N</page-num> or <folio>X</folio>, do NOT include in the body text
+- Running headers/page headings: Capture ONLY in <header>...</header>, do NOT include in the body text
 - These elements should appear in metadata annotations only, never in the main transcription
 
 **Do NOT use:**
 - Code blocks (\`\`\`) or inline code - this is prose, not code
-- If markdown can't capture the layout, add a [[meta: ...]] explaining it
+- If markdown can't capture the layout, add a <meta>...</meta> explaining it
 
 **Instructions:**
-1. Begin with [[meta: ...]] describing image quality, script type (humanist/gothic/italic), print quality.
-2. Include [[page number: N]] or [[folio: Nv/Nr]] if visible.
+1. Begin with <meta>...</meta> describing image quality, script type (humanist/gothic/italic), print quality.
+2. Include <page-num>N</page-num> or <folio>Nv/Nr</folio> if visible.
 3. Preserve original spelling, punctuation, line breaks.
 4. Expand abbreviations consistently, marking first occurrence.
 5. Flag all technical/esoteric vocabulary with <term>...</term>.
 6. Capture ALL text including margins and annotations.
 7. Describe any illustrations, diagrams, or charts with <image-desc>...</image-desc>.
-8. END with [[vocabulary: ...]] listing key Latin terms, names, and concepts on this page.
+8. END with <vocab>...</vocab> listing key Latin terms, names, and concepts on this page.
 
 **Important:** This page may have been split from a two-page spread. Focus on the MAIN text block. Ignore partial text at edges from facing pages.
 
 **Final output format:**
 [page transcription]
 
-[[vocabulary: term1, term2, Person Name, Concept, ...]]`,
+<vocab>term1, term2, Person Name, Concept, ...</vocab>`,
 
   translation: `You are translating a Neo-Latin text (1450-1700) into clear, accessible English.
 
@@ -857,7 +857,7 @@ This is a SCHOLARLY ACCESSIBLE translation:
 **Add notes:**
 - <note>...</note> for interpretive choices readers should see
 - <note>cf. Corpus Hermeticum I.4</note> for source references
-- [[meta: ...]] for translator notes that should be hidden (e.g., continuity with previous page)
+- <meta>...</meta> for translator notes that should be hidden (e.g., continuity with previous page)
 
 **Style:** Warm but precise. Like a knowledgeable guide at a museum of ideas. Explain references without being condescending.
 
@@ -872,8 +872,8 @@ This is a SCHOLARLY ACCESSIBLE translation:
 **Final output format:**
 [translated text]
 
-[[summary: 1-2 sentence summary of this page's main content and significance]]
-[[keywords: key concepts, names, themes in English — for indexing]]`
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English — for indexing</keywords>`
 };
 
 export const GERMAN_PROMPTS = {
@@ -883,12 +883,12 @@ export const GERMAN_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format that visually resembles the original.
 
-**First:** Confirm with [[language: German]] or [[language: German (Early New High German)]] as appropriate.
+**First:** Confirm with <lang>German</lang> or <lang>German (Early New High German)</lang> as appropriate.
 
 **German-specific conventions:**
 
 1. **Script recognition:**
-   - Identify script type: [[notes: Fraktur/Kurrent/Sütterlin/Roman]]
+   - Identify script type: <meta>Fraktur/Kurrent/Sütterlin/Roman</meta>
    - Fraktur was standard for German texts until 20th century
    - Latin passages often in Roman type within Fraktur texts
 
@@ -896,12 +896,12 @@ export const GERMAN_PROMPTS = {
    - Long s (ſ) → s
    - ſs or ſz → ß (or ss if text predates ß)
    - Fraktur r variants → r
-   - Note: [[notes: uses round r after o]]
+   - Note: <note>uses round r after o</note>
 
 3. **Umlauts - Preserve original forms:**
    - Superscript e (aͤ, oͤ, uͤ) → ä, ö, ü
    - ae, oe, ue → keep as written OR normalize (note your choice)
-   - [[notes: normalizing ue → ü throughout]]
+   - <note>normalizing ue → ü throughout</note>
 
 4. **Historical spelling - Preserve:**
    - Double consonants: auff, daß, thun
@@ -912,12 +912,12 @@ export const GERMAN_PROMPTS = {
 
 5. **Abbreviations:**
    - Common: tironian et → und, tilde over vowels → nn/mm, superscript letters
-   - Expand and mark: [[abbrev: (symbol) → und]] or [[abbrev: ū → um]]
+   - Expand and mark: <abbrev>(symbol) → und</abbrev> or <abbrev>ū → um</abbrev>
    - Latin abbreviations in German texts: treat as Latin
 
 6. **Mixed language:**
    - German texts often include Latin phrases
-   - Mark language switches: [[language: Latin]] ... [[language: German]]
+   - Mark language switches: <lang>Latin</lang> ... <lang>German</lang>
    - Keep Latin passages in their original form
 
 **Representing text styles:**
@@ -933,12 +933,12 @@ export const GERMAN_PROMPTS = {
 - > blockquotes for quotations, prayers
 - --- for decorative dividers
 
-**Metadata tags (hidden from readers, use [[bracket]] syntax):**
-- [[meta: ...]] for page metadata (script type, print quality)
-- [[page number: N]] or [[folio: 12r]] for page/folio numbers
-- [[header: ...]] for running headers/page headings
-- [[abbrev: X → expansion]] for abbreviations (collected in metadata)
-- [[vocabulary: ...]] for key terms for indexing
+**Metadata tags (hidden from readers):**
+- <meta>...</meta> for page metadata (script type, print quality)
+- <page-num>N</page-num> or <folio>12r</folio> for page/folio numbers
+- <header>...</header> for running headers/page headings
+- <abbrev>X → expansion</abbrev> for abbreviations (collected in metadata)
+- <vocab>...</vocab> for key terms for indexing
 
 **Inline annotations (visible to readers, use <xml> tags):**
 - <note>X</note> for interpretive notes readers should see
@@ -949,30 +949,30 @@ export const GERMAN_PROMPTS = {
 - <term>word</term> for technical/alchemical vocabulary
 
 **IMPORTANT - Exclude from main text:**
-- Page numbers: Capture ONLY in [[page number: N]] or [[folio:]], do NOT include in the body text
-- Running headers/page headings: Capture ONLY in [[header: ...]], do NOT include in the body text
+- Page numbers: Capture ONLY in <page-num>N</page-num> or <folio>X</folio>, do NOT include in the body text
+- Running headers/page headings: Capture ONLY in <header>...</header>, do NOT include in the body text
 - These elements should appear in metadata annotations only, never in the main transcription
 
 **Do NOT use:**
 - Code blocks (\`\`\`) or inline code - this is prose, not code
-- If markdown can't capture the layout, add a [[meta: ...]] explaining it
+- If markdown can't capture the layout, add a <meta>...</meta> explaining it
 
 **Instructions:**
-1. Begin with [[meta: ...]] describing script type, print quality, date if visible.
-2. Include [[page number: N]] if visible.
+1. Begin with <meta>...</meta> describing script type, print quality, date if visible.
+2. Include <page-num>N</page-num> if visible.
 3. Preserve historical spelling exactly - do NOT modernize.
 4. Expand abbreviations, marking first occurrence.
 5. Preserve all Noun Capitalization.
 6. Mark language switches in multilingual texts.
 7. Flag technical vocabulary with <term>...</term>.
-8. END with [[vocabulary: ...]] listing key German terms, names, and concepts on this page.
+8. END with <vocab>...</vocab> listing key German terms, names, and concepts on this page.
 
 **Important:** This page may have been split from a two-page spread. Focus on the MAIN text block.
 
 **Final output format:**
 [page transcription]
 
-[[vocabulary: term1, term2, Person Name, Concept, ...]]`,
+<vocab>term1, term2, Person Name, Concept, ...</vocab>`,
 
   translation: `You are translating an early modern German text (1450-1800) into clear, accessible English.
 
@@ -1032,7 +1032,7 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
 **Add notes:**
 - <note>...</note> for interpretive choices readers should see
 - <note>lit. "..."</note> for significant literal meanings lost in translation
-- [[meta: ...]] for translator notes that should be hidden (e.g., continuity with previous page)
+- <meta>...</meta> for translator notes that should be hidden (e.g., continuity with previous page)
 
 **Style:** Clear and warm. The goal is to unlock these texts for modern readers while respecting their original power and strangeness.
 
@@ -1047,8 +1047,8 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
 **Final output format:**
 [translated text]
 
-[[summary: 1-2 sentence summary of this page's main content and significance]]
-[[keywords: key concepts, names, themes in English — for indexing]]`
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English — for indexing</keywords>`
 };
 
 // Streamlined OCR prompt - same features, fewer tokens (~200 tokens)
@@ -1056,24 +1056,24 @@ export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript pag
 
 **Format:** # headings, **bold**, *italic*, ->centered<-, | tables |, > blockquotes, ---
 
-**Metadata (use [[bracket]] syntax, hidden from readers):**
-[[language: X]] [[page number: N]] [[header: X]] [[signature: X]] [[meta: X]] [[warning: X]] [[vocabulary: X]]
+**Metadata (hidden from readers):**
+<lang>X</lang> <page-num>N</page-num> <header>X</header> <sig>X</sig> <meta>X</meta> <warning>X</warning> <vocab>X</vocab>
 
-**Inline annotations (use <xml> tags, visible to readers):**
+**Inline annotations (visible to readers):**
 <margin>X</margin> <gloss>X</gloss> <insert>X</insert> <unclear>X</unclear>
 <note>X</note> <term>X</term> <image-desc>description</image-desc>
 
 **Tables:** Use markdown tables for any columnar data, lists, charts. Preserve structure.
 
 **Rules:**
-- Page numbers, headers, signatures → [[metadata]] tags ONLY, not in body text
+- Page numbers, headers, signatures → metadata tags ONLY, not in body text
 - Preserve original spelling, punctuation, line breaks
 - IGNORE partial text at page edges (from facing page)
-- End with [[vocabulary: key terms, names, concepts]]
+- End with <vocab>key terms, names, concepts</vocab>
 
-**If quality issues:** Add [[warning: reason]] at start.`;
+**If quality issues:** Add <warning>reason</warning> at start.`;
 
-// Default prompts with [[notes]] support
+// Default prompts with XML annotation support
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
   ocr: `Transcribe this {language} manuscript page to Markdown.
 
@@ -1094,19 +1094,19 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - Charts or graphs
 - Any visual layout that isn't truly tabular
 
-**Metadata tags (hidden from readers, use [[bracket]] syntax):**
-- [[language: detected]] — confirm the language
-- [[page number: N]] — visible page/folio numbers (NOT in body text)
-- [[header: X]] — running headers (NOT in body text)
-- [[signature: X]] — printer's marks like A2, B1 (NOT in body text)
-- [[meta: X]] — hidden metadata (image quality, catchwords)
-- [[warning: X]] — quality issues (faded, damaged, blurry)
-- [[vocabulary: X]] — key terms for indexing
+**Metadata tags (hidden from readers):**
+- <lang>detected</lang> — confirm the language
+- <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
+- <header>X</header> — running headers (NOT in body text)
+- <sig>X</sig> — printer's marks like A2, B1 (NOT in body text)
+- <meta>X</meta> — hidden metadata (image quality, catchwords)
+- <warning>X</warning> — quality issues (faded, damaged, blurry)
+- <vocab>X</vocab> — key terms for indexing
 
-**Inline annotations (visible to readers, use <xml> tags):**
+**Inline annotations (visible to readers):**
 - <margin>X</margin> — marginal notes, citations (place BEFORE the paragraph they annotate)
 - <gloss>X</gloss> — interlinear annotations
-- <insert>X</insert> — boxed text, later additions
+- <insert>X</insert> — boxed text, later additions (inline only, not around tables)
 - <unclear>X</unclear> — illegible readings
 - <note>X</note> — interpretive notes for readers
 - <term>X</term> — technical vocabulary
@@ -1114,13 +1114,13 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
-2. Page numbers/headers/signatures go in [[metadata]] tags only, never in body
+2. Page numbers/headers/signatures go in metadata tags only, never in body
 3. IGNORE partial text at left/right edges (from facing page in spread)
 4. Capture ALL text including margins and annotations
 5. Describe any images/diagrams with <image-desc>...</image-desc> using prose, never tables
-6. End with [[vocabulary: key terms, names, concepts on this page]]
+6. End with <vocab>key terms, names, concepts on this page</vocab>
 
-**If image has quality issues**, start with [[warning: describe issue]]`,
+**If image has quality issues**, start with <warning>describe issue</warning>`,
 
   translation: `You are translating a manuscript transcription into accessible English.
 
@@ -1135,16 +1135,16 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - Centered text (->text<-)
 - Line breaks and paragraph structure
 
-**Inline annotations (visible to readers, use <xml> tags):**
+**Inline annotations (visible to readers):**
 - <note>X</note> — interpretive notes for readers
 - <margin>X</margin> — translate and keep marginal notes
 - <gloss>X</gloss> — translate interlinear annotations
-- <insert>X</insert> — translate later additions
+- <insert>X</insert> — translate later additions (inline only)
 - <unclear>X</unclear> — illegible readings
 - <term>X</term> — technical vocabulary with explanation
 
-**Metadata tags (hidden, use [[bracket]] syntax):**
-- [[meta: ...]] for translator notes that should be hidden (e.g., continuity with previous page)
+**Metadata tags (hidden from readers):**
+- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
 
 **Do NOT use:**
 - Code blocks or backticks - this is prose
@@ -1158,14 +1158,14 @@ The source text may contain phrases in multiple languages (Latin, Greek, Hebrew,
 Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
 
 **Instructions:**
-1. Start with [[meta: ...]] if noting continuity with previous page (hidden from readers).
+1. Start with <meta>...</meta> if noting continuity with previous page (hidden from readers).
 2. Mirror the source layout - headings, paragraphs, tables, centered text.
 3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
 4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
 5. Add <note>...</note> inline to explain historical references or difficult phrases.
 6. Style: warm museum label - explain rather than assume knowledge.
 7. Preserve the voice and spirit of the original.
-8. END with [[summary:]] and [[keywords:]] for indexing (these use bracket syntax).
+8. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
 
 **Source language:** {source_language}
 **Target language:** {target_language}
@@ -1173,8 +1173,8 @@ Use <note>original: "..."</note> to preserve important original phrases for scho
 **Final output format:**
 [translated text]
 
-[[summary: 1-2 sentence summary of this page's main content and significance]]
-[[keywords: key concepts, names, themes in English — for indexing]]`,
+<summary>1-2 sentence summary of this page's main content and significance</summary>
+<keywords>key concepts, names, themes in English — for indexing</keywords>`,
 
   summary: `Summarize the contents of this page for a general, non-specialist reader.
 
@@ -1185,25 +1185,37 @@ Use <note>original: "..."</note> to preserve important original phrases for scho
 **Instructions:**
 1. Write 3 to 5 clear sentences, optionally with bullet points.
 2. Mention key people, ideas, and why the page matters to modern audiences.
-3. Highlight continuity with the previous page in \`[[notes: ...]]\` at the top if relevant.
+3. Highlight continuity with the previous page in <meta>...</meta> at the top if relevant.
 4. Make it accessible to someone who has never read the original text.`
 };
 
-// Parse [[notes: ...]] from text
+// Parse <note>...</note> from text (for extraction, not for hiding)
 export function parseNotes(text: string): { content: string; notes: string[] } {
-  const notePattern = /\[\[notes?:\s*(.*?)\]\]/gi;
+  // Support both old [[notes:...]] and new <note>...</note> syntax
+  const bracketPattern = /\[\[notes?:\s*(.*?)\]\]/gi;
+  const xmlPattern = /<note>([\s\S]*?)<\/note>/gi;
   const notes: string[] = [];
 
-  const content = text.replace(notePattern, (match, noteContent) => {
+  let content = text.replace(bracketPattern, (match, noteContent) => {
     notes.push(noteContent.trim());
-    return ''; // Remove from main content, or keep if you want inline
+    return ''; // Remove from main content
+  });
+
+  content = content.replace(xmlPattern, (match, noteContent) => {
+    notes.push(noteContent.trim());
+    return ''; // Remove from main content
   });
 
   return { content: content.trim(), notes };
 }
 
-// Extract page number from [[page number: ####]]
+// Extract page number from <page-num>N</page-num> or [[page number: ####]]
 export function extractPageNumber(text: string): number | null {
-  const match = text.match(/\[\[page\s*number:\s*(\d+)\]\]/i);
-  return match ? parseInt(match[1], 10) : null;
+  // Try new XML syntax first
+  const xmlMatch = text.match(/<page-num>(\d+)<\/page-num>/i);
+  if (xmlMatch) return parseInt(xmlMatch[1], 10);
+
+  // Fall back to old bracket syntax for backward compatibility
+  const bracketMatch = text.match(/\[\[page\s*number:\s*(\d+)\]\]/i);
+  return bracketMatch ? parseInt(bracketMatch[1], 10) : null;
 }

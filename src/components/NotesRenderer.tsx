@@ -28,6 +28,7 @@ interface ExtractedMetadata {
 }
 
 // Extract metadata entries and return cleaned text + metadata object
+// Supports both old [[bracket:]] and new <xml> syntax
 function extractMetadata(text: string): { cleanText: string; metadata: ExtractedMetadata } {
   const metadata: ExtractedMetadata = {
     meta: [],
@@ -47,33 +48,100 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   result = result.replace(/^(?:I have (?:translated|transcribed|completed)[^:]*:\s*\n*)/i, '');
   result = result.replace(/^(?:The following is[^:]*:\s*\n*)/i, '');
 
-  // Extract language (hidden from reader)
-  result = result.replace(/\[\[language:\s*(.*?)\]\]/gi, (_, lang) => {
+  // === XML syntax (new) ===
+  // Extract language
+  result = result.replace(/<lang>([\s\S]*?)<\/lang>/gi, (_, lang) => {
     metadata.language = lang.trim();
     return '';
   });
 
   // Extract page numbers
-  result = result.replace(/\[\[page\s*number:\s*(.*?)\]\]/gi, (_, num) => {
+  result = result.replace(/<page-num>([\s\S]*?)<\/page-num>/gi, (_, num) => {
     metadata.pageNumber = num.trim();
     return '';
   });
 
   // Extract folio references
-  result = result.replace(/\[\[folio:\s*(.*?)\]\]/gi, (_, folio) => {
+  result = result.replace(/<folio>([\s\S]*?)<\/folio>/gi, (_, folio) => {
     metadata.folio = folio.trim();
+    return '';
+  });
+
+  // Extract signature marks
+  result = result.replace(/<sig>([\s\S]*?)<\/sig>/gi, (_, sig) => {
+    metadata.signature = sig.trim();
+    return '';
+  });
+
+  // Extract warning (OCR quality issues)
+  result = result.replace(/<warning>([\s\S]*?)<\/warning>/gi, (_, warning) => {
+    metadata.warning = warning.trim();
+    return '';
+  });
+
+  // Extract meta notes
+  result = result.replace(/<meta>([\s\S]*?)<\/meta>/gi, (_, content) => {
+    metadata.meta.push(content.trim());
+    return '';
+  });
+
+  // Extract abbreviation expansions
+  result = result.replace(/<abbrev>([\s\S]*?)<\/abbrev>/gi, (_, content) => {
+    metadata.abbreviations.push(content.trim());
+    return '';
+  });
+
+  // Extract vocabulary (key terms from OCR)
+  result = result.replace(/<vocab>([\s\S]*?)<\/vocab>/gi, (_, content) => {
+    const terms = content.split(',').map((t: string) => t.trim()).filter(Boolean);
+    metadata.vocabulary.push(...terms);
+    return '';
+  });
+
+  // Extract summary
+  result = result.replace(/<summary>([\s\S]*?)<\/summary>/gi, (_, content) => {
+    metadata.summary = content.trim().replace(/\s+/g, ' ');
+    return '';
+  });
+
+  // Extract keywords
+  result = result.replace(/<keywords>([\s\S]*?)<\/keywords>/gi, (_, content) => {
+    const terms = content.split(',').map((t: string) => t.trim()).filter(Boolean);
+    metadata.keywords.push(...terms);
+    return '';
+  });
+
+  // Extract headers (running headers) - hidden from display
+  result = result.replace(/<header>([\s\S]*?)<\/header>/gi, () => '');
+
+  // === Bracket syntax (legacy, for backward compatibility) ===
+  // Extract language (hidden from reader) - supports multiline
+  result = result.replace(/\[\[language:\s*([\s\S]*?)\]\]/gi, (_, lang) => {
+    if (!metadata.language) metadata.language = lang.trim();
+    return '';
+  });
+
+  // Extract page numbers - supports multiline
+  result = result.replace(/\[\[page\s*number:\s*([\s\S]*?)\]\]/gi, (_, num) => {
+    if (!metadata.pageNumber) metadata.pageNumber = num.trim();
+    return '';
+  });
+
+  // Extract folio references
+  result = result.replace(/\[\[folio:\s*(.*?)\]\]/gi, (_, folio) => {
+    if (!metadata.folio) metadata.folio = folio.trim();
     return '';
   });
 
   // Extract warning (OCR quality issues)
   result = result.replace(/\[\[warning:\s*(.*?)\]\]/gi, (_, warning) => {
-    metadata.warning = warning.trim();
+    if (!metadata.warning) metadata.warning = warning.trim();
     return '';
   });
 
   // Extract signature marks (printer's signatures like A2, B1, etc.)
   result = result.replace(/\[\[signature:\s*(.*?)\]\]/gi, (_, sig) => {
-    metadata.signature = sig.trim();
+    if (!metadata.signature) metadata.signature = sig.trim();
     return '';
   });
 
@@ -98,7 +166,7 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
 
   // Extract summary (page summary from translation) - handles multiline
   result = result.replace(/\[\[summary:\s*([\s\S]*?)\]\]/gi, (_, content) => {
-    metadata.summary = content.trim().replace(/\s+/g, ' '); // Normalize whitespace
+    if (!metadata.summary) metadata.summary = content.trim().replace(/\s+/g, ' ');
     return '';
   });
 
@@ -120,7 +188,7 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract headers (running headers) - hidden from display
   result = result.replace(/\[\[header:\s*(.*?)\]\]/gi, () => '');
 
-  // Catch-all: remove any remaining metadata tags
+  // Catch-all: remove any remaining bracket metadata tags
   result = result.replace(/\[\[(?:markup|language|page\s*number|folio|signature|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
 
   // Clean up extra whitespace from removed metadata
