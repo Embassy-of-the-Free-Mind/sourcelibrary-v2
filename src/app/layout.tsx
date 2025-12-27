@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GlobalFooter from "@/components/GlobalFooter";
 import Providers from "@/components/Providers";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Source Library",
@@ -35,6 +36,7 @@ export default function RootLayout({
           </div>
           <GlobalFooter />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
