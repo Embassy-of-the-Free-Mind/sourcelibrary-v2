@@ -112,6 +112,19 @@ export async function POST(request: NextRequest) {
     // Get OCR prompt
     const ocrPrompt = await getOcrPrompt(language);
 
+    // For translation, fetch ALL pages to get previous page context for continuity
+    // This ensures continuity even when only some pages need translation
+    const allPagesMap: Map<number, { ocr?: { data?: string }; translation?: { data?: string } }> = new Map();
+    if (type === 'translate') {
+      const allPages = await db
+        .collection('pages')
+        .find({ book_id: bookId })
+        .project({ page_number: 1, 'ocr.data': 1, 'translation.data': 1 })
+        .sort({ page_number: 1 })
+        .toArray();
+      allPages.forEach(p => allPagesMap.set(p.page_number, p));
+    }
+
     // Build batch requests
     const batchRequests: BatchRequest[] = [];
     const failedImages: string[] = [];
@@ -127,7 +140,6 @@ export async function POST(request: NextRequest) {
 
       if (type === 'ocr') {
         // For OCR, we need to fetch and embed images
-        // For batch API, we'll use file references or inline data
         try {
           const imageResponse = await fetch(imageUrl);
           if (!imageResponse.ok) {
@@ -174,6 +186,19 @@ export async function POST(request: NextRequest) {
           continue;
         }
 
+        // Get previous page context for continuity
+        let previousContext = '';
+        const prevPageData = allPagesMap.get(page.page_number - 1);
+        if (prevPageData?.translation?.data) {
+          // Use last 2000 chars of previous translation
+          const prevTranslation = prevPageData.translation.data;
+          previousContext = `\n\n**Previous page translation for continuity:**\n${prevTranslation.slice(-2000)}${prevTranslation.length > 2000 ? '...' : ''}`;
+        } else if (prevPageData?.ocr?.data) {
+          // Fall back to previous OCR if no translation yet
+          const prevOcr = prevPageData.ocr.data;
+          previousContext = `\n\n**Previous page text for continuity:**\n${prevOcr.slice(-1500)}${prevOcr.length > 1500 ? '...' : ''}`;
+        }
+
         batchRequests.push({
           key: page.id,
           request: {
@@ -181,7 +206,7 @@ export async function POST(request: NextRequest) {
               {
                 parts: [
                   {
-                    text: `Translate the following ${language} text to English. Preserve formatting and paragraph breaks.\n\n${ocrText}`,
+                    text: `Translate the following ${language} text to English. Preserve formatting and paragraph breaks. Maintain continuity with the previous page if provided.\n\n${ocrText}${previousContext}`,
                   },
                 ],
               },
