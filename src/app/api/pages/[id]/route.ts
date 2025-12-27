@@ -1,5 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { z } from 'zod';
+
+// Validation schema for page updates
+const pageUpdateSchema = z.object({
+  ocr: z.object({
+    data: z.string().max(500000, 'OCR data too large'),
+    language: z.string().min(1).max(50),
+    model: z.string().max(100).optional(),
+  }).optional(),
+  translation: z.object({
+    data: z.string().max(500000, 'Translation data too large'),
+    language: z.string().min(1).max(50),
+    model: z.string().max(100).optional(),
+  }).optional(),
+  summary: z.object({
+    data: z.string().max(10000, 'Summary too large'),
+    model: z.string().max(100).optional(),
+  }).optional(),
+}).refine(data => data.ocr || data.translation || data.summary, {
+  message: 'At least one of ocr, translation, or summary must be provided',
+});
 
 export async function GET(
   request: NextRequest,
@@ -28,7 +49,17 @@ export async function PATCH(
   try {
     const { id } = await params;
     const db = await getDb();
-    const body = await request.json();
+    const rawBody = await request.json();
+
+    // Validate request body
+    const parseResult = pageUpdateSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { error: 'Invalid request', details: parseResult.error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+    const body = parseResult.data;
 
     const updateData: Record<string, unknown> = {
       updated_at: new Date()

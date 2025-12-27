@@ -1,5 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { z } from 'zod';
+
+// Allowed highlight colors
+const HIGHLIGHT_COLORS = ['yellow', 'green', 'blue', 'pink', 'purple', 'orange'] as const;
+
+// Validation schema for highlight updates
+const highlightUpdateSchema = z.object({
+  note: z.string().max(5000, 'Note too long').optional(),
+  color: z.enum(HIGHLIGHT_COLORS).optional(),
+}).refine(data => data.note !== undefined || data.color !== undefined, {
+  message: 'At least one of note or color must be provided',
+});
 
 // GET /api/highlights/[id] - Get a single highlight
 export async function GET(
@@ -64,8 +76,17 @@ export async function PATCH(
 ) {
   try {
     const { id } = await params;
-    const body = await request.json();
-    const { note, color } = body;
+    const rawBody = await request.json();
+
+    // Validate request body
+    const parseResult = highlightUpdateSchema.safeParse(rawBody);
+    if (!parseResult.success) {
+      return NextResponse.json(
+        { error: 'Invalid request', details: parseResult.error.flatten().fieldErrors },
+        { status: 400 }
+      );
+    }
+    const { note, color } = parseResult.data;
 
     const db = await getDb();
 

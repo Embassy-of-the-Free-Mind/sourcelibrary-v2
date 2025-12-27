@@ -1,8 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getGeminiClient } from '@/lib/gemini';
+import { z } from 'zod';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Validation schema for chat messages
+const messageSchema = z.object({
+  role: z.enum(['user', 'assistant']),
+  content: z.string().min(1, 'Message cannot be empty').max(10000, 'Message too long'),
+});
+
+const chatRequestSchema = z.object({
+  messages: z.array(messageSchema)
+    .min(1, 'At least one message required')
+    .max(50, 'Too many messages in conversation'),
+});
 
 interface Message {
   role: 'user' | 'assistant';
@@ -171,14 +182,17 @@ export async function POST(
 ) {
   try {
     const { id } = await params;
-    const { messages } = await request.json() as { messages: Message[] };
+    const rawBody = await request.json();
 
-    if (!messages || !Array.isArray(messages)) {
+    // Validate request body
+    const parseResult = chatRequestSchema.safeParse(rawBody);
+    if (!parseResult.success) {
       return NextResponse.json(
-        { error: 'Messages array required' },
+        { error: 'Invalid request', details: parseResult.error.flatten().fieldErrors },
         { status: 400 }
       );
     }
+    const { messages } = parseResult.data;
 
     // Get the user's current question to find relevant pages
     const lastMessage = messages[messages.length - 1];
@@ -188,7 +202,7 @@ export async function POST(
     const { context: bookContext, pageCount } = await buildBookContext(id, userQuery);
 
     // Create the model
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = getGeminiClient().getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     // System prompt
     const systemPrompt = `You are a knowledgeable guide helping readers understand a historical text. You have access to the book's content below.
