@@ -79,6 +79,9 @@ export default function HighlightSelection({
     setSaving(true);
 
     try {
+      // Get user name from localStorage (shared with annotations)
+      const userName = localStorage.getItem('annotation_username') || undefined;
+
       const response = await fetch('/api/highlights', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -87,7 +90,9 @@ export default function HighlightSelection({
           page_id: pageId,
           page_number: pageNumber,
           book_title: bookTitle,
+          book_author: bookAuthor,
           text: selectedText,
+          user_name: userName,
         }),
       });
 

@@ -8,10 +8,12 @@ export interface Highlight {
   page_id: string;
   page_number: number;
   book_title: string;
+  book_author?: string;
   text: string;
   context?: string;  // Surrounding text for context
   note?: string;     // Optional user note
   color?: string;    // Highlight color
+  user_name?: string; // Who highlighted this (public)
   created_at: Date;
 }
 
@@ -49,7 +51,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { book_id, page_id, page_number, book_title, text, context, note, color } = body;
+    const { book_id, page_id, page_number, book_title, book_author, text, context, note, color, user_name } = body;
 
     if (!book_id || !page_id || !text) {
       return NextResponse.json(
@@ -73,10 +75,12 @@ export async function POST(request: NextRequest) {
       page_id,
       page_number: page_number || 0,
       book_title: book_title || '',
+      book_author: book_author || undefined,
       text: text.trim(),
       context: context?.trim(),
       note: note?.trim(),
       color: color || 'yellow',
+      user_name: user_name?.trim() || undefined,
       created_at: new Date(),
     };
 
