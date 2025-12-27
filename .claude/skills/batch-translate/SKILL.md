@@ -44,13 +44,25 @@ This workflow handles the full processing pipeline for historical book scans:
 | `POST /api/process/batch-ocr` | OCR up to 5 pages directly |
 | `POST /api/process/batch-translate` | Translate up to 10 pages directly |
 
-## Models
+## Batch API vs Realtime
 
-| Model ID | Description | Best For |
-|----------|-------------|----------|
-| `gemini-3-flash-preview` | Best quality, handles complex layouts | Tables, symbols, difficult text |
-| `gemini-2.5-flash` | Good balance of speed/quality | Normal text (recommended default) |
-| `gemini-2.0-flash` | Fast and cheap | Simple, clear text |
+All batch jobs (batch_ocr, batch_translate) use **Gemini Batch API** for 50% cost savings.
+
+| Job Type | API | Model | Cost |
+|----------|-----|-------|------|
+| Single page | Realtime | gemini-3-flash-preview | Full price |
+| batch_ocr | Batch API | gemini-2.5-flash | **50% off** |
+| batch_translate | Batch API | gemini-2.5-flash | **50% off** |
+
+See `docs/BATCH-PROCESSING.md` for full documentation.
+
+### How Batch Jobs Work
+
+1. **Create job** → `use_batch_api: true` automatically set
+2. **Call `/process` repeatedly** → Each call prepares 20 pages
+3. **When all prepared** → Submits to Gemini Batch API
+4. **Call `/process` again** → Polls for results (ready in 2-24 hours)
+5. **When done** → Results saved, job complete
 
 ## Step 1: Analyze Book Status
 

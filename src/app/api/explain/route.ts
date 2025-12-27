@@ -10,7 +10,55 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
   return inputCost + outputCost;
 }
 
-const DEFAULT_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
+// Prompt to analyze text and identify confusing elements
+const ANALYZE_PROMPT = `You are helping a modern reader understand a historical text.
+
+Analyze this passage and identify 3-6 specific things that might be confusing or interesting to explain:
+- Archaic or unusual words/phrases
+- Historical references (people, places, events)
+- Technical or specialized concepts
+- Metaphors or symbolic language
+- Cultural context that's not obvious today
+
+Text from {context}:
+---
+{text}
+---
+
+Return ONLY a JSON array of objects, each with:
+- "term": the specific word, phrase, or concept (keep it short, 1-5 words)
+- "type": one of "word", "reference", "concept", "metaphor", "context"
+- "preview": a 5-10 word hint of what it means (tease, don't fully explain)
+
+Example format:
+[
+  {"term": "the White Stone", "type": "concept", "preview": "An alchemical stage of purification"},
+  {"term": "gross and subtle", "type": "word", "preview": "Dense matter vs refined essence"}
+]
+
+Return 3-6 items, most interesting first. JSON only, no other text:`;
+
+// Prompt to explain a specific term/concept
+const EXPLAIN_TERM_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
+
+A reader is studying a passage {context} and wants to understand a specific term or concept.
+
+The passage:
+---
+{text}
+---
+
+The reader wants to understand: "{term}"
+
+Explain this clearly in 2-3 short paragraphs:
+1. What it literally means
+2. Why it matters in this context
+3. Any interesting background (if relevant)
+
+Be warm and conversational, like a knowledgeable friend. Don't be condescending.`;
+
+// Original full explanation prompt (fallback)
+const FULL_EXPLAIN_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
 
 A reader is reading a passage {context} and wants to understand it better.
 
@@ -30,7 +78,15 @@ If the text references alchemical, philosophical, religious, or esoteric concept
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { text, book_title, book_author, page_number, customPrompt } = body;
+    const {
+      text,
+      book_title,
+      book_author,
+      page_number,
+      customPrompt,
+      mode = 'analyze', // 'analyze' | 'explain_term' | 'full'
+      term // for explain_term mode
+    } = body;
 
     if (!text) {
       return NextResponse.json(
@@ -54,27 +110,76 @@ export async function POST(request: NextRequest) {
       book_title && `from "${book_title}"`,
       book_author && `by ${book_author}`,
       page_number && `(page ${page_number})`,
-    ].filter(Boolean).join(' ');
+    ].filter(Boolean).join(' ') || 'from a historical text';
 
-    // Use custom prompt if provided, otherwise use default
-    const promptTemplate = customPrompt || DEFAULT_PROMPT;
+    let prompt: string;
 
-    // Replace variables in the prompt
-    const prompt = promptTemplate
-      .replace('{context}', contextInfo || 'from a historical text')
-      .replace('{text}', text);
+    if (mode === 'analyze') {
+      // Analyze mode: identify confusing elements
+      prompt = ANALYZE_PROMPT
+        .replace('{context}', contextInfo)
+        .replace('{text}', text);
+    } else if (mode === 'explain_term' && term) {
+      // Explain a specific term
+      prompt = (customPrompt || EXPLAIN_TERM_PROMPT)
+        .replace('{context}', contextInfo)
+        .replace('{text}', text)
+        .replace('{term}', term);
+    } else {
+      // Full explanation (fallback or explicit)
+      prompt = (customPrompt || FULL_EXPLAIN_PROMPT)
+        .replace('{context}', contextInfo)
+        .replace('{text}', text);
+    }
 
     const result = await model.generateContent(prompt);
     const response = result.response;
-    const explanation = response.text();
+    const responseText = response.text();
 
     // Track usage
     const usageMetadata = response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
     const outputTokens = usageMetadata?.candidatesTokenCount || 0;
 
+    // For analyze mode, parse the JSON response
+    if (mode === 'analyze') {
+      try {
+        // Extract JSON from response (handle markdown code blocks)
+        let jsonStr = responseText;
+        const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+        if (jsonMatch) {
+          jsonStr = jsonMatch[0];
+        }
+
+        const items = JSON.parse(jsonStr);
+        return NextResponse.json({
+          items,
+          usage: {
+            inputTokens,
+            outputTokens,
+            totalTokens: inputTokens + outputTokens,
+            costUsd: calculateCost(inputTokens, outputTokens, DEFAULT_MODEL),
+            model: DEFAULT_MODEL,
+          },
+        });
+      } catch (parseError) {
+        console.error('Failed to parse analyze response:', parseError, responseText);
+        // Fallback: return as full explanation
+        return NextResponse.json({
+          explanation: responseText,
+          usage: {
+            inputTokens,
+            outputTokens,
+            totalTokens: inputTokens + outputTokens,
+            costUsd: calculateCost(inputTokens, outputTokens, DEFAULT_MODEL),
+            model: DEFAULT_MODEL,
+          },
+        });
+      }
+    }
+
     return NextResponse.json({
-      explanation,
+      explanation: responseText,
       usage: {
         inputTokens,
         outputTokens,
