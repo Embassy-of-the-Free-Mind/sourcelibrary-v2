@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { performOCR, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
+import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
+import sharp from 'sharp';
+import { put } from '@vercel/blob';
 
 // Increase timeout for AI processing (max 60s for Pro, 10s for Hobby)
 export const maxDuration = 60;
@@ -67,7 +69,7 @@ export async function POST(request: NextRequest) {
 
     const results: { ocr?: string; translation?: string; summary?: string } = {};
     const metadata: {
-      ocr?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
+      ocr?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number; imageUrl?: string };
       translation?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
       summary?: { inputTokens: number; outputTokens: number; costUsd: number; durationMs: number };
     } = {};
@@ -79,27 +81,116 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: 'imageUrl required for OCR' }, { status: 400 });
       }
 
-      // Use pre-generated cropped image if available, otherwise fall back to photo or imageUrl
+      // Use pre-generated cropped image if available
+      // CRITICAL: For split pages (pages with crop data), we MUST use cropped image
+      // to avoid OCRing the full 2-page spread
       let finalImageUrl = imageUrl;
+      let ocrResult;
+      const ocrStart = performance.now();
+
       if (pageId) {
         const currentPage = await db.collection('pages').findOne({ id: pageId });
+
         if (currentPage?.cropped_photo) {
           // Use pre-generated cropped image (Vercel Blob URL)
           finalImageUrl = currentPage.cropped_photo;
+          console.log(`[process] Page ${pageId}: Using cropped_photo`);
+          ocrResult = await performOCR(
+            finalImageUrl,
+            language || 'Latin',
+            previousPage?.ocr,
+            customPrompts?.ocr,
+            model
+          );
+        } else if (currentPage?.crop?.xStart !== undefined && currentPage?.crop?.xEnd !== undefined) {
+          // SPLIT PAGE without cropped_photo - crop inline to avoid using full spread!
+          console.log(`[process] Page ${pageId}: Split page without cropped_photo - cropping inline`);
+          const originalUrl = currentPage.photo_original || currentPage.photo;
+
+          const imageResponse = await fetch(originalUrl);
+          if (!imageResponse.ok) {
+            return NextResponse.json({ error: 'Failed to fetch image for cropping' }, { status: 500 });
+          }
+
+          const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+          const imgMetadata = await sharp(imageBuffer).metadata();
+          const imgWidth = imgMetadata.width || 1000;
+          const imgHeight = imgMetadata.height || 1000;
+
+          const left = Math.round((currentPage.crop.xStart / 1000) * imgWidth);
+          const cropWidth = Math.round(((currentPage.crop.xEnd - currentPage.crop.xStart) / 1000) * imgWidth);
+
+          const croppedBuffer = await sharp(imageBuffer)
+            .extract({
+              left,
+              top: 0,
+              width: Math.min(cropWidth, imgWidth - left),
+              height: imgHeight,
+            })
+            .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
+            .jpeg({ quality: 80, progressive: true })
+            .toBuffer();
+
+          // Do OCR with buffer directly
+          ocrResult = await performOCRWithBuffer(
+            croppedBuffer,
+            'image/jpeg',
+            language || 'Latin',
+            previousPage?.ocr,
+            customPrompts?.ocr,
+            model
+          );
+
+          // Upload cropped image in background for future use
+          const filename = `cropped/${currentPage.book_id}/${pageId}.jpg`;
+          put(filename, croppedBuffer, {
+            access: 'public',
+            contentType: 'image/jpeg',
+            allowOverwrite: true,
+          }).then(blob => {
+            db.collection('pages').updateOne(
+              { id: pageId },
+              { $set: { cropped_photo: blob.url, updated_at: new Date() } }
+            );
+            console.log(`[process] Page ${pageId}: Saved cropped_photo for future use`);
+          }).catch(err => {
+            console.warn(`[process] Page ${pageId}: Failed to save cropped_photo:`, err);
+          });
+
+          finalImageUrl = `[cropped inline from ${originalUrl}]`;
         } else if (currentPage?.photo) {
-          // Use the page's photo field
+          // Not a split page - safe to use full photo
           finalImageUrl = currentPage.photo;
+          console.log(`[process] Page ${pageId}: Using full photo (not a split page)`);
+          ocrResult = await performOCR(
+            finalImageUrl,
+            language || 'Latin',
+            previousPage?.ocr,
+            customPrompts?.ocr,
+            model
+          );
+        } else {
+          // Fallback to provided imageUrl
+          console.log(`[process] Page ${pageId}: Using provided imageUrl`);
+          ocrResult = await performOCR(
+            finalImageUrl,
+            language || 'Latin',
+            previousPage?.ocr,
+            customPrompts?.ocr,
+            model
+          );
         }
+      } else {
+        // No pageId - use provided imageUrl directly
+        ocrResult = await performOCR(
+          finalImageUrl,
+          language || 'Latin',
+          previousPage?.ocr,
+          customPrompts?.ocr,
+          model
+        );
       }
 
-      const ocrStart = performance.now();
-      const ocrResult = await performOCR(
-        finalImageUrl,
-        language || 'Latin',
-        previousPage?.ocr,
-        customPrompts?.ocr,
-        model
-      );
       results.ocr = ocrResult.text;
       totalUsage.inputTokens += ocrResult.usage.inputTokens;
       totalUsage.outputTokens += ocrResult.usage.outputTokens;
@@ -112,6 +203,7 @@ export async function POST(request: NextRequest) {
         outputTokens: ocrResult.usage.outputTokens,
         costUsd: ocrResult.usage.costUsd,
         durationMs: Math.round(ocrDuration),
+        imageUrl: finalImageUrl,
       };
       await recordProcessingMetric(db, 'ocr_processing', ocrDuration, {
         pageId,
@@ -214,6 +306,8 @@ export async function POST(request: NextRequest) {
           output_tokens: metadata.ocr?.outputTokens,
           cost_usd: metadata.ocr?.costUsd,
           processing_ms: metadata.ocr?.durationMs,
+          // Track which image was used for debugging split page issues
+          image_url: metadata.ocr?.imageUrl,
         };
       }
 
