@@ -252,3 +252,33 @@ export function applyFix(
       return text;
   }
 }
+
+/**
+ * Clean up empty tags from text
+ * Removes patterns like [[unclear:]], [[note: ]], [[margin:]], etc.
+ * Returns the cleaned text and count of removed tags
+ */
+export function cleanupEmptyTags(text: string): { cleaned: string; removedCount: number } {
+  if (!text) {
+    return { cleaned: text, removedCount: 0 };
+  }
+
+  let removedCount = 0;
+
+  // Match [[tagname:]] or [[tagname: ]] (empty or whitespace-only content)
+  // The regex matches: [[ + word characters + : + optional whitespace + ]]
+  const emptyTagPattern = /\[\[\w+:\s*\]\]/g;
+
+  const cleaned = text.replace(emptyTagPattern, () => {
+    removedCount++;
+    return '';
+  });
+
+  // Clean up any double spaces or trailing spaces left behind
+  const finalCleaned = cleaned
+    .replace(/  +/g, ' ')  // Collapse multiple spaces
+    .replace(/ +\n/g, '\n')  // Remove trailing spaces before newlines
+    .replace(/\n +/g, '\n');  // Remove leading spaces after newlines (but preserve indentation in code blocks)
+
+  return { cleaned: finalCleaned, removedCount };
+}

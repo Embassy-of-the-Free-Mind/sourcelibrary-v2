@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, RefreshCw, Loader2, CheckCircle, AlertTriangle, Wrench, RotateCcw } from 'lucide-react';
+import { ArrowLeft, RefreshCw, Loader2, CheckCircle, AlertTriangle, Wrench, RotateCcw, Trash2 } from 'lucide-react';
 import { ValidationIssue } from '@/lib/validateTranslation';
 
 interface PageIssue {
@@ -29,6 +29,8 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
   const [error, setError] = useState<string | null>(null);
   const [applying, setApplying] = useState<string | null>(null);
   const [retranslating, setRetranslating] = useState<string | null>(null);
+  const [cleaning, setCleaning] = useState(false);
+  const [cleanupResult, setCleanupResult] = useState<{ removed: number; pages: number } | null>(null);
 
   useEffect(() => {
     params.then(p => setBookId(p.id));
@@ -101,6 +103,28 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
     }
   };
 
+  const cleanupEmptyTags = async () => {
+    if (!bookId) return;
+    setCleaning(true);
+    setCleanupResult(null);
+    try {
+      const res = await fetch(`/api/books/${bookId}/cleanup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ field: 'both' }),
+      });
+      if (!res.ok) throw new Error('Cleanup failed');
+      const result = await res.json();
+      setCleanupResult({ removed: result.totalTagsRemoved, pages: result.pagesModified });
+      // Refresh QA data
+      await fetchQA();
+    } catch (err) {
+      alert(err instanceof Error ? err.message : 'Cleanup failed');
+    } finally {
+      setCleaning(false);
+    }
+  };
+
   const issueTypeLabel = (type: string) => {
     switch (type) {
       case 'unclosed_open': return 'Unclosed [[';
@@ -167,14 +191,28 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Book</span>
             </Link>
-            <button
-              onClick={fetchQA}
-              disabled={loading}
-              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Rescan
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={cleanupEmptyTags}
+                disabled={cleaning || loading}
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 rounded-lg transition-colors disabled:opacity-50"
+              >
+                {cleaning ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Trash2 className="w-4 h-4" />
+                )}
+                Clean Empty Tags
+              </button>
+              <button
+                onClick={fetchQA}
+                disabled={loading}
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
+              >
+                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                Rescan
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -185,6 +223,24 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
           <h1 className="text-2xl font-serif font-bold text-stone-900">QA Review</h1>
           <p className="text-stone-600 mt-1">{data?.bookTitle}</p>
         </div>
+
+        {/* Cleanup Result Banner */}
+        {cleanupResult && (
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              <span className="text-green-800">
+                Removed {cleanupResult.removed} empty tag{cleanupResult.removed !== 1 ? 's' : ''} from {cleanupResult.pages} page{cleanupResult.pages !== 1 ? 's' : ''}
+              </span>
+            </div>
+            <button
+              onClick={() => setCleanupResult(null)}
+              className="text-green-600 hover:text-green-800 text-sm"
+            >
+              Dismiss
+            </button>
+          </div>
+        )}
 
         {/* Summary */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
