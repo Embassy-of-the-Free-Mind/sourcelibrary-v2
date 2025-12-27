@@ -153,6 +153,10 @@ function processInlineMarkup(text: string, showNotes: boolean = true): string {
     return `<h${level} class="text-center">${cleaned}</h${level}>`;
   });
 
+  // Escape numbered paragraph markers (10. 11. etc) to prevent markdown list interpretation
+  // Only at start of line, followed by space and text (not already in a list context)
+  result = result.replace(/^(\d+)\. /gm, '$1\\. ');
+
   // Centered text: ->text<- or ::text:: (handles multiline)
   result = result.replace(/->([\s\S]*?)<-/g, (match, content) => {
     // Clean up whitespace and join lines
@@ -357,7 +361,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
             <h4 className="text-base font-serif font-semibold mt-3 mb-1 text-[var(--text-primary)]">{children}</h4>
           ),
           ul: ({ children }) => <ul className="list-disc ml-5 my-3 space-y-1">{children}</ul>,
-          ol: ({ children }) => <ol className="list-decimal ml-5 my-3 space-y-1">{children}</ol>,
+          ol: ({ children, start }) => <ol className="list-decimal ml-5 my-3 space-y-1" start={start}>{children}</ol>,
           li: ({ children }) => <li className="leading-relaxed">{children}</li>,
           blockquote: ({ children }) => (
             <blockquote className="border-l-3 border-amber-300 pl-4 my-4 italic text-stone-600 bg-amber-50/30 py-2 pr-2 rounded-r">

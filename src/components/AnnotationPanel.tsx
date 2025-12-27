@@ -432,30 +432,50 @@ export default function AnnotationPanel({
     </div>
   );
 
+  // Handle Escape key to close panel
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   return (
     <>
       <div className="fixed inset-0 z-40 flex justify-end">
         {/* Backdrop */}
-        <div className="absolute inset-0 bg-black/20" onClick={onClose} />
+        <div
+          className="absolute inset-0 bg-black/20"
+          onClick={onClose}
+          aria-hidden="true"
+        />
 
         {/* Panel */}
-        <div className="relative w-full max-w-md bg-white shadow-xl flex flex-col h-full">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="annotation-panel-title"
+          className="relative w-full max-w-md bg-white shadow-xl flex flex-col h-full"
+        >
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-blue-50 to-indigo-50">
             <div className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-blue-600" />
-              <h2 className="font-semibold text-stone-900">Page Annotations</h2>
+              <MessageSquare className="w-5 h-5 text-blue-600" aria-hidden="true" />
+              <h2 id="annotation-panel-title" className="font-semibold text-stone-900">Page Annotations</h2>
               {!loading && (
                 <span className="text-sm text-stone-500">({annotations.length})</span>
               )}
             </div>
             <button
               onClick={onClose}
+              aria-label="Close annotations panel"
               className="p-1 hover:bg-stone-200 rounded transition-colors"
             >
-              <X className="w-5 h-5 text-stone-600" />
+              <X className="w-5 h-5 text-stone-600" aria-hidden="true" />
             </button>
           </div>
 

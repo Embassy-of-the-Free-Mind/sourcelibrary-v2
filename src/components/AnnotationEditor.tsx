@@ -83,6 +83,16 @@ export default function AnnotationEditor({
     }
   }, [isOpen]);
 
+  // Handle Escape key to close
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   // Search encyclopedia entries
   const searchEncyclopedia = useCallback(async (query: string) => {
     if (!query || query.length < 2) {
@@ -184,20 +194,26 @@ export default function AnnotationEditor({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/50" onClick={onClose} aria-hidden="true" />
 
       {/* Modal - Compact by default */}
-      <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="annotation-editor-title"
+        className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden"
+      >
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-stone-50">
-          <h2 className="font-medium text-stone-900">
+          <h2 id="annotation-editor-title" className="font-medium text-stone-900">
             {parentId ? 'Reply' : 'Add Comment'}
           </h2>
           <button
             onClick={onClose}
+            aria-label="Close dialog"
             className="p-1 hover:bg-stone-200 rounded transition-colors"
           >
-            <X className="w-4 h-4 text-stone-600" />
+            <X className="w-4 h-4 text-stone-600" aria-hidden="true" />
           </button>
         </div>
 
@@ -210,18 +226,24 @@ export default function AnnotationEditor({
 
           {/* Name input - inline if not saved */}
           {!userName && (
-            <input
-              type="text"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              placeholder="Your name"
-              className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-            />
+            <div>
+              <label htmlFor="annotation-username" className="sr-only">Your name</label>
+              <input
+                id="annotation-username"
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                placeholder="Your name"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+              />
+            </div>
           )}
 
           {/* Comment textarea */}
           <div>
+            <label htmlFor="annotation-content" className="sr-only">Your comment</label>
             <textarea
+              id="annotation-content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Write your comment..."
