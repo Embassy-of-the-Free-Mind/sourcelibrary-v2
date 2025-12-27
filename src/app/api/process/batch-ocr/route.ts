@@ -3,17 +3,12 @@ import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemini';
+import { getOcrPrompt, type PromptLookupResult } from '@/lib/prompts';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
 
 // Increase timeout for batch OCR (5 images)
 export const maxDuration = 300;
-
-// Get GitHub URL to exact commit of prompts file for reproducibility
-function getPromptsUrl(): string {
-  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
-  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
-}
 
 // Page result status for detailed logging
 type PageStatus = 'processed' | 'skipped_has_ocr' | 'cropped_inline' | 'failed_image_fetch' | 'failed_crop' | 'failed_parse';
@@ -124,6 +119,7 @@ export async function POST(request: NextRequest) {
       pages,
       language = 'Latin',
       customPrompt,
+      promptName,
       model: modelId = DEFAULT_MODEL,
       previousContext,
       overwrite = false,
@@ -131,6 +127,7 @@ export async function POST(request: NextRequest) {
       pages: PageInput[];
       language?: string;
       customPrompt?: string;
+      promptName?: string;
       model?: string;
       previousContext?: string;
       overwrite?: boolean;
@@ -146,6 +143,12 @@ export async function POST(request: NextRequest) {
 
     // Look up pages from database to check existing OCR and get image URLs
     const db = await getDb();
+
+    // Look up prompt for this batch (with versioning)
+    const ocrPrompt: PromptLookupResult = await getOcrPrompt(language, {
+      name: promptName,
+      customText: customPrompt,
+    });
     const pageIds = pages.map(p => p.pageId);
     const dbPages = await db.collection('pages').find({ id: { $in: pageIds } }).toArray();
     const dbPageMap = new Map(dbPages.map(p => [p.id, p]));
@@ -290,18 +293,9 @@ export async function POST(request: NextRequest) {
 
     console.log(`[batch-ocr] Processing ${validPages.length} pages with ${modelId}...`);
 
-    // Build the batch OCR prompt
-    const basePrompt = customPrompt?.replace('{language}', language) ||
-      `You are an expert OCR system specializing in historical ${language} manuscripts and printed books.
-
-Transcribe the text from each page image accurately:
-- Preserve original spelling, punctuation, and formatting
-- Maintain paragraph structure
-- Note any unclear or damaged text with [unclear] or [damaged]
-- Keep line breaks where they appear significant
-- Transcribe in reading order (left to right, top to bottom)
-
-IMPORTANT: Return transcriptions in the exact format specified below.`;
+    // Build the batch OCR prompt using the looked-up prompt as base
+    // The prompt helper already does language substitution
+    const basePrompt = ocrPrompt.text + '\n\nIMPORTANT: Return transcriptions in the exact format specified below.';
 
     let fullPrompt = basePrompt + '\n\n';
 
@@ -460,7 +454,8 @@ Return each transcription clearly separated with the exact format:
               updated_at: now,
               model: modelId,
               language: language,
-              prompt_url: getPromptsUrl(),
+              prompt: ocrPrompt.reference,
+              source: 'ai',  // Mark as AI-generated
               // Processing metadata (tokens distributed across batch)
               input_tokens: tokensPerPage.input,
               output_tokens: tokensPerPage.output,

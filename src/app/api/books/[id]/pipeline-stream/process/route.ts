@@ -1,18 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performOCRWithBuffer, performTranslation } from '@/lib/ai';
+import { getOcrPrompt, getTranslationPrompt, type PromptLookupResult } from '@/lib/prompts';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
-import type { Job, JobResult } from '@/lib/types';
+import type { Job, JobResult, PromptReference } from '@/lib/types';
 
 // Extend timeout for processing
 export const maxDuration = 300;
-
-// Get GitHub URL to exact commit of prompts file for reproducibility
-function getPromptsUrl(): string {
-  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
-  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
-}
 
 // Process a single page through the full pipeline: crop → OCR → translate
 // Key: If page has crop data, we MUST use the cropped image for OCR (not full spread)
@@ -29,6 +25,7 @@ async function processPageFully(
     translation?: { data?: string };
   },
   config: { model: string; language: string; overwrite?: boolean },
+  prompts: { ocr: PromptLookupResult; translation: PromptLookupResult },
   db: Awaited<ReturnType<typeof getDb>>,
   previousOcr?: string,
   previousTranslation?: string
@@ -52,6 +49,14 @@ async function processPageFully(
     const needsCrop = page.crop && !page.cropped_photo;
     const needsOcr = config.overwrite || !ocrText;
     const needsTranslate = config.overwrite || !translationText;
+
+    // Create snapshots of any manually-edited content before overwriting
+    if (needsOcr) {
+      await createSnapshotIfNeeded(page.id, 'pre_ocr');
+    }
+    if (needsTranslate) {
+      await createSnapshotIfNeeded(page.id, 'pre_translate');
+    }
 
     // If page was split but needs OCR, we MUST have or create a cropped image
     // This ensures OCR only sees the single page, not the full two-page spread
@@ -104,7 +109,7 @@ async function processPageFully(
           'image/jpeg',
           config.language,
           previousOcr,
-          undefined,
+          prompts.ocr.text,
           config.model
         );
         const ocrDuration = performance.now() - ocrStart;
@@ -119,8 +124,9 @@ async function processPageFully(
                 data: ocrText,
                 language: config.language,
                 model: config.model,
-                prompt_url: getPromptsUrl(),
+                prompt: prompts.ocr.reference,
                 updated_at: new Date(),
+                source: 'ai',  // Mark as AI-generated
                 // Processing metadata
                 input_tokens: ocrResult.usage.inputTokens,
                 output_tokens: ocrResult.usage.outputTokens,
@@ -161,7 +167,7 @@ async function processPageFully(
         imageUrlForOcr,
         config.language,
         previousOcr,
-        undefined,
+        prompts.ocr.text,
         config.model
       );
       const ocrDuration = performance.now() - ocrStart;
@@ -176,8 +182,9 @@ async function processPageFully(
               data: ocrText,
               language: config.language,
               model: config.model,
-              prompt_url: getPromptsUrl(),
+              prompt: prompts.ocr.reference,
               updated_at: new Date(),
+              source: 'ai',  // Mark as AI-generated
               // Processing metadata
               input_tokens: ocrResult.usage.inputTokens,
               output_tokens: ocrResult.usage.outputTokens,
@@ -201,7 +208,7 @@ async function processPageFully(
         config.language,
         'English',
         previousTranslation,
-        undefined,
+        prompts.translation.text,
         config.model
       );
       const translateDuration = performance.now() - translateStart;
@@ -217,8 +224,9 @@ async function processPageFully(
               language: 'English',
               source_language: config.language,
               model: config.model,
-              prompt_url: getPromptsUrl(),
+              prompt: prompts.translation.reference,
               updated_at: new Date(),
+              source: 'ai',  // Mark as AI-generated
               // Processing metadata
               input_tokens: translateResult.usage.inputTokens,
               output_tokens: translateResult.usage.outputTokens,
@@ -317,6 +325,16 @@ export async function POST(
       .sort({ page_number: 1 })
       .toArray();
 
+    // Look up prompts for this job (with versioning)
+    const jobLanguage = (job.config.language as string) || 'Latin';
+    const ocrPrompt = await getOcrPrompt(jobLanguage, {
+      name: job.config.prompt_name as string | undefined,
+    });
+    const translationPrompt = await getTranslationPrompt(jobLanguage, 'English', {
+      name: job.config.prompt_name as string | undefined,
+    });
+    const prompts = { ocr: ocrPrompt, translation: translationPrompt };
+
     // Get previous page's OCR/translation for context (from the last processed page)
     let previousOcr: string | undefined;
     let previousTranslation: string | undefined;
@@ -357,9 +375,10 @@ export async function POST(
         page as unknown as Parameters<typeof processPageFully>[0],
         {
           model: (job.config.model as string) || 'gemini-2.5-flash',
-          language: (job.config.language as string) || 'Latin',
+          language: jobLanguage,
           overwrite: Boolean(job.config.overwrite),
         },
+        prompts,
         db,
         previousOcr,
         previousTranslation

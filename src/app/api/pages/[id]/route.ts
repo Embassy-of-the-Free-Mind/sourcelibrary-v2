@@ -18,6 +18,8 @@ const pageUpdateSchema = z.object({
     data: z.string().max(10000, 'Summary too large'),
     model: z.string().max(100).optional(),
   }).optional(),
+  // Source tracking for manual edits
+  edited_by: z.string().max(100).optional(),
 }).refine(data => data.ocr || data.translation || data.summary, {
   message: 'At least one of ocr, translation, or summary must be provided',
 });
@@ -65,27 +67,42 @@ export async function PATCH(
       updated_at: new Date()
     };
 
-    // Update OCR if provided
+    const now = new Date();
+    const editedBy = body.edited_by || 'Unknown';
+
+    // Update OCR if provided - mark as manual edit
     if (body.ocr) {
       updateData['ocr.data'] = body.ocr.data;
       updateData['ocr.language'] = body.ocr.language;
-      updateData['ocr.model'] = body.ocr.model || 'gemini-2.0-flash';
-      updateData['ocr.updated_at'] = new Date();
+      updateData['ocr.model'] = body.ocr.model || 'manual';
+      updateData['ocr.updated_at'] = now;
+      // Source tracking
+      updateData['ocr.source'] = 'manual';
+      updateData['ocr.edited_by'] = editedBy;
+      updateData['ocr.edited_at'] = now;
     }
 
-    // Update translation if provided
+    // Update translation if provided - mark as manual edit
     if (body.translation) {
       updateData['translation.data'] = body.translation.data;
       updateData['translation.language'] = body.translation.language;
-      updateData['translation.model'] = body.translation.model || 'gemini-2.0-flash';
-      updateData['translation.updated_at'] = new Date();
+      updateData['translation.model'] = body.translation.model || 'manual';
+      updateData['translation.updated_at'] = now;
+      // Source tracking
+      updateData['translation.source'] = 'manual';
+      updateData['translation.edited_by'] = editedBy;
+      updateData['translation.edited_at'] = now;
     }
 
-    // Update summary if provided
+    // Update summary if provided - mark as manual edit
     if (body.summary) {
       updateData['summary.data'] = body.summary.data;
-      updateData['summary.model'] = body.summary.model || 'gemini-2.0-flash';
-      updateData['summary.updated_at'] = new Date();
+      updateData['summary.model'] = body.summary.model || 'manual';
+      updateData['summary.updated_at'] = now;
+      // Source tracking
+      updateData['summary.source'] = 'manual';
+      updateData['summary.edited_by'] = editedBy;
+      updateData['summary.edited_at'] = now;
     }
 
     // Use findOneAndUpdate to get updated document in a single query

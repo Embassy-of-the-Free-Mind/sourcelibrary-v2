@@ -80,6 +80,7 @@ async function processChunk(
                 language: page.language || 'Latin',
                 model,
                 updated_at: new Date(),
+                source: 'ai',  // Mark as AI-generated
               },
               updated_at: new Date(),
             },

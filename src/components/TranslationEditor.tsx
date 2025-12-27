@@ -26,8 +26,43 @@ import {
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
 import ImageWithMagnifier from './ImageWithMagnifier';
-import type { Page, Book, Prompt } from '@/lib/types';
+import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
+
+// Helper to format edit source info
+function EditSourceBadge({ source, editedBy, editedAt }: {
+  source?: ContentSource;
+  editedBy?: string;
+  editedAt?: Date | string;
+}) {
+  if (!source) return null;
+
+  const isManual = source === 'manual';
+  const dateStr = editedAt ? new Date(editedAt).toLocaleDateString() : '';
+
+  if (isManual) {
+    return (
+      <span
+        className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium"
+        style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}
+        title={`Edited by ${editedBy || 'unknown'}${dateStr ? ` on ${dateStr}` : ''}`}
+      >
+        <Pencil className="w-2.5 h-2.5" />
+        Edited{editedBy ? ` by ${editedBy}` : ''}
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium"
+      style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}
+      title="AI-generated content"
+    >
+      AI
+    </span>
+  );
+}
 
 interface TranslationEditorProps {
   book: Book;
@@ -379,15 +414,15 @@ export default function TranslationEditor({
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
 
   // Build image URLs at different quality tiers
-  // Tier 1: Thumbnail (400px) - for navigation, grid views
+  // Tier 1: Thumbnail (150px) - for navigation, grid views
   // Tier 2: Display (1200px) - for main reading view
-  // Tier 3: Full (2400px) - for magnifier, fullscreen (high quality but not unlimited)
+  // Tier 3: Full (2400px) - for magnifier, fullscreen
   const getImageUrl = (p: Page, tier: 'thumbnail' | 'display' | 'full' = 'display') => {
     const baseUrl = p.photo_original || p.photo;
     if (!baseUrl) return '';
 
-    const widths = { thumbnail: 400, display: 1200, full: 2400 };
-    const qualities = { thumbnail: 70, display: 80, full: 90 };
+    const widths = { thumbnail: 150, display: 1200, full: 2400 };
+    const qualities = { thumbnail: 60, display: 80, full: 90 };
     const width = widths[tier];
     const quality = qualities[tier];
 
@@ -431,7 +466,7 @@ export default function TranslationEditor({
       if (p.thumbnail) return p.thumbnail;
       if (p.compressed_photo) return p.compressed_photo;
       // Use resize API for small version
-      return `/api/image?url=${encodeURIComponent(p.photo)}&w=400&q=70`;
+      return `/api/image?url=${encodeURIComponent(p.photo)}&w=150&q=60`;
     };
 
     const prefetchImage = (url: string) => {
@@ -733,6 +768,13 @@ export default function TranslationEditor({
                         </span>
                       )}
                     </div>
+                    {ocrText && (
+                      <EditSourceBadge
+                        source={page.ocr?.source}
+                        editedBy={page.ocr?.edited_by}
+                        editedAt={page.ocr?.edited_at}
+                      />
+                    )}
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
@@ -790,6 +832,13 @@ export default function TranslationEditor({
                         <span className="flex items-center gap-1 text-xs" style={{ color: 'var(--accent-sage)' }}>
                           <Check className="w-3 h-3" />
                         </span>
+                      )}
+                      {translationText && (
+                        <EditSourceBadge
+                          source={page.translation?.source}
+                          editedBy={page.translation?.edited_by}
+                          editedAt={page.translation?.edited_at}
+                        />
                       )}
                     </div>
                     {translationText && (

@@ -2,18 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performOCRWithBuffer, performTranslation } from '@/lib/ai';
 import { detectSplitFromBuffer } from '@/lib/splitDetection';
+import { getOcrPrompt, getTranslationPrompt, type PromptLookupResult } from '@/lib/prompts';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
 
 // Extend timeout for job processing (Vercel Pro allows up to 300s)
 export const maxDuration = 300;
-
-// Get GitHub URL to exact commit of prompts file for reproducibility
-function getPromptsUrl(): string {
-  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
-  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
-}
 
 const CHUNK_SIZE = 5; // Process 5 pages per request for AI jobs
 const CROP_CHUNK_SIZE = 40; // Sweet spot: ~55s per request (just under 60s timeout)
@@ -187,6 +183,22 @@ export async function POST(
 
     const pageMap = new Map(pages.map(p => [p.id, p]));
 
+    // Look up prompts for this job (with versioning)
+    let ocrPrompt: PromptLookupResult | undefined;
+    let translationPrompt: PromptLookupResult | undefined;
+
+    if (job.type === 'batch_ocr') {
+      ocrPrompt = await getOcrPrompt(job.config.language || 'Latin', {
+        name: job.config.prompt_name,
+      });
+    } else if (job.type === 'batch_translate') {
+      translationPrompt = await getTranslationPrompt(
+        job.config.language || 'Latin',
+        'English',
+        { name: job.config.prompt_name }
+      );
+    }
+
     // Handle cropped image generation with parallel processing
     if (job.type === 'generate_cropped_images') {
       console.log(`[CropJob ${id}] Processing ${pages.length} pages in parallel (${CROP_PARALLEL} at a time)`);
@@ -243,6 +255,9 @@ export async function POST(
         );
 
         if (job.type === 'batch_ocr') {
+          // Create snapshot of any manually-edited OCR before overwriting
+          await createSnapshotIfNeeded(pageId, 'pre_ocr', id);
+
           // Get the correct image for OCR (respecting crop if present)
           let ocrResult;
           let imageUrlUsed: string;
@@ -257,7 +272,7 @@ export async function POST(
                 page.cropped_photo,
                 job.config.language || 'Latin',
                 previousOcr,
-                undefined,
+                ocrPrompt?.text,
                 job.config.model || 'gemini-2.0-flash'
               );
             } else {
@@ -300,7 +315,7 @@ export async function POST(
                 'image/jpeg',
                 job.config.language || 'Latin',
                 previousOcr,
-                undefined,
+                ocrPrompt?.text,
                 job.config.model || 'gemini-2.0-flash'
               );
 
@@ -326,7 +341,7 @@ export async function POST(
               page.photo,
               job.config.language || 'Latin',
               previousOcr,
-              undefined,
+              ocrPrompt?.text,
               job.config.model || 'gemini-2.0-flash'
             );
           }
@@ -342,9 +357,9 @@ export async function POST(
                   data: ocrResult.text,
                   language: job.config.language || 'Latin',
                   model: job.config.model || 'gemini-2.0-flash',
-                  prompt_name: job.config.prompt_name || 'Default',
-                  prompt_url: getPromptsUrl(),
+                  prompt: ocrPrompt?.reference,
                   updated_at: new Date(),
+                  source: 'ai',  // Mark as AI-generated
                   // Processing metadata for reproducibility
                   input_tokens: ocrResult.usage.inputTokens,
                   output_tokens: ocrResult.usage.outputTokens,
@@ -370,13 +385,16 @@ export async function POST(
             continue;
           }
 
+          // Create snapshot of any manually-edited translation before overwriting
+          await createSnapshotIfNeeded(pageId, 'pre_translate', id);
+
           const translateStart = performance.now();
           const translationResult = await performTranslation(
             page.ocr.data,
             job.config.language || 'Latin',
             'English',
             previousTranslation,
-            undefined,
+            translationPrompt?.text,
             job.config.model || 'gemini-2.0-flash'
           );
           const translateDuration = performance.now() - translateStart;
@@ -391,9 +409,9 @@ export async function POST(
                   language: 'English',
                   source_language: job.config.language || 'Latin',
                   model: job.config.model || 'gemini-2.0-flash',
-                  prompt_name: job.config.prompt_name || 'Default',
-                  prompt_url: getPromptsUrl(),
+                  prompt: translationPrompt?.reference,
                   updated_at: new Date(),
+                  source: 'ai',  // Mark as AI-generated
                   // Processing metadata
                   input_tokens: translationResult.usage.inputTokens,
                   output_tokens: translationResult.usage.outputTokens,

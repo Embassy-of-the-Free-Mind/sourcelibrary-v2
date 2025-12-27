@@ -1,18 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
+import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { DEFAULT_MODEL } from '@/lib/types';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
 
 // Increase timeout for AI processing (max 60s for Pro, 10s for Hobby)
 export const maxDuration = 60;
-
-// Get GitHub URL to exact commit of prompts file for reproducibility
-function getPromptsUrl(): string {
-  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
-  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
-}
 
 // Helper to record processing metrics
 async function recordProcessingMetric(
@@ -75,6 +71,46 @@ export async function POST(request: NextRequest) {
     } = {};
     let totalUsage: TokenUsage = { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 };
 
+    // Look up prompts from DB (with versioning)
+    // customPrompts override DB lookups for backwards compatibility
+    const promptRefs: {
+      ocr?: PromptLookupResult;
+      translation?: PromptLookupResult;
+      summary?: PromptLookupResult;
+    } = {};
+
+    if (action === 'ocr' || action === 'all') {
+      promptRefs.ocr = await getOcrPrompt(language || 'Latin', {
+        name: promptInfo?.ocr,
+        customText: customPrompts?.ocr,
+      });
+    }
+    if (action === 'translation' || action === 'all') {
+      promptRefs.translation = await getTranslationPrompt(language || 'Latin', targetLanguage, {
+        name: promptInfo?.translation,
+        customText: customPrompts?.translation,
+      });
+    }
+    if (action === 'summary' || action === 'all') {
+      promptRefs.summary = await getSummaryPrompt({
+        name: promptInfo?.summary,
+        customText: customPrompts?.summary,
+      });
+    }
+
+    // Create snapshots of any manually-edited content before overwriting
+    if (pageId && autoSave) {
+      if (action === 'ocr' || action === 'all') {
+        await createSnapshotIfNeeded(pageId, 'pre_ocr');
+      }
+      if (action === 'translation' || action === 'all') {
+        await createSnapshotIfNeeded(pageId, 'pre_translate');
+      }
+      if (action === 'summary' || action === 'all') {
+        await createSnapshotIfNeeded(pageId, 'pre_summary');
+      }
+    }
+
     // Process based on action (with timing)
     if (action === 'ocr' || action === 'all') {
       if (!imageUrl) {
@@ -99,7 +135,7 @@ export async function POST(request: NextRequest) {
             finalImageUrl,
             language || 'Latin',
             previousPage?.ocr,
-            customPrompts?.ocr,
+            promptRefs.ocr?.text,
             model
           );
         } else if (currentPage?.crop?.xStart !== undefined && currentPage?.crop?.xEnd !== undefined) {
@@ -137,7 +173,7 @@ export async function POST(request: NextRequest) {
             'image/jpeg',
             language || 'Latin',
             previousPage?.ocr,
-            customPrompts?.ocr,
+            promptRefs.ocr?.text,
             model
           );
 
@@ -166,7 +202,7 @@ export async function POST(request: NextRequest) {
             finalImageUrl,
             language || 'Latin',
             previousPage?.ocr,
-            customPrompts?.ocr,
+            promptRefs.ocr?.text,
             model
           );
         } else {
@@ -176,7 +212,7 @@ export async function POST(request: NextRequest) {
             finalImageUrl,
             language || 'Latin',
             previousPage?.ocr,
-            customPrompts?.ocr,
+            promptRefs.ocr?.text,
             model
           );
         }
@@ -186,7 +222,7 @@ export async function POST(request: NextRequest) {
           finalImageUrl,
           language || 'Latin',
           previousPage?.ocr,
-          customPrompts?.ocr,
+          promptRefs.ocr?.text,
           model
         );
       }
@@ -226,7 +262,7 @@ export async function POST(request: NextRequest) {
         language || 'Latin',
         targetLanguage,
         previousPage?.translation,
-        customPrompts?.translation,
+        promptRefs.translation?.text,
         model
       );
       results.translation = translationResult.text;
@@ -263,7 +299,7 @@ export async function POST(request: NextRequest) {
       const summaryResult = await generateSummary(
         textToSummarize,
         previousPage?.summary,
-        customPrompts?.summary,
+        promptRefs.summary?.text,
         model
       );
       results.summary = summaryResult.text;
@@ -293,14 +329,14 @@ export async function POST(request: NextRequest) {
     if (autoSave && pageId) {
       const updateData: Record<string, unknown> = { updated_at: new Date() };
 
-      if (results.ocr) {
+      if (results.ocr && promptRefs.ocr) {
         updateData['ocr'] = {
           data: results.ocr,
           language: language || 'Latin',
           model,
-          prompt_name: promptInfo?.ocr || 'Default',
-          prompt_url: getPromptsUrl(),
+          prompt: promptRefs.ocr.reference,
           updated_at: new Date(),
+          source: 'ai',  // Mark as AI-generated
           // Processing metadata for reproducibility
           input_tokens: metadata.ocr?.inputTokens,
           output_tokens: metadata.ocr?.outputTokens,
@@ -311,14 +347,14 @@ export async function POST(request: NextRequest) {
         };
       }
 
-      if (results.translation) {
+      if (results.translation && promptRefs.translation) {
         updateData['translation'] = {
           data: results.translation,
           language: targetLanguage,
           model,
-          prompt_name: promptInfo?.translation || 'Default',
-          prompt_url: getPromptsUrl(),
+          prompt: promptRefs.translation.reference,
           updated_at: new Date(),
+          source: 'ai',  // Mark as AI-generated
           // Processing metadata
           input_tokens: metadata.translation?.inputTokens,
           output_tokens: metadata.translation?.outputTokens,
@@ -327,13 +363,13 @@ export async function POST(request: NextRequest) {
         };
       }
 
-      if (results.summary) {
+      if (results.summary && promptRefs.summary) {
         updateData['summary'] = {
           data: results.summary,
           model,
-          prompt_name: promptInfo?.summary || 'Default',
-          prompt_url: getPromptsUrl(),
+          prompt: promptRefs.summary.reference,
           updated_at: new Date(),
+          source: 'ai',  // Mark as AI-generated
           // Processing metadata
           input_tokens: metadata.summary?.inputTokens,
           output_tokens: metadata.summary?.outputTokens,
