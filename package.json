@@ -53,6 +53,7 @@
     "pngjs": "^7.0.0",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
+    "twitter-api-v2": "^1.28.0",
     "typescript": "^5"
   }
 }
