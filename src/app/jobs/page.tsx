@@ -41,6 +41,7 @@ export default function JobsPage() {
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [creatingJobs, setCreatingJobs] = useState(false);
   const [createResult, setCreateResult] = useState<string | null>(null);
+  const [processingAll, setProcessingAll] = useState(false);
   const processingRef = useRef(false);
 
   const fetchJobs = useCallback(async () => {
@@ -106,6 +107,36 @@ export default function JobsPage() {
       setCreatingJobs(false);
       // Clear result after 5 seconds
       setTimeout(() => setCreateResult(null), 5000);
+    }
+  };
+
+  // Process all pending batch jobs
+  const processAllPending = async () => {
+    setProcessingAll(true);
+    try {
+      // Keep calling process-pending until no more jobs need preparation
+      let keepGoing = true;
+      while (keepGoing) {
+        const res = await fetch('/api/batch-jobs/process-pending?limit=5', {
+          method: 'POST',
+        });
+        const data = await res.json();
+        await fetchJobs();
+
+        // Stop if no jobs needing preparation remain
+        if (!data.remaining?.needing_preparation || data.remaining.needing_preparation === 0) {
+          keepGoing = false;
+        }
+
+        // Small delay between batches
+        if (keepGoing) {
+          await new Promise(r => setTimeout(r, 1000));
+        }
+      }
+    } catch (e) {
+      console.error('Error processing pending jobs:', e);
+    } finally {
+      setProcessingAll(false);
     }
   };
 
@@ -310,7 +341,7 @@ export default function JobsPage() {
                 )}
                 <button
                   onClick={() => createBatchJobs('both', 10)}
-                  disabled={creatingJobs}
+                  disabled={creatingJobs || processingAll}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
                   style={{ background: 'var(--accent-rust)' }}
                 >
@@ -321,6 +352,21 @@ export default function JobsPage() {
                   )}
                   Queue 10 Books
                 </button>
+                {preparingJobs.length > 0 && (
+                  <button
+                    onClick={processAllPending}
+                    disabled={processingAll || creatingJobs}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
+                    style={{ background: 'var(--accent-sage)', color: 'white' }}
+                  >
+                    {processingAll ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <Play className="w-4 h-4" />
+                    )}
+                    Process All ({preparingJobs.length})
+                  </button>
+                )}
               </div>
             </div>
           </div>

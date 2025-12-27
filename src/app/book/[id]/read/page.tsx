@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List, Info, X } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List, Info, X, FileText } from 'lucide-react';
 import { Book, Page } from '@/lib/types';
 import HighlightSelection from '@/components/HighlightSelection';
 import HighlightsPanel from '@/components/HighlightsPanel';
@@ -10,6 +10,7 @@ import AnnotationPanel from '@/components/AnnotationPanel';
 import { QuoteShare } from '@/components/ShareButton';
 import NotesRenderer from '@/components/NotesRenderer';
 import SectionsNav from '@/components/SectionsNav';
+import PageMetadataPanel from '@/components/PageMetadataPanel';
 
 interface SectionSummary {
   title: string;
@@ -50,6 +51,7 @@ export default function ReadPage({ params }: ReadPageProps) {
   const [showBookInfo, setShowBookInfo] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [showSections, setShowSections] = useState(true);
+  const [metadataPage, setMetadataPage] = useState<Page | null>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
   // Resolve params
@@ -471,12 +473,21 @@ export default function ReadPage({ params }: ReadPageProps) {
                       <div className="mb-8">
                         <div className="flex items-center gap-4 my-8 text-stone-400">
                           <div className="flex-1 h-px bg-stone-200" />
-                          <Link
-                            href={`/book/${bookId}/page/${page.id}`}
-                            className="text-xs hover:text-amber-600 transition-colors"
-                          >
-                            Page {page.page_number}
-                          </Link>
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/book/${bookId}/page/${page.id}`}
+                              className="text-xs hover:text-amber-600 transition-colors"
+                            >
+                              Page {page.page_number}
+                            </Link>
+                            <button
+                              onClick={() => setMetadataPage(page)}
+                              className="p-1 hover:bg-stone-100 rounded transition-colors"
+                              title="View page metadata"
+                            >
+                              <FileText className="w-3 h-3" />
+                            </button>
+                          </div>
                           <div className="flex-1 h-px bg-stone-200" />
                         </div>
 
@@ -726,6 +737,14 @@ export default function ReadPage({ params }: ReadPageProps) {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Page Metadata Panel */}
+      {metadataPage && (
+        <PageMetadataPanel
+          page={metadataPage}
+          onClose={() => setMetadataPage(null)}
+        />
       )}
     </div>
   );
