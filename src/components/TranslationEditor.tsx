@@ -21,11 +21,14 @@ import {
   Languages,
   MessageSquare,
   RotateCcw,
-  Scissors
+  Scissors,
+  Sparkles,
+  MessageCircle
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
 import ImageWithMagnifier from './ImageWithMagnifier';
+import PageAssistant from './PageAssistant';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 
@@ -397,6 +400,10 @@ export default function TranslationEditor({
 
   const [copiedTranslation, setCopiedTranslation] = useState(false);
   const [showHowItWorks, setShowHowItWorks] = useState(false);
+
+  // Page Assistant state
+  const [showAssistant, setShowAssistant] = useState(false);
+  const [assistantMode, setAssistantMode] = useState<'explain' | 'ask'>('explain');
 
   // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden)
   const [showImagePanel, setShowImagePanel] = useState(true);
@@ -919,6 +926,37 @@ export default function TranslationEditor({
                       </div>
                     )}
                   </div>
+
+                  {/* AI Assistant action bar - only show when translation exists */}
+                  {translationText && (
+                    <div
+                      className="px-4 py-2 flex items-center justify-center gap-2 flex-shrink-0"
+                      style={{ borderTop: '1px solid var(--border-light)', background: 'var(--bg-cream)' }}
+                    >
+                      <button
+                        onClick={() => {
+                          setAssistantMode('explain');
+                          setShowAssistant(true);
+                        }}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-violet-50"
+                        style={{ color: 'var(--accent-violet)' }}
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        Explain
+                      </button>
+                      <button
+                        onClick={() => {
+                          setAssistantMode('ask');
+                          setShowAssistant(true);
+                        }}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-violet-50"
+                        style={{ color: 'var(--accent-violet)' }}
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        Ask AI
+                      </button>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -945,6 +983,15 @@ export default function TranslationEditor({
             </a>
           </span>
         </div>
+
+        {/* Page Assistant Modal */}
+        <PageAssistant
+          isOpen={showAssistant}
+          onClose={() => setShowAssistant(false)}
+          initialMode={assistantMode}
+          page={page}
+          book={book}
+        />
       </div>
     );
   }

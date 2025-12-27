@@ -15,7 +15,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (text.length > 2000) {
+    // Allow up to 8000 chars for full page explanations
+    if (text.length > 8000) {
       return NextResponse.json(
         { error: 'Text too long. Please select a shorter passage.' },
         { status: 400 }
