@@ -1,6 +1,30 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+// Validation: Reject modern editions
+// Returns error message if invalid, null if OK
+function validateOldEdition(ia_identifier: string, notes?: string): string | null {
+  // Reject identifiers with modern upload dates (2020+)
+  if (/_20[2-9]\d/.test(ia_identifier)) {
+    return `Modern upload detected: ${ia_identifier} contains recent date`;
+  }
+
+  // Reject common modern translation patterns
+  const modernPatterns = [
+    /ScottHermetica/i,           // Walter Scott's modern translation
+    /penguin|oxford|cambridge/i,  // Modern publishers
+    /translated.*by.*\d{4}/i,     // "Translated by X (1990)"
+  ];
+
+  for (const pattern of modernPatterns) {
+    if (pattern.test(ia_identifier) || (notes && pattern.test(notes))) {
+      return `Modern translation pattern detected`;
+    }
+  }
+
+  return null; // Valid old edition
+}
+
 // Roadmap books from Internet Archive
 // IMPORTANT: Only include genuinely OLD editions (15th-18th century), not modern translations
 const ROADMAP_BOOKS = [
@@ -976,6 +1000,14 @@ export async function POST() {
     for (const book of ROADMAP_BOOKS) {
       if (existingIdentifiers.has(book.ia_identifier)) {
         results.push({ title: book.title, status: 'exists' });
+        continue;
+      }
+
+      // Validate: reject modern editions
+      const validationError = validateOldEdition(book.ia_identifier, book.notes);
+      if (validationError) {
+        console.warn(`Skipping ${book.title}: ${validationError}`);
+        results.push({ title: book.title, status: 'error' });
         continue;
       }
 

@@ -58,6 +58,20 @@ When searching for books to add to the roadmap:
 3. **Prioritize UNTRANSLATED works** - check if English translation exists
 4. **Verify publication date** from IA metadata, not just title claims
 
+### REJECT Modern Editions
+
+The system will automatically reject:
+- IA identifiers with `_202X` dates (modern uploads like `_202406`)
+- Known modern translations (Scott Hermetica, Penguin, Oxford, Cambridge)
+- Books noted as "English translation" without being a 17th-century translation
+
+### Good IA Identifier Patterns (OLD editions)
+- `bim_early-english-books-*` - Early English Books Online
+- `bub_gb_*` - Google Books historical scans
+- `ita-bnc-*` - Italian National Library
+- `A3*` - Wellcome Library
+- Contains year like `1481`, `1550`, `1617` in title/identifier
+
 ### Search Strategies
 
 ```bash
