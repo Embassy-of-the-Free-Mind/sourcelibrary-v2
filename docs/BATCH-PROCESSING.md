@@ -89,6 +89,48 @@ Responses by phase:
 
 ## Automating All Books
 
+### API Endpoints for Automation
+
+```bash
+# Check what work needs to be done
+GET /api/batch-jobs/process-all
+
+# Create jobs for all books needing OCR/translation
+POST /api/batch-jobs/process-all?type=both&limit=10
+
+# Process all pending jobs (call repeatedly)
+POST /api/batch-jobs/process-pending?limit=5
+
+# Check status of pending jobs
+GET /api/batch-jobs/process-pending
+```
+
+### Quick Start
+
+```bash
+# 1. See what work is pending
+curl https://sourcelibrary.io/api/batch-jobs/process-all
+
+# 2. Create jobs for 10 books
+curl -X POST "https://sourcelibrary.io/api/batch-jobs/process-all?type=both&limit=10"
+
+# 3. Process jobs (call repeatedly until all submitted)
+while true; do
+  RESULT=$(curl -s -X POST "https://sourcelibrary.io/api/batch-jobs/process-pending?limit=5")
+  echo "$RESULT" | jq '{processed: .processed, remaining: .remaining}'
+
+  CONTINUE=$(echo "$RESULT" | jq -r '.remaining.needing_preparation')
+  if [ "$CONTINUE" = "0" ]; then
+    echo "All jobs submitted to Gemini!"
+    break
+  fi
+  sleep 2
+done
+
+# 4. Later, check for completed Gemini jobs
+curl -X POST "https://sourcelibrary.io/api/batch-jobs/process-pending?limit=10"
+```
+
 ### Script: Process All Pending Work
 
 ```bash

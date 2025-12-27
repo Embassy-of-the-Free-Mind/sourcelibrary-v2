@@ -1,12 +1,18 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Sparkles, MessageCircle, X, Loader2, Send, ArrowLeft, Settings, Info, RotateCcw } from 'lucide-react';
+import { Sparkles, MessageCircle, X, Loader2, Send, ArrowLeft, Settings, Info, RotateCcw, ChevronRight, BookOpen } from 'lucide-react';
 import type { Page, Book } from '@/lib/types';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+}
+
+interface ExplainItem {
+  term: string;
+  type: 'word' | 'reference' | 'concept' | 'metaphor' | 'context';
+  preview: string;
 }
 
 interface PageAssistantProps {
@@ -20,20 +26,21 @@ interface PageAssistantProps {
 // Default prompts
 const DEFAULT_EXPLAIN_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
 
-A reader is reading a passage {context} and wants to understand it better.
+A reader is studying a passage {context} and wants to understand a specific term or concept.
 
-Here is the passage they selected:
-"{text}"
+The passage:
+---
+{text}
+---
 
-Please explain this passage in plain, accessible English. Your explanation should:
-1. Clarify any archaic or technical language
-2. Provide brief historical/cultural context if relevant
-3. Explain the main idea or argument
-4. Keep it concise (2-3 short paragraphs max)
+The reader wants to understand: "{term}"
 
-Write in a warm, conversational tone - like a knowledgeable friend explaining something interesting. Don't be condescending, but do assume the reader may not know specialized terms.
+Explain this clearly in 2-3 short paragraphs:
+1. What it literally means
+2. Why it matters in this context
+3. Any interesting background (if relevant)
 
-If the text references alchemical, philosophical, religious, or esoteric concepts, briefly explain what they mean in their historical context.`;
+Be warm and conversational, like a knowledgeable friend. Don't be condescending.`;
 
 const DEFAULT_ASK_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
 
@@ -58,6 +65,15 @@ Answer:`;
 const STORAGE_KEY_EXPLAIN = 'pageAssistant_explainPrompt';
 const STORAGE_KEY_ASK = 'pageAssistant_askPrompt';
 
+// Type icons/colors
+const TYPE_STYLES: Record<string, { icon: string; color: string }> = {
+  word: { icon: 'Aa', color: 'var(--accent-rust)' },
+  reference: { icon: '@', color: 'var(--accent-sage)' },
+  concept: { icon: '💡', color: 'var(--accent-violet)' },
+  metaphor: { icon: '~', color: '#d97706' },
+  context: { icon: '📜', color: '#6b7280' },
+};
+
 export default function PageAssistant({
   isOpen,
   onClose,
@@ -69,6 +85,8 @@ export default function PageAssistant({
   const [showSettings, setShowSettings] = useState(false);
   const [loading, setLoading] = useState(false);
   const [explanation, setExplanation] = useState<string | null>(null);
+  const [explainItems, setExplainItems] = useState<ExplainItem[]>([]);
+  const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -112,14 +130,16 @@ export default function PageAssistant({
       setMode(initialMode);
       setShowSettings(false);
       setExplanation(null);
+      setExplainItems([]);
+      setSelectedTerm(null);
       setMessages([]);
       setInput('');
       setError(null);
       setShowInfo(null);
 
-      // Auto-explain if in explain mode
+      // Auto-analyze if in explain mode
       if (initialMode === 'explain') {
-        handleExplain();
+        handleAnalyze();
       }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -146,6 +166,9 @@ export default function PageAssistant({
           setShowSettings(false);
         } else if (showInfo) {
           setShowInfo(null);
+        } else if (selectedTerm) {
+          setSelectedTerm(null);
+          setExplanation(null);
         } else {
           onClose();
         }
@@ -153,14 +176,14 @@ export default function PageAssistant({
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose, showSettings, showInfo]);
+  }, [isOpen, onClose, showSettings, showInfo, selectedTerm]);
 
   const getPageText = () => {
-    // Use translation if available, fall back to OCR
     return page.translation?.data || page.ocr?.data || '';
   };
 
-  const handleExplain = async () => {
+  // Step 1: Analyze text to find confusing elements
+  const handleAnalyze = async () => {
     const text = getPageText();
     if (!text) {
       setError('No text available on this page');
@@ -169,9 +192,9 @@ export default function PageAssistant({
 
     setLoading(true);
     setError(null);
+    setExplainItems([]);
 
     try {
-      // For long pages, use first ~3000 chars (API will handle it)
       const truncatedText = text.length > 3000
         ? text.slice(0, 3000) + '...'
         : text;
@@ -184,19 +207,106 @@ export default function PageAssistant({
           book_title: book.display_title || book.title,
           book_author: book.author,
           page_number: page.page_number,
+          mode: 'analyze',
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to analyze page');
+      }
+
+      const data = await res.json();
+
+      if (data.items && Array.isArray(data.items)) {
+        setExplainItems(data.items);
+      } else if (data.explanation) {
+        // Fallback: API returned a full explanation instead
+        setExplanation(data.explanation);
+      }
+    } catch (err) {
+      console.error('Analyze error:', err);
+      setError('Failed to analyze this page. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Step 2: Explain a specific term
+  const handleExplainTerm = async (term: string) => {
+    const text = getPageText();
+    setSelectedTerm(term);
+    setLoading(true);
+    setError(null);
+    setExplanation(null);
+
+    try {
+      const truncatedText = text.length > 3000
+        ? text.slice(0, 3000) + '...'
+        : text;
+
+      const res = await fetch('/api/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: truncatedText,
+          book_title: book.display_title || book.title,
+          book_author: book.author,
+          page_number: page.page_number,
+          mode: 'explain_term',
+          term,
           customPrompt: explainPrompt !== DEFAULT_EXPLAIN_PROMPT ? explainPrompt : undefined,
         }),
       });
 
       if (!res.ok) {
-        throw new Error('Failed to get explanation');
+        throw new Error('Failed to explain term');
       }
 
       const data = await res.json();
       setExplanation(data.explanation);
     } catch (err) {
       console.error('Explain error:', err);
-      setError('Failed to explain this page. Please try again.');
+      setError('Failed to explain. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Full page explanation
+  const handleExplainAll = async () => {
+    const text = getPageText();
+    setSelectedTerm('full page');
+    setLoading(true);
+    setError(null);
+    setExplanation(null);
+
+    try {
+      const truncatedText = text.length > 3000
+        ? text.slice(0, 3000) + '...'
+        : text;
+
+      const res = await fetch('/api/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text: truncatedText,
+          book_title: book.display_title || book.title,
+          book_author: book.author,
+          page_number: page.page_number,
+          mode: 'full',
+          customPrompt: explainPrompt !== DEFAULT_EXPLAIN_PROMPT ? explainPrompt : undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to explain');
+      }
+
+      const data = await res.json();
+      setExplanation(data.explanation);
+    } catch (err) {
+      console.error('Explain error:', err);
+      setError('Failed to explain. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -208,7 +318,6 @@ export default function PageAssistant({
     const question = input.trim();
     setInput('');
 
-    // Add user message
     const newMessages: Message[] = [...messages, { role: 'user', content: question }];
     setMessages(newMessages);
     setLoading(true);
@@ -238,7 +347,6 @@ export default function PageAssistant({
     } catch (err) {
       console.error('Ask error:', err);
       setError('Failed to get an answer. Please try again.');
-      // Remove the user message on error
       setMessages(messages);
     } finally {
       setLoading(false);
@@ -254,12 +362,14 @@ export default function PageAssistant({
 
   const switchToAsk = () => {
     setMode('ask');
-    // If we have an explanation, add it as context
     if (explanation) {
-      setMessages([
-        { role: 'assistant', content: explanation }
-      ]);
+      setMessages([{ role: 'assistant', content: explanation }]);
     }
+  };
+
+  const goBackToItems = () => {
+    setSelectedTerm(null);
+    setExplanation(null);
   };
 
   if (!isOpen) return null;
@@ -271,13 +381,14 @@ export default function PageAssistant({
     const isExplain = showInfo === 'explain';
     const title = isExplain ? 'Explain Prompt' : 'Ask Prompt';
     const description = isExplain
-      ? 'This prompt is sent to Gemini 3 Flash when you tap "Explain". It tells the AI how to explain the page content to you.'
+      ? 'This prompt is sent to Gemini 3 Flash when you select a term to explain. It tells the AI how to explain that specific concept.'
       : 'This prompt is sent to Gemini 3 Flash when you ask a question. It provides context about the page and guides how the AI should respond.';
 
     const variables = isExplain
       ? [
           { name: '{context}', desc: 'Book title, author, and page number' },
           { name: '{text}', desc: 'The page text being explained' },
+          { name: '{term}', desc: 'The specific term/concept to explain' },
         ]
       : [
           { name: '{page_number}', desc: 'Current page number' },
@@ -327,7 +438,7 @@ export default function PageAssistant({
             <ul className="text-sm space-y-1" style={{ color: 'var(--text-secondary)' }}>
               <li>- Keep instructions clear and specific</li>
               <li>- Include the variable placeholders where needed</li>
-              <li>- Test changes by running Explain or Ask again</li>
+              <li>- Test changes by selecting a term to explain</li>
               <li>- Use "Reset to Defaults" if things break</li>
             </ul>
           </div>
@@ -384,7 +495,7 @@ export default function PageAssistant({
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
-              Explain Prompt
+              Explain Term Prompt
             </label>
             <button
               onClick={() => setShowInfo('explain')}
@@ -467,7 +578,6 @@ export default function PageAssistant({
         </button>
       </div>
 
-      {/* Info modal overlay */}
       {renderInfoModal()}
     </div>
   );
@@ -498,18 +608,22 @@ export default function PageAssistant({
           }}
         >
           <div className="flex items-center gap-2">
-            {mode === 'ask' && messages.length > 0 && (
+            {(mode === 'ask' && messages.length > 0) || selectedTerm ? (
               <button
                 onClick={() => {
-                  setMode('explain');
-                  setMessages([]);
+                  if (selectedTerm) {
+                    goBackToItems();
+                  } else {
+                    setMode('explain');
+                    setMessages([]);
+                  }
                 }}
                 className="p-1.5 -ml-1 rounded-lg hover:bg-white/50 transition-colors"
                 style={{ color: 'var(--text-muted)' }}
               >
                 <ArrowLeft className="w-4 h-4" />
               </button>
-            )}
+            ) : null}
             {mode === 'explain' ? (
               <Sparkles className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
             ) : (
@@ -520,7 +634,11 @@ export default function PageAssistant({
               className="font-medium"
               style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
             >
-              {mode === 'explain' ? 'Explain This Page' : 'Ask About This Page'}
+              {mode === 'explain'
+                ? selectedTerm
+                  ? `Explaining: ${selectedTerm}`
+                  : 'What would you like explained?'
+                : 'Ask About This Page'}
             </h2>
           </div>
           <div className="flex items-center gap-1">
@@ -559,20 +677,23 @@ export default function PageAssistant({
         {/* Content area */}
         <div className="flex-1 overflow-auto p-4 min-h-[200px]">
           {mode === 'explain' ? (
-            // Explain mode content
             <>
+              {/* Loading state */}
               {loading && (
                 <div className="flex flex-col items-center justify-center py-8">
                   <Loader2 className="w-8 h-8 animate-spin mb-3" style={{ color: 'var(--accent-violet)' }} />
-                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Reading the page...</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                    {selectedTerm ? 'Explaining...' : 'Analyzing the page...'}
+                  </p>
                 </div>
               )}
 
-              {error && (
+              {/* Error state */}
+              {error && !loading && (
                 <div className="text-center py-8">
                   <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>{error}</p>
                   <button
-                    onClick={handleExplain}
+                    onClick={selectedTerm ? () => handleExplainTerm(selectedTerm) : handleAnalyze}
                     className="text-sm font-medium hover:underline"
                     style={{ color: 'var(--accent-violet)' }}
                   >
@@ -581,7 +702,8 @@ export default function PageAssistant({
                 </div>
               )}
 
-              {explanation && !loading && (
+              {/* Explanation view */}
+              {selectedTerm && explanation && !loading && (
                 <div
                   className="prose prose-sm max-w-none leading-relaxed"
                   style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}
@@ -589,6 +711,80 @@ export default function PageAssistant({
                   {explanation.split('\n').map((paragraph, i) => (
                     <p key={i} className="mb-3">{paragraph}</p>
                   ))}
+                </div>
+              )}
+
+              {/* Items list view */}
+              {!selectedTerm && !loading && !error && explainItems.length > 0 && (
+                <div className="space-y-2">
+                  {explainItems.map((item, i) => {
+                    const style = TYPE_STYLES[item.type] || TYPE_STYLES.concept;
+                    return (
+                      <button
+                        key={i}
+                        onClick={() => handleExplainTerm(item.term)}
+                        className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all hover:bg-violet-50 group"
+                        style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
+                      >
+                        <span
+                          className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-medium flex-shrink-0"
+                          style={{ background: `${style.color}15`, color: style.color }}
+                        >
+                          {style.icon}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm truncate" style={{ color: 'var(--text-primary)' }}>
+                            {item.term}
+                          </p>
+                          <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
+                            {item.preview}
+                          </p>
+                        </div>
+                        <ChevronRight
+                          className="w-4 h-4 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ color: 'var(--accent-violet)' }}
+                        />
+                      </button>
+                    );
+                  })}
+
+                  {/* Explain All option */}
+                  <button
+                    onClick={handleExplainAll}
+                    className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all hover:bg-stone-100 group mt-4"
+                    style={{ border: '1px dashed var(--border-medium)' }}
+                  >
+                    <span
+                      className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}
+                    >
+                      <BookOpen className="w-4 h-4" />
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm" style={{ color: 'var(--text-secondary)' }}>
+                        Explain the whole page
+                      </p>
+                      <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                        Get a general overview instead
+                      </p>
+                    </div>
+                  </button>
+                </div>
+              )}
+
+              {/* Empty state (no items found) */}
+              {!selectedTerm && !loading && !error && explainItems.length === 0 && !explanation && (
+                <div className="text-center py-8">
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                    No specific terms identified. Try "Explain All" below.
+                  </p>
+                  <button
+                    onClick={handleExplainAll}
+                    className="mt-4 px-4 py-2 rounded-lg text-sm font-medium text-white"
+                    style={{ background: 'var(--accent-violet)' }}
+                  >
+                    Explain the whole page
+                  </button>
                 </div>
               )}
             </>
@@ -629,9 +825,7 @@ export default function PageAssistant({
                 >
                   <div
                     className={`rounded-2xl px-4 py-2.5 ${
-                      msg.role === 'user'
-                        ? 'rounded-br-md'
-                        : 'rounded-bl-md'
+                      msg.role === 'user' ? 'rounded-br-md' : 'rounded-bl-md'
                     }`}
                     style={{
                       background: msg.role === 'user' ? 'var(--accent-violet)' : 'var(--bg-warm)',
