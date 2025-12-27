@@ -104,7 +104,11 @@ export const GEMINI_MODELS = [
   { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Good for normal text (recommended default)' },
 ] as const;
 
-export const DEFAULT_MODEL = 'gemini-2.5-flash';
+// Default model for single-page realtime operations (best quality)
+export const DEFAULT_MODEL = 'gemini-3-flash-preview';
+
+// Default model for batch operations (50% cheaper via Batch API)
+export const DEFAULT_BATCH_MODEL = 'gemini-2.5-flash';
 
 // ============================================
 // PROMPT VERSIONING

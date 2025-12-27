@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { nanoid } from 'nanoid';
 import type { Job, JobType } from '@/lib/types';
+import { DEFAULT_BATCH_MODEL } from '@/lib/types';
 
 // GET - List all jobs (with optional filters)
 export async function GET(request: NextRequest) {
@@ -74,6 +75,9 @@ export async function POST(request: NextRequest) {
     const db = await getDb();
     const jobId = nanoid(12);
 
+    // Use Batch API for batch_ocr and batch_translate (50% cheaper)
+    const useBatchApi = type === 'batch_ocr' || type === 'batch_translate';
+
     const job: Job = {
       id: jobId,
       type,
@@ -90,10 +94,11 @@ export async function POST(request: NextRequest) {
       updated_at: new Date(),
       results: [],
       config: {
-        model: model || 'gemini-2.0-flash',
+        model: model || DEFAULT_BATCH_MODEL,
         prompt_name,
         language: language || 'Latin',
         page_ids,
+        use_batch_api: useBatchApi,
       },
     };
 

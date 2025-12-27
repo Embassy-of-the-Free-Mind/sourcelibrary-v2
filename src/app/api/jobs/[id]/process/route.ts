@@ -7,6 +7,12 @@ import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
+import {
+  createBatchJobInline,
+  getBatchJobStatus,
+  getBatchJobResults,
+  type BatchRequest,
+} from '@/lib/gemini-batch';
 
 // Extend timeout for job processing (Vercel Pro allows up to 300s)
 export const maxDuration = 300;
@@ -96,6 +102,304 @@ async function processCroppedImage(
   }
 }
 
+// ========== GEMINI BATCH API HANDLER ==========
+async function handleBatchApiJob(
+  job: Job,
+  db: Awaited<ReturnType<typeof getDb>>,
+  jobId: string
+) {
+  // Check if we already submitted to Gemini Batch API
+  if (job.gemini_batch_job) {
+    // Check status of existing batch job
+    console.log(`[BatchJob ${jobId}] Checking Gemini batch status: ${job.gemini_batch_job}`);
+
+    try {
+      const status = await getBatchJobStatus(job.gemini_batch_job);
+      console.log(`[BatchJob ${jobId}] Gemini state: ${status.state}`);
+
+      if (status.state === 'JOB_STATE_SUCCEEDED') {
+        // Download and save results
+        console.log(`[BatchJob ${jobId}] Downloading results...`);
+        const results = await getBatchJobResults(job.gemini_batch_job);
+
+        let successCount = 0;
+        let failCount = 0;
+        const now = new Date();
+        const jobResults: JobResult[] = [];
+
+        for (const result of results) {
+          const pageId = result.key;
+
+          if (result.error) {
+            console.error(`[BatchJob ${jobId}] Page ${pageId} error:`, result.error.message);
+            jobResults.push({ pageId, success: false, error: result.error.message });
+            failCount++;
+            continue;
+          }
+
+          if (!result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+            console.error(`[BatchJob ${jobId}] Page ${pageId} no response`);
+            jobResults.push({ pageId, success: false, error: 'No response text' });
+            failCount++;
+            continue;
+          }
+
+          const text = result.response.candidates[0].content.parts[0].text;
+          const usage = result.response.usageMetadata;
+
+          if (job.type === 'batch_ocr') {
+            await db.collection('pages').updateOne(
+              { id: pageId },
+              {
+                $set: {
+                  ocr: {
+                    data: text,
+                    updated_at: now,
+                    model: job.config.model,
+                    language: job.config.language,
+                    source: 'batch_api',
+                    input_tokens: usage?.promptTokenCount || 0,
+                    output_tokens: usage?.candidatesTokenCount || 0,
+                  },
+                  updated_at: now,
+                },
+              }
+            );
+          } else {
+            await db.collection('pages').updateOne(
+              { id: pageId },
+              {
+                $set: {
+                  translation: {
+                    data: text,
+                    updated_at: now,
+                    model: job.config.model,
+                    source_language: job.config.language,
+                    target_language: 'English',
+                    source: 'batch_api',
+                    input_tokens: usage?.promptTokenCount || 0,
+                    output_tokens: usage?.candidatesTokenCount || 0,
+                  },
+                  updated_at: now,
+                },
+              }
+            );
+          }
+
+          jobResults.push({ pageId, success: true });
+          successCount++;
+        }
+
+        // Mark job as completed
+        await db.collection('jobs').updateOne(
+          { id: jobId },
+          {
+            $set: {
+              status: 'completed',
+              completed_at: now,
+              updated_at: now,
+              results: jobResults,
+              'progress.completed': successCount,
+              'progress.failed': failCount,
+            },
+          }
+        );
+
+        return NextResponse.json({
+          job: { ...job, status: 'completed', progress: { ...job.progress, completed: successCount, failed: failCount } },
+          message: `Batch job completed: ${successCount} succeeded, ${failCount} failed`,
+          done: true,
+        });
+
+      } else if (status.state === 'JOB_STATE_FAILED' || status.state === 'JOB_STATE_CANCELLED' || status.state === 'JOB_STATE_EXPIRED') {
+        // Job failed
+        await db.collection('jobs').updateOne(
+          { id: jobId },
+          {
+            $set: {
+              status: 'failed',
+              error: `Gemini batch job ${status.state}`,
+              updated_at: new Date(),
+            },
+          }
+        );
+
+        return NextResponse.json({
+          job: { ...job, status: 'failed' },
+          message: `Batch job ${status.state}`,
+          done: true,
+          error: status.error?.message,
+        });
+
+      } else {
+        // Still processing
+        await db.collection('jobs').updateOne(
+          { id: jobId },
+          {
+            $set: {
+              gemini_state: status.state,
+              gemini_stats: status.stats,
+              updated_at: new Date(),
+            },
+          }
+        );
+
+        return NextResponse.json({
+          job: { ...job, gemini_state: status.state },
+          message: `Gemini batch job ${status.state}. Check back later.`,
+          done: false,
+          gemini_state: status.state,
+          stats: status.stats,
+        });
+      }
+    } catch (error) {
+      console.error(`[BatchJob ${jobId}] Error checking batch status:`, error);
+      return NextResponse.json({
+        error: 'Failed to check batch job status',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      }, { status: 500 });
+    }
+  }
+
+  // Need to submit to Gemini Batch API
+  console.log(`[BatchJob ${jobId}] Submitting to Gemini Batch API...`);
+
+  try {
+    // Get pages
+    const pageIds = job.config.page_ids || [];
+    const pages = await db.collection('pages')
+      .find({ id: { $in: pageIds } })
+      .toArray();
+
+    // Get prompt
+    const ocrPrompt = job.type === 'batch_ocr'
+      ? await getOcrPrompt(job.config.language || 'Latin')
+      : null;
+
+    // Build batch requests
+    const batchRequests: BatchRequest[] = [];
+    const failedImages: string[] = [];
+
+    for (const page of pages) {
+      if (job.type === 'batch_ocr') {
+        const imageUrl = page.cropped_photo || page.photo;
+        if (!imageUrl) {
+          failedImages.push(page.id);
+          continue;
+        }
+
+        try {
+          const imageResponse = await fetch(imageUrl);
+          if (!imageResponse.ok) {
+            failedImages.push(page.id);
+            continue;
+          }
+
+          const imageBuffer = await imageResponse.arrayBuffer();
+          const base64 = Buffer.from(imageBuffer).toString('base64');
+          let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+          mimeType = mimeType.split(';')[0].trim();
+
+          batchRequests.push({
+            key: page.id,
+            request: {
+              contents: [
+                {
+                  parts: [
+                    { text: ocrPrompt?.text || 'Transcribe this image.' },
+                    { inlineData: { mimeType, data: base64 } },
+                  ],
+                },
+              ],
+              generationConfig: {
+                temperature: 0.1,
+                maxOutputTokens: 8192,
+              },
+            },
+          });
+        } catch (e) {
+          console.error(`[BatchJob ${jobId}] Failed to fetch image for ${page.id}:`, e);
+          failedImages.push(page.id);
+        }
+      } else {
+        // Translation
+        const ocrText = page.ocr?.data;
+        if (!ocrText) {
+          failedImages.push(page.id);
+          continue;
+        }
+
+        batchRequests.push({
+          key: page.id,
+          request: {
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `Translate the following ${job.config.language || 'Latin'} text to English. Preserve formatting.\n\n${ocrText}`,
+                  },
+                ],
+              },
+            ],
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 8192,
+            },
+          },
+        });
+      }
+    }
+
+    if (batchRequests.length === 0) {
+      return NextResponse.json({
+        error: 'No valid pages to process',
+        failedImages,
+      }, { status: 400 });
+    }
+
+    console.log(`[BatchJob ${jobId}] Submitting ${batchRequests.length} requests to Gemini...`);
+
+    // Submit to Gemini Batch API
+    const displayName = `${job.type}-${jobId}`;
+    const geminiJob = await createBatchJobInline(
+      job.config.model || 'gemini-2.5-flash',
+      batchRequests,
+      displayName
+    );
+
+    console.log(`[BatchJob ${jobId}] Gemini job created: ${geminiJob.name}`);
+
+    // Update our job with Gemini job reference
+    await db.collection('jobs').updateOne(
+      { id: jobId },
+      {
+        $set: {
+          gemini_batch_job: geminiJob.name,
+          gemini_state: geminiJob.state,
+          'progress.total': batchRequests.length,
+          updated_at: new Date(),
+        },
+      }
+    );
+
+    return NextResponse.json({
+      job: { ...job, gemini_batch_job: geminiJob.name },
+      message: `Batch job submitted to Gemini (${batchRequests.length} pages). Results typically ready in 2-24 hours.`,
+      done: false,
+      gemini_job: geminiJob.name,
+      gemini_state: geminiJob.state,
+      pages_submitted: batchRequests.length,
+      failed_images: failedImages.length,
+    });
+  } catch (error) {
+    console.error(`[BatchJob ${jobId}] Error submitting batch:`, error);
+    return NextResponse.json({
+      error: 'Failed to submit batch job',
+      details: error instanceof Error ? error.message : 'Unknown error',
+    }, { status: 500 });
+  }
+}
+
 // POST - Process next chunk of the job
 export async function POST(
   request: NextRequest,
@@ -142,6 +446,12 @@ export async function POST(
           },
         }
       );
+    }
+
+    // ========== GEMINI BATCH API HANDLING ==========
+    // For batch_ocr and batch_translate jobs, use Gemini Batch API (50% cheaper)
+    if (job.config.use_batch_api && (job.type === 'batch_ocr' || job.type === 'batch_translate')) {
+      return await handleBatchApiJob(job, db, id);
     }
 
     // Get pages that haven't been processed yet
