@@ -106,7 +106,23 @@ export const GEMINI_MODELS = [
 
 export const DEFAULT_MODEL = 'gemini-2.5-flash';
 
-// GitHub URL for prompt versioning - links to exact commit for reproducibility
+// ============================================
+// PROMPT VERSIONING
+// ============================================
+
+export type PromptType = 'ocr' | 'translation' | 'summary';
+
+/**
+ * Reference to a prompt stored in page metadata.
+ * Allows retrieving the exact prompt used for processing.
+ */
+export interface PromptReference {
+  id: string;                   // Prompt document ID
+  name: string;                 // Prompt name for quick reference
+  version: number;              // Version number
+}
+
+// Legacy: GitHub URL for prompt versioning (deprecated in favor of prompt_id)
 export const PROMPTS_SOURCE_URL = 'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/src/lib/types.ts';
 
 export interface BookSummary {
@@ -368,15 +384,25 @@ export interface ProcessingPrompts {
   summary: string;
 }
 
+/**
+ * A versioned prompt stored in the database.
+ * Each prompt has a name and version number.
+ * When prompts are updated, a new version is created (immutable history).
+ */
 export interface Prompt {
   _id?: unknown;
   id?: string;
-  name: string;
-  type: 'ocr' | 'translation' | 'summary';
-  content: string;
-  is_default?: boolean;
+  name: string;                           // e.g., "Standard OCR", "Latin Translation"
+  type: PromptType;                       // 'ocr' | 'translation' | 'summary'
+  version?: number;                       // Auto-increment per name (1, 2, 3...)
+  content: string;                        // The actual prompt template (legacy name, same as 'text')
+  text?: string;                          // Alias for content
+  variables?: string[];                   // Variables used, e.g., ["language"]
+  description?: string;                   // Human-readable description
+  is_default?: boolean;                   // Is this the default prompt for this type?
   created_at?: Date;
-  updated_at?: Date;
+  updated_at?: Date;                      // Legacy field
+  created_by?: string;                    // User who created this version
 }
 
 // ============================================

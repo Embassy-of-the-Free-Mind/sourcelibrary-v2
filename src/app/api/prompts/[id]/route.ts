@@ -3,7 +3,13 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import type { Prompt } from '@/lib/types';
 
-// GET /api/prompts/[id] - Get a single prompt
+// Helper to extract variables from prompt text
+function extractVariables(text: string): string[] {
+  const matches = text.match(/\{(\w+)\}/g) || [];
+  return [...new Set(matches.map(m => m.slice(1, -1)))];
+}
+
+// GET /api/prompts/[id] - Get a single prompt by ID
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -11,7 +17,7 @@ export async function GET(
   try {
     const { id } = await params;
     const db = await getDb();
-    const collection = db.collection<Prompt>('prompts');
+    const collection = db.collection('prompts');
 
     const prompt = await collection.findOne({ _id: new ObjectId(id) });
 
@@ -29,7 +35,8 @@ export async function GET(
   }
 }
 
-// PATCH /api/prompts/[id] - Update a prompt
+// PATCH /api/prompts/[id] - Create a new version of a prompt
+// Instead of updating in place, creates a new version for audit trail
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -37,31 +44,56 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name, content } = body;
+    const { text, description, setAsDefault } = body;
+
+    // Support legacy 'content' field
+    const promptText = text || body.content;
 
     const db = await getDb();
-    const collection = db.collection<Prompt>('prompts');
+    const collection = db.collection('prompts');
 
-    const updateData: Partial<Prompt> = {
-      updated_at: new Date(),
-    };
-
-    if (name !== undefined) updateData.name = name;
-    if (content !== undefined) updateData.content = content;
-
-    const result = await collection.findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      { $set: updateData },
-      { returnDocument: 'after' }
-    );
-
-    if (!result) {
+    // Get the existing prompt
+    const existingPrompt = await collection.findOne({ _id: new ObjectId(id) });
+    if (!existingPrompt) {
       return NextResponse.json({ error: 'Prompt not found' }, { status: 404 });
     }
 
+    // Get the latest version for this prompt name
+    const latestVersion = await collection.findOne(
+      { name: existingPrompt.name },
+      { sort: { version: -1 } }
+    );
+
+    const newVersion = (latestVersion?.version || 0) + 1;
+
+    // If setting as default, unset current default for this type
+    if (setAsDefault) {
+      await collection.updateMany(
+        { type: existingPrompt.type, is_default: true },
+        { $set: { is_default: false } }
+      );
+    }
+
+    // Create new version
+    const newPrompt = {
+      name: existingPrompt.name as string,
+      type: existingPrompt.type as string,
+      version: newVersion,
+      content: promptText || existingPrompt.content as string,
+      variables: promptText ? extractVariables(promptText) : existingPrompt.variables as string[],
+      description: description || existingPrompt.description as string | undefined,
+      is_default: setAsDefault ?? existingPrompt.is_default as boolean,
+      created_at: new Date(),
+    };
+
+    const result = await collection.insertOne(newPrompt);
+
     return NextResponse.json({
-      ...result,
-      id: result._id?.toString(),
+      ...newPrompt,
+      id: result.insertedId.toString(),
+      _id: result.insertedId,
+      previousVersion: existingPrompt.version,
+      message: `Created version ${newVersion} of "${existingPrompt.name}"`
     });
   } catch (error) {
     console.error('Error updating prompt:', error);
@@ -69,31 +101,42 @@ export async function PATCH(
   }
 }
 
-// DELETE /api/prompts/[id] - Delete a prompt
-export async function DELETE(
+// POST /api/prompts/[id]/set-default - Set this prompt as the default for its type
+export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
     const db = await getDb();
-    const collection = db.collection<Prompt>('prompts');
+    const collection = db.collection('prompts');
 
-    // Don't allow deleting default prompts
     const prompt = await collection.findOne({ _id: new ObjectId(id) });
-    if (prompt?.is_default) {
-      return NextResponse.json({ error: 'Cannot delete default prompts' }, { status: 400 });
-    }
-
-    const result = await collection.deleteOne({ _id: new ObjectId(id) });
-
-    if (result.deletedCount === 0) {
+    if (!prompt) {
       return NextResponse.json({ error: 'Prompt not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true });
+    // Unset current default for this type
+    await collection.updateMany(
+      { type: prompt.type, is_default: true },
+      { $set: { is_default: false } }
+    );
+
+    // Set this one as default
+    await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { is_default: true } }
+    );
+
+    return NextResponse.json({
+      success: true,
+      message: `"${prompt.name}" v${prompt.version} is now the default ${prompt.type} prompt`
+    });
   } catch (error) {
-    console.error('Error deleting prompt:', error);
-    return NextResponse.json({ error: 'Failed to delete prompt' }, { status: 500 });
+    console.error('Error setting default prompt:', error);
+    return NextResponse.json({ error: 'Failed to set default prompt' }, { status: 500 });
   }
 }
+
+// DELETE is intentionally not supported - prompts are immutable for audit trail
+// Old versions can be marked as deprecated but not deleted
