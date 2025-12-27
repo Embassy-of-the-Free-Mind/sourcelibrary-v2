@@ -228,7 +228,8 @@ export async function GET(request: NextRequest) {
             description: img.description,
             type: img.type,
             bbox: img.bbox,
-            confidence: img.confidence
+            confidence: img.confidence,
+            model: img.model
           });
         }
       } else if (page.ocr?.data) {

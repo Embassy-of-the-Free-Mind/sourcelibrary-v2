@@ -24,6 +24,7 @@ interface GalleryItem {
   type?: string;
   bbox?: BBox;
   confidence?: number;
+  model?: 'gemini' | 'mistral';
 }
 
 interface GalleryResponse {
@@ -53,13 +54,14 @@ export default function GalleryPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [verifiedOnly, setVerifiedOnly] = useState(true);
+  const [selectedModel, setSelectedModel] = useState<'gemini' | 'mistral' | ''>('');
   const [page, setPage] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const limit = 24;
 
   useEffect(() => {
     fetchGallery();
-  }, [selectedBook, verifiedOnly, page]);
+  }, [selectedBook, verifiedOnly, selectedModel, page]);
 
   const fetchGallery = async () => {
     setLoading(true);
@@ -70,6 +72,7 @@ export default function GalleryPage() {
       });
       if (selectedBook) params.set('bookId', selectedBook);
       if (verifiedOnly) params.set('verified', 'true');
+      if (selectedModel) params.set('model', selectedModel);
 
       const res = await fetch(`/api/gallery?${params}`);
       if (!res.ok) throw new Error('Failed to fetch');
@@ -114,7 +117,7 @@ export default function GalleryPage() {
         {/* Filters */}
         <div className="mb-6 space-y-4">
           {/* Verified toggle */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-wrap">
             <button
               onClick={() => { setVerifiedOnly(true); setPage(0); }}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
@@ -138,6 +141,43 @@ export default function GalleryPage() {
               All (including unverified)
             </button>
           </div>
+
+          {/* Model filter */}
+          {verifiedOnly && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-500">Model:</span>
+              <button
+                onClick={() => { setSelectedModel(''); setPage(0); }}
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  !selectedModel
+                    ? 'bg-stone-700 text-white'
+                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+                }`}
+              >
+                All
+              </button>
+              <button
+                onClick={() => { setSelectedModel('gemini'); setPage(0); }}
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  selectedModel === 'gemini'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+                }`}
+              >
+                Gemini
+              </button>
+              <button
+                onClick={() => { setSelectedModel('mistral'); setPage(0); }}
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  selectedModel === 'mistral'
+                    ? 'bg-orange-600 text-white'
+                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+                }`}
+              >
+                Mistral
+              </button>
+            </div>
+          )}
 
           {/* Book filter */}
           <button
@@ -300,10 +340,12 @@ function GalleryCard({ item }: { item: GalleryItem }) {
             </span>
           )}
 
-          {/* Confidence badge */}
-          {item.confidence && (
-            <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs bg-green-600/80 text-white">
-              {Math.round(item.confidence * 100)}%
+          {/* Model badge */}
+          {item.model && (
+            <span className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs text-white ${
+              item.model === 'gemini' ? 'bg-blue-600/80' : 'bg-orange-600/80'
+            }`}>
+              {item.model}
             </span>
           )}
         </div>
