@@ -139,13 +139,30 @@ function markdownToHtml(text: string): string {
   // Remove any standalone URLs
   html = html.replace(/https?:\/\/[^\s\)]+/g, '');
 
+  // Convert XML annotation tags to styled aside/span blocks BEFORE escaping HTML
+  // These are our custom tags that should become actual HTML elements
+  html = html.replace(/<note>([\s\S]*?)<\/note>/gi, '[[NOTE_PLACEHOLDER:$1]]');
+  html = html.replace(/<margin>([\s\S]*?)<\/margin>/gi, '[[MARGIN_PLACEHOLDER:$1]]');
+  html = html.replace(/<gloss>([\s\S]*?)<\/gloss>/gi, '[[GLOSS_PLACEHOLDER:$1]]');
+  html = html.replace(/<term>([\s\S]*?)<\/term>/gi, '[[TERM_PLACEHOLDER:$1]]');
+  html = html.replace(/<unclear>([\s\S]*?)<\/unclear>/gi, '[[UNCLEAR_PLACEHOLDER:$1]]');
+  // Remove metadata tags (hidden)
+  html = html.replace(/<(?:lang|page-num|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords)>[\s\S]*?<\/(?:lang|page-num|folio|sig|header|meta|warning|abbrev|vocab|summary|keywords)>/gi, '');
+
   // Escape HTML entities
   html = html
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
 
-  // Convert [[notes: ...]] to styled aside blocks
+  // Convert placeholders to styled HTML elements
+  html = html.replace(/\[\[NOTE_PLACEHOLDER:(.*?)\]\]/gi, '<aside class="note">$1</aside>');
+  html = html.replace(/\[\[MARGIN_PLACEHOLDER:(.*?)\]\]/gi, '<aside class="margin">$1</aside>');
+  html = html.replace(/\[\[GLOSS_PLACEHOLDER:(.*?)\]\]/gi, '<span class="gloss">$1</span>');
+  html = html.replace(/\[\[TERM_PLACEHOLDER:(.*?)\]\]/gi, '<em class="term">$1</em>');
+  html = html.replace(/\[\[UNCLEAR_PLACEHOLDER:(.*?)\]\]/gi, '<span class="unclear">$1?</span>');
+
+  // Convert legacy [[notes: ...]] to styled aside blocks
   html = html.replace(/\[\[notes?:\s*(.*?)\]\]/gi, '<aside class="note">$1</aside>');
 
   // Convert headers (must be done before paragraph wrapping)

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, Trash2, CheckCircle, XCircle, Clock, Loader2, Cloud, Zap, BookOpen, FileText } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, Trash2, CheckCircle, XCircle, Clock, Loader2, Cloud, Zap, BookOpen, FileText, Plus } from 'lucide-react';
 import type { Job, JobStatus } from '@/lib/types';
 
 interface PendingStats {
@@ -39,6 +39,8 @@ export default function JobsPage() {
   const [loading, setLoading] = useState(true);
   const [processingJobId, setProcessingJobId] = useState<string | null>(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
+  const [creatingJobs, setCreatingJobs] = useState(false);
+  const [createResult, setCreateResult] = useState<string | null>(null);
   const processingRef = useRef(false);
 
   const fetchJobs = useCallback(async () => {
@@ -80,6 +82,32 @@ export default function JobsPage() {
     const interval = setInterval(fetchJobs, 5000);
     return () => clearInterval(interval);
   }, [fetchJobs, autoRefresh]);
+
+  // Create batch jobs for books needing work
+  const createBatchJobs = async (type: 'ocr' | 'translate' | 'both', limit: number = 10) => {
+    setCreatingJobs(true);
+    setCreateResult(null);
+    try {
+      const res = await fetch(`/api/batch-jobs/process-all?type=${type}&limit=${limit}`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        const ocrCount = data.ocr_jobs?.length || 0;
+        const transCount = data.translate_jobs?.length || 0;
+        setCreateResult(`Created ${ocrCount} OCR + ${transCount} translation jobs`);
+        await fetchJobs();
+      } else {
+        setCreateResult(`Error: ${data.error || 'Failed to create jobs'}`);
+      }
+    } catch (e) {
+      setCreateResult(`Error: ${e instanceof Error ? e.message : 'Unknown error'}`);
+    } finally {
+      setCreatingJobs(false);
+      // Clear result after 5 seconds
+      setTimeout(() => setCreateResult(null), 5000);
+    }
+  };
 
   // Process a job (runs in a loop until done/paused/cancelled)
   const processJob = useCallback(async (jobId: string) => {
@@ -259,6 +287,40 @@ export default function JobsPage() {
               </div>
               <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
                 50% off with Batch API
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Create Batch Jobs */}
+        {pendingStats && (pendingStats.total_pages_needing_ocr > 0 || pendingStats.total_pages_needing_translation > 0) && (
+          <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-medium" style={{ color: 'var(--text-primary)' }}>Queue Batch Jobs</div>
+                <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                  Create jobs for books needing OCR or translation
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {createResult && (
+                  <span className={`text-sm px-3 py-1 rounded-lg ${createResult.startsWith('Error') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>
+                    {createResult}
+                  </span>
+                )}
+                <button
+                  onClick={() => createBatchJobs('both', 10)}
+                  disabled={creatingJobs}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+                  style={{ background: 'var(--accent-rust)' }}
+                >
+                  {creatingJobs ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Plus className="w-4 h-4" />
+                  )}
+                  Queue 10 Books
+                </button>
               </div>
             </div>
           </div>

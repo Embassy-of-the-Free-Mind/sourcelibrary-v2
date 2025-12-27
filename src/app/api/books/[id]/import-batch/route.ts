@@ -94,7 +94,7 @@ export async function POST(
       const endPage = parseInt(match[2], 10);
 
       // Parse the batch text to extract individual page results
-      // Format: === PAGE N === or [[page number: N]]
+      // Format: === PAGE N ===, <page-num>N</page-num>, or [[page number: N]]
       const pageTexts = parseBatchText(batchText, startPage, endPage);
 
       for (const { pageNumber, text } of pageTexts) {
@@ -157,6 +157,7 @@ export async function POST(
  * Parse batch text containing multiple pages into individual page texts.
  * Handles formats:
  * - === PAGE N ===
+ * - <page-num>N</page-num>
  * - [[page number: N]]
  * - Page N:
  */
@@ -185,7 +186,22 @@ function parseBatchText(
     if (results.length > 0) return results;
   }
 
-  // Pattern 2: [[page number: N]] markers
+  // Pattern 2: <page-num>N</page-num> markers (new XML syntax)
+  const xmlPattern = /<page-num>(\d+)<\/page-num>/gi;
+  const xmlParts = batchText.split(xmlPattern);
+
+  if (xmlParts.length > 1) {
+    for (let i = 1; i < xmlParts.length; i += 2) {
+      const pageNum = parseInt(xmlParts[i], 10);
+      const text = xmlParts[i + 1]?.trim();
+      if (text && pageNum >= startPage && pageNum <= endPage) {
+        results.push({ pageNumber: pageNum, text });
+      }
+    }
+    if (results.length > 0) return results;
+  }
+
+  // Pattern 3: [[page number: N]] markers (legacy bracket syntax)
   const bracketPattern = /\[\[page number:\s*(\d+)\]\]/gi;
   const bracketParts = batchText.split(bracketPattern);
 

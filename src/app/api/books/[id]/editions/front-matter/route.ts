@@ -224,12 +224,13 @@ The methodology section should include:
 3. **Translation Process** (1-2 paragraphs)
    - Explain the translation philosophy: faithful to original, explanatory notes added
    - Technical terms preserved in original with translations
-   - Inline [[notes:]] provide context for modern readers
+   - Inline <note> tags provide context for modern readers
 
 4. **Editorial Conventions** (as a formatted list)
-   - [[notes:]] = translator's explanatory additions
-   - [[margin:]] = marginalia from the original
-   - [[unclear:]] = uncertain readings
+   - <note> = translator's explanatory additions
+   - <margin> = marginalia from the original
+   - <unclear> = uncertain readings
+   - <term> = technical vocabulary with definitions
    - Original paragraph structure preserved
    - etc.
 

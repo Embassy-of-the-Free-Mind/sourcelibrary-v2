@@ -4,7 +4,7 @@
  */
 
 export interface ValidationIssue {
-  type: 'unclosed_open' | 'unclosed_close' | 'unknown_tag' | 'empty_tag' | 'nested_bracket' | 'unbalanced_center';
+  type: 'unclosed_open' | 'unclosed_close' | 'unknown_tag' | 'empty_tag' | 'nested_bracket' | 'unbalanced_center' | 'unclosed_xml' | 'unknown_xml_tag' | 'empty_xml_tag';
   message: string;
   position: number;
   length: number;
@@ -22,11 +22,20 @@ export interface ValidationResult {
   issues: ValidationIssue[];
 }
 
-// Known valid tag types
+// Known valid tag types (bracket syntax)
 const VALID_TAGS = new Set([
   'margin', 'note', 'notes', 'gloss', 'insert', 'unclear', 'term', 'image',
   'meta', 'language', 'page number', 'header', 'signature', 'vocabulary',
   'summary', 'keywords', 'warning', 'folio', 'abbrev', 'markup'
+]);
+
+// Known valid XML tag types (new syntax)
+const VALID_XML_TAGS = new Set([
+  // Display annotations
+  'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc',
+  // Metadata tags
+  'lang', 'page-num', 'folio', 'sig', 'header', 'meta', 'warning',
+  'abbrev', 'vocab', 'summary', 'keywords'
 ]);
 
 /**
@@ -225,6 +234,106 @@ export function validateTranslation(text: string): ValidationResult {
     }
   }
 
+  // === XML Tag Validation ===
+  // Find all XML-style opening and closing tags
+  const xmlOpenPattern = /<([a-z][a-z0-9-]*)>/gi;
+  const xmlClosePattern = /<\/([a-z][a-z0-9-]*)>/gi;
+
+  const openTags: { tag: string; position: number }[] = [];
+  const closeTags: { tag: string; position: number }[] = [];
+
+  let xmlMatch;
+  while ((xmlMatch = xmlOpenPattern.exec(text)) !== null) {
+    const tag = xmlMatch[1].toLowerCase();
+    openTags.push({ tag, position: xmlMatch.index });
+  }
+
+  while ((xmlMatch = xmlClosePattern.exec(text)) !== null) {
+    const tag = xmlMatch[1].toLowerCase();
+    closeTags.push({ tag, position: xmlMatch.index });
+  }
+
+  // Check for unknown XML tags
+  for (const { tag, position } of openTags) {
+    if (!VALID_XML_TAGS.has(tag)) {
+      issues.push({
+        type: 'unknown_xml_tag',
+        message: `Unknown XML tag: <${tag}>`,
+        position,
+        length: tag.length + 2,
+        context: getContext(text, position, tag.length + 2)
+      });
+    }
+  }
+
+  // Check for unclosed XML tags (simple stack-based matching)
+  const tagStack: { tag: string; position: number }[] = [];
+  const allTags = [
+    ...openTags.map(t => ({ ...t, type: 'open' as const })),
+    ...closeTags.map(t => ({ ...t, type: 'close' as const }))
+  ].sort((a, b) => a.position - b.position);
+
+  for (const tagInfo of allTags) {
+    if (tagInfo.type === 'open') {
+      tagStack.push({ tag: tagInfo.tag, position: tagInfo.position });
+    } else {
+      // Close tag - find matching open
+      const matchIdx = tagStack.findIndex(t => t.tag === tagInfo.tag);
+      if (matchIdx === -1) {
+        // Closing tag without matching opening
+        issues.push({
+          type: 'unclosed_xml',
+          message: `Closing </${tagInfo.tag}> without matching opening <${tagInfo.tag}>`,
+          position: tagInfo.position,
+          length: tagInfo.tag.length + 3,
+          context: getContext(text, tagInfo.position, tagInfo.tag.length + 3),
+          suggestedFix: {
+            type: 'delete',
+            position: tagInfo.position,
+            length: tagInfo.tag.length + 3
+          }
+        });
+      } else {
+        // Check for empty content (opening tag immediately followed by closing)
+        const openPos = tagStack[matchIdx].position;
+        const openEnd = openPos + tagInfo.tag.length + 2;
+        const content = text.slice(openEnd, tagInfo.position).trim();
+        if (!content) {
+          issues.push({
+            type: 'empty_xml_tag',
+            message: `Empty XML tag: <${tagInfo.tag}></${tagInfo.tag}>`,
+            position: openPos,
+            length: tagInfo.position + tagInfo.tag.length + 3 - openPos,
+            context: getContext(text, openPos, tagInfo.position + tagInfo.tag.length + 3 - openPos),
+            suggestedFix: {
+              type: 'delete',
+              position: openPos,
+              length: tagInfo.position + tagInfo.tag.length + 3 - openPos
+            }
+          });
+        }
+        // Remove from stack (and any unclosed tags between)
+        tagStack.splice(matchIdx, 1);
+      }
+    }
+  }
+
+  // Report any unclosed opening tags
+  for (const { tag, position } of tagStack) {
+    issues.push({
+      type: 'unclosed_xml',
+      message: `Opening <${tag}> without matching closing </${tag}>`,
+      position,
+      length: tag.length + 2,
+      context: getContext(text, position, 50),
+      suggestedFix: {
+        type: 'insert',
+        position: text.length,
+        text: `</${tag}>`
+      }
+    });
+  }
+
   // Sort issues by position
   issues.sort((a, b) => a.position - b.position);
 
@@ -255,7 +364,7 @@ export function applyFix(
 
 /**
  * Clean up empty tags from text
- * Removes patterns like [[unclear:]], [[note: ]], [[margin:]], etc.
+ * Removes patterns like [[unclear:]], [[note: ]], [[margin:]], <note></note>, etc.
  * Returns the cleaned text and count of removed tags
  */
 export function cleanupEmptyTags(text: string): { cleaned: string; removedCount: number } {
@@ -267,9 +376,17 @@ export function cleanupEmptyTags(text: string): { cleaned: string; removedCount:
 
   // Match [[tagname:]] or [[tagname: ]] (empty or whitespace-only content)
   // The regex matches: [[ + word characters + : + optional whitespace + ]]
-  const emptyTagPattern = /\[\[\w+:\s*\]\]/g;
+  const emptyBracketPattern = /\[\[\w+:\s*\]\]/g;
 
-  const cleaned = text.replace(emptyTagPattern, () => {
+  let cleaned = text.replace(emptyBracketPattern, () => {
+    removedCount++;
+    return '';
+  });
+
+  // Match <tagname></tagname> or <tagname> </tagname> (empty or whitespace-only content)
+  const emptyXmlPattern = /<([a-z][a-z0-9-]*)>\s*<\/\1>/gi;
+
+  cleaned = cleaned.replace(emptyXmlPattern, () => {
     removedCount++;
     return '';
   });
