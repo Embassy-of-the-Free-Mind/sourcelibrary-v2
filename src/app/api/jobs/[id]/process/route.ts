@@ -103,12 +103,19 @@ async function processCroppedImage(
 }
 
 // ========== GEMINI BATCH API HANDLER ==========
+// Phases: prepare -> submit -> poll
+// - prepare: Fetch images in chunks, store in batch_preparations collection
+// - submit: When all prepared, submit to Gemini Batch API
+// - poll: Check status and download results
+
+const BATCH_PREPARE_CHUNK_SIZE = 20; // Prepare 20 images per request
+
 async function handleBatchApiJob(
   job: Job,
   db: Awaited<ReturnType<typeof getDb>>,
   jobId: string
 ) {
-  // Check if we already submitted to Gemini Batch API
+  // Phase 3: Already submitted - poll for results
   if (job.gemini_batch_job) {
     // Check status of existing batch job
     console.log(`[BatchJob ${jobId}] Checking Gemini batch status: ${job.gemini_batch_job}`);
@@ -261,48 +268,74 @@ async function handleBatchApiJob(
     }
   }
 
-  // Need to submit to Gemini Batch API
-  console.log(`[BatchJob ${jobId}] Submitting to Gemini Batch API...`);
+  // Phase 1 & 2: Prepare images incrementally, then submit
+  console.log(`[BatchJob ${jobId}] Preparing batch...`);
 
   try {
-    // Get pages
     const pageIds = job.config.page_ids || [];
-    const pages = await db.collection('pages')
-      .find({ id: { $in: pageIds } })
-      .toArray();
+    const prepCollection = db.collection('batch_preparations');
 
-    // Get prompt
-    const ocrPrompt = job.type === 'batch_ocr'
-      ? await getOcrPrompt(job.config.language || 'Latin')
-      : null;
+    // Check what's already prepared
+    const prepared = await prepCollection.find({ job_id: jobId }).toArray();
+    const preparedIds = new Set(prepared.map(p => p.page_id));
+    const failedIds = new Set(prepared.filter(p => p.failed).map(p => p.page_id));
 
-    // Build batch requests
-    const batchRequests: BatchRequest[] = [];
-    const failedImages: string[] = [];
+    // Find pages that still need preparation
+    const unpreparedIds = pageIds.filter((id: string) => !preparedIds.has(id) && !failedIds.has(id));
 
-    for (const page of pages) {
-      if (job.type === 'batch_ocr') {
-        const imageUrl = page.cropped_photo || page.photo;
-        if (!imageUrl) {
-          failedImages.push(page.id);
-          continue;
-        }
+    console.log(`[BatchJob ${jobId}] Total: ${pageIds.length}, Prepared: ${preparedIds.size - failedIds.size}, Failed: ${failedIds.size}, Remaining: ${unpreparedIds.length}`);
 
+    // Phase 1: If there are unprepared pages, prepare a chunk
+    if (unpreparedIds.length > 0) {
+      const chunkIds = unpreparedIds.slice(0, BATCH_PREPARE_CHUNK_SIZE);
+      const pages = await db.collection('pages')
+        .find({ id: { $in: chunkIds } })
+        .toArray();
+
+      const ocrPrompt = job.type === 'batch_ocr'
+        ? await getOcrPrompt(job.config.language || 'Latin')
+        : null;
+
+      let preparedCount = 0;
+      let failedCount = 0;
+
+      for (const page of pages) {
         try {
-          const imageResponse = await fetch(imageUrl);
-          if (!imageResponse.ok) {
-            failedImages.push(page.id);
-            continue;
-          }
+          let requestData: BatchRequest['request'] | null = null;
 
-          const imageBuffer = await imageResponse.arrayBuffer();
-          const base64 = Buffer.from(imageBuffer).toString('base64');
-          let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
-          mimeType = mimeType.split(';')[0].trim();
+          if (job.type === 'batch_ocr') {
+            const imageUrl = page.cropped_photo || page.photo;
+            if (!imageUrl) {
+              await prepCollection.insertOne({
+                job_id: jobId,
+                page_id: page.id,
+                failed: true,
+                error: 'No image URL',
+                created_at: new Date(),
+              });
+              failedCount++;
+              continue;
+            }
 
-          batchRequests.push({
-            key: page.id,
-            request: {
+            const imageResponse = await fetch(imageUrl);
+            if (!imageResponse.ok) {
+              await prepCollection.insertOne({
+                job_id: jobId,
+                page_id: page.id,
+                failed: true,
+                error: `Image fetch failed: ${imageResponse.status}`,
+                created_at: new Date(),
+              });
+              failedCount++;
+              continue;
+            }
+
+            const imageBuffer = await imageResponse.arrayBuffer();
+            const base64 = Buffer.from(imageBuffer).toString('base64');
+            let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+            mimeType = mimeType.split(';')[0].trim();
+
+            requestData = {
               contents: [
                 {
                   parts: [
@@ -315,47 +348,117 @@ async function handleBatchApiJob(
                 temperature: 0.1,
                 maxOutputTokens: 8192,
               },
-            },
-          });
-        } catch (e) {
-          console.error(`[BatchJob ${jobId}] Failed to fetch image for ${page.id}:`, e);
-          failedImages.push(page.id);
-        }
-      } else {
-        // Translation
-        const ocrText = page.ocr?.data;
-        if (!ocrText) {
-          failedImages.push(page.id);
-          continue;
-        }
+            };
+          } else {
+            // Translation
+            const ocrText = page.ocr?.data;
+            if (!ocrText) {
+              await prepCollection.insertOne({
+                job_id: jobId,
+                page_id: page.id,
+                failed: true,
+                error: 'No OCR text',
+                created_at: new Date(),
+              });
+              failedCount++;
+              continue;
+            }
 
-        batchRequests.push({
-          key: page.id,
-          request: {
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `Translate the following ${job.config.language || 'Latin'} text to English. Preserve formatting.\n\n${ocrText}`,
-                  },
-                ],
+            requestData = {
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: `Translate the following ${job.config.language || 'Latin'} text to English. Preserve formatting.\n\n${ocrText}`,
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 8192,
               },
-            ],
-            generationConfig: {
-              temperature: 0.3,
-              maxOutputTokens: 8192,
-            },
-          },
-        });
+            };
+          }
+
+          // Store prepared request
+          await prepCollection.insertOne({
+            job_id: jobId,
+            page_id: page.id,
+            request: requestData,
+            failed: false,
+            created_at: new Date(),
+          });
+          preparedCount++;
+
+        } catch (e) {
+          console.error(`[BatchJob ${jobId}] Failed to prepare ${page.id}:`, e);
+          await prepCollection.insertOne({
+            job_id: jobId,
+            page_id: page.id,
+            failed: true,
+            error: e instanceof Error ? e.message : 'Unknown error',
+            created_at: new Date(),
+          });
+          failedCount++;
+        }
       }
+
+      // Update progress
+      const totalPrepared = preparedIds.size - failedIds.size + preparedCount;
+      const totalFailed = failedIds.size + failedCount;
+      const remaining = pageIds.length - totalPrepared - totalFailed;
+
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        {
+          $set: {
+            'progress.completed': totalPrepared,
+            'progress.failed': totalFailed,
+            batch_phase: 'preparing',
+            updated_at: new Date(),
+          },
+        }
+      );
+
+      return NextResponse.json({
+        job: { ...job, batch_phase: 'preparing' },
+        message: `Prepared ${preparedCount} pages this request. ${remaining} remaining.`,
+        done: false,
+        phase: 'preparing',
+        prepared: totalPrepared,
+        failed: totalFailed,
+        remaining,
+        continue: remaining > 0,
+      });
     }
 
-    if (batchRequests.length === 0) {
+    // Phase 2: All prepared - submit to Gemini Batch API
+    console.log(`[BatchJob ${jobId}] All pages prepared. Submitting to Gemini...`);
+
+    const successfulPreps = prepared.filter(p => !p.failed);
+    if (successfulPreps.length === 0) {
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        {
+          $set: {
+            status: 'failed',
+            error: 'No pages prepared successfully',
+            updated_at: new Date(),
+          },
+        }
+      );
       return NextResponse.json({
-        error: 'No valid pages to process',
-        failedImages,
+        error: 'No pages prepared successfully',
+        failed: prepared.filter(p => p.failed).length,
       }, { status: 400 });
     }
+
+    // Build batch requests from prepared data
+    const batchRequests: BatchRequest[] = successfulPreps.map(p => ({
+      key: p.page_id,
+      request: p.request,
+    }));
 
     console.log(`[BatchJob ${jobId}] Submitting ${batchRequests.length} requests to Gemini...`);
 
@@ -369,6 +472,9 @@ async function handleBatchApiJob(
 
     console.log(`[BatchJob ${jobId}] Gemini job created: ${geminiJob.name}`);
 
+    // Clean up preparations (optional - keep for debugging)
+    // await prepCollection.deleteMany({ job_id: jobId });
+
     // Update our job with Gemini job reference
     await db.collection('jobs').updateOne(
       { id: jobId },
@@ -376,6 +482,7 @@ async function handleBatchApiJob(
         $set: {
           gemini_batch_job: geminiJob.name,
           gemini_state: geminiJob.state,
+          batch_phase: 'submitted',
           'progress.total': batchRequests.length,
           updated_at: new Date(),
         },
@@ -386,15 +493,16 @@ async function handleBatchApiJob(
       job: { ...job, gemini_batch_job: geminiJob.name },
       message: `Batch job submitted to Gemini (${batchRequests.length} pages). Results typically ready in 2-24 hours.`,
       done: false,
+      phase: 'submitted',
       gemini_job: geminiJob.name,
       gemini_state: geminiJob.state,
       pages_submitted: batchRequests.length,
-      failed_images: failedImages.length,
+      failed_images: prepared.filter(p => p.failed).length,
     });
   } catch (error) {
-    console.error(`[BatchJob ${jobId}] Error submitting batch:`, error);
+    console.error(`[BatchJob ${jobId}] Error in batch processing:`, error);
     return NextResponse.json({
-      error: 'Failed to submit batch job',
+      error: 'Failed to process batch job',
       details: error instanceof Error ? error.message : 'Unknown error',
     }, { status: 500 });
   }
