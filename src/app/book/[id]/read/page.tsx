@@ -10,6 +10,7 @@ import rehypeRaw from 'rehype-raw';
 import { Book, Page } from '@/lib/types';
 import HighlightSelection from '@/components/HighlightSelection';
 import HighlightsPanel from '@/components/HighlightsPanel';
+import { QuoteShare } from '@/components/ShareButton';
 
 interface ReadPageProps {
   params: Promise<{ id: string }>;
@@ -404,13 +405,24 @@ export default function ReadPage({ params }: ReadPageProps) {
                           <p className="text-stone-600 italic text-sm leading-relaxed">
                             &ldquo;{quote.text}&rdquo;
                           </p>
-                          <Link
-                            href={`/book/${bookId}/page/${pages.find(p => p.page_number === quote.page)?.id || ''}`}
-                            className="text-xs text-amber-600 hover:text-amber-700 mt-1 inline-flex items-center gap-1"
-                          >
-                            Page {quote.page}
-                            <ExternalLink className="w-3 h-3" />
-                          </Link>
+                          <div className="flex items-center gap-2 mt-1">
+                            <Link
+                              href={`/book/${bookId}/page/${pages.find(p => p.page_number === quote.page)?.id || ''}`}
+                              className="text-xs text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
+                            >
+                              Page {quote.page}
+                              <ExternalLink className="w-3 h-3" />
+                            </Link>
+                            <QuoteShare
+                              text={quote.text}
+                              title={book?.display_title || book?.title || ''}
+                              author={book?.author || ''}
+                              year={book?.published}
+                              page={quote.page}
+                              bookId={bookId!}
+                              doi={book?.doi}
+                            />
+                          </div>
                         </blockquote>
                       ))}
                     </div>
@@ -516,6 +528,9 @@ export default function ReadPage({ params }: ReadPageProps) {
                       pageId={page.id}
                       pageNumber={page.page_number}
                       bookTitle={book?.display_title || book?.title || ''}
+                      bookAuthor={book?.author}
+                      bookYear={book?.published}
+                      doi={book?.doi}
                       onHighlightSaved={fetchHighlightCount}
                     >
                       <div className="mb-8">

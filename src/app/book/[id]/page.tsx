@@ -17,6 +17,7 @@ import PublishEditionButton from '@/components/PublishEditionButton';
 import EditionsPanel from '@/components/EditionsPanel';
 import SchemaOrgMetadata from '@/components/SchemaOrgMetadata';
 import CategoryPicker from '@/components/CategoryPicker';
+import { BookShare } from '@/components/ShareButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -253,6 +254,14 @@ async function BookInfo({ id }: { id: string }) {
 
                 {/* Utilities - always available */}
                 <span className="hidden sm:inline text-stone-600">|</span>
+                <BookShare
+                  title={book.display_title || book.title}
+                  author={book.author}
+                  year={book.published}
+                  bookId={book.id}
+                  doi={book.doi}
+                  className="text-stone-300 hover:text-white hover:bg-white/10"
+                />
                 <Link
                   href={`/book/${book.id}/pipeline`}
                   className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Highlighter, Trash2, ExternalLink, Loader2, X } from 'lucide-react';
+import { Highlighter, Trash2, ExternalLink, Loader2, X, Share2, Twitter, MessageCircle, Link2, Check } from 'lucide-react';
 
 interface Highlight {
   id: string;
@@ -31,6 +31,8 @@ export default function HighlightsPanel({
   const [highlights, setHighlights] = useState<Highlight[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [shareMenuOpen, setShareMenuOpen] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
 
   const fetchHighlights = async () => {
     setLoading(true);
@@ -79,6 +81,46 @@ export default function HighlightsPanel({
       day: 'numeric',
       year: 'numeric',
     });
+  };
+
+  const shareToTwitter = (highlight: Highlight) => {
+    const citation = `${highlight.book_title}, p. ${highlight.page_number}`;
+    const maxQuoteLength = 200;
+    const quote = highlight.text.length > maxQuoteLength
+      ? highlight.text.substring(0, maxQuoteLength - 3) + '...'
+      : highlight.text;
+    const tweetText = `"${quote}"\n\n— ${citation}`;
+    const shareUrl = `${window.location.origin}/book/${highlight.book_id}/read#page-${highlight.page_number}`;
+
+    const twitterUrl = new URL('https://twitter.com/intent/tweet');
+    twitterUrl.searchParams.set('text', tweetText);
+    twitterUrl.searchParams.set('url', shareUrl);
+    window.open(twitterUrl.toString(), '_blank', 'width=550,height=420');
+    setShareMenuOpen(null);
+  };
+
+  const shareToBluesky = (highlight: Highlight) => {
+    const citation = `${highlight.book_title}, p. ${highlight.page_number}`;
+    const shareUrl = `${window.location.origin}/book/${highlight.book_id}/read#page-${highlight.page_number}`;
+    const fullText = `"${highlight.text.substring(0, 250)}"\n\n— ${citation}\n\n${shareUrl}`;
+
+    const bskyUrl = new URL('https://bsky.app/intent/compose');
+    bskyUrl.searchParams.set('text', fullText);
+    window.open(bskyUrl.toString(), '_blank', 'width=550,height=420');
+    setShareMenuOpen(null);
+  };
+
+  const copyQuote = async (highlight: Highlight) => {
+    const citation = `${highlight.book_title}, p. ${highlight.page_number}`;
+    const shareUrl = `${window.location.origin}/book/${highlight.book_id}/read#page-${highlight.page_number}`;
+    const quoteToCopy = `"${highlight.text}"\n\n— ${citation}\n${shareUrl}`;
+
+    await navigator.clipboard.writeText(quoteToCopy);
+    setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+      setShareMenuOpen(null);
+    }, 1500);
   };
 
   if (!isOpen) return null;
@@ -159,18 +201,61 @@ export default function HighlightsPanel({
                       </span>
                     </div>
 
-                    <button
-                      onClick={() => handleDelete(highlight.id)}
-                      disabled={deletingId === highlight.id}
-                      className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-red-500 transition-all"
-                      title="Delete highlight"
-                    >
-                      {deletingId === highlight.id ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        <Trash2 className="w-4 h-4" />
-                      )}
-                    </button>
+                    <div className="flex items-center gap-1">
+                      {/* Share button */}
+                      <div className="relative">
+                        <button
+                          onClick={() => setShareMenuOpen(shareMenuOpen === highlight.id ? null : highlight.id)}
+                          className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-amber-600 transition-all"
+                          title="Share"
+                        >
+                          {copied && shareMenuOpen === highlight.id ? (
+                            <Check className="w-4 h-4 text-green-500" />
+                          ) : (
+                            <Share2 className="w-4 h-4" />
+                          )}
+                        </button>
+                        {shareMenuOpen === highlight.id && (
+                          <div className="absolute right-0 bottom-full mb-1 bg-white rounded-lg shadow-lg border border-stone-200 py-1 min-w-[140px] z-10">
+                            <button
+                              onClick={() => shareToTwitter(highlight)}
+                              className="w-full px-3 py-1.5 text-left text-sm hover:bg-stone-50 flex items-center gap-2"
+                            >
+                              <Twitter className="w-3.5 h-3.5" />
+                              Share on X
+                            </button>
+                            <button
+                              onClick={() => shareToBluesky(highlight)}
+                              className="w-full px-3 py-1.5 text-left text-sm hover:bg-stone-50 flex items-center gap-2"
+                            >
+                              <MessageCircle className="w-3.5 h-3.5" />
+                              Bluesky
+                            </button>
+                            <button
+                              onClick={() => copyQuote(highlight)}
+                              className="w-full px-3 py-1.5 text-left text-sm hover:bg-stone-50 flex items-center gap-2"
+                            >
+                              <Link2 className="w-3.5 h-3.5" />
+                              Copy quote
+                            </button>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Delete button */}
+                      <button
+                        onClick={() => handleDelete(highlight.id)}
+                        disabled={deletingId === highlight.id}
+                        className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-red-500 transition-all"
+                        title="Delete highlight"
+                      >
+                        {deletingId === highlight.id ? (
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="w-4 h-4" />
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
