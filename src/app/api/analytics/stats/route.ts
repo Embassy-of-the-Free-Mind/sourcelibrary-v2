@@ -30,27 +30,26 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Get global stats
-    const [totalReads, totalEdits, totalBooks, totalPages] = await Promise.all([
+    // Get global stats - single aggregation for reads/edits
+    const [bookStats, totalBooks, totalPages, pagesTranslated] = await Promise.all([
       db.collection('books').aggregate([
-        { $group: { _id: null, total: { $sum: '$read_count' } } }
-      ]).toArray(),
-      db.collection('books').aggregate([
-        { $group: { _id: null, total: { $sum: '$edit_count' } } }
+        { $group: {
+          _id: null,
+          totalReads: { $sum: '$read_count' },
+          totalEdits: { $sum: '$edit_count' }
+        } }
       ]).toArray(),
       db.collection('books').countDocuments(),
       db.collection('pages').countDocuments(),
+      db.collection('pages').countDocuments({
+        'translation.data': { $exists: true, $ne: '' }
+      }),
     ]);
-
-    // Get pages with translations (edits completed)
-    const pagesTranslated = await db.collection('pages').countDocuments({
-      'translation.data': { $exists: true, $ne: '' }
-    });
 
     return NextResponse.json({
       global: true,
-      totalReads: totalReads[0]?.total || 0,
-      totalEdits: totalEdits[0]?.total || 0,
+      totalReads: bookStats[0]?.totalReads || 0,
+      totalEdits: bookStats[0]?.totalEdits || 0,
       totalBooks,
       totalPages,
       pagesTranslated,

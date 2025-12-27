@@ -20,11 +20,12 @@ export async function POST(
 
     // Support single page or batch
     const pages = Array.isArray(body) ? body : [body];
-    const created = [];
+    const now = new Date();
 
-    for (const pageData of pages) {
+    // Build all documents upfront
+    const docs = pages.map(pageData => {
       const pageId = new ObjectId();
-      const doc = {
+      return {
         _id: pageId,
         id: pageId.toHexString(),
         tenant_id: 'default',
@@ -43,18 +44,18 @@ export async function POST(
           model: null,
           data: ''
         },
-        created_at: new Date(),
-        updated_at: new Date()
+        created_at: now,
+        updated_at: now
       };
+    });
 
-      await db.collection('pages').insertOne(doc);
-      created.push({ id: doc.id, page_number: doc.page_number });
-    }
+    // Bulk insert for efficiency
+    await db.collection('pages').insertMany(docs);
 
     return NextResponse.json({
       success: true,
-      created: created.length,
-      pages: created
+      created: docs.length,
+      pages: docs.map(d => ({ id: d.id, page_number: d.page_number }))
     });
   } catch (error) {
     console.error('Error creating pages:', error);
