@@ -26,7 +26,7 @@ Let's trace a real research query: *"What experiments did Drebbel report on rega
 ### Step 1: Search
 
 ```bash
-curl "https://sourcelibrary-v2.vercel.app/api/search?q=quintessence"
+curl "https://sourcelibrary.org/api/search?q=quintessence"
 ```
 
 Returns matches across all translated texts:
@@ -56,7 +56,7 @@ The search finds the relevant book and specific pages mentioning the term.
 ### Step 2: Get the Quote
 
 ```bash
-curl "https://sourcelibrary-v2.vercel.app/api/books/6836f8ee811c8ab472a49e36/quote?page=57"
+curl "https://sourcelibrary.org/api/books/6836f8ee811c8ab472a49e36/quote?page=57"
 ```
 
 Returns the full translation with the original Latin and formatted citations:
@@ -138,7 +138,7 @@ Configuration for Claude Desktop:
       "command": "node",
       "args": ["/path/to/mcp-server/dist/index.js"],
       "env": {
-        "SOURCE_LIBRARY_API": "https://sourcelibrary-v2.vercel.app/api"
+        "SOURCE_LIBRARY_API": "https://sourcelibrary.org/api"
       }
     }
   }
@@ -194,8 +194,8 @@ Source Library answers all three. The AI becomes a research assistant that can s
 
 ## Try It
 
-- **Search UI**: https://sourcelibrary-v2.vercel.app/search
-- **API**: https://sourcelibrary-v2.vercel.app/api/search?q=quintessence
+- **Search UI**: https://sourcelibrary.org/search
+- **API**: https://sourcelibrary.org/api/search?q=quintessence
 - **MCP Server**: See `/mcp-server/README.md`
 
 ---

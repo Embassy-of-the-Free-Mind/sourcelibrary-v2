@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getDb } from '@/lib/mongodb';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://sourcelibrary-v2.vercel.app';
+  const baseUrl = 'https://sourcelibrary.org';
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [

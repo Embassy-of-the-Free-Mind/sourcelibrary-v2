@@ -53,8 +53,11 @@ export interface Job {
     prompt_name?: string;
     language?: string;
     page_ids?: string[];
+    use_batch_api?: boolean;
     [key: string]: unknown;
   };
+  // Gemini Batch API job name (for async processing)
+  gemini_batch_job?: string;
 }
 
 // ============================================

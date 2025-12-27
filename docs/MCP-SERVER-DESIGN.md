@@ -281,7 +281,7 @@ await server.connect(transport);
       "command": "node",
       "args": ["/path/to/source-library/dist/mcp/server.js"],
       "env": {
-        "SOURCE_LIBRARY_API": "https://sourcelibrary-v2.vercel.app/api"
+        "SOURCE_LIBRARY_API": "https://sourcelibrary.org/api"
       }
     }
   }

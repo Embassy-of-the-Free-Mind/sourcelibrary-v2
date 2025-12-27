@@ -8,7 +8,7 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
-const API_BASE = 'https://sourcelibrary-v2.vercel.app';
+const API_BASE = 'https://sourcelibrary.org';
 const OUTPUT_DIR = path.join(__dirname, '..', 'public', 'gutter-analysis');
 const ANALYSIS_WIDTH = 1000;
 

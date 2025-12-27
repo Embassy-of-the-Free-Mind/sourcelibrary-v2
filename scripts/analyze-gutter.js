@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const API_BASE = 'https://sourcelibrary-v2.vercel.app';
+const API_BASE = 'https://sourcelibrary.org';
 const OUTPUT_DIR = path.join(__dirname, '..', 'public', 'gutter-analysis');
 const SAMPLE_COUNT = 5; // Number of pages to analyze
 const ANALYSIS_WIDTH = 1000; // Normalize all images to this width for consistent analysis

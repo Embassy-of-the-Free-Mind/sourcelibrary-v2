@@ -22,7 +22,7 @@ First, get the book ID and check its readiness:
 
 ```bash
 # Get book details and page statistics
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID" | jq '{
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID" | jq '{
   title: .title,
   display_title: .display_title,
   author: .author,
@@ -32,7 +32,7 @@ curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID" | jq '{
 }'
 
 # Check translation progress
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID/pages?limit=500" | \
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID/pages?limit=500" | \
   jq '[.pages[] | select(.translation.data != null)] | length'
 ```
 
@@ -43,7 +43,7 @@ Confirm ALL pages have translations before proceeding.
 Generate the scholarly Introduction and Methodology sections:
 
 ```bash
-curl -X POST "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID/front-matter" \
+curl -X POST "https://sourcelibrary.org/api/books/BOOK_ID/front-matter" \
   -H "Content-Type: application/json" \
   -d '{}'
 ```
@@ -59,7 +59,7 @@ Save the response to use when creating the edition.
 Create a versioned edition with the generated front matter:
 
 ```bash
-curl -X POST "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID/editions" \
+curl -X POST "https://sourcelibrary.org/api/books/BOOK_ID/editions" \
   -H "Content-Type: application/json" \
   -d '{
     "version_label": "First Edition",
@@ -85,7 +85,7 @@ Note the returned `edition_id` for the next step.
 Test the scholarly EPUB download:
 
 ```bash
-curl -sL "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID/download?format=scholarly" \
+curl -sL "https://sourcelibrary.org/api/books/BOOK_ID/download?format=scholarly" \
   -o /tmp/scholarly-test.epub
 
 # Check file size
@@ -108,7 +108,7 @@ The EPUB should include:
 Mint a permanent DOI for the edition:
 
 ```bash
-curl -X POST "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID/editions/mint-doi" \
+curl -X POST "https://sourcelibrary.org/api/books/BOOK_ID/editions/mint-doi" \
   -H "Content-Type: application/json" \
   -d '{"edition_id": "EDITION_ID"}'
 ```

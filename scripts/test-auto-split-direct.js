@@ -6,7 +6,7 @@
 
 const sharp = require('sharp');
 
-const API_BASE = 'https://sourcelibrary-v2.vercel.app';
+const API_BASE = 'https://sourcelibrary.org';
 
 // Import detection logic (inline for testing)
 function analyzeColumns(pixelData, width, height, darkThreshold = 180) {

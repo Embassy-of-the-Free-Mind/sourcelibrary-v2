@@ -21,7 +21,7 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
       "command": "node",
       "args": ["/path/to/sourcelibrary-v2/mcp-server/dist/index.js"],
       "env": {
-        "SOURCE_LIBRARY_API": "https://sourcelibrary-v2.vercel.app/api"
+        "SOURCE_LIBRARY_API": "https://sourcelibrary.org/api"
       }
     }
   }

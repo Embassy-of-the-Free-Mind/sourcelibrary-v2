@@ -21,7 +21,7 @@ See `.claude/ROADMAP.md` for the translation priority list.
 
 ```bash
 # Get roadmap with priorities
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/roadmap" | jq '.books[] | select(.priority == 1) | {title, notes}'
+curl -s "https://sourcelibrary.org/api/books/roadmap" | jq '.books[] | select(.priority == 1) | {title, notes}'
 ```
 
 Roadmap source: `src/app/api/books/roadmap/route.ts`
@@ -58,7 +58,7 @@ First, check what work is needed for a book:
 
 ```bash
 # Get book and analyze page status
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID" > /tmp/book.json
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID" > /tmp/book.json
 
 # Count pages by status (IMPORTANT: check length > 0, not just existence - empty strings are truthy!)
 jq '{
@@ -93,7 +93,7 @@ For books with split two-page spreads, generate individual page images:
 CROP_IDS=$(jq '[.pages[] | select(.crop) | select(.cropped_photo | not) | .id]' /tmp/book.json)
 
 # Create crop job
-curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
+curl -s -X POST "https://sourcelibrary.org/api/jobs" \
   -H "Content-Type: application/json" \
   -d "{
     \"type\": \"generate_cropped_images\",
@@ -107,7 +107,7 @@ Process the job:
 
 ```bash
 # Trigger processing (40 pages per request, auto-continues)
-curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs/JOB_ID/process"
+curl -s -X POST "https://sourcelibrary.org/api/jobs/JOB_ID/process"
 ```
 
 ## Step 3: OCR Pages
@@ -119,7 +119,7 @@ curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs/JOB_ID/process"
 OCR_IDS=$(jq '[.pages[] | select((.ocr.data // "") | length == 0) | .id]' /tmp/book.json)
 
 # Create OCR job
-curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
+curl -s -X POST "https://sourcelibrary.org/api/jobs" \
   -H "Content-Type: application/json" \
   -d "{
     \"type\": \"batch_ocr\",
@@ -135,7 +135,7 @@ curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
 
 ```bash
 # OCR with overwrite (for fixing bad OCR)
-curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/process/batch-ocr" \
+curl -s -X POST "https://sourcelibrary.org/api/process/batch-ocr" \
   -H "Content-Type: application/json" \
   -d '{
     "pages": [
@@ -159,7 +159,7 @@ The batch-ocr API automatically uses `cropped_photo` when available.
 TRANS_IDS=$(jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) | .id]' /tmp/book.json)
 
 # Create translation job
-curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
+curl -s -X POST "https://sourcelibrary.org/api/jobs" \
   -H "Content-Type: application/json" \
   -d "{
     \"type\": \"batch_translate\",
@@ -182,7 +182,7 @@ PAGES=$(jq '[.pages | sort_by(.page_number) | .[] |
   {pageId: .id, ocrText: .ocr.data, pageNumber: .page_number}]' /tmp/book.json)
 
 # Translate with context (process in batches of 5-10)
-curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/process/batch-translate" \
+curl -s -X POST "https://sourcelibrary.org/api/process/batch-translate" \
   -H "Content-Type: application/json" \
   -d "{
     \"pages\": $BATCH,
@@ -201,7 +201,7 @@ Process a single book through the full pipeline:
 #!/bin/bash
 BOOK_ID="YOUR_BOOK_ID"
 MODEL="gemini-3-flash-preview"
-BASE_URL="https://sourcelibrary-v2.vercel.app"
+BASE_URL="https://sourcelibrary.org"
 
 # 1. Fetch book data
 echo "Fetching book..."
@@ -292,7 +292,7 @@ BAD_OCR_IDS=$(jq '[.pages[] | select(.crop) | select(.ocr.data) |
 TOTAL=$(echo "$BAD_OCR_IDS" | jq 'length')
 for ((i=0; i<TOTAL; i+=5)); do
   BATCH=$(echo "$BAD_OCR_IDS" | jq ".[$i:$((i+5))] | [.[] | {pageId: ., imageUrl: \"\", pageNumber: 0}]")
-  curl -s -X POST "https://sourcelibrary-v2.vercel.app/api/process/batch-ocr" \
+  curl -s -X POST "https://sourcelibrary.org/api/process/batch-ocr" \
     -H "Content-Type: application/json" \
     -d "{\"pages\":$BATCH,\"model\":\"gemini-3-flash-preview\",\"overwrite\":true}"
 done
@@ -308,7 +308,7 @@ This script processes all books with proper rate limiting:
 #!/bin/bash
 # Optimized for Tier 1 (300 RPM) - adjust SLEEP_TIME for other tiers
 
-BASE_URL="https://sourcelibrary-v2.vercel.app"
+BASE_URL="https://sourcelibrary.org"
 MODEL="gemini-2.5-flash"
 BATCH_SIZE=5
 SLEEP_TIME=0.4  # Tier 1: 0.4s, Tier 2: 0.12s, Tier 3: 0.06s
@@ -439,7 +439,7 @@ nohup ./batch_process.sh > batch.log 2>&1 &
 Check overall library status:
 
 ```bash
-curl -s "https://sourcelibrary-v2.vercel.app/api/books" | jq '[.[] | {
+curl -s "https://sourcelibrary.org/api/books" | jq '[.[] | {
   title: .title[0:30],
   pages: .pages_count,
   ocr: .ocr_count,

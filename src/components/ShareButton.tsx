@@ -193,7 +193,7 @@ export function QuoteShare({
 }) {
   const baseUrl = typeof window !== 'undefined'
     ? window.location.origin
-    : 'https://sourcelibrary-v2.vercel.app';
+    : 'https://sourcelibrary.org';
 
   const url = page
     ? `${baseUrl}/book/${bookId}/read#page-${page}`
@@ -231,7 +231,7 @@ export function BookShare({
 }) {
   const baseUrl = typeof window !== 'undefined'
     ? window.location.origin
-    : 'https://sourcelibrary-v2.vercel.app';
+    : 'https://sourcelibrary.org';
 
   return (
     <ShareButton

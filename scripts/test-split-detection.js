@@ -6,7 +6,7 @@
 
 const sharp = require('sharp');
 
-const API_BASE = 'https://sourcelibrary-v2.vercel.app';
+const API_BASE = 'https://sourcelibrary.org';
 
 async function fetchBook(bookId) {
   const response = await fetch(`${API_BASE}/api/books/${bookId}`);

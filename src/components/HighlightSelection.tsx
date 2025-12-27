@@ -130,7 +130,7 @@ export default function HighlightSelection({
 
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/book/${bookId}/read#page-${pageNumber}`
-    : `https://sourcelibrary-v2.vercel.app/book/${bookId}/read#page-${pageNumber}`;
+    : `https://sourcelibrary.org/book/${bookId}/read#page-${pageNumber}`;
 
   const buildTweetText = () => {
     const maxQuoteLength = 200;

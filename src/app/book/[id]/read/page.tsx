@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List, Info, X } from 'lucide-react';
 import { Book, Page } from '@/lib/types';
 import HighlightSelection from '@/components/HighlightSelection';
 import HighlightsPanel from '@/components/HighlightsPanel';
@@ -46,7 +46,8 @@ export default function ReadPage({ params }: ReadPageProps) {
   const [annotationCount, setAnnotationCount] = useState(0);
   const [currentPageId, setCurrentPageId] = useState<string | null>(null);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const [showNotes, setShowNotes] = useState(true);
+  const [showNotes, setShowNotes] = useState(false);
+  const [showBookInfo, setShowBookInfo] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [showSections, setShowSections] = useState(true);
   const textRef = useRef<HTMLDivElement>(null);
@@ -216,16 +217,24 @@ export default function ReadPage({ params }: ReadPageProps) {
             </Link>
             <div className="flex items-center gap-4">
               <button
+                onClick={() => setShowBookInfo(true)}
+                className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 transition-colors"
+                title="Book metadata"
+              >
+                <Info className="w-4 h-4" />
+                <span className="hidden sm:inline">Info</span>
+              </button>
+              <button
                 onClick={() => setShowNotes(!showNotes)}
                 className={`inline-flex items-center gap-1.5 text-sm transition-colors ${
                   showNotes
-                    ? 'text-amber-600 hover:text-amber-700'
+                    ? 'text-teal-600 hover:text-teal-700'
                     : 'text-stone-400 hover:text-stone-600'
                 }`}
-                title={showNotes ? 'Hide annotations' : 'Show annotations'}
+                title={showNotes ? 'Hide margin notes & annotations' : 'Show margin notes & annotations'}
               >
                 <StickyNote className="w-4 h-4" />
-                <span className="hidden sm:inline">{showNotes ? 'Notes' : 'Notes Off'}</span>
+                <span className="hidden sm:inline">{showNotes ? 'Notes On' : 'Notes'}</span>
               </button>
               <button
                 onClick={() => setShowHighlights(true)}
@@ -534,6 +543,189 @@ export default function ReadPage({ params }: ReadPageProps) {
           onClose={() => setShowAnnotations(false)}
           onAnnotationChange={fetchAnnotationCount}
         />
+      )}
+
+      {/* Book Info Modal */}
+      {showBookInfo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-stone-200 px-4 py-3 flex items-center justify-between">
+              <h2 className="font-semibold text-stone-900">Book Information</h2>
+              <button
+                onClick={() => setShowBookInfo(false)}
+                className="p-1 text-stone-400 hover:text-stone-600 rounded"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 space-y-4">
+              {/* Title */}
+              <div>
+                <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Title</h3>
+                <p className="text-stone-900">{book.display_title || book.title}</p>
+                {book.display_title && book.title !== book.display_title && (
+                  <p className="text-sm text-stone-500 mt-0.5 italic">{book.title}</p>
+                )}
+              </div>
+
+              {/* Author */}
+              <div>
+                <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Author</h3>
+                <p className="text-stone-900">{book.author}</p>
+              </div>
+
+              {/* Publication */}
+              <div className="grid grid-cols-2 gap-4">
+                {book.published && (
+                  <div>
+                    <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Published</h3>
+                    <p className="text-stone-900">{book.published}</p>
+                  </div>
+                )}
+                {book.place_published && (
+                  <div>
+                    <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Place</h3>
+                    <p className="text-stone-900">{book.place_published}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Publisher */}
+              {book.publisher && (
+                <div>
+                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Publisher</h3>
+                  <p className="text-stone-900">{book.publisher}</p>
+                </div>
+              )}
+
+              {/* Language & Format */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Language</h3>
+                  <p className="text-stone-900">{book.language}</p>
+                </div>
+                {book.format && (
+                  <div>
+                    <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Format</h3>
+                    <p className="text-stone-900">{book.format}</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Categories */}
+              {book.categories && book.categories.length > 0 && (
+                <div>
+                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Categories</h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {book.categories.map((cat, i) => (
+                      <span key={i} className="px-2 py-0.5 bg-amber-100 text-amber-800 text-sm rounded">
+                        {cat}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Identifiers */}
+              {(book.doi || book.ustc_id || book.ia_identifier) && (
+                <div>
+                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Identifiers</h3>
+                  <div className="space-y-1 text-sm">
+                    {book.doi && (
+                      <p>
+                        <span className="text-stone-500">DOI:</span>{' '}
+                        <a
+                          href={`https://doi.org/${book.doi}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-amber-600 hover:text-amber-700"
+                        >
+                          {book.doi}
+                        </a>
+                      </p>
+                    )}
+                    {book.ustc_id && (
+                      <p>
+                        <span className="text-stone-500">USTC:</span>{' '}
+                        <a
+                          href={`https://www.ustc.ac.uk/editions/${book.ustc_id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-amber-600 hover:text-amber-700"
+                        >
+                          {book.ustc_id}
+                        </a>
+                      </p>
+                    )}
+                    {book.ia_identifier && (
+                      <p>
+                        <span className="text-stone-500">Internet Archive:</span>{' '}
+                        <a
+                          href={`https://archive.org/details/${book.ia_identifier}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-amber-600 hover:text-amber-700"
+                        >
+                          {book.ia_identifier}
+                        </a>
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* License */}
+              {book.license && (
+                <div>
+                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">License</h3>
+                  <p className="text-stone-900">{book.license}</p>
+                </div>
+              )}
+
+              {/* Image Source */}
+              {book.image_source && (
+                <div>
+                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Image Source</h3>
+                  <p className="text-stone-900">
+                    {book.image_source.provider_name || book.image_source.provider}
+                    {book.image_source.source_url && (
+                      <>
+                        {' '}
+                        <a
+                          href={book.image_source.source_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-amber-600 hover:text-amber-700"
+                        >
+                          <ExternalLink className="w-3 h-3 inline" />
+                        </a>
+                      </>
+                    )}
+                  </p>
+                  {book.image_source.license && (
+                    <p className="text-sm text-stone-500">{book.image_source.license}</p>
+                  )}
+                </div>
+              )}
+
+              {/* Translation Progress */}
+              <div className="pt-2 border-t border-stone-200">
+                <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">Translation Progress</h3>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 bg-stone-200 rounded-full h-2">
+                    <div
+                      className="bg-amber-500 h-2 rounded-full transition-all"
+                      style={{ width: `${translationProgress}%` }}
+                    />
+                  </div>
+                  <span className="text-sm text-stone-600">
+                    {translatedPages.length}/{pages.length} pages ({translationProgress}%)
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

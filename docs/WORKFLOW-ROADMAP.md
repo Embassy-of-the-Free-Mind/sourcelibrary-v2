@@ -54,7 +54,7 @@ Key signals for authentic early editions:
 ### Step 2: Import from Internet Archive
 
 ```bash
-curl -X POST "https://sourcelibrary-v2.vercel.app/api/import/ia" \
+curl -X POST "https://sourcelibrary.org/api/import/ia" \
   -H "Content-Type: application/json" \
   -d '{
     "ia_identifier": "ita-bnc-in2-00001718-002",
@@ -78,11 +78,11 @@ curl -X POST "https://sourcelibrary-v2.vercel.app/api/import/ia" \
 ```bash
 # Fetch book and get page IDs
 BOOK_ID="YOUR_BOOK_ID"
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/$BOOK_ID" > /tmp/book.json
+curl -s "https://sourcelibrary.org/api/books/$BOOK_ID" > /tmp/book.json
 OCR_IDS=$(jq '[.pages[] | select((.ocr.data // "") | length == 0) | .id]' /tmp/book.json)
 
 # Create job
-curl -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
+curl -X POST "https://sourcelibrary.org/api/jobs" \
   -H "Content-Type: application/json" \
   -d "{
     \"type\": \"batch_ocr\",
@@ -98,10 +98,10 @@ curl -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
 
 ```bash
 # Start processing (runs in batches of 5)
-curl -X POST "https://sourcelibrary-v2.vercel.app/api/jobs/JOB_ID/process"
+curl -X POST "https://sourcelibrary.org/api/jobs/JOB_ID/process"
 
 # Check status
-curl "https://sourcelibrary-v2.vercel.app/api/jobs/JOB_ID"
+curl "https://sourcelibrary.org/api/jobs/JOB_ID"
 ```
 
 ### Step 5: Create Translation Job
@@ -111,7 +111,7 @@ After OCR completes:
 # Get pages with OCR but no translation
 TRANS_IDS=$(jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) | .id]' /tmp/book.json)
 
-curl -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
+curl -X POST "https://sourcelibrary.org/api/jobs" \
   -H "Content-Type: application/json" \
   -d "{
     \"type\": \"batch_translate\",
@@ -154,12 +154,12 @@ curl -X POST "https://sourcelibrary-v2.vercel.app/api/jobs" \
 
 ### Check All Jobs
 ```bash
-curl "https://sourcelibrary-v2.vercel.app/api/jobs" | jq '.jobs[] | {id, type, status, progress}'
+curl "https://sourcelibrary.org/api/jobs" | jq '.jobs[] | {id, type, status, progress}'
 ```
 
 ### Check Book Progress
 ```bash
-curl "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID" | jq '{
+curl "https://sourcelibrary.org/api/books/BOOK_ID" | jq '{
   title: .title,
   pages: (.pages | length),
   ocr: [.pages[] | select((.ocr.data // "") | length > 0)] | length,
@@ -198,7 +198,7 @@ The public roadmap is at `/roadmap` and includes:
 ### Retry Failed Pages
 ```bash
 # Get failed page IDs from job
-curl "https://sourcelibrary-v2.vercel.app/api/jobs/JOB_ID" | jq '[.job.results[] | select(.status == "failed") | .pageId]'
+curl "https://sourcelibrary.org/api/jobs/JOB_ID" | jq '[.job.results[] | select(.status == "failed") | .pageId]'
 
 # Create new job with just failed pages
 ```

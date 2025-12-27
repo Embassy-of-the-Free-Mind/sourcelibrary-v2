@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://sourcelibrary-v2.vercel.app';
+  const baseUrl = 'https://sourcelibrary.org';
 
   return {
     rules: [

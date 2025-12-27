@@ -11,7 +11,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 
 // Configuration
-const API_BASE = process.env.SOURCE_LIBRARY_API || "https://sourcelibrary-v2.vercel.app/api";
+const API_BASE = process.env.SOURCE_LIBRARY_API || "https://sourcelibrary.org/api";
 
 // Tool definitions
 const TOOLS: Tool[] = [

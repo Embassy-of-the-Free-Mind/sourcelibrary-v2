@@ -42,14 +42,14 @@ export async function GET() {
         pages: pageCountMap.get(bookId) || 0,
         thumbnail: book.thumbnail || '',
         summary: summaryMap.get(bookId)?.substring(0, 500) || '',
-        url: `https://sourcelibrary-v2.vercel.app/book/${bookId}`
+        url: `https://sourcelibrary.org/book/${bookId}`
       };
     });
 
     return NextResponse.json({
       total: catalog.length,
       description: 'Source Library: Digitizing and translating rare Hermetic, esoteric, and humanist texts',
-      website: 'https://sourcelibrary-v2.vercel.app',
+      website: 'https://sourcelibrary.org',
       catalog
     });
   } catch (error) {

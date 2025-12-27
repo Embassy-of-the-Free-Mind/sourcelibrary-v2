@@ -2,7 +2,7 @@
 // Test crop job speed on Vercel deployment
 // Usage: node scripts/test-crop-vercel.mjs [jobId]
 
-const BASE_URL = 'https://sourcelibrary-v2.vercel.app';
+const BASE_URL = 'https://sourcelibrary.org';
 
 async function processAndTime(jobId) {
   console.log(`\n=== Processing job ${jobId} ===`);

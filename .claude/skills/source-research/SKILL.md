@@ -19,7 +19,7 @@ Search the Source Library collection of translated historical texts and retrieve
 ### Search
 
 ```bash
-curl -s "https://sourcelibrary-v2.vercel.app/api/search?q=QUERY"
+curl -s "https://sourcelibrary.org/api/search?q=QUERY"
 ```
 
 Options: `language=Latin`, `has_doi=true`, `limit=10`
@@ -27,7 +27,7 @@ Options: `language=Latin`, `has_doi=true`, `limit=10`
 ### Get Quote
 
 ```bash
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID/quote?page=N"
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID/quote?page=N"
 ```
 
 Returns translation, original text, and citation.
@@ -35,7 +35,7 @@ Returns translation, original text, and citation.
 ### Get Book
 
 ```bash
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID"
+curl -s "https://sourcelibrary.org/api/books/BOOK_ID"
 ```
 
 ## Workflow
@@ -49,10 +49,10 @@ curl -s "https://sourcelibrary-v2.vercel.app/api/books/BOOK_ID"
 
 ```bash
 # Search
-curl -s "https://sourcelibrary-v2.vercel.app/api/search?q=quintessence&limit=5"
+curl -s "https://sourcelibrary.org/api/search?q=quintessence&limit=5"
 
 # Get quote
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/6836f8ee811c8ab472a49e36/quote?page=57"
+curl -s "https://sourcelibrary.org/api/books/6836f8ee811c8ab472a49e36/quote?page=57"
 ```
 
 ## Citing

@@ -97,7 +97,7 @@ https://archive.org/details/IDENTIFIER
 
 ```bash
 # Get current roadmap
-curl -s "https://sourcelibrary-v2.vercel.app/api/books/roadmap"
+curl -s "https://sourcelibrary.org/api/books/roadmap"
 
 # Response includes:
 # - total: number of books
