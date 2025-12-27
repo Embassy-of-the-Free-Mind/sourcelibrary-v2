@@ -11,8 +11,9 @@ import {
 
 export const maxDuration = 300;
 
-// Maximum inline requests before switching to file upload
-const MAX_INLINE_REQUESTS = 50;
+// Maximum inline requests (Gemini Batch API handles inline batches well)
+// File-based uploads require GCS, so we use inline for all reasonable sizes
+const MAX_INLINE_REQUESTS = 1000;
 
 interface PageForBatch {
   pageId: string;
