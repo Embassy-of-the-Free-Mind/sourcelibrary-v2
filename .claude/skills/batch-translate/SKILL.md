@@ -7,6 +7,25 @@ description: Batch process books through the complete pipeline - generate croppe
 
 Process books through the complete pipeline: Crop → OCR → Translate
 
+## Roadmap Reference
+
+See `.claude/ROADMAP.md` for the translation priority list.
+
+**Priority 1 = UNTRANSLATED** - These are highest priority for processing:
+- Kircher encyclopedias (Oedipus, Musurgia, Ars Magna Lucis)
+- Fludd: Utriusque Cosmi Historia
+- Theatrum Chemicum, Musaeum Hermeticum
+- Cardano: De Subtilitate
+- Della Porta: Magia Naturalis
+- Lomazzo, Poliziano, Landino
+
+```bash
+# Get roadmap with priorities
+curl -s "https://sourcelibrary-v2.vercel.app/api/books/roadmap" | jq '.books[] | select(.priority == 1) | {title, notes}'
+```
+
+Roadmap source: `src/app/api/books/roadmap/route.ts`
+
 ## Overview
 
 This workflow handles the full processing pipeline for historical book scans:
