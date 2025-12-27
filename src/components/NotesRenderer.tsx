@@ -124,9 +124,9 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // This ensures no metadata tags slip through to the reader
   result = result.replace(/\[\[(?:markup|language|page\s*number|folio|signature|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
 
-  // Final aggressive cleanup: remove ANY remaining [[something: ...]] patterns
-  // This catches any malformed or unexpected tags
-  result = result.replace(/\[\[[a-z_-]+:\s*[\s\S]*?\]\]/gi, '');
+  // Note: Do NOT add a catch-all here that removes all [[tag:]] patterns!
+  // The note-related tags (margin, note, gloss, insert, unclear, term, image)
+  // must be preserved for processInlineMarkup to style them.
 
   // Clean up extra whitespace from removed metadata
   result = result.replace(/^\s*\n/gm, '\n').replace(/\n{3,}/g, '\n\n').trim();
