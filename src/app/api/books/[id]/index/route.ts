@@ -84,22 +84,38 @@ interface BookIndex {
   totalPages: number;
 }
 
-// Extract [[vocabulary: ...]] and [[keywords: ...]] from text
+// Extract vocabulary/keywords from text - supports both [[tag:]] and <tag></tag> syntax
 function extractTerms(text: string, tag: string): string[] {
-  const pattern = new RegExp(`\\[\\[${tag}:\\s*(.*?)\\]\\]`, 'gi');
   const terms: string[] = [];
+
+  // XML syntax: <vocab>...</vocab> or <keywords>...</keywords>
+  const xmlTag = tag === 'vocabulary' ? 'vocab' : tag;
+  const xmlPattern = new RegExp(`<${xmlTag}>([\\s\\S]*?)</${xmlTag}>`, 'gi');
   let match;
-  while ((match = pattern.exec(text)) !== null) {
+  while ((match = xmlPattern.exec(text)) !== null) {
     const items = match[1].split(',').map(t => t.trim()).filter(Boolean);
     terms.push(...items);
   }
+
+  // Legacy bracket syntax: [[vocabulary:...]] or [[keywords:...]]
+  const bracketPattern = new RegExp(`\\[\\[${tag}:\\s*(.*?)\\]\\]`, 'gi');
+  while ((match = bracketPattern.exec(text)) !== null) {
+    const items = match[1].split(',').map(t => t.trim()).filter(Boolean);
+    terms.push(...items);
+  }
+
   return terms;
 }
 
-// Extract [[summary: ...]] from text
+// Extract summary from text - supports both [[summary:]] and <summary></summary> syntax
 function extractSummary(text: string): string | undefined {
-  const match = text.match(/\[\[summary:\s*(.*?)\]\]/i);
-  return match ? match[1].trim() : undefined;
+  // Try XML syntax first
+  const xmlMatch = text.match(/<summary>([\s\S]*?)<\/summary>/i);
+  if (xmlMatch) return xmlMatch[1].trim();
+
+  // Fall back to bracket syntax
+  const bracketMatch = text.match(/\[\[summary:\s*(.*?)\]\]/i);
+  return bracketMatch ? bracketMatch[1].trim() : undefined;
 }
 
 // Categorize terms into people, places, concepts
@@ -192,6 +208,7 @@ function extractPageSummaries(pages: PageData[]): { page: number; summary: strin
     if (!summary && text.length > 50) {
       // Strip metadata tags and get clean text
       let cleanText = text
+        .replace(/<[a-z-]+>[\s\S]*?<\/[a-z-]+>/gi, '') // Remove all <tag>...</tag> patterns
         .replace(/\[\[[^\]]+\]\]/g, '') // Remove all [[tag:...]] patterns
         .replace(/^```(?:markdown)?\s*\n?/i, '') // Remove code fences
         .replace(/\n?```\s*$/i, '')

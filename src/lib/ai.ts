@@ -252,7 +252,7 @@ const MODERNIZATION_PROMPT = `You are rewriting a scholarly translation into cle
 
 **Format:** Clean prose with paragraph breaks. No markdown headers, bullet points, or annotations. Just flowing, readable text.
 
-**IMPORTANT:** If the translation has [[notes: ...]] or [[term: ...]] or other [[tags]], incorporate that information naturally into the text rather than preserving the markup. Remove all [[...]] tags from output.`;
+**IMPORTANT:** If the translation has <note>...</note>, <term>...</term>, or other XML/bracket tags, incorporate that information naturally into the text rather than preserving the markup. Remove all tags from output.`;
 
 export async function performModernization(
   translationText: string,

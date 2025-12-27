@@ -4,28 +4,32 @@ import { getDb } from '@/lib/mongodb';
 /**
  * POST /api/extract-images
  *
- * Run Mistral (Pixtral) image extraction on pages with illustrations.
- * Body: { limit?: number, bookId?: string }
+ * Run Gemini image extraction on pages with illustrations.
+ * Body: { limit?: number, bookId?: string, model?: 'gemini' | 'mistral' }
  */
 
-const EXTRACTION_PROMPT = `Analyze this historical book page scan and identify all illustrations, diagrams, woodcuts, charts, or decorative elements.
+const EXTRACTION_PROMPT = `You are analyzing a historical book page scan. Your task is to identify and PRECISELY locate all illustrations, diagrams, woodcuts, charts, maps, or decorative elements.
 
-For each image/illustration found, provide:
-1. A brief description of what it depicts
-2. The type (woodcut, diagram, chart, illustration, symbol, decorative, table)
-3. The bounding box coordinates as normalized values (0-1 scale where 0,0 is top-left)
+CRITICAL: Provide EXACT bounding box coordinates. Measure carefully:
+- x: horizontal position of LEFT edge (0.0 = left margin, 1.0 = right margin)
+- y: vertical position of TOP edge (0.0 = top margin, 1.0 = bottom margin)
+- width: horizontal span of the illustration
+- height: vertical span of the illustration
 
-Return ONLY a JSON array:
-[
-  {
-    "description": "Alchemist working at a furnace with dragon symbol",
-    "type": "woodcut",
-    "bbox": { "x": 0.1, "y": 0.2, "width": 0.8, "height": 0.4 },
-    "confidence": 0.95
-  }
-]
+The bounding box should TIGHTLY enclose just the illustration, not the surrounding text.
 
-If there are no illustrations (just text), return: []`;
+For each illustration found, return:
+{
+  "description": "Brief description of what it depicts",
+  "type": "woodcut|diagram|chart|illustration|map|symbol|decorative|table",
+  "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "confidence": 0.95
+}
+
+Return ONLY a valid JSON array. If no illustrations exist (text-only page), return: []
+
+Example for a woodcut in the upper-right quadrant:
+[{"description": "Alchemical furnace with dragon", "type": "woodcut", "bbox": {"x": 0.55, "y": 0.10, "width": 0.40, "height": 0.35}, "confidence": 0.95}]`;
 
 interface DetectedImage {
   description: string;
@@ -36,10 +40,10 @@ interface DetectedImage {
   detection_source: 'vision_model';
 }
 
-async function extractWithMistral(imageUrl: string): Promise<DetectedImage[]> {
-  const apiKey = process.env.MISTRAL_API_KEY;
+async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    throw new Error('MISTRAL_API_KEY not set');
+    throw new Error('GEMINI_API_KEY not set');
   }
 
   // Fetch and encode image
@@ -50,31 +54,35 @@ async function extractWithMistral(imageUrl: string): Promise<DetectedImage[]> {
 
   const imageBuffer = await imageResponse.arrayBuffer();
   const base64Image = Buffer.from(imageBuffer).toString('base64');
-  const mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
-  const dataUrl = `data:${mimeType};base64,${base64Image}`;
+  const mimeType = imageResponse.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
 
-  const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: 'pixtral-12b-2409',
-      messages: [{
-        role: 'user',
-        content: [
-          { type: 'text', text: EXTRACTION_PROMPT },
-          { type: 'image_url', image_url: { url: dataUrl } }
-        ]
-      }],
-      temperature: 0.1,
-      max_tokens: 2048
-    })
-  });
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [
+            { text: EXTRACTION_PROMPT },
+            { inline_data: { mime_type: mimeType, data: base64Image } }
+          ]
+        }],
+        generationConfig: {
+          temperature: 0.1,
+          maxOutputTokens: 2048,
+        }
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Gemini API error: ${response.status} - ${error.slice(0, 200)}`);
+  }
 
   const data = await response.json();
-  const text = data.choices?.[0]?.message?.content || '';
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
   // Parse JSON from response
   const jsonMatch = text.match(/\[[\s\S]*\]/);
@@ -166,7 +174,7 @@ export async function POST(request: NextRequest) {
       let error: string | undefined;
 
       try {
-        extractedImages = await extractWithMistral(imageUrl);
+        extractedImages = await extractWithGemini(imageUrl);
 
         // Update the page with extracted images (unless dry run)
         if (!dryRun && extractedImages.length > 0) {

@@ -220,9 +220,23 @@ export async function GET(request: NextRequest) {
           });
         }
       } else if (page.ocr?.data) {
-        // Parse [[image: description]] from OCR
-        const matches = page.ocr.data.matchAll(/\[\[image:\s*([^\]]+)\]\]/gi);
-        for (const match of matches) {
+        // Parse <image-desc>...</image-desc> (new) and [[image: description]] (legacy) from OCR
+        const xmlMatches = page.ocr.data.matchAll(/<image-desc>([\s\S]*?)<\/image-desc>/gi);
+        for (const match of xmlMatches) {
+          items.push({
+            pageId: page.id,
+            bookId: page.book_id,
+            pageNumber: page.page_number,
+            imageUrl,
+            bookTitle: page.book?.title || 'Unknown',
+            author: page.book?.author,
+            year: page.book?.year,
+            description: match[1].trim()
+          });
+        }
+        // Legacy bracket syntax
+        const bracketMatches = page.ocr.data.matchAll(/\[\[image:\s*([^\]]+)\]\]/gi);
+        for (const match of bracketMatches) {
           items.push({
             pageId: page.id,
             bookId: page.book_id,
