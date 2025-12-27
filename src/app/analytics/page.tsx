@@ -846,9 +846,20 @@ export default function AnalyticsPage() {
                               {job.initiated_by || '-'}
                             </td>
                             <td className="px-4 py-3 max-w-[200px]">
-                              <div className="truncate" style={{ color: 'var(--text-primary)' }} title={job.book_title || '-'}>
-                                {job.book_title || '-'}
-                              </div>
+                              {job.book_id ? (
+                                <Link
+                                  href={`/book/${job.book_id}`}
+                                  className="block truncate hover:underline"
+                                  style={{ color: 'var(--text-primary)' }}
+                                  title={job.book_title || '-'}
+                                >
+                                  {job.book_title || '-'}
+                                </Link>
+                              ) : (
+                                <div className="truncate" style={{ color: 'var(--text-primary)' }} title={job.book_title || '-'}>
+                                  {job.book_title || '-'}
+                                </div>
+                              )}
                             </td>
                             <td className="px-4 py-3">
                               <div style={{ color: 'var(--text-primary)' }}>
