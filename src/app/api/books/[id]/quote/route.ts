@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
+import { getShortUrl } from '@/lib/shortlinks';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -14,6 +15,7 @@ interface Citation {
   chicago: string;          // Chicago style
   mla: string;              // MLA style
   url: string;              // Direct link to page in Source Library
+  short_url: string;        // Shortlink for sharing (e.g., Twitter)
   doi_url?: string;         // Clickable DOI URL
 }
 
@@ -91,6 +93,9 @@ function generateCitations(
   // Direct URL to page in Source Library
   const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;
 
+  // Short URL for sharing
+  const short_url = getShortUrl(bookId, pageNumber);
+
   return {
     inline,
     footnote,
@@ -99,6 +104,7 @@ function generateCitations(
     chicago,
     mla,
     url,
+    short_url,
     doi_url: doiUrl,
   };
 }

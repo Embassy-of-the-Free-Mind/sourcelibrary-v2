@@ -148,6 +148,14 @@ export async function createBatchJobInline(
 ): Promise<{ name: string; state: string }> {
   const apiKey = getApiKey();
 
+  // Format requests for Gemini Batch API
+  const formattedRequests = requests.map(r => ({
+    request: r.request,
+    metadata: {
+      key: r.key,
+    },
+  }));
+
   const response = await fetch(
     `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
     {
@@ -156,12 +164,13 @@ export async function createBatchJobInline(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        requests: requests.map(r => ({
-          key: r.key,
-          request: r.request,
-        })),
-        config: {
-          displayName,
+        batch: {
+          display_name: displayName,
+          input_config: {
+            requests: {
+              requests: formattedRequests,
+            },
+          },
         },
       }),
     }
@@ -197,9 +206,15 @@ export async function createBatchJobFromFile(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        src: fileName,
-        config: {
-          displayName,
+        batch: {
+          display_name: displayName,
+          input_config: {
+            requests: {
+              file_input_source: {
+                file_name: fileName,
+              },
+            },
+          },
         },
       }),
     }
