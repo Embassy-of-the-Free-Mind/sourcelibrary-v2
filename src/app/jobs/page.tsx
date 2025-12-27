@@ -2,8 +2,18 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, Trash2, CheckCircle, XCircle, Clock, Loader2 } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, Trash2, CheckCircle, XCircle, Clock, Loader2, Cloud, Zap, BookOpen, FileText } from 'lucide-react';
 import type { Job, JobStatus } from '@/lib/types';
+
+interface PendingStats {
+  total_books: number;
+  books_needing_ocr: number;
+  books_needing_translation: number;
+  total_pages_needing_ocr: number;
+  total_pages_needing_translation: number;
+  active_jobs: number;
+  pending_batch_jobs: number;
+}
 
 const STATUS_COLORS: Record<JobStatus, string> = {
   pending: 'var(--text-muted)',
@@ -25,16 +35,27 @@ const STATUS_ICONS: Record<JobStatus, typeof CheckCircle> = {
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [pendingStats, setPendingStats] = useState<PendingStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [processingJobId, setProcessingJobId] = useState<string | null>(null);
+  const [autoRefresh, setAutoRefresh] = useState(true);
   const processingRef = useRef(false);
 
   const fetchJobs = useCallback(async () => {
     try {
-      const res = await fetch('/api/jobs?limit=100');
-      if (res.ok) {
-        const data = await res.json();
+      const [jobsRes, statsRes] = await Promise.all([
+        fetch('/api/jobs?limit=100'),
+        fetch('/api/batch-jobs/process-all'),
+      ]);
+
+      if (jobsRes.ok) {
+        const data = await jobsRes.json();
         setJobs(data.jobs);
+      }
+
+      if (statsRes.ok) {
+        const data = await statsRes.json();
+        setPendingStats(data.stats || null);
       }
     } catch (e) {
       console.error('Failed to fetch jobs:', e);
@@ -45,10 +66,13 @@ export default function JobsPage() {
 
   useEffect(() => {
     fetchJobs();
-    // Poll for updates every 5 seconds
+  }, [fetchJobs]);
+
+  useEffect(() => {
+    if (!autoRefresh) return;
     const interval = setInterval(fetchJobs, 5000);
     return () => clearInterval(interval);
-  }, [fetchJobs]);
+  }, [fetchJobs, autoRefresh]);
 
   // Process a job (runs in a loop until done/paused/cancelled)
   const processJob = useCallback(async (jobId: string) => {
@@ -133,32 +157,154 @@ export default function JobsPage() {
     return Math.round(((job.progress.completed + job.progress.failed) / job.progress.total) * 100);
   };
 
+  // Calculate batch API stats
+  const activeJobs = jobs.filter(j => ['pending', 'processing'].includes(j.status));
+  const batchApiJobs = activeJobs.filter(j => (j as Job & { config?: { use_batch_api?: boolean } }).config?.use_batch_api);
+  const preparingJobs = batchApiJobs.filter(j => !(j as Job & { gemini_batch_job?: string }).gemini_batch_job);
+  const submittedJobs = batchApiJobs.filter(j => (j as Job & { gemini_batch_job?: string }).gemini_batch_job);
+
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       {/* Header */}
       <header className="px-6 py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
+        <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link href="/" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
             </Link>
             <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
-              Jobs
+              Jobs Manager
             </h1>
           </div>
-          <button
-            onClick={fetchJobs}
-            disabled={loading}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--accent-rust)' }}
-          >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            Refresh
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setAutoRefresh(!autoRefresh)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                autoRefresh ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-600'
+              }`}
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${autoRefresh ? 'animate-spin' : ''}`} />
+              {autoRefresh ? 'Live' : 'Paused'}
+            </button>
+            <button
+              onClick={fetchJobs}
+              disabled={loading}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--accent-rust)' }}
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
+          </div>
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-8">
+      <main className="max-w-5xl mx-auto px-6 py-8">
+        {/* Stats Cards */}
+        {pendingStats && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <Zap className="w-4 h-4" />
+                Active Jobs
+              </div>
+              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--text-primary)' }}>
+                {activeJobs.length}
+              </div>
+              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
+                {preparingJobs.length} preparing, {submittedJobs.length} with Gemini
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <BookOpen className="w-4 h-4" />
+                Needs OCR
+              </div>
+              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--accent-gold)' }}>
+                {pendingStats.total_pages_needing_ocr.toLocaleString()}
+              </div>
+              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
+                {pendingStats.books_needing_ocr} books
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <FileText className="w-4 h-4" />
+                Needs Translation
+              </div>
+              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--accent-sage)' }}>
+                {pendingStats.total_pages_needing_translation.toLocaleString()}
+              </div>
+              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
+                {pendingStats.books_needing_translation} books
+              </div>
+            </div>
+
+            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <Cloud className="w-4 h-4" />
+                Est. Cost (Batch)
+              </div>
+              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--accent-rust)' }}>
+                ${((pendingStats.total_pages_needing_ocr * 0.0025) + (pendingStats.total_pages_needing_translation * 0.0015)).toFixed(0)}
+              </div>
+              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
+                50% off with Batch API
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Gemini Batch Jobs Section */}
+        {submittedJobs.length > 0 && (
+          <div className="mb-6 p-4 rounded-xl" style={{ background: 'linear-gradient(135deg, #eff6ff 0%, #eef2ff 100%)', border: '1px solid #bfdbfe' }}>
+            <div className="flex items-center gap-2 mb-3">
+              <Cloud className="w-5 h-5 text-blue-600" />
+              <span className="font-medium text-blue-900">Gemini Batch API Queue</span>
+              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                {submittedJobs.length} processing
+              </span>
+            </div>
+            <div className="space-y-2">
+              {submittedJobs.map(job => {
+                const extJob = job as Job & { gemini_batch_job?: string; gemini_state?: string };
+                return (
+                  <div key={job.id} className="flex items-center justify-between bg-white/60 rounded-lg px-3 py-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-medium text-stone-700">
+                        {job.book_title?.slice(0, 35) || 'Untitled'}
+                      </span>
+                      <span className="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">
+                        {job.type.replace('batch_', '').toUpperCase()}
+                      </span>
+                      <span className="text-xs text-stone-500">
+                        {job.progress.total} pages
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-mono text-indigo-600">
+                        {extJob.gemini_state?.replace('JOB_STATE_', '') || 'PENDING'}
+                      </span>
+                      <button
+                        onClick={() => processJob(job.id)}
+                        disabled={processingJobId === job.id}
+                        className="text-xs px-2 py-1 bg-blue-100 hover:bg-blue-200 text-blue-700 rounded transition-colors"
+                      >
+                        {processingJobId === job.id ? (
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                        ) : (
+                          'Check'
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
         {loading && jobs.length === 0 ? (
           <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
             <RefreshCw className="w-8 h-8 mx-auto mb-4 animate-spin opacity-30" />
