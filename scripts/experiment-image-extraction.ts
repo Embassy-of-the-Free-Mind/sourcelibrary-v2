@@ -61,9 +61,9 @@ Be precise with bounding boxes - they should tightly enclose each illustration.`
 
 // Gemini extraction
 async function extractWithGemini(imageUrl: string): Promise<ExtractionResult> {
-  const apiKey = process.env.GOOGLE_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   if (!apiKey) {
-    return { model: 'gemini', images: [], rawResponse: '', latencyMs: 0, error: 'GOOGLE_API_KEY not set' };
+    return { model: 'gemini', images: [], rawResponse: '', latencyMs: 0, error: 'GEMINI_API_KEY not set' };
   }
 
   const start = Date.now();
