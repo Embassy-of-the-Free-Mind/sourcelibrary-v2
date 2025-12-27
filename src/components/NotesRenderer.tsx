@@ -430,58 +430,58 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
         ]}
         unwrapDisallowed={true}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        components={({
+        components={{
           p: withNotes(({ children }: { children?: ReactNode }) => <p className="mb-4 last:mb-0 leading-relaxed text-[var(--text-secondary)]">{children}</p>),
           strong: ({ children }: { children?: ReactNode }) => <strong className="font-bold text-[var(--text-primary)]">{children}</strong>,
           em: ({ children }: { children?: ReactNode }) => <em className="italic">{children}</em>,
-          img: ({ src, alt }) => (
+          img: ({ src, alt }: any) => (
             <img src={src} alt={alt || ''} className="max-w-full h-auto rounded my-4" />
           ),
-          h1: withNotes(({ children }) => (
+          h1: withNotes(({ children }: any) => (
             <h1 className="text-2xl font-serif font-bold mt-6 mb-3 text-[var(--text-primary)]">{children}</h1>
           )),
-          h2: withNotes(({ children }) => (
+          h2: withNotes(({ children }: any) => (
             <h2 className="text-xl font-serif font-bold mt-5 mb-2 text-[var(--text-primary)]">{children}</h2>
           )),
-          h3: withNotes(({ children }) => (
+          h3: withNotes(({ children }: any) => (
             <h3 className="text-lg font-serif font-semibold mt-4 mb-2 text-[var(--text-primary)]">{children}</h3>
           )),
-          h4: withNotes(({ children }) => (
+          h4: withNotes(({ children }: any) => (
             <h4 className="text-base font-serif font-semibold mt-3 mb-1 text-[var(--text-primary)]">{children}</h4>
           )),
-          ul: ({ children }) => <ul className="list-disc ml-5 my-3 space-y-1">{children}</ul>,
-          ol: ({ children, start }) => <ol className="list-decimal ml-5 my-3 space-y-1" start={start}>{children}</ol>,
-          li: withNotes(({ children }) => <li className="leading-relaxed">{children}</li>),
-          blockquote: withNotes(({ children }) => (
+          ul: ({ children }: any) => <ul className="list-disc ml-5 my-3 space-y-1">{children}</ul>,
+          ol: ({ children, start }: any) => <ol className="list-decimal ml-5 my-3 space-y-1" start={start}>{children}</ol>,
+          li: withNotes(({ children }: any) => <li className="leading-relaxed">{children}</li>),
+          blockquote: withNotes(({ children }: any) => (
             <blockquote className="border-l-3 border-amber-300 pl-4 my-4 italic text-stone-600 bg-amber-50/30 py-2 pr-2 rounded-r">
               {children}
             </blockquote>
           )),
-          code: ({ children }) => <span>{children}</span>,
-          pre: ({ children }) => <span>{children}</span>,
+          code: ({ children }: any) => <span>{children}</span>,
+          pre: ({ children }: any) => <span>{children}</span>,
           hr: () => <hr className="my-6 border-stone-200" />,
-          a: ({ href, children }) => (
+          a: ({ href, children }: any) => (
             <a href={href} className="text-amber-700 underline hover:text-amber-800" target="_blank" rel="noopener noreferrer">
               {children}
             </a>
           ),
-          table: ({ children }) => (
+          table: ({ children }: any) => (
             <div className="overflow-x-auto my-4">
               <table className="min-w-full border-collapse border border-stone-200">{children}</table>
             </div>
           ),
-          thead: ({ children }) => <thead className="bg-stone-100">{children}</thead>,
-          tbody: ({ children }) => <tbody>{children}</tbody>,
-          tr: ({ children }) => <tr className="border-b border-stone-200">{children}</tr>,
-          th: withNotes(({ children }) => (
+          thead: ({ children }: any) => <thead className="bg-stone-100">{children}</thead>,
+          tbody: ({ children }: any) => <tbody>{children}</tbody>,
+          tr: ({ children }: any) => <tr className="border-b border-stone-200">{children}</tr>,
+          th: withNotes(({ children }: any) => (
             <th className="px-3 py-2 text-left text-sm font-semibold text-stone-700 border border-stone-200">
               {children}
             </th>
           )),
-          td: withNotes(({ children }) => (
+          td: withNotes(({ children }: any) => (
             <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
           )),
-          div: ({ children, className: divClassName }) => {
+          div: ({ children, className: divClassName }: any) => {
             if (divClassName === 'text-center') {
               return <div className="text-center my-4">{children}</div>;
             }
@@ -496,7 +496,7 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
             }
             return <div>{children}</div>;
           },
-          span: ({ children, className: spanClassName }) => {
+          span: ({ children, className: spanClassName }: any) => {
             // These are from rehypeRaw processing our pre-processed HTML
             if (spanClassName === 'inline-note') {
               return (
@@ -509,44 +509,43 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
           },
           // XML annotation elements (TEI-aligned, new syntax)
           // These are handled natively by rehype-raw - no custom parsing needed!
-          note: ({ children }) => showNotes ? (
+          note: ({ children }: any) => showNotes ? (
             <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
               {children}
             </span>
           ) : null,
-          margin: ({ children }) => showNotes ? (
+          margin: ({ children }: any) => showNotes ? (
             <span className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
               {children}
             </span>
           ) : null,
-          gloss: ({ children }) => showNotes ? (
+          gloss: ({ children }: any) => showNotes ? (
             <span className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
               {children}
             </span>
           ) : null,
-          insert: ({ children }) => showNotes ? (
+          insert: ({ children }: any) => showNotes ? (
             <span className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
               {children}
             </span>
           ) : null,
-          unclear: ({ children }) => showNotes ? (
+          unclear: ({ children }: any) => showNotes ? (
             <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
               {children}?
             </span>
           ) : null,
-          term: ({ children }) => showNotes ? (
+          term: ({ children }: any) => showNotes ? (
             <span className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
               <em>{children}</em>
             </span>
           ) : null,
-          'image-desc': ({ children }) => showNotes ? (
+          'image-desc': ({ children }: any) => showNotes ? (
             <span className="block my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
               <span className="text-amber-700 font-medium not-italic">[Image: </span>
               {children}
               <span className="text-amber-700 font-medium not-italic">]</span>
             </span>
           ) : null,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any}
       >
         {processedText}
