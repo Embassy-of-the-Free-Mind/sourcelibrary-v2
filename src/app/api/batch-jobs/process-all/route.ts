@@ -191,44 +191,69 @@ export async function POST(request: NextRequest) {
  * GET /api/batch-jobs/process-all
  *
  * Shows what work is pending across all books.
+ * Uses aggregation for performance.
  */
 export async function GET() {
   try {
     const db = await getDb();
 
-    // Get aggregate stats
-    const books = await db.collection('books').find().toArray();
+    // Use aggregation to get stats in one query
+    const [pageStats] = await db.collection('pages').aggregate([
+      {
+        $group: {
+          _id: '$book_id',
+          needsOcr: {
+            $sum: {
+              $cond: [
+                { $or: [
+                  { $eq: ['$ocr.data', null] },
+                  { $eq: ['$ocr.data', ''] },
+                  { $not: { $ifNull: ['$ocr.data', false] } }
+                ]},
+                1,
+                0
+              ]
+            }
+          },
+          needsTranslation: {
+            $sum: {
+              $cond: [
+                { $and: [
+                  { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
+                  { $or: [
+                    { $eq: ['$translation.data', null] },
+                    { $eq: ['$translation.data', ''] },
+                    { $not: { $ifNull: ['$translation.data', false] } }
+                  ]}
+                ]},
+                1,
+                0
+              ]
+            }
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          books_needing_ocr: { $sum: { $cond: [{ $gt: ['$needsOcr', 0] }, 1, 0] } },
+          books_needing_translation: { $sum: { $cond: [{ $gt: ['$needsTranslation', 0] }, 1, 0] } },
+          total_pages_needing_ocr: { $sum: '$needsOcr' },
+          total_pages_needing_translation: { $sum: '$needsTranslation' },
+          total_books: { $sum: 1 }
+        }
+      }
+    ]).toArray();
 
     const stats = {
-      total_books: books.length,
-      books_needing_ocr: 0,
-      books_needing_translation: 0,
-      total_pages_needing_ocr: 0,
-      total_pages_needing_translation: 0,
+      total_books: pageStats?.total_books || 0,
+      books_needing_ocr: pageStats?.books_needing_ocr || 0,
+      books_needing_translation: pageStats?.books_needing_translation || 0,
+      total_pages_needing_ocr: pageStats?.total_pages_needing_ocr || 0,
+      total_pages_needing_translation: pageStats?.total_pages_needing_translation || 0,
       active_jobs: 0,
       pending_batch_jobs: 0,
     };
-
-    for (const book of books) {
-      const bookId = book.id || book._id?.toString();
-      const pages = await db.collection('pages')
-        .find({ book_id: bookId })
-        .toArray();
-
-      const needsOcr = pages.filter(p => (p.ocr?.data || '').length === 0).length;
-      const needsTranslation = pages.filter(p =>
-        (p.ocr?.data || '').length > 0 && (p.translation?.data || '').length === 0
-      ).length;
-
-      if (needsOcr > 0) {
-        stats.books_needing_ocr++;
-        stats.total_pages_needing_ocr += needsOcr;
-      }
-      if (needsTranslation > 0) {
-        stats.books_needing_translation++;
-        stats.total_pages_needing_translation += needsTranslation;
-      }
-    }
 
     // Count active jobs
     const activeJobs = await db.collection('jobs')

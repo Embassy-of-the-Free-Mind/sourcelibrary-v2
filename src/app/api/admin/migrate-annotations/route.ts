@@ -21,6 +21,19 @@ const TAG_MAPPINGS = [
   { old: /\[\[unclear:\s*([\s\S]*?)\]\]/gi, new: '<unclear>$1</unclear>' },
   { old: /\[\[term:\s*([\s\S]*?)\]\]/gi, new: '<term>$1</term>' },
   { old: /\[\[image:\s*([\s\S]*?)\]\]/gi, new: '<image-desc>$1</image-desc>' },
+
+  // Metadata tags (hidden from readers)
+  { old: /\[\[language:\s*([\s\S]*?)\]\]/gi, new: '<lang>$1</lang>' },
+  { old: /\[\[page\s*number:\s*([\s\S]*?)\]\]/gi, new: '<page-num>$1</page-num>' },
+  { old: /\[\[folio:\s*([\s\S]*?)\]\]/gi, new: '<folio>$1</folio>' },
+  { old: /\[\[signature:\s*([\s\S]*?)\]\]/gi, new: '<sig>$1</sig>' },
+  { old: /\[\[header:\s*([\s\S]*?)\]\]/gi, new: '<header>$1</header>' },
+  { old: /\[\[meta:\s*([\s\S]*?)\]\]/gi, new: '<meta>$1</meta>' },
+  { old: /\[\[warning:\s*([\s\S]*?)\]\]/gi, new: '<warning>$1</warning>' },
+  { old: /\[\[abbrev:\s*([\s\S]*?)\]\]/gi, new: '<abbrev>$1</abbrev>' },
+  { old: /\[\[vocabulary:\s*([\s\S]*?)\]\]/gi, new: '<vocab>$1</vocab>' },
+  { old: /\[\[summary:\s*([\s\S]*?)\]\]/gi, new: '<summary>$1</summary>' },
+  { old: /\[\[keywords:\s*([\s\S]*?)\]\]/gi, new: '<keywords>$1</keywords>' },
 ];
 
 function migrateText(text: string): { migrated: string; changesCount: number } {
@@ -144,9 +157,12 @@ export async function GET() {
       },
     ]).toArray();
 
-    // Count pages with old [[tag:]] syntax in translation
+    // Count pages with old [[tag:]] syntax in translation or OCR
     const oldSyntaxCount = await db.collection('pages').countDocuments({
-      'translation.data': { $regex: '\\[\\[(notes?|margin|gloss|insert|unclear|term|image):' },
+      $or: [
+        { 'translation.data': { $regex: '\\[\\[(notes?|margin|gloss|insert|unclear|term|image|language|page\\s*number|folio|signature|header|meta|warning|abbrev|vocabulary|summary|keywords):' } },
+        { 'ocr.data': { $regex: '\\[\\[(notes?|margin|gloss|insert|unclear|term|image|language|page\\s*number|folio|signature|header|meta|warning|abbrev|vocabulary|summary|keywords):' } }
+      ]
     });
 
     return NextResponse.json({
