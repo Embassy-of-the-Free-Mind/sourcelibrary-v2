@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { v4 as uuidv4 } from 'uuid';
 
 // Roadmap books from Internet Archive
 const ROADMAP_BOOKS = [
@@ -337,7 +336,7 @@ export async function POST() {
       }
 
       try {
-        const bookId = uuidv4();
+        const bookId = crypto.randomUUID();
         const now = new Date();
 
         const bookDoc = {
