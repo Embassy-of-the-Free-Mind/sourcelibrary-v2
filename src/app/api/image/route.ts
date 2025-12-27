@@ -23,23 +23,29 @@ export async function GET(request: NextRequest) {
 
     let buffer: Buffer;
 
-    // Handle absolute local paths (e.g., /Users/... from imports)
-    if (url.startsWith('/Users/') || url.startsWith('/home/')) {
-      if (!fs.existsSync(url)) {
-        return NextResponse.json({ error: 'Local file not found' }, { status: 404 });
+    // Handle relative local paths (starting with /) - must be in public directory
+    if (url.startsWith('/')) {
+      // Prevent path traversal attacks
+      const normalizedUrl = path.normalize(url).replace(/^(\.\.(\/|\\|$))+/, '');
+      if (normalizedUrl.includes('..')) {
+        return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
       }
-      buffer = fs.readFileSync(url);
-    }
-    // Handle relative local paths (starting with /)
-    else if (url.startsWith('/')) {
-      const localPath = path.join(process.cwd(), 'public', url);
+
+      const localPath = path.join(process.cwd(), 'public', normalizedUrl);
+
+      // Ensure the resolved path is still within public directory
+      const publicDir = path.join(process.cwd(), 'public');
+      if (!localPath.startsWith(publicDir)) {
+        return NextResponse.json({ error: 'Invalid path' }, { status: 400 });
+      }
+
       if (!fs.existsSync(localPath)) {
         return NextResponse.json({ error: 'Local file not found' }, { status: 404 });
       }
       buffer = fs.readFileSync(localPath);
     } else {
       // Only allow trusted image hosts for security
-      const allowedHosts = ['amazonaws.com', 'archive.org'];
+      const allowedHosts = ['amazonaws.com', 'archive.org', 'vercel-storage.com', 'blob.vercel-storage.com'];
       const urlObj = new URL(url);
       if (!allowedHosts.some(host => urlObj.hostname.endsWith(host))) {
         return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
