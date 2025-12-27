@@ -1,5 +1,21 @@
 # Claude Code Guidelines for Source Library
 
+## Data Protection Rules - CRITICAL
+
+### NEVER Delete Source Material Without Explicit Confirmation
+- **NEVER** call DELETE endpoints on books, pages, or any source material without the user explicitly saying "delete [specific item]"
+- **NEVER** batch delete multiple items - always list them first and ask for confirmation
+- If cleaning up data, **ALWAYS** list the specific items first and wait for user to say "yes, delete those"
+- When in doubt, **DO NOT DELETE** - ask the user first
+- The `deleted_books` collection contains recoverable items - check there before assuming data is lost
+- To restore: `POST /api/books/restore/[id]`
+- To list deleted: `GET /api/books/deleted`
+
+### Assume All Books Are Valuable
+- Books without IA identifiers may be from other catalogs (EFM, manuscripts, etc.)
+- "Modern" looking titles may still be valuable historical sources
+- When auditing the library, ONLY flag items - never delete without explicit approval
+
 ## Security Rules - CRITICAL
 
 ### Never Read Secret Files
