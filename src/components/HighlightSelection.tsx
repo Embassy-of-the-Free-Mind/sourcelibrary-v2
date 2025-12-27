@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback, ReactNode } from 'react';
-import { Highlighter, X, Check, Loader2, Share2, Twitter, Link2, MessageCircle, MessageSquarePlus, Sparkles, BookOpen, Search } from 'lucide-react';
+import { Highlighter, X, Check, Loader2, Share2, Twitter, Link2, MessageCircle, MessageSquarePlus, Sparkles } from 'lucide-react';
 import AnnotationEditor from './AnnotationEditor';
+import { getShortUrl } from '@/lib/shortlinks';
 
 interface HighlightSelectionProps {
   bookId: string;
@@ -45,9 +46,6 @@ export default function HighlightSelection({
   const [showExplainPanel, setShowExplainPanel] = useState(false);
   const [explaining, setExplaining] = useState(false);
   const [explanation, setExplanation] = useState<string | null>(null);
-  const [showLookupResults, setShowLookupResults] = useState(false);
-  const [lookupResults, setLookupResults] = useState<Array<{ id: string; slug: string; title: string; summary: string }>>([]);
-  const [searchingLookup, setSearchingLookup] = useState(false);
 
   const handleSelection = useCallback(() => {
     const selection = window.getSelection();
@@ -128,9 +126,7 @@ export default function HighlightSelection({
     `p. ${pageNumber}`,
   ].filter(Boolean).join(', ');
 
-  const shareUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/book/${bookId}/read#page-${pageNumber}`
-    : `https://sourcelibrary.org/book/${bookId}/read#page-${pageNumber}`;
+  const shareUrl = getShortUrl(bookId, pageNumber);
 
   const buildTweetText = () => {
     const maxQuoteLength = 200;
@@ -199,35 +195,9 @@ export default function HighlightSelection({
     }
   };
 
-  // Look up selected text in encyclopedia
-  const handleLookup = async () => {
-    setShowPopup(false);
-    setShowLookupResults(true);
-    setSearchingLookup(true);
-    setLookupResults([]);
-
-    try {
-      const res = await fetch(`/api/encyclopedia?q=${encodeURIComponent(selectedText)}&limit=5`);
-      if (res.ok) {
-        const data = await res.json();
-        setLookupResults(data.entries || []);
-      }
-    } catch (err) {
-      console.error('Lookup error:', err);
-    } finally {
-      setSearchingLookup(false);
-    }
-  };
-
   const closeExplainPanel = () => {
     setShowExplainPanel(false);
     setExplanation(null);
-    window.getSelection()?.removeAllRanges();
-  };
-
-  const closeLookupPanel = () => {
-    setShowLookupResults(false);
-    setLookupResults([]);
     window.getSelection()?.removeAllRanges();
   };
 
@@ -236,13 +206,12 @@ export default function HighlightSelection({
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         if (showExplainPanel) closeExplainPanel();
-        if (showLookupResults) closeLookupPanel();
         if (showPopup) handleDismiss();
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [showExplainPanel, showLookupResults, showPopup]);
+  }, [showExplainPanel, showPopup]);
 
   useEffect(() => {
     document.addEventListener('mouseup', handleSelection);
@@ -328,13 +297,6 @@ export default function HighlightSelection({
                   title="Explain this"
                 >
                   <Sparkles className="w-4 h-4 text-purple-400" />
-                </button>
-                <button
-                  onClick={handleLookup}
-                  className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors border-l border-stone-700"
-                  title="Look up"
-                >
-                  <Search className="w-4 h-4 text-green-400" />
                 </button>
                 <button
                   onClick={handleSaveHighlight}
@@ -451,82 +413,6 @@ export default function HighlightSelection({
               </button>
               <button
                 onClick={closeExplainPanel}
-                className="px-3 py-1.5 text-xs text-stone-600 hover:text-stone-900"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Lookup Results Panel */}
-      {showLookupResults && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={closeLookupPanel} aria-hidden="true" />
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="lookup-panel-title"
-            className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden"
-          >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-green-50 to-emerald-50">
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-green-600" aria-hidden="true" />
-                <h2 id="lookup-panel-title" className="font-medium text-stone-900">Encyclopedia</h2>
-              </div>
-              <button
-                onClick={closeLookupPanel}
-                aria-label="Close dialog"
-                className="p-1 hover:bg-stone-200 rounded transition-colors"
-              >
-                <X className="w-4 h-4 text-stone-600" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="p-4">
-              <div className="bg-yellow-50 border-l-2 border-yellow-400 px-3 py-2 text-sm text-stone-600 italic mb-4">
-                Looking up: &ldquo;{selectedText.length > 50 ? selectedText.slice(0, 50) + '...' : selectedText}&rdquo;
-              </div>
-              {searchingLookup ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 animate-spin text-green-600" />
-                  <span className="ml-2 text-stone-600">Searching...</span>
-                </div>
-              ) : lookupResults.length > 0 ? (
-                <div className="space-y-3">
-                  {lookupResults.map((entry) => (
-                    <a
-                      key={entry.id}
-                      href={`/encyclopedia/${entry.slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block p-3 bg-stone-50 hover:bg-stone-100 rounded-lg transition-colors"
-                    >
-                      <div className="font-medium text-stone-900">{entry.title}</div>
-                      <div className="text-sm text-stone-600 mt-1 line-clamp-2">{entry.summary}</div>
-                    </a>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <BookOpen className="w-10 h-10 text-stone-300 mx-auto mb-2" />
-                  <p className="text-stone-500 text-sm">No encyclopedia entries found.</p>
-                  <p className="text-stone-400 text-xs mt-1">Try a different selection or create an entry.</p>
-                </div>
-              )}
-            </div>
-            <div className="flex items-center justify-between px-4 py-3 border-t border-stone-100 bg-stone-50">
-              <a
-                href="/encyclopedia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-green-600 hover:text-green-700 flex items-center gap-1"
-              >
-                <BookOpen className="w-3 h-3" />
-                Browse encyclopedia
-              </a>
-              <button
-                onClick={closeLookupPanel}
                 className="px-3 py-1.5 text-xs text-stone-600 hover:text-stone-900"
               >
                 Close

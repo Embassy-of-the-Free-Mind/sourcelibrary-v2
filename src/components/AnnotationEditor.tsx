@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import {
   X,
   Loader2,
@@ -10,13 +10,11 @@ import {
   HelpCircle,
   Quote,
   Languages,
-  Link2,
-  Search,
   MessageCircle,
   ChevronDown,
   ChevronUp,
 } from 'lucide-react';
-import { AnnotationType, EncyclopediaEntry } from '@/lib/types';
+import { AnnotationType } from '@/lib/types';
 
 interface AnnotationEditorProps {
   isOpen: boolean;
@@ -59,13 +57,6 @@ export default function AnnotationEditor({
   const [error, setError] = useState<string | null>(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  // Encyclopedia linking
-  const [showEncyclopediaSearch, setShowEncyclopediaSearch] = useState(false);
-  const [encyclopediaQuery, setEncyclopediaQuery] = useState('');
-  const [encyclopediaResults, setEncyclopediaResults] = useState<EncyclopediaEntry[]>([]);
-  const [linkedEntries, setLinkedEntries] = useState<EncyclopediaEntry[]>([]);
-  const [searchingEncyclopedia, setSearchingEncyclopedia] = useState(false);
-
   // Load saved username from localStorage
   useEffect(() => {
     const saved = localStorage.getItem('annotation_username');
@@ -79,7 +70,6 @@ export default function AnnotationEditor({
       setContent('');
       setError(null);
       setShowAdvanced(false);
-      setLinkedEntries([]);
     }
   }, [isOpen]);
 
@@ -92,35 +82,6 @@ export default function AnnotationEditor({
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
-
-  // Search encyclopedia entries
-  const searchEncyclopedia = useCallback(async (query: string) => {
-    if (!query || query.length < 2) {
-      setEncyclopediaResults([]);
-      return;
-    }
-
-    setSearchingEncyclopedia(true);
-    try {
-      const res = await fetch(`/api/encyclopedia?q=${encodeURIComponent(query)}&limit=5`);
-      if (res.ok) {
-        const data = await res.json();
-        setEncyclopediaResults(data.entries || []);
-      }
-    } catch (err) {
-      console.error('Encyclopedia search error:', err);
-    } finally {
-      setSearchingEncyclopedia(false);
-    }
-  }, []);
-
-  // Debounced search
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (encyclopediaQuery) searchEncyclopedia(encyclopediaQuery);
-    }, 300);
-    return () => clearTimeout(timer);
-  }, [encyclopediaQuery, searchEncyclopedia]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -159,7 +120,6 @@ export default function AnnotationEditor({
           type,
           user_name: userName.trim(),
           parent_id: parentId,
-          encyclopedia_refs: linkedEntries.map(e => e.id),
         }),
       });
 
@@ -175,18 +135,6 @@ export default function AnnotationEditor({
     } finally {
       setSaving(false);
     }
-  };
-
-  const linkEntry = (entry: EncyclopediaEntry) => {
-    if (!linkedEntries.find(e => e.id === entry.id)) {
-      setLinkedEntries([...linkedEntries, entry]);
-    }
-    setShowEncyclopediaSearch(false);
-    setEncyclopediaQuery('');
-  };
-
-  const unlinkEntry = (entryId: string) => {
-    setLinkedEntries(linkedEntries.filter(e => e.id !== entryId));
   };
 
   if (!isOpen) return null;
@@ -261,7 +209,7 @@ export default function AnnotationEditor({
               className="flex items-center gap-1 text-xs text-stone-500 hover:text-stone-700"
             >
               {showAdvanced ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-              {showAdvanced ? 'Less options' : 'More options (type, encyclopedia link)'}
+              {showAdvanced ? 'Less options' : 'More options (annotation type)'}
             </button>
           )}
 
@@ -291,93 +239,6 @@ export default function AnnotationEditor({
                     </button>
                   ))}
                 </div>
-              </div>
-
-              {/* Encyclopedia links */}
-              <div>
-                <label className="block text-xs font-medium text-stone-600 mb-2">
-                  Link to encyclopedia
-                </label>
-
-                {linkedEntries.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {linkedEntries.map((entry) => (
-                      <span
-                        key={entry.id}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs"
-                      >
-                        <Link2 className="w-3 h-3" />
-                        {entry.title}
-                        <button
-                          type="button"
-                          onClick={() => unlinkEntry(entry.id)}
-                          className="hover:text-blue-900"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {showEncyclopediaSearch ? (
-                  <div className="relative">
-                    <div className="flex items-center gap-2">
-                      <div className="relative flex-1">
-                        <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3 h-3 text-stone-400" />
-                        <input
-                          type="text"
-                          value={encyclopediaQuery}
-                          onChange={(e) => setEncyclopediaQuery(e.target.value)}
-                          placeholder="Search..."
-                          className="w-full pl-7 pr-2 py-1.5 border border-stone-300 rounded text-xs focus:outline-none focus:ring-1 focus:ring-amber-500"
-                          autoFocus
-                        />
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setShowEncyclopediaSearch(false);
-                          setEncyclopediaQuery('');
-                        }}
-                        className="text-xs text-stone-500 hover:text-stone-700"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-
-                    {(encyclopediaResults.length > 0 || searchingEncyclopedia) && (
-                      <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-stone-200 rounded shadow-lg z-10 max-h-32 overflow-y-auto">
-                        {searchingEncyclopedia ? (
-                          <div className="p-2 text-center text-xs text-stone-500">
-                            <Loader2 className="w-3 h-3 animate-spin inline-block mr-1" />
-                            Searching...
-                          </div>
-                        ) : (
-                          encyclopediaResults.map((entry) => (
-                            <button
-                              key={entry.id}
-                              type="button"
-                              onClick={() => linkEntry(entry)}
-                              className="w-full px-2 py-1.5 text-left hover:bg-stone-50 text-xs border-b border-stone-100 last:border-0"
-                            >
-                              <div className="font-medium text-stone-900">{entry.title}</div>
-                            </button>
-                          ))
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setShowEncyclopediaSearch(true)}
-                    className="inline-flex items-center gap-1 text-xs text-stone-500 hover:text-stone-700"
-                  >
-                    <Link2 className="w-3 h-3" />
-                    Link to entry
-                  </button>
-                )}
               </div>
             </div>
           )}

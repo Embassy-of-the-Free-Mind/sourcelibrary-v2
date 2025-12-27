@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { Annotation, AnnotationType } from '@/lib/types';
 import AnnotationEditor from './AnnotationEditor';
+import { getShortUrl } from '@/lib/shortlinks';
 
 interface AnnotationPanelProps {
   bookId: string;
@@ -86,8 +87,8 @@ export default function AnnotationPanel({
   const [replyingTo, setReplyingTo] = useState<Annotation | null>(null);
 
   // Share functions
-  const getShareUrl = (annotation: Annotation) => {
-    return `${window.location.origin}/book/${bookId}/read#page-${annotation.page_number}`;
+  const getAnnotationShareUrl = (annotation: Annotation) => {
+    return getShortUrl(bookId, annotation.page_number);
   };
 
   const shareToTwitter = (annotation: Annotation) => {
@@ -101,7 +102,7 @@ export default function AnnotationPanel({
 
     const twitterUrl = new URL('https://twitter.com/intent/tweet');
     twitterUrl.searchParams.set('text', text);
-    twitterUrl.searchParams.set('url', getShareUrl(annotation));
+    twitterUrl.searchParams.set('url', getAnnotationShareUrl(annotation));
     window.open(twitterUrl.toString(), '_blank', 'width=550,height=420');
     setShareMenuOpen(null);
   };
@@ -110,7 +111,7 @@ export default function AnnotationPanel({
     const quote = annotation.anchor?.text?.slice(0, 150) || '';
     const comment = annotation.content.slice(0, 150);
     const citation = bookTitle ? `${bookTitle}, p. ${annotation.page_number}` : `p. ${annotation.page_number}`;
-    const url = getShareUrl(annotation);
+    const url = getAnnotationShareUrl(annotation);
 
     const text = quote
       ? `"${quote}${quote.length >= 150 ? '...' : ''}" — ${citation}\n\n💬 ${comment}${comment.length >= 150 ? '...' : ''}\n\n${url}`
@@ -125,7 +126,7 @@ export default function AnnotationPanel({
   const copyAnnotation = async (annotation: Annotation) => {
     const quote = annotation.anchor?.text || '';
     const citation = [bookAuthor, bookTitle, `p. ${annotation.page_number}`].filter(Boolean).join(', ');
-    const url = getShareUrl(annotation);
+    const url = getAnnotationShareUrl(annotation);
 
     const text = quote
       ? `"${quote}"\n— ${citation}\n\n💬 ${annotation.content}\n\n${url}`
@@ -306,22 +307,6 @@ export default function AnnotationPanel({
 
       {/* Content */}
       <div className="text-sm text-stone-700 whitespace-pre-wrap">{annotation.content}</div>
-
-      {/* Encyclopedia links */}
-      {annotation.encyclopedia_refs && annotation.encyclopedia_refs.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {annotation.encyclopedia_refs.map((refId: string) => (
-            <Link
-              key={refId}
-              href={`/encyclopedia/${refId}`}
-              className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800"
-            >
-              <Link2 className="w-3 h-3" />
-              Encyclopedia
-            </Link>
-          ))}
-        </div>
-      )}
 
       {/* Actions */}
       <div className="flex items-center gap-3 mt-3">
