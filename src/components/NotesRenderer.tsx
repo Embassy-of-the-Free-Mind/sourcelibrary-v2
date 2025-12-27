@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState, ReactNode } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
@@ -48,62 +48,62 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   result = result.replace(/^(?:The following is[^:]*:\s*\n*)/i, '');
 
   // Extract language (hidden from reader)
-  result = result.replace(/\[\[language:\s*(.*?)\]\]/gi, (match, lang) => {
+  result = result.replace(/\[\[language:\s*(.*?)\]\]/gi, (_, lang) => {
     metadata.language = lang.trim();
     return '';
   });
 
   // Extract page numbers
-  result = result.replace(/\[\[page\s*number:\s*(.*?)\]\]/gi, (match, num) => {
+  result = result.replace(/\[\[page\s*number:\s*(.*?)\]\]/gi, (_, num) => {
     metadata.pageNumber = num.trim();
     return '';
   });
 
   // Extract folio references
-  result = result.replace(/\[\[folio:\s*(.*?)\]\]/gi, (match, folio) => {
+  result = result.replace(/\[\[folio:\s*(.*?)\]\]/gi, (_, folio) => {
     metadata.folio = folio.trim();
     return '';
   });
 
   // Extract warning (OCR quality issues)
-  result = result.replace(/\[\[warning:\s*(.*?)\]\]/gi, (match, warning) => {
+  result = result.replace(/\[\[warning:\s*(.*?)\]\]/gi, (_, warning) => {
     metadata.warning = warning.trim();
     return '';
   });
 
   // Extract signature marks (printer's signatures like A2, B1, etc.)
-  result = result.replace(/\[\[signature:\s*(.*?)\]\]/gi, (match, sig) => {
+  result = result.replace(/\[\[signature:\s*(.*?)\]\]/gi, (_, sig) => {
     metadata.signature = sig.trim();
     return '';
   });
 
   // Extract meta notes (page descriptions, image quality, etc.)
-  result = result.replace(/\[\[meta:\s*(.*?)\]\]/gi, (match, content) => {
+  result = result.replace(/\[\[meta:\s*(.*?)\]\]/gi, (_, content) => {
     metadata.meta.push(content.trim());
     return '';
   });
 
   // Extract abbreviation expansions
-  result = result.replace(/\[\[abbrev:\s*(.*?)\]\]/gi, (match, content) => {
+  result = result.replace(/\[\[abbrev:\s*(.*?)\]\]/gi, (_, content) => {
     metadata.abbreviations.push(content.trim());
     return '';
   });
 
   // Extract vocabulary (key terms from OCR)
-  result = result.replace(/\[\[vocabulary:\s*(.*?)\]\]/gi, (match, content) => {
+  result = result.replace(/\[\[vocabulary:\s*(.*?)\]\]/gi, (_, content) => {
     const terms = content.split(',').map((t: string) => t.trim()).filter(Boolean);
     metadata.vocabulary.push(...terms);
     return '';
   });
 
   // Extract summary (page summary from translation) - handles multiline
-  result = result.replace(/\[\[summary:\s*([\s\S]*?)\]\]/gi, (match, content) => {
+  result = result.replace(/\[\[summary:\s*([\s\S]*?)\]\]/gi, (_, content) => {
     metadata.summary = content.trim().replace(/\s+/g, ' '); // Normalize whitespace
     return '';
   });
 
   // Also catch plain "Summary:" lines without brackets (legacy/non-compliant output)
-  result = result.replace(/^Summary:\s*(.+?)(?=\n\n|\n\[\[|$)/gim, (match, content) => {
+  result = result.replace(/^Summary:\s*(.+?)(?=\n\n|\n\[\[|$)/gim, (_, content) => {
     if (!metadata.summary) {
       metadata.summary = content.trim().replace(/\s+/g, ' ');
     }
@@ -111,7 +111,7 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   });
 
   // Extract keywords (English terms for indexing)
-  result = result.replace(/\[\[keywords:\s*(.*?)\]\]/gi, (match, content) => {
+  result = result.replace(/\[\[keywords:\s*(.*?)\]\]/gi, (_, content) => {
     const terms = content.split(',').map((t: string) => t.trim()).filter(Boolean);
     metadata.keywords.push(...terms);
     return '';
@@ -120,13 +120,8 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract headers (running headers) - hidden from display
   result = result.replace(/\[\[header:\s*(.*?)\]\]/gi, () => '');
 
-  // Catch-all: remove any remaining [[tag: ...]] patterns (handles multiline)
-  // This ensures no metadata tags slip through to the reader
+  // Catch-all: remove any remaining metadata tags
   result = result.replace(/\[\[(?:markup|language|page\s*number|folio|signature|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
-
-  // Note: Do NOT add a catch-all here that removes all [[tag:]] patterns!
-  // The note-related tags (margin, note, gloss, insert, unclear, term, image)
-  // must be preserved for processInlineMarkup to style them.
 
   // Clean up extra whitespace from removed metadata
   result = result.replace(/^\s*\n/gm, '\n').replace(/\n{3,}/g, '\n\n').trim();
@@ -134,92 +129,167 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   return { cleanText: result, metadata };
 }
 
-// Convert inline markup to styled HTML spans (or plain text if showNotes is false)
-function processInlineMarkup(text: string, showNotes: boolean = true): string {
+// Pre-process ONLY centering syntax (doesn't break tables)
+// Note tags are handled separately after markdown parsing
+function preprocessCentering(text: string): string {
   let result = text;
 
   // Handle centered headings: ->## text<- → <h2 class="text-center">text</h2>
-  // Must be done before generic centering to preserve heading semantics
-  result = result.replace(/->\s*(#{1,6})\s*([\s\S]*?)\s*<-/g, (match, hashes, content) => {
+  result = result.replace(/->\s*(#{1,6})\s*([\s\S]*?)\s*<-/g, (_, hashes, content) => {
     const level = hashes.length;
     const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
     return `<h${level} class="text-center">${cleaned}</h${level}>`;
   });
 
   // Handle headings with centered content: ## ->text<- → <h2 class="text-center">text</h2>
-  result = result.replace(/^(#{1,6})\s*->([\s\S]*?)<-\s*$/gm, (match, hashes, content) => {
+  result = result.replace(/^(#{1,6})\s*->([\s\S]*?)<-\s*$/gm, (_, hashes, content) => {
     const level = hashes.length;
     const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
     return `<h${level} class="text-center">${cleaned}</h${level}>`;
   });
 
   // Escape numbered paragraph markers (10. 11. etc) to prevent markdown list interpretation
-  // Only at start of line, followed by space and text (not already in a list context)
   result = result.replace(/^(\d+)\. /gm, '$1\\. ');
 
   // Centered text: ->text<- or ::text:: (handles multiline)
+  // Only process if NOT inside a table (no | on same line)
   result = result.replace(/->([\s\S]*?)<-/g, (match, content) => {
-    // Clean up whitespace and join lines
     const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
     return `<div class="text-center">${cleaned}</div>`;
   });
-  result = result.replace(/::([\s\S]*?)::/g, (match, content) => {
+  result = result.replace(/::([\s\S]*?)::/g, (_, content) => {
     const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
     return `<div class="text-center">${cleaned}</div>`;
   });
-
-  if (showNotes) {
-    // Editorial notes (amber) - interpretive choices, context for reader
-    // Use [\s\S]*? to match across newlines
-    result = result.replace(/\[\[(notes?):\s*([\s\S]*?)\]\]/gi, (match, type, content) => {
-      return `<span class="inline-note">${content.trim()}</span>`;
-    });
-
-    // Technical terms with optional gloss: [[term: word]] or [[term: word → meaning]]
-    result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      const parts = content.split(/→|->/).map((s: string) => s.trim());
-      if (parts.length > 1) {
-        return `<span class="term-note"><em>${parts[0]}</em> (${parts[1]})</span>`;
-      }
-      return `<span class="term-note"><em>${parts[0]}</em></span>`;
-    });
-
-    // Marginalia - text in margins of original manuscript (teal)
-    result = result.replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<span class="margin-note">${content.trim()}</span>`;
-    });
-
-    // Gloss - interlinear annotations in original (purple)
-    result = result.replace(/\[\[gloss:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<span class="gloss-note">${content.trim()}</span>`;
-    });
-
-    // Insertion - later additions to the text (green)
-    result = result.replace(/\[\[insert:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<span class="insert-note">${content.trim()}</span>`;
-    });
-
-    // Uncertain/illegible text (gray with ?)
-    result = result.replace(/\[\[unclear:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<span class="unclear-text">${content.trim()}</span>`;
-    });
-
-    // Image descriptions (block display)
-    result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<div class="image-description">${content.trim()}</div>`;
-    });
-  } else {
-    // When notes are hidden, completely remove all note content
-    result = result.replace(/\[\[(notes?):\s*([\s\S]*?)\]\]/gi, '');
-    result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi, '');
-    result = result.replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, '');
-    result = result.replace(/\[\[gloss:\s*([\s\S]*?)\]\]/gi, '');
-    result = result.replace(/\[\[insert:\s*([\s\S]*?)\]\]/gi, '');
-    result = result.replace(/\[\[unclear:\s*([\s\S]*?)\]\]/gi, '');
-    result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, '');
-  }
 
   return result;
+}
+
+// Process note tags in text string, returning React elements
+function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
+  if (!showNotes) {
+    // Remove all note tags when hidden
+    const cleaned = text
+      .replace(/\[\[(notes?):\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[term:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[margin:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[gloss:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[insert:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[unclear:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[image:\s*[\s\S]*?\]\]/gi, '');
+    return [cleaned];
+  }
+
+  // Pattern to match all note types
+  const notePattern = /\[\[(notes?|term|margin|gloss|insert|unclear|image):\s*([\s\S]*?)\]\]/gi;
+  const parts: ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+
+  while ((match = notePattern.exec(text)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+
+    const tagType = match[1].toLowerCase();
+    const content = match[2].trim();
+
+    // Create styled span based on tag type
+    switch (tagType) {
+      case 'note':
+      case 'notes':
+        parts.push(
+          <span key={key++} className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
+            {content}
+          </span>
+        );
+        break;
+      case 'term':
+        const termParts = content.split(/→|->/).map((s: string) => s.trim());
+        parts.push(
+          <span key={key++} className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
+            <em>{termParts[0]}</em>{termParts.length > 1 ? ` (${termParts[1]})` : ''}
+          </span>
+        );
+        break;
+      case 'margin':
+        parts.push(
+          <span key={key++} className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
+            {content}
+          </span>
+        );
+        break;
+      case 'gloss':
+        parts.push(
+          <span key={key++} className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
+            {content}
+          </span>
+        );
+        break;
+      case 'insert':
+        parts.push(
+          <span key={key++} className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
+            {content}
+          </span>
+        );
+        break;
+      case 'unclear':
+        parts.push(
+          <span key={key++} className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
+            {content}?
+          </span>
+        );
+        break;
+      case 'image':
+        parts.push(
+          <span key={key++} className="block my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
+            <span className="text-amber-700 font-medium not-italic">[Image: </span>
+            {content}
+            <span className="text-amber-700 font-medium not-italic">]</span>
+          </span>
+        );
+        break;
+    }
+
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text after last match
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : [text];
+}
+
+// Recursively process children to find and style note tags in text
+function processChildren(children: ReactNode, showNotes: boolean): ReactNode {
+  if (typeof children === 'string') {
+    const processed = processNoteTags(children, showNotes);
+    return processed.length === 1 && typeof processed[0] === 'string'
+      ? processed[0]
+      : <>{processed}</>;
+  }
+
+  if (Array.isArray(children)) {
+    return children.map((child, i) => (
+      <React.Fragment key={i}>{processChildren(child, showNotes)}</React.Fragment>
+    ));
+  }
+
+  if (React.isValidElement(children)) {
+    const element = children as React.ReactElement<{ children?: ReactNode }>;
+    if (element.props.children) {
+      return React.cloneElement(element, {
+        ...element.props,
+        children: processChildren(element.props.children, showNotes)
+      });
+    }
+  }
+
+  return children;
 }
 
 // Metadata panel component (collapsible)
@@ -312,9 +382,14 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   );
 }
 
+// Wrapper component that processes note tags in children
+function NoteProcessor({ children, showNotes }: { children: ReactNode; showNotes: boolean }) {
+  return <>{processChildren(children, showNotes)}</>;
+}
+
 export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
-  const processedText = useMemo(() => processInlineMarkup(cleanText, showNotes), [cleanText, showNotes]);
+  const processedText = useMemo(() => preprocessCentering(cleanText), [cleanText]);
 
   if (!text) {
     return (
@@ -323,6 +398,17 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
       </div>
     );
   }
+
+  // Create wrapper component for processing notes in text
+  const withNotes = (Component: React.ComponentType<{ children?: ReactNode }>) => {
+    return function NoteWrapper({ children, ...props }: { children?: ReactNode }) {
+      return (
+        <Component {...props}>
+          <NoteProcessor showNotes={showNotes}>{children}</NoteProcessor>
+        </Component>
+      );
+    };
+  };
 
   return (
     <div className={`prose-manuscript ${className}`}>
@@ -342,32 +428,32 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
         ]}
         unwrapDisallowed={true}
         components={{
-          p: ({ children }) => <p className="mb-4 last:mb-0 leading-relaxed text-[var(--text-secondary)]">{children}</p>,
+          p: withNotes(({ children }) => <p className="mb-4 last:mb-0 leading-relaxed text-[var(--text-secondary)]">{children}</p>),
           strong: ({ children }) => <strong className="font-bold text-[var(--text-primary)]">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
           img: ({ src, alt }) => (
             <img src={src} alt={alt || ''} className="max-w-full h-auto rounded my-4" />
           ),
-          h1: ({ children }) => (
+          h1: withNotes(({ children }) => (
             <h1 className="text-2xl font-serif font-bold mt-6 mb-3 text-[var(--text-primary)]">{children}</h1>
-          ),
-          h2: ({ children }) => (
+          )),
+          h2: withNotes(({ children }) => (
             <h2 className="text-xl font-serif font-bold mt-5 mb-2 text-[var(--text-primary)]">{children}</h2>
-          ),
-          h3: ({ children }) => (
+          )),
+          h3: withNotes(({ children }) => (
             <h3 className="text-lg font-serif font-semibold mt-4 mb-2 text-[var(--text-primary)]">{children}</h3>
-          ),
-          h4: ({ children }) => (
+          )),
+          h4: withNotes(({ children }) => (
             <h4 className="text-base font-serif font-semibold mt-3 mb-1 text-[var(--text-primary)]">{children}</h4>
-          ),
+          )),
           ul: ({ children }) => <ul className="list-disc ml-5 my-3 space-y-1">{children}</ul>,
           ol: ({ children, start }) => <ol className="list-decimal ml-5 my-3 space-y-1" start={start}>{children}</ol>,
-          li: ({ children }) => <li className="leading-relaxed">{children}</li>,
-          blockquote: ({ children }) => (
+          li: withNotes(({ children }) => <li className="leading-relaxed">{children}</li>),
+          blockquote: withNotes(({ children }) => (
             <blockquote className="border-l-3 border-amber-300 pl-4 my-4 italic text-stone-600 bg-amber-50/30 py-2 pr-2 rounded-r">
               {children}
             </blockquote>
-          ),
+          )),
           code: ({ children }) => <span>{children}</span>,
           pre: ({ children }) => <span>{children}</span>,
           hr: () => <hr className="my-6 border-stone-200" />,
@@ -384,19 +470,19 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
           thead: ({ children }) => <thead className="bg-stone-100">{children}</thead>,
           tbody: ({ children }) => <tbody>{children}</tbody>,
           tr: ({ children }) => <tr className="border-b border-stone-200">{children}</tr>,
-          th: ({ children }) => (
+          th: withNotes(({ children }) => (
             <th className="px-3 py-2 text-left text-sm font-semibold text-stone-700 border border-stone-200">
               {children}
             </th>
-          ),
-          td: ({ children }) => (
+          )),
+          td: withNotes(({ children }) => (
             <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
-          ),
-          div: ({ children, className }) => {
-            if (className === 'text-center') {
+          )),
+          div: ({ children, className: divClassName }) => {
+            if (divClassName === 'text-center') {
               return <div className="text-center my-4">{children}</div>;
             }
-            if (className === 'image-description') {
+            if (divClassName === 'image-description') {
               return (
                 <div className="my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
                   <span className="text-amber-700 font-medium not-italic">[Image: </span>
@@ -407,52 +493,12 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
             }
             return <div>{children}</div>;
           },
-          span: ({ children, className }) => {
-            // Editorial notes (amber)
-            if (className === 'inline-note') {
+          span: ({ children, className: spanClassName }) => {
+            // These are from rehypeRaw processing our pre-processed HTML
+            if (spanClassName === 'inline-note') {
               return (
                 <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
                   {children}
-                </span>
-              );
-            }
-            // Technical terms (indigo)
-            if (className === 'term-note') {
-              return (
-                <span className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
-                  {children}
-                </span>
-              );
-            }
-            // Marginalia (teal)
-            if (className === 'margin-note') {
-              return (
-                <span className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
-                  {children}
-                </span>
-              );
-            }
-            // Gloss (purple)
-            if (className === 'gloss-note') {
-              return (
-                <span className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
-                  {children}
-                </span>
-              );
-            }
-            // Insertions (green)
-            if (className === 'insert-note') {
-              return (
-                <span className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
-                  {children}
-                </span>
-              );
-            }
-            // Unclear text (gray)
-            if (className === 'unclear-text') {
-              return (
-                <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
-                  {children}?
                 </span>
               );
             }
