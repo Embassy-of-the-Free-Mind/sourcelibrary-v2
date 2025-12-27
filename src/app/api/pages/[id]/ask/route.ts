@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { getGeminiClient } from '@/lib/gemini';
+import { DEFAULT_MODEL } from '@/lib/types';
+import { MODEL_PRICING } from '@/lib/ai';
 
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+}
+
+function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
+  const inputCost = (inputTokens / 1_000_000) * pricing.input;
+  const outputCost = (outputTokens / 1_000_000) * pricing.output;
+  return inputCost + outputCost;
 }
 
 export async function POST(
@@ -32,7 +39,7 @@ export async function POST(
       return NextResponse.json({ error: 'Page text is required' }, { status: 400 });
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = getGeminiClient().getGenerativeModel({ model: DEFAULT_MODEL });
 
     // Build context from book info
     const bookContext = [
@@ -71,10 +78,25 @@ Please answer their question helpfully:
 Answer:`;
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response = result.response;
     const answer = response.text();
 
-    return NextResponse.json({ answer, pageId });
+    // Track usage
+    const usageMetadata = response.usageMetadata;
+    const inputTokens = usageMetadata?.promptTokenCount || 0;
+    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
+    return NextResponse.json({
+      answer,
+      pageId,
+      usage: {
+        inputTokens,
+        outputTokens,
+        totalTokens: inputTokens + outputTokens,
+        costUsd: calculateCost(inputTokens, outputTokens, DEFAULT_MODEL),
+        model: DEFAULT_MODEL,
+      },
+    });
   } catch (error) {
     console.error('Error answering question:', error);
     return NextResponse.json(
