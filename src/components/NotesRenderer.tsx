@@ -138,6 +138,21 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
 function processInlineMarkup(text: string, showNotes: boolean = true): string {
   let result = text;
 
+  // Handle centered headings: ->## text<- → <h2 class="text-center">text</h2>
+  // Must be done before generic centering to preserve heading semantics
+  result = result.replace(/->\s*(#{1,6})\s*([\s\S]*?)\s*<-/g, (match, hashes, content) => {
+    const level = hashes.length;
+    const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
+    return `<h${level} class="text-center">${cleaned}</h${level}>`;
+  });
+
+  // Handle headings with centered content: ## ->text<- → <h2 class="text-center">text</h2>
+  result = result.replace(/^(#{1,6})\s*->([\s\S]*?)<-\s*$/gm, (match, hashes, content) => {
+    const level = hashes.length;
+    const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
+    return `<h${level} class="text-center">${cleaned}</h${level}>`;
+  });
+
   // Centered text: ->text<- or ::text:: (handles multiline)
   result = result.replace(/->([\s\S]*?)<-/g, (match, content) => {
     // Clean up whitespace and join lines
