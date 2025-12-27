@@ -85,34 +85,50 @@ export async function POST(
 
       const metadata = await metadataRes.json();
       const files = metadata.files || [];
+      const meta = metadata.metadata || {};
 
-      // Get page count
+      // Get page count - try multiple methods
       let pageCount = 0;
-      const jp2Files = files.filter((f: { name: string }) =>
-        f.name.endsWith('.jp2') && !f.name.includes('thumb')
-      );
 
-      if (jp2Files.length > 0) {
-        pageCount = jp2Files.length;
-      } else {
-        const scandata = files.find((f: { name: string }) => f.name === 'scandata.xml');
+      // Method 1: Use imagecount from metadata (most reliable)
+      if (meta.imagecount) {
+        pageCount = parseInt(meta.imagecount, 10) || 0;
+      }
+
+      // Method 2: Count direct JP2 files
+      if (pageCount === 0) {
+        const jp2Files = files.filter((f: { name: string }) =>
+          f.name.endsWith('.jp2') && !f.name.includes('thumb')
+        );
+        if (jp2Files.length > 1) {
+          pageCount = jp2Files.length;
+        }
+      }
+
+      // Method 3: Parse scandata XML (look for *_scandata.xml pattern)
+      if (pageCount === 0) {
+        const scandata = files.find((f: { name: string }) =>
+          f.name.endsWith('_scandata.xml') || f.name === 'scandata.xml'
+        );
         if (scandata) {
-          const scandataRes = await fetch(`https://archive.org/download/${identifier}/scandata.xml`);
+          const scandataRes = await fetch(`https://archive.org/download/${identifier}/${scandata.name}`);
           if (scandataRes.ok) {
             const scandataText = await scandataRes.text();
             const leafMatches = scandataText.match(/<page /g);
             pageCount = leafMatches ? leafMatches.length : 0;
           }
         }
+      }
 
-        if (pageCount === 0) {
-          const jp2Zip = files.find((f: { name: string }) => f.name.endsWith('_jp2.zip'));
-          if (jp2Zip) {
-            pageCount = Math.max(10, Math.floor((jp2Zip.size || 50000000) / 500000));
-          }
+      // Method 4: Estimate from JP2 zip size
+      if (pageCount === 0) {
+        const jp2Zip = files.find((f: { name: string }) => f.name.endsWith('_jp2.zip'));
+        if (jp2Zip) {
+          pageCount = Math.max(10, Math.floor((jp2Zip.size || 50000000) / 500000));
         }
       }
 
+      // Fallback
       if (pageCount === 0) {
         pageCount = 100;
       }
