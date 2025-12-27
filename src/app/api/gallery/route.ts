@@ -208,6 +208,7 @@ export async function GET(request: NextRequest) {
       type?: string;
       bbox?: { x: number; y: number; width: number; height: number };
       confidence?: number;
+      model?: 'gemini' | 'mistral';
     }> = [];
 
     for (const page of pages) {
