@@ -7,6 +7,7 @@ interface DetectedImage {
   bbox?: { x: number; y: number; width: number; height: number };
   confidence?: number;
   detection_source?: string;
+  model?: 'gemini' | 'mistral';
 }
 
 /**
@@ -21,6 +22,7 @@ interface DetectedImage {
  *   - bookId: filter by book
  *   - type: filter by image type (woodcut, diagram, etc.)
  *   - verified: if "true", only show vision-extracted images with bboxes
+ *   - model: filter by extraction model ('gemini' or 'mistral')
  */
 export async function GET(request: NextRequest) {
   try {
@@ -30,17 +32,23 @@ export async function GET(request: NextRequest) {
     const bookId = searchParams.get('bookId');
     const imageType = searchParams.get('type');
     const verifiedOnly = searchParams.get('verified') === 'true';
+    const modelFilter = searchParams.get('model') as 'gemini' | 'mistral' | null;
 
     const db = await getDb();
 
     // Build query - for verified, only get vision-extracted images with bboxes
+    const elemMatchConditions: Record<string, unknown> = {
+      detection_source: 'vision_model',
+      bbox: { $exists: true }
+    };
+    if (modelFilter) {
+      elemMatchConditions.model = modelFilter;
+    }
+
     const query: Record<string, unknown> = verifiedOnly
       ? {
           'detected_images': {
-            $elemMatch: {
-              detection_source: 'vision_model',
-              bbox: { $exists: true }
-            }
+            $elemMatch: elemMatchConditions
           }
         }
       : {
@@ -72,15 +80,18 @@ export async function GET(request: NextRequest) {
 
     // For verified images, we need to unwind detected_images to get individual items
     if (verifiedOnly) {
+      const unwindMatch: Record<string, unknown> = {
+        'detected_images.detection_source': 'vision_model',
+        'detected_images.bbox': { $exists: true }
+      };
+      if (modelFilter) {
+        unwindMatch['detected_images.model'] = modelFilter;
+      }
+
       const pipeline = [
         { $match: fullQuery },
         { $unwind: '$detected_images' },
-        {
-          $match: {
-            'detected_images.detection_source': 'vision_model',
-            'detected_images.bbox': { $exists: true }
-          }
-        },
+        { $match: unwindMatch },
         {
           $lookup: {
             from: 'books',
@@ -108,7 +119,8 @@ export async function GET(request: NextRequest) {
                   description: '$detected_images.description',
                   type: '$detected_images.type',
                   bbox: '$detected_images.bbox',
-                  confidence: '$detected_images.confidence'
+                  confidence: '$detected_images.confidence',
+                  model: '$detected_images.model'
                 }
               }
             ],

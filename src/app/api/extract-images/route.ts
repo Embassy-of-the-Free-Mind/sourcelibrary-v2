@@ -38,6 +38,7 @@ interface DetectedImage {
   confidence?: number;
   detected_at: Date;
   detection_source: 'vision_model';
+  model: 'gemini' | 'mistral';
 }
 
 async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
@@ -105,6 +106,70 @@ async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
     confidence: item.confidence,
     detected_at: new Date(),
     detection_source: 'vision_model' as const,
+    model: 'gemini' as const,
+  }));
+}
+
+async function extractWithMistral(imageUrl: string): Promise<DetectedImage[]> {
+  const apiKey = process.env.MISTRAL_API_KEY;
+  if (!apiKey) {
+    throw new Error('MISTRAL_API_KEY not set');
+  }
+
+  const imageResponse = await fetch(imageUrl);
+  if (!imageResponse.ok) {
+    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+  }
+
+  const imageBuffer = await imageResponse.arrayBuffer();
+  const base64Image = Buffer.from(imageBuffer).toString('base64');
+  const mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+  const dataUrl = `data:${mimeType};base64,${base64Image}`;
+
+  const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: 'pixtral-12b-2409',
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'text', text: EXTRACTION_PROMPT },
+          { type: 'image_url', image_url: { url: dataUrl } }
+        ]
+      }],
+      temperature: 0.1,
+      max_tokens: 2048
+    })
+  });
+
+  const data = await response.json();
+  const text = data.choices?.[0]?.message?.content || '';
+
+  const jsonMatch = text.match(/\[[\s\S]*\]/);
+  if (!jsonMatch) {
+    return [];
+  }
+
+  const parsed = JSON.parse(jsonMatch[0]);
+  if (!Array.isArray(parsed)) return [];
+
+  return parsed.map(item => ({
+    description: item.description || '',
+    type: item.type || 'unknown',
+    bbox: item.bbox ? {
+      x: parseFloat(item.bbox.x) || 0,
+      y: parseFloat(item.bbox.y) || 0,
+      width: parseFloat(item.bbox.width) || 0,
+      height: parseFloat(item.bbox.height) || 0,
+    } : undefined,
+    confidence: item.confidence,
+    detected_at: new Date(),
+    detection_source: 'vision_model' as const,
+    model: 'mistral' as const,
   }));
 }
 
@@ -114,6 +179,9 @@ export async function POST(request: NextRequest) {
     const limit = Math.min(body.limit || 5, 20); // Max 20 pages
     const bookId = body.bookId;
     const dryRun = body.dryRun || false;
+    const model: 'gemini' | 'mistral' = body.model || 'gemini';
+
+    const extractFn = model === 'mistral' ? extractWithMistral : extractWithGemini;
 
     const db = await getDb();
 
@@ -174,7 +242,7 @@ export async function POST(request: NextRequest) {
       let error: string | undefined;
 
       try {
-        extractedImages = await extractWithGemini(imageUrl);
+        extractedImages = await extractFn(imageUrl);
 
         // Update the page with extracted images (unless dry run)
         if (!dryRun && extractedImages.length > 0) {
@@ -210,6 +278,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       summary: {
+        model,
         pagesProcessed: results.length,
         totalImagesExtracted: totalExtracted,
         imagesWithBbox: withBbox,

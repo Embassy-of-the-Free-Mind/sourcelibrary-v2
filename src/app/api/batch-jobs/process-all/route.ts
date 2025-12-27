@@ -38,11 +38,11 @@ export async function POST(request: NextRequest) {
       errors: [],
     };
 
-    // Get books to process
+    // Get books to process - fetch many more than limit since most may be done
     const bookQuery = specificBookId ? { id: specificBookId } : {};
     const books = await db.collection('books')
       .find(bookQuery)
-      .limit(specificBookId ? 1 : limit * 2) // Get extra to account for skips
+      .limit(specificBookId ? 1 : 500) // Get lots - most will be skipped
       .toArray();
 
     let processedCount = 0;

@@ -28,6 +28,7 @@ import {
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
 import ImageWithMagnifier from './ImageWithMagnifier';
+import PageMetadataPanel from './PageMetadataPanel';
 import PageAssistant from './PageAssistant';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
@@ -410,6 +411,7 @@ export default function TranslationEditor({
   const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
   const [showOcrPanel, setShowOcrPanel] = useState(false);
   const [showTranslationPanel, setShowTranslationPanel] = useState(true);
+  const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
 
   // Swipe navigation state
   const touchStartX = useRef<number>(0);
@@ -874,6 +876,15 @@ export default function TranslationEditor({
                         >
                           <MessageSquare className="w-3 h-3" />
                           {showNotes ? 'Notes' : 'Notes Off'}
+                        </button>
+                        <button
+                          onClick={() => setShowPageMetadata(true)}
+                          className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors bg-stone-100 hover:bg-stone-200"
+                          style={{ color: 'var(--text-muted)' }}
+                          title="View page metadata (models, timestamps, etc.)"
+                        >
+                          <FileText className="w-3 h-3" />
+                          Info
                         </button>
                         <button
                           onClick={() => copyToClipboard(translationText)}
@@ -1411,6 +1422,14 @@ export default function TranslationEditor({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Page Metadata Panel */}
+      {showPageMetadata && page && (
+        <PageMetadataPanel
+          page={page}
+          onClose={() => setShowPageMetadata(false)}
+        />
       )}
     </div>
   );
