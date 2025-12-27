@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
+import { getGeminiClient, getNextApiKey, reportRateLimitError } from '@/lib/gemini';
 
 // Increase timeout for batch translation
 export const maxDuration = 180;
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 interface PageInput {
   pageId: string;
@@ -79,10 +77,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Maximum 10 pages per batch' }, { status: 400 });
     }
 
-    if (!process.env.GEMINI_API_KEY) {
+    // Get API key with rotation
+    let apiKey: string;
+    try {
+      apiKey = getNextApiKey();
+    } catch (e) {
       return NextResponse.json({ error: 'GEMINI_API_KEY not configured' }, { status: 500 });
     }
 
+    const genAI = getGeminiClient();
     let model;
     try {
       model = genAI.getGenerativeModel({ model: modelId });
@@ -137,6 +140,8 @@ Return each translation clearly separated with the exact format:
 
       // Parse common Gemini errors
       if (errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('429')) {
+        // Report rate limit for key rotation
+        reportRateLimitError(apiKey);
         return NextResponse.json({
           error: 'Rate limit exceeded - too many requests',
           details: 'Wait a moment and try again, or reduce batch size',
