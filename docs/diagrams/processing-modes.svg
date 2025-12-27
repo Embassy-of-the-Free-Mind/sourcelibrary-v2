@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 550">
+  <defs>
+    <style>
+      .title { font: bold 24px system-ui, sans-serif; fill: #1a1a2e; }
+      .mode-title { font: bold 15px system-ui, sans-serif; fill: white; }
+      .mode-subtitle { font: 11px system-ui, sans-serif; fill: white; opacity: 0.8; }
+      .feature { font: 12px system-ui, sans-serif; fill: #374151; }
+      .feature-icon { font: 14px system-ui, sans-serif; }
+      .stat-value { font: bold 20px system-ui, sans-serif; fill: #1a1a2e; }
+      .stat-label { font: 11px system-ui, sans-serif; fill: #6b7280; }
+      .vs-text { font: bold 12px system-ui, sans-serif; fill: #9ca3af; }
+    </style>
+    <linearGradient id="interactive" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="batch-sync" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="batch-async" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <linearGradient id="post-process" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="550" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" class="title">Processing Modes</text>
+
+  <!-- Interactive Mode -->
+  <g filter="url(#shadow)" transform="translate(30, 70)">
+    <rect width="220" height="300" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="220" height="60" rx="12" fill="url(#interactive)"/>
+    <rect x="0" y="48" width="220" height="12" fill="url(#interactive)"/>
+    <text x="110" y="32" text-anchor="middle" class="mode-title">Interactive</text>
+    <text x="110" y="50" text-anchor="middle" class="mode-subtitle">Single Page</text>
+
+    <!-- Stats -->
+    <text x="110" y="100" text-anchor="middle" class="stat-value">~3s</text>
+    <text x="110" y="115" text-anchor="middle" class="stat-label">response time</text>
+
+    <line x1="20" y1="130" x2="200" y2="130" stroke="#e5e7eb"/>
+
+    <!-- Features -->
+    <text x="30" y="155" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="155" class="feature">Immediate results</text>
+    <text x="30" y="180" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="180" class="feature">Previous page context</text>
+    <text x="30" y="205" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="205" class="feature">Real-time editing</text>
+    <text x="30" y="230" class="feature-icon" fill="#ef4444">&#10007;</text>
+    <text x="50" y="230" class="feature">Full price</text>
+
+    <line x1="20" y1="250" x2="200" y2="250" stroke="#e5e7eb"/>
+    <text x="110" y="275" text-anchor="middle" class="stat-label">BEST FOR</text>
+    <text x="110" y="295" text-anchor="middle" class="feature">Quick fixes, QA review</text>
+  </g>
+
+  <!-- Batch Sync Mode -->
+  <g filter="url(#shadow)" transform="translate(280, 70)">
+    <rect width="220" height="300" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="220" height="60" rx="12" fill="url(#batch-sync)"/>
+    <rect x="0" y="48" width="220" height="12" fill="url(#batch-sync)"/>
+    <text x="110" y="32" text-anchor="middle" class="mode-title">Batch Streaming</text>
+    <text x="110" y="50" text-anchor="middle" class="mode-subtitle">10 pages/request</text>
+
+    <!-- Stats -->
+    <text x="110" y="100" text-anchor="middle" class="stat-value">~30s</text>
+    <text x="110" y="115" text-anchor="middle" class="stat-label">per batch</text>
+
+    <line x1="20" y1="130" x2="200" y2="130" stroke="#e5e7eb"/>
+
+    <!-- Features -->
+    <text x="30" y="155" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="155" class="feature">Live progress bar</text>
+    <text x="30" y="180" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="180" class="feature">Pause/resume</text>
+    <text x="30" y="205" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="205" class="feature">Previous page context</text>
+    <text x="30" y="230" class="feature-icon" fill="#ef4444">&#10007;</text>
+    <text x="50" y="230" class="feature">Full price</text>
+
+    <line x1="20" y1="250" x2="200" y2="250" stroke="#e5e7eb"/>
+    <text x="110" y="275" text-anchor="middle" class="stat-label">BEST FOR</text>
+    <text x="110" y="295" text-anchor="middle" class="feature">Single book processing</text>
+  </g>
+
+  <!-- Batch Async Mode -->
+  <g filter="url(#shadow)" transform="translate(530, 70)">
+    <rect width="220" height="300" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="220" height="60" rx="12" fill="url(#batch-async)"/>
+    <rect x="0" y="48" width="220" height="12" fill="url(#batch-async)"/>
+    <text x="110" y="32" text-anchor="middle" class="mode-title">Batch API</text>
+    <text x="110" y="50" text-anchor="middle" class="mode-subtitle">Async, 50% off</text>
+
+    <!-- Stats -->
+    <text x="110" y="100" text-anchor="middle" class="stat-value">2-24h</text>
+    <text x="110" y="115" text-anchor="middle" class="stat-label">completion time</text>
+
+    <line x1="20" y1="130" x2="200" y2="130" stroke="#e5e7eb"/>
+
+    <!-- Features -->
+    <text x="30" y="155" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="155" class="feature">50% cost savings</text>
+    <text x="30" y="180" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="180" class="feature">Previous page context</text>
+    <text x="30" y="205" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="50" y="205" class="feature">Handles 1000s of pages</text>
+    <text x="30" y="230" class="feature-icon" fill="#f59e0b">&#9679;</text>
+    <text x="50" y="230" class="feature">Submit and wait</text>
+
+    <line x1="20" y1="250" x2="200" y2="250" stroke="#e5e7eb"/>
+    <text x="110" y="275" text-anchor="middle" class="stat-label">BEST FOR</text>
+    <text x="110" y="295" text-anchor="middle" class="feature">Bulk library processing</text>
+  </g>
+
+  <!-- Post-Process Mode -->
+  <g filter="url(#shadow)" transform="translate(780, 70)">
+    <rect width="190" height="300" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="190" height="60" rx="12" fill="url(#post-process)"/>
+    <rect x="0" y="48" width="190" height="12" fill="url(#post-process)"/>
+    <text x="95" y="32" text-anchor="middle" class="mode-title">Stitch</text>
+    <text x="95" y="50" text-anchor="middle" class="mode-subtitle">Post-process cleanup</text>
+
+    <!-- Stats -->
+    <text x="95" y="100" text-anchor="middle" class="stat-value">~1s</text>
+    <text x="95" y="115" text-anchor="middle" class="stat-label">per page</text>
+
+    <line x1="15" y1="130" x2="175" y2="130" stroke="#e5e7eb"/>
+
+    <!-- Features -->
+    <text x="25" y="155" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="45" y="155" class="feature">Fix page breaks</text>
+    <text x="25" y="180" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="45" y="180" class="feature">Dry-run preview</text>
+    <text x="25" y="205" class="feature-icon" fill="#10b981">&#10003;</text>
+    <text x="45" y="205" class="feature">Selective pages</text>
+    <text x="25" y="230" class="feature-icon" fill="#f59e0b">&#9679;</text>
+    <text x="45" y="230" class="feature">Extra AI call</text>
+
+    <line x1="15" y1="250" x2="175" y2="250" stroke="#e5e7eb"/>
+    <text x="95" y="275" text-anchor="middle" class="stat-label">BEST FOR</text>
+    <text x="95" y="295" text-anchor="middle" class="feature">Legacy cleanup</text>
+  </g>
+
+  <!-- Cost Comparison -->
+  <g transform="translate(30, 400)">
+    <rect width="940" height="120" rx="12" fill="white" stroke="#e5e7eb" filter="url(#shadow)"/>
+    <text x="470" y="30" text-anchor="middle" style="font: bold 14px system-ui; fill: #374151;">Cost Comparison: 1,000 Books (200 pages each)</text>
+
+    <line x1="30" y1="50" x2="910" y2="50" stroke="#e5e7eb"/>
+
+    <!-- Cost bars -->
+    <rect x="50" y="65" width="350" height="20" rx="4" fill="#e5e7eb"/>
+    <rect x="50" y="65" width="350" height="20" rx="4" fill="url(#interactive)"/>
+    <text x="410" y="80" class="feature">Full Price: $3,000 - $6,000</text>
+
+    <rect x="50" y="95" width="175" height="20" rx="4" fill="#e5e7eb"/>
+    <rect x="50" y="95" width="175" height="20" rx="4" fill="url(#batch-async)"/>
+    <text x="235" y="110" class="feature">Batch API: $1,500 - $3,000 (50% off)</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="500" y="540" text-anchor="middle" style="font: 12px system-ui; fill: #9ca3af;">
+    All modes support OCR + Translation + Summary pipeline
+  </text>
+</svg>

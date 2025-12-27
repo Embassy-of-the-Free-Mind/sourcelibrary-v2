@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 400">
+  <defs>
+    <style>
+      .title { font: bold 24px system-ui, sans-serif; fill: #1a1a2e; }
+      .stage-label { font: bold 12px system-ui, sans-serif; fill: white; }
+      .stage-desc { font: 10px system-ui, sans-serif; fill: #6b7280; }
+      .arrow-label { font: 11px system-ui, sans-serif; fill: #6b7280; }
+      .percent { font: bold 18px system-ui, sans-serif; }
+    </style>
+    <linearGradient id="stage1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#94a3b8"/>
+      <stop offset="100%" style="stop-color:#64748b"/>
+    </linearGradient>
+    <linearGradient id="stage2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+    <linearGradient id="stage3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="stage4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <linearGradient id="stage5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#9ca3af"/>
+    </marker>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="400" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="550" y="40" text-anchor="middle" class="title">Book Lifecycle</text>
+
+  <!-- Progress bar background -->
+  <rect x="50" y="320" width="1000" height="8" rx="4" fill="#e5e7eb"/>
+
+  <!-- Stage 1: Import -->
+  <g filter="url(#shadow)" transform="translate(50, 80)">
+    <rect width="160" height="80" rx="10" fill="url(#stage1)"/>
+    <text x="80" y="35" text-anchor="middle" class="stage-label">IMPORT</text>
+    <text x="80" y="55" text-anchor="middle" class="stage-label" style="opacity: 0.8">342 pages</text>
+    <text x="80" y="70" text-anchor="middle" style="font: 10px system-ui; fill: white; opacity: 0.7">images only</text>
+  </g>
+  <rect x="50" y="320" width="0" height="8" rx="4" fill="url(#stage1)"/>
+  <text x="130" y="310" text-anchor="middle" class="percent" fill="#64748b">0%</text>
+  <text x="130" y="355" text-anchor="middle" class="stage-desc">Imported</text>
+
+  <!-- Arrow 1 -->
+  <line x1="220" y1="120" x2="270" y2="120" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="245" y="108" text-anchor="middle" class="arrow-label">split</text>
+
+  <!-- Stage 2: Split -->
+  <g filter="url(#shadow)" transform="translate(280, 80)">
+    <rect width="160" height="80" rx="10" fill="url(#stage2)"/>
+    <text x="80" y="35" text-anchor="middle" class="stage-label">SPLIT</text>
+    <text x="80" y="55" text-anchor="middle" class="stage-label" style="opacity: 0.8">684 pages</text>
+    <text x="80" y="70" text-anchor="middle" style="font: 10px system-ui; fill: white; opacity: 0.7">2-page spreads detected</text>
+  </g>
+  <rect x="50" y="320" width="200" height="8" rx="4" fill="url(#stage2)"/>
+  <text x="360" y="310" text-anchor="middle" class="percent" fill="#2563eb">20%</text>
+  <text x="360" y="355" text-anchor="middle" class="stage-desc">Split</text>
+
+  <!-- Arrow 2 -->
+  <line x1="450" y1="120" x2="500" y2="120" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="475" y="108" text-anchor="middle" class="arrow-label">ocr</text>
+
+  <!-- Stage 3: OCR -->
+  <g filter="url(#shadow)" transform="translate(510, 80)">
+    <rect width="160" height="80" rx="10" fill="url(#stage3)"/>
+    <text x="80" y="35" text-anchor="middle" class="stage-label">OCR</text>
+    <text x="80" y="55" text-anchor="middle" class="stage-label" style="opacity: 0.8">684 pages</text>
+    <text x="80" y="70" text-anchor="middle" style="font: 10px system-ui; fill: white; opacity: 0.7">text extracted</text>
+  </g>
+  <rect x="50" y="320" width="500" height="8" rx="4" fill="url(#stage3)"/>
+  <text x="590" y="310" text-anchor="middle" class="percent" fill="#7c3aed">50%</text>
+  <text x="590" y="355" text-anchor="middle" class="stage-desc">OCR Complete</text>
+
+  <!-- Arrow 3 -->
+  <line x1="680" y1="120" x2="730" y2="120" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="705" y="108" text-anchor="middle" class="arrow-label">translate</text>
+
+  <!-- Stage 4: Translate -->
+  <g filter="url(#shadow)" transform="translate(740, 80)">
+    <rect width="160" height="80" rx="10" fill="url(#stage4)"/>
+    <text x="80" y="35" text-anchor="middle" class="stage-label">TRANSLATE</text>
+    <text x="80" y="55" text-anchor="middle" class="stage-label" style="opacity: 0.8">684 pages</text>
+    <text x="80" y="70" text-anchor="middle" style="font: 10px system-ui; fill: white; opacity: 0.7">English + notes</text>
+  </g>
+  <rect x="50" y="320" width="800" height="8" rx="4" fill="url(#stage4)"/>
+  <text x="820" y="310" text-anchor="middle" class="percent" fill="#d97706">80%</text>
+  <text x="820" y="355" text-anchor="middle" class="stage-desc">Translated</text>
+
+  <!-- Arrow 4 -->
+  <line x1="910" y1="120" x2="960" y2="120" stroke="#9ca3af" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="935" y="108" text-anchor="middle" class="arrow-label">publish</text>
+
+  <!-- Stage 5: Published -->
+  <g filter="url(#shadow)" transform="translate(970, 80)">
+    <rect width="100" height="80" rx="10" fill="url(#stage5)"/>
+    <text x="50" y="35" text-anchor="middle" class="stage-label">EDITION</text>
+    <text x="50" y="55" text-anchor="middle" class="stage-label" style="opacity: 0.8">v1.0.0</text>
+    <text x="50" y="70" text-anchor="middle" style="font: 10px system-ui; fill: white; opacity: 0.7">DOI minted</text>
+  </g>
+  <rect x="50" y="320" width="1000" height="8" rx="4" fill="url(#stage5)"/>
+  <text x="1020" y="310" text-anchor="middle" class="percent" fill="#059669">100%</text>
+  <text x="1020" y="355" text-anchor="middle" class="stage-desc">Published</text>
+
+  <!-- Details below -->
+  <g transform="translate(50, 200)">
+    <rect width="1000" height="90" rx="8" fill="white" stroke="#e5e7eb" filter="url(#shadow)"/>
+
+    <g transform="translate(30, 25)">
+      <circle r="6" fill="#64748b"/>
+      <text x="15" y="4" style="font: 11px system-ui; fill: #374151;">Import from Internet Archive, IIIF, or PDF upload</text>
+    </g>
+
+    <g transform="translate(230, 25)">
+      <circle r="6" fill="#2563eb"/>
+      <text x="15" y="4" style="font: 11px system-ui; fill: #374151;">Detect and split two-page spreads</text>
+    </g>
+
+    <g transform="translate(480, 25)">
+      <circle r="6" fill="#7c3aed"/>
+      <text x="15" y="4" style="font: 11px system-ui; fill: #374151;">Gemini Vision extracts text</text>
+    </g>
+
+    <g transform="translate(700, 25)">
+      <circle r="6" fill="#d97706"/>
+      <text x="15" y="4" style="font: 11px system-ui; fill: #374151;">Latin/German to English</text>
+    </g>
+
+    <g transform="translate(30, 55)">
+      <circle r="6" fill="#059669"/>
+      <text x="15" y="4" style="font: 11px system-ui; fill: #374151;">Create immutable edition with DOI, archive to Zenodo, generate EPUB/PDF</text>
+    </g>
+
+    <g transform="translate(550, 55)">
+      <text style="font: 11px system-ui; fill: #9ca3af;">Time: 2-24 hours (Batch API) | Cost: ~$3 per 200-page book</text>
+    </g>
+  </g>
+
+</svg>

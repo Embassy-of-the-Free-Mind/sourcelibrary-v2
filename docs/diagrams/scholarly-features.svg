@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <defs>
+    <style>
+      .title { font: bold 24px system-ui, sans-serif; fill: #1a1a2e; }
+      .category-title { font: bold 14px system-ui, sans-serif; fill: white; }
+      .feature-title { font: bold 12px system-ui, sans-serif; fill: #374151; }
+      .feature-desc { font: 11px system-ui, sans-serif; fill: #6b7280; }
+      .icon { font: 20px system-ui, sans-serif; }
+    </style>
+    <linearGradient id="provenance" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="citability" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="transparency" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <linearGradient id="accuracy" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <linearGradient id="accessibility" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ec4899"/>
+      <stop offset="100%" style="stop-color:#db2777"/>
+    </linearGradient>
+    <linearGradient id="community" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#0891b2"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="450" y="45" text-anchor="middle" class="title">Scholarly Features</text>
+  <text x="450" y="70" text-anchor="middle" style="font: 13px system-ui; fill: #6b7280;">What makes this a research tool, not just a translator</text>
+
+  <!-- Row 1 -->
+
+  <!-- Provenance -->
+  <g filter="url(#shadow)" transform="translate(30, 100)">
+    <rect width="270" height="200" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="270" height="45" rx="12" fill="url(#provenance)"/>
+    <rect x="0" y="35" width="270" height="10" fill="url(#provenance)"/>
+    <text x="135" y="30" text-anchor="middle" class="category-title">PROVENANCE</text>
+
+    <g transform="translate(20, 65)">
+      <text class="icon" fill="#3b82f6">&#128218;</text>
+      <text x="35" y="5" class="feature-title">Image Source Tracking</text>
+      <text x="35" y="20" class="feature-desc">Provider, license, source URL</text>
+    </g>
+    <g transform="translate(20, 105)">
+      <text class="icon" fill="#3b82f6">&#128279;</text>
+      <text x="35" y="5" class="feature-title">USTC Catalog Linking</text>
+      <text x="35" y="20" class="feature-desc">Universal Short Title Catalogue</text>
+    </g>
+    <g transform="translate(20, 145)">
+      <text class="icon" fill="#3b82f6">&#9878;</text>
+      <text x="35" y="5" class="feature-title">SPDX Licensing</text>
+      <text x="35" y="20" class="feature-desc">Machine-readable rights</text>
+    </g>
+  </g>
+
+  <!-- Citability -->
+  <g filter="url(#shadow)" transform="translate(315, 100)">
+    <rect width="270" height="200" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="270" height="45" rx="12" fill="url(#citability)"/>
+    <rect x="0" y="35" width="270" height="10" fill="url(#citability)"/>
+    <text x="135" y="30" text-anchor="middle" class="category-title">CITABILITY</text>
+
+    <g transform="translate(20, 65)">
+      <text class="icon" fill="#8b5cf6">&#128206;</text>
+      <text x="35" y="5" class="feature-title">DOI Minting</text>
+      <text x="35" y="20" class="feature-desc">Permanent identifiers via Zenodo</text>
+    </g>
+    <g transform="translate(20, 105)">
+      <text class="icon" fill="#8b5cf6">&#128230;</text>
+      <text x="35" y="5" class="feature-title">Immutable Editions</text>
+      <text x="35" y="20" class="feature-desc">Versioned snapshots, SHA-256</text>
+    </g>
+    <g transform="translate(20, 145)">
+      <text class="icon" fill="#8b5cf6">&#128196;</text>
+      <text x="35" y="5" class="feature-title">Export Formats</text>
+      <text x="35" y="20" class="feature-desc">PDF-A, EPUB, TEI-XML</text>
+    </g>
+  </g>
+
+  <!-- Transparency -->
+  <g filter="url(#shadow)" transform="translate(600, 100)">
+    <rect width="270" height="200" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="270" height="45" rx="12" fill="url(#transparency)"/>
+    <rect x="0" y="35" width="270" height="10" fill="url(#transparency)"/>
+    <text x="135" y="30" text-anchor="middle" class="category-title">TRANSPARENCY</text>
+
+    <g transform="translate(20, 65)">
+      <text class="icon" fill="#10b981">&#129302;</text>
+      <text x="35" y="5" class="feature-title">Model Tracking</text>
+      <text x="35" y="20" class="feature-desc">Which AI, which version</text>
+    </g>
+    <g transform="translate(20, 105)">
+      <text class="icon" fill="#10b981">&#128221;</text>
+      <text x="35" y="5" class="feature-title">Prompt Storage</text>
+      <text x="35" y="20" class="feature-desc">Full prompts preserved</text>
+    </g>
+    <g transform="translate(20, 145)">
+      <text class="icon" fill="#10b981">&#128176;</text>
+      <text x="35" y="5" class="feature-title">Cost Logging</text>
+      <text x="35" y="20" class="feature-desc">Per-page token usage</text>
+    </g>
+  </g>
+
+  <!-- Row 2 -->
+
+  <!-- Accuracy -->
+  <g filter="url(#shadow)" transform="translate(30, 320)">
+    <rect width="270" height="200" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="270" height="45" rx="12" fill="url(#accuracy)"/>
+    <rect x="0" y="35" width="270" height="10" fill="url(#accuracy)"/>
+    <text x="135" y="30" text-anchor="middle" class="category-title">ACCURACY</text>
+
+    <g transform="translate(20, 65)">
+      <text class="icon" fill="#f59e0b">&#128279;</text>
+      <text x="35" y="5" class="feature-title">Page Context</text>
+      <text x="35" y="20" class="feature-desc">Previous page for continuity</text>
+    </g>
+    <g transform="translate(20, 105)">
+      <text class="icon" fill="#f59e0b">&#127979;</text>
+      <text x="35" y="5" class="feature-title">Language Prompts</text>
+      <text x="35" y="20" class="feature-desc">Latin/German specialized</text>
+    </g>
+    <g transform="translate(20, 145)">
+      <text class="icon" fill="#f59e0b">&#9999;</text>
+      <text x="35" y="5" class="feature-title">Manual Override</text>
+      <text x="35" y="20" class="feature-desc">Human edits preserved</text>
+    </g>
+  </g>
+
+  <!-- Accessibility -->
+  <g filter="url(#shadow)" transform="translate(315, 320)">
+    <rect width="270" height="200" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="270" height="45" rx="12" fill="url(#accessibility)"/>
+    <rect x="0" y="35" width="270" height="10" fill="url(#accessibility)"/>
+    <text x="135" y="30" text-anchor="middle" class="category-title">ACCESSIBILITY</text>
+
+    <g transform="translate(20, 65)">
+      <text class="icon" fill="#ec4899">&#128214;</text>
+      <text x="35" y="5" class="feature-title">Parallel Text</text>
+      <text x="35" y="20" class="feature-desc">Original + translation side by side</text>
+    </g>
+    <g transform="translate(20, 105)">
+      <text class="icon" fill="#ec4899">&#128269;</text>
+      <text x="35" y="5" class="feature-title">Full-Text Search</text>
+      <text x="35" y="20" class="feature-desc">Across all books and pages</text>
+    </g>
+    <g transform="translate(20, 145)">
+      <text class="icon" fill="#ec4899">&#10024;</text>
+      <text x="35" y="5" class="feature-title">Modernized Mode</text>
+      <text x="35" y="20" class="feature-desc">Readable prose version</text>
+    </g>
+  </g>
+
+  <!-- Community -->
+  <g filter="url(#shadow)" transform="translate(600, 320)">
+    <rect width="270" height="200" rx="12" fill="white" stroke="#e5e7eb"/>
+    <rect width="270" height="45" rx="12" fill="url(#community)"/>
+    <rect x="0" y="35" width="270" height="10" fill="url(#community)"/>
+    <text x="135" y="30" text-anchor="middle" class="category-title">COMMUNITY</text>
+
+    <g transform="translate(20, 65)">
+      <text class="icon" fill="#06b6d4">&#128172;</text>
+      <text x="35" y="5" class="feature-title">Annotations</text>
+      <text x="35" y="20" class="feature-desc">Comments, context, corrections</text>
+    </g>
+    <g transform="translate(20, 105)">
+      <text class="icon" fill="#06b6d4">&#128203;</text>
+      <text x="35" y="5" class="feature-title">Highlights</text>
+      <text x="35" y="20" class="feature-desc">Save and share passages</text>
+    </g>
+    <g transform="translate(20, 145)">
+      <text class="icon" fill="#06b6d4">&#128101;</text>
+      <text x="35" y="5" class="feature-title">Attribution</text>
+      <text x="35" y="20" class="feature-desc">Contributors credited</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <text x="450" y="570" text-anchor="middle" style="font: 12px system-ui; fill: #9ca3af;">
+    Embassy of the Free Mind — Source Library v2
+  </text>
+</svg>

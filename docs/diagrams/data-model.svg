@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700">
+  <defs>
+    <style>
+      .title { font: bold 24px system-ui, sans-serif; fill: #1a1a2e; }
+      .entity-name { font: bold 16px system-ui, sans-serif; fill: white; }
+      .field-name { font: bold 11px monospace; fill: #374151; }
+      .field-type { font: 11px monospace; fill: #6b7280; }
+      .field-example { font: 10px monospace; fill: #9ca3af; font-style: italic; }
+      .relation-label { font: 11px system-ui, sans-serif; fill: #6b7280; }
+      .section-label { font: bold 10px system-ui, sans-serif; fill: #9ca3af; letter-spacing: 1px; }
+    </style>
+    <linearGradient id="book-header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#2563eb"/>
+    </linearGradient>
+    <linearGradient id="page-header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8b5cf6"/>
+      <stop offset="100%" style="stop-color:#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="edition-header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+    <linearGradient id="annotation-header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b"/>
+      <stop offset="100%" style="stop-color:#d97706"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.1"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" class="title">Data Model</text>
+
+  <!-- BOOK Entity -->
+  <g filter="url(#shadow)" transform="translate(50, 70)">
+    <rect width="280" height="320" rx="8" fill="white" stroke="#e5e7eb"/>
+    <rect width="280" height="40" rx="8" fill="url(#book-header)"/>
+    <rect x="0" y="32" width="280" height="8" fill="url(#book-header)"/>
+    <text x="140" y="27" text-anchor="middle" class="entity-name">BOOK</text>
+
+    <text x="15" y="65" class="section-label">IDENTITY</text>
+    <text x="15" y="85" class="field-name">id</text>
+    <text x="100" y="85" class="field-type">string</text>
+    <text x="15" y="102" class="field-name">title</text>
+    <text x="100" y="102" class="field-type">string</text>
+    <text x="15" y="119" class="field-name">author</text>
+    <text x="100" y="119" class="field-type">string</text>
+    <text x="15" y="136" class="field-name">language</text>
+    <text x="100" y="136" class="field-type">"Latin" | "German"</text>
+
+    <line x1="15" y1="148" x2="265" y2="148" stroke="#e5e7eb"/>
+    <text x="15" y="165" class="section-label">PROGRESS</text>
+    <text x="15" y="185" class="field-name">pages_count</text>
+    <text x="120" y="185" class="field-type">number</text>
+    <text x="180" y="185" class="field-example">342</text>
+    <text x="15" y="202" class="field-name">pages_ocr</text>
+    <text x="120" y="202" class="field-type">number</text>
+    <text x="180" y="202" class="field-example">342</text>
+    <text x="15" y="219" class="field-name">pages_translated</text>
+    <text x="120" y="219" class="field-type">number</text>
+    <text x="180" y="219" class="field-example">280</text>
+
+    <line x1="15" y1="231" x2="265" y2="231" stroke="#e5e7eb"/>
+    <text x="15" y="248" class="section-label">METADATA</text>
+    <text x="15" y="268" class="field-name">ustc_id</text>
+    <text x="100" y="268" class="field-type">string?</text>
+    <text x="15" y="285" class="field-name">image_source</text>
+    <text x="100" y="285" class="field-type">{ provider, license }</text>
+    <text x="15" y="302" class="field-name">dublin_core</text>
+    <text x="100" y="302" class="field-type">{ dc_subject, ... }</text>
+  </g>
+
+  <!-- PAGE Entity -->
+  <g filter="url(#shadow)" transform="translate(400, 70)">
+    <rect width="280" height="380" rx="8" fill="white" stroke="#e5e7eb"/>
+    <rect width="280" height="40" rx="8" fill="url(#page-header)"/>
+    <rect x="0" y="32" width="280" height="8" fill="url(#page-header)"/>
+    <text x="140" y="27" text-anchor="middle" class="entity-name">PAGE</text>
+
+    <text x="15" y="65" class="section-label">IDENTITY</text>
+    <text x="15" y="85" class="field-name">id</text>
+    <text x="100" y="85" class="field-type">string</text>
+    <text x="15" y="102" class="field-name">book_id</text>
+    <text x="100" y="102" class="field-type">string (FK)</text>
+    <text x="15" y="119" class="field-name">page_number</text>
+    <text x="100" y="119" class="field-type">number</text>
+
+    <line x1="15" y1="131" x2="265" y2="131" stroke="#e5e7eb"/>
+    <text x="15" y="148" class="section-label">IMAGES</text>
+    <text x="15" y="168" class="field-name">photo</text>
+    <text x="100" y="168" class="field-type">string (URL)</text>
+    <text x="15" y="185" class="field-name">photo_original</text>
+    <text x="100" y="185" class="field-type">string?</text>
+    <text x="15" y="202" class="field-name">crop</text>
+    <text x="100" y="202" class="field-type">{ xStart, xEnd }</text>
+
+    <line x1="15" y1="214" x2="265" y2="214" stroke="#e5e7eb"/>
+    <text x="15" y="231" class="section-label">AI CONTENT</text>
+    <text x="15" y="251" class="field-name">ocr</text>
+    <text x="100" y="251" class="field-type">{ data, model, cost }</text>
+    <text x="15" y="268" class="field-name">translation</text>
+    <text x="100" y="268" class="field-type">{ data, model, cost }</text>
+    <text x="15" y="285" class="field-name">summary</text>
+    <text x="100" y="285" class="field-type">{ data, model }</text>
+
+    <line x1="15" y1="297" x2="265" y2="297" stroke="#e5e7eb"/>
+    <text x="15" y="314" class="section-label">SPLIT DETECTION</text>
+    <text x="15" y="334" class="field-name">split_from</text>
+    <text x="100" y="334" class="field-type">string?</text>
+    <text x="15" y="351" class="field-name">split_detection</text>
+    <text x="100" y="351" class="field-type">{ confidence, pos }</text>
+  </g>
+
+  <!-- EDITION Entity -->
+  <g filter="url(#shadow)" transform="translate(50, 420)">
+    <rect width="280" height="220" rx="8" fill="white" stroke="#e5e7eb"/>
+    <rect width="280" height="40" rx="8" fill="url(#edition-header)"/>
+    <rect x="0" y="32" width="280" height="8" fill="url(#edition-header)"/>
+    <text x="140" y="27" text-anchor="middle" class="entity-name">EDITION</text>
+
+    <text x="15" y="65" class="section-label">PUBLICATION</text>
+    <text x="15" y="85" class="field-name">id</text>
+    <text x="100" y="85" class="field-type">string</text>
+    <text x="15" y="102" class="field-name">book_id</text>
+    <text x="100" y="102" class="field-type">string (FK)</text>
+    <text x="15" y="119" class="field-name">version</text>
+    <text x="100" y="119" class="field-type">string</text>
+    <text x="180" y="119" class="field-example">"1.0.0"</text>
+    <text x="15" y="136" class="field-name">doi</text>
+    <text x="100" y="136" class="field-type">string</text>
+
+    <line x1="15" y1="148" x2="265" y2="148" stroke="#e5e7eb"/>
+    <text x="15" y="165" class="section-label">ARCHIVE</text>
+    <text x="15" y="185" class="field-name">zenodo_id</text>
+    <text x="100" y="185" class="field-type">number</text>
+    <text x="15" y="202" class="field-name">content_hash</text>
+    <text x="100" y="202" class="field-type">string (SHA-256)</text>
+  </g>
+
+  <!-- ANNOTATION Entity -->
+  <g filter="url(#shadow)" transform="translate(720, 70)">
+    <rect width="240" height="260" rx="8" fill="white" stroke="#e5e7eb"/>
+    <rect width="240" height="40" rx="8" fill="url(#annotation-header)"/>
+    <rect x="0" y="32" width="240" height="8" fill="url(#annotation-header)"/>
+    <text x="120" y="27" text-anchor="middle" class="entity-name">ANNOTATION</text>
+
+    <text x="15" y="65" class="section-label">REFERENCE</text>
+    <text x="15" y="85" class="field-name">id</text>
+    <text x="90" y="85" class="field-type">string</text>
+    <text x="15" y="102" class="field-name">page_id</text>
+    <text x="90" y="102" class="field-type">string (FK)</text>
+    <text x="15" y="119" class="field-name">anchor</text>
+    <text x="90" y="119" class="field-type">{ text, offset }</text>
+
+    <line x1="15" y1="131" x2="225" y2="131" stroke="#e5e7eb"/>
+    <text x="15" y="148" class="section-label">CONTENT</text>
+    <text x="15" y="168" class="field-name">content</text>
+    <text x="90" y="168" class="field-type">string (MD)</text>
+    <text x="15" y="185" class="field-name">type</text>
+    <text x="90" y="185" class="field-type">comment | context</text>
+    <text x="15" y="202" class="field-name">status</text>
+    <text x="90" y="202" class="field-type">pending | approved</text>
+
+    <line x1="15" y1="214" x2="225" y2="214" stroke="#e5e7eb"/>
+    <text x="15" y="231" class="section-label">ENGAGEMENT</text>
+    <text x="15" y="251" class="field-name">upvotes</text>
+    <text x="90" y="251" class="field-type">number</text>
+  </g>
+
+  <!-- Relationships -->
+  <!-- Book to Page -->
+  <path d="M 330 230 Q 365 230 365 180 Q 365 130 400 130"
+        fill="none" stroke="#6b7280" stroke-width="2"/>
+  <circle cx="330" cy="230" r="4" fill="#3b82f6"/>
+  <polygon points="400,130 390,125 390,135" fill="#8b5cf6"/>
+  <text x="355" y="165" class="relation-label">1:N</text>
+
+  <!-- Book to Edition -->
+  <path d="M 190 390 L 190 420"
+        fill="none" stroke="#6b7280" stroke-width="2"/>
+  <circle cx="190" cy="390" r="4" fill="#3b82f6"/>
+  <polygon points="190,420 185,410 195,410" fill="#10b981"/>
+  <text x="200" y="410" class="relation-label">1:N</text>
+
+  <!-- Page to Annotation -->
+  <path d="M 680 260 L 720 260"
+        fill="none" stroke="#6b7280" stroke-width="2"/>
+  <circle cx="680" cy="260" r="4" fill="#8b5cf6"/>
+  <polygon points="720,260 710,255 710,265" fill="#f59e0b"/>
+  <text x="690" y="250" class="relation-label">1:N</text>
+
+  <!-- Footer -->
+  <text x="500" y="670" text-anchor="middle" style="font: 12px system-ui; fill: #9ca3af;">
+    MongoDB Collections — Source Library v2
+  </text>
+</svg>
