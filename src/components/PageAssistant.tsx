@@ -136,13 +136,8 @@ export default function PageAssistant({
       setInput('');
       setError(null);
       setShowInfo(null);
-
-      // Auto-analyze if in explain mode
-      if (initialMode === 'explain') {
-        handleAnalyze();
-      }
+      // No auto-analyze - let user choose what to explain
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, initialMode]);
 
   // Focus input when switching to ask mode
@@ -772,19 +767,71 @@ export default function PageAssistant({
                 </div>
               )}
 
-              {/* Empty state (no items found) */}
+              {/* Quick options - show immediately */}
               {!selectedTerm && !loading && !error && explainItems.length === 0 && !explanation && (
-                <div className="text-center py-8">
-                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                    No specific terms identified. Try "Explain All" below.
+                <div className="space-y-3">
+                  <p className="text-sm text-center mb-4" style={{ color: 'var(--text-muted)' }}>
+                    What would you like explained?
                   </p>
-                  <button
-                    onClick={handleExplainAll}
-                    className="mt-4 px-4 py-2 rounded-lg text-sm font-medium text-white"
-                    style={{ background: 'var(--accent-violet)' }}
-                  >
-                    Explain the whole page
-                  </button>
+
+                  {/* Quick explain options */}
+                  {[
+                    { label: 'Summarize this page', icon: '📝', query: 'full page' },
+                    { label: 'Explain difficult terms', icon: 'Aa', query: 'difficult terms and archaic language' },
+                    { label: 'Historical context', icon: '📜', query: 'the historical context and background' },
+                    { label: 'Key concepts', icon: '💡', query: 'the key concepts and ideas' },
+                  ].map((option) => (
+                    <button
+                      key={option.query}
+                      onClick={() => handleExplainTerm(option.query)}
+                      className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all hover:bg-violet-50"
+                      style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
+                    >
+                      <span
+                        className="w-8 h-8 rounded-lg flex items-center justify-center text-sm flex-shrink-0"
+                        style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}
+                      >
+                        {option.icon}
+                      </span>
+                      <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>
+                        {option.label}
+                      </span>
+                    </button>
+                  ))}
+
+                  {/* Custom input */}
+                  <div className="pt-3 mt-3" style={{ borderTop: '1px solid var(--border-light)' }}>
+                    <p className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>
+                      Or type what you want explained:
+                    </p>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && input.trim()) {
+                            handleExplainTerm(input.trim());
+                          }
+                        }}
+                        placeholder="e.g., 'the philosopher's stone'"
+                        className="flex-1 px-3 py-2 rounded-lg text-sm"
+                        style={{
+                          background: 'var(--bg-white)',
+                          border: '1px solid var(--border-medium)',
+                          color: 'var(--text-primary)'
+                        }}
+                      />
+                      <button
+                        onClick={() => input.trim() && handleExplainTerm(input.trim())}
+                        disabled={!input.trim()}
+                        className="px-4 py-2 rounded-lg text-sm font-medium text-white disabled:opacity-50"
+                        style={{ background: 'var(--accent-violet)' }}
+                      >
+                        Go
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
             </>
