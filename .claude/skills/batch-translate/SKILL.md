@@ -281,17 +281,138 @@ done
 
 ## Processing All Books
 
-To process all books in the library:
+### Optimized Batch Script (Tier 1)
+
+This script processes all books with proper rate limiting:
 
 ```bash
-# Get all book IDs
-curl -s "https://sourcelibrary-v2.vercel.app/api/books" | jq -r '.[] | .id' > /tmp/book_ids.txt
+#!/bin/bash
+# Optimized for Tier 1 (300 RPM) - adjust SLEEP_TIME for other tiers
 
-# Process each book
-while read -r BOOK_ID; do
-  # Run the single-book script above for each
-  ./process_book.sh "$BOOK_ID"
-done < /tmp/book_ids.txt
+BASE_URL="https://sourcelibrary-v2.vercel.app"
+MODEL="gemini-2.5-flash"
+BATCH_SIZE=5
+SLEEP_TIME=0.4  # Tier 1: 0.4s, Tier 2: 0.12s, Tier 3: 0.06s
+
+process_book() {
+  BOOK_ID="$1"
+  BOOK_DATA=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
+  TITLE=$(echo "$BOOK_DATA" | jq -r '.title[0:30]')
+
+  # Check what's needed (IMPORTANT: empty string detection)
+  NEEDS_CROP=$(echo "$BOOK_DATA" | jq '[.pages[] | select(.crop) | select(.cropped_photo | not)] | length')
+  NEEDS_OCR=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length == 0)] | length')
+  NEEDS_TRANSLATE=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0)] | length')
+
+  if [ "$NEEDS_CROP" = "0" ] && [ "$NEEDS_OCR" = "0" ] && [ "$NEEDS_TRANSLATE" = "0" ]; then
+    echo "SKIP: $TITLE"
+    return
+  fi
+
+  echo "START: $TITLE [crop:$NEEDS_CROP ocr:$NEEDS_OCR trans:$NEEDS_TRANSLATE]"
+
+  # Step 1: Crops
+  if [ "$NEEDS_CROP" != "0" ]; then
+    CROP_IDS=$(echo "$BOOK_DATA" | jq '[.pages[] | select(.crop) | select(.cropped_photo | not) | .id]')
+    JOB_RESP=$(curl -s -X POST "$BASE_URL/api/jobs" \
+      -H 'Content-Type: application/json' \
+      -d "{\"type\": \"generate_cropped_images\", \"book_id\": \"$BOOK_ID\", \"page_ids\": $CROP_IDS}")
+    JOB_ID=$(echo "$JOB_RESP" | jq -r '.job.id')
+
+    if [ "$JOB_ID" != "null" ]; then
+      while true; do
+        RESULT=$(curl -s -X POST "$BASE_URL/api/jobs/$JOB_ID/process")
+        [ "$(echo "$RESULT" | jq -r '.done')" = "true" ] && break
+        sleep 1
+      done
+    fi
+    BOOK_DATA=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
+  fi
+
+  # Step 2: OCR
+  NEEDS_OCR=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length == 0)] | length')
+  if [ "$NEEDS_OCR" != "0" ]; then
+    OCR_IDS=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length == 0) | .id]')
+    TOTAL_OCR=$(echo "$OCR_IDS" | jq 'length')
+
+    for ((i=0; i<TOTAL_OCR; i+=BATCH_SIZE)); do
+      BATCH=$(echo "$OCR_IDS" | jq ".[$i:$((i+BATCH_SIZE))]")
+      PAGES=$(echo "$BATCH" | jq '[.[] | {pageId: ., imageUrl: "", pageNumber: 0}]')
+
+      RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-ocr" \
+        -H 'Content-Type: application/json' \
+        -d "{\"pages\": $PAGES, \"model\": \"$MODEL\"}")
+
+      if echo "$RESP" | grep -q "429\|rate"; then
+        echo "RATE_LIMIT: $TITLE - backing off 10s"
+        sleep 10
+        i=$((i-BATCH_SIZE))  # Retry this batch
+      fi
+      sleep $SLEEP_TIME
+    done
+    echo "OCR_DONE: $TITLE"
+    BOOK_DATA=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
+  fi
+
+  # Step 3: Translate with context
+  NEEDS_TRANSLATE=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0)] | length')
+  if [ "$NEEDS_TRANSLATE" != "0" ]; then
+    TRANSLATE_PAGES=$(echo "$BOOK_DATA" | jq '[.pages | sort_by(.page_number) | .[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) | {pageId: .id, ocrText: .ocr.data, pageNumber: .page_number}]')
+    TOTAL_TRANS=$(echo "$TRANSLATE_PAGES" | jq 'length')
+    PREV_CONTEXT=""
+
+    for ((i=0; i<TOTAL_TRANS; i+=BATCH_SIZE)); do
+      BATCH=$(echo "$TRANSLATE_PAGES" | jq ".[$i:$((i+BATCH_SIZE))]")
+
+      if [ -n "$PREV_CONTEXT" ]; then
+        RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-translate" \
+          -H 'Content-Type: application/json' \
+          -d "{\"pages\": $BATCH, \"model\": \"$MODEL\", \"previousContext\": \"$PREV_CONTEXT\"}")
+      else
+        RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-translate" \
+          -H 'Content-Type: application/json' \
+          -d "{\"pages\": $BATCH, \"model\": \"$MODEL\"}")
+      fi
+
+      if echo "$RESP" | grep -q "429\|rate"; then
+        echo "RATE_LIMIT: $TITLE - backing off 10s"
+        sleep 10
+        i=$((i-BATCH_SIZE))  # Retry this batch
+      else
+        LAST_ID=$(echo "$BATCH" | jq -r '.[-1].pageId')
+        PREV_CONTEXT=$(echo "$RESP" | jq -r ".translations[\"$LAST_ID\"] // \"\"" | head -c 1500)
+      fi
+      sleep $SLEEP_TIME
+    done
+    echo "TRANS_DONE: $TITLE"
+  fi
+
+  echo "COMPLETE: $TITLE"
+}
+
+export -f process_book
+export BASE_URL MODEL BATCH_SIZE SLEEP_TIME
+
+echo "=== BATCH PROCESSING ==="
+echo "Batch: $BATCH_SIZE | Sleep: ${SLEEP_TIME}s"
+
+curl -s "$BASE_URL/api/books" | jq -r '.[] | .id' > /tmp/book_ids.txt
+TOTAL=$(wc -l < /tmp/book_ids.txt | tr -d ' ')
+echo "Processing $TOTAL books..."
+
+cat /tmp/book_ids.txt | xargs -P 1 -I {} bash -c 'process_book "$@"' _ {}
+
+echo "=== ALL DONE ==="
+```
+
+### Running the Script
+```bash
+# Save to file and run
+chmod +x batch_process.sh
+./batch_process.sh 2>&1 | tee batch.log
+
+# Or run in background
+nohup ./batch_process.sh > batch.log 2>&1 &
 ```
 
 ## Monitoring Progress
@@ -317,9 +438,32 @@ In jq, empty strings `""` are truthy! This means:
 - Use `select((.ocr.data // "") | length > 0)` to find pages WITH OCR content
 
 ### Rate Limits (429 errors)
-- Add `sleep 1` between API calls
-- Use smaller batch sizes (3 instead of 5)
-- The system has API key rotation built-in
+
+#### Gemini API Tiers
+| Tier | RPM | How to Qualify |
+|------|-----|----------------|
+| Free | 15 | Default |
+| Tier 1 | 300 | Enable billing + $50 spend |
+| Tier 2 | 1000 | $250 spend |
+| Tier 3 | 2000 | $1000 spend |
+
+#### Optimal Sleep Times by Tier
+| Tier | Max RPM | Safe Sleep Time | Effective Rate |
+|------|---------|-----------------|----------------|
+| Free | 15 | 4.0s | ~15/min |
+| Tier 1 | 300 | 0.4s | ~150/min |
+| Tier 2 | 1000 | 0.12s | ~500/min |
+| Tier 3 | 2000 | 0.06s | ~1000/min |
+
+**Note:** Use ~50% of max rate to leave headroom for bursts.
+
+#### API Key Rotation
+The system supports multiple API keys for higher throughput:
+- Set `GEMINI_API_KEY` (primary)
+- Set `GEMINI_API_KEY_2`, `GEMINI_API_KEY_3`, ... up to `GEMINI_API_KEY_10`
+- Keys rotate automatically with 60s cooldown after rate limit
+
+With N keys at Tier 1, you get N × 300 RPM = N × 150 safe req/min
 
 ### Function Timeouts
 - Jobs have `maxDuration=300s` for Vercel Pro
