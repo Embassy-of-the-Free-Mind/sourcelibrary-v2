@@ -71,6 +71,12 @@ export default function HeroSection() {
             Categories
           </Link>
           <Link
+            href="/gallery"
+            className="px-4 py-2 text-white/90 hover:text-white text-sm font-medium transition-colors"
+          >
+            Gallery
+          </Link>
+          <Link
             href="/upload"
             className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
           >
