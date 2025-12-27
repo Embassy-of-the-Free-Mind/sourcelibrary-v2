@@ -151,12 +151,13 @@ function processInlineMarkup(text: string, showNotes: boolean = true): string {
 
   if (showNotes) {
     // Editorial notes (amber) - interpretive choices, context for reader
-    result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, (match, type, content) => {
+    // Use [\s\S]*? to match across newlines
+    result = result.replace(/\[\[(notes?):\s*([\s\S]*?)\]\]/gi, (match, type, content) => {
       return `<span class="inline-note">${content.trim()}</span>`;
     });
 
     // Technical terms with optional gloss: [[term: word]] or [[term: word → meaning]]
-    result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, (match, content) => {
+    result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi, (match, content) => {
       const parts = content.split(/→|->/).map((s: string) => s.trim());
       if (parts.length > 1) {
         return `<span class="term-note"><em>${parts[0]}</em> (${parts[1]})</span>`;
@@ -165,32 +166,38 @@ function processInlineMarkup(text: string, showNotes: boolean = true): string {
     });
 
     // Marginalia - text in margins of original manuscript (teal)
-    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, (match, content) => {
+    result = result.replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, (match, content) => {
       return `<span class="margin-note">${content.trim()}</span>`;
     });
 
     // Gloss - interlinear annotations in original (purple)
-    result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, (match, content) => {
+    result = result.replace(/\[\[gloss:\s*([\s\S]*?)\]\]/gi, (match, content) => {
       return `<span class="gloss-note">${content.trim()}</span>`;
     });
 
     // Insertion - later additions to the text (green)
-    result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, (match, content) => {
+    result = result.replace(/\[\[insert:\s*([\s\S]*?)\]\]/gi, (match, content) => {
       return `<span class="insert-note">${content.trim()}</span>`;
     });
 
     // Uncertain/illegible text (gray with ?)
-    result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, (match, content) => {
+    result = result.replace(/\[\[unclear:\s*([\s\S]*?)\]\]/gi, (match, content) => {
       return `<span class="unclear-text">${content.trim()}</span>`;
+    });
+
+    // Image descriptions (block display)
+    result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, (match, content) => {
+      return `<div class="image-description">${content.trim()}</div>`;
     });
   } else {
     // When notes are hidden, completely remove all note content
-    result = result.replace(/\[\[(notes?):\s*(.*?)\]\]/gi, '');
-    result = result.replace(/\[\[term:\s*(.*?)\]\]/gi, '');
-    result = result.replace(/\[\[margin:\s*(.*?)\]\]/gi, '');
-    result = result.replace(/\[\[gloss:\s*(.*?)\]\]/gi, '');
-    result = result.replace(/\[\[insert:\s*(.*?)\]\]/gi, '');
-    result = result.replace(/\[\[unclear:\s*(.*?)\]\]/gi, '');
+    result = result.replace(/\[\[(notes?):\s*([\s\S]*?)\]\]/gi, '');
+    result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi, '');
+    result = result.replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, '');
+    result = result.replace(/\[\[gloss:\s*([\s\S]*?)\]\]/gi, '');
+    result = result.replace(/\[\[insert:\s*([\s\S]*?)\]\]/gi, '');
+    result = result.replace(/\[\[unclear:\s*([\s\S]*?)\]\]/gi, '');
+    result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, '');
   }
 
   return result;
@@ -369,6 +376,15 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
           div: ({ children, className }) => {
             if (className === 'text-center') {
               return <div className="text-center my-4">{children}</div>;
+            }
+            if (className === 'image-description') {
+              return (
+                <div className="my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
+                  <span className="text-amber-700 font-medium not-italic">[Image: </span>
+                  {children}
+                  <span className="text-amber-700 font-medium not-italic">]</span>
+                </div>
+              );
             }
             return <div>{children}</div>;
           },

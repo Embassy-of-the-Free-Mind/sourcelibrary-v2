@@ -198,6 +198,13 @@ export default async function HomePage() {
               &copy; {new Date().getFullYear()} Source Library — A project of the Ancient Wisdom Trust
             </div>
             <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
+              <a
+                href="/roadmap"
+                className="text-amber-700 hover:text-amber-800 transition-colors"
+              >
+                Roadmap
+              </a>
+              <span className="hidden md:inline">•</span>
               <span>CC0 Public Domain</span>
               <span className="hidden md:inline">•</span>
               <a

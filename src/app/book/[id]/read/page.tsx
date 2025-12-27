@@ -2,15 +2,13 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, Info, X } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import remarkBreaks from 'remark-breaks';
-import rehypeRaw from 'rehype-raw';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare } from 'lucide-react';
 import { Book, Page } from '@/lib/types';
 import HighlightSelection from '@/components/HighlightSelection';
 import HighlightsPanel from '@/components/HighlightsPanel';
+import AnnotationPanel from '@/components/AnnotationPanel';
 import { QuoteShare } from '@/components/ShareButton';
+import NotesRenderer from '@/components/NotesRenderer';
 
 interface ReadPageProps {
   params: Promise<{ id: string }>;
@@ -34,7 +32,11 @@ export default function ReadPage({ params }: ReadPageProps) {
   const [showFullText, setShowFullText] = useState(false);
   const [showHighlights, setShowHighlights] = useState(false);
   const [highlightCount, setHighlightCount] = useState(0);
-  const [metadataPageId, setMetadataPageId] = useState<string | null>(null);
+  const [showAnnotations, setShowAnnotations] = useState(false);
+  const [annotationCount, setAnnotationCount] = useState(0);
+  const [currentPageId, setCurrentPageId] = useState<string | null>(null);
+  const [currentPageNumber, setCurrentPageNumber] = useState(1);
+  const [showNotes, setShowNotes] = useState(true);
   const textRef = useRef<HTMLDivElement>(null);
 
   // Resolve params
@@ -56,9 +58,24 @@ export default function ReadPage({ params }: ReadPageProps) {
     }
   };
 
+  // Fetch annotation count for the book
+  const fetchAnnotationCount = async () => {
+    if (!bookId) return;
+    try {
+      const res = await fetch(`/api/annotations?book_id=${bookId}&limit=1`);
+      if (res.ok) {
+        const data = await res.json();
+        setAnnotationCount(data.total || 0);
+      }
+    } catch (e) {
+      console.error('Failed to fetch annotations:', e);
+    }
+  };
+
   useEffect(() => {
     if (bookId) {
       fetchHighlightCount();
+      fetchAnnotationCount();
     }
   }, [bookId]);
 
@@ -144,170 +161,6 @@ export default function ReadPage({ params }: ReadPageProps) {
     ? Math.round((translatedPages.length / pages.length) * 100)
     : 0;
 
-  // Preprocess text to handle special syntax before markdown parsing
-  const preprocessText = (text: string): string => {
-    let result = text;
-
-    // Handle centered headings: ->## text<- → <h2 class="text-center">text</h2>
-    // Must be done before generic centering to preserve heading semantics
-    result = result.replace(/->\s*(#{1,6})\s*([\s\S]*?)\s*<-/g, (match, hashes, content) => {
-      const level = hashes.length;
-      const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
-      return `<h${level} class="text-center">${cleaned}</h${level}>`;
-    });
-
-    // Handle regular centered text: ->text<-
-    result = result.replace(/->([\s\S]*?)<-/g, (match, content) => {
-      const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
-      return `<div class="text-center">${cleaned}</div>`;
-    });
-
-    // Convert margin notes to visible styled spans
-    result = result.replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<span class="margin-note">${content.trim()}</span>`;
-    });
-
-    // Convert editorial notes to visible styled spans
-    result = result.replace(/\[\[notes?:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<span class="editorial-note">${content.trim()}</span>`;
-    });
-
-    // Convert image descriptions to visible blocks (multiline)
-    result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, (match, content) => {
-      return `<div class="image-description">${content.trim()}</div>`;
-    });
-
-    // Remove other [[tags]] that shouldn't be shown (meta, language, page number, etc.)
-    result = result.replace(/\[\[(meta|language|page number|header|signature|vocabulary|summary|keywords|warning):[^\]]*\]\]/gi, '');
-
-    return result.trim();
-  };
-
-  // Extract hidden metadata from text for the metadata panel
-  const extractHiddenMetadata = (text: string): Record<string, string> => {
-    const metadata: Record<string, string> = {};
-    const tagPatterns = [
-      'meta', 'language', 'page number', 'header', 'signature',
-      'vocabulary', 'summary', 'keywords', 'warning'
-    ];
-
-    for (const tag of tagPatterns) {
-      const regex = new RegExp(`\\[\\[${tag}:\\s*([\\s\\S]*?)\\]\\]`, 'gi');
-      const matches = text.matchAll(regex);
-      const values: string[] = [];
-      for (const match of matches) {
-        values.push(match[1].trim());
-      }
-      if (values.length > 0) {
-        metadata[tag] = values.join('; ');
-      }
-    }
-
-    return metadata;
-  };
-
-  // Format date for display
-  const formatDate = (dateStr: string | Date | undefined) => {
-    if (!dateStr) return 'Unknown';
-    const date = typeof dateStr === 'string' ? new Date(dateStr) : dateStr;
-    return date.toLocaleString();
-  };
-
-  // Render translation text with full markdown support
-  const renderTranslation = (text: string) => {
-    const processed = preprocessText(text);
-
-    return (
-      <div style={{ fontVariantEmoji: 'text' }}>
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkBreaks]}
-        rehypePlugins={[rehypeRaw]}
-        components={{
-          p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
-          strong: ({ children }) => <strong className="font-bold">{children}</strong>,
-          em: ({ children }) => <em className="italic">{children}</em>,
-          h1: ({ children, className }) => (
-            <h1 className={`text-2xl font-serif font-bold mt-6 mb-3 ${className || ''}`}>{children}</h1>
-          ),
-          h2: ({ children, className }) => (
-            <h2 className={`text-xl font-serif font-bold mt-5 mb-2 ${className || ''}`}>{children}</h2>
-          ),
-          h3: ({ children, className }) => (
-            <h3 className={`text-lg font-serif font-semibold mt-4 mb-2 ${className || ''}`}>{children}</h3>
-          ),
-          h4: ({ children, className }) => (
-            <h4 className={`text-base font-serif font-semibold mt-3 mb-1 ${className || ''}`}>{children}</h4>
-          ),
-          ul: ({ children }) => <ul className="list-disc ml-5 my-3 space-y-1">{children}</ul>,
-          ol: ({ children }) => <ol className="list-decimal ml-5 my-3 space-y-1">{children}</ol>,
-          li: ({ children }) => <li className="leading-relaxed">{children}</li>,
-          blockquote: ({ children }) => (
-            <blockquote className="border-l-3 border-amber-300 pl-4 my-4 italic text-stone-600 bg-amber-50/30 py-2 pr-2 rounded-r">
-              {children}
-            </blockquote>
-          ),
-          hr: () => <hr className="my-6 border-stone-200" />,
-          a: ({ href, children }) => (
-            <a href={href} className="text-amber-700 underline hover:text-amber-800" target="_blank" rel="noopener noreferrer">
-              {children}
-            </a>
-          ),
-          table: ({ children }) => (
-            <div className="overflow-x-auto my-4">
-              <table className="min-w-full border-collapse border border-stone-200">{children}</table>
-            </div>
-          ),
-          thead: ({ children }) => <thead className="bg-stone-100">{children}</thead>,
-          tbody: ({ children }) => <tbody>{children}</tbody>,
-          tr: ({ children }) => <tr className="border-b border-stone-200">{children}</tr>,
-          th: ({ children }) => (
-            <th className="px-3 py-2 text-left text-sm font-semibold text-stone-700 border border-stone-200">
-              {children}
-            </th>
-          ),
-          td: ({ children }) => (
-            <td className="px-3 py-2 text-sm text-stone-600 border border-stone-200">{children}</td>
-          ),
-          // Custom styling for margin notes, editorial notes, and image descriptions
-          span: ({ className, children }) => {
-            if (className === 'margin-note') {
-              return (
-                <span className="inline-block text-sm text-teal-700 bg-teal-50 border-l-2 border-teal-400 px-2 py-0.5 ml-1 rounded-r">
-                  {children}
-                </span>
-              );
-            }
-            if (className === 'editorial-note') {
-              return (
-                <span className="inline-block text-sm text-amber-700 bg-amber-50 border-l-2 border-amber-400 px-2 py-0.5 ml-1 rounded-r">
-                  {children}
-                </span>
-              );
-            }
-            return <span className={className}>{children}</span>;
-          },
-          div: ({ className, children }) => {
-            if (className === 'text-center') {
-              return <div className="text-center">{children}</div>;
-            }
-            if (className === 'image-description') {
-              return (
-                <div className="my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
-                  <span className="text-amber-700 font-medium not-italic">[Image: </span>
-                  {children}
-                  <span className="text-amber-700 font-medium not-italic">]</span>
-                </div>
-              );
-            }
-            return <div className={className}>{children}</div>;
-          },
-        }}
-      >
-        {processed}
-      </ReactMarkdown>
-      </div>
-    );
-  };
 
   if (loading) {
     return (
@@ -346,6 +199,18 @@ export default function ReadPage({ params }: ReadPageProps) {
             </Link>
             <div className="flex items-center gap-4">
               <button
+                onClick={() => setShowNotes(!showNotes)}
+                className={`inline-flex items-center gap-1.5 text-sm transition-colors ${
+                  showNotes
+                    ? 'text-amber-600 hover:text-amber-700'
+                    : 'text-stone-400 hover:text-stone-600'
+                }`}
+                title={showNotes ? 'Hide annotations' : 'Show annotations'}
+              >
+                <StickyNote className="w-4 h-4" />
+                <span className="hidden sm:inline">{showNotes ? 'Notes' : 'Notes Off'}</span>
+              </button>
+              <button
                 onClick={() => setShowHighlights(true)}
                 className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-600 transition-colors"
               >
@@ -354,6 +219,26 @@ export default function ReadPage({ params }: ReadPageProps) {
                 {highlightCount > 0 && (
                   <span className="bg-amber-100 text-amber-700 text-xs px-1.5 py-0.5 rounded-full">
                     {highlightCount}
+                  </span>
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  // Use first translated page as default
+                  const firstPage = translatedPages[0];
+                  if (firstPage) {
+                    setCurrentPageId(firstPage.id);
+                    setCurrentPageNumber(firstPage.page_number);
+                  }
+                  setShowAnnotations(true);
+                }}
+                className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-blue-600 transition-colors"
+              >
+                <MessageSquare className="w-4 h-4" />
+                <span className="hidden sm:inline">Annotations</span>
+                {annotationCount > 0 && (
+                  <span className="bg-blue-100 text-blue-700 text-xs px-1.5 py-0.5 rounded-full">
+                    {annotationCount}
                   </span>
                 )}
               </button>
@@ -517,11 +402,7 @@ export default function ReadPage({ params }: ReadPageProps) {
                   Select text to save highlights
                 </p>
                 <div className="prose prose-stone max-w-none font-serif text-lg leading-relaxed">
-                  {translatedPages.map((page, index) => {
-                    const hiddenMeta = extractHiddenMetadata(page.translation?.data || '');
-                    const isMetadataOpen = metadataPageId === page.id;
-
-                    return (
+                  {translatedPages.map((page) => (
                     <HighlightSelection
                       key={page.id}
                       bookId={bookId!}
@@ -532,6 +413,7 @@ export default function ReadPage({ params }: ReadPageProps) {
                       bookYear={book?.published}
                       doi={book?.doi}
                       onHighlightSaved={fetchHighlightCount}
+                      onAnnotationSaved={fetchAnnotationCount}
                     >
                       <div className="mb-8">
                         <div className="flex items-center gap-4 my-8 text-stone-400">
@@ -542,94 +424,18 @@ export default function ReadPage({ params }: ReadPageProps) {
                           >
                             Page {page.page_number}
                           </Link>
-                          <button
-                            onClick={() => setMetadataPageId(isMetadataOpen ? null : page.id)}
-                            className="text-xs hover:text-amber-600 transition-colors flex items-center gap-1"
-                            title="View metadata"
-                          >
-                            <Info className="w-3 h-3" />
-                          </button>
                           <div className="flex-1 h-px bg-stone-200" />
                         </div>
 
-                        {/* Metadata Panel */}
-                        {isMetadataOpen && (
-                          <div className="mb-6 p-4 bg-stone-50 border border-stone-200 rounded-lg text-sm">
-                            <div className="flex justify-between items-start mb-3">
-                              <h4 className="font-semibold text-stone-700">Page {page.page_number} Metadata</h4>
-                              <button
-                                onClick={() => setMetadataPageId(null)}
-                                className="text-stone-400 hover:text-stone-600"
-                              >
-                                <X className="w-4 h-4" />
-                              </button>
-                            </div>
-
-                            {/* Processing Info */}
-                            <div className="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
-                              <div className="text-stone-500">OCR Model:</div>
-                              <div className="text-stone-700 font-mono text-xs">{page.ocr?.model || 'Unknown'}</div>
-
-                              <div className="text-stone-500">Translation Model:</div>
-                              <div className="text-stone-700 font-mono text-xs">{page.translation?.model || 'Unknown'}</div>
-
-                              {page.ocr?.prompt_name && (
-                                <>
-                                  <div className="text-stone-500">Prompt:</div>
-                                  <div className="text-stone-700">{page.ocr.prompt_name}</div>
-                                </>
-                              )}
-
-                              <div className="text-stone-500">OCR Updated:</div>
-                              <div className="text-stone-700">{formatDate(page.ocr?.updated_at)}</div>
-
-                              <div className="text-stone-500">Translation Updated:</div>
-                              <div className="text-stone-700">{formatDate(page.translation?.updated_at)}</div>
-
-                              {page.ocr?.input_tokens && (
-                                <>
-                                  <div className="text-stone-500">OCR Tokens:</div>
-                                  <div className="text-stone-700">{page.ocr.input_tokens} in / {page.ocr.output_tokens} out</div>
-                                </>
-                              )}
-
-                              {page.translation?.input_tokens && (
-                                <>
-                                  <div className="text-stone-500">Translation Tokens:</div>
-                                  <div className="text-stone-700">{page.translation.input_tokens} in / {page.translation.output_tokens} out</div>
-                                </>
-                              )}
-
-                              {(page.ocr?.cost_usd || page.translation?.cost_usd) && (
-                                <>
-                                  <div className="text-stone-500">Total Cost:</div>
-                                  <div className="text-stone-700">${((page.ocr?.cost_usd || 0) + (page.translation?.cost_usd || 0)).toFixed(4)}</div>
-                                </>
-                              )}
-                            </div>
-
-                            {/* Hidden Tags */}
-                            {Object.keys(hiddenMeta).length > 0 && (
-                              <div className="border-t border-stone-200 pt-3 mt-3">
-                                <h5 className="font-medium text-stone-600 mb-2">Hidden Tags</h5>
-                                <div className="space-y-2">
-                                  {Object.entries(hiddenMeta).map(([tag, value]) => (
-                                    <div key={tag}>
-                                      <span className="text-stone-500 capitalize">{tag}:</span>{' '}
-                                      <span className="text-stone-700">{value}</span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        )}
-
-                        {renderTranslation(page.translation?.data || '')}
+                        <NotesRenderer
+                          key={`translation-${page.id}-${showNotes}`}
+                          text={page.translation?.data || ''}
+                          showNotes={showNotes}
+                          showMetadata={showNotes}
+                        />
                       </div>
                     </HighlightSelection>
-                  );
-                  })}
+                  ))}
                 </div>
               </div>
             )}
@@ -671,6 +477,20 @@ export default function ReadPage({ params }: ReadPageProps) {
         onClose={() => setShowHighlights(false)}
         onHighlightDeleted={fetchHighlightCount}
       />
+
+      {/* Annotations Panel */}
+      {currentPageId && (
+        <AnnotationPanel
+          bookId={bookId!}
+          pageId={currentPageId}
+          pageNumber={currentPageNumber}
+          bookTitle={book?.display_title || book?.title}
+          bookAuthor={book?.author}
+          isOpen={showAnnotations}
+          onClose={() => setShowAnnotations(false)}
+          onAnnotationChange={fetchAnnotationCount}
+        />
+      )}
     </div>
   );
 }
