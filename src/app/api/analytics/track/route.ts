@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 /**
- * Track analytics events (book reads, page edits)
+ * Track analytics events (book reads, page reads, page edits)
  *
  * POST /api/analytics/track
  * Body: {
- *   event: 'book_read' | 'page_edit',
+ *   event: 'book_read' | 'page_read' | 'page_edit',
  *   book_id: string,
  *   page_id?: string,
  * }
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!['book_read', 'page_edit'].includes(event)) {
+    if (!['book_read', 'page_read', 'page_edit'].includes(event)) {
       return NextResponse.json(
         { error: 'Invalid event type' },
         { status: 400 }
@@ -37,16 +37,20 @@ export async function POST(request: NextRequest) {
       || request.headers.get('x-real-ip')
       || 'unknown';
 
-    // For reads, dedupe by IP + book_id within last hour
-    if (event === 'book_read') {
+    // For reads, dedupe by IP + target within last hour
+    if (event === 'book_read' || event === 'page_read') {
       const oneHourAgo = Date.now() - 60 * 60 * 1000;
-      const existing = await db.collection('analytics_events').findOne({
-        event: 'book_read',
+      const dedupeQuery: Record<string, unknown> = {
+        event,
         book_id,
         ip,
         timestamp: { $gte: oneHourAgo }
-      });
+      };
+      if (event === 'page_read' && page_id) {
+        dedupeQuery.page_id = page_id;
+      }
 
+      const existing = await db.collection('analytics_events').findOne(dedupeQuery);
       if (existing) {
         return NextResponse.json({ success: true, deduplicated: true });
       }
@@ -66,6 +70,12 @@ export async function POST(request: NextRequest) {
     if (event === 'book_read') {
       await db.collection('books').updateOne(
         { id: book_id },
+        { $inc: { read_count: 1 } }
+      );
+    } else if (event === 'page_read' && page_id) {
+      // Increment page read count
+      await db.collection('pages').updateOne(
+        { id: page_id },
         { $inc: { read_count: 1 } }
       );
     } else if (event === 'page_edit') {

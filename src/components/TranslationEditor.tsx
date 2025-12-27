@@ -467,6 +467,19 @@ export default function TranslationEditor({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [previousPage, nextPage, onNavigate]);
 
+  // Track page view
+  useEffect(() => {
+    fetch('/api/analytics/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event: 'page_read',
+        book_id: book.id,
+        page_id: page.id
+      }),
+    }).catch(() => {}); // Fire and forget
+  }, [book.id, page.id]);
+
   // Prefetch adjacent page images for faster navigation
   useEffect(() => {
     const getSmallImageUrl = (p: Page) => {
@@ -1010,7 +1023,10 @@ export default function TranslationEditor({
               <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
                 {book.display_title || book.title}
               </h1>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Page {currentIndex + 1} of {pages.length}</p>
+              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                Page {currentIndex + 1} of {pages.length}
+                {page.read_count ? <span className="ml-2 text-xs opacity-60">({page.read_count} views)</span> : null}
+              </p>
             </div>
           </div>
 

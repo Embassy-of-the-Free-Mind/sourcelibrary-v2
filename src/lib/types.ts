@@ -399,6 +399,22 @@ export interface CropData {
   yEnd?: number;
 }
 
+// Detected illustration/image on a page (from OCR or vision model)
+export interface DetectedImage {
+  description: string;          // What the image depicts
+  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'unknown';
+  // Bounding box (0-1 normalized coordinates, for future extraction)
+  bbox?: {
+    x: number;      // Left edge (0-1)
+    y: number;      // Top edge (0-1)
+    width: number;  // Width (0-1)
+    height: number; // Height (0-1)
+  };
+  extracted_url?: string;       // URL to extracted/cropped image (future)
+  detected_at?: Date;
+  detection_source: 'ocr_tag' | 'vision_model' | 'manual';
+}
+
 export interface Page {
   id: string;
   _id?: string;
@@ -414,6 +430,13 @@ export interface Page {
   modernized?: ModernizedData;  // Modernized text for reading dashboard
   created_at?: Date;
   updated_at?: Date;
+
+  // Analytics
+  read_count?: number;
+  edit_count?: number;
+
+  // Detected illustrations/images on this page
+  detected_images?: DetectedImage[];
 
   // Split/crop workflow
   photo_original?: string;      // Original S3 URL before cropping
