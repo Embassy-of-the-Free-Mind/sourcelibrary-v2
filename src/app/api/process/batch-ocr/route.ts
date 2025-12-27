@@ -9,6 +9,12 @@ import { put } from '@vercel/blob';
 // Increase timeout for batch OCR (5 images)
 export const maxDuration = 300;
 
+// Get GitHub URL to exact commit of prompts file for reproducibility
+function getPromptsUrl(): string {
+  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
+  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
+}
+
 // Page result status for detailed logging
 type PageStatus = 'processed' | 'skipped_has_ocr' | 'cropped_inline' | 'failed_image_fetch' | 'failed_crop' | 'failed_parse';
 
@@ -210,24 +216,24 @@ export async function POST(request: NextRequest) {
           dbPage?.book_id || '',
           db
         );
-        return { image: result, croppedInline: true };
+        return { image: result, croppedInline: true, imageUrl: `[cropped inline from ${originalUrl}]` };
       }
 
       // Use pre-generated cropped image or original
       const imageUrl = dbPage?.cropped_photo || dbPage?.photo || page.imageUrl;
       const result = await fetchImageAsBase64(imageUrl);
-      return { image: result, croppedInline: false };
+      return { image: result, croppedInline: false, imageUrl };
     });
 
     const imageResults = await Promise.all(imagePromises);
 
     // Filter out failed fetches
-    const validPages: { page: PageInput; image: { data: string; mimeType: string } }[] = [];
+    const validPages: { page: PageInput; image: { data: string; mimeType: string }; imageUrl: string }[] = [];
 
     pagesToProcess.forEach((page, i) => {
-      const { image, croppedInline } = imageResults[i];
+      const { image, croppedInline, imageUrl } = imageResults[i];
       if (image) {
-        validPages.push({ page, image });
+        validPages.push({ page, image, imageUrl });
         if (croppedInline) {
           pageResults.push({
             pageId: page.pageId,
@@ -430,9 +436,19 @@ Return each transcription clearly separated with the exact format:
     const outputTokens = usageMetadata?.candidatesTokenCount || 0;
     const costUsd = calculateCost(inputTokens, outputTokens, modelId);
 
-    // Save OCR results to database (db already defined above)
-    // Set the entire ocr object to handle cases where ocr is null
+    // Save OCR results to database with full metadata
     const now = new Date();
+    const pagesProcessed = Object.keys(ocrResults).length;
+
+    // Build map of pageId to imageUrl for metadata
+    const imageUrlMap = new Map(validPages.map(vp => [vp.page.pageId, vp.imageUrl]));
+
+    // Distribute token costs proportionally across pages (approximate)
+    const tokensPerPage = pagesProcessed > 0 ? {
+      input: Math.round(inputTokens / pagesProcessed),
+      output: Math.round(outputTokens / pagesProcessed),
+      cost: costUsd / pagesProcessed,
+    } : { input: 0, output: 0, cost: 0 };
 
     const updatePromises = Object.entries(ocrResults).map(([pageId, ocrText]) =>
       db.collection('pages').updateOne(
@@ -444,6 +460,13 @@ Return each transcription clearly separated with the exact format:
               updated_at: now,
               model: modelId,
               language: language,
+              prompt_url: getPromptsUrl(),
+              // Processing metadata (tokens distributed across batch)
+              input_tokens: tokensPerPage.input,
+              output_tokens: tokensPerPage.output,
+              cost_usd: tokensPerPage.cost,
+              batch_size: pagesProcessed,
+              image_url: imageUrlMap.get(pageId) || 'unknown',
             },
             updated_at: now,
           },

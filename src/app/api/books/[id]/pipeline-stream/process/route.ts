@@ -8,6 +8,12 @@ import type { Job, JobResult } from '@/lib/types';
 // Extend timeout for processing
 export const maxDuration = 300;
 
+// Get GitHub URL to exact commit of prompts file for reproducibility
+function getPromptsUrl(): string {
+  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
+  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
+}
+
 // Process a single page through the full pipeline: crop → OCR → translate
 // Key: If page has crop data, we MUST use the cropped image for OCR (not full spread)
 async function processPageFully(
@@ -92,6 +98,7 @@ async function processPageFully(
       // Upload happens in parallel/after OCR
       if (needsOcr) {
         // Do OCR with buffer directly - much faster!
+        const ocrStart = performance.now();
         const ocrResult = await performOCRWithBuffer(
           croppedBuffer,
           'image/jpeg',
@@ -100,6 +107,7 @@ async function processPageFully(
           undefined,
           config.model
         );
+        const ocrDuration = performance.now() - ocrStart;
 
         ocrText = ocrResult.text;
 
@@ -111,7 +119,14 @@ async function processPageFully(
                 data: ocrText,
                 language: config.language,
                 model: config.model,
+                prompt_url: getPromptsUrl(),
                 updated_at: new Date(),
+                // Processing metadata
+                input_tokens: ocrResult.usage.inputTokens,
+                output_tokens: ocrResult.usage.outputTokens,
+                cost_usd: ocrResult.usage.costUsd,
+                processing_ms: Math.round(ocrDuration),
+                image_url: `[cropped inline from ${originalUrl}]`,
               },
               updated_at: new Date(),
             },
@@ -141,6 +156,7 @@ async function processPageFully(
     // Step 2: OCR if needed and not already done above
     if (needsOcr && !steps.ocr) {
       // Page either has no crop data (full image is fine) or already has cropped_photo
+      const ocrStart = performance.now();
       const ocrResult = await performOCR(
         imageUrlForOcr,
         config.language,
@@ -148,6 +164,7 @@ async function processPageFully(
         undefined,
         config.model
       );
+      const ocrDuration = performance.now() - ocrStart;
 
       ocrText = ocrResult.text;
 
@@ -159,7 +176,14 @@ async function processPageFully(
               data: ocrText,
               language: config.language,
               model: config.model,
+              prompt_url: getPromptsUrl(),
               updated_at: new Date(),
+              // Processing metadata
+              input_tokens: ocrResult.usage.inputTokens,
+              output_tokens: ocrResult.usage.outputTokens,
+              cost_usd: ocrResult.usage.costUsd,
+              processing_ms: Math.round(ocrDuration),
+              image_url: imageUrlForOcr,
             },
             updated_at: new Date(),
           },
@@ -171,6 +195,7 @@ async function processPageFully(
 
     // Step 3: Translate if needed
     if (ocrText && needsTranslate) {
+      const translateStart = performance.now();
       const translateResult = await performTranslation(
         ocrText,
         config.language,
@@ -179,6 +204,7 @@ async function processPageFully(
         undefined,
         config.model
       );
+      const translateDuration = performance.now() - translateStart;
 
       translationText = translateResult.text;
 
@@ -189,8 +215,15 @@ async function processPageFully(
             translation: {
               data: translationText,
               language: 'English',
+              source_language: config.language,
               model: config.model,
+              prompt_url: getPromptsUrl(),
               updated_at: new Date(),
+              // Processing metadata
+              input_tokens: translateResult.usage.inputTokens,
+              output_tokens: translateResult.usage.outputTokens,
+              cost_usd: translateResult.usage.costUsd,
+              processing_ms: Math.round(translateDuration),
             },
             updated_at: new Date(),
           },

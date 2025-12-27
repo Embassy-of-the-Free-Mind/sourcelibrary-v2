@@ -9,6 +9,12 @@ import type { Job, JobResult } from '@/lib/types';
 // Extend timeout for job processing (Vercel Pro allows up to 300s)
 export const maxDuration = 300;
 
+// Get GitHub URL to exact commit of prompts file for reproducibility
+function getPromptsUrl(): string {
+  const commitSha = process.env.VERCEL_GIT_COMMIT_SHA || 'main';
+  return `https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/${commitSha}/src/lib/types.ts`;
+}
+
 const CHUNK_SIZE = 5; // Process 5 pages per request for AI jobs
 const CROP_CHUNK_SIZE = 40; // Sweet spot: ~55s per request (just under 60s timeout)
 const CROP_PARALLEL = 10; // 10 parallel operations balances speed vs memory
@@ -239,11 +245,14 @@ export async function POST(
         if (job.type === 'batch_ocr') {
           // Get the correct image for OCR (respecting crop if present)
           let ocrResult;
+          let imageUrlUsed: string;
+          const ocrStart = performance.now();
 
           if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
             // Page was split - need cropped image
             if (page.cropped_photo) {
               // Use pre-generated cropped image
+              imageUrlUsed = page.cropped_photo;
               ocrResult = await performOCR(
                 page.cropped_photo,
                 job.config.language || 'Latin',
@@ -254,6 +263,7 @@ export async function POST(
             } else {
               // No cropped_photo yet - crop inline and use buffer directly (faster!)
               const originalUrl = page.photo_original || page.photo;
+              imageUrlUsed = `[cropped inline from ${originalUrl}]`;
               const imageResponse = await fetch(originalUrl);
               if (!imageResponse.ok) {
                 results.push({
@@ -311,6 +321,7 @@ export async function POST(
             }
           } else {
             // No crop data - use full image
+            imageUrlUsed = page.photo;
             ocrResult = await performOCR(
               page.photo,
               job.config.language || 'Latin',
@@ -320,7 +331,9 @@ export async function POST(
             );
           }
 
-          // Save OCR result to page
+          const ocrDuration = performance.now() - ocrStart;
+
+          // Save OCR result to page with full metadata
           await db.collection('pages').updateOne(
             { id: pageId },
             {
@@ -330,7 +343,14 @@ export async function POST(
                   language: job.config.language || 'Latin',
                   model: job.config.model || 'gemini-2.0-flash',
                   prompt_name: job.config.prompt_name || 'Default',
+                  prompt_url: getPromptsUrl(),
                   updated_at: new Date(),
+                  // Processing metadata for reproducibility
+                  input_tokens: ocrResult.usage.inputTokens,
+                  output_tokens: ocrResult.usage.outputTokens,
+                  cost_usd: ocrResult.usage.costUsd,
+                  processing_ms: Math.round(ocrDuration),
+                  image_url: imageUrlUsed,
                 },
                 updated_at: new Date(),
               },
@@ -350,6 +370,7 @@ export async function POST(
             continue;
           }
 
+          const translateStart = performance.now();
           const translationResult = await performTranslation(
             page.ocr.data,
             job.config.language || 'Latin',
@@ -358,8 +379,9 @@ export async function POST(
             undefined,
             job.config.model || 'gemini-2.0-flash'
           );
+          const translateDuration = performance.now() - translateStart;
 
-          // Save to page
+          // Save to page with full metadata
           await db.collection('pages').updateOne(
             { id: pageId },
             {
@@ -367,9 +389,16 @@ export async function POST(
                 translation: {
                   data: translationResult.text,
                   language: 'English',
+                  source_language: job.config.language || 'Latin',
                   model: job.config.model || 'gemini-2.0-flash',
                   prompt_name: job.config.prompt_name || 'Default',
+                  prompt_url: getPromptsUrl(),
                   updated_at: new Date(),
+                  // Processing metadata
+                  input_tokens: translationResult.usage.inputTokens,
+                  output_tokens: translationResult.usage.outputTokens,
+                  cost_usd: translationResult.usage.costUsd,
+                  processing_ms: Math.round(translateDuration),
                 },
                 updated_at: new Date(),
               },

@@ -2,29 +2,19 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 // Roadmap books from Internet Archive
+// IMPORTANT: Only include genuinely OLD editions (15th-18th century), not modern translations
 const ROADMAP_BOOKS = [
   // Tier 1: Foundational Texts - Hermeticism
   {
     title: 'Corpus Hermeticum',
-    display_title: 'Corpus Hermeticum (Nock-Festugière Critical Edition)',
-    author: 'Hermes Trismegistus; ed. A.D. Nock, A.J. Festugière',
-    language: 'Greek/Latin/French',
-    ia_identifier: 'corpushermeticum0001herm',
-    source_url: 'https://archive.org/details/corpushermeticum0001herm',
+    display_title: 'Corpus Hermeticum (Ficino Latin, 1481)',
+    author: 'Hermes Trismegistus; trans. Marsilio Ficino',
+    language: 'Latin',
+    ia_identifier: 'bib_fict_4102599',
+    source_url: 'https://archive.org/details/bib_fict_4102599',
     categories: ['hermeticism', 'prisca-theologia'],
     priority: 1,
-    notes: 'Critical Greek/Latin/French edition. Foundation of Hermetic tradition.',
-  },
-  {
-    title: 'Hermetica',
-    display_title: 'Hermetica (Walter Scott Edition)',
-    author: 'Hermes Trismegistus; ed. Walter Scott',
-    language: 'Greek/Latin/English',
-    ia_identifier: 'ScottHermeticaVolOne',
-    source_url: 'https://archive.org/details/ScottHermeticaVolOne',
-    categories: ['hermeticism', 'prisca-theologia'],
-    priority: 1,
-    notes: 'Greek/Latin with English translation and notes.',
+    notes: 'Third Latin edition (1481, Venice). Ficino translation from 1463. Incunabulum.',
   },
 
   // Tier 1: Florentine Platonism
@@ -52,38 +42,51 @@ const ROADMAP_BOOKS = [
   },
   {
     title: 'De Vita Libri Tres',
-    display_title: 'Three Books on Life',
+    display_title: 'De Vita Libri Tres (1489 First Edition)',
     author: 'Marsilio Ficino',
-    language: 'English',
-    ia_identifier: 'the-book-of-life_202406',
-    source_url: 'https://archive.org/details/the-book-of-life_202406',
+    language: 'Latin',
+    ia_identifier: 'ita-bnc-in2-00001718-001',
+    source_url: 'https://archive.org/details/ita-bnc-in2-00001718-001',
     categories: ['florentine-platonism', 'natural-magic', 'medicine'],
     priority: 1,
-    notes: 'English translation. Astrological medicine and natural magic.',
+    notes: 'First edition (Florence, Miscomini, 1489). Astrological medicine and natural magic. Incunabulum.',
+  },
+
+  // Tier 1: Neoplatonism & Theurgy
+  {
+    title: 'De Mysteriis Aegyptiorum',
+    display_title: 'Iamblichus De Mysteriis (1497 Aldine)',
+    author: 'Iamblichus; Proclus; Porphyry; trans. Marsilio Ficino',
+    language: 'Latin',
+    ia_identifier: 'A335081',
+    source_url: 'https://archive.org/details/A335081',
+    categories: ['neoplatonism', 'theurgy', 'prisca-theologia'],
+    priority: 1,
+    notes: '1497 Venice, Aldus Manutius. Incunabulum. Includes Proclus, Porphyry, Synesius, Psellus.',
   },
 
   // Tier 1: Christian Cabala
   {
     title: 'De Arte Cabalistica',
-    display_title: 'On the Art of the Kabbalah',
+    display_title: 'De Arte Cabalistica (in Galatino, 1550)',
     author: 'Johann Reuchlin',
-    language: 'Latin/English',
-    ia_identifier: 'onartofkabbalahd0000reuc',
-    source_url: 'https://archive.org/details/onartofkabbalahd0000reuc',
+    language: 'Latin',
+    ia_identifier: 'bub_gb_hgg8vG6num4C',
+    source_url: 'https://archive.org/details/bub_gb_hgg8vG6num4C',
     categories: ['christian-cabala', 'jewish-kabbalah'],
     priority: 1,
-    notes: 'Foundation of Christian Cabala. Latin with English translation.',
+    notes: '1550 Latin edition bound with Galatino. Foundation of Christian Cabala.',
   },
   {
-    title: 'Oratio de hominis dignitate',
-    display_title: 'Oration on the Dignity of Man',
+    title: 'Opera Omnia',
+    display_title: 'Pico della Mirandola: Opera (1496)',
     author: 'Giovanni Pico della Mirandola',
-    language: 'Latin/English',
-    ia_identifier: 'orationondignity00giov',
-    source_url: 'https://archive.org/details/orationondignity00giov',
+    language: 'Latin',
+    ia_identifier: 'A335045',
+    source_url: 'https://archive.org/details/A335045',
     categories: ['florentine-platonism', 'christian-cabala', 'renaissance'],
     priority: 1,
-    notes: 'Manifesto of Renaissance humanism. Core text.',
+    notes: 'Incunabulum (Bologna, 1496). Includes Oratio, Heptaplus, 900 Theses. Complete works.',
   },
 
   // Tier 2: Major Alchemical Collections
@@ -96,7 +99,7 @@ const ROADMAP_BOOKS = [
     source_url: 'https://archive.org/details/musaeumhermeticu00meri',
     categories: ['alchemy', 'hermeticism'],
     priority: 2,
-    notes: '21 alchemical treatises. Merian engravings. Major compilation.',
+    notes: '1678 Latin edition. 21 alchemical treatises. Merian engravings.',
   },
   {
     title: 'Theatrum Chemicum Britannicum',
@@ -107,7 +110,7 @@ const ROADMAP_BOOKS = [
     source_url: 'https://archive.org/details/theatrumchemicum00ashm',
     categories: ['alchemy', 'spiritual-alchemy'],
     priority: 2,
-    notes: 'English alchemical poetry. Norton, Ripley, Chaucer, Kelley, Dee.',
+    notes: '1652 London edition. English alchemical poetry. Norton, Ripley, Kelley, Dee.',
   },
   {
     title: 'Manly Palmer Hall Alchemical Manuscripts',
@@ -118,7 +121,7 @@ const ROADMAP_BOOKS = [
     source_url: 'https://archive.org/details/manlypalmerhabox4v3hall',
     categories: ['alchemy', 'hermeticism', 'rosicrucianism'],
     priority: 2,
-    notes: '243 manuscripts in 68 volumes. Major research resource.',
+    notes: '243 manuscripts (1500-1825) in 68 volumes. Getty Research Institute.',
   },
   {
     title: 'Lehigh Codex',
@@ -142,7 +145,7 @@ const ROADMAP_BOOKS = [
     source_url: 'https://archive.org/details/bub_gb_fAA6Advd-pMC',
     categories: ['paracelsian', 'alchemy', 'medicine'],
     priority: 2,
-    notes: 'Complete Latin works. 3 volumes. Medical-chemical-surgical.',
+    notes: '1658 Geneva edition. Complete Latin works. 3 volumes.',
   },
   {
     title: 'Archidoxes of Magic',
@@ -154,17 +157,6 @@ const ROADMAP_BOOKS = [
     categories: ['paracelsian', 'natural-magic'],
     priority: 2,
     notes: '17th century English translation. Magical Paracelsiana.',
-  },
-  {
-    title: 'Volumen Paramirum und Opus Paramirum',
-    display_title: 'Paramirum Works',
-    author: 'Paracelsus',
-    language: 'German',
-    ia_identifier: 'b24867330',
-    source_url: 'https://archive.org/details/b24867330',
-    categories: ['paracelsian', 'medicine'],
-    priority: 2,
-    notes: 'German. Core Paracelsian medical theory.',
   },
 
   // Tier 3: Magic & Ritual
@@ -179,40 +171,18 @@ const ROADMAP_BOOKS = [
     priority: 3,
     notes: 'First complete Latin edition. Foundation of Western ceremonial magic.',
   },
-  {
-    title: 'Sefer Yetzirah',
-    display_title: 'Sefer Yetzirah: Book of Creation (Kaplan)',
-    author: 'trans. Aryeh Kaplan',
-    language: 'Hebrew/English',
-    ia_identifier: 'seferyetzirah00arye',
-    source_url: 'https://archive.org/details/seferyetzirah00arye',
-    categories: ['jewish-kabbalah'],
-    priority: 3,
-    notes: 'Authoritative translation with commentary. Core Kabbalistic text.',
-  },
 
   // Tier 4: Christian Mysticism - Böhme
   {
-    title: 'Mysterium Magnum (Part One)',
-    display_title: 'Mysterium Magnum Part 1 (Sparrow trans.)',
+    title: 'Mysterium Magnum',
+    display_title: 'Mysterium Magnum (1656 Sparrow Translation)',
     author: 'Jakob Böhme; trans. John Sparrow',
     language: 'English',
-    ia_identifier: 'JacobBoehmesMysteriumMagnumPartOne',
-    source_url: 'https://archive.org/details/JacobBoehmesMysteriumMagnumPartOne',
+    ia_identifier: 'bim_early-english-books-1475-1640_mysterium-magnum_bhme-jacob_1656',
+    source_url: 'https://archive.org/details/bim_early-english-books-1475-1640_mysterium-magnum_bhme-jacob_1656',
     categories: ['christian-mysticism', 'theosophy'],
     priority: 4,
-    notes: 'Genesis commentary. Major theosophical work.',
-  },
-  {
-    title: 'Mysterium Magnum (Part Two)',
-    display_title: 'Mysterium Magnum Part 2 (Sparrow trans.)',
-    author: 'Jakob Böhme; trans. John Sparrow',
-    language: 'English',
-    ia_identifier: 'JacobBoehmesMysteriumMagnumPartTwo',
-    source_url: 'https://archive.org/details/JacobBoehmesMysteriumMagnumPartTwo',
-    categories: ['christian-mysticism', 'theosophy'],
-    priority: 4,
-    notes: 'Continuation. Abraham through Jacob.',
+    notes: 'Original 1656 English edition. Genesis commentary. Major theosophical work.',
   },
   {
     title: 'Works of Jacob Behmen',
@@ -223,18 +193,7 @@ const ROADMAP_BOOKS = [
     source_url: 'https://archive.org/details/worksofjacobbehm04beohuoft',
     categories: ['christian-mysticism', 'theosophy'],
     priority: 4,
-    notes: 'Complete English works. William Law edition with figures.',
-  },
-  {
-    title: 'Jakob Böhmes Schriften',
-    display_title: 'Jakob Böhme: Collected Writings (German)',
-    author: 'Jakob Böhme',
-    language: 'German',
-    ia_identifier: 'jakobbhmesschrif0000bhme',
-    source_url: 'https://archive.org/details/jakobbhmesschrif0000bhme',
-    categories: ['christian-mysticism'],
-    priority: 4,
-    notes: 'German. Aurora and Mysterium Magnum.',
+    notes: '1764-1781 London edition. Complete English works with figures.',
   },
 
   // Tier 5: Encyclopedic Works - Kircher
