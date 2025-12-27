@@ -97,6 +97,8 @@ export async function POST(request: NextRequest) {
       ia_identifier: ia_identifier || null,
       dublin_core: dublin_core || null,
       image_source: image_source || null,
+      pageCount: pageFiles.length,
+      pages_count: pageFiles.length,
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date()

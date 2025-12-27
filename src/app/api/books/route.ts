@@ -75,6 +75,8 @@ export async function POST(request: NextRequest) {
       printer: printer || null,
       ia_identifier: ia_identifier || null,
       image_source: image_source || null,
+      pageCount: 0,  // No pages yet - will be updated when pages are added
+      pages_count: 0,
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date(),
