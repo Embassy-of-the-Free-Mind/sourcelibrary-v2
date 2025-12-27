@@ -52,6 +52,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
     const language = searchParams.get('language');
+    const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');
     const hasDoi = searchParams.get('has_doi');
@@ -93,6 +94,10 @@ export async function GET(request: NextRequest) {
 
       if (language) {
         bookFilter.language = language;
+      }
+
+      if (category) {
+        bookFilter.categories = category;
       }
 
       if (dateFrom || dateTo) {
@@ -155,9 +160,10 @@ export async function GET(request: NextRequest) {
 
       // Apply book-level filters via lookup or pre-fetch book IDs
       let allowedBookIds: string[] | null = null;
-      if (!bookId && (language || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true')) {
+      if (!bookId && (language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true')) {
         const bookIdFilter: Record<string, unknown> = {};
         if (language) bookIdFilter.language = language;
+        if (category) bookIdFilter.categories = category;
         if (dateFrom || dateTo) {
           bookIdFilter.published = {};
           if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
@@ -250,6 +256,7 @@ export async function GET(request: NextRequest) {
       results: paginatedResults,
       filters: {
         language,
+        category,
         date_from: dateFrom,
         date_to: dateTo,
         has_doi: hasDoi,

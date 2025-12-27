@@ -13,6 +13,7 @@ interface Citation {
   bibtex: string;           // BibTeX format
   chicago: string;          // Chicago style
   mla: string;              // MLA style
+  url: string;              // Direct link to page in Source Library
   doi_url?: string;         // Clickable DOI URL
 }
 
@@ -37,7 +38,9 @@ interface QuoteResponse {
 
 function generateCitations(
   book: Book,
-  page: number,
+  pageNumber: number,
+  bookId: string,
+  pageId: string,
   edition?: TranslationEdition
 ): Citation {
   const year = book.published || 'n.d.';
@@ -59,10 +62,10 @@ function generateCitations(
     : author;
 
   // Inline citation
-  const inline = `(${authorParts[0]} ${year}, p. ${page})`;
+  const inline = `(${authorParts[0]} ${year}, p. ${pageNumber})`;
 
   // Footnote (Chicago style note)
-  const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${page}${doi ? `. DOI: ${doi}` : ''}.`;
+  const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
 
   // Bibliography entry
   const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ''}`;
@@ -85,6 +88,9 @@ function generateCitations(
   // MLA
   const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''}`;
 
+  // Direct URL to page in Source Library
+  const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;
+
   return {
     inline,
     footnote,
@@ -92,6 +98,7 @@ function generateCitations(
     bibtex,
     chicago,
     mla,
+    url,
     doi_url: doiUrl,
   };
 }
@@ -150,7 +157,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
         published: book.published,
         language: book.language,
       },
-      citation: generateCitations(book, pageNumber, currentEdition),
+      citation: generateCitations(book, pageNumber, bookId, page.id, currentEdition),
     };
 
     // Include original text if requested

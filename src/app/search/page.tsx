@@ -49,6 +49,38 @@ const LANGUAGES = [
   { value: 'Spanish', label: 'Spanish' },
 ];
 
+const CATEGORIES = [
+  { value: '', label: 'All Categories' },
+  { value: 'alchemy', label: 'Alchemy' },
+  { value: 'hermeticism', label: 'Hermeticism' },
+  { value: 'jewish-kabbalah', label: 'Jewish Kabbalah' },
+  { value: 'christian-cabala', label: 'Christian Cabala' },
+  { value: 'neoplatonism', label: 'Neoplatonism' },
+  { value: 'rosicrucianism', label: 'Rosicrucianism' },
+  { value: 'freemasonry', label: 'Freemasonry' },
+  { value: 'natural-philosophy', label: 'Natural Philosophy' },
+  { value: 'astrology', label: 'Astrology' },
+  { value: 'natural-magic', label: 'Natural Magic' },
+  { value: 'ritual-magic', label: 'Ritual Magic' },
+  { value: 'theurgy', label: 'Theurgy' },
+  { value: 'mysticism', label: 'Mysticism' },
+  { value: 'theology', label: 'Theology' },
+  { value: 'medicine', label: 'Medicine & Healing' },
+  { value: 'gnosticism', label: 'Gnosticism' },
+  { value: 'theosophy', label: 'Theosophy' },
+  { value: 'pythagoreanism', label: 'Pythagoreanism' },
+  { value: 'divination', label: 'Divination' },
+  { value: 'paracelsian', label: 'Paracelsian' },
+  { value: 'spiritual-alchemy', label: 'Spiritual Alchemy' },
+  { value: 'christian-mysticism', label: 'Christian Mysticism' },
+  { value: 'prisca-theologia', label: 'Prisca Theologia' },
+  { value: 'florentine-platonism', label: 'Florentine Platonism' },
+  { value: 'renaissance', label: 'Renaissance' },
+  { value: 'reformation', label: 'Reformation Era' },
+  { value: 'enlightenment', label: 'Enlightenment' },
+  { value: '19th-century-revival', label: '19th Century Revival' },
+];
+
 export default function SearchPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -61,6 +93,7 @@ export default function SearchPage() {
 
   // Filters
   const [language, setLanguage] = useState(searchParams.get('language') || '');
+  const [category, setCategory] = useState(searchParams.get('category') || '');
   const [dateFrom, setDateFrom] = useState(searchParams.get('date_from') || '');
   const [dateTo, setDateTo] = useState(searchParams.get('date_to') || '');
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
@@ -78,6 +111,7 @@ export default function SearchPage() {
     try {
       const params = new URLSearchParams({ q: searchQuery });
       if (language) params.set('language', language);
+      if (category) params.set('category', category);
       if (dateFrom) params.set('date_from', dateFrom);
       if (dateTo) params.set('date_to', dateTo);
       if (hasDoi) params.set('has_doi', 'true');
@@ -95,7 +129,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  }, [language, dateFrom, dateTo, hasDoi, hasTranslation]);
+  }, [language, category, dateFrom, dateTo, hasDoi, hasTranslation]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     performSearch(value);
@@ -103,6 +137,7 @@ export default function SearchPage() {
     const params = new URLSearchParams();
     if (value) params.set('q', value);
     if (language) params.set('language', language);
+    if (category) params.set('category', category);
     if (dateFrom) params.set('date_from', dateFrom);
     if (dateTo) params.set('date_to', dateTo);
     if (hasDoi) params.set('has_doi', 'true');
@@ -114,7 +149,7 @@ export default function SearchPage() {
     if (query) {
       performSearch(query);
     }
-  }, [language, dateFrom, dateTo, hasDoi, hasTranslation]);
+  }, [language, category, dateFrom, dateTo, hasDoi, hasTranslation]);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
@@ -123,13 +158,14 @@ export default function SearchPage() {
 
   const clearFilters = () => {
     setLanguage('');
+    setCategory('');
     setDateFrom('');
     setDateTo('');
     setHasDoi(false);
     setHasTranslation(false);
   };
 
-  const hasActiveFilters = language || dateFrom || dateTo || hasDoi || hasTranslation;
+  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -192,7 +228,7 @@ export default function SearchPage() {
                   </button>
                 )}
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm text-stone-600 mb-1">Language</label>
                   <select
@@ -203,6 +239,20 @@ export default function SearchPage() {
                     {LANGUAGES.map((lang) => (
                       <option key={lang.value} value={lang.value}>
                         {lang.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-stone-600 mb-1">Category</label>
+                  <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  >
+                    {CATEGORIES.map((cat) => (
+                      <option key={cat.value} value={cat.value}>
+                        {cat.label}
                       </option>
                     ))}
                   </select>

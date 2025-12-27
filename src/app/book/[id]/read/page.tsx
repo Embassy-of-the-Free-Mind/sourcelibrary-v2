@@ -2,13 +2,23 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List } from 'lucide-react';
 import { Book, Page } from '@/lib/types';
 import HighlightSelection from '@/components/HighlightSelection';
 import HighlightsPanel from '@/components/HighlightsPanel';
 import AnnotationPanel from '@/components/AnnotationPanel';
 import { QuoteShare } from '@/components/ShareButton';
 import NotesRenderer from '@/components/NotesRenderer';
+import SectionsNav from '@/components/SectionsNav';
+
+interface SectionSummary {
+  title: string;
+  startPage: number;
+  endPage: number;
+  summary: string;
+  quotes?: Array<{ text: string; page: number; significance?: string }>;
+  concepts?: string[];
+}
 
 interface ReadPageProps {
   params: Promise<{ id: string }>;
@@ -37,6 +47,8 @@ export default function ReadPage({ params }: ReadPageProps) {
   const [currentPageId, setCurrentPageId] = useState<string | null>(null);
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [showNotes, setShowNotes] = useState(true);
+  const [sections, setSections] = useState<SectionSummary[]>([]);
+  const [showSections, setShowSections] = useState(true);
   const textRef = useRef<HTMLDivElement>(null);
 
   // Resolve params
@@ -105,6 +117,11 @@ export default function ReadPage({ params }: ReadPageProps) {
             themes: [],
             generated_at: bookData.index.generatedAt,
           });
+        }
+
+        // Load section summaries from index
+        if (bookData.index?.sectionSummaries && Array.isArray(bookData.index.sectionSummaries)) {
+          setSections(bookData.index.sectionSummaries);
         }
 
         setError(null);
@@ -375,6 +392,33 @@ export default function ReadPage({ params }: ReadPageProps) {
             </div>
           )}
         </section>
+
+        {/* Sections Navigation */}
+        {sections.length > 0 && (
+          <section className="mb-8">
+            <button
+              onClick={() => setShowSections(!showSections)}
+              className="w-full flex items-center justify-between p-4 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors mb-4"
+            >
+              <span className="font-semibold text-stone-900 flex items-center gap-2">
+                <List className="w-4 h-4 text-amber-600" />
+                Table of Contents ({sections.length} sections)
+              </span>
+              {showSections ? (
+                <ChevronUp className="w-5 h-5 text-stone-500" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-stone-500" />
+              )}
+            </button>
+            {showSections && (
+              <SectionsNav
+                bookId={bookId!}
+                sections={sections}
+                pages={pages.map(p => ({ id: p.id, page_number: p.page_number }))}
+              />
+            )}
+          </section>
+        )}
 
         {/* Full Text Section */}
         {translatedPages.length > 0 && (
