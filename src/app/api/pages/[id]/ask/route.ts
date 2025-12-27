@@ -15,6 +15,26 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
   return inputCost + outputCost;
 }
 
+const DEFAULT_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
+
+A reader is studying page {page_number} from {book_context}.
+
+Here is the text from this page:
+---
+{page_text}
+---
+
+{conversation_history}The reader now asks: "{question}"
+
+Please answer their question helpfully:
+- Be concise but thorough
+- Reference specific parts of the text when relevant
+- Explain any archaic terms or concepts
+- If the answer isn't in the text, say so honestly
+- Keep a warm, conversational tone
+
+Answer:`;
+
 export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -28,7 +48,8 @@ export async function POST(
       pageText,
       bookTitle,
       bookAuthor,
-      pageNumber
+      pageNumber,
+      customPrompt
     } = body;
 
     if (!question) {
@@ -45,37 +66,30 @@ export async function POST(
     const bookContext = [
       bookTitle && `"${bookTitle}"`,
       bookAuthor && `by ${bookAuthor}`,
-    ].filter(Boolean).join(' ');
+    ].filter(Boolean).join(' ') || 'a historical text';
 
     // Build conversation history for context
-    const conversationHistory = history.map((msg: Message) =>
-      `${msg.role === 'user' ? 'Reader' : 'Assistant'}: ${msg.content}`
-    ).join('\n\n');
+    const conversationHistory = history.length > 0
+      ? history.map((msg: Message) =>
+          `${msg.role === 'user' ? 'Reader' : 'Assistant'}: ${msg.content}`
+        ).join('\n\n') + '\n\n'
+      : '';
 
     // Truncate page text if too long
     const truncatedText = pageText.length > 6000
       ? pageText.slice(0, 6000) + '\n\n[Text truncated for length]'
       : pageText;
 
-    const prompt = `You are a helpful guide explaining historical texts to modern readers.
+    // Use custom prompt if provided, otherwise use default
+    const promptTemplate = customPrompt || DEFAULT_PROMPT;
 
-A reader is studying page ${pageNumber || '?'} from ${bookContext || 'a historical text'}.
-
-Here is the text from this page:
----
-${truncatedText}
----
-
-${conversationHistory ? `Previous conversation:\n${conversationHistory}\n\n` : ''}The reader now asks: "${question}"
-
-Please answer their question helpfully:
-- Be concise but thorough
-- Reference specific parts of the text when relevant
-- Explain any archaic terms or concepts
-- If the answer isn't in the text, say so honestly
-- Keep a warm, conversational tone
-
-Answer:`;
+    // Replace variables in the prompt
+    const prompt = promptTemplate
+      .replace('{page_number}', pageNumber || '?')
+      .replace('{book_context}', bookContext)
+      .replace('{page_text}', truncatedText)
+      .replace('{conversation_history}', conversationHistory)
+      .replace('{question}', question);
 
     const result = await model.generateContent(prompt);
     const response = result.response;
