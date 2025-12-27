@@ -382,6 +382,24 @@ export async function POST(request: NextRequest) {
         { id: pageId },
         { $set: updateData }
       );
+
+      // Update book counts if translation was processed
+      if (results.translation) {
+        const page = await db.collection('pages').findOne({ id: pageId });
+        if (page?.book_id) {
+          const bookId = page.book_id;
+          // Fire and forget - count translations for this book
+          db.collection('pages').countDocuments({
+            book_id: bookId,
+            'translation.data': { $exists: true, $nin: [null, ''] }
+          }).then(translatedCount => {
+            db.collection('books').updateOne(
+              { id: bookId },
+              { $set: { pages_translated: translatedCount, updated_at: new Date() } }
+            );
+          }).catch(() => {});
+        }
+      }
     }
 
     // Track total cost in a separate collection for analytics

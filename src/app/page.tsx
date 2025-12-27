@@ -11,87 +11,18 @@ async function getBooks(): Promise<Book[]> {
   try {
     const db = await getDb();
 
+    // Use pre-computed counts from book documents (no expensive $lookup)
     const books = await db.collection('books').aggregate([
       {
         // Ensure id field exists (use _id as fallback for older imports)
         $addFields: {
-          id: { $ifNull: ['$id', { $toString: '$_id' }] }
-        }
-      },
-      {
-        $lookup: {
-          from: 'pages',
-          localField: 'id',
-          foreignField: 'book_id',
-          as: 'pages_array'
-        }
-      },
-      {
-        $addFields: {
-          pages_count: { $size: '$pages_array' },
-          pages_translated: {
-            $size: {
-              $filter: {
-                input: '$pages_array',
-                as: 'page',
-                cond: {
-                  $and: [
-                    { $ne: ['$$page.translation', null] },
-                    { $ne: ['$$page.translation.data', null] },
-                    { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
-                  ]
-                }
-              }
-            }
-          },
-          pages_ocr: {
-            $size: {
-              $filter: {
-                input: '$pages_array',
-                as: 'page',
-                cond: {
-                  $and: [
-                    { $ne: ['$$page.ocr', null] },
-                    { $ne: ['$$page.ocr.data', null] }
-                  ]
-                }
-              }
-            }
-          },
-          // Get the most recent processing timestamp from any page (with fallback to book updated_at)
-          _page_max_timestamp: {
-            $max: {
-              $map: {
-                input: '$pages_array',
-                as: 'page',
-                in: {
-                  $max: [
-                    { $ifNull: ['$$page.ocr.updated_at', null] },
-                    { $ifNull: ['$$page.translation.updated_at', null] }
-                  ]
-                }
-              }
-            }
-          },
-          last_processed: {
-            $ifNull: [
-              {
-                $max: {
-                  $map: {
-                    input: '$pages_array',
-                    as: 'page',
-                    in: {
-                      $max: [
-                        { $ifNull: ['$$page.ocr.updated_at', null] },
-                        { $ifNull: ['$$page.translation.updated_at', null] }
-                      ]
-                    }
-                  }
-                }
-              },
-              '$updated_at'
-            ]
-          }
+          id: { $ifNull: ['$id', { $toString: '$_id' }] },
+          // Use pre-computed counts, default to 0 if not set
+          pages_count: { $ifNull: ['$pages_count', 0] },
+          pages_translated: { $ifNull: ['$pages_translated', 0] },
+          pages_ocr: { $ifNull: ['$pages_ocr', 0] },
+          // Use updated_at as last_processed (counts are updated when pages change)
+          last_processed: { $ifNull: ['$updated_at', '$created_at'] }
         }
       },
       {
@@ -106,13 +37,7 @@ async function getBooks(): Promise<Book[]> {
         }
       },
       {
-        $project: {
-          pages_array: 0,
-          _page_max_timestamp: 0
-        }
-      },
-      {
-        // Sort by most recently processed first, then by title for books with no processing
+        // Sort by most recently updated first, then by title
         $sort: { last_processed: -1, title: 1 }
       }
     ]).toArray();

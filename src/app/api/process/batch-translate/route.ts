@@ -237,6 +237,22 @@ Return each translation clearly separated with the exact format:
 
     await Promise.all(updatePromises);
 
+    // Update book's translation count (fire and forget)
+    const firstPage = dbPages[0];
+    if (firstPage?.book_id) {
+      const bookId = firstPage.book_id;
+      // Count pages with translations for this book
+      db.collection('pages').countDocuments({
+        book_id: bookId,
+        'translation.data': { $exists: true, $nin: [null, ''] }
+      }).then(translatedCount => {
+        db.collection('books').updateOne(
+          { id: bookId },
+          { $set: { pages_translated: translatedCount, updated_at: new Date() } }
+        );
+      }).catch(() => {}); // Non-critical
+    }
+
     // Track cost
     try {
       await db.collection('cost_tracking').insertOne({
