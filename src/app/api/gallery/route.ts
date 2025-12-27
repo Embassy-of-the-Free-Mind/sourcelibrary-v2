@@ -1,15 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+interface DetectedImage {
+  description: string;
+  type?: string;
+  bbox?: { x: number; y: number; width: number; height: number };
+  confidence?: number;
+  detection_source?: string;
+}
+
 /**
  * GET /api/gallery
  *
- * Fetch pages with illustrations for the gallery view.
+ * Fetch illustrations for gallery view.
+ * Returns individual images (not pages) with bounding boxes for cropping.
+ *
  * Query params:
- *   - limit: number of pages (default 50, max 200)
+ *   - limit: number of images (default 50, max 200)
  *   - offset: pagination offset
  *   - bookId: filter by book
  *   - type: filter by image type (woodcut, diagram, etc.)
+ *   - verified: if "true", only show vision-extracted images with bboxes
  */
 export async function GET(request: NextRequest) {
   try {
@@ -18,27 +29,35 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
     const bookId = searchParams.get('bookId');
     const imageType = searchParams.get('type');
+    const verifiedOnly = searchParams.get('verified') === 'true';
 
     const db = await getDb();
 
-    // Build query for pages with images
-    const query: Record<string, unknown> = {
-      $or: [
-        { 'detected_images.0': { $exists: true } },
-        { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
-      ]
-    };
+    // Build query - for verified, only get vision-extracted images with bboxes
+    const query: Record<string, unknown> = verifiedOnly
+      ? {
+          'detected_images': {
+            $elemMatch: {
+              detection_source: 'vision_model',
+              bbox: { $exists: true }
+            }
+          }
+        }
+      : {
+          $or: [
+            { 'detected_images.0': { $exists: true } },
+            { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
+          ]
+        };
 
     // Must have an image URL
-    query.$and = [
-      {
-        $or: [
-          { cropped_photo: { $exists: true, $ne: '' } },
-          { photo_original: { $exists: true, $ne: '' } },
-          { photo: { $exists: true, $ne: '' } }
-        ]
-      }
-    ];
+    const imageUrlCondition = {
+      $or: [
+        { cropped_photo: { $exists: true, $ne: '' } },
+        { photo_original: { $exists: true, $ne: '' } },
+        { photo: { $exists: true, $ne: '' } }
+      ]
+    };
 
     if (bookId) {
       query.book_id = bookId;
@@ -48,12 +67,93 @@ export async function GET(request: NextRequest) {
       query['detected_images.type'] = imageType;
     }
 
-    // Get total count
-    const total = await db.collection('pages').countDocuments(query);
+    // Combine conditions
+    const fullQuery = { $and: [query, imageUrlCondition] };
 
-    // Fetch pages with book info
+    // For verified images, we need to unwind detected_images to get individual items
+    if (verifiedOnly) {
+      const pipeline = [
+        { $match: fullQuery },
+        { $unwind: '$detected_images' },
+        {
+          $match: {
+            'detected_images.detection_source': 'vision_model',
+            'detected_images.bbox': { $exists: true }
+          }
+        },
+        {
+          $lookup: {
+            from: 'books',
+            localField: 'book_id',
+            foreignField: 'id',
+            as: 'book'
+          }
+        },
+        { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+        { $sort: { 'detected_images.confidence': -1, book_id: 1, page_number: 1 } },
+        {
+          $facet: {
+            items: [
+              { $skip: offset },
+              { $limit: limit },
+              {
+                $project: {
+                  pageId: '$id',
+                  bookId: '$book_id',
+                  pageNumber: '$page_number',
+                  imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
+                  bookTitle: { $ifNull: ['$book.title', 'Unknown'] },
+                  author: '$book.author',
+                  year: '$book.year',
+                  description: '$detected_images.description',
+                  type: '$detected_images.type',
+                  bbox: '$detected_images.bbox',
+                  confidence: '$detected_images.confidence'
+                }
+              }
+            ],
+            total: [{ $count: 'count' }]
+          }
+        }
+      ];
+
+      const [result] = await db.collection('pages').aggregate(pipeline).toArray();
+      const items = result.items || [];
+      const total = result.total[0]?.count || 0;
+
+      // Get unique books
+      const books = await db.collection('pages').aggregate([
+        { $match: fullQuery },
+        { $group: { _id: '$book_id' } },
+        {
+          $lookup: {
+            from: 'books',
+            localField: '_id',
+            foreignField: 'id',
+            as: 'book'
+          }
+        },
+        { $unwind: '$book' },
+        { $project: { id: '$_id', title: '$book.title' } },
+        { $sort: { title: 1 } }
+      ]).toArray();
+
+      return NextResponse.json({
+        items,
+        total,
+        limit,
+        offset,
+        books,
+        verified: true,
+        imageTypes: ['woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'decorative', 'table']
+      });
+    }
+
+    // Non-verified: return pages with any image indicators
+    const total = await db.collection('pages').countDocuments(fullQuery);
+
     const pages = await db.collection('pages').aggregate([
-      { $match: query },
+      { $match: fullQuery },
       { $sort: { book_id: 1, page_number: 1 } },
       { $skip: offset },
       { $limit: limit },
@@ -83,44 +183,63 @@ export async function GET(request: NextRequest) {
       }
     ]).toArray();
 
-    // Process pages to extract image descriptions
-    const items = pages.map(page => {
-      const imageUrl = page.cropped_photo || page.photo_original || page.photo;
+    // Flatten: each detected_image becomes a gallery item
+    const items: Array<{
+      pageId: string;
+      bookId: string;
+      pageNumber: number;
+      imageUrl: string;
+      bookTitle: string;
+      author?: string;
+      year?: number;
+      description: string;
+      type?: string;
+      bbox?: { x: number; y: number; width: number; height: number };
+      confidence?: number;
+    }> = [];
 
-      // Get descriptions from detected_images or parse from OCR
-      let descriptions: Array<{ description: string; type?: string }> = [];
+    for (const page of pages) {
+      const imageUrl = page.cropped_photo || page.photo_original || page.photo;
+      if (!imageUrl) continue;
 
       if (page.detected_images?.length > 0) {
-        descriptions = page.detected_images.map((img: { description: string; type?: string }) => ({
-          description: img.description,
-          type: img.type
-        }));
+        // Add each detected image as separate item
+        for (const img of page.detected_images as DetectedImage[]) {
+          items.push({
+            pageId: page.id,
+            bookId: page.book_id,
+            pageNumber: page.page_number,
+            imageUrl,
+            bookTitle: page.book?.title || 'Unknown',
+            author: page.book?.author,
+            year: page.book?.year,
+            description: img.description,
+            type: img.type,
+            bbox: img.bbox,
+            confidence: img.confidence
+          });
+        }
       } else if (page.ocr?.data) {
-        // Parse [[image: description]] tags from OCR
+        // Parse [[image: description]] from OCR
         const matches = page.ocr.data.matchAll(/\[\[image:\s*([^\]]+)\]\]/gi);
         for (const match of matches) {
-          descriptions.push({ description: match[1].trim() });
+          items.push({
+            pageId: page.id,
+            bookId: page.book_id,
+            pageNumber: page.page_number,
+            imageUrl,
+            bookTitle: page.book?.title || 'Unknown',
+            author: page.book?.author,
+            year: page.book?.year,
+            description: match[1].trim()
+          });
         }
       }
+    }
 
-      return {
-        pageId: page.id,
-        bookId: page.book_id,
-        pageNumber: page.page_number,
-        imageUrl,
-        bookTitle: page.book?.title || 'Unknown',
-        author: page.book?.author,
-        year: page.book?.year,
-        descriptions,
-        hasVisionExtraction: page.detected_images?.some(
-          (img: { detection_source?: string }) => img.detection_source === 'vision_model'
-        ) || false
-      };
-    });
-
-    // Get unique books for filtering
+    // Get unique books
     const books = await db.collection('pages').aggregate([
-      { $match: query },
+      { $match: fullQuery },
       { $group: { _id: '$book_id' } },
       {
         $lookup: {
@@ -137,10 +256,11 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       items,
-      total,
+      total: items.length, // Actual count after flattening
       limit,
       offset,
       books,
+      verified: false,
       imageTypes: ['woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'decorative', 'table']
     });
   } catch (error) {

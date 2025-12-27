@@ -3,7 +3,14 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Image as ImageIcon, BookOpen, ExternalLink, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Image as ImageIcon, BookOpen, ExternalLink, Filter, ChevronLeft, ChevronRight, CheckCircle, AlertCircle } from 'lucide-react';
+
+interface BBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 interface GalleryItem {
   pageId: string;
@@ -13,8 +20,10 @@ interface GalleryItem {
   bookTitle: string;
   author?: string;
   year?: number;
-  descriptions: Array<{ description: string; type?: string }>;
-  hasVisionExtraction: boolean;
+  description: string;
+  type?: string;
+  bbox?: BBox;
+  confidence?: number;
 }
 
 interface GalleryResponse {
@@ -24,6 +33,18 @@ interface GalleryResponse {
   offset: number;
   books: Array<{ id: string; title: string }>;
   imageTypes: string[];
+  verified: boolean;
+}
+
+function getCroppedImageUrl(imageUrl: string, bbox: BBox): string {
+  const params = new URLSearchParams({
+    url: imageUrl,
+    x: bbox.x.toString(),
+    y: bbox.y.toString(),
+    w: bbox.width.toString(),
+    h: bbox.height.toString()
+  });
+  return `/api/crop-image?${params}`;
 }
 
 export default function GalleryPage() {
@@ -31,13 +52,14 @@ export default function GalleryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedBook, setSelectedBook] = useState<string>('');
+  const [verifiedOnly, setVerifiedOnly] = useState(true);
   const [page, setPage] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const limit = 24;
 
   useEffect(() => {
     fetchGallery();
-  }, [selectedBook, page]);
+  }, [selectedBook, verifiedOnly, page]);
 
   const fetchGallery = async () => {
     setLoading(true);
@@ -47,6 +69,7 @@ export default function GalleryPage() {
         offset: (page * limit).toString()
       });
       if (selectedBook) params.set('bookId', selectedBook);
+      if (verifiedOnly) params.set('verified', 'true');
 
       const res = await fetch(`/api/gallery?${params}`);
       if (!res.ok) throw new Error('Failed to fetch');
@@ -89,7 +112,34 @@ export default function GalleryPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Filters */}
-        <div className="mb-6">
+        <div className="mb-6 space-y-4">
+          {/* Verified toggle */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => { setVerifiedOnly(true); setPage(0); }}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                verifiedOnly
+                  ? 'bg-green-600 text-white'
+                  : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+              }`}
+            >
+              <CheckCircle className="w-4 h-4" />
+              Verified only
+            </button>
+            <button
+              onClick={() => { setVerifiedOnly(false); setPage(0); }}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                !verifiedOnly
+                  ? 'bg-amber-600 text-white'
+                  : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+              }`}
+            >
+              <AlertCircle className="w-4 h-4" />
+              All (including unverified)
+            </button>
+          </div>
+
+          {/* Book filter */}
           <button
             onClick={() => setShowFilters(!showFilters)}
             className="flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors"
@@ -99,7 +149,7 @@ export default function GalleryPage() {
           </button>
 
           {showFilters && data?.books && (
-            <div className="mt-3 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => { setSelectedBook(''); setPage(0); }}
                 className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
@@ -129,9 +179,18 @@ export default function GalleryPage() {
 
         {/* Stats */}
         {data && (
-          <p className="text-stone-500 text-sm mb-4">
-            Showing {data.offset + 1}–{Math.min(data.offset + data.items.length, data.total)} of {data.total} pages with illustrations
-          </p>
+          <div className="flex items-center gap-4 text-sm mb-4">
+            <span className="text-stone-500">
+              {data.total === 0
+                ? 'No illustrations found'
+                : `${data.total} illustration${data.total !== 1 ? 's' : ''}`}
+            </span>
+            {verifiedOnly && data.total === 0 && (
+              <span className="text-amber-600">
+                Run image extraction to populate the gallery
+              </span>
+            )}
+          </div>
         )}
 
         {/* Loading state */}
@@ -149,18 +208,25 @@ export default function GalleryPage() {
         )}
 
         {/* Gallery Grid */}
-        {!loading && data && (
+        {!loading && data && data.items.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.items.map(item => (
-              <GalleryCard key={`${item.bookId}-${item.pageNumber}`} item={item} />
+            {data.items.map((item, idx) => (
+              <GalleryCard key={`${item.bookId}-${item.pageNumber}-${idx}`} item={item} />
             ))}
           </div>
         )}
 
         {/* Empty state */}
         {!loading && data?.items.length === 0 && (
-          <div className="text-center py-20 text-stone-500">
-            No illustrations found
+          <div className="text-center py-20">
+            <ImageIcon className="w-16 h-16 text-stone-300 mx-auto mb-4" />
+            <p className="text-stone-500 mb-2">No verified illustrations yet</p>
+            {verifiedOnly && (
+              <p className="text-stone-400 text-sm">
+                Add MISTRAL_API_KEY to Vercel and run extraction via
+                <code className="mx-1 px-2 py-0.5 bg-stone-200 rounded">/api/extract-images</code>
+              </p>
+            )}
           </div>
         )}
 
@@ -196,24 +262,25 @@ export default function GalleryPage() {
 function GalleryCard({ item }: { item: GalleryItem }) {
   const [imageError, setImageError] = useState(false);
 
-  // Get first description
-  const firstDesc = item.descriptions[0];
-  const description = firstDesc?.description || 'Illustration';
-  const imageType = firstDesc?.type;
+  // Use cropped image if bbox available, otherwise full page
+  const displayUrl = item.bbox
+    ? getCroppedImageUrl(item.imageUrl, item.bbox)
+    : item.imageUrl;
 
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
       {/* Image */}
       <Link href={`/book/${item.bookId}/read?page=${item.pageNumber}`}>
-        <div className="relative aspect-[3/4] bg-stone-200">
+        <div className="relative aspect-square bg-stone-200">
           {!imageError ? (
             <Image
-              src={item.imageUrl}
-              alt={description}
+              src={displayUrl}
+              alt={item.description}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              className="object-contain group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onError={() => setImageError(true)}
+              unoptimized={!!item.bbox} // Skip Next.js optimization for cropped images
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-stone-400">
@@ -227,9 +294,16 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           </div>
 
           {/* Type badge */}
-          {imageType && (
+          {item.type && (
             <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-xs bg-black/60 text-white capitalize">
-              {imageType}
+              {item.type}
+            </span>
+          )}
+
+          {/* Confidence badge */}
+          {item.confidence && (
+            <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs bg-green-600/80 text-white">
+              {Math.round(item.confidence * 100)}%
             </span>
           )}
         </div>
@@ -237,8 +311,8 @@ function GalleryCard({ item }: { item: GalleryItem }) {
 
       {/* Metadata */}
       <div className="p-3">
-        <p className="text-sm text-stone-800 line-clamp-2 mb-2" title={description}>
-          {description}
+        <p className="text-sm text-stone-800 line-clamp-2 mb-2" title={item.description}>
+          {item.description}
         </p>
 
         <div className="flex items-start justify-between gap-2">
@@ -264,13 +338,6 @@ function GalleryCard({ item }: { item: GalleryItem }) {
             p. {item.pageNumber}
           </Link>
         </div>
-
-        {/* Multiple descriptions indicator */}
-        {item.descriptions.length > 1 && (
-          <p className="text-xs text-stone-400 mt-1">
-            +{item.descriptions.length - 1} more illustration{item.descriptions.length > 2 ? 's' : ''}
-          </p>
-        )}
       </div>
     </div>
   );

@@ -744,11 +744,11 @@ export const LATIN_PROMPTS = {
 3. **Capitalization** - Preserve original:
    - Renaissance Latin often capitalizes Nouns like German
    - Keep ALL CAPS for emphasis where used
-   - Note patterns: [[notes: capitalizes all proper nouns and abstract concepts]]
+   - Note patterns: <note>capitalizes all proper nouns and abstract concepts</note>
 
 4. **Technical vocabulary** - Flag uncertain readings:
-   - [[term: azoth]] for alchemical/esoteric terms
-   - [[term: anima mundi → "world soul"]] for terms needing gloss
+   - <term>azoth</term> for alchemical/esoteric terms
+   - <term>anima mundi → "world soul"</term> for terms needing gloss
    - Paracelsian neologisms, Hermetic terminology, Kabbalistic transliterations
 
 **Representing text styles:**
@@ -768,18 +768,21 @@ export const LATIN_PROMPTS = {
 |----------|----------|
 | data | data |
 
-**Annotations:**
-- [[meta: ...]] for page metadata (image quality, script type) — hidden from readers
-- [[notes: ...]] for interpretive notes readers should see
-- [[margin: ...]] for marginalia
-- [[gloss: ...]] for interlinear annotations
-- [[insert: ...]] for later additions
-- [[unclear: ...]] for illegible readings
+**Metadata tags (hidden from readers, use [[bracket]] syntax):**
+- [[meta: ...]] for page metadata (image quality, script type)
 - [[page number: N]] or [[folio: 12r]] for visible page/folio numbers
 - [[header: ...]] for running headers/page headings
 - [[abbrev: X → expansion]] for abbreviation expansions (collected in metadata)
-- [[term: word]] or [[term: word → meaning]] for technical vocabulary
-- [[image: description]] for illustrations, diagrams, charts, woodcuts, printer's devices
+- [[vocabulary: ...]] for key terms for indexing
+
+**Inline annotations (visible to readers, use <xml> tags):**
+- <note>X</note> for interpretive notes readers should see
+- <margin>X</margin> for marginalia
+- <gloss>X</gloss> for interlinear annotations
+- <insert>X</insert> for later additions
+- <unclear>X</unclear> for illegible readings
+- <term>word</term> or <term>word → meaning</term> for technical vocabulary
+- <image-desc>description</image-desc> for illustrations, diagrams, charts, woodcuts, printer's devices
 
 **IMPORTANT - Exclude from main text:**
 - Page numbers: Capture ONLY in [[page number: N]] or [[folio:]], do NOT include in the body text
@@ -795,9 +798,9 @@ export const LATIN_PROMPTS = {
 2. Include [[page number: N]] or [[folio: Nv/Nr]] if visible.
 3. Preserve original spelling, punctuation, line breaks.
 4. Expand abbreviations consistently, marking first occurrence.
-5. Flag all technical/esoteric vocabulary with [[term:]].
+5. Flag all technical/esoteric vocabulary with <term>...</term>.
 6. Capture ALL text including margins and annotations.
-7. Describe any illustrations, diagrams, or charts with [[image: ...]].
+7. Describe any illustrations, diagrams, or charts with <image-desc>...</image-desc>.
 8. END with [[vocabulary: ...]] listing key Latin terms, names, and concepts on this page.
 
 **Important:** This page may have been split from a two-page spread. Focus on the MAIN text block. Ignore partial text at edges from facing pages.
@@ -823,8 +826,8 @@ This is a SCHOLARLY ACCESSIBLE translation:
 - Heading levels (# ## ###)
 - **Bold** and *italic* formatting
 - Tables and centered text
-- All [[markup:]] annotations - translate content, keep tags
-- [[term:]] markers - translate and explain
+- All <xml> annotations - translate content, keep tags
+- <term> markers - translate and explain
 
 **Latin translation guidelines:**
 
@@ -836,24 +839,24 @@ This is a SCHOLARLY ACCESSIBLE translation:
 2. **Syntax:**
    - Break up long periodic sentences for readability
    - But preserve rhetorical structures (tricolons, parallelism)
-   - [[notes: restructured for clarity]] when significantly reordering
+   - <note>restructured for clarity</note> when significantly reordering
 
 3. **Names and references:**
    - Keep Latin forms of ancient names: Aristoteles, Plato, Mercurius Trismegistus
    - Add context: "Ficino (the Florentine translator of Plato)"
-   - Biblical/classical refs: add book/verse or work in [[notes:]]
+   - Biblical/classical refs: add book/verse or work in <note>...</note>
 
 4. **Ambiguity:**
    - When Latin is genuinely ambiguous, translate the most likely reading
-   - Note alternatives: [[notes: could also mean "spirit" rather than "breath"]]
+   - Note alternatives: <note>could also mean "spirit" rather than "breath"</note>
 
 5. **Untranslatable passages:**
    - Hebrew/Greek quotations: transliterate + translate
-   - Magical formulas, barbarous names: preserve with [[notes: explanation]]
+   - Magical formulas, barbarous names: preserve with <note>explanation</note>
 
 **Add notes:**
-- [[notes: ...]] for interpretive choices readers should see
-- [[notes: cf. Corpus Hermeticum I.4]] for source references
+- <note>...</note> for interpretive choices readers should see
+- <note>cf. Corpus Hermeticum I.4</note> for source references
 - [[meta: ...]] for translator notes that should be hidden (e.g., continuity with previous page)
 
 **Style:** Warm but precise. Like a knowledgeable guide at a museum of ideas. Explain references without being condescending.
@@ -930,17 +933,20 @@ export const GERMAN_PROMPTS = {
 - > blockquotes for quotations, prayers
 - --- for decorative dividers
 
-**Annotations:**
-- [[meta: ...]] for page metadata (script type, print quality) — hidden from readers
-- [[notes: ...]] for interpretive notes readers should see
-- [[margin: ...]] for marginalia
-- [[gloss: ...]] for interlinear text
-- [[insert: ...]] for later additions
-- [[unclear: ...]] for illegible readings
+**Metadata tags (hidden from readers, use [[bracket]] syntax):**
+- [[meta: ...]] for page metadata (script type, print quality)
 - [[page number: N]] or [[folio: 12r]] for page/folio numbers
 - [[header: ...]] for running headers/page headings
 - [[abbrev: X → expansion]] for abbreviations (collected in metadata)
-- [[term: word]] for technical/alchemical vocabulary
+- [[vocabulary: ...]] for key terms for indexing
+
+**Inline annotations (visible to readers, use <xml> tags):**
+- <note>X</note> for interpretive notes readers should see
+- <margin>X</margin> for marginalia
+- <gloss>X</gloss> for interlinear text
+- <insert>X</insert> for later additions
+- <unclear>X</unclear> for illegible readings
+- <term>word</term> for technical/alchemical vocabulary
 
 **IMPORTANT - Exclude from main text:**
 - Page numbers: Capture ONLY in [[page number: N]] or [[folio:]], do NOT include in the body text
@@ -958,7 +964,7 @@ export const GERMAN_PROMPTS = {
 4. Expand abbreviations, marking first occurrence.
 5. Preserve all Noun Capitalization.
 6. Mark language switches in multilingual texts.
-7. Flag technical vocabulary with [[term:]].
+7. Flag technical vocabulary with <term>...</term>.
 8. END with [[vocabulary: ...]] listing key German terms, names, and concepts on this page.
 
 **Important:** This page may have been split from a two-page spread. Focus on the MAIN text block.
@@ -981,8 +987,8 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
 - Heading levels (# ## ###)
 - **Bold** and *italic* formatting
 - Tables and centered text
-- All [[markup:]] annotations - translate content, keep tags
-- [[term:]] markers - translate and explain
+- All <xml> annotations - translate content, keep tags
+- <term> markers - translate and explain
 
 **German translation guidelines:**
 
@@ -1006,13 +1012,13 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
    - Greek phrases → translate to English
    - Hebrew/Aramaic terms → translate to English
    - The reader should understand EVERYTHING without knowing Latin, Greek, or Hebrew
-   - Use [[notes: original: "..."]] to preserve significant original phrases for scholars
-   - Example: "per aspera ad astra" → "through hardships to the stars" [[notes: Latin: "per aspera ad astra"]]
+   - Use <note>original: "..."</note> to preserve significant original phrases for scholars
+   - Example: "per aspera ad astra" → "through hardships to the stars" <note>Latin: "per aspera ad astra"</note>
 
 5. **Syntax:**
    - German sentence structure differs significantly
    - Verb-final clauses → reorder naturally for English
-   - [[notes: reordered for English syntax]] when major restructuring
+   - <note>reordered for English syntax</note> when major restructuring
 
 6. **Titles and names:**
    - Keep German honorifics with explanation: "Herr Doktor (the formal German academic title)"
@@ -1024,8 +1030,8 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
    - Explain Kabbalistic/alchemical references
 
 **Add notes:**
-- [[notes: ...]] for interpretive choices readers should see
-- [[notes: lit. "..."]] for significant literal meanings lost in translation
+- <note>...</note> for interpretive choices readers should see
+- <note>lit. "..."</note> for significant literal meanings lost in translation
 - [[meta: ...]] for translator notes that should be hidden (e.g., continuity with previous page)
 
 **Style:** Clear and warm. The goal is to unlock these texts for modern readers while respecting their original power and strangeness.
@@ -1050,16 +1056,17 @@ export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript pag
 
 **Format:** # headings, **bold**, *italic*, ->centered<-, | tables |, > blockquotes, ---
 
-**Annotations (use inline):**
-[[language: X]] [[page number: N]] [[header: X]] [[signature: X]]
-[[margin: X]] [[gloss: X]] [[insert: X]] [[unclear: X]]
-[[notes: X]] [[meta: X]] [[warning: X]]
-[[image: brief description]] — for illustrations, diagrams, charts, printer's marks
+**Metadata (use [[bracket]] syntax, hidden from readers):**
+[[language: X]] [[page number: N]] [[header: X]] [[signature: X]] [[meta: X]] [[warning: X]] [[vocabulary: X]]
+
+**Inline annotations (use <xml> tags, visible to readers):**
+<margin>X</margin> <gloss>X</gloss> <insert>X</insert> <unclear>X</unclear>
+<note>X</note> <term>X</term> <image-desc>description</image-desc>
 
 **Tables:** Use markdown tables for any columnar data, lists, charts. Preserve structure.
 
 **Rules:**
-- Page numbers, headers, signatures → metadata tags ONLY, not in body text
+- Page numbers, headers, signatures → [[metadata]] tags ONLY, not in body text
 - Preserve original spelling, punctuation, line breaks
 - IGNORE partial text at page edges (from facing page)
 - End with [[vocabulary: key terms, names, concepts]]
@@ -1087,26 +1094,30 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - Charts or graphs
 - Any visual layout that isn't truly tabular
 
-**Annotations (use inline where relevant):**
+**Metadata tags (hidden from readers, use [[bracket]] syntax):**
 - [[language: detected]] — confirm the language
 - [[page number: N]] — visible page/folio numbers (NOT in body text)
 - [[header: X]] — running headers (NOT in body text)
 - [[signature: X]] — printer's marks like A2, B1 (NOT in body text)
-- [[margin: X]] — marginal notes, citations (place BEFORE the paragraph they annotate)
-- [[gloss: X]] — interlinear annotations
-- [[insert: X]] — boxed text, later additions
-- [[unclear: X]] — illegible readings
-- [[notes: X]] — interpretive notes for readers
 - [[meta: X]] — hidden metadata (image quality, catchwords)
 - [[warning: X]] — quality issues (faded, damaged, blurry)
-- [[image: description]] — describe illustrations, diagrams, circular charts, woodcuts. Use prose description, NOT tables.
+- [[vocabulary: X]] — key terms for indexing
+
+**Inline annotations (visible to readers, use <xml> tags):**
+- <margin>X</margin> — marginal notes, citations (place BEFORE the paragraph they annotate)
+- <gloss>X</gloss> — interlinear annotations
+- <insert>X</insert> — boxed text, later additions
+- <unclear>X</unclear> — illegible readings
+- <note>X</note> — interpretive notes for readers
+- <term>X</term> — technical vocabulary
+- <image-desc>description</image-desc> — describe illustrations, diagrams, circular charts, woodcuts
 
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
-2. Page numbers/headers/signatures go in tags only, never in body
+2. Page numbers/headers/signatures go in [[metadata]] tags only, never in body
 3. IGNORE partial text at left/right edges (from facing page in spread)
 4. Capture ALL text including margins and annotations
-5. Describe any images/diagrams with [[image: ...]] using prose, never tables
+5. Describe any images/diagrams with <image-desc>...</image-desc> using prose, never tables
 6. End with [[vocabulary: key terms, names, concepts on this page]]
 
 **If image has quality issues**, start with [[warning: describe issue]]`,
@@ -1123,12 +1134,17 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - Tables - recreate them in the translation
 - Centered text (->text<-)
 - Line breaks and paragraph structure
-- All [[markup: ...]] annotations - translate the content but keep the markup
 
-**Add notes:**
-- [[notes: ...]] for interpretive choices readers should see
+**Inline annotations (visible to readers, use <xml> tags):**
+- <note>X</note> — interpretive notes for readers
+- <margin>X</margin> — translate and keep marginal notes
+- <gloss>X</gloss> — translate interlinear annotations
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — illegible readings
+- <term>X</term> — technical vocabulary with explanation
+
+**Metadata tags (hidden, use [[bracket]] syntax):**
 - [[meta: ...]] for translator notes that should be hidden (e.g., continuity with previous page)
-- Explain references a modern reader wouldn't know
 
 **Do NOT use:**
 - Code blocks or backticks - this is prose
@@ -1139,17 +1155,17 @@ The source text may contain phrases in multiple languages (Latin, Greek, Hebrew,
 - Greek phrases → translate to English
 - Hebrew or Aramaic terms → translate to English
 - ANY non-English text → translate to English
-Use [[notes: original: "..."]] to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
 
 **Instructions:**
 1. Start with [[meta: ...]] if noting continuity with previous page (hidden from readers).
 2. Mirror the source layout - headings, paragraphs, tables, centered text.
-3. Translate ALL text including [[margin:]], [[insert:]], [[gloss:]] - keep the markup tags.
+3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
 4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
-5. Add [[notes: ...]] inline to explain historical references or difficult phrases.
+5. Add <note>...</note> inline to explain historical references or difficult phrases.
 6. Style: warm museum label - explain rather than assume knowledge.
 7. Preserve the voice and spirit of the original.
-8. END with [[summary:]] and [[keywords:]] for indexing.
+8. END with [[summary:]] and [[keywords:]] for indexing (these use bracket syntax).
 
 **Source language:** {source_language}
 **Target language:** {target_language}

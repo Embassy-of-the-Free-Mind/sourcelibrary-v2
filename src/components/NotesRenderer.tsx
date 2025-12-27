@@ -424,13 +424,16 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
           'ul', 'ol', 'li', 'blockquote', 'code', 'pre',
           'em', 'strong', 'del', 'hr', 'br', 'a', 'img',
           'table', 'thead', 'tbody', 'tr', 'th', 'td',
-          'span', 'div'
+          'span', 'div',
+          // XML annotation elements (new syntax)
+          'note', 'margin', 'gloss', 'insert', 'unclear', 'term', 'image-desc'
         ]}
         unwrapDisallowed={true}
-        components={{
-          p: withNotes(({ children }) => <p className="mb-4 last:mb-0 leading-relaxed text-[var(--text-secondary)]">{children}</p>),
-          strong: ({ children }) => <strong className="font-bold text-[var(--text-primary)]">{children}</strong>,
-          em: ({ children }) => <em className="italic">{children}</em>,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        components={({
+          p: withNotes(({ children }: { children?: ReactNode }) => <p className="mb-4 last:mb-0 leading-relaxed text-[var(--text-secondary)]">{children}</p>),
+          strong: ({ children }: { children?: ReactNode }) => <strong className="font-bold text-[var(--text-primary)]">{children}</strong>,
+          em: ({ children }: { children?: ReactNode }) => <em className="italic">{children}</em>,
           img: ({ src, alt }) => (
             <img src={src} alt={alt || ''} className="max-w-full h-auto rounded my-4" />
           ),
@@ -504,7 +507,47 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
             }
             return <span>{children}</span>;
           },
-        }}
+          // XML annotation elements (TEI-aligned, new syntax)
+          // These are handled natively by rehype-raw - no custom parsing needed!
+          note: ({ children }) => showNotes ? (
+            <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
+              {children}
+            </span>
+          ) : null,
+          margin: ({ children }) => showNotes ? (
+            <span className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
+              {children}
+            </span>
+          ) : null,
+          gloss: ({ children }) => showNotes ? (
+            <span className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
+              {children}
+            </span>
+          ) : null,
+          insert: ({ children }) => showNotes ? (
+            <span className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
+              {children}
+            </span>
+          ) : null,
+          unclear: ({ children }) => showNotes ? (
+            <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear in original">
+              {children}?
+            </span>
+          ) : null,
+          term: ({ children }) => showNotes ? (
+            <span className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
+              <em>{children}</em>
+            </span>
+          ) : null,
+          'image-desc': ({ children }) => showNotes ? (
+            <span className="block my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
+              <span className="text-amber-700 font-medium not-italic">[Image: </span>
+              {children}
+              <span className="text-amber-700 font-medium not-italic">]</span>
+            </span>
+          ) : null,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any}
       >
         {processedText}
       </ReactMarkdown>
