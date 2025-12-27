@@ -384,7 +384,7 @@ export default function AnnotationEditor({
 
           {/* Error */}
           {error && (
-            <div className="flex items-center gap-2 p-2 bg-red-50 text-red-700 rounded text-xs">
+            <div role="alert" className="flex items-center gap-2 p-2 bg-red-50 text-red-700 rounded text-xs">
               <AlertCircle className="w-3 h-3 flex-shrink-0" />
               {error}
             </div>

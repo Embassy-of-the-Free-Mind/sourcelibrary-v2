@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { BookOpen, X, Check, Loader2 } from 'lucide-react';
@@ -17,6 +17,17 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
+
+  // Handle Escape key to close
+  const handleClose = useCallback(() => setIsOpen(false), []);
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handleClose]);
 
   const getPageImageUrl = (page: Page, width: number = 200) => {
     const baseUrl = page.photo_original || page.photo;
@@ -81,15 +92,21 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
       {/* Picker Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full mx-4 max-h-[85vh] overflow-hidden">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cover-picker-title"
+            className="bg-white rounded-xl shadow-2xl max-w-4xl w-full mx-4 max-h-[85vh] overflow-hidden"
+          >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-stone-200">
-              <h2 className="text-lg font-semibold text-stone-900">Choose Cover Image</h2>
+              <h2 id="cover-picker-title" className="text-lg font-semibold text-stone-900">Choose Cover Image</h2>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
+                aria-label="Close dialog"
                 className="p-1 text-stone-400 hover:text-stone-600 rounded"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 

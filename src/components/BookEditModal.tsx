@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { X, Save, Loader2, Search, ExternalLink, Languages, Sparkles } from 'lucide-react';
 
 interface BookEditModalProps {
@@ -54,6 +54,15 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
 
   // Title translation
   const [translating, setTranslating] = useState(false);
+
+  // Handle Escape key to close
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
 
   // AI identification
   const [identifying, setIdentifying] = useState(false);
@@ -223,12 +232,17 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="book-edit-modal-title"
+        className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-stone-200">
-          <h2 className="text-lg font-semibold text-stone-900">Edit Book Metadata</h2>
-          <button onClick={onClose} className="p-1 hover:bg-stone-100 rounded">
-            <X className="w-5 h-5" />
+          <h2 id="book-edit-modal-title" className="text-lg font-semibold text-stone-900">Edit Book Metadata</h2>
+          <button onClick={onClose} aria-label="Close dialog" className="p-1 hover:bg-stone-100 rounded">
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -453,7 +467,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
           </div>
 
           {error && (
-            <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">
+            <div role="alert" className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">
               {error}
             </div>
           )}

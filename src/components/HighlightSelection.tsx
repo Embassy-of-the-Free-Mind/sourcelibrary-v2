@@ -226,6 +226,19 @@ export default function HighlightSelection({
     window.getSelection()?.removeAllRanges();
   };
 
+  // Handle Escape key to close panels
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (showExplainPanel) closeExplainPanel();
+        if (showLookupResults) closeLookupPanel();
+        if (showPopup) handleDismiss();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [showExplainPanel, showLookupResults, showPopup]);
+
   useEffect(() => {
     document.addEventListener('mouseup', handleSelection);
     document.addEventListener('touchend', handleSelection);
@@ -383,18 +396,24 @@ export default function HighlightSelection({
       {/* Explain Panel */}
       {showExplainPanel && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={closeExplainPanel} />
-          <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden">
+          <div className="absolute inset-0 bg-black/50" onClick={closeExplainPanel} aria-hidden="true" />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="explain-panel-title"
+            className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden"
+          >
             <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-purple-50 to-pink-50">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-purple-600" />
-                <h2 className="font-medium text-stone-900">Explain</h2>
+                <Sparkles className="w-5 h-5 text-purple-600" aria-hidden="true" />
+                <h2 id="explain-panel-title" className="font-medium text-stone-900">Explain</h2>
               </div>
               <button
                 onClick={closeExplainPanel}
+                aria-label="Close dialog"
                 className="p-1 hover:bg-stone-200 rounded transition-colors"
               >
-                <X className="w-4 h-4 text-stone-600" />
+                <X className="w-4 h-4 text-stone-600" aria-hidden="true" />
               </button>
             </div>
             <div className="p-4">
@@ -439,18 +458,24 @@ export default function HighlightSelection({
       {/* Lookup Results Panel */}
       {showLookupResults && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/50" onClick={closeLookupPanel} />
-          <div className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden">
+          <div className="absolute inset-0 bg-black/50" onClick={closeLookupPanel} aria-hidden="true" />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="lookup-panel-title"
+            className="relative w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden"
+          >
             <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-green-50 to-emerald-50">
               <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-green-600" />
-                <h2 className="font-medium text-stone-900">Encyclopedia</h2>
+                <BookOpen className="w-5 h-5 text-green-600" aria-hidden="true" />
+                <h2 id="lookup-panel-title" className="font-medium text-stone-900">Encyclopedia</h2>
               </div>
               <button
                 onClick={closeLookupPanel}
+                aria-label="Close dialog"
                 className="p-1 hover:bg-stone-200 rounded transition-colors"
               >
-                <X className="w-4 h-4 text-stone-600" />
+                <X className="w-4 h-4 text-stone-600" aria-hidden="true" />
               </button>
             </div>
             <div className="p-4">

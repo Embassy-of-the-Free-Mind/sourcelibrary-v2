@@ -60,6 +60,16 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
   const [creating, setCreating] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
+  // Handle Escape key to close
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   // Fetch prompts when modal opens
   useEffect(() => {
     if (isOpen) {
@@ -166,13 +176,21 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
 
   if (!isOpen) return null;
 
+  const modalId = `settings-modal-${promptType}`;
+
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="w-full max-w-3xl mx-4 rounded-xl shadow-2xl max-h-[90vh] flex flex-col" style={{ background: 'var(--bg-white)' }}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`${modalId}-title`}
+        className="w-full max-w-3xl mx-4 rounded-xl shadow-2xl max-h-[90vh] flex flex-col"
+        style={{ background: 'var(--bg-white)' }}
+      >
         <div className="flex items-center justify-between p-5 flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-          <h2 className="text-lg font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>{title}</h2>
-          <button onClick={onClose} className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
-            <X className="w-5 h-5" />
+          <h2 id={`${modalId}-title`} className="text-lg font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>{title}</h2>
+          <button onClick={onClose} aria-label="Close dialog" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -1102,14 +1120,20 @@ export default function TranslationEditor({
       {/* How It Works Modal */}
       {showHowItWorks && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden" style={{ background: 'var(--bg-white)' }}>
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="how-it-works-title"
+            className="w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden"
+            style={{ background: 'var(--bg-white)' }}
+          >
             {/* Header */}
             <div className="px-6 py-5 flex items-center justify-between" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-              <h2 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+              <h2 id="how-it-works-title" className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
                 How Translation Works
               </h2>
-              <button onClick={() => setShowHowItWorks(false)} className="p-1 rounded-full hover:bg-white/50 transition-colors" style={{ color: 'var(--text-secondary)' }}>
-                <X className="w-5 h-5" />
+              <button onClick={() => setShowHowItWorks(false)} aria-label="Close dialog" className="p-1 rounded-full hover:bg-white/50 transition-colors" style={{ color: 'var(--text-secondary)' }}>
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -1211,12 +1235,17 @@ export default function TranslationEditor({
       {/* Reset Split Confirmation Modal */}
       {showResetSplitConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="reset-split-title"
+            className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
+          >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-                <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} />
+                <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} aria-hidden="true" />
               </div>
-              <h3 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+              <h3 id="reset-split-title" className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
                 Reset Split?
               </h3>
             </div>

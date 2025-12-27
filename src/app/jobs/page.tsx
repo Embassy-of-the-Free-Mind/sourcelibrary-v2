@@ -204,7 +204,13 @@ export default function JobsPage() {
                       </div>
                       {job.book_title && (
                         <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-                          {job.book_title}
+                          {job.book_id ? (
+                            <Link href={`/book/${job.book_id}`} className="hover:underline">
+                              {job.book_title}
+                            </Link>
+                          ) : (
+                            job.book_title
+                          )}
                         </div>
                       )}
                     </div>

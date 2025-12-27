@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Tag, X, Plus, Loader2, Check } from 'lucide-react';
 
 interface Category {
@@ -31,6 +31,17 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
   useEffect(() => {
     setSelected(currentCategories || []);
   }, [currentCategories]);
+
+  // Handle Escape key to close
+  const handleClose = useCallback(() => setIsOpen(false), []);
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, handleClose]);
 
   const fetchCategories = async () => {
     setLoading(true);
@@ -112,16 +123,22 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
       {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/30" onClick={() => setIsOpen(false)} />
-          <div className="relative bg-white rounded-xl shadow-xl max-w-md w-full max-h-[80vh] flex flex-col">
+          <div className="absolute inset-0 bg-black/30" onClick={handleClose} aria-hidden="true" />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="category-picker-title"
+            className="relative bg-white rounded-xl shadow-xl max-w-md w-full max-h-[80vh] flex flex-col"
+          >
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200">
-              <h3 className="font-semibold text-stone-900">Edit Categories</h3>
+              <h3 id="category-picker-title" className="font-semibold text-stone-900">Edit Categories</h3>
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
+                aria-label="Close dialog"
                 className="p-1 hover:bg-stone-100 rounded transition-colors"
               >
-                <X className="w-5 h-5 text-stone-500" />
+                <X className="w-5 h-5 text-stone-500" aria-hidden="true" />
               </button>
             </div>
 
@@ -160,7 +177,7 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
             {/* Footer */}
             <div className="flex items-center justify-end gap-3 px-4 py-3 border-t border-stone-200 bg-stone-50">
               <button
-                onClick={() => setIsOpen(false)}
+                onClick={handleClose}
                 className="px-4 py-2 text-stone-600 hover:text-stone-800 text-sm font-medium transition-colors"
               >
                 Cancel
