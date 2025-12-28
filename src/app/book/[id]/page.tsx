@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { ArrowLeft, BookOpen, Calendar, Globe, FileText, BookText, Glasses, Workflow, MessageCircle, BookMarked } from 'lucide-react';
+import { ArrowLeft, Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookHistory from '@/components/BookHistory';
@@ -220,14 +220,6 @@ async function BookInfo({ id }: { id: string }) {
 
               {/* Actions - organized by progression */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-4 text-sm">
-                {/* Always available */}
-                <Link
-                  href={`/book/${book.id}/read`}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
-                >
-                  <Glasses className="w-4 h-4" />
-                  Read
-                </Link>
                 {/* Unlocks after translation */}
                 {hasTranslations ? (
                   <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
