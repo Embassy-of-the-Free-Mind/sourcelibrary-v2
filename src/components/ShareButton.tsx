@@ -122,37 +122,37 @@ export default function ShareButton({
               className="fixed inset-0 z-[9998]"
               onClick={() => setShowMenu(false)}
             />
-            <div className="absolute right-0 top-full mt-1 z-[9999] bg-white rounded-lg shadow-lg border border-stone-200 py-1 min-w-[160px] text-stone-900">
+            <div className="absolute right-0 top-full mt-1 z-[9999] bg-white rounded-lg shadow-lg border border-stone-200 py-1 min-w-[160px] !text-stone-900">
               <button
                 onClick={shareToTwitter}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
               >
-                <Twitter className="w-4 h-4" />
-                Share on X
+                <Twitter className="w-4 h-4 text-stone-700" />
+                <span>Share on X</span>
               </button>
               <button
                 onClick={shareToBluesky}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
               >
-                <MessageCircle className="w-4 h-4" />
-                Share on Bluesky
+                <MessageCircle className="w-4 h-4 text-stone-700" />
+                <span>Share on Bluesky</span>
               </button>
               <hr className="my-1 border-stone-100" />
               {text && (
                 <button
                   onClick={copyQuote}
-                  className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+                  className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
                 >
-                  <Link2 className="w-4 h-4" />
-                  Copy quote
+                  <Link2 className="w-4 h-4 text-stone-700" />
+                  <span>Copy quote</span>
                 </button>
               )}
               <button
                 onClick={copyLink}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
               >
-                <Link2 className="w-4 h-4" />
-                Copy link
+                <Link2 className="w-4 h-4 text-stone-700" />
+                <span>Copy link</span>
               </button>
             </div>
           </>
