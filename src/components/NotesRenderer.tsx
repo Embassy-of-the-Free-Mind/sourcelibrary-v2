@@ -258,10 +258,10 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
   let match;
   let key = 0;
 
-  while ((match = notePattern.exec(text)) !== null) {
+  while ((match = notePattern.exec(processed)) !== null) {
     // Add text before the match
     if (match.index > lastIndex) {
-      parts.push(text.slice(lastIndex, match.index));
+      parts.push(processed.slice(lastIndex, match.index));
     }
 
     const tagType = match[1].toLowerCase();
@@ -320,11 +320,11 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
   }
 
   // Add remaining text after last match
-  if (lastIndex < text.length) {
-    parts.push(text.slice(lastIndex));
+  if (lastIndex < processed.length) {
+    parts.push(processed.slice(lastIndex));
   }
 
-  return parts.length > 0 ? parts : [text];
+  return parts.length > 0 ? parts : [processed];
 }
 
 // Recursively process children to find and style note tags in text
