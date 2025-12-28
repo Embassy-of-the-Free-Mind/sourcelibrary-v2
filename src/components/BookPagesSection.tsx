@@ -567,16 +567,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     // For OCR/summary, use parallel per-page processing
     if (action === 'translation') {
       const TRANSLATION_BATCH_SIZE = 5;
-      // Debug: check page OCR status
-      const pagesWithOcr = pageIds.filter(id => {
-        const p = pages.find(pg => pg.id === id);
-        return p && !!p.ocr;
-      });
-      console.log(`[translation] Starting: ${pageIds.length} pages selected, ${pagesWithOcr.length} have OCR object`);
-      if (pagesWithOcr.length === 0 && pageIds.length > 0) {
-        const samplePage = pages.find(p => p.id === pageIds[0]);
-        console.log('[translation] Sample page structure:', JSON.stringify({ id: samplePage?.id, hasOcr: !!samplePage?.ocr, ocrKeys: samplePage?.ocr ? Object.keys(samplePage.ocr) : [] }));
-      }
       let previousContext = '';
 
       // Sort pages by page number for proper continuity
@@ -593,8 +583,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         const batchPages = batchIds
           .map(id => pages.find(p => p.id === id))
           .filter((p): p is Page => p !== undefined && !!p.ocr); // Check for OCR presence (data loaded by API)
-
-        console.log(`[translation] Batch ${Math.floor(i / TRANSLATION_BATCH_SIZE) + 1}: ${batchIds.length} selected, ${batchPages.length} with OCR`);
 
         if (batchPages.length === 0) {
           batchIds.forEach(id => failed.push(id));
