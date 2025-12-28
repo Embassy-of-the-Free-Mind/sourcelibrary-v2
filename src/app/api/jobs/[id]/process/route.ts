@@ -108,7 +108,8 @@ async function processCroppedImage(
 // - submit: When all prepared, submit to Gemini Batch API
 // - poll: Check status and download results
 
-const BATCH_PREPARE_CHUNK_SIZE = 40; // Prepare 40 images per request (with parallel fetching)
+const BATCH_PREPARE_CHUNK_SIZE = 50; // Prepare 50 images per request
+const BATCH_PREPARE_PARALLEL = 10; // Fetch 10 images in parallel
 
 async function handleBatchApiJob(
   job: Job,
@@ -299,7 +300,8 @@ async function handleBatchApiJob(
       let preparedCount = 0;
       let failedCount = 0;
 
-      for (const page of pages) {
+      // Prepare a single page (for parallel processing)
+      const preparePage = async (page: typeof pages[0]): Promise<{ success: boolean }> => {
         try {
           let requestData: BatchRequest['request'] | null = null;
 
@@ -313,8 +315,7 @@ async function handleBatchApiJob(
                 error: 'No image URL',
                 created_at: new Date(),
               });
-              failedCount++;
-              continue;
+              return { success: false };
             }
 
             const imageResponse = await fetch(imageUrl);
@@ -326,8 +327,7 @@ async function handleBatchApiJob(
                 error: `Image fetch failed: ${imageResponse.status}`,
                 created_at: new Date(),
               });
-              failedCount++;
-              continue;
+              return { success: false };
             }
 
             const imageBuffer = await imageResponse.arrayBuffer();
@@ -360,8 +360,7 @@ async function handleBatchApiJob(
                 error: 'No OCR text',
                 created_at: new Date(),
               });
-              failedCount++;
-              continue;
+              return { success: false };
             }
 
             requestData = {
@@ -389,7 +388,7 @@ async function handleBatchApiJob(
             failed: false,
             created_at: new Date(),
           });
-          preparedCount++;
+          return { success: true };
 
         } catch (e) {
           console.error(`[BatchJob ${jobId}] Failed to prepare ${page.id}:`, e);
@@ -400,7 +399,17 @@ async function handleBatchApiJob(
             error: e instanceof Error ? e.message : 'Unknown error',
             created_at: new Date(),
           });
-          failedCount++;
+          return { success: false };
+        }
+      };
+
+      // Process pages in parallel batches
+      for (let i = 0; i < pages.length; i += BATCH_PREPARE_PARALLEL) {
+        const batch = pages.slice(i, i + BATCH_PREPARE_PARALLEL);
+        const results = await Promise.all(batch.map(preparePage));
+        for (const r of results) {
+          if (r.success) preparedCount++;
+          else failedCount++;
         }
       }
 
