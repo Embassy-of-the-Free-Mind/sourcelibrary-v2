@@ -1337,9 +1337,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             {pages.slice(0, visibleCount).map((page, index) => {
               const isSelected = selectedPages.has(page.id);
               const imageUrl = getImageUrl(page);
-              const hasOcr = !!page.ocr?.data;
-              const hasTranslation = !!page.translation?.data;
-              const hasSummary = !!page.summary?.data;
+              // Check updated_at since data is excluded from projection for performance
+              const hasOcr = !!page.ocr?.updated_at;
+              const hasTranslation = !!page.translation?.updated_at;
+              const hasSummary = !!page.summary?.updated_at;
 
               // Reorder mode - draggable pages
               if (reorderMode) {
