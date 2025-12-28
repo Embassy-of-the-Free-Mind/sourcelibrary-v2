@@ -185,9 +185,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const stopRequestedRef = useRef(false);
   const lastSelectedIndexRef = useRef<number | null>(null);
 
-  // Calculate stats
-  const pagesWithOcr = pages.filter(p => p.ocr?.data).length;
-  const pagesWithTranslation = pages.filter(p => p.translation?.data).length;
+  // Calculate stats (check updated_at since data is excluded from projection)
+  const pagesWithOcr = pages.filter(p => p.ocr?.updated_at).length;
+  const pagesWithTranslation = pages.filter(p => p.translation?.updated_at).length;
   const totalPages = pages.length;
 
   // Calculate last activity dates
