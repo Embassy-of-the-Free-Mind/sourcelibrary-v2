@@ -110,7 +110,7 @@ async function processCroppedImage(
 
 const BATCH_PREPARE_CHUNK_SIZE = 50; // Prepare 50 images per request
 const BATCH_PREPARE_PARALLEL = 10; // Fetch 10 images in parallel
-const BATCH_SUBMIT_CHUNK_SIZE = 50; // Submit 50 pages per Gemini batch job
+const BATCH_SUBMIT_CHUNK_SIZE = 25; // Submit 25 pages per Gemini batch job (smaller = faster submission)
 
 async function handleBatchApiJob(
   job: Job,
