@@ -197,8 +197,44 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   return { cleanText: result, metadata };
 }
 
-// Pre-process ONLY centering syntax (doesn't break tables)
-// Note tags are handled separately after markdown parsing
+// Pre-process bracket note tags to HTML before ReactMarkdown sees them
+// This prevents markdown from interpreting [[ as link syntax
+function preprocessBracketTags(text: string, showNotes: boolean): string {
+  let result = text;
+
+  // Always remove image descriptions (only shown in edit mode)
+  result = result.replace(/\[\[image:\s*([\s\S]*?)\]\]/gi, '');
+
+  if (!showNotes) {
+    // Remove editorial notes when hidden, but keep terms
+    result = result
+      .replace(/\[\[(notes?):\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[margin:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[gloss:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[insert:\s*[\s\S]*?\]\]/gi, '')
+      .replace(/\[\[unclear:\s*[\s\S]*?\]\]/gi, '');
+  } else {
+    // Convert bracket tags to HTML spans
+    result = result.replace(/\[\[(notes?):\s*([\s\S]*?)\]\]/gi,
+      '<span class="inline-note" title="Editorial note">$2</span>');
+    result = result.replace(/\[\[margin:\s*([\s\S]*?)\]\]/gi,
+      '<span class="inline-margin" title="Marginal note">$1</span>');
+    result = result.replace(/\[\[gloss:\s*([\s\S]*?)\]\]/gi,
+      '<span class="inline-gloss" title="Gloss">$1</span>');
+    result = result.replace(/\[\[insert:\s*([\s\S]*?)\]\]/gi,
+      '<span class="inline-insert" title="Later insertion">$1</span>');
+    result = result.replace(/\[\[unclear:\s*([\s\S]*?)\]\]/gi,
+      '<span class="inline-unclear" title="Unclear">$1?</span>');
+  }
+
+  // Terms always shown
+  result = result.replace(/\[\[term:\s*([\s\S]*?)\]\]/gi,
+    '<span class="inline-term" title="Technical term">$1</span>');
+
+  return result;
+}
+
+// Pre-process centering syntax (doesn't break tables)
 function preprocessCentering(text: string): string {
   let result = text;
 
@@ -452,7 +488,8 @@ function NoteProcessor({ children, showNotes }: { children: ReactNode; showNotes
 
 export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
-  const processedText = useMemo(() => preprocessCentering(cleanText), [cleanText]);
+  const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
+  const processedText = useMemo(() => preprocessCentering(withBracketTags), [withBracketTags]);
 
   if (!text) {
     return (
@@ -560,15 +597,47 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
             return <div>{children}</div>;
           },
           span: ({ children, className: spanClassName }: any) => {
-            // These are from rehypeRaw processing our pre-processed HTML
-            if (spanClassName === 'inline-note') {
-              return (
-                <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
-                  {children}
-                </span>
-              );
+            // These are from rehypeRaw processing our pre-processed bracket tags
+            switch (spanClassName) {
+              case 'inline-note':
+                return (
+                  <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
+                    {children}
+                  </span>
+                );
+              case 'inline-margin':
+                return (
+                  <span className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note">
+                    {children}
+                  </span>
+                );
+              case 'inline-gloss':
+                return (
+                  <span className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss">
+                    {children}
+                  </span>
+                );
+              case 'inline-insert':
+                return (
+                  <span className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
+                    {children}
+                  </span>
+                );
+              case 'inline-unclear':
+                return (
+                  <span className="bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded text-sm mx-0.5 italic" title="Unclear">
+                    {children}
+                  </span>
+                );
+              case 'inline-term':
+                return (
+                  <span className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
+                    <em>{children}</em>
+                  </span>
+                );
+              default:
+                return <span className={spanClassName}>{children}</span>;
             }
-            return <span>{children}</span>;
           },
           // XML annotation elements (TEI-aligned, new syntax)
           // These are handled natively by rehype-raw - no custom parsing needed!
