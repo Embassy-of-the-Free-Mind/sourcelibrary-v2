@@ -7,14 +7,22 @@ import { getDb } from '@/lib/mongodb';
  * Backfills last_translation_at for all books based on their pages' translation timestamps.
  * This is a one-time migration for existing data.
  */
+export const maxDuration = 60;
+
 export async function POST(request: NextRequest) {
   try {
-    const { dryRun = true } = await request.json().catch(() => ({ dryRun: true }));
+    const { dryRun = true, limit = 50, skip = 0 } = await request.json().catch(() => ({ dryRun: true, limit: 50, skip: 0 }));
 
     const db = await getDb();
 
-    // Get all books
-    const books = await db.collection('books').find({}).toArray();
+    // Get books in batches to avoid timeout
+    const books = await db.collection('books')
+      .find({})
+      .skip(skip)
+      .limit(limit)
+      .toArray();
+
+    const totalBooks = await db.collection('books').countDocuments();
 
     const results: Array<{
       bookId: string;
@@ -74,13 +82,18 @@ export async function POST(request: NextRequest) {
       return new Date(b.lastTranslationAt).getTime() - new Date(a.lastTranslationAt).getTime();
     });
 
+    const hasMore = skip + books.length < totalBooks;
+
     return NextResponse.json({
       success: true,
       dryRun,
-      totalBooks: books.length,
+      batch: { skip, limit, processed: books.length },
+      totalBooks,
       booksWithTranslations: results.filter(r => r.lastTranslationAt).length,
       booksUpdated: updatedCount,
-      results: results.slice(0, 50), // Return first 50 for preview
+      hasMore,
+      nextSkip: hasMore ? skip + limit : null,
+      results: results.slice(0, 20),
     });
 
   } catch (error) {
