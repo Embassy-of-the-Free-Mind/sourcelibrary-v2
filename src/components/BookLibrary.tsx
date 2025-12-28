@@ -25,13 +25,13 @@ interface CatalogResult {
   imageUrl?: string;
 }
 
-type SortOption = 'title-asc' | 'title-desc' | 'recent';
+type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
 export default function BookLibrary({ books, languages }: BookLibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('recent');
+  const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
 
   // Catalog search state
@@ -71,15 +71,22 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
 
     // Sort
     switch (sortBy) {
+      case 'recent-translation':
+        // Keep server order - already sorted by last_translation_at
+        break;
+      case 'recent':
+        // Sort by last_processed (any update)
+        result.sort((a, b) => {
+          const aDate = a.last_processed ? new Date(a.last_processed).getTime() : 0;
+          const bDate = b.last_processed ? new Date(b.last_processed).getTime() : 0;
+          return bDate - aDate;
+        });
+        break;
       case 'title-asc':
         result.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
         break;
       case 'title-desc':
         result.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
-        break;
-      case 'recent':
-        // Keep server order - already sorted by last_processed
-        // No client-side re-sort needed
         break;
     }
 
@@ -242,11 +249,12 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortOption)}
-            className="px-4 py-3 bg-white border border-gray-200 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat min-w-[140px]"
+            className="px-4 py-3 bg-white border border-gray-200 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat min-w-[180px]"
           >
+            <option value="recent-translation">Recent Translations</option>
+            <option value="recent">Recently Updated</option>
             <option value="title-asc">Title (A-Z)</option>
             <option value="title-desc">Title (Z-A)</option>
-            <option value="recent">Recently Added</option>
           </select>
 
           {/* View Toggle */}

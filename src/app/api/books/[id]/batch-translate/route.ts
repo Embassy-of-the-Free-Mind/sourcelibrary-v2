@@ -212,6 +212,20 @@ Return each translation clearly separated with the exact format:
       }
     }
 
+    // Update book's translation count and last_translation_at
+    const successCount = results.filter(r => r.success).length;
+    if (successCount > 0) {
+      const now = new Date();
+      const translatedCount = await db.collection('pages').countDocuments({
+        book_id: bookId,
+        'translation.data': { $exists: true, $nin: [null, ''] }
+      });
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { pages_translated: translatedCount, last_translation_at: now, updated_at: now } }
+      );
+    }
+
     // Track total cost
     try {
       await db.collection('cost_tracking').insertOne({
@@ -223,7 +237,7 @@ Return each translation clearly separated with the exact format:
         outputTokens: totalOutputTokens,
         totalTokens: totalInputTokens + totalOutputTokens,
         costUsd: totalCost,
-        pagesProcessed: results.filter(r => r.success).length,
+        pagesProcessed: successCount,
       });
     } catch (e) {
       console.error('Failed to track cost:', e);
@@ -236,7 +250,6 @@ Return each translation clearly separated with the exact format:
       'translation.data': { $exists: false }
     });
 
-    const successCount = results.filter(r => r.success).length;
     const failedCount = results.filter(r => !r.success).length;
 
     return NextResponse.json({

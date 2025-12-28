@@ -388,6 +388,7 @@ export async function POST(request: NextRequest) {
         const page = await db.collection('pages').findOne({ id: pageId });
         if (page?.book_id) {
           const bookId = page.book_id;
+          const now = new Date();
           // Fire and forget - count translations for this book
           db.collection('pages').countDocuments({
             book_id: bookId,
@@ -395,7 +396,7 @@ export async function POST(request: NextRequest) {
           }).then(translatedCount => {
             db.collection('books').updateOne(
               { id: bookId },
-              { $set: { pages_translated: translatedCount, updated_at: new Date() } }
+              { $set: { pages_translated: translatedCount, last_translation_at: now, updated_at: now } }
             );
           }).catch(() => {});
         }

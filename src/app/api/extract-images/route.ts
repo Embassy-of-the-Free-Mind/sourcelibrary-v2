@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import Replicate from 'replicate';
+import sharp from 'sharp';
 
 /**
  * POST /api/extract-images
@@ -185,6 +186,16 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
   // Grounding DINO prompt for detecting illustrations in historical texts
   const prompt = "illustration . diagram . woodcut . chart . map . decorative element . symbol . figure . drawing . engraving";
 
+  // Get image dimensions using sharp
+  const imageResponse = await fetch(imageUrl);
+  if (!imageResponse.ok) {
+    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+  }
+  const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+  const metadata = await sharp(imageBuffer).metadata();
+  const imgWidth = metadata.width || 1000;
+  const imgHeight = metadata.height || 1500;
+
   const output = await replicate.run(
     "adirik/grounding-dino:efd10a8ddc57ea28773327e881ce95e20cc1d734c589f7dd01d2036921ed78aa",
     {
@@ -202,16 +213,15 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
   }
 
   // Grounding DINO returns bbox as [x1, y1, x2, y2] in pixels
-  // We need to normalize to 0-1 scale
-  // The model returns normalized coordinates already (0-1)
+  // Normalize to 0-1 scale using image dimensions
   return output.detections.map(det => ({
     description: det.label,
     type: categorizeLabel(det.label),
     bbox: {
-      x: det.bbox[0],
-      y: det.bbox[1],
-      width: det.bbox[2] - det.bbox[0],
-      height: det.bbox[3] - det.bbox[1]
+      x: det.bbox[0] / imgWidth,
+      y: det.bbox[1] / imgHeight,
+      width: (det.bbox[2] - det.bbox[0]) / imgWidth,
+      height: (det.bbox[3] - det.bbox[1]) / imgHeight
     },
     confidence: det.score,
     detected_at: new Date(),

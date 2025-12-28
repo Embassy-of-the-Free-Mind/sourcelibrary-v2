@@ -21,8 +21,9 @@ async function getBooks(): Promise<Book[]> {
           pages_count: { $ifNull: ['$pages_count', 0] },
           pages_translated: { $ifNull: ['$pages_translated', 0] },
           pages_ocr: { $ifNull: ['$pages_ocr', 0] },
-          // Use updated_at as last_processed (counts are updated when pages change)
-          last_processed: { $ifNull: ['$updated_at', '$created_at'] }
+          // Track last activity timestamps
+          last_processed: { $ifNull: ['$updated_at', '$created_at'] },
+          last_translation_at: { $ifNull: ['$last_translation_at', null] }
         }
       },
       {
@@ -37,8 +38,8 @@ async function getBooks(): Promise<Book[]> {
         }
       },
       {
-        // Sort by most recently updated first, then by title
-        $sort: { last_processed: -1, title: 1 }
+        // Sort by most recent translation activity first, then by last updated, then title
+        $sort: { last_translation_at: -1, last_processed: -1, title: 1 }
       }
     ]).toArray();
 
