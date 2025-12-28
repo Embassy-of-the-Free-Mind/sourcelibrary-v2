@@ -214,20 +214,27 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
 
   // Grounding DINO returns bbox as [x1, y1, x2, y2] in pixels
   // Normalize to 0-1 scale using image dimensions
-  return output.detections.map(det => ({
-    description: det.label,
-    type: categorizeLabel(det.label),
-    bbox: {
-      x: det.bbox[0] / imgWidth,
-      y: det.bbox[1] / imgHeight,
-      width: (det.bbox[2] - det.bbox[0]) / imgWidth,
-      height: (det.bbox[3] - det.bbox[1]) / imgHeight
-    },
-    confidence: det.score,
-    detected_at: new Date(),
-    detection_source: 'vision_model' as const,
-    model: 'grounding-dino' as const,
-  }));
+  return output.detections.map(det => {
+    const rawX = det.bbox[0];
+    const rawY = det.bbox[1];
+    const rawW = det.bbox[2] - det.bbox[0];
+    const rawH = det.bbox[3] - det.bbox[1];
+
+    return {
+      description: `${det.label} (img: ${imgWidth}x${imgHeight})`,
+      type: categorizeLabel(det.label),
+      bbox: {
+        x: rawX / imgWidth,
+        y: rawY / imgHeight,
+        width: rawW / imgWidth,
+        height: rawH / imgHeight
+      },
+      confidence: det.score,
+      detected_at: new Date(),
+      detection_source: 'vision_model' as const,
+      model: 'grounding-dino' as const,
+    };
+  });
 }
 
 function categorizeLabel(label: string): string {
