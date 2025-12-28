@@ -41,35 +41,40 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: 'No pages with null IDs found' });
     }
 
-    let fixed = 0;
+    // Get unique book_ids and check which exist in one query
+    const bookIds = [...new Set(nullIdPages.map(p => p.book_id).filter(Boolean))];
+    const existingBooks = await db.collection('books').find(
+      { id: { $in: bookIds } },
+      { projection: { id: 1 } }
+    ).toArray();
+    const existingBookIds = new Set(existingBooks.map(b => b.id));
+
+    // Categorize pages
+    const toFix = nullIdPages.filter(p => p.book_id && existingBookIds.has(p.book_id));
+    const orphaned = nullIdPages.filter(p => !p.book_id || !existingBookIds.has(p.book_id));
+
+    // Bulk fix pages with valid books
+    if (toFix.length > 0) {
+      const bulkOps = toFix.map(page => ({
+        updateOne: {
+          filter: { _id: page._id },
+          update: { $set: { id: page._id.toHexString() } }
+        }
+      }));
+      await db.collection('pages').bulkWrite(bulkOps);
+    }
+
+    // Optionally delete orphans
     let deleted = 0;
-    let orphaned = 0;
-
-    for (const page of nullIdPages) {
-      // Check if book exists
-      const bookExists = page.book_id
-        ? await db.collection('books').findOne({ id: page.book_id })
-        : null;
-
-      if (!bookExists && deleteOrphans) {
-        // Delete orphaned page
-        await db.collection('pages').deleteOne({ _id: page._id });
-        deleted++;
-      } else if (!bookExists) {
-        orphaned++;
-      } else {
-        // Fix the ID
-        await db.collection('pages').updateOne(
-          { _id: page._id },
-          { $set: { id: page._id.toHexString() } }
-        );
-        fixed++;
-      }
+    if (deleteOrphans && orphaned.length > 0) {
+      const orphanIds = orphaned.map(p => p._id);
+      const result = await db.collection('pages').deleteMany({ _id: { $in: orphanIds } });
+      deleted = result.deletedCount;
     }
 
     // Retry creating the unique index
     let indexResult = 'not attempted';
-    if (fixed > 0 || deleted > 0) {
+    if (toFix.length > 0 || deleted > 0) {
       try {
         await db.collection('pages').createIndex(
           { id: 1 },
@@ -84,11 +89,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       found: nullIdPages.length,
-      fixed,
+      fixed: toFix.length,
       deleted,
-      orphaned,
+      orphaned: deleteOrphans ? 0 : orphaned.length,
       indexResult,
-      hint: orphaned > 0 ? 'Run with ?delete=true to remove orphaned pages' : undefined
+      hint: orphaned.length > 0 && !deleteOrphans ? 'Run with ?delete=true to remove orphaned pages' : undefined
     });
   } catch (error) {
     console.error('Error fixing null ID pages:', error);
