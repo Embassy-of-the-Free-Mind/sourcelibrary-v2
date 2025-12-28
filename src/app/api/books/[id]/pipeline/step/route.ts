@@ -104,9 +104,11 @@ async function createOcrJob(
   const book = await db.collection('books').findOne({ id: bookId });
   const jobId = nanoid(12);
 
+  const useBatch = config.useBatchApi !== false; // Default to batch
+
   const job: Job = {
     id: jobId,
-    type: 'batch_ocr',
+    type: useBatch ? 'batch_ocr' : 'ocr',
     status: 'pending',
     progress: {
       total: pages.length,
@@ -123,6 +125,7 @@ async function createOcrJob(
       model: config.model,
       language: config.language,
       page_ids: pages.map(p => p.id),
+      use_batch_api: useBatch,
     },
   };
 
@@ -158,9 +161,11 @@ async function createTranslateJob(
   const book = await db.collection('books').findOne({ id: bookId });
   const jobId = nanoid(12);
 
+  const useBatch = config.useBatchApi !== false; // Default to batch
+
   const job: Job = {
     id: jobId,
-    type: 'batch_translate',
+    type: useBatch ? 'batch_translate' : 'translate',
     status: 'pending',
     progress: {
       total: pages.length,
@@ -177,6 +182,7 @@ async function createTranslateJob(
       model: config.model,
       language: config.language,
       page_ids: pages.map(p => p.id),
+      use_batch_api: useBatch,
     },
   };
 

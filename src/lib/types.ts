@@ -1,7 +1,7 @@
 export type BookStatus = 'draft' | 'in_progress' | 'complete' | 'published';
 
 // Job management for long-running tasks
-export type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_split' | 'book_import' | 'generate_cropped_images' | 'pipeline_stream';
+export type JobType = 'ocr' | 'translate' | 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_split' | 'book_import' | 'generate_cropped_images' | 'pipeline_stream';
 export type JobStatus = 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
 
 export interface JobProgress {
@@ -80,6 +80,7 @@ export interface PipelineConfig {
   model: string;
   language: string;
   license: string;
+  useBatchApi?: boolean;
 }
 
 export interface PipelineState {
