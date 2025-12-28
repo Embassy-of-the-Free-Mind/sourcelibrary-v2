@@ -40,30 +40,62 @@ export async function POST(request: NextRequest) {
       overwrite?: boolean;
     } = await request.json();
 
-    // Look up pages to check for existing translations
+    // Look up pages to get OCR data and check for existing translations
     const db = await getDb();
     const pageIds = pages.map(p => p.pageId);
     const dbPages = await db.collection('pages').find({ id: { $in: pageIds } }).toArray();
     const dbPageMap = new Map(dbPages.map(p => [p.id, p]));
 
+    // Enrich pages with OCR text from database (client may not have it due to projection)
+    const enrichedPages = pages.map(page => {
+      const dbPage = dbPageMap.get(page.pageId);
+      return {
+        ...page,
+        ocrText: page.ocrText || dbPage?.ocr?.data || '',
+      };
+    });
+
     // Filter out pages that already have translations (unless overwrite mode)
-    const pagesToTranslate = overwrite
-      ? pages
-      : pages.filter(page => {
-          const dbPage = dbPageMap.get(page.pageId);
-          if (dbPage?.translation?.data && dbPage.translation.data.length > 0) {
-            console.log(`[batch-translate] Skipping page ${page.pageNumber} - already has translation`);
-            return false;
-          }
-          return true;
-        });
+    // Also filter out pages without OCR text
+    const pagesToTranslate = (overwrite ? enrichedPages : enrichedPages.filter(page => {
+      const dbPage = dbPageMap.get(page.pageId);
+      if (dbPage?.translation?.data && dbPage.translation.data.length > 0) {
+        console.log(`[batch-translate] Skipping page ${page.pageNumber} - already has translation`);
+        return false;
+      }
+      return true;
+    })).filter(page => {
+      if (!page.ocrText) {
+        console.log(`[batch-translate] Skipping page ${page.pageNumber} - no OCR text`);
+        return false;
+      }
+      return true;
+    });
 
     if (pagesToTranslate.length === 0) {
+      // Count why pages were skipped
+      const alreadyTranslated = enrichedPages.filter(p => {
+        const dbPage = dbPageMap.get(p.pageId);
+        return dbPage?.translation?.data && dbPage.translation.data.length > 0;
+      }).length;
+      const noOcr = enrichedPages.filter(p => !p.ocrText).length;
+
+      let message = 'No pages to translate: ';
+      if (noOcr > 0 && alreadyTranslated > 0) {
+        message += `${noOcr} missing OCR, ${alreadyTranslated} already translated`;
+      } else if (noOcr > 0) {
+        message += `${noOcr} pages missing OCR text`;
+      } else if (alreadyTranslated > 0) {
+        message += `${alreadyTranslated} pages already have translations`;
+      }
+
       return NextResponse.json({
         translations: {},
         processedCount: 0,
         skippedCount: pages.length,
-        message: 'All pages already have translations',
+        skippedNoOcr: noOcr,
+        skippedAlreadyTranslated: alreadyTranslated,
+        message,
         usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 },
       });
     }

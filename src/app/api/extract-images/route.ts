@@ -184,7 +184,8 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
   const replicate = new Replicate({ auth: apiToken });
 
   // Grounding DINO prompt for detecting illustrations in historical texts
-  const prompt = "illustration . diagram . woodcut . chart . map . decorative element . symbol . figure . drawing . engraving";
+  // Focused on actual book illustrations, not full-page layouts
+  const prompt = "frontispiece . woodcut . engraving . portrait . decorated initial . printer's device . coat of arms . allegorical scene";
 
   // Get image dimensions using sharp
   const imageResponse = await fetch(imageUrl);
@@ -217,27 +218,30 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
 
   // Grounding DINO returns bbox as [x1, y1, x2, y2] in pixels
   // Normalize to 0-1 scale using image dimensions
-  const detections = output.detections.map(det => {
-    const rawX = det.bbox[0];
-    const rawY = det.bbox[1];
-    const rawW = det.bbox[2] - det.bbox[0];
-    const rawH = det.bbox[3] - det.bbox[1];
+  const detections = output.detections
+    .map(det => {
+      const rawX = det.bbox[0];
+      const rawY = det.bbox[1];
+      const rawW = det.bbox[2] - det.bbox[0];
+      const rawH = det.bbox[3] - det.bbox[1];
 
-    return {
-      description: det.label,
-      type: categorizeLabel(det.label),
-      bbox: {
-        x: rawX / imgWidth,
-        y: rawY / imgHeight,
-        width: rawW / imgWidth,
-        height: rawH / imgHeight
-      },
-      confidence: det.score,
-      detected_at: new Date(),
-      detection_source: 'vision_model' as const,
-      model: 'grounding-dino' as const,
-    };
-  });
+      return {
+        description: det.label,
+        type: categorizeLabel(det.label),
+        bbox: {
+          x: rawX / imgWidth,
+          y: rawY / imgHeight,
+          width: rawW / imgWidth,
+          height: rawH / imgHeight
+        },
+        confidence: det.score,
+        detected_at: new Date(),
+        detection_source: 'vision_model' as const,
+        model: 'grounding-dino' as const,
+      };
+    })
+    // Filter out full-page detections (>70% coverage = probably false positive)
+    .filter(det => det.bbox && (det.bbox.width * det.bbox.height) < 0.7);
 
   // Remove duplicate overlapping detections (NMS)
   return deduplicateDetections(detections);
@@ -285,13 +289,16 @@ function deduplicateDetections(detections: DetectedImage[], iouThreshold = 0.5):
 
 function categorizeLabel(label: string): string {
   const lower = label.toLowerCase();
-  if (lower.includes('diagram')) return 'diagram';
-  if (lower.includes('chart')) return 'chart';
+  if (lower.includes('frontispiece')) return 'frontispiece';
+  if (lower.includes('woodcut')) return 'woodcut';
+  if (lower.includes('engraving')) return 'engraving';
+  if (lower.includes('portrait')) return 'portrait';
+  if (lower.includes('initial')) return 'decorated-initial';
+  if (lower.includes('printer') || lower.includes('device')) return 'printers-device';
+  if (lower.includes('coat') || lower.includes('arms')) return 'coat-of-arms';
+  if (lower.includes('allegori')) return 'allegorical';
   if (lower.includes('map')) return 'map';
-  if (lower.includes('woodcut') || lower.includes('engraving')) return 'woodcut';
-  if (lower.includes('symbol')) return 'symbol';
-  if (lower.includes('decorative')) return 'decorative';
-  if (lower.includes('figure') || lower.includes('drawing')) return 'illustration';
+  if (lower.includes('diagram')) return 'diagram';
   return 'illustration';
 }
 

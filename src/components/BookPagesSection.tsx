@@ -582,11 +582,18 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         const batchIds = sortedPageIds.slice(i, Math.min(i + TRANSLATION_BATCH_SIZE, sortedPageIds.length));
         const batchPages = batchIds
           .map(id => pages.find(p => p.id === id))
-          .filter((p): p is Page => p !== undefined && !!p.ocr?.data);
+          .filter((p): p is Page => p !== undefined && !!p.ocr); // Check for OCR presence (data loaded by API)
 
         if (batchPages.length === 0) {
           batchIds.forEach(id => failed.push(id));
           processedCount += batchIds.length;
+          // Update state even when skipping
+          setProcessing(prev => ({
+            ...prev,
+            currentIndex: processedCount,
+            completed: [...completed],
+            failed: [...failed],
+          }));
           continue;
         }
 
@@ -833,7 +840,15 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       }
     }
 
-    setProcessing(prev => ({ ...prev, active: false }));
+    // Final state update with all completed/failed pages
+    setProcessing(prev => ({
+      ...prev,
+      active: false,
+      completed: [...completed],
+      failed: [...failed],
+      totalCost: runningCost,
+      totalTokens: runningTokens,
+    }));
     if (completed.length > 0) router.refresh();
   };
 
