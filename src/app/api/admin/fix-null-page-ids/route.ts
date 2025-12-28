@@ -30,12 +30,14 @@ export async function POST(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const deleteOrphans = searchParams.get('delete') === 'true';
+    const limit = parseInt(searchParams.get('limit') || '50');
 
     const db = await getDb();
 
+    // Process in chunks to avoid timeout
     const nullIdPages = await db.collection('pages').find(
       { $or: [{ id: null }, { id: { $exists: false } }] }
-    ).toArray();
+    ).limit(limit).toArray();
 
     if (nullIdPages.length === 0) {
       return NextResponse.json({ message: 'No pages with null IDs found' });
@@ -87,13 +89,19 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Check if there are more to process
+    const remaining = await db.collection('pages').countDocuments(
+      { $or: [{ id: null }, { id: { $exists: false } }] }
+    );
+
     return NextResponse.json({
-      found: nullIdPages.length,
+      processed: nullIdPages.length,
       fixed: toFix.length,
       deleted,
       orphaned: deleteOrphans ? 0 : orphaned.length,
+      remaining,
       indexResult,
-      hint: orphaned.length > 0 && !deleteOrphans ? 'Run with ?delete=true to remove orphaned pages' : undefined
+      hint: remaining > 0 ? 'Run again to process more' : undefined
     });
   } catch (error) {
     console.error('Error fixing null ID pages:', error);
