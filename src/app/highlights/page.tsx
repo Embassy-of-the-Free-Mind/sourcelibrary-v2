@@ -26,10 +26,10 @@ export default function HighlightsPage() {
   const fetchHighlights = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/highlights?limit=200');
+      const response = await fetch('/api/highlights?limit=100');
       if (response.ok) {
         const data = await response.json();
-        setHighlights(data);
+        setHighlights(data.highlights || data);
       }
     } catch (error) {
       console.error('Failed to fetch highlights:', error);

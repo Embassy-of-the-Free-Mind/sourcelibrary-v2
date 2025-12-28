@@ -44,7 +44,7 @@ export default function HighlightsPanel({
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
-        setHighlights(data);
+        setHighlights(data.highlights || data);
       }
     } catch (error) {
       console.error('Failed to fetch highlights:', error);

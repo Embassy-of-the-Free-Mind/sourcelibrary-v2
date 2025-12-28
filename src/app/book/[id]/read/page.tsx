@@ -66,7 +66,8 @@ export default function ReadPage({ params }: ReadPageProps) {
       const res = await fetch(`/api/highlights?book_id=${bookId}`);
       if (res.ok) {
         const data = await res.json();
-        setHighlightCount(data.length);
+        const highlights = data.highlights || data;
+        setHighlightCount(highlights.length);
       }
     } catch (e) {
       console.error('Failed to fetch highlights:', e);

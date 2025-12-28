@@ -402,9 +402,12 @@ export interface CropData {
 }
 
 // Detected illustration/image on a page (from OCR or vision model)
+export type DetectionStatus = 'pending' | 'approved' | 'rejected';
+
 export interface DetectedImage {
+  id?: string;                  // Unique ID for this detection
   description: string;          // What the image depicts
-  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'unknown';
+  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'unknown';
   // Bounding box (0-1 normalized coordinates, for future extraction)
   bbox?: {
     x: number;      // Left edge (0-1)
@@ -415,6 +418,11 @@ export interface DetectedImage {
   extracted_url?: string;       // URL to extracted/cropped image (future)
   detected_at?: Date;
   detection_source: 'ocr_tag' | 'vision_model' | 'manual';
+  model?: 'gemini' | 'mistral' | 'grounding-dino';
+  confidence?: number;
+  status?: DetectionStatus;     // Review status: pending (default), approved, rejected
+  reviewed_at?: Date;
+  reviewed_by?: string;
 }
 
 export interface Page {

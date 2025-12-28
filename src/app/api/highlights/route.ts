@@ -23,7 +23,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const bookId = searchParams.get('book_id');
     const pageId = searchParams.get('page_id');
-    const limit = parseInt(searchParams.get('limit') || '50');
+    const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '50')));
+    const skip = Math.max(0, parseInt(searchParams.get('skip') || '0'));
 
     const db = await getDb();
 
@@ -34,10 +35,11 @@ export async function GET(request: NextRequest) {
     const highlights = await db.collection('highlights')
       .find(query)
       .sort({ created_at: -1 })
+      .skip(skip)
       .limit(limit)
       .toArray();
 
-    return NextResponse.json(highlights);
+    return NextResponse.json({ highlights, pagination: { limit, skip } });
   } catch (error) {
     console.error('Error fetching highlights:', error);
     return NextResponse.json(
@@ -60,9 +62,35 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Length validation
+    const MAX_TEXT = 2000;
+    const MAX_CONTEXT = 5000;
+    const MAX_NOTE = 1000;
+
     if (text.length < 3) {
       return NextResponse.json(
         { error: 'Highlight text must be at least 3 characters' },
+        { status: 400 }
+      );
+    }
+
+    if (text.length > MAX_TEXT) {
+      return NextResponse.json(
+        { error: `Text too long (max ${MAX_TEXT} chars)` },
+        { status: 400 }
+      );
+    }
+
+    if (context && context.length > MAX_CONTEXT) {
+      return NextResponse.json(
+        { error: `Context too long (max ${MAX_CONTEXT} chars)` },
+        { status: 400 }
+      );
+    }
+
+    if (note && note.length > MAX_NOTE) {
+      return NextResponse.json(
+        { error: `Note too long (max ${MAX_NOTE} chars)` },
         { status: 400 }
       );
     }

@@ -183,7 +183,6 @@ function TagList({ tags, color = 'stone' }: { tags: string[]; color?: 'stone' | 
 }
 
 export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelProps) {
-  console.log('PageMetadataPanel rendering for page:', page.page_number);
   const ocrMeta = extractMetadataFromText(page.ocr?.data || '');
   const translationMeta = extractMetadataFromText(page.translation?.data || '');
 
