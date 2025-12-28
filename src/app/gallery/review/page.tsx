@@ -456,7 +456,7 @@ function PageReviewCard({
       {/* Full page image with drawing */}
       <div
         ref={containerRef}
-        className="relative bg-stone-800 cursor-crosshair select-none"
+        className="relative bg-stone-800 cursor-crosshair select-none max-w-2xl mx-auto"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -465,8 +465,8 @@ function PageReviewCard({
         <Image
           src={page.imageUrl}
           alt={`Page ${page.pageNumber}`}
-          width={1200}
-          height={1800}
+          width={600}
+          height={900}
           className="w-full h-auto"
           draggable={false}
           unoptimized
