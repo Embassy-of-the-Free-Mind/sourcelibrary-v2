@@ -371,7 +371,12 @@ export default function TranslationEditor({
   const handleResetSplit = async () => {
     setResettingSplit(true);
     try {
-      await fetch(`/api/pages/${originalPageId}/reset`, { method: 'POST' });
+      const res = await fetch(`/api/pages/${originalPageId}/reset`, { method: 'POST' });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Reset failed');
+      }
 
       // Refresh the book data
       if (onRefresh) {
@@ -382,7 +387,7 @@ export default function TranslationEditor({
       window.location.href = `/book/${book.id}/split`;
     } catch (error) {
       console.error('Reset split error:', error);
-      alert('Failed to reset split. Please try again.');
+      alert(error instanceof Error ? error.message : 'Failed to reset split. Please try again.');
     } finally {
       setResettingSplit(false);
       setShowResetSplitConfirm(false);

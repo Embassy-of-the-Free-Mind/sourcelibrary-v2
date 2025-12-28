@@ -11,27 +11,39 @@ export async function POST(
     const { id: pageId } = await params;
     const db = await getDb();
 
-    // Find the original page
-    const page = await db.collection('pages').findOne({ id: pageId });
+    // Find the page (could be left or right side of split)
+    let page = await db.collection('pages').findOne({ id: pageId });
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
+    // If this is the right side (has split_from), find the original left page
+    if (page.split_from) {
+      const leftPage = await db.collection('pages').findOne({ id: page.split_from });
+      if (leftPage) {
+        page = leftPage;
+      }
+    }
+
     // Check if this page has a crop (was the left side of a split)
     if (!page.crop) {
-      return NextResponse.json({ error: 'Page is not split' }, { status: 400 });
+      return NextResponse.json({
+        error: 'Page is not split',
+        details: 'No crop data found on this page'
+      }, { status: 400 });
     }
 
     const bookId = page.book_id;
+    const originalPageId = page.id; // This is now always the left page ID
 
     // Find the sibling page (the right side that was created from this split)
-    const sibling = await db.collection('pages').findOne({ split_from: pageId });
+    const sibling = await db.collection('pages').findOne({ split_from: originalPageId });
 
     // Delete sibling and restore original in parallel
     await Promise.all([
       sibling ? db.collection('pages').deleteOne({ id: sibling.id }) : Promise.resolve(),
       db.collection('pages').updateOne(
-        { id: pageId },
+        { id: originalPageId },
         {
           $unset: { crop: '', split_from: '' },
           $set: { updated_at: new Date() }

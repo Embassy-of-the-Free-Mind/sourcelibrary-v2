@@ -2,7 +2,7 @@
  * Fix Opera Omnia page mapping error.
  * Batch import error: OCR from folios 526+ was incorrectly mapped to pages 1-39
  *
- * Run: npx tsx scripts/fix-opera-omnia.ts
+ * Run: source .env.local && npx tsx scripts/fix-opera-omnia.ts
  */
 
 import { MongoClient } from 'mongodb';
@@ -11,8 +11,13 @@ const BOOK_ID = '694fd600435f95fd0c9556d1';
 
 async function main() {
   const uri = process.env.MONGODB_URI;
+  const dbName = process.env.MONGODB_DB;
   if (!uri) {
     console.error('MONGODB_URI not set');
+    process.exit(1);
+  }
+  if (!dbName) {
+    console.error('MONGODB_DB not set');
     process.exit(1);
   }
 
@@ -20,7 +25,7 @@ async function main() {
 
   try {
     await client.connect();
-    const db = client.db();
+    const db = client.db(dbName);
 
     console.log('Fixing Opera Omnia page mapping...\n');
 

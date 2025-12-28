@@ -2,6 +2,56 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 /**
+ * Validate batch results for page mapping issues.
+ * Returns { valid: true } or { valid: false, errors: string[], mismatches: number }
+ */
+function validatePageMapping(
+  results: Record<string, string>,
+  options: { maxDelta?: number; skipValidation?: boolean } = {}
+): { valid: boolean; errors?: string[]; mismatches?: number } {
+  const { maxDelta = 10, skipValidation = false } = options;
+
+  if (skipValidation) {
+    return { valid: true };
+  }
+
+  const errors: string[] = [];
+  let mismatchCount = 0;
+
+  for (const [key, text] of Object.entries(results)) {
+    // Parse key like "ocr_0001-0010"
+    const keyMatch = key.match(/(?:ocr|trans)_(\d+)-(\d+)/);
+    if (!keyMatch) continue;
+
+    const startPage = parseInt(keyMatch[1], 10);
+
+    // Look for folio markers in the text
+    const folioMatch = text.match(/\[\[page number:\s*(\d+)\]\]/);
+    if (folioMatch) {
+      const detectedFolio = parseInt(folioMatch[1], 10);
+      const delta = Math.abs(detectedFolio - startPage);
+
+      if (delta > maxDelta) {
+        mismatchCount++;
+        if (errors.length < 3) {
+          errors.push(`Key ${key}: target page ${startPage}, detected folio ${detectedFolio} (delta: ${delta})`);
+        }
+      }
+    }
+  }
+
+  if (mismatchCount > 0) {
+    return {
+      valid: false,
+      errors: [`Found ${mismatchCount} page mapping mismatches`, ...errors],
+      mismatches: mismatchCount
+    };
+  }
+
+  return { valid: true };
+}
+
+/**
  * Import batch OCR/translation results into a book's pages.
  *
  * POST /api/books/[id]/import-batch
@@ -12,7 +62,8 @@ import { getDb } from '@/lib/mongodb';
  *     ...
  *   },
  *   model?: string,
- *   language?: string
+ *   language?: string,
+ *   skipValidation?: boolean  // Set to true to bypass page mapping validation
  * }
  *
  * The results keys are in format "ocr_XXXX-YYYY" or "trans_XXXX-YYYY"
@@ -30,12 +81,14 @@ export async function POST(
       type,
       results,
       model = 'gemini-3-flash-preview',
-      language = 'Latin'
+      language = 'Latin',
+      skipValidation = false
     }: {
       type: 'ocr' | 'translation';
       results: Record<string, string>;
       model?: string;
       language?: string;
+      skipValidation?: boolean;
     } = body;
 
     if (!type || !results) {
@@ -48,6 +101,21 @@ export async function POST(
     if (type !== 'ocr' && type !== 'translation') {
       return NextResponse.json(
         { error: 'type must be "ocr" or "translation"' },
+        { status: 400 }
+      );
+    }
+
+    // Validate page mapping before importing
+    const validation = validatePageMapping(results, { skipValidation });
+    if (!validation.valid) {
+      console.warn(`[IMPORT-BATCH] Rejected import for ${bookId}: ${validation.errors?.join(', ')}`);
+      return NextResponse.json(
+        {
+          error: 'Page mapping validation failed',
+          details: validation.errors,
+          mismatches: validation.mismatches,
+          hint: 'Set skipValidation: true to bypass this check'
+        },
         { status: 400 }
       );
     }
