@@ -196,14 +196,17 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
   const imgWidth = metadata.width || 1000;
   const imgHeight = metadata.height || 1500;
 
+  // Convert to base64 for Replicate
+  const base64Image = `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
+
   const output = await replicate.run(
     "adirik/grounding-dino:efd10a8ddc57ea28773327e881ce95e20cc1d734c589f7dd01d2036921ed78aa",
     {
       input: {
-        image: imageUrl,
+        image: base64Image,
         query: prompt,
-        box_threshold: 0.25,
-        text_threshold: 0.25
+        box_threshold: 0.3,
+        text_threshold: 0.3
       }
     }
   ) as { detections: Array<{ bbox: number[]; label: string; score: number }> };
