@@ -65,6 +65,46 @@ Answer:`;
 const STORAGE_KEY_EXPLAIN = 'pageAssistant_explainPrompt';
 const STORAGE_KEY_ASK = 'pageAssistant_askPrompt';
 
+// AI Personas for Ask mode
+interface AskPersona {
+  id: string;
+  name: string;
+  icon: string;
+  description: string;
+  systemPrompt: string;
+}
+
+const ASK_PERSONAS: AskPersona[] = [
+  {
+    id: 'scholar',
+    name: 'Modern Scholar',
+    icon: '🎓',
+    description: 'Academic perspective with contemporary research',
+    systemPrompt: `You are a modern academic scholar helping a reader understand this historical text. Draw on contemporary scholarship and research when relevant. Be objective, cite historical context, and explain how modern historians interpret these ideas. If claims are outdated or debunked, say so diplomatically.`,
+  },
+  {
+    id: 'traditionalist',
+    name: 'Sympathetic Reader',
+    icon: '📖',
+    description: 'Interprets through the original worldview',
+    systemPrompt: `You are a sympathetic guide who interprets this text through its original worldview. Help the reader understand what these ideas meant to people of that era. Take the author's claims seriously and explain the internal logic, even if modern science disagrees. Be open to esoteric, alchemical, or spiritual interpretations.`,
+  },
+  {
+    id: 'skeptic',
+    name: 'Critical Analyst',
+    icon: '🔍',
+    description: 'Questions claims, spots logical issues',
+    systemPrompt: `You are a critical analyst who helps readers think carefully about this text. Question bold claims, identify logical gaps, note when evidence is lacking, and highlight assumptions the author makes. Be respectful but intellectually rigorous. Help the reader develop their own critical reading skills.`,
+  },
+  {
+    id: 'explorer',
+    name: 'Curious Explorer',
+    icon: '🌟',
+    description: 'Draws surprising connections, speculative',
+    systemPrompt: `You are a curious explorer who loves finding unexpected connections. Draw parallels to other traditions, modern ideas, or surprising contexts. Be speculative and imaginative while noting when you're going beyond what the text says. Make the text come alive by connecting it to broader human questions.`,
+  },
+];
+
 // Type icons/colors
 const TYPE_STYLES: Record<string, { icon: string; color: string }> = {
   word: { icon: 'Aa', color: 'var(--accent-rust)' },
@@ -87,6 +127,7 @@ export default function PageAssistant({
   const [explanation, setExplanation] = useState<string | null>(null);
   const [explainItems, setExplainItems] = useState<ExplainItem[]>([]);
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
+  const [selectedPersona, setSelectedPersona] = useState<AskPersona | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -132,6 +173,7 @@ export default function PageAssistant({
       setExplanation(null);
       setExplainItems([]);
       setSelectedTerm(null);
+      setSelectedPersona(null);
       setMessages([]);
       setInput('');
       setError(null);
@@ -308,7 +350,7 @@ export default function PageAssistant({
   };
 
   const handleAsk = async () => {
-    if (!input.trim()) return;
+    if (!input.trim() || !selectedPersona) return;
 
     const question = input.trim();
     setInput('');
@@ -319,6 +361,20 @@ export default function PageAssistant({
     setError(null);
 
     try {
+      // Build prompt with persona's system prompt
+      const personaPrompt = `${selectedPersona.systemPrompt}
+
+A reader is studying page {page_number} from {book_context}.
+
+Here is the text from this page:
+---
+{page_text}
+---
+
+{conversation_history}The reader asks: "{question}"
+
+Respond in character, keeping your answers focused and conversational (2-3 paragraphs max unless more detail is needed).`;
+
       const res = await fetch(`/api/pages/${page.id}/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -329,7 +385,7 @@ export default function PageAssistant({
           bookTitle: book.display_title || book.title,
           bookAuthor: book.author,
           pageNumber: page.page_number,
-          customPrompt: askPrompt !== DEFAULT_ASK_PROMPT ? askPrompt : undefined,
+          customPrompt: askPrompt !== DEFAULT_ASK_PROMPT ? askPrompt : personaPrompt,
         }),
       });
 
@@ -603,14 +659,17 @@ export default function PageAssistant({
           }}
         >
           <div className="flex items-center gap-2">
-            {(mode === 'ask' && messages.length > 0) || selectedTerm ? (
+            {(mode === 'ask' && (messages.length > 0 || selectedPersona)) || selectedTerm ? (
               <button
                 onClick={() => {
                   if (selectedTerm) {
                     goBackToItems();
-                  } else {
-                    setMode('explain');
+                  } else if (messages.length > 0) {
+                    // Clear messages but keep persona
                     setMessages([]);
+                  } else if (selectedPersona) {
+                    // Go back to persona selection
+                    setSelectedPersona(null);
                   }
                 }}
                 className="p-1.5 -ml-1 rounded-lg hover:bg-white/50 transition-colors"
@@ -621,6 +680,8 @@ export default function PageAssistant({
             ) : null}
             {mode === 'explain' ? (
               <Sparkles className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+            ) : selectedPersona ? (
+              <span className="text-lg">{selectedPersona.icon}</span>
             ) : (
               <MessageCircle className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
             )}
@@ -633,7 +694,9 @@ export default function PageAssistant({
                 ? selectedTerm
                   ? `Explaining: ${selectedTerm}`
                   : 'What would you like explained?'
-                : 'Ask About This Page'}
+                : selectedPersona
+                  ? selectedPersona.name
+                  : 'Choose your guide'}
             </h2>
           </div>
           <div className="flex items-center gap-1">
@@ -838,13 +901,52 @@ export default function PageAssistant({
           ) : (
             // Ask mode content
             <div className="space-y-4">
-              {messages.length === 0 && !loading && (
-                <div className="text-center py-4">
-                  <p className="text-sm mb-2" style={{ color: 'var(--text-muted)' }}>
-                    Ask anything about this page
+              {/* Persona selection - show if no persona selected */}
+              {!selectedPersona && !loading && (
+                <div className="space-y-3">
+                  <p className="text-sm text-center mb-4" style={{ color: 'var(--text-muted)' }}>
+                    Choose your guide
                   </p>
-                  <div className="flex flex-wrap justify-center gap-2 mt-4">
-                    {['What is this about?', 'Who is mentioned here?', 'Explain the main idea'].map((q) => (
+                  {ASK_PERSONAS.map((persona) => (
+                    <button
+                      key={persona.id}
+                      onClick={() => setSelectedPersona(persona)}
+                      className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all hover:bg-violet-50"
+                      style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
+                    >
+                      <span
+                        className="w-10 h-10 rounded-lg flex items-center justify-center text-xl flex-shrink-0"
+                        style={{ background: 'rgba(124, 93, 181, 0.1)' }}
+                      >
+                        {persona.icon}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>
+                          {persona.name}
+                        </p>
+                        <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                          {persona.description}
+                        </p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Chat interface - show after persona selected */}
+              {selectedPersona && messages.length === 0 && !loading && (
+                <div className="text-center py-4">
+                  <div className="flex items-center justify-center gap-2 mb-3">
+                    <span className="text-2xl">{selectedPersona.icon}</span>
+                    <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
+                      {selectedPersona.name}
+                    </span>
+                  </div>
+                  <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+                    {selectedPersona.description}
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {['What is this about?', 'What should I notice?', 'Is this credible?'].map((q) => (
                       <button
                         key={q}
                         onClick={() => {
@@ -934,7 +1036,7 @@ export default function PageAssistant({
                 Ask More
               </button>
             </div>
-          ) : (
+          ) : selectedPersona ? (
             <div className="flex gap-2">
               <input
                 ref={inputRef}
@@ -961,6 +1063,14 @@ export default function PageAssistant({
                 <Send className="w-5 h-5" />
               </button>
             </div>
+          ) : (
+            <button
+              onClick={onClose}
+              className="w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-stone-200"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              Close
+            </button>
           )}
         </div>
 
