@@ -23,13 +23,20 @@ import {
   RotateCcw,
   Scissors,
   Sparkles,
-  MessageCircle
+  MessageCircle,
+  Share2,
+  Highlighter,
+  StickyNote
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
 import ImageWithMagnifier from './ImageWithMagnifier';
 import PageMetadataPanel from './PageMetadataPanel';
 import PageAssistant from './PageAssistant';
+import HighlightsPanel from './HighlightsPanel';
+import AnnotationPanel from './AnnotationPanel';
+import { BookShare } from './ShareButton';
+import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 
@@ -418,6 +425,10 @@ export default function TranslationEditor({
   const [showTranslationPanel, setShowTranslationPanel] = useState(true);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
 
+  // Highlights and Annotations panels
+  const [showHighlights, setShowHighlights] = useState(false);
+  const [showAnnotations, setShowAnnotations] = useState(false);
+
   // Swipe navigation state
   const touchStartX = useRef<number>(0);
   const touchStartY = useRef<number>(0);
@@ -734,6 +745,44 @@ export default function TranslationEditor({
               </button>
             )}
 
+            {/* Share, Highlights, Annotations */}
+            <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+              <BookShare
+                title={book.display_title || book.title}
+                author={book.author}
+                year={book.published}
+                bookId={book.id}
+                doi={book.doi}
+                className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100"
+              />
+              <button
+                onClick={() => setShowHighlights(true)}
+                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 relative"
+                style={{ color: 'var(--text-muted)' }}
+                title="View highlights"
+              >
+                <Highlighter className="w-4 h-4" />
+                {highlightCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] bg-amber-500 text-white rounded-full flex items-center justify-center">
+                    {highlightCount}
+                  </span>
+                )}
+              </button>
+              <button
+                onClick={() => setShowAnnotations(true)}
+                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 relative"
+                style={{ color: 'var(--text-muted)' }}
+                title="View annotations"
+              >
+                <StickyNote className="w-4 h-4" />
+                {annotationCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] bg-violet-500 text-white rounded-full flex items-center justify-center">
+                    {annotationCount}
+                  </span>
+                )}
+              </button>
+            </div>
+
             <button
               onClick={() => setMode('edit')}
               className="flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0"
@@ -1032,6 +1081,24 @@ export default function TranslationEditor({
             onClose={() => setShowPageMetadata(false)}
           />
         )}
+
+        {/* Highlights Panel */}
+        <HighlightsPanel
+          bookId={book.id}
+          isOpen={showHighlights}
+          onClose={() => setShowHighlights(false)}
+        />
+
+        {/* Annotations Panel */}
+        <AnnotationPanel
+          bookId={book.id}
+          pageId={page.id}
+          pageNumber={page.page_number}
+          bookTitle={book.display_title || book.title}
+          bookAuthor={book.author}
+          isOpen={showAnnotations}
+          onClose={() => setShowAnnotations(false)}
+        />
 
         {/* Reset Split Confirmation Modal (read mode) */}
         {showResetSplitConfirm && (

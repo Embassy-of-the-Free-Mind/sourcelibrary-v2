@@ -48,11 +48,6 @@ export function BookLoader({ label = 'Loading...', className }: BookLoaderProps)
             strokeWidth="0.5"
             className="text-stone-500"
           />
-          {/* Center dot */}
-          <circle
-            cx="12" cy="12" r="1"
-            className="fill-stone-700"
-          />
         </svg>
       </div>
 
