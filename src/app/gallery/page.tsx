@@ -102,13 +102,21 @@ export default function GalleryPage() {
                 </p>
               </div>
             </div>
-            <Link
-              href="/"
-              className="text-stone-400 hover:text-white transition-colors flex items-center gap-2"
-            >
-              <BookOpen className="w-4 h-4" />
-              Back to Library
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/gallery/review"
+                className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-2"
+              >
+                Review Detections
+              </Link>
+              <Link
+                href="/"
+                className="text-stone-400 hover:text-white transition-colors flex items-center gap-2"
+              >
+                <BookOpen className="w-4 h-4" />
+                Back to Library
+              </Link>
+            </div>
           </div>
         </div>
       </header>
