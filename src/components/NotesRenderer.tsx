@@ -234,22 +234,25 @@ function preprocessCentering(text: string): string {
 }
 
 // Process note tags in text string, returning React elements
+// Terms are ALWAYS shown (vocabulary). Images are NEVER shown in read mode.
 function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
+  // Always remove image descriptions in read mode (only shown in edit mode)
+  let processed = text.replace(/\[\[image:\s*[\s\S]*?\]\]/gi, '');
+
   if (!showNotes) {
-    // Remove all note tags when hidden
-    const cleaned = text
+    // Remove editorial note tags when hidden, but KEEP terms
+    processed = processed
       .replace(/\[\[(notes?):\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[term:\s*[\s\S]*?\]\]/gi, '')
       .replace(/\[\[margin:\s*[\s\S]*?\]\]/gi, '')
       .replace(/\[\[gloss:\s*[\s\S]*?\]\]/gi, '')
       .replace(/\[\[insert:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[unclear:\s*[\s\S]*?\]\]/gi, '')
-      .replace(/\[\[image:\s*[\s\S]*?\]\]/gi, '');
-    return [cleaned];
+      .replace(/\[\[unclear:\s*[\s\S]*?\]\]/gi, '');
+    // Process remaining text to render terms
+    return processNoteTags(processed, true);
   }
 
-  // Pattern to match all note types
-  const notePattern = /\[\[(notes?|term|margin|gloss|insert|unclear|image):\s*([\s\S]*?)\]\]/gi;
+  // Pattern to match all note types (image is handled separately above)
+  const notePattern = /\[\[(notes?|term|margin|gloss|insert|unclear):\s*([\s\S]*?)\]\]/gi;
   const parts: ReactNode[] = [];
   let lastIndex = 0;
   let match;
@@ -310,15 +313,7 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
           </span>
         );
         break;
-      case 'image':
-        parts.push(
-          <span key={key++} className="block my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
-            <span className="text-amber-700 font-medium not-italic">[Image: </span>
-            {content}
-            <span className="text-amber-700 font-medium not-italic">]</span>
-          </span>
-        );
-        break;
+      // Note: 'image' is stripped out before this function runs - only shown in edit mode
     }
 
     lastIndex = match.index + match[0].length;
@@ -602,18 +597,14 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
               {children}?
             </span>
           ) : null,
-          term: ({ children }: any) => showNotes ? (
+          // Terms are ALWAYS shown (they're vocabulary, not editorial notes)
+          term: ({ children }: any) => (
             <span className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
               <em>{children}</em>
             </span>
-          ) : null,
-          'image-desc': ({ children }: any) => showNotes ? (
-            <span className="block my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
-              <span className="text-amber-700 font-medium not-italic">[Image: </span>
-              {children}
-              <span className="text-amber-700 font-medium not-italic">]</span>
-            </span>
-          ) : null,
+          ),
+          // Image descriptions are NEVER shown in read mode (only in edit mode)
+          'image-desc': () => null,
         } as any}
       >
         {processedText}

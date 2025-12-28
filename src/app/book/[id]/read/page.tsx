@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List, Info, X, FileText } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List, Info, X } from 'lucide-react';
 import { Book, Page } from '@/lib/types';
 import HighlightSelection from '@/components/HighlightSelection';
 import HighlightsPanel from '@/components/HighlightsPanel';
@@ -482,10 +482,10 @@ export default function ReadPage({ params }: ReadPageProps) {
                             </Link>
                             <button
                               onClick={() => setMetadataPage(page)}
-                              className="p-1 hover:bg-stone-100 rounded transition-colors"
+                              className="p-1 hover:bg-stone-100 rounded transition-colors text-stone-400 hover:text-stone-600"
                               title="View page metadata"
                             >
-                              <FileText className="w-3 h-3" />
+                              <Info className="w-4 h-4" />
                             </button>
                           </div>
                           <div className="flex-1 h-px bg-stone-200" />
