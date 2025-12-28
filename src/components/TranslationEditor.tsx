@@ -878,7 +878,10 @@ export default function TranslationEditor({
                           {showNotes ? 'Notes' : 'Notes Off'}
                         </button>
                         <button
-                          onClick={() => setShowPageMetadata(true)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowPageMetadata(true);
+                          }}
                           className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors bg-stone-100 hover:bg-stone-200"
                           style={{ color: 'var(--text-muted)' }}
                           title="View page metadata (models, timestamps, etc.)"

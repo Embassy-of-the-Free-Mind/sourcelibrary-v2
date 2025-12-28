@@ -481,7 +481,11 @@ export default function ReadPage({ params }: ReadPageProps) {
                               Page {page.page_number}
                             </Link>
                             <button
-                              onClick={() => setMetadataPage(page)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                setMetadataPage(page);
+                              }}
                               className="p-1 hover:bg-stone-100 rounded transition-colors text-stone-400 hover:text-stone-600"
                               title="View page metadata"
                             >
@@ -495,7 +499,7 @@ export default function ReadPage({ params }: ReadPageProps) {
                           key={`translation-${page.id}-${showNotes}`}
                           text={page.translation?.data || ''}
                           showNotes={showNotes}
-                          showMetadata={showNotes}
+                          showMetadata={false}
                         />
                       </div>
                     </HighlightSelection>
