@@ -880,6 +880,7 @@ export default function TranslationEditor({
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
+                            console.log('Info button clicked, setting showPageMetadata to true');
                             setShowPageMetadata(true);
                           }}
                           className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors bg-stone-100 hover:bg-stone-200"
@@ -1428,7 +1429,7 @@ export default function TranslationEditor({
       )}
 
       {/* Page Metadata Panel */}
-      {showPageMetadata && page && (
+      {showPageMetadata && (
         <PageMetadataPanel
           page={page}
           onClose={() => setShowPageMetadata(false)}
