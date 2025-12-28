@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import Replicate from 'replicate';
 
 /**
  * POST /api/extract-images
  *
- * Run Gemini image extraction on pages with illustrations.
- * Body: { limit?: number, bookId?: string, model?: 'gemini' | 'mistral' }
+ * Run image extraction on pages with illustrations.
+ * Body: { limit?: number, bookId?: string, model?: 'gemini' | 'mistral' | 'grounding-dino' }
  */
 
 const EXTRACTION_PROMPT = `You are analyzing a historical book page scan. Your task is to identify and PRECISELY locate all illustrations, diagrams, woodcuts, charts, maps, or decorative elements.
@@ -38,7 +39,7 @@ interface DetectedImage {
   confidence?: number;
   detected_at: Date;
   detection_source: 'vision_model';
-  model: 'gemini' | 'mistral';
+  model: 'gemini' | 'mistral' | 'grounding-dino';
 }
 
 async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
@@ -173,15 +174,77 @@ async function extractWithMistral(imageUrl: string): Promise<DetectedImage[]> {
   }));
 }
 
+async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage[]> {
+  const apiToken = process.env.REPLICATE_API_TOKEN;
+  if (!apiToken) {
+    throw new Error('REPLICATE_API_TOKEN not set');
+  }
+
+  const replicate = new Replicate({ auth: apiToken });
+
+  // Grounding DINO prompt for detecting illustrations in historical texts
+  const prompt = "illustration . diagram . woodcut . chart . map . decorative element . symbol . figure . drawing . engraving";
+
+  const output = await replicate.run(
+    "adirik/grounding-dino:efd10a8ddc57ea28773327e881ce95e20cc1d734c589f7dd01d2036921ed78aa",
+    {
+      input: {
+        image: imageUrl,
+        query: prompt,
+        box_threshold: 0.25,
+        text_threshold: 0.25
+      }
+    }
+  ) as { detections: Array<{ bbox: number[]; label: string; score: number }> };
+
+  if (!output?.detections?.length) {
+    return [];
+  }
+
+  // Grounding DINO returns bbox as [x1, y1, x2, y2] in pixels
+  // We need to normalize to 0-1 scale
+  // The model returns normalized coordinates already (0-1)
+  return output.detections.map(det => ({
+    description: det.label,
+    type: categorizeLabel(det.label),
+    bbox: {
+      x: det.bbox[0],
+      y: det.bbox[1],
+      width: det.bbox[2] - det.bbox[0],
+      height: det.bbox[3] - det.bbox[1]
+    },
+    confidence: det.score,
+    detected_at: new Date(),
+    detection_source: 'vision_model' as const,
+    model: 'grounding-dino' as const,
+  }));
+}
+
+function categorizeLabel(label: string): string {
+  const lower = label.toLowerCase();
+  if (lower.includes('diagram')) return 'diagram';
+  if (lower.includes('chart')) return 'chart';
+  if (lower.includes('map')) return 'map';
+  if (lower.includes('woodcut') || lower.includes('engraving')) return 'woodcut';
+  if (lower.includes('symbol')) return 'symbol';
+  if (lower.includes('decorative')) return 'decorative';
+  if (lower.includes('figure') || lower.includes('drawing')) return 'illustration';
+  return 'illustration';
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const limit = Math.min(body.limit || 5, 20); // Max 20 pages
     const bookId = body.bookId;
     const dryRun = body.dryRun || false;
-    const model: 'gemini' | 'mistral' = body.model || 'gemini';
+    const model: 'gemini' | 'mistral' | 'grounding-dino' = body.model || 'gemini';
 
-    const extractFn = model === 'mistral' ? extractWithMistral : extractWithGemini;
+    const extractFn = model === 'mistral'
+      ? extractWithMistral
+      : model === 'grounding-dino'
+        ? extractWithGroundingDino
+        : extractWithGemini;
 
     const db = await getDb();
 

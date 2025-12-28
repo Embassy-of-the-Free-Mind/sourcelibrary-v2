@@ -24,7 +24,7 @@ interface GalleryItem {
   type?: string;
   bbox?: BBox;
   confidence?: number;
-  model?: 'gemini' | 'mistral';
+  model?: 'gemini' | 'mistral' | 'grounding-dino';
 }
 
 interface GalleryResponse {
@@ -54,7 +54,7 @@ export default function GalleryPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [verifiedOnly, setVerifiedOnly] = useState(true);
-  const [selectedModel, setSelectedModel] = useState<'gemini' | 'mistral' | ''>('');
+  const [selectedModel, setSelectedModel] = useState<'gemini' | 'mistral' | 'grounding-dino' | ''>('');
   const [page, setPage] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const limit = 24;
@@ -175,6 +175,16 @@ export default function GalleryPage() {
                 }`}
               >
                 Mistral
+              </button>
+              <button
+                onClick={() => { setSelectedModel('grounding-dino'); setPage(0); }}
+                className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                  selectedModel === 'grounding-dino'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
+                }`}
+              >
+                Grounding DINO
               </button>
             </div>
           )}
@@ -343,9 +353,10 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           {/* Model badge */}
           {item.model && (
             <span className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs text-white ${
-              item.model === 'gemini' ? 'bg-blue-600/80' : 'bg-orange-600/80'
+              item.model === 'gemini' ? 'bg-blue-600/80' :
+              item.model === 'grounding-dino' ? 'bg-green-600/80' : 'bg-orange-600/80'
             }`}>
-              {item.model}
+              {item.model === 'grounding-dino' ? 'DINO' : item.model}
             </span>
           )}
         </div>

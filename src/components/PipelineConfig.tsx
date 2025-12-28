@@ -38,10 +38,11 @@ export default function PipelineConfigForm({
   const [model, setModel] = useState(DEFAULT_MODEL);
   const [language, setLanguage] = useState(initialLanguage);
   const [license, setLicense] = useState('CC0-1.0');
+  const [useBatchApi, setUseBatchApi] = useState(true); // Default to batch for 50% savings
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onStart({ model, language, license });
+    onStart({ model, language, license, useBatchApi });
   };
 
   return (
@@ -105,6 +106,44 @@ export default function PipelineConfigForm({
               </option>
             ))}
           </select>
+        </div>
+      </div>
+
+      {/* Processing Mode */}
+      <div className="flex items-center gap-4 p-4 rounded-lg bg-stone-50 border border-stone-200">
+        <div className="flex-1">
+          <div className="font-medium text-stone-700">Processing Mode</div>
+          <div className="text-sm text-stone-500">
+            {useBatchApi
+              ? 'Batch API: 50% cheaper, results in 2-24 hours'
+              : 'Realtime: Instant results, full price'}
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setUseBatchApi(false)}
+            disabled={disabled}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              !useBatchApi
+                ? 'bg-amber-600 text-white'
+                : 'bg-white text-stone-600 border border-stone-300 hover:bg-stone-50'
+            } disabled:opacity-50`}
+          >
+            Realtime
+          </button>
+          <button
+            type="button"
+            onClick={() => setUseBatchApi(true)}
+            disabled={disabled}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              useBatchApi
+                ? 'bg-green-600 text-white'
+                : 'bg-white text-stone-600 border border-stone-300 hover:bg-stone-50'
+            } disabled:opacity-50`}
+          >
+            Batch (50% off)
+          </button>
         </div>
       </div>
 

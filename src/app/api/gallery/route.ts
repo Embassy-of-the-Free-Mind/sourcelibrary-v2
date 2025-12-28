@@ -7,7 +7,7 @@ interface DetectedImage {
   bbox?: { x: number; y: number; width: number; height: number };
   confidence?: number;
   detection_source?: string;
-  model?: 'gemini' | 'mistral';
+  model?: 'gemini' | 'mistral' | 'grounding-dino';
 }
 
 /**
@@ -208,7 +208,7 @@ export async function GET(request: NextRequest) {
       type?: string;
       bbox?: { x: number; y: number; width: number; height: number };
       confidence?: number;
-      model?: 'gemini' | 'mistral';
+      model?: 'gemini' | 'mistral' | 'grounding-dino';
     }> = [];
 
     for (const page of pages) {
