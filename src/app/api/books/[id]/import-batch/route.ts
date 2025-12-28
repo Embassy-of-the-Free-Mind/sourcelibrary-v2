@@ -3,20 +3,27 @@ import { getDb } from '@/lib/mongodb';
 
 /**
  * Validate batch results for page mapping issues.
- * Returns { valid: true } or { valid: false, errors: string[], mismatches: number }
+ * Checks for:
+ * 1. Multiple folio markers in single batch result (merged content)
+ * 2. Folio sequence breaks between consecutive batches
+ *
+ * Returns { valid: true } or { valid: false, errors: string[], issues: number }
  */
 function validatePageMapping(
   results: Record<string, string>,
-  options: { maxDelta?: number; skipValidation?: boolean } = {}
-): { valid: boolean; errors?: string[]; mismatches?: number } {
-  const { maxDelta = 10, skipValidation = false } = options;
+  options: { skipValidation?: boolean } = {}
+): { valid: boolean; errors?: string[]; issues?: number } {
+  const { skipValidation = false } = options;
 
   if (skipValidation) {
     return { valid: true };
   }
 
   const errors: string[] = [];
-  let mismatchCount = 0;
+  let issueCount = 0;
+
+  // Collect folio info from each batch
+  const batchFolios: { key: string; startPage: number; folios: number[] }[] = [];
 
   for (const [key, text] of Object.entries(results)) {
     // Parse key like "ocr_0001-0010"
@@ -25,26 +32,49 @@ function validatePageMapping(
 
     const startPage = parseInt(keyMatch[1], 10);
 
-    // Look for folio markers in the text
-    const folioMatch = text.match(/\[\[page number:\s*(\d+)\]\]/);
-    if (folioMatch) {
-      const detectedFolio = parseInt(folioMatch[1], 10);
-      const delta = Math.abs(detectedFolio - startPage);
+    // Find ALL folio markers in this batch
+    const folioMatches = [...text.matchAll(/\[\[page number:\s*(\d+)\]\]/g)];
+    const folios = folioMatches.map(m => parseInt(m[1], 10));
 
-      if (delta > maxDelta) {
-        mismatchCount++;
+    if (folios.length > 0) {
+      batchFolios.push({ key, startPage, folios });
+
+      // Check for multiple distinct folios (indicates merged content)
+      const uniqueFolios = [...new Set(folios)];
+      if (uniqueFolios.length > 3) {
+        issueCount++;
         if (errors.length < 3) {
-          errors.push(`Key ${key}: target page ${startPage}, detected folio ${detectedFolio} (delta: ${delta})`);
+          errors.push(`Key ${key}: contains ${uniqueFolios.length} different page numbers (merged content?)`);
         }
       }
     }
   }
 
-  if (mismatchCount > 0) {
+  // Check folio sequence consistency across batches
+  batchFolios.sort((a, b) => a.startPage - b.startPage);
+
+  for (let i = 1; i < batchFolios.length; i++) {
+    const prev = batchFolios[i - 1];
+    const curr = batchFolios[i];
+
+    // First folio of current batch should be greater than last folio of previous
+    const prevLastFolio = Math.max(...prev.folios);
+    const currFirstFolio = Math.min(...curr.folios);
+
+    // If current folio is less than previous, the sequence is broken
+    if (currFirstFolio < prevLastFolio - 5) {
+      issueCount++;
+      if (errors.length < 3) {
+        errors.push(`Sequence break: ${prev.key} ends at folio ${prevLastFolio}, ${curr.key} starts at folio ${currFirstFolio}`);
+      }
+    }
+  }
+
+  if (issueCount > 0) {
     return {
       valid: false,
-      errors: [`Found ${mismatchCount} page mapping mismatches`, ...errors],
-      mismatches: mismatchCount
+      errors: [`Found ${issueCount} page mapping issues`, ...errors],
+      issues: issueCount
     };
   }
 
@@ -113,7 +143,7 @@ export async function POST(
         {
           error: 'Page mapping validation failed',
           details: validation.errors,
-          mismatches: validation.mismatches,
+          issues: validation.issues,
           hint: 'Set skipValidation: true to bypass this check'
         },
         { status: 400 }
