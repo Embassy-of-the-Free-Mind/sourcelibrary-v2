@@ -35,6 +35,7 @@ import PageMetadataPanel from './PageMetadataPanel';
 import PageAssistant from './PageAssistant';
 import HighlightsPanel from './HighlightsPanel';
 import AnnotationPanel from './AnnotationPanel';
+import HighlightSelection from './HighlightSelection';
 import { BookShare } from './ShareButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
@@ -757,29 +758,19 @@ export default function TranslationEditor({
               />
               <button
                 onClick={() => setShowHighlights(true)}
-                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 relative"
+                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
                 style={{ color: 'var(--text-muted)' }}
                 title="View highlights"
               >
                 <Highlighter className="w-4 h-4" />
-                {highlightCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] bg-amber-500 text-white rounded-full flex items-center justify-center">
-                    {highlightCount}
-                  </span>
-                )}
               </button>
               <button
                 onClick={() => setShowAnnotations(true)}
-                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 relative"
+                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
                 style={{ color: 'var(--text-muted)' }}
                 title="View annotations"
               >
                 <StickyNote className="w-4 h-4" />
-                {annotationCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-4 h-4 text-[10px] bg-violet-500 text-white rounded-full flex items-center justify-center">
-                    {annotationCount}
-                  </span>
-                )}
               </button>
             </div>
 
@@ -956,7 +947,17 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {translationText ? (
-                      <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} />
+                      <HighlightSelection
+                        bookId={book.id}
+                        pageId={page.id}
+                        pageNumber={page.page_number}
+                        bookTitle={book.display_title || book.title}
+                        bookAuthor={book.author}
+                        bookYear={book.published}
+                        doi={book.doi}
+                      >
+                        <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} />
+                      </HighlightSelection>
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
