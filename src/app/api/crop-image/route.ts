@@ -40,14 +40,27 @@ export async function GET(request: NextRequest) {
     const imgWidth = metadata.width || 1;
     const imgHeight = metadata.height || 1;
 
+    // Detect if values are pixels (>1) or normalized (0-1)
+    // If any value > 1, treat all as pixels; otherwise treat as normalized
+    const isPixels = x > 1 || y > 1 || w > 1 || h > 1;
+
+    let normX = x, normY = y, normW = w, normH = h;
+    if (isPixels) {
+      // Convert pixels to normalized
+      normX = x / imgWidth;
+      normY = y / imgHeight;
+      normW = w / imgWidth;
+      normH = h / imgHeight;
+    }
+
     // Apply padding and clamp to valid range
     const padX = padding * imgWidth;
     const padY = padding * imgHeight;
 
-    const left = Math.max(0, Math.floor(x * imgWidth - padX));
-    const top = Math.max(0, Math.floor(y * imgHeight - padY));
-    const width = Math.min(imgWidth - left, Math.ceil(w * imgWidth + padX * 2));
-    const height = Math.min(imgHeight - top, Math.ceil(h * imgHeight + padY * 2));
+    const left = Math.max(0, Math.floor(normX * imgWidth - padX));
+    const top = Math.max(0, Math.floor(normY * imgHeight - padY));
+    const width = Math.min(imgWidth - left, Math.ceil(normW * imgWidth + padX * 2));
+    const height = Math.min(imgHeight - top, Math.ceil(normH * imgHeight + padY * 2));
 
     // Crop the image
     const croppedBuffer = await sharp(imageBuffer)
