@@ -241,6 +241,13 @@ export default function JobsPage() {
             <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
               Jobs Manager
             </h1>
+            <Link
+              href="/analytics"
+              className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+            >
+              Analytics
+            </Link>
           </div>
           <div className="flex items-center gap-3">
             <button
