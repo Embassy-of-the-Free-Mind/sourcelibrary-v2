@@ -343,11 +343,11 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
           <MetadataSection title="Processing Details" icon={Cpu} defaultOpen={false}>
             <MetadataRow
               label="OCR prompt"
-              value={page.ocr?.prompt_name || 'default'}
+              value={page.ocr?.prompt?.name || page.ocr?.prompt_name || 'default'}
             />
             <MetadataRow
               label="Translation prompt"
-              value={page.translation?.prompt_name || 'default'}
+              value={page.translation?.prompt?.name || page.translation?.prompt_name || 'default'}
             />
             {page.summary && (
               <>

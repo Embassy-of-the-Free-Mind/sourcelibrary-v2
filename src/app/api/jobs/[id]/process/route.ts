@@ -110,6 +110,7 @@ async function processCroppedImage(
 
 const BATCH_PREPARE_CHUNK_SIZE = 50; // Prepare 50 images per request
 const BATCH_PREPARE_PARALLEL = 10; // Fetch 10 images in parallel
+const BATCH_SUBMIT_CHUNK_SIZE = 50; // Submit 50 pages per Gemini batch job
 
 async function handleBatchApiJob(
   job: Job,
@@ -117,147 +118,158 @@ async function handleBatchApiJob(
   jobId: string
 ) {
   // Phase 3: Already submitted - poll for results
-  if (job.gemini_batch_job) {
-    // Check status of existing batch job
-    console.log(`[BatchJob ${jobId}] Checking Gemini batch status: ${job.gemini_batch_job}`);
+  // Support both single batch (legacy) and multiple batches (new)
+  const batchJobs = job.gemini_batch_jobs || (job.gemini_batch_job ? [{ name: job.gemini_batch_job, page_ids: job.config.page_ids }] : []);
+
+  if (batchJobs.length > 0 && job.batch_phase === 'submitted') {
+    console.log(`[BatchJob ${jobId}] Checking ${batchJobs.length} Gemini batch(es)...`);
 
     try {
-      const status = await getBatchJobStatus(job.gemini_batch_job);
-      console.log(`[BatchJob ${jobId}] Gemini state: ${status.state}`);
+      let totalSuccess = 0;
+      let totalFail = 0;
+      let allCompleted = true;
+      let anyFailed = false;
+      const now = new Date();
+      const allResults: JobResult[] = job.results || [];
+      const processedPageIds = new Set(allResults.map(r => r.pageId));
+      const batchStatuses: string[] = [];
 
-      if (status.state === 'JOB_STATE_SUCCEEDED') {
-        // Download and save results
-        console.log(`[BatchJob ${jobId}] Downloading results...`);
-        const results = await getBatchJobResults(job.gemini_batch_job);
+      for (const batch of batchJobs) {
+        if (!batch.name) continue;
 
-        let successCount = 0;
-        let failCount = 0;
-        const now = new Date();
-        const jobResults: JobResult[] = [];
-
-        for (const result of results) {
-          const pageId = result.key;
-
-          if (result.error) {
-            console.error(`[BatchJob ${jobId}] Page ${pageId} error:`, result.error.message);
-            jobResults.push({ pageId, success: false, error: result.error.message });
-            failCount++;
-            continue;
-          }
-
-          if (!result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
-            console.error(`[BatchJob ${jobId}] Page ${pageId} no response`);
-            jobResults.push({ pageId, success: false, error: 'No response text' });
-            failCount++;
-            continue;
-          }
-
-          const text = result.response.candidates[0].content.parts[0].text;
-          const usage = result.response.usageMetadata;
-
-          if (job.type === 'batch_ocr') {
-            await db.collection('pages').updateOne(
-              { id: pageId },
-              {
-                $set: {
-                  ocr: {
-                    data: text,
-                    updated_at: now,
-                    model: job.config.model,
-                    language: job.config.language,
-                    source: 'batch_api',
-                    input_tokens: usage?.promptTokenCount || 0,
-                    output_tokens: usage?.candidatesTokenCount || 0,
-                  },
-                  updated_at: now,
-                },
-              }
-            );
-          } else {
-            await db.collection('pages').updateOne(
-              { id: pageId },
-              {
-                $set: {
-                  translation: {
-                    data: text,
-                    updated_at: now,
-                    model: job.config.model,
-                    source_language: job.config.language,
-                    target_language: 'English',
-                    source: 'batch_api',
-                    input_tokens: usage?.promptTokenCount || 0,
-                    output_tokens: usage?.candidatesTokenCount || 0,
-                  },
-                  updated_at: now,
-                },
-              }
-            );
-          }
-
-          jobResults.push({ pageId, success: true });
-          successCount++;
+        // Skip if already processed
+        if (batch.results_collected) {
+          totalSuccess += batch.success_count || 0;
+          totalFail += batch.fail_count || 0;
+          batchStatuses.push(`${batch.name.split('/').pop()}: completed`);
+          continue;
         }
 
-        // Mark job as completed
-        await db.collection('jobs').updateOne(
-          { id: jobId },
-          {
-            $set: {
-              status: 'completed',
-              completed_at: now,
-              updated_at: now,
-              results: jobResults,
-              'progress.completed': successCount,
-              'progress.failed': failCount,
-            },
+        const status = await getBatchJobStatus(batch.name);
+        batchStatuses.push(`${batch.name.split('/').pop()}: ${status.state}`);
+        console.log(`[BatchJob ${jobId}] Batch ${batch.name}: ${status.state}`);
+
+        if (status.state === 'JOB_STATE_SUCCEEDED') {
+          // Download and save results for this batch
+          console.log(`[BatchJob ${jobId}] Downloading results from ${batch.name}...`);
+          const results = await getBatchJobResults(batch.name);
+
+          let batchSuccess = 0;
+          let batchFail = 0;
+
+          for (const result of results) {
+            const pageId = result.key;
+            if (processedPageIds.has(pageId)) continue; // Skip duplicates
+            processedPageIds.add(pageId);
+
+            if (result.error) {
+              console.error(`[BatchJob ${jobId}] Page ${pageId} error:`, result.error.message);
+              allResults.push({ pageId, success: false, error: result.error.message });
+              batchFail++;
+              continue;
+            }
+
+            if (!result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+              console.error(`[BatchJob ${jobId}] Page ${pageId} no response`);
+              allResults.push({ pageId, success: false, error: 'No response text' });
+              batchFail++;
+              continue;
+            }
+
+            const text = result.response.candidates[0].content.parts[0].text;
+            const usage = result.response.usageMetadata;
+
+            if (job.type === 'batch_ocr') {
+              await db.collection('pages').updateOne(
+                { id: pageId },
+                {
+                  $set: {
+                    ocr: {
+                      data: text,
+                      updated_at: now,
+                      model: job.config.model,
+                      language: job.config.language,
+                      source: 'batch_api',
+                      input_tokens: usage?.promptTokenCount || 0,
+                      output_tokens: usage?.candidatesTokenCount || 0,
+                    },
+                    updated_at: now,
+                  },
+                }
+              );
+            } else {
+              await db.collection('pages').updateOne(
+                { id: pageId },
+                {
+                  $set: {
+                    translation: {
+                      data: text,
+                      updated_at: now,
+                      model: job.config.model,
+                      source_language: job.config.language,
+                      target_language: 'English',
+                      source: 'batch_api',
+                      input_tokens: usage?.promptTokenCount || 0,
+                      output_tokens: usage?.candidatesTokenCount || 0,
+                    },
+                    updated_at: now,
+                  },
+                }
+              );
+            }
+
+            allResults.push({ pageId, success: true });
+            batchSuccess++;
           }
-        );
 
+          // Mark batch as collected
+          batch.results_collected = true;
+          batch.success_count = batchSuccess;
+          batch.fail_count = batchFail;
+          totalSuccess += batchSuccess;
+          totalFail += batchFail;
+
+        } else if (status.state === 'JOB_STATE_FAILED' || status.state === 'JOB_STATE_CANCELLED' || status.state === 'JOB_STATE_EXPIRED') {
+          anyFailed = true;
+          batch.results_collected = true;
+          batch.error = status.state;
+        } else {
+          // Still processing
+          allCompleted = false;
+        }
+      }
+
+      // Update job
+      const jobStatus = allCompleted ? (anyFailed && totalSuccess === 0 ? 'failed' : 'completed') : 'processing';
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        {
+          $set: {
+            status: jobStatus,
+            gemini_batch_jobs: batchJobs,
+            results: allResults,
+            'progress.completed': totalSuccess,
+            'progress.failed': totalFail,
+            ...(allCompleted ? { completed_at: now } : {}),
+            updated_at: now,
+          },
+        }
+      );
+
+      if (allCompleted) {
         return NextResponse.json({
-          job: { ...job, status: 'completed', progress: { ...job.progress, completed: successCount, failed: failCount } },
-          message: `Batch job completed: ${successCount} succeeded, ${failCount} failed`,
+          job: { ...job, status: jobStatus },
+          message: `All ${batchJobs.length} batch(es) completed: ${totalSuccess} succeeded, ${totalFail} failed`,
           done: true,
+          batches: batchStatuses,
         });
-
-      } else if (status.state === 'JOB_STATE_FAILED' || status.state === 'JOB_STATE_CANCELLED' || status.state === 'JOB_STATE_EXPIRED') {
-        // Job failed
-        await db.collection('jobs').updateOne(
-          { id: jobId },
-          {
-            $set: {
-              status: 'failed',
-              error: `Gemini batch job ${status.state}`,
-              updated_at: new Date(),
-            },
-          }
-        );
-
-        return NextResponse.json({
-          job: { ...job, status: 'failed' },
-          message: `Batch job ${status.state}`,
-          done: true,
-          error: status.error?.message,
-        });
-
       } else {
-        // Still processing
-        await db.collection('jobs').updateOne(
-          { id: jobId },
-          {
-            $set: {
-              gemini_state: status.state,
-              gemini_stats: status.stats,
-              updated_at: new Date(),
-            },
-          }
-        );
-
         return NextResponse.json({
-          job: { ...job, gemini_state: status.state },
-          message: `Gemini batch job ${status.state}. Check back later.`,
+          job: { ...job, status: 'processing' },
+          message: `Waiting for Gemini batches. ${totalSuccess} results collected so far.`,
           done: false,
-          gemini_state: status.state,
-          stats: status.stats,
+          batches: batchStatuses,
+          collected: totalSuccess,
         });
       }
     } catch (error) {
@@ -442,7 +454,7 @@ async function handleBatchApiJob(
       });
     }
 
-    // Phase 2: All prepared - submit to Gemini Batch API
+    // Phase 2: All prepared - submit to Gemini Batch API in chunks
     console.log(`[BatchJob ${jobId}] All pages prepared. Submitting to Gemini...`);
 
     const successfulPreps = prepared.filter(p => !p.failed);
@@ -463,16 +475,47 @@ async function handleBatchApiJob(
       }, { status: 400 });
     }
 
-    // Build batch requests from prepared data
-    const batchRequests: BatchRequest[] = successfulPreps.map(p => ({
+    // Get already submitted page IDs
+    const existingBatchJobs = job.gemini_batch_jobs || [];
+    const submittedPageIds = new Set(
+      existingBatchJobs.flatMap((bj: { page_ids: string[] }) => bj.page_ids || [])
+    );
+
+    // Find pages that need to be submitted
+    const unsubmittedPreps = successfulPreps.filter(p => !submittedPageIds.has(p.page_id));
+
+    if (unsubmittedPreps.length === 0) {
+      // All submitted - update phase
+      await db.collection('jobs').updateOne(
+        { id: jobId },
+        {
+          $set: {
+            batch_phase: 'submitted',
+            updated_at: new Date(),
+          },
+        }
+      );
+      return NextResponse.json({
+        job: { ...job, batch_phase: 'submitted' },
+        message: `All ${successfulPreps.length} pages already submitted in ${existingBatchJobs.length} batch(es).`,
+        done: false,
+        phase: 'submitted',
+        batches: existingBatchJobs.length,
+      });
+    }
+
+    // Submit next chunk
+    const chunkToSubmit = unsubmittedPreps.slice(0, BATCH_SUBMIT_CHUNK_SIZE);
+    const batchRequests: BatchRequest[] = chunkToSubmit.map(p => ({
       key: p.page_id,
       request: p.request,
     }));
 
-    console.log(`[BatchJob ${jobId}] Submitting ${batchRequests.length} requests to Gemini...`);
+    console.log(`[BatchJob ${jobId}] Submitting chunk of ${batchRequests.length} requests to Gemini (${unsubmittedPreps.length - batchRequests.length} remaining)...`);
 
     // Submit to Gemini Batch API
-    const displayName = `${job.type}-${jobId}`;
+    const chunkIndex = existingBatchJobs.length;
+    const displayName = `${job.type}-${jobId}-chunk${chunkIndex}`;
     const geminiJob = await createBatchJobInline(
       job.config.model || 'gemini-2.5-flash',
       batchRequests,
@@ -481,32 +524,44 @@ async function handleBatchApiJob(
 
     console.log(`[BatchJob ${jobId}] Gemini job created: ${geminiJob.name}`);
 
-    // Clean up preparations (optional - keep for debugging)
-    // await prepCollection.deleteMany({ job_id: jobId });
+    // Add to batch jobs array
+    const newBatchJob = {
+      name: geminiJob.name,
+      state: geminiJob.state,
+      page_ids: chunkToSubmit.map(p => p.page_id),
+      submitted_at: new Date(),
+    };
 
-    // Update our job with Gemini job reference
+    const allBatchJobs = [...existingBatchJobs, newBatchJob];
+    const totalSubmitted = allBatchJobs.reduce((sum, bj) => sum + (bj.page_ids?.length || 0), 0);
+    const remaining = successfulPreps.length - totalSubmitted;
+
+    // Update job with new batch job
     await db.collection('jobs').updateOne(
       { id: jobId },
       {
         $set: {
-          gemini_batch_job: geminiJob.name,
+          gemini_batch_jobs: allBatchJobs,
+          gemini_batch_job: geminiJob.name, // Keep for backwards compat
           gemini_state: geminiJob.state,
-          batch_phase: 'submitted',
-          'progress.total': batchRequests.length,
+          batch_phase: remaining > 0 ? 'submitting' : 'submitted',
+          'progress.total': successfulPreps.length,
           updated_at: new Date(),
         },
       }
     );
 
     return NextResponse.json({
-      job: { ...job, gemini_batch_job: geminiJob.name },
-      message: `Batch job submitted to Gemini (${batchRequests.length} pages). Results typically ready in 2-24 hours.`,
+      job: { ...job, gemini_batch_jobs: allBatchJobs },
+      message: `Submitted ${batchRequests.length} pages to Gemini (batch ${chunkIndex + 1}). ${remaining > 0 ? `${remaining} pages remaining to submit.` : 'All pages submitted!'}`,
       done: false,
-      phase: 'submitted',
+      phase: remaining > 0 ? 'submitting' : 'submitted',
       gemini_job: geminiJob.name,
       gemini_state: geminiJob.state,
       pages_submitted: batchRequests.length,
-      failed_images: prepared.filter(p => p.failed).length,
+      total_submitted: totalSubmitted,
+      remaining_to_submit: remaining,
+      batches: allBatchJobs.length,
     });
   } catch (error) {
     console.error(`[BatchJob ${jobId}] Error in batch processing:`, error);

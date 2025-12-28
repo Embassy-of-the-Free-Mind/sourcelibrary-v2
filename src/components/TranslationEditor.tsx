@@ -1100,6 +1100,17 @@ export default function TranslationEditor({
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
+
+            {/* Info Button */}
+            <button
+              onClick={() => setShowPageMetadata(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-stone-100"
+              style={{ color: 'var(--text-muted)' }}
+              title="View page metadata"
+            >
+              <FileText className="w-4 h-4" />
+              Info
+            </button>
           </div>
         </div>
       </header>
