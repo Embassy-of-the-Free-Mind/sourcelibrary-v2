@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
       prompt_name,
       language,
       initiated_by,
+      use_batch_api,
     } = body as {
       type: JobType;
       book_id?: string;
@@ -63,6 +64,7 @@ export async function POST(request: NextRequest) {
       prompt_name?: string;
       language?: string;
       initiated_by?: string;
+      use_batch_api?: boolean;
     };
 
     if (!type || !page_ids || !Array.isArray(page_ids) || page_ids.length === 0) {
@@ -75,8 +77,8 @@ export async function POST(request: NextRequest) {
     const db = await getDb();
     const jobId = nanoid(12);
 
-    // Use Batch API for batch_ocr and batch_translate (50% cheaper)
-    const useBatchApi = type === 'batch_ocr' || type === 'batch_translate';
+    // Use Batch API if explicitly requested, or if it's a batch_* job type
+    const useBatchApi = use_batch_api === true || type === 'batch_ocr' || type === 'batch_translate';
 
     const job: Job = {
       id: jobId,

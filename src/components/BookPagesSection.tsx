@@ -122,6 +122,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [concurrency, setConcurrency] = useState(5); // Parallel requests
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
+  const [useBatchApi, setUseBatchApi] = useState(false); // Use Gemini Batch API (50% off, 2-24h)
   const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
@@ -368,6 +369,45 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     if (selectedPages.size === 0) return;
 
     const pageIds = Array.from(selectedPages);
+
+    // Get prompt name for job record
+    const currentPrompt = prompts[action].find(
+      p => (p.id || p._id?.toString()) === selectedPromptIds[action]
+    );
+
+    // If using Batch API, create job and redirect to jobs page
+    if (useBatchApi) {
+      try {
+        const jobRes = await fetch('/api/jobs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: actionToJobType[action],
+            book_id: bookId,
+            book_title: bookTitle,
+            page_ids: pageIds,
+            model: selectedModel,
+            prompt_name: currentPrompt?.name,
+            use_batch_api: true,
+          }),
+        });
+        if (jobRes.ok) {
+          const jobData = await jobRes.json();
+          // Redirect to jobs page
+          router.push('/jobs');
+          return;
+        } else {
+          alert('Failed to create batch job');
+          return;
+        }
+      } catch (error) {
+        console.error('Failed to create batch job:', error);
+        alert('Failed to create batch job');
+        return;
+      }
+    }
+
+    // Realtime processing
     stopRequestedRef.current = false;
     setProcessing({
       active: true,
@@ -386,12 +426,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     let runningTokens = 0;
     let processedCount = 0;
 
-    // Get prompt name for job record
-    const currentPrompt = prompts[action].find(
-      p => (p.id || p._id?.toString()) === selectedPromptIds[action]
-    );
-
-    // Create job record
+    // Create job record for tracking
     let jobId: string | null = null;
     try {
       const jobRes = await fetch('/api/jobs', {
@@ -1160,6 +1195,31 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 <option value="missing">only missing</option>
                 <option value="all">all (overwrite)</option>
               </select>
+            </div>
+
+            {/* Batch API toggle */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setUseBatchApi(false)}
+                className={`px-2 py-1.5 text-sm rounded-l-lg border transition-colors ${
+                  !useBatchApi
+                    ? 'bg-amber-600 text-white border-amber-600'
+                    : 'bg-white text-stone-600 border-amber-300 hover:bg-amber-50'
+                }`}
+              >
+                Realtime
+              </button>
+              <button
+                onClick={() => setUseBatchApi(true)}
+                className={`px-2 py-1.5 text-sm rounded-r-lg border-y border-r transition-colors ${
+                  useBatchApi
+                    ? 'bg-green-600 text-white border-green-600'
+                    : 'bg-white text-stone-600 border-amber-300 hover:bg-green-50'
+                }`}
+                title="50% cheaper, results in 2-24 hours"
+              >
+                Batch 50%↓
+              </button>
             </div>
 
             <div className="h-6 w-px bg-amber-300" />
