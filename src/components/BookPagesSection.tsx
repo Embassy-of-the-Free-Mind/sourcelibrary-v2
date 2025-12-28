@@ -1163,7 +1163,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   ) : (
                     <>
                       <p className="font-medium mb-1">Translation</p>
-                      <p className="text-stone-300">Translates OCR text to English. Pages are processed sequentially in batches of 5, with the previous translation passed as context to maintain continuity across pages.</p>
+                      <p className="text-stone-300 mb-2">Translates OCR text to English in sequential batches of 5 pages.</p>
+                      <p className="text-stone-400 text-[11px]">After each batch, the last page&apos;s translation is passed to the next batch as context, creating a chain: Batch 1 → page 5 context → Batch 2 → page 10 context → Batch 3...</p>
                     </>
                   )}
                 </div>
