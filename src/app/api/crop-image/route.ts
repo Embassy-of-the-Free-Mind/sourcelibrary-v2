@@ -75,9 +75,10 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.error('Crop image error:', error);
+    const errMsg = error instanceof Error ? error.message : 'Failed to crop image';
+    console.error('Crop image error:', errMsg, { url: request.url });
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to crop image' },
+      { error: errMsg, url: request.url },
       { status: 500 }
     );
   }

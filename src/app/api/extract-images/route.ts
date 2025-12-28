@@ -217,14 +217,14 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
 
   // Grounding DINO returns bbox as [x1, y1, x2, y2] in pixels
   // Normalize to 0-1 scale using image dimensions
-  return output.detections.map(det => {
+  const detections = output.detections.map(det => {
     const rawX = det.bbox[0];
     const rawY = det.bbox[1];
     const rawW = det.bbox[2] - det.bbox[0];
     const rawH = det.bbox[3] - det.bbox[1];
 
     return {
-      description: `${det.label} (img: ${imgWidth}x${imgHeight})`,
+      description: det.label,
       type: categorizeLabel(det.label),
       bbox: {
         x: rawX / imgWidth,
@@ -238,6 +238,49 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
       model: 'grounding-dino' as const,
     };
   });
+
+  // Remove duplicate overlapping detections (NMS)
+  return deduplicateDetections(detections);
+}
+
+// Calculate Intersection over Union for two bboxes
+function calculateIoU(a: { x: number; y: number; width: number; height: number },
+                      b: { x: number; y: number; width: number; height: number }): number {
+  const x1 = Math.max(a.x, b.x);
+  const y1 = Math.max(a.y, b.y);
+  const x2 = Math.min(a.x + a.width, b.x + b.width);
+  const y2 = Math.min(a.y + a.height, b.y + b.height);
+
+  const intersection = Math.max(0, x2 - x1) * Math.max(0, y2 - y1);
+  const areaA = a.width * a.height;
+  const areaB = b.width * b.height;
+  const union = areaA + areaB - intersection;
+
+  return union > 0 ? intersection / union : 0;
+}
+
+// Remove duplicate detections with high overlap (NMS)
+function deduplicateDetections(detections: DetectedImage[], iouThreshold = 0.5): DetectedImage[] {
+  if (detections.length <= 1) return detections;
+
+  // Sort by confidence descending
+  const sorted = [...detections].sort((a, b) => (b.confidence || 0) - (a.confidence || 0));
+  const kept: DetectedImage[] = [];
+
+  for (const det of sorted) {
+    if (!det.bbox) {
+      kept.push(det);
+      continue;
+    }
+
+    // Check if this detection overlaps significantly with any kept detection
+    const dominated = kept.some(k => k.bbox && calculateIoU(det.bbox!, k.bbox) > iouThreshold);
+    if (!dominated) {
+      kept.push(det);
+    }
+  }
+
+  return kept;
 }
 
 function categorizeLabel(label: string): string {

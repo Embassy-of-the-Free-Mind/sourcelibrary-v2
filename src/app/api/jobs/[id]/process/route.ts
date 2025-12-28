@@ -108,7 +108,7 @@ async function processCroppedImage(
 // - submit: When all prepared, submit to Gemini Batch API
 // - poll: Check status and download results
 
-const BATCH_PREPARE_CHUNK_SIZE = 20; // Prepare 20 images per request
+const BATCH_PREPARE_CHUNK_SIZE = 40; // Prepare 40 images per request (with parallel fetching)
 
 async function handleBatchApiJob(
   job: Job,
