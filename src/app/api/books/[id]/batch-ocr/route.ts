@@ -167,7 +167,7 @@ export async function POST(
           : baseUrl;
 
         const image = await fetchImageAsBase64(imageUrl);
-        return { page, image };
+        return { page, image, imageUrl }; // Track URL for audit
       });
 
       const batchData = await Promise.all(imagePromises);
@@ -253,8 +253,9 @@ Return each transcription clearly separated with the exact format:
         totalOutputTokens += outputTokens;
         totalCost += calculateCost(inputTokens, outputTokens, modelId);
 
-        // Save to database
+        // Save to database with image URL for audit trail
         const now = new Date().toISOString();
+        const imageUrlMap = new Map(validBatch.map(b => [b.page.id, b.imageUrl]));
         const updatePromises = Object.entries(ocrResults).map(([pageId, ocr]) =>
           db.collection('pages').updateOne(
             { id: pageId },
@@ -264,6 +265,9 @@ Return each transcription clearly separated with the exact format:
                 'ocr.updated_at': now,
                 'ocr.model': modelId,
                 'ocr.language': language,
+                'ocr.source': 'ai',
+                'ocr.image_url': imageUrlMap.get(pageId) || 'unknown',
+                'ocr.batch_size': validBatch.length,
               },
             }
           )

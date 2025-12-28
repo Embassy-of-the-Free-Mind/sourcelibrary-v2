@@ -456,7 +456,7 @@ function PageReviewCard({
       {/* Full page image with drawing */}
       <div
         ref={containerRef}
-        className="relative bg-stone-800 cursor-crosshair select-none max-w-2xl mx-auto"
+        className="relative bg-stone-800 cursor-crosshair select-none max-w-md mx-auto"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
