@@ -228,6 +228,7 @@ export interface Book {
   translation_percent?: number; // Percentage of pages translated (0-100)
   created_at?: Date;
   updated_at?: Date;
+  last_processed?: Date;  // Last OCR or translation update
 
   // Workflow status
   status?: BookStatus;
