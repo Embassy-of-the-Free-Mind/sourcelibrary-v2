@@ -58,6 +58,17 @@ export interface Job {
   };
   // Gemini Batch API job name (for async processing)
   gemini_batch_job?: string;
+  // Multiple batch jobs (for large jobs split into batches)
+  gemini_batch_jobs?: Array<{
+    name: string;
+    page_ids?: string[];
+    results_collected?: boolean;
+    success_count?: number;
+    fail_count?: number;
+    error?: string;
+  }>;
+  // Batch processing phase
+  batch_phase?: 'preparing' | 'submitted' | 'completed';
 }
 
 // ============================================

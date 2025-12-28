@@ -478,7 +478,7 @@ async function handleBatchApiJob(
     // Get already submitted page IDs
     const existingBatchJobs = job.gemini_batch_jobs || [];
     const submittedPageIds = new Set(
-      existingBatchJobs.flatMap((bj: { page_ids: string[] }) => bj.page_ids || [])
+      existingBatchJobs.flatMap(bj => bj.page_ids || [])
     );
 
     // Find pages that need to be submitted

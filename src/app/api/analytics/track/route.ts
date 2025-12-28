@@ -37,9 +37,11 @@ export async function POST(request: NextRequest) {
       || request.headers.get('x-real-ip')
       || 'unknown';
 
-    // For reads, dedupe by IP + target within last hour
+    const now = Date.now();
+
+    // For reads, use atomic upsert to prevent race condition duplicates
     if (event === 'book_read' || event === 'page_read') {
-      const oneHourAgo = Date.now() - 60 * 60 * 1000;
+      const oneHourAgo = now - 60 * 60 * 1000;
       const dedupeQuery: Record<string, unknown> = {
         event,
         book_id,
@@ -50,21 +52,37 @@ export async function POST(request: NextRequest) {
         dedupeQuery.page_id = page_id;
       }
 
-      const existing = await db.collection('analytics_events').findOne(dedupeQuery);
-      if (existing) {
+      // Atomic findOneAndUpdate prevents race condition
+      const result = await db.collection('analytics_events').findOneAndUpdate(
+        dedupeQuery,
+        {
+          $setOnInsert: {
+            event,
+            book_id,
+            page_id: page_id || null,
+            ip,
+            timestamp: now,
+            created_at: new Date(),
+          }
+        },
+        { upsert: true, returnDocument: 'before' }
+      );
+
+      // If document existed before, it's a duplicate
+      if (result) {
         return NextResponse.json({ success: true, deduplicated: true });
       }
+    } else {
+      // For edits, just insert (no deduplication needed)
+      await db.collection('analytics_events').insertOne({
+        event,
+        book_id,
+        page_id: page_id || null,
+        ip,
+        timestamp: now,
+        created_at: new Date(),
+      });
     }
-
-    // Insert event
-    await db.collection('analytics_events').insertOne({
-      event,
-      book_id,
-      page_id: page_id || null,
-      ip,
-      timestamp: Date.now(),
-      created_at: new Date(),
-    });
 
     // Update book/page counters for fast reads
     if (event === 'book_read') {
