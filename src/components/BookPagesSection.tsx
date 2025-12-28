@@ -1130,7 +1130,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             <div className="flex items-center gap-2">
               <span className="text-sm text-stone-600">Action:</span>
               <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
-                {(['ocr', 'translation', 'summary'] as ActionType[]).map(type => {
+                {(['ocr', 'translation'] as ActionType[]).map(type => {
                   const { label, icon: Icon, color } = actionConfig[type];
                   const isSelected = action === type;
                   return (
@@ -1168,21 +1168,23 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               </select>
             </div>
 
-            {/* Concurrency selector */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-stone-600">Parallel:</span>
-              <select
-                value={concurrency}
-                onChange={(e) => setConcurrency(Number(e.target.value))}
-                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              >
-                <option value={1}>1x (sequential)</option>
-                <option value={3}>3x</option>
-                <option value={5}>5x</option>
-                <option value={10}>10x</option>
-                <option value={15}>15x (max free)</option>
-              </select>
-            </div>
+            {/* Concurrency selector - only for realtime */}
+            {!useBatchApi && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-stone-600">Parallel:</span>
+                <select
+                  value={concurrency}
+                  onChange={(e) => setConcurrency(Number(e.target.value))}
+                  className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                >
+                  <option value={1}>1x (sequential)</option>
+                  <option value={3}>3x</option>
+                  <option value={5}>5x</option>
+                  <option value={10}>10x</option>
+                  <option value={15}>15x (max free)</option>
+                </select>
+              </div>
+            )}
 
             {/* Mode selector */}
             <div className="flex items-center gap-2">
