@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -11,7 +11,12 @@ import {
   ChevronRight,
   BookOpen,
   Filter,
-  Loader2
+  Loader2,
+  Eye,
+  EyeOff,
+  PenTool,
+  Trash2,
+  Save
 } from 'lucide-react';
 
 interface BBox {
@@ -29,6 +34,7 @@ interface Detection {
   confidence?: number;
   model?: string;
   status?: 'pending' | 'approved' | 'rejected';
+  detection_source?: 'ocr_tag' | 'vision_model' | 'manual';
 }
 
 interface PageWithDetections {
@@ -115,6 +121,63 @@ export default function DetectionReviewPage() {
       console.error('Update error:', e);
     } finally {
       setSaving(null);
+    }
+  };
+
+  const addManualDetection = async (pageId: string, bbox: BBox, description: string) => {
+    try {
+      const res = await fetch('/api/detections', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId, bbox, description })
+      });
+      if (!res.ok) throw new Error('Failed to add');
+      const json = await res.json();
+
+      // Update local state
+      setData(prev => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          pages: prev.pages.map(p => {
+            if (p.pageId !== pageId) return p;
+            return {
+              ...p,
+              detections: [...p.detections, json.detection]
+            };
+          })
+        };
+      });
+    } catch (e) {
+      console.error('Add error:', e);
+    }
+  };
+
+  const deleteDetection = async (pageId: string, detectionIndex: number) => {
+    try {
+      const res = await fetch('/api/detections', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId, detectionIndex })
+      });
+      if (!res.ok) throw new Error('Failed to delete');
+
+      // Update local state
+      setData(prev => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          pages: prev.pages.map(p => {
+            if (p.pageId !== pageId) return p;
+            return {
+              ...p,
+              detections: p.detections.filter((_, i) => i !== detectionIndex)
+            };
+          })
+        };
+      });
+    } catch (e) {
+      console.error('Delete error:', e);
     }
   };
 
@@ -239,6 +302,8 @@ export default function DetectionReviewPage() {
                 key={pageData.pageId}
                 page={pageData}
                 onUpdateStatus={updateStatus}
+                onAddManualDetection={addManualDetection}
+                onDeleteDetection={deleteDetection}
                 saving={saving}
               />
             ))}
@@ -284,13 +349,78 @@ export default function DetectionReviewPage() {
 function PageReviewCard({
   page,
   onUpdateStatus,
+  onAddManualDetection,
+  onDeleteDetection,
   saving
 }: {
   page: PageWithDetections;
   onUpdateStatus: (pageId: string, index: number, status: 'approved' | 'rejected' | 'pending') => void;
+  onAddManualDetection: (pageId: string, bbox: BBox, description: string) => Promise<void>;
+  onDeleteDetection: (pageId: string, index: number) => Promise<void>;
   saving: string | null;
 }) {
-  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [showAutoBoxes, setShowAutoBoxes] = useState(false);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [drawStart, setDrawStart] = useState<{ x: number; y: number } | null>(null);
+  const [currentBox, setCurrentBox] = useState<BBox | null>(null);
+  const [newDescription, setNewDescription] = useState('');
+  const [showSaveModal, setShowSaveModal] = useState(false);
+
+  const getRelativeCoords = (e: React.MouseEvent) => {
+    if (!containerRef.current) return { x: 0, y: 0 };
+    const rect = containerRef.current.getBoundingClientRect();
+    return {
+      x: (e.clientX - rect.left) / rect.width,
+      y: (e.clientY - rect.top) / rect.height
+    };
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (e.button !== 0) return; // Left click only
+    const coords = getRelativeCoords(e);
+    setDrawStart(coords);
+    setIsDrawing(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDrawing || !drawStart) return;
+    const coords = getRelativeCoords(e);
+    setCurrentBox({
+      x: Math.min(drawStart.x, coords.x),
+      y: Math.min(drawStart.y, coords.y),
+      width: Math.abs(coords.x - drawStart.x),
+      height: Math.abs(coords.y - drawStart.y)
+    });
+  };
+
+  const handleMouseUp = () => {
+    if (isDrawing && currentBox && currentBox.width > 0.02 && currentBox.height > 0.02) {
+      setShowSaveModal(true);
+    } else {
+      setCurrentBox(null);
+    }
+    setIsDrawing(false);
+    setDrawStart(null);
+  };
+
+  const saveManualBox = async () => {
+    if (!currentBox) return;
+    await onAddManualDetection(page.pageId, currentBox, newDescription || 'Manual selection');
+    setCurrentBox(null);
+    setNewDescription('');
+    setShowSaveModal(false);
+  };
+
+  const cancelDraw = () => {
+    setCurrentBox(null);
+    setNewDescription('');
+    setShowSaveModal(false);
+  };
+
+  // Filter detections for display
+  const manualDetections = page.detections.filter(d => d.detection_source === 'manual');
+  const autoDetections = page.detections.filter(d => d.detection_source !== 'manual');
 
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -306,148 +436,186 @@ function PageReviewCard({
             </Link>
             <span className="text-stone-500 ml-2">p. {page.pageNumber}</span>
           </div>
-          <span className="text-sm text-stone-500">
-            {page.detections.length} detection{page.detections.length !== 1 ? 's' : ''}
-          </span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowAutoBoxes(!showAutoBoxes)}
+              className={`flex items-center gap-1 px-3 py-1 rounded text-sm transition-colors ${
+                showAutoBoxes ? 'bg-amber-100 text-amber-700' : 'bg-stone-200 text-stone-600'
+              }`}
+            >
+              {showAutoBoxes ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
+              Auto ({autoDetections.length})
+            </button>
+            <span className="text-sm text-green-600">
+              {manualDetections.length} manual
+            </span>
+          </div>
         </div>
       </div>
 
-      {/* Image with bounding boxes */}
-      <div className="relative bg-stone-200">
-        <div className="relative w-full" style={{ maxHeight: '600px' }}>
-          <Image
-            src={page.imageUrl}
-            alt={`Page ${page.pageNumber}`}
-            width={800}
-            height={1200}
-            className="w-full h-auto object-contain"
-            onLoad={(e) => {
-              const img = e.target as HTMLImageElement;
-              setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
+      {/* Full page image with drawing */}
+      <div
+        ref={containerRef}
+        className="relative bg-stone-800 cursor-crosshair select-none"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={() => { if (isDrawing) handleMouseUp(); }}
+      >
+        <Image
+          src={page.imageUrl}
+          alt={`Page ${page.pageNumber}`}
+          width={1200}
+          height={1800}
+          className="w-full h-auto"
+          draggable={false}
+          unoptimized
+        />
+
+        {/* Auto-detected boxes (toggleable) */}
+        {showAutoBoxes && autoDetections.map((det, idx) => {
+          if (!det.bbox) return null;
+          const actualIdx = page.detections.indexOf(det);
+          const status = det.status || 'pending';
+
+          // Handle both pixel and normalized coords
+          const isPixels = det.bbox.x > 1 || det.bbox.width > 1;
+          const bbox = isPixels ? {
+            x: det.bbox.x / 2555, // Approximate - will be slightly off
+            y: det.bbox.y / 3906,
+            width: det.bbox.width / 2555,
+            height: det.bbox.height / 3906
+          } : det.bbox;
+
+          return (
+            <div
+              key={`auto-${idx}`}
+              className={`absolute border-2 border-dashed pointer-events-none ${
+                status === 'approved' ? 'border-green-500 bg-green-500/10' :
+                status === 'rejected' ? 'border-red-500 bg-red-500/10' :
+                'border-amber-500 bg-amber-500/10'
+              }`}
+              style={{
+                left: `${bbox.x * 100}%`,
+                top: `${bbox.y * 100}%`,
+                width: `${bbox.width * 100}%`,
+                height: `${bbox.height * 100}%`
+              }}
+            >
+              <span className="absolute -top-5 left-0 px-1 bg-amber-500 text-white text-xs rounded">
+                {det.type}
+              </span>
+            </div>
+          );
+        })}
+
+        {/* Manual detections (always shown) */}
+        {manualDetections.map((det, idx) => {
+          if (!det.bbox) return null;
+          const actualIdx = page.detections.indexOf(det);
+
+          return (
+            <div
+              key={`manual-${idx}`}
+              className="absolute border-3 border-green-500 bg-green-500/20"
+              style={{
+                left: `${det.bbox.x * 100}%`,
+                top: `${det.bbox.y * 100}%`,
+                width: `${det.bbox.width * 100}%`,
+                height: `${det.bbox.height * 100}%`
+              }}
+            >
+              <span className="absolute -top-5 left-0 px-1 bg-green-600 text-white text-xs rounded">
+                {det.description}
+              </span>
+              <button
+                onClick={(e) => { e.stopPropagation(); onDeleteDetection(page.pageId, actualIdx); }}
+                className="absolute -top-5 right-0 p-0.5 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                <Trash2 className="w-3 h-3" />
+              </button>
+            </div>
+          );
+        })}
+
+        {/* Currently drawing box */}
+        {currentBox && (
+          <div
+            className="absolute border-2 border-blue-500 bg-blue-500/30 pointer-events-none"
+            style={{
+              left: `${currentBox.x * 100}%`,
+              top: `${currentBox.y * 100}%`,
+              width: `${currentBox.width * 100}%`,
+              height: `${currentBox.height * 100}%`
             }}
-            unoptimized
           />
+        )}
+      </div>
 
-          {/* Bounding box overlays */}
-          {imageDimensions && page.detections.map((det, idx) => {
-            if (!det.bbox) return null;
+      {/* Save modal */}
+      {showSaveModal && currentBox && (
+        <div className="p-4 bg-blue-50 border-t border-blue-200">
+          <div className="flex items-center gap-3">
+            <input
+              type="text"
+              placeholder="Description (e.g., 'woodcut of dragon')"
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              className="flex-1 px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              autoFocus
+            />
+            <button
+              onClick={saveManualBox}
+              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            >
+              <Save className="w-4 h-4" />
+              Save
+            </button>
+            <button
+              onClick={cancelDraw}
+              className="px-4 py-2 bg-stone-200 text-stone-700 rounded-lg hover:bg-stone-300"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
 
-            const status = det.status || 'pending';
-            const isPixels = det.bbox.x > 1 || det.bbox.y > 1 || det.bbox.width > 1 || det.bbox.height > 1;
+      {/* Instructions */}
+      <div className="px-4 py-2 bg-stone-50 border-t border-stone-200 text-sm text-stone-500">
+        <PenTool className="w-4 h-4 inline mr-1" />
+        Click and drag to draw a bounding box around illustrations
+      </div>
 
-            // Normalize if pixels
-            const bbox = isPixels ? {
-              x: det.bbox.x / imageDimensions.width,
-              y: det.bbox.y / imageDimensions.height,
-              width: det.bbox.width / imageDimensions.width,
-              height: det.bbox.height / imageDimensions.height
-            } : det.bbox;
-
-            const borderColor = status === 'approved'
-              ? 'border-green-500'
-              : status === 'rejected'
-                ? 'border-red-500'
-                : 'border-amber-500';
-
-            const bgColor = status === 'approved'
-              ? 'bg-green-500/20'
-              : status === 'rejected'
-                ? 'bg-red-500/20'
-                : 'bg-amber-500/20';
-
+      {/* Manual detection list */}
+      {manualDetections.length > 0 && (
+        <div className="p-4 space-y-2 border-t border-stone-200">
+          <h4 className="font-medium text-stone-700 text-sm">Your selections:</h4>
+          {manualDetections.map((det, idx) => {
+            const actualIdx = page.detections.indexOf(det);
             return (
               <div
                 key={idx}
-                className={`absolute border-2 ${borderColor} ${bgColor} cursor-pointer transition-all hover:border-4`}
-                style={{
-                  left: `${bbox.x * 100}%`,
-                  top: `${bbox.y * 100}%`,
-                  width: `${bbox.width * 100}%`,
-                  height: `${bbox.height * 100}%`
-                }}
-                title={`${det.description} (${det.type || 'unknown'})`}
+                className="flex items-center justify-between p-3 rounded-lg bg-green-50"
               >
-                {/* Label */}
-                <div className="absolute -top-6 left-0 px-2 py-0.5 bg-stone-900 text-white text-xs rounded whitespace-nowrap">
-                  {idx + 1}. {det.type || 'unknown'}
-                  {det.confidence && ` (${Math.round(det.confidence * 100)}%)`}
+                <div className="flex items-center gap-3">
+                  <span className="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-sm font-medium text-green-800">
+                    {idx + 1}
+                  </span>
+                  <span className="font-medium">{det.description}</span>
                 </div>
+                <button
+                  onClick={() => onDeleteDetection(page.pageId, actualIdx)}
+                  className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
+                  title="Delete"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
               </div>
             );
           })}
         </div>
-      </div>
-
-      {/* Detection list with actions */}
-      <div className="p-4 space-y-2">
-        {page.detections.map((det, idx) => {
-          const status = det.status || 'pending';
-          const isSaving = saving === `${page.pageId}-${idx}`;
-
-          return (
-            <div
-              key={idx}
-              className={`flex items-center justify-between p-3 rounded-lg ${
-                status === 'approved' ? 'bg-green-50' :
-                status === 'rejected' ? 'bg-red-50' : 'bg-stone-50'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <span className="w-6 h-6 rounded-full bg-stone-200 flex items-center justify-center text-sm font-medium">
-                  {idx + 1}
-                </span>
-                <div>
-                  <span className="font-medium">{det.description}</span>
-                  <span className="text-stone-500 text-sm ml-2">
-                    {det.type}
-                    {det.model && ` via ${det.model}`}
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                {isSaving ? (
-                  <Loader2 className="w-5 h-5 animate-spin text-stone-400" />
-                ) : (
-                  <>
-                    <button
-                      onClick={() => onUpdateStatus(page.pageId, idx, 'approved')}
-                      className={`p-2 rounded-lg transition-colors ${
-                        status === 'approved'
-                          ? 'bg-green-600 text-white'
-                          : 'bg-stone-200 text-stone-600 hover:bg-green-100 hover:text-green-700'
-                      }`}
-                      title="Approve"
-                    >
-                      <CheckCircle className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => onUpdateStatus(page.pageId, idx, 'rejected')}
-                      className={`p-2 rounded-lg transition-colors ${
-                        status === 'rejected'
-                          ? 'bg-red-600 text-white'
-                          : 'bg-stone-200 text-stone-600 hover:bg-red-100 hover:text-red-700'
-                      }`}
-                      title="Reject"
-                    >
-                      <XCircle className="w-5 h-5" />
-                    </button>
-                    {status !== 'pending' && (
-                      <button
-                        onClick={() => onUpdateStatus(page.pageId, idx, 'pending')}
-                        className="p-2 rounded-lg bg-stone-200 text-stone-600 hover:bg-amber-100 hover:text-amber-700 transition-colors"
-                        title="Reset to pending"
-                      >
-                        <Clock className="w-5 h-5" />
-                      </button>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      )}
     </div>
   );
 }

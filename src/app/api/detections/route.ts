@@ -149,6 +149,98 @@ export async function GET(request: NextRequest) {
 }
 
 /**
+ * POST /api/detections
+ *
+ * Add a manual detection to a page.
+ * Body: { pageId, bbox: { x, y, width, height }, description, type? }
+ */
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { pageId, bbox, description, type } = body;
+
+    if (!pageId || !bbox) {
+      return NextResponse.json({ error: 'pageId and bbox required' }, { status: 400 });
+    }
+
+    const db = await getDb();
+
+    const newDetection = {
+      id: `manual-${Date.now()}`,
+      description: description || 'Manual selection',
+      type: type || 'illustration',
+      bbox: {
+        x: bbox.x,
+        y: bbox.y,
+        width: bbox.width,
+        height: bbox.height
+      },
+      detected_at: new Date(),
+      detection_source: 'manual',
+      status: 'approved' // Manual selections are auto-approved
+    };
+
+    const result = await db.collection('pages').updateOne(
+      { id: pageId },
+      { $push: { detected_images: newDetection } } as unknown as Record<string, unknown>
+    );
+
+    return NextResponse.json({
+      success: result.modifiedCount > 0,
+      detection: newDetection
+    });
+  } catch (error) {
+    console.error('Detections POST error:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed to add detection' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * DELETE /api/detections
+ *
+ * Remove a detection from a page.
+ * Body: { pageId, detectionIndex }
+ */
+export async function DELETE(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { pageId, detectionIndex } = body;
+
+    if (!pageId || detectionIndex === undefined) {
+      return NextResponse.json({ error: 'pageId and detectionIndex required' }, { status: 400 });
+    }
+
+    const db = await getDb();
+
+    // Get the page first to find the detection
+    const page = await db.collection('pages').findOne({ id: pageId });
+    if (!page || !page.detected_images) {
+      return NextResponse.json({ error: 'Page or detections not found' }, { status: 404 });
+    }
+
+    // Remove the detection at the specified index
+    const detections = [...page.detected_images];
+    detections.splice(detectionIndex, 1);
+
+    const result = await db.collection('pages').updateOne(
+      { id: pageId },
+      { $set: { detected_images: detections } }
+    );
+
+    return NextResponse.json({ success: result.modifiedCount > 0 });
+  } catch (error) {
+    console.error('Detections DELETE error:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed to delete detection' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
  * PATCH /api/detections
  *
  * Update detection status.
