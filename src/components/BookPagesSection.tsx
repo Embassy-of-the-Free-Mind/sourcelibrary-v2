@@ -22,7 +22,8 @@ import {
   AlertCircle,
   GripVertical,
   ArrowUpDown,
-  RefreshCw
+  RefreshCw,
+  Info
 } from 'lucide-react';
 import DownloadButton from './DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
@@ -1147,6 +1148,25 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                     </button>
                   );
                 })}
+              </div>
+              {/* Info tooltip */}
+              <div className="relative group">
+                <button className="p-1 text-stone-400 hover:text-stone-600 transition-colors">
+                  <Info className="w-4 h-4" />
+                </button>
+                <div className="absolute left-0 top-full mt-2 w-72 p-3 bg-stone-800 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  {action === 'ocr' ? (
+                    <>
+                      <p className="font-medium mb-1">OCR (Optical Character Recognition)</p>
+                      <p className="text-stone-300">Extracts text from page images using AI vision. Processes 5 pages per batch in parallel for speed. Best results with clear, high-contrast scans.</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-medium mb-1">Translation</p>
+                      <p className="text-stone-300">Translates OCR text to English. Pages are processed sequentially in batches of 5, with the previous translation passed as context to maintain continuity across pages.</p>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 
