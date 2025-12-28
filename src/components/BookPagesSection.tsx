@@ -188,7 +188,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   // Calculate stats
   const pagesWithOcr = pages.filter(p => p.ocr?.data).length;
   const pagesWithTranslation = pages.filter(p => p.translation?.data).length;
-  const pagesWithSummary = pages.filter(p => p.summary?.data).length;
   const totalPages = pages.length;
 
   // Calculate last activity dates
@@ -924,20 +923,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 <span className="text-sm text-stone-400">/ {totalPages}</span>
               </div>
               <div className="text-xs text-stone-500">Translated {lastTranslationDate ? `· ${formatRelativeTime(lastTranslationDate)}` : ''}</div>
-            </div>
-          </div>
-
-          {/* Summary stat */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#faf5ff' }}>
-              <BookOpen className="w-5 h-5" style={{ color: '#a855f7' }} />
-            </div>
-            <div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-semibold text-stone-900">{pagesWithSummary}</span>
-                <span className="text-sm text-stone-400">/ {totalPages}</span>
-              </div>
-              <div className="text-xs text-stone-500">Summarized</div>
             </div>
           </div>
 
