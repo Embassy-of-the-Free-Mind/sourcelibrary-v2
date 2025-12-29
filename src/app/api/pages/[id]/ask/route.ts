@@ -24,16 +24,41 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
   return inputCost + outputCost;
 }
 
-// Fetch author's works from Source Library API
-async function fetchAuthorSources(searchTerms: string[]): Promise<SourceQuote[]> {
+// Extract key terms from a question for searching
+function extractSearchTerms(question: string): string[] {
+  // Remove common words and extract meaningful terms
+  const stopWords = new Set([
+    'what', 'is', 'the', 'a', 'an', 'of', 'in', 'to', 'and', 'or', 'how', 'why',
+    'does', 'do', 'this', 'that', 'these', 'those', 'it', 'its', 'about', 'from',
+    'with', 'for', 'on', 'at', 'by', 'as', 'be', 'are', 'was', 'were', 'been',
+    'have', 'has', 'had', 'can', 'could', 'would', 'should', 'will', 'may', 'might',
+    'mean', 'means', 'meaning', 'think', 'you', 'your', 'here', 'there'
+  ]);
+
+  const words = question.toLowerCase()
+    .replace(/[?.,!'"]/g, '')
+    .split(/\s+/)
+    .filter(w => w.length > 2 && !stopWords.has(w));
+
+  // Return unique terms, prioritizing longer/more specific ones
+  return [...new Set(words)].sort((a, b) => b.length - a.length).slice(0, 3);
+}
+
+// Fetch relevant sources from Source Library API based on the question
+async function fetchRelevantSources(question: string): Promise<SourceQuote[]> {
   const API_BASE = 'https://sourcelibrary.org/api';
   const sources: SourceQuote[] = [];
   const seenBooks = new Set<string>();
 
+  const searchTerms = extractSearchTerms(question);
+  if (searchTerms.length === 0) return sources;
+
   try {
-    // Search for each term and combine results
-    for (const term of searchTerms.slice(0, 2)) { // Limit to first 2 terms
-      const searchUrl = `${API_BASE}/search?q=${encodeURIComponent(term)}&has_translation=true&limit=8`;
+    // Search for question-related terms
+    for (const term of searchTerms) {
+      if (sources.length >= 3) break;
+
+      const searchUrl = `${API_BASE}/search?q=${encodeURIComponent(term)}&has_translation=true&limit=5`;
       const searchRes = await fetch(searchUrl);
 
       if (!searchRes.ok) continue;
@@ -87,23 +112,21 @@ async function fetchAuthorSources(searchTerms: string[]): Promise<SourceQuote[]>
           // Skip failed quote fetches
         }
       }
-
-      if (sources.length >= 3) break;
     }
   } catch (error) {
-    console.error('Failed to fetch author sources:', error);
+    console.error('Failed to fetch sources:', error);
   }
 
   return sources;
 }
 
-function formatSourcesForPrompt(sources: SourceQuote[], personaName: string): string {
+function formatSourcesForPrompt(sources: SourceQuote[]): string {
   if (sources.length === 0) return '';
 
-  let text = `\nHere are excerpts from ${personaName}'s own works in the Source Library that you may cite. Include the URL when citing so readers can verify the source:\n\n`;
+  let text = `\nHere are relevant excerpts from historical texts in the Source Library that you may cite to support your answer. Include the URL when citing so readers can verify the source:\n\n`;
 
   for (const source of sources) {
-    text += `From "${source.bookTitle}" ${source.citation}:\n`;
+    text += `From "${source.bookTitle}" by ${source.author} ${source.citation}:\n`;
     text += `URL: ${source.url}\n`;
     text += `"${source.translation}"\n\n`;
   }
@@ -178,11 +201,11 @@ export async function POST(
       ? pageText.slice(0, 6000) + '\n\n[Text truncated for length]'
       : pageText;
 
-    // Fetch author's sources from Source Library if search terms provided
+    // Fetch relevant sources from Source Library based on the question
     let authorSources = '';
-    if (authorSearchTerms && authorSearchTerms.length > 0 && personaName) {
-      const sources = await fetchAuthorSources(authorSearchTerms);
-      authorSources = formatSourcesForPrompt(sources, personaName);
+    if (question) {
+      const sources = await fetchRelevantSources(question);
+      authorSources = formatSourcesForPrompt(sources);
     }
 
     // Use custom prompt if provided, otherwise use default
