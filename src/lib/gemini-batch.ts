@@ -76,16 +76,36 @@ function getApiKey(): string {
   return key;
 }
 
+// Normalize state names (BATCH_STATE_* -> JOB_STATE_*)
+function normalizeState(state: string | undefined): BatchJobStatus['state'] {
+  if (!state) return 'JOB_STATE_PENDING';
+  // Map BATCH_STATE_* to JOB_STATE_*
+  const mapping: Record<string, BatchJobStatus['state']> = {
+    'BATCH_STATE_PENDING': 'JOB_STATE_PENDING',
+    'BATCH_STATE_RUNNING': 'JOB_STATE_RUNNING',
+    'BATCH_STATE_SUCCEEDED': 'JOB_STATE_SUCCEEDED',
+    'BATCH_STATE_FAILED': 'JOB_STATE_FAILED',
+    'BATCH_STATE_CANCELLED': 'JOB_STATE_CANCELLED',
+  };
+  return mapping[state] || (state.replace('BATCH_STATE_', 'JOB_STATE_') as BatchJobStatus['state']);
+}
+
 /**
  * Upload a file to Gemini File API for batch processing
+ *
+ * Note: Uses text/plain MIME type as workaround for known Gemini API bug
+ * where application/jsonl returns HTTP 200 but missing 'file' key in response.
+ * @see https://github.com/googleapis/python-genai/issues/1590
  */
 export async function uploadBatchFile(
   jsonlContent: string,
   displayName: string
 ): Promise<{ name: string; uri: string }> {
   const apiKey = getApiKey();
+  const contentLength = Buffer.byteLength(jsonlContent);
 
   // Step 1: Start resumable upload
+  // Using text/plain as workaround - application/jsonl has backend issues
   const startResponse = await fetch(
     `https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`,
     {
@@ -94,8 +114,8 @@ export async function uploadBatchFile(
         'Content-Type': 'application/json',
         'X-Goog-Upload-Protocol': 'resumable',
         'X-Goog-Upload-Command': 'start',
-        'X-Goog-Upload-Header-Content-Length': Buffer.byteLength(jsonlContent).toString(),
-        'X-Goog-Upload-Header-Content-Type': 'application/jsonl',
+        'X-Goog-Upload-Header-Content-Length': contentLength.toString(),
+        'X-Goog-Upload-Header-Content-Type': 'text/plain',
       },
       body: JSON.stringify({
         file: {
@@ -119,7 +139,7 @@ export async function uploadBatchFile(
   const uploadResponse = await fetch(uploadUrl, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/jsonl',
+      'Content-Type': 'text/plain',
       'X-Goog-Upload-Command': 'upload, finalize',
       'X-Goog-Upload-Offset': '0',
     },
@@ -132,6 +152,13 @@ export async function uploadBatchFile(
   }
 
   const fileInfo = await uploadResponse.json();
+
+  // Validate response structure
+  if (!fileInfo.file?.name) {
+    console.error('[uploadBatchFile] Unexpected response:', JSON.stringify(fileInfo));
+    throw new Error(`File upload response missing 'file.name': ${JSON.stringify(fileInfo)}`);
+  }
+
   return {
     name: fileInfo.file.name,
     uri: fileInfo.file.uri,
@@ -253,7 +280,26 @@ export async function getBatchJobStatus(jobName: string): Promise<BatchJobStatus
     throw new Error(`Failed to get batch job status: ${error}`);
   }
 
-  return response.json();
+  const data = await response.json();
+
+  // Transform response - Gemini returns { name, metadata: { state, ... } }
+  // We need to normalize to our BatchJobStatus format
+  const metadata = data.metadata || {};
+  const batchStats = metadata.batchStats || {};
+
+  return {
+    name: data.name,
+    state: normalizeState(metadata.state),
+    createTime: metadata.createTime,
+    updateTime: metadata.updateTime,
+    displayName: metadata.displayName,
+    model: metadata.model,
+    stats: {
+      totalCount: parseInt(batchStats.requestCount || '0'),
+      successCount: parseInt(batchStats.succeededCount || '0'),
+      failedCount: parseInt(batchStats.failedCount || '0'),
+    },
+  };
 }
 
 /**
@@ -346,8 +392,9 @@ export async function cancelBatchJob(jobName: string): Promise<void> {
 export async function listBatchJobs(pageSize = 100): Promise<BatchJobStatus[]> {
   const apiKey = getApiKey();
 
+  // Use /batches endpoint (not /batchJobs which returns 404)
   const response = await fetch(
-    `${GEMINI_API_BASE}/batchJobs?key=${apiKey}&pageSize=${pageSize}`,
+    `${GEMINI_API_BASE}/batches?key=${apiKey}&pageSize=${pageSize}`,
     {
       method: 'GET',
       headers: {
@@ -362,5 +409,20 @@ export async function listBatchJobs(pageSize = 100): Promise<BatchJobStatus[]> {
   }
 
   const data = await response.json();
-  return data.batchJobs || [];
+
+  // Transform operations to BatchJobStatus format
+  // Gemini returns operations with metadata, we need to normalize the state names
+  return (data.operations || []).map((op: { name: string; metadata: Record<string, unknown> }) => ({
+    name: op.name,
+    state: normalizeState(op.metadata?.state as string),
+    createTime: op.metadata?.createTime as string,
+    updateTime: op.metadata?.updateTime as string,
+    displayName: op.metadata?.displayName as string,
+    model: op.metadata?.model as string,
+    stats: op.metadata?.batchStats ? {
+      totalCount: parseInt((op.metadata.batchStats as Record<string, string>).requestCount || '0'),
+      successCount: parseInt((op.metadata.batchStats as Record<string, string>).succeededCount || '0'),
+      failedCount: parseInt((op.metadata.batchStats as Record<string, string>).failedCount || '0'),
+    } : undefined,
+  }));
 }
