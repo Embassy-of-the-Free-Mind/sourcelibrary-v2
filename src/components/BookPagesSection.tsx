@@ -1137,7 +1137,13 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   return (
                     <button
                       key={type}
-                      onClick={() => setAction(type)}
+                      onClick={() => {
+                        setAction(type);
+                        // Translation requires realtime mode for context continuity
+                        if (type === 'translation') {
+                          setUseBatchApi(false);
+                        }
+                      }}
                       className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${
                         isSelected ? 'text-white' : 'text-stone-600 hover:bg-stone-50'
                       }`}
@@ -1189,8 +1195,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               </select>
             </div>
 
-            {/* Concurrency selector - only for realtime */}
-            {!useBatchApi && (
+            {/* Concurrency selector - only for OCR realtime */}
+            {!useBatchApi && action === 'ocr' && (
               <div className="flex items-center gap-2">
                 <span className="text-sm text-stone-600">Parallel:</span>
                 <select
@@ -1200,10 +1206,19 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 >
                   <option value={1}>1x (sequential)</option>
                   <option value={3}>3x</option>
-                  <option value={5}>5x</option>
+                  <option value={5}>5x (recommended)</option>
                   <option value={10}>10x</option>
                   <option value={15}>15x (max free)</option>
                 </select>
+              </div>
+            )}
+            {/* Translation batch info */}
+            {action === 'translation' && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-stone-600">Batch:</span>
+                <span className="px-2 py-1.5 text-sm bg-stone-100 text-stone-600 rounded-lg">
+                  5 pages (recommended)
+                </span>
               </div>
             )}
 
@@ -1220,30 +1235,36 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               </select>
             </div>
 
-            {/* Batch API toggle */}
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setUseBatchApi(false)}
-                className={`px-2 py-1.5 text-sm rounded-l-lg border transition-colors ${
-                  !useBatchApi
-                    ? 'bg-amber-600 text-white border-amber-600'
-                    : 'bg-white text-stone-600 border-amber-300 hover:bg-amber-50'
-                }`}
-              >
-                Realtime
-              </button>
-              <button
-                onClick={() => setUseBatchApi(true)}
-                className={`px-2 py-1.5 text-sm rounded-r-lg border-y border-r transition-colors ${
-                  useBatchApi
-                    ? 'bg-green-600 text-white border-green-600'
-                    : 'bg-white text-stone-600 border-amber-300 hover:bg-green-50'
-                }`}
-                title="50% cheaper, results in 2-24 hours"
-              >
-                Batch 50%↓
-              </button>
-            </div>
+            {/* Batch API toggle - only for OCR (translation needs context continuity) */}
+            {action === 'ocr' ? (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setUseBatchApi(false)}
+                  className={`px-2 py-1.5 text-sm rounded-l-lg border transition-colors ${
+                    !useBatchApi
+                      ? 'bg-amber-600 text-white border-amber-600'
+                      : 'bg-white text-stone-600 border-amber-300 hover:bg-amber-50'
+                  }`}
+                >
+                  Realtime
+                </button>
+                <button
+                  onClick={() => setUseBatchApi(true)}
+                  className={`px-2 py-1.5 text-sm rounded-r-lg border-y border-r transition-colors ${
+                    useBatchApi
+                      ? 'bg-green-600 text-white border-green-600'
+                      : 'bg-white text-stone-600 border-amber-300 hover:bg-green-50'
+                  }`}
+                  title="50% cheaper, results in 2-24 hours"
+                >
+                  Batch 50%↓
+                </button>
+              </div>
+            ) : (
+              <span className="text-xs text-stone-500 px-2 py-1.5 bg-stone-100 rounded-lg">
+                Sequential (for continuity)
+              </span>
+            )}
 
             <div className="h-6 w-px bg-amber-300" />
 
