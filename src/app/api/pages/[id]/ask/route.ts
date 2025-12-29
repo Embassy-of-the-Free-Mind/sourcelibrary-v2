@@ -14,6 +14,7 @@ interface SourceQuote {
   bookTitle: string;
   author: string;
   citation: string;
+  url: string;
 }
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
@@ -67,6 +68,7 @@ async function fetchAuthorSources(searchTerms: string[]): Promise<SourceQuote[]>
                     bookTitle: altData.quote.display_title || altData.quote.book_title,
                     author: altData.quote.author,
                     citation: altData.citation?.inline || `(${altData.quote.author}, p. ${altData.quote.page})`,
+                    url: altData.citation?.short_url || altData.citation?.url || '',
                   });
                 }
               }
@@ -77,6 +79,7 @@ async function fetchAuthorSources(searchTerms: string[]): Promise<SourceQuote[]>
                 bookTitle: quoteData.quote.display_title || quoteData.quote.book_title,
                 author: quoteData.quote.author,
                 citation: quoteData.citation?.inline || `(${quoteData.quote.author}, p. ${quoteData.quote.page})`,
+                url: quoteData.citation?.short_url || quoteData.citation?.url || '',
               });
             }
           }
@@ -97,10 +100,11 @@ async function fetchAuthorSources(searchTerms: string[]): Promise<SourceQuote[]>
 function formatSourcesForPrompt(sources: SourceQuote[], personaName: string): string {
   if (sources.length === 0) return '';
 
-  let text = `\nHere are excerpts from ${personaName}'s own works in the Source Library that you may cite:\n\n`;
+  let text = `\nHere are excerpts from ${personaName}'s own works in the Source Library that you may cite. Include the URL when citing so readers can verify the source:\n\n`;
 
   for (const source of sources) {
     text += `From "${source.bookTitle}" ${source.citation}:\n`;
+    text += `URL: ${source.url}\n`;
     text += `"${source.translation}"\n\n`;
   }
 
