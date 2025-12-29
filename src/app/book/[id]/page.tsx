@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { ArrowLeft, Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked } from 'lucide-react';
+import { ArrowLeft, Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookHistory from '@/components/BookHistory';
@@ -338,6 +338,110 @@ async function BookInfo({ id }: { id: string }) {
                 editions={book.editions as TranslationEdition[]}
               />
             ) : null}
+
+            {/* Entity Links - People, Places, Concepts */}
+            {(() => {
+              const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; places?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
+              const people = index?.people || [];
+              const places = index?.places || [];
+              const concepts = index?.concepts || [];
+              const hasEntities = people.length > 0 || places.length > 0 || concepts.length > 0;
+
+              if (!hasEntities) return null;
+
+              return (
+                <div className="bg-white rounded-lg border border-stone-200 p-6 mt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold text-stone-900">Index</h2>
+                    <Link
+                      href="/encyclopedia"
+                      className="text-sm text-amber-700 hover:text-amber-800"
+                    >
+                      Browse all →
+                    </Link>
+                  </div>
+                  <div className="space-y-4">
+                    {/* People */}
+                    {people.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
+                          <User className="w-4 h-4 text-blue-600" />
+                          People ({people.length})
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {people.slice(0, 15).map((p) => (
+                            <Link
+                              key={p.term}
+                              href={`/encyclopedia/${encodeURIComponent(p.term)}`}
+                              className="px-2 py-1 text-xs bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
+                            >
+                              {p.term}
+                            </Link>
+                          ))}
+                          {people.length > 15 && (
+                            <span className="px-2 py-1 text-xs text-stone-400">
+                              +{people.length - 15} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Places */}
+                    {places.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
+                          <MapPin className="w-4 h-4 text-green-600" />
+                          Places ({places.length})
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {places.slice(0, 15).map((p) => (
+                            <Link
+                              key={p.term}
+                              href={`/encyclopedia/${encodeURIComponent(p.term)}`}
+                              className="px-2 py-1 text-xs bg-green-50 text-green-700 rounded hover:bg-green-100 transition-colors"
+                            >
+                              {p.term}
+                            </Link>
+                          ))}
+                          {places.length > 15 && (
+                            <span className="px-2 py-1 text-xs text-stone-400">
+                              +{places.length - 15} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Concepts */}
+                    {concepts.length > 0 && (
+                      <div>
+                        <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
+                          <Lightbulb className="w-4 h-4 text-purple-600" />
+                          Concepts ({concepts.length})
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {concepts.slice(0, 15).map((c) => (
+                            <Link
+                              key={c.term}
+                              href={`/encyclopedia/${encodeURIComponent(c.term)}`}
+                              className="px-2 py-1 text-xs bg-purple-50 text-purple-700 rounded hover:bg-purple-100 transition-colors"
+                            >
+                              {c.term}
+                            </Link>
+                          ))}
+                          {concepts.length > 15 && (
+                            <span className="px-2 py-1 text-xs text-stone-400">
+                              +{concepts.length - 15} more
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         );
       })()}

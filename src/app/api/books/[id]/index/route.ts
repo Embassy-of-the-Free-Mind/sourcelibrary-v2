@@ -702,6 +702,89 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
   };
 }
 
+// Sync entities from a single book to the cross-book entities collection
+async function syncBookEntities(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+  bookTitle: string,
+  bookAuthor: string,
+  conceptIndex: {
+    people: ConceptEntry[];
+    places: ConceptEntry[];
+    concepts: ConceptEntry[];
+    vocabulary: ConceptEntry[];
+    keywords: ConceptEntry[];
+  }
+) {
+  const now = new Date();
+
+  const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', pages: number[]) => {
+    await db.collection('entities').updateOne(
+      { name: term, type },
+      {
+        $set: {
+          updated_at: now
+        },
+        $setOnInsert: {
+          name: term,
+          type,
+          created_at: now
+        },
+        $addToSet: {
+          books: {
+            book_id: bookId,
+            book_title: bookTitle,
+            book_author: bookAuthor,
+            pages: pages
+          }
+        }
+      },
+      { upsert: true }
+    );
+  };
+
+  // Sync all entity types
+  const promises: Promise<void>[] = [];
+
+  for (const person of conceptIndex.people) {
+    promises.push(syncEntity(person.term, 'person', person.pages));
+  }
+
+  for (const place of conceptIndex.places) {
+    promises.push(syncEntity(place.term, 'place', place.pages));
+  }
+
+  for (const concept of conceptIndex.concepts) {
+    promises.push(syncEntity(concept.term, 'concept', concept.pages));
+  }
+
+  await Promise.all(promises);
+
+  // Update book_count and total_mentions for affected entities
+  const allTerms = [
+    ...conceptIndex.people.map(p => ({ name: p.term, type: 'person' })),
+    ...conceptIndex.places.map(p => ({ name: p.term, type: 'place' })),
+    ...conceptIndex.concepts.map(p => ({ name: p.term, type: 'concept' }))
+  ];
+
+  for (const { name, type } of allTerms) {
+    const entity = await db.collection('entities').findOne({ name, type });
+    if (entity) {
+      const bookCount = entity.books?.length || 0;
+      const totalMentions = (entity.books || []).reduce(
+        (sum: number, b: { pages: number[] }) => sum + (b.pages?.length || 0),
+        0
+      );
+      await db.collection('entities').updateOne(
+        { name, type },
+        { $set: { book_count: bookCount, total_mentions: totalMentions } }
+      );
+    }
+  }
+
+  console.log(`Synced ${promises.length} entities for book "${bookTitle}"`);
+}
+
 // GET /api/books/[id]/index - Get or generate book index
 export async function GET(
   request: NextRequest,
@@ -841,6 +924,11 @@ export async function GET(
       { id },
       { $set: updateData }
     );
+
+    // Sync entities to cross-book entity collection (non-blocking)
+    syncBookEntities(db, id, bookTitle, bookAuthor, conceptIndex).catch(err => {
+      console.error('Entity sync failed:', err);
+    });
 
     return NextResponse.json(index);
   } catch (error) {
