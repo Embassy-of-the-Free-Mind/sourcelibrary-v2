@@ -182,7 +182,7 @@
 - **Theme**: Alchemical practice, Basil Valentine corpus, early chemical philosophy
 - **Languages**: Latin, English, German
 - **Date range**: 1599-1678
-- **Status**: IMPORTING (Archive.org 503 - retrying)
+- **Status**: BLOCKED (Archive.org global outage - 503 since ~03:45 UTC 2025-12-29)
 
 ## Thematic Rationale
 Basil Valentine is a cornerstone of practical alchemy, bridging medieval and early modern chemical philosophy. The Twelve Keys and Triumphant Chariot are foundational texts cited throughout the tradition. We have scattered Valentine references but lack his major individual works. This batch fills a critical gap in our alchemical holdings.
@@ -311,5 +311,34 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 | Date | Title | ID | Pages | Language | Notes |
 |------|-------|-----|-------|----------|-------|
 | *Imports will be logged here as completed* | | | | | |
+
+---
+
+# QA Spot Checks
+
+## 2025-12-29 Collection Review
+
+### Statistics
+- **Total books**: 193
+- **Books with OCR**: 74 (38%)
+- **Top languages**: Latin (85), German (34), English (9)
+- **Best covered period**: 17th century (38 books)
+
+### Random Sample Checks
+| Book | Page | Folio | OCR Quality | Translation | Notes |
+|------|------|-------|-------------|-------------|-------|
+| De Occulta Philosophia III | 150 | 130 | ✓ Excellent | ✓ Accurate | Consistent 20-page offset (front matter) |
+| De Occulta Philosophia III | 400 | 31 | ✓ Excellent | ✓ Accurate | Hebrew diagrams properly described |
+
+### Issues Found
+- QA sampling API reports ~14% issue rate (7-26% CI)
+- Estimated 500-2000 pages with formatting issues across collection
+- Models: gemini-3-flash-preview and gemini-2.0-flash show higher issue rates
+
+### Missing Key Authors (for future acquisition)
+- Thomas Vaughan ✗
+- Gichtel ✗
+- Jane Lead ✗
+- Cudworth ✗
 
 ---

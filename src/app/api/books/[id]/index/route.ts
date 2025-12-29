@@ -55,6 +55,266 @@ interface PageData {
   summary?: { data: string };
 }
 
+// Batch extraction result
+interface BatchExtraction {
+  pageRange: { start: number; end: number };
+  themes: string[];
+  quotes: Array<{ text: string; page: number; context?: string }>;
+  people: string[];
+  places: string[];
+  concepts: string[];
+  summary: string;
+}
+
+const TARGET_BATCH_CHARS = 50000; // ~12k tokens, leaves room for prompt
+
+// Process a batch of pages to extract structured information
+async function processBatch(
+  pages: PageData[],
+  bookTitle: string,
+  bookAuthor: string,
+  bookLanguage?: string
+): Promise<BatchExtraction> {
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.0-flash',
+    generationConfig: {
+      temperature: 0.2, // Low temperature for consistent extraction
+      maxOutputTokens: 2000,
+    }
+  });
+
+  const pageRange = {
+    start: pages[0].page_number,
+    end: pages[pages.length - 1].page_number
+  };
+
+  // Combine translation text from all pages in batch
+  const batchContent = pages
+    .filter(p => p.translation?.data)
+    .map(p => {
+      // Clean the translation text of metadata tags
+      const cleanText = (p.translation?.data || '')
+        .replace(/<[a-z-]+>[\s\S]*?<\/[a-z-]+>/gi, '')
+        .replace(/\[\[[^\]]+\]\]/g, '')
+        .replace(/^```(?:markdown)?\s*\n?/i, '')
+        .replace(/\n?```\s*$/i, '')
+        .trim();
+      return `[Page ${p.page_number}]\n${cleanText}`;
+    })
+    .join('\n\n---\n\n');
+
+  if (!batchContent.trim()) {
+    return {
+      pageRange,
+      themes: [],
+      quotes: [],
+      people: [],
+      places: [],
+      concepts: [],
+      summary: ''
+    };
+  }
+
+  const prompt = `You are analyzing pages ${pageRange.start}-${pageRange.end} of "${bookTitle}" by ${bookAuthor}${bookLanguage ? ` (translated from ${bookLanguage})` : ''}.
+
+## Pages to analyze:
+${batchContent}
+
+## Task
+Extract structured information from these pages. Be thorough but accurate - only include what's actually in the text.
+
+Output as JSON:
+{
+  "themes": ["Main theme 1", "Main theme 2"],
+  "quotes": [
+    {"text": "Exact memorable quote from the text", "page": 5, "context": "Why this quote matters"},
+    {"text": "Another significant passage", "page": 7, "context": "Its significance"}
+  ],
+  "people": ["Person Name 1", "Person Name 2"],
+  "places": ["Place Name 1", "Place Name 2"],
+  "concepts": ["Key concept 1", "Technical term 2"],
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments or ideas."
+}
+
+Include 3-5 of the most notable quotes. For people/places/concepts, include all that appear prominently.`;
+
+  try {
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
+
+    const jsonMatch = responseText.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error('Failed to parse batch extraction JSON');
+      return {
+        pageRange,
+        themes: [],
+        quotes: [],
+        people: [],
+        places: [],
+        concepts: [],
+        summary: ''
+      };
+    }
+
+    const parsed = JSON.parse(jsonMatch[0]);
+    return {
+      pageRange,
+      themes: Array.isArray(parsed.themes) ? parsed.themes : [],
+      quotes: Array.isArray(parsed.quotes) ? parsed.quotes : [],
+      people: Array.isArray(parsed.people) ? parsed.people : [],
+      places: Array.isArray(parsed.places) ? parsed.places : [],
+      concepts: Array.isArray(parsed.concepts) ? parsed.concepts : [],
+      summary: typeof parsed.summary === 'string' ? parsed.summary : ''
+    };
+  } catch (e) {
+    console.error('Batch processing error:', e);
+    return {
+      pageRange,
+      themes: [],
+      quotes: [],
+      people: [],
+      places: [],
+      concepts: [],
+      summary: ''
+    };
+  }
+}
+
+// Group pages into batches based on character count
+function createBatches(pages: PageData[]): PageData[][] {
+  const translatedPages = pages.filter(p => p.translation?.data);
+  if (translatedPages.length === 0) return [];
+
+  const batches: PageData[][] = [];
+  let currentBatch: PageData[] = [];
+  let currentSize = 0;
+
+  for (const page of translatedPages) {
+    const pageSize = (page.translation?.data || '').length;
+
+    // If adding this page would exceed target, start new batch
+    // (unless current batch is empty - always include at least one page)
+    if (currentSize + pageSize > TARGET_BATCH_CHARS && currentBatch.length > 0) {
+      batches.push(currentBatch);
+      currentBatch = [];
+      currentSize = 0;
+    }
+
+    currentBatch.push(page);
+    currentSize += pageSize;
+  }
+
+  // Don't forget the last batch
+  if (currentBatch.length > 0) {
+    batches.push(currentBatch);
+  }
+
+  return batches;
+}
+
+// Process all pages in parallel batches (MapReduce approach)
+async function processAllBatches(
+  pages: PageData[],
+  bookTitle: string,
+  bookAuthor: string,
+  bookLanguage?: string
+): Promise<BatchExtraction[]> {
+  const pageBatches = createBatches(pages);
+  if (pageBatches.length === 0) return [];
+
+  console.log(`Processing ${pageBatches.length} batches in parallel...`);
+
+  // Process all batches in parallel for speed
+  const batchPromises = pageBatches.map((batchPages, i) => {
+    const start = batchPages[0].page_number;
+    const end = batchPages[batchPages.length - 1].page_number;
+    console.log(`  Batch ${i + 1}: pages ${start}-${end} (${batchPages.length} pages)`);
+
+    return processBatch(batchPages, bookTitle, bookAuthor, bookLanguage);
+  });
+
+  const results = await Promise.all(batchPromises);
+  console.log(`All ${results.length} batches completed`);
+
+  return results;
+}
+
+// Build concept index from batch extractions (new approach)
+function buildConceptIndexFromBatches(
+  batches: BatchExtraction[],
+  pages: PageData[]
+): {
+  vocabulary: ConceptEntry[];
+  keywords: ConceptEntry[];
+  people: ConceptEntry[];
+  places: ConceptEntry[];
+  concepts: ConceptEntry[];
+} {
+  // Aggregate from batches
+  const peopleMap = new Map<string, number[]>();
+  const placesMap = new Map<string, number[]>();
+  const conceptsMap = new Map<string, number[]>();
+
+  for (const batch of batches) {
+    const pageNumbers = Array.from(
+      { length: batch.pageRange.end - batch.pageRange.start + 1 },
+      (_, i) => batch.pageRange.start + i
+    );
+
+    for (const person of batch.people) {
+      if (!peopleMap.has(person)) peopleMap.set(person, []);
+      peopleMap.get(person)!.push(...pageNumbers);
+    }
+
+    for (const place of batch.places) {
+      if (!placesMap.has(place)) placesMap.set(place, []);
+      placesMap.get(place)!.push(...pageNumbers);
+    }
+
+    for (const concept of batch.concepts) {
+      if (!conceptsMap.has(concept)) conceptsMap.set(concept, []);
+      conceptsMap.get(concept)!.push(...pageNumbers);
+    }
+  }
+
+  // Also extract vocabulary from OCR tags (existing approach)
+  const vocabMap = new Map<string, number[]>();
+  const keywordMap = new Map<string, number[]>();
+
+  for (const page of pages) {
+    const pageNum = page.page_number;
+
+    if (page.ocr?.data) {
+      const vocab = extractTerms(page.ocr.data, 'vocabulary');
+      for (const term of vocab) {
+        if (!vocabMap.has(term)) vocabMap.set(term, []);
+        vocabMap.get(term)!.push(pageNum);
+      }
+    }
+
+    if (page.translation?.data) {
+      const keywords = extractTerms(page.translation.data, 'keywords');
+      for (const term of keywords) {
+        if (!keywordMap.has(term)) keywordMap.set(term, []);
+        keywordMap.get(term)!.push(pageNum);
+      }
+    }
+  }
+
+  const mapToEntries = (map: Map<string, number[]>): ConceptEntry[] =>
+    Array.from(map.entries())
+      .map(([term, pgs]) => ({ term, pages: [...new Set(pgs)].sort((a, b) => a - b) }))
+      .sort((a, b) => b.pages.length - a.pages.length);
+
+  return {
+    vocabulary: mapToEntries(vocabMap),
+    keywords: mapToEntries(keywordMap),
+    people: mapToEntries(peopleMap),
+    places: mapToEntries(placesMap),
+    concepts: mapToEntries(conceptsMap),
+  };
+}
+
 interface ConceptEntry {
   term: string;
   pages: number[];
@@ -293,9 +553,9 @@ function buildSectionsFromChapters(
   return sections;
 }
 
-// Generate hierarchical book summary using AI
+// Generate hierarchical book summary from batch extractions
 async function generateBookSummary(
-  pageSummaries: { page: number; summary: string }[],
+  batchExtractions: BatchExtraction[],
   bookTitle: string,
   bookAuthor: string,
   bookLanguage?: string,
@@ -304,20 +564,38 @@ async function generateBookSummary(
 ): Promise<GeneratedSummary> {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-  const summaryText = pageSummaries
-    .map(s => `Page ${s.page}: ${s.summary}`)
+  // If no batch extractions, fall back to research-only summary
+  if (batchExtractions.length === 0) {
+    return {
+      brief: researchContext ? `A text by ${bookAuthor}. ${researchContext.substring(0, 200)}...` : `A text by ${bookAuthor}. Process page translations to generate a detailed summary.`,
+      abstract: researchContext || 'No page content available yet. Process translations to generate a summary based on the actual text.',
+      detailed: researchContext || 'This book has not been processed yet. Generate OCR and translations for the pages, then regenerate this summary to see content-based analysis.',
+      sections: [],
+    };
+  }
+
+  // Compile all extracted information
+  const allThemes = [...new Set(batchExtractions.flatMap(b => b.themes))];
+  const allQuotes = batchExtractions.flatMap(b => b.quotes);
+  const allPeople = [...new Set(batchExtractions.flatMap(b => b.people))];
+  const allPlaces = [...new Set(batchExtractions.flatMap(b => b.places))];
+  const allConcepts = [...new Set(batchExtractions.flatMap(b => b.concepts))];
+
+  // Build batch summaries section
+  const batchSummariesText = batchExtractions
+    .map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`)
+    .join('\n');
+
+  // Build quotes section (limit to best 15)
+  const quotesText = allQuotes.slice(0, 15)
+    .map(q => `- "${q.text}" (p. ${q.page})${q.context ? ` — ${q.context}` : ''}`)
     .join('\n');
 
   const languageContext = bookLanguage ? ` The original text is in ${bookLanguage}.` : '';
 
   const researchSection = researchContext ? `
-## Wikipedia Context (verified)
+## Wikipedia Context
 ${researchContext}
-` : '';
-
-  const pageSummarySection = summaryText ? `
-## Page Contents
-${summaryText}
 ` : '';
 
   // Build chapter context if available
@@ -327,63 +605,48 @@ ${summaryText}
 ${chapters.map(c => `- Page ${c.pageNumber}: ${c.title}`).join('\n')}
 ` : '';
 
-  const sectionsInstructions = summaryText ? (hasChapters ? `
-4. **SECTIONS**: Use the detected chapter structure above as your guide. For each section:
-   - Use the chapter title (or create a descriptive title if merging small chapters)
-   - The page range
-   - What the section covers (2-3 sentences)
-   - Notable quotes from that section with page numbers (include as many as are striking or important)
-   - Key concepts introduced
-
-For each quote, briefly explain its significance.` : `
-4. **SECTIONS**: Group the pages into 5-8 thematic sections. For each:
-   - A descriptive title based on the content
-   - The page range
-   - What the section covers (2-3 sentences)
-   - Notable quotes from that section with page numbers (include as many as are striking or important)
-   - Key concepts introduced
-
-For each quote, briefly explain its significance.`) : `
-4. **SECTIONS**: Return an empty array since no page content is available.`;
-
-  // If no page content, we can't generate a meaningful summary
-  if (!summaryText) {
-    return {
-      brief: researchContext ? `A text by ${bookAuthor}. ${researchContext.substring(0, 200)}...` : `A text by ${bookAuthor}. Process page translations to generate a detailed summary.`,
-      abstract: researchContext || 'No page content available yet. Process translations to generate a summary based on the actual text.',
-      detailed: researchContext || 'This book has not been processed yet. Generate OCR and translations for the pages, then regenerate this summary to see content-based analysis.',
-      sections: [],
-    };
-  }
-
   const prompt = `You're writing compelling copy to help readers discover "${bookTitle}" by ${bookAuthor}.${languageContext}
 
 ${researchSection}
 ${chapterSection}
-${pageSummarySection}
+## Extracted from the text:
+
+**Themes:** ${allThemes.join(', ')}
+
+**Key People:** ${allPeople.join(', ') || 'None identified'}
+
+**Key Places:** ${allPlaces.join(', ') || 'None identified'}
+
+**Key Concepts:** ${allConcepts.join(', ')}
+
+## Section-by-section summaries:
+${batchSummariesText}
+
+## Notable quotes extracted:
+${quotesText}
 
 ## Your Task
-Write summaries that make readers WANT to explore this text. Be engaging, highlight what's fascinating, but stay grounded in what's actually in the pages above.
+Synthesize the above into compelling summaries that make readers WANT to explore this text.
 
 1. **BRIEF** (2-3 punchy sentences):
    - Hook the reader - what's compelling about this text?
    - What questions does it tackle? What will readers discover?
-   - Write like a book jacket, not an encyclopedia
 
 2. **ABSTRACT** (1 paragraph, 4-6 sentences):
-   - Open with what makes this text worth reading
+   - What makes this text worth reading?
    - What bold claims or intriguing ideas does it contain?
-   - What's the author's unique perspective or approach?
-   - What will readers learn or encounter?
-   - End with why someone should dive in
+   - What's the author's unique perspective?
 
 3. **DETAILED** (2-4 paragraphs):
    - Paint a picture of the journey through this text
-   - Highlight the most striking passages, ideas, or arguments
-   - What surprising or thought-provoking content appears?
-   - What concepts or figures play key roles?
+   - Highlight the most striking ideas or arguments
    - Convey the texture and flavor of the writing
-${sectionsInstructions}
+
+4. **SECTIONS**: ${hasChapters ? 'Use the detected chapter structure.' : 'Group into 5-8 thematic sections.'} For each:
+   - Title and page range
+   - What it covers (2-3 sentences)
+   - 2-4 notable quotes with page numbers and significance
+   - Key concepts
 
 Output as JSON:
 {
@@ -394,18 +657,17 @@ Output as JSON:
     {
       "title": "Section Title",
       "startPage": 1,
-      "endPage": 5,
+      "endPage": 10,
       "summary": "What this section covers...",
       "quotes": [
-        {"text": "Exact quote from the text", "page": 3, "significance": "Why this matters"},
-        {"text": "Another notable quote", "page": 4, "significance": "Key insight"}
+        {"text": "Exact quote", "page": 3, "significance": "Why this matters"}
       ],
       "concepts": ["Key Term", "Important Concept"]
     }
   ]
 }
 
-IMPORTANT: Be engaging and interesting, but only describe what's actually in the text. Don't invent historical claims or content not in the pages. Include as many notable quotes as are genuinely striking or important - there is no limit.`;
+IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
 
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
@@ -418,7 +680,7 @@ IMPORTANT: Be engaging and interesting, but only describe what's actually in the
 
   const parsed = JSON.parse(jsonMatch[0]);
 
-  // Ensure all fields are strings (AI sometimes returns objects or arrays)
+  // Ensure all fields are strings
   const ensureString = (val: unknown): string => {
     if (typeof val === 'string') return val;
     if (val === null || val === undefined) return '';
@@ -467,43 +729,63 @@ export async function GET(
       .sort({ page_number: 1 })
       .toArray() as unknown as PageData[];
 
-    // Build concept index
-    const conceptIndex = buildConceptIndex(pages);
-
-    // Extract page summaries
-    const pageSummaries = extractPageSummaries(pages);
-    console.log(`Found ${pageSummaries.length} page summaries from ${pages.length} total pages`);
-
-    // Generate book summary if we have page summaries OR translations
-    let bookSummary = { brief: '', abstract: '', detailed: '' };
-    let sectionSummaries: SectionSummary[] = [];
-
-    // Research the book first (useful even without page summaries)
+    // Book metadata
     const bookTitle = book.display_title || book.title;
     const bookAuthor = book.author || 'Unknown';
-    let researchContext = '';
 
-    try {
-      console.log('Researching book:', bookTitle, 'by', bookAuthor);
-      researchContext = await researchBook(bookTitle, bookAuthor);
-      console.log('Research found:', researchContext ? researchContext.substring(0, 200) + '...' : 'none');
-    } catch (e) {
-      console.error('Research failed:', e);
-    }
-
-    // Get chapters for hybrid section detection
+    // Get chapters for section structure
     const chapters: ChapterInfo[] = (book.chapters || []).map((c: { title: string; pageNumber: number; level?: number }) => ({
       title: c.title,
       pageNumber: c.pageNumber,
       level: c.level || 1,
     }));
-    console.log(`Found ${chapters.length} chapters for section structure`);
 
-    // Generate summary if we have at least 1 page summary, or just research
-    if (pageSummaries.length >= 1 || researchContext) {
+    // Research the book via Wikipedia (runs in parallel with batch processing)
+    const researchPromise = researchBook(bookTitle, bookAuthor)
+      .then(result => {
+        console.log('Research found:', result ? result.substring(0, 100) + '...' : 'none');
+        return result;
+      })
+      .catch(e => {
+        console.error('Research failed:', e);
+        return '';
+      });
+
+    // Process pages in parallel batches (MapReduce approach)
+    console.log(`\n=== Generating summary for "${bookTitle}" ===`);
+    const translatedCount = pages.filter(p => p.translation?.data).length;
+    console.log(`${translatedCount} of ${pages.length} pages have translations`);
+
+    const batchExtractions = await processAllBatches(
+      pages,
+      bookTitle,
+      bookAuthor,
+      book.language || undefined
+    );
+
+    // Wait for research to complete
+    const researchContext = await researchPromise;
+
+    // Build concept index from batch extractions
+    const conceptIndex = buildConceptIndexFromBatches(batchExtractions, pages);
+
+    // Build page summaries from batch extractions (for backward compatibility)
+    const pageSummaries = batchExtractions.flatMap(batch =>
+      batch.summary ? [{
+        page: batch.pageRange.start,
+        summary: batch.summary
+      }] : []
+    );
+
+    // Generate final summary from batch extractions
+    let bookSummary = { brief: '', abstract: '', detailed: '' };
+    let sectionSummaries: SectionSummary[] = [];
+
+    if (batchExtractions.length > 0 || researchContext) {
       try {
+        console.log('Synthesizing final summary from batch extractions...');
         const generated = await generateBookSummary(
-          pageSummaries,
+          batchExtractions,
           bookTitle,
           bookAuthor,
           book.language || undefined,
@@ -516,12 +798,12 @@ export async function GET(
           detailed: generated.detailed,
         };
         sectionSummaries = generated.sections || [];
-        console.log('Summary generated successfully with', sectionSummaries.length, 'sections');
+        console.log('Summary generated with', sectionSummaries.length, 'sections');
       } catch (e) {
         console.error('Failed to generate book summary:', e);
       }
     } else {
-      console.log('Skipping summary generation: no page summaries and no research context');
+      console.log('Skipping summary: no translations and no research context');
     }
 
     const index: BookIndex = {
