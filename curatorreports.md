@@ -119,4 +119,21 @@ OCR Jobs: `QWIIz_GPdTiA` (882 pages), `WMOMjSGum5he` (226 pages)
 
 **Session Total: 8 books, 3,376 pages imported**
 
+### Batch 3 (05:35 CET) - Khunrath, Kircher, Dee, Bruno
+| Title | Author | Date | Pages |
+|-------|--------|------|-------|
+| Amphitheatrum Sapientiae | Khunrath | 1609 | 191 |
+| Musurgia universalis I | Kircher | 1650 | 751 |
+| Musurgia universalis II | Kircher | 1650 | 545 |
+| Sphinx mystagoga | Kircher | 1676 | 99 |
+| Obeliscus pamphilius | Kircher | 1650 | 659 |
+| Iter extaticum II | Kircher | 1657 | 770 |
+| Monas hieroglyphica | Dee | **1564** | 61 |
+| Cantus circaeus | Bruno | 1582 | 85 |
+| De gli eroici furori | Bruno | 1585 | 294 |
+
+**GRAND TOTAL: 17 books, 6,831 pages from Gallica**
+
+All queued for batch OCR.
+
 ---

@@ -401,3 +401,58 @@
 
 ---
 
+### 14. Anleitung zur primitiven gabalistischen Wissenschaft
+
+**Book ID:** 6867c831aadfee9e955ecc6a
+**USTC:** N/A (18th century esoteric text)
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Anleitung zur primitiven gabalistischen Wissenschaft | Anleitung zur primitiven gabalistischen Wissenschaft und zur symbolischen Zahlenkenntniß | Partial |
+| Author | anonymous | I. I. J. v. I. B. G. (initials) | Match |
+| Year | 1789 | 1785 | **Mismatch** |
+| Place | N/A | Heliopolis in Egypten (allegorical) | N/A |
+| Publisher | N/A | (none - esoteric publication) | N/A |
+
+**Metadata Issues:**
+- **Year discrepancy:** Catalog shows 1789, title page clearly shows "im 1785"
+- Title incomplete: missing "und zur symbolischen Zahlenkenntniß für alle Sprachen anwendbar"
+- "Heliopolis in Egypt" is symbolic (Masonic/Rosicrucian convention), not real place
+- Dedicated to "Söhne des Lichts" (Sons of Light) - esoteric society
+
+**Translation Quality:** 100% (250 pages)
+- Excellent handling of kabbalistic terminology
+- Numerical tables accurately transcribed
+- Esoteric vocabulary (gematria, Kabbalah) properly annotated
+- Good explanatory notes for mystical references
+
+---
+
+### 15. Abhandlung von freier Untersuchung des Canon
+
+**Book ID:** 690c293de0787282ad5932fd
+**USTC:** N/A (1771)
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Abhandlung von freier Untersuchung des Canon | Abhandlung von freier Untersuchung des Canon; nebst Antwort auf die tübingische Vertheidigung der Apokalypsis | Partial |
+| Author | Semler, Johann Salomo | D. Joh. Salomo Semler | Match |
+| Year | 1771 | 1771 | Match |
+| Place | N/A | (Halle implied) | Missing |
+| Publisher | N/A | Carl Hermann Hemmerde | Missing |
+| Language | Unknown | German | Wrong |
+
+**Metadata Issues:**
+- **Language incorrectly set to "Unknown"** - should be "German"
+- Place missing: likely Halle (Hemmerde's publishing location)
+- Publisher missing: should be "Carl Hermann Hemmerde"
+- Title incomplete: missing subtitle about Apocalypse defense
+
+**Translation Quality:** 100% (238 pages)
+- Complex theological/critical German well translated
+- Biblical criticism concepts accurately rendered
+- Good contextual notes (Philemon/Onesimus reference)
+- Enlightenment-era scriptural analysis clearly expressed
+
+---
+

@@ -487,6 +487,34 @@ export default function JobsPage() {
                           )}
                         </div>
                       )}
+                      {/* Job config info */}
+                      <div className="flex flex-wrap items-center gap-1.5 mt-2">
+                        {job.config?.model && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-mono">
+                            {job.config.model.replace('gemini-', '').replace('-preview', '')}
+                          </span>
+                        )}
+                        {job.config?.language && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600">
+                            {job.config.language}
+                          </span>
+                        )}
+                        {job.config?.use_batch_api && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-50 text-green-700">
+                            Batch API 50%↓
+                          </span>
+                        )}
+                        {job.progress?.total > 0 && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-500">
+                            {job.progress.total} pages
+                          </span>
+                        )}
+                        {job.config?.prompt_name && job.config.prompt_name !== 'Standard OCR' && job.config.prompt_name !== 'Standard Translation' && (
+                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-700">
+                            {job.config.prompt_name}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <div className="flex items-center gap-1">
                       {/* Actions */}

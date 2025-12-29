@@ -318,6 +318,17 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 | 2025-12-29 | De nobilitate foeminei sexus | 6952018fab34727b1f04177d | 168 | Latin | Agrippa 1529 - from Gallica |
 | 2025-12-29 | Musaeum hermeticum reformatum | 695203a5ab34727b1f041c53 | 882 | Latin | Major alchemical anthology |
 | 2025-12-29 | Tripus chimicus Sendivogianus | 695203c8ab34727b1f041fc6 | 226 | German | Sendivogius - from Gallica |
+| 2025-12-29 | Amphitheatrum Sapientiae | 69520508ab34727b1f0420ab | 191 | Latin | Khunrath 1609 |
+| 2025-12-29 | Musurgia universalis I | 6952050fab34727b1f04216b | 751 | Latin | Kircher 1650 |
+| 2025-12-29 | Musurgia universalis II | 69520516ab34727b1f04245b | 545 | Latin | Kircher 1650 |
+| 2025-12-29 | Sphinx mystagoga | 69520539ab34727b1f04267d | 99 | Latin | Kircher 1676 |
+| 2025-12-29 | Obeliscus pamphilius | 6952053eab34727b1f0426e1 | 659 | Latin | Kircher 1650 |
+| 2025-12-29 | Iter extaticum II | 69520543ab34727b1f042975 | 770 | Latin | Kircher 1657 |
+| 2025-12-29 | Monas hieroglyphica | 69520571ab34727b1f042c78 | 61 | Latin | **Dee 1564 original** |
+| 2025-12-29 | Cantus circaeus | 69520579ab34727b1f042cb6 | 85 | Latin | Bruno 1582 |
+| 2025-12-29 | De gli eroici furori | 69520588ab34727b1f042d0c | 294 | Italian | Bruno 1585 |
+
+**Session Total: 17 books, 6,831 pages**
 
 ## Batch OCR Jobs Queued (2025-12-29 05:25 CET)
 
