@@ -183,6 +183,19 @@ export async function POST(request: NextRequest) {
 
     await db.collection('pages').insertMany(pageDocs);
 
+    // Fire off split detection check (non-blocking)
+    // This will set book.needs_splitting based on aspect ratio of pages 10 & 15
+    const baseUrl = process.env.NEXT_PUBLIC_URL || process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : request.headers.get('origin') || 'http://localhost:3000';
+
+    fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, {
+      method: 'GET',
+    }).catch(() => {
+      // Ignore errors - split check is optional
+      console.log(`[Import] Split check queued for ${bookIdStr}`);
+    });
+
     return NextResponse.json({
       success: true,
       bookId: bookIdStr,
@@ -191,7 +204,8 @@ export async function POST(request: NextRequest) {
       pagesCreated: pageDocs.length,
       bookUrl: `/book/${bookIdStr}`,
       iaUrl: `https://archive.org/details/${ia_identifier}`,
-      message: `Created book with ${pageDocs.length} pages from Internet Archive`
+      splitCheckQueued: true,
+      message: `Created book with ${pageDocs.length} pages from Internet Archive. Split detection queued.`
     });
 
   } catch (error) {
