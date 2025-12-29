@@ -59,12 +59,6 @@ export default function HeroSection() {
         </Link>
         <div className="flex items-center gap-3">
           <Link
-            href="/encyclopedia"
-            className="px-4 py-2 text-white text-sm font-medium hover:text-white/80 transition-colors"
-          >
-            Encyclopedia
-          </Link>
-          <Link
             href="/upload"
             className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
           >

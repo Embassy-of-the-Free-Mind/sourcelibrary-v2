@@ -11,41 +11,41 @@ export function BookLoader({ label = 'Loading...', className }: BookLoaderProps)
   return (
     <div className={cn('flex flex-col items-center justify-center gap-8', className)}>
       {/* Animated Source Library logo with emanating rings */}
-      <div className="relative w-20 h-20">
-        {/* Emanating rings that expand outward */}
+      <div className="relative w-16 h-16">
+        {/* Emanating rings that expand outward - matching logo circle proportions */}
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-16 h-16 rounded-full border border-stone-400/40 animate-emanate" style={{ animationDelay: '0ms' }} />
-          <div className="absolute w-16 h-16 rounded-full border border-stone-400/40 animate-emanate" style={{ animationDelay: '700ms' }} />
-          <div className="absolute w-16 h-16 rounded-full border border-stone-400/40 animate-emanate" style={{ animationDelay: '1400ms' }} />
+          <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '0ms' }} />
+          <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '700ms' }} />
+          <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '1400ms' }} />
         </div>
 
-        {/* Core logo - concentric circles */}
+        {/* Core logo - concentric circles matching logo.svg exactly */}
         <svg
           viewBox="0 0 24 24"
-          className="w-20 h-20 relative z-10"
+          className="w-16 h-16 relative z-10"
         >
-          {/* Outer ring */}
+          {/* Outer ring - r=10, matching logo */}
           <circle
             cx="12" cy="12" r="10"
             fill="none"
             stroke="currentColor"
-            strokeWidth="0.5"
-            className="text-stone-800"
+            strokeWidth="1"
+            className="text-stone-700"
           />
-          {/* Middle ring */}
+          {/* Middle ring - r=7, matching logo */}
           <circle
             cx="12" cy="12" r="7"
             fill="none"
             stroke="currentColor"
-            strokeWidth="0.5"
+            strokeWidth="1"
             className="text-stone-600"
           />
-          {/* Inner ring */}
+          {/* Inner ring - r=4, matching logo */}
           <circle
             cx="12" cy="12" r="4"
             fill="none"
             stroke="currentColor"
-            strokeWidth="0.5"
+            strokeWidth="1"
             className="text-stone-500"
           />
         </svg>
