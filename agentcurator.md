@@ -316,6 +316,8 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 | 2025-12-29 | Aurora thesaurusque philosophorum | 69520185ab34727b1f0416bc | 192 | Latin | Paracelsus - from Gallica |
 | 2025-12-29 | De Restituta medicinae | 695201c3ab34727b1f041b02 | 330 | Latin | Paracelsus/Dorn - from Gallica |
 | 2025-12-29 | De nobilitate foeminei sexus | 6952018fab34727b1f04177d | 168 | Latin | Agrippa 1529 - from Gallica |
+| 2025-12-29 | Musaeum hermeticum reformatum | 695203a5ab34727b1f041c53 | 882 | Latin | Major alchemical anthology |
+| 2025-12-29 | Tripus chimicus Sendivogianus | 695203c8ab34727b1f041fc6 | 226 | German | Sendivogius - from Gallica |
 
 ## Batch OCR Jobs Queued (2025-12-29 05:25 CET)
 
@@ -327,8 +329,10 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 | UJUvKBOaZkG4 | Aurora (Paracelsus) | 192 | pending |
 | 3eZEC5Njm_lU | De Restituta (Paracelsus) | 330 | pending |
 | VoRKaLbErRui | De nobilitate (Agrippa) | 168 | pending |
+| QWIIz_GPdTiA | Musaeum hermeticum | 882 | pending |
+| WMOMjSGum5he | Tripus chimicus Sendivogianus | 226 | pending |
 
-**Total: 2,268 pages queued for OCR**
+**Total: 3,376 pages queued for OCR**
 
 ---
 

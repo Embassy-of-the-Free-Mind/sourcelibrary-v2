@@ -343,3 +343,61 @@
 
 ---
 
+## Audit Session: 2025-12-29 06:15 (continued)
+
+---
+
+### 12. Erzählungen zum Vergnügen und zur Seelenbildung
+
+**Book ID:** 6909f42ecf28baa1b4cb0dc3
+**USTC:** N/A (1785 publication)
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Erzählungen zum Vergnügen und zur Seelenbildung | Erzählungen zum Vergnügen und zur Seelenbildung | Match |
+| Author | Eckartshausen, Karl von | Hofrath Eckartshausen | Match |
+| Year | 1785 | 1785 | Match |
+| Place | N/A | München (Munich) | Missing |
+| Publisher | N/A | Anton Franz, kurfürstl. Hof-Akademie-Buchdrucker | Missing |
+| Language | Unknown | German | Wrong |
+
+**Metadata Issues:**
+- Language incorrectly set to "Unknown" - should be "German"
+- Place missing: should be "Munich"
+- Publisher missing: should be "Anton Franz"
+- Frontispiece engraving by Weißenhahn properly described
+
+**Translation Quality:** 98% (416 pages translated)
+- 18th-century German Fraktur script well handled
+- Moral philosophy terminology ("Seelenbildung") accurately rendered
+- Excellent annotations explaining historical context
+- Domestic scenes and moral tales clearly translated
+
+---
+
+### 13. Historisch-theologische Betrachtungen
+
+**Book ID:** 68fa138e6bd5e42f9c120538
+**USTC:** N/A (1709 publication)
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Historisch-theologische Betrachtungen... | (OCR garbled) | Verify |
+| Author | Arnold, Gottfried | (OCR garbled) | Match |
+| Year | 1709 | (Not visible in samples) | Verify |
+| Place | N/A | (OCR garbled) | Missing |
+| Publisher | N/A | (OCR garbled) | Missing |
+
+**Metadata Issues:**
+- Metadata appears correct based on title
+- Place/publisher not determinable from current OCR
+
+**Translation Quality:** POOR - Needs re-OCR (361 pages)
+- OCR performed with older Mistral model (Oct 2024) - significant errors
+- Title page (page 3) OCR garbled: "Bifurifif = Theologifife" instead of proper title
+- Page 100 has catastrophic loop: "S. C. 22ff. und 22ff. von" repeated hundreds of times
+- Early 18th-century German Fraktur script not properly handled
+- **RECOMMENDATION: Re-run OCR with current Gemini model**
+
+---
+

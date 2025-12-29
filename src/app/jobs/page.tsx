@@ -446,28 +446,34 @@ export default function JobsPage() {
               const isActive = job.status === 'processing' || job.status === 'pending';
               const isProcessingThis = processingJobId === job.id;
 
+              // Check if job is stale (processing but not updated in 5+ minutes)
+              const lastUpdate = new Date(job.updated_at).getTime();
+              const now = Date.now();
+              const staleMinutes = 5;
+              const isStale = job.status === 'processing' && (now - lastUpdate) > staleMinutes * 60 * 1000;
+
               return (
                 <div
                   key={job.id}
                   className="p-4 rounded-xl"
-                  style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
+                  style={{ background: 'var(--bg-white)', border: isStale ? '2px solid var(--accent-gold)' : '1px solid var(--border-light)' }}
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <div className="flex items-center gap-2">
                         <StatusIcon
-                          className={`w-4 h-4 ${job.status === 'processing' ? 'animate-spin' : ''}`}
-                          style={{ color: STATUS_COLORS[job.status] }}
+                          className={`w-4 h-4 ${job.status === 'processing' && !isStale ? 'animate-spin' : ''}`}
+                          style={{ color: isStale ? 'var(--accent-gold)' : STATUS_COLORS[job.status] }}
                         />
                         <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
                           {job.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                         </span>
                         <span className="text-xs px-2 py-0.5 rounded-full capitalize" style={{
-                          background: 'var(--bg-warm)',
-                          color: STATUS_COLORS[job.status],
+                          background: isStale ? '#fef3c7' : 'var(--bg-warm)',
+                          color: isStale ? '#92400e' : STATUS_COLORS[job.status],
                         }}>
-                          {job.status}
+                          {isStale ? 'Stale' : job.status}
                         </span>
                       </div>
                       {job.book_title && (
@@ -493,7 +499,16 @@ export default function JobsPage() {
                           <Play className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
                         </button>
                       )}
-                      {job.status === 'processing' && (
+                      {job.status === 'processing' && isStale && !isProcessingThis && (
+                        <button
+                          onClick={() => processJob(job.id)}
+                          className="p-1.5 rounded-lg hover:bg-amber-100 transition-colors"
+                          title="Resume stale job"
+                        >
+                          <Play className="w-4 h-4" style={{ color: 'var(--accent-gold)' }} />
+                        </button>
+                      )}
+                      {job.status === 'processing' && !isStale && (
                         <button
                           onClick={() => handleAction(job.id, 'pause')}
                           className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
@@ -597,9 +612,19 @@ export default function JobsPage() {
                     </div>
                   )}
 
+                  {/* Stale warning */}
+                  {isStale && (
+                    <div className="text-xs p-2 rounded-lg mb-2" style={{ background: '#fef3c7', color: '#92400e' }}>
+                      Job appears stuck (no updates for {Math.round((now - lastUpdate) / 60000)} minutes). Click the play button to resume.
+                    </div>
+                  )}
+
                   {/* Footer info */}
                   <div className="flex justify-between text-xs" style={{ color: 'var(--text-faint)' }}>
                     <span>Created: {formatDate(job.created_at)}</span>
+                    {isStale && (
+                      <span style={{ color: '#92400e' }}>Last update: {formatDate(job.updated_at)}</span>
+                    )}
                     {job.completed_at && (
                       <span>Completed: {formatDate(job.completed_at)}</span>
                     )}

@@ -109,4 +109,14 @@ All 6 books queued for batch OCR processing:
 - `3eZEC5Njm_lU` - Paracelsus De Restituta (330 pages)
 - `VoRKaLbErRui` - Agrippa De nobilitate (168 pages)
 
+### Additional Imports (05:30 CET)
+| Title | Author | Date | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Musaeum hermeticum reformatum | Various | 1678 | 882 | 695203a5ab34727b1f041c53 |
+| Tripus chimicus Sendivogianus | Sendivogius | 1628 | 226 | 695203c8ab34727b1f041fc6 |
+
+OCR Jobs: `QWIIz_GPdTiA` (882 pages), `WMOMjSGum5he` (226 pages)
+
+**Session Total: 8 books, 3,376 pages imported**
+
 ---

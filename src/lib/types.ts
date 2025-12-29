@@ -462,6 +462,7 @@ export interface Page {
   // Split/crop workflow
   photo_original?: string;      // Original S3 URL before cropping
   cropped_photo?: string;       // Local path to cropped image
+  archived_photo?: string;      // Vercel Blob URL for archived IA images
   crop?: CropData;              // Crop coordinates used
   split_from?: string;          // ID of parent page if this was split from another
   split_detection?: {           // Pixel analysis result
