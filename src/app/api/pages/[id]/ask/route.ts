@@ -8,11 +8,81 @@ interface Message {
   content: string;
 }
 
+interface SourceQuote {
+  translation: string;
+  page: number;
+  bookTitle: string;
+  author: string;
+  citation: string;
+}
+
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
   const inputCost = (inputTokens / 1_000_000) * pricing.input;
   const outputCost = (outputTokens / 1_000_000) * pricing.output;
   return inputCost + outputCost;
+}
+
+// Fetch author's works from Source Library API
+async function fetchAuthorSources(searchTerms: string[], question: string): Promise<SourceQuote[]> {
+  const API_BASE = 'https://sourcelibrary.org/api';
+  const sources: SourceQuote[] = [];
+
+  try {
+    // Search for each term and combine results
+    for (const term of searchTerms.slice(0, 2)) { // Limit to first 2 terms
+      const searchUrl = `${API_BASE}/search?q=${encodeURIComponent(term)}&has_translation=true&limit=5`;
+      const searchRes = await fetch(searchUrl);
+
+      if (!searchRes.ok) continue;
+
+      const searchData = await searchRes.json();
+
+      // Get quotes from top matching pages
+      for (const result of (searchData.results || []).slice(0, 3)) {
+        if (result.page_number) {
+          try {
+            const quoteUrl = `${API_BASE}/books/${result.book_id}/quote?page=${result.page_number}`;
+            const quoteRes = await fetch(quoteUrl);
+
+            if (quoteRes.ok) {
+              const quoteData = await quoteRes.json();
+              if (quoteData.quote?.translation) {
+                sources.push({
+                  translation: quoteData.quote.translation.slice(0, 500), // Limit length
+                  page: quoteData.quote.page,
+                  bookTitle: quoteData.quote.display_title || quoteData.quote.book_title,
+                  author: quoteData.quote.author,
+                  citation: quoteData.citation?.inline || `(${quoteData.quote.author}, p. ${quoteData.quote.page})`,
+                });
+              }
+            }
+          } catch {
+            // Skip failed quote fetches
+          }
+        }
+      }
+
+      if (sources.length >= 3) break; // Limit total sources
+    }
+  } catch (error) {
+    console.error('Failed to fetch author sources:', error);
+  }
+
+  return sources;
+}
+
+function formatSourcesForPrompt(sources: SourceQuote[], personaName: string): string {
+  if (sources.length === 0) return '';
+
+  let text = `\nHere are excerpts from ${personaName}'s own works in the Source Library that you may cite:\n\n`;
+
+  for (const source of sources) {
+    text += `From "${source.bookTitle}" ${source.citation}:\n`;
+    text += `"${source.translation}"\n\n`;
+  }
+
+  return text;
 }
 
 const DEFAULT_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
@@ -49,7 +119,9 @@ export async function POST(
       bookTitle,
       bookAuthor,
       pageNumber,
-      customPrompt
+      customPrompt,
+      authorSearchTerms,
+      personaName
     } = body;
 
     if (!question) {
@@ -80,6 +152,13 @@ export async function POST(
       ? pageText.slice(0, 6000) + '\n\n[Text truncated for length]'
       : pageText;
 
+    // Fetch author's sources from Source Library if search terms provided
+    let authorSources = '';
+    if (authorSearchTerms && authorSearchTerms.length > 0 && personaName) {
+      const sources = await fetchAuthorSources(authorSearchTerms, question);
+      authorSources = formatSourcesForPrompt(sources, personaName);
+    }
+
     // Use custom prompt if provided, otherwise use default
     const promptTemplate = customPrompt || DEFAULT_PROMPT;
 
@@ -89,6 +168,7 @@ export async function POST(
       .replace('{book_context}', bookContext)
       .replace('{page_text}', truncatedText)
       .replace('{conversation_history}', conversationHistory)
+      .replace('{author_sources}', authorSources)
       .replace('{question}', question);
 
     const result = await model.generateContent(prompt);
