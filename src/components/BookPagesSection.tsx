@@ -120,7 +120,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [action, setAction] = useState<ActionType>('ocr');
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
-  const [concurrency, setConcurrency] = useState(2); // Parallel batches (2 = good balance of speed/quality)
+  const [concurrency, setConcurrency] = useState(5); // Parallel batches for OCR (speed optimized)
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
   const [useBatchApi, setUseBatchApi] = useState(false); // Use Gemini Batch API (50% off, 2-24h)
@@ -1164,8 +1164,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   {action === 'ocr' ? (
                     <>
                       <p className="font-medium mb-1">OCR (Optical Character Recognition)</p>
-                      <p className="text-stone-300 mb-2">Extracts text from page images using AI vision. 5 pages per batch (experiment-validated optimal size).</p>
-                      <p className="text-stone-400 text-[11px]">Parallel batches trade quality for speed. Use &quot;1 (sequential)&quot; for best continuity with words spanning page breaks.</p>
+                      <p className="text-stone-300 mb-2">Extracts text from page images using AI vision. 5 pages per batch (experiment-validated).</p>
+                      <p className="text-stone-400 text-[11px]">Parallel batches = faster. OCR is image-based so context between pages is less critical than for translation.</p>
                     </>
                   ) : (
                     <>
@@ -1205,9 +1205,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   onChange={(e) => setConcurrency(Number(e.target.value))}
                   className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 >
-                  <option value={1}>1 (sequential, best quality)</option>
-                  <option value={2}>2 (recommended)</option>
-                  <option value={5}>5 (faster)</option>
+                  <option value={1}>1 (sequential)</option>
+                  <option value={2}>2</option>
+                  <option value={5}>5 (recommended)</option>
                   <option value={10}>10 (max speed)</option>
                 </select>
               </div>
