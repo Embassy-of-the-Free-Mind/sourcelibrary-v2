@@ -155,6 +155,18 @@
 - Cross-references from acquired texts
 - Scholarly bibliographies (Thorndike, Yates, etc.)
 
+### Alternative Sources (when IA is down)
+| Source | Status | Notes |
+|--------|--------|-------|
+| **HathiTrust** | Requires login | Academic access, high quality scans |
+| **Google Books** | Limited API | Some full-view public domain |
+| **Gallica (BnF)** | Accessible | French materials, IIIF support |
+| **e-rara** | Accessible | Swiss rare books |
+| **BSB (Munich)** | Accessible | German materials, IIIF support |
+| **MDZ** | Accessible | Munich Digitization Center |
+
+*Note: Many require manual download + local import pipeline*
+
 ---
 
 ## Current Session
@@ -242,14 +254,30 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 
 # Acquisition Roadmap
 
-## Priority 1: Core Gaps
+## Priority 1: Core Gaps (Updated 2025-12-29)
+
+### URGENT - Missing Key Authors
+| Author | Status | What We Need | Priority |
+|--------|--------|--------------|----------|
+| **Thomas Vaughan** | ✗ MISSING | Lumen de Lumine, Aula Lucis, Anima Magica Abscondita | HIGH |
+| **Gichtel** | ✗ MISSING | Theosophia Practica | HIGH |
+| **Jane Lead** | ✗ MISSING | English Philadelphian Society | MEDIUM |
+| **Cudworth** | ✗ MISSING | True Intellectual System | MEDIUM |
+
+### In Progress
 | Author/Text | What We Need | Why | Status |
 |-------------|--------------|-----|--------|
-| Basil Valentine | Twelve Keys, Triumphant Chariot | Foundational alchemy | In progress |
-| Sendivogius | Novum Lumen Chymicum | Key 17th c. alchemy | Pending |
-| Thomas Vaughan | Lumen de Lumine, Aula Lucis | English Hermeticism | Pending |
-| John Dee | Monas Hieroglyphica, True Relation | Angelic magic | Pending |
-| Fludd | Utriusque Cosmi (complete) | Macrocosm/microcosm | Partial |
+| Basil Valentine | Triumphant Chariot | Antimony/iatrochemistry | In batch |
+| Hermetic Museum | English 1678 edition | Expands Latin Musaeum | In batch |
+| Fourth Book of Occult Philosophy | Pseudo-Agrippa | Practical magic | In batch |
+
+### Have Some, Need More
+| Author/Text | Have | Need | Notes |
+|-------------|------|------|-------|
+| Boehme | 3 works | More German originals | Aurora, Signatura Rerum |
+| Fludd | 1 work | Complete Utriusque Cosmi | 5+ volumes |
+| Dee | 1 work | True Relation, Monas | Angelic magic |
+| Sendivogius | 3 works | Earlier Latin editions | Already strong |
 
 ## Priority 2: Expanding Holdings
 | Theme | Target | Notes |

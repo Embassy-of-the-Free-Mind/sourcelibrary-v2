@@ -1160,18 +1160,24 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 <button className="p-1 text-stone-400 hover:text-stone-600 transition-colors">
                   <Info className="w-4 h-4" />
                 </button>
-                <div className="absolute left-0 top-full mt-2 w-72 p-3 bg-stone-800 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                <div className="absolute left-0 top-full mt-2 w-80 p-3 bg-stone-800 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
                   {action === 'ocr' ? (
                     <>
                       <p className="font-medium mb-1">OCR (Optical Character Recognition)</p>
-                      <p className="text-stone-300 mb-2">Extracts text from page images using AI vision. 5 pages per batch (experiment-validated).</p>
-                      <p className="text-stone-400 text-[11px]">Parallel batches = faster. OCR is image-based so context between pages is less critical than for translation.</p>
+                      <p className="text-stone-300 mb-2">Extracts text from page images. 5 pages/batch, 10 parallel batches recommended.</p>
+                      <p className="text-amber-400 text-[11px] mb-2">Experiment: Batch sizes 1, 5, 10 showed no quality difference. Only batch 20 degraded (30-1 loss).</p>
+                      <Link href="/about/processing" className="text-amber-400 hover:text-amber-300 text-[11px] underline">
+                        Learn more about our experiments →
+                      </Link>
                     </>
                   ) : (
                     <>
                       <p className="font-medium mb-1">Translation</p>
-                      <p className="text-stone-300 mb-2">Translates OCR text to English. 5 pages per batch, always sequential for continuity.</p>
-                      <p className="text-stone-400 text-[11px]">Each batch&apos;s last translation is passed as context: Batch 1 → page 5 context → Batch 2 → page 10 context → ...</p>
+                      <p className="text-stone-300 mb-2">Translates OCR text to English. Sequential processing for context continuity.</p>
+                      <p className="text-blue-400 text-[11px] mb-2">Each batch passes the last page&apos;s translation as context to the next batch.</p>
+                      <Link href="/about/processing" className="text-amber-400 hover:text-amber-300 text-[11px] underline">
+                        Learn more about processing →
+                      </Link>
                     </>
                   )}
                 </div>
