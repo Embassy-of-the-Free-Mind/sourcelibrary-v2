@@ -153,8 +153,9 @@ async function BookInfo({ id }: { id: string }) {
   }
 
   const { book, pages } = data;
-  const ocrCount = pages.filter(p => p.ocr?.data).length;
-  const translatedCount = pages.filter(p => p.translation?.data).length;
+  // Note: projection excludes .data fields, so check for object existence instead
+  const ocrCount = pages.filter(p => p.ocr).length;
+  const translatedCount = pages.filter(p => p.translation).length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
