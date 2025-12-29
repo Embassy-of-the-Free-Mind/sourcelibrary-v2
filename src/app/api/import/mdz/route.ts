@@ -2,33 +2,44 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
+interface IIIFCanvas {
+  '@id'?: string;
+  label?: string;
+  images?: Array<{
+    resource?: {
+      '@id'?: string;
+      service?: {
+        '@id'?: string;
+      };
+    };
+  }>;
+}
+
 interface IIIFManifest {
   label?: string;
-  description?: string;
+  description?: string | Array<{ '@value'?: string }>;
   license?: string | string[];
   attribution?: string | Array<{ '@value'?: string; '@language'?: string }>;
+  metadata?: Array<{
+    label?: string | { '@value'?: string };
+    value?: string | Array<{ '@value'?: string }>;
+  }>;
   sequences?: Array<{
-    canvases?: Array<{
-      images?: Array<{
-        resource?: {
-          '@id'?: string;
-        };
-      }>;
-    }>;
+    canvases?: IIIFCanvas[];
   }>;
 }
 
 /**
- * Import a book from Gallica (BnF) via IIIF
+ * Import a book from MDZ (Münchener DigitalisierungsZentrum / Bavarian State Library) via IIIF
  *
- * POST /api/import/gallica
+ * POST /api/import/mdz
  * Body: {
- *   ark: string,           // e.g., "bpt6k61073880" (Gallica ARK identifier)
+ *   bsb_id: string,           // e.g., "bsb00029099" (BSB identifier)
  *   title: string,
  *   display_title?: string,
  *   author: string,
- *   language?: string,
- *   published?: string,
+ *   year?: number,
+ *   original_language?: string,
  *   categories?: string[]
  * }
  */
@@ -36,29 +47,32 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const {
-      ark,
+      bsb_id,
       title,
       display_title,
       author,
-      language,
-      published,
+      year,
+      original_language,
       categories,
     } = body;
 
-    if (!ark || !title || !author) {
+    if (!bsb_id || !title || !author) {
       return NextResponse.json(
-        { error: 'Missing required fields: ark, title, author' },
+        { error: 'Missing required fields: bsb_id, title, author' },
         { status: 400 }
       );
     }
 
-    // Fetch IIIF manifest from Gallica
-    const manifestUrl = `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/manifest.json`;
+    // Normalize bsb_id (ensure it has the bsb prefix)
+    const normalizedId = bsb_id.startsWith('bsb') ? bsb_id : `bsb${bsb_id}`;
+
+    // Fetch IIIF manifest from MDZ
+    const manifestUrl = `https://api.digitale-sammlungen.de/iiif/presentation/v2/${normalizedId}/manifest`;
     const manifestRes = await fetch(manifestUrl);
 
     if (!manifestRes.ok) {
       return NextResponse.json(
-        { error: `Failed to fetch Gallica manifest: ${manifestRes.status}` },
+        { error: `Failed to fetch MDZ manifest: ${manifestRes.status}` },
         { status: 400 }
       );
     }
@@ -81,8 +95,9 @@ export async function POST(request: NextRequest) {
     // Check if book already exists
     const existing = await db.collection('books').findOne({
       $or: [
-        { gallica_ark: ark },
-        { 'dublin_core.dc_identifier': `GALLICA:${ark}` }
+        { mdz_id: normalizedId },
+        { bsb_id: normalizedId },
+        { 'dublin_core.dc_identifier': `MDZ:${normalizedId}` }
       ]
     });
 
@@ -97,14 +112,27 @@ export async function POST(request: NextRequest) {
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
 
-    // Gallica IIIF image URL pattern
-    // Full quality: /full/full/0/native.jpg
-    // Reduced for display: /full/1000,/0/default.jpg
-    const getPageImageUrl = (pageNum: number) =>
-      `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/f${pageNum + 1}/full/1000,/0/default.jpg`;
+    // MDZ IIIF image URL pattern
+    // Format: bsb_id_pagenum (padded to 5 digits)
+    const getPageImageUrl = (pageNum: number) => {
+      const paddedPage = String(pageNum + 1).padStart(5, '0');
+      return `https://api.digitale-sammlungen.de/iiif/image/v2/${normalizedId}_${paddedPage}/full/1000,/0/default.jpg`;
+    };
 
-    const getThumbnailUrl = (pageNum: number) =>
-      `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/f${pageNum + 1}/full/200,/0/default.jpg`;
+    const getThumbnailUrl = (pageNum: number) => {
+      const paddedPage = String(pageNum + 1).padStart(5, '0');
+      return `https://api.digitale-sammlungen.de/iiif/image/v2/${normalizedId}_${paddedPage}/full/200,/0/default.jpg`;
+    };
+
+    const getFullResUrl = (pageNum: number) => {
+      const paddedPage = String(pageNum + 1).padStart(5, '0');
+      return `https://api.digitale-sammlungen.de/iiif/image/v2/${normalizedId}_${paddedPage}/full/full/0/default.jpg`;
+    };
+
+    // Extract manifest title if available
+    const manifestTitle = typeof manifest.label === 'string'
+      ? manifest.label
+      : (manifest.label as unknown as { '@value'?: string })?.['@value'] || title;
 
     // Extract license URL from manifest
     const licenseUrl = Array.isArray(manifest.license)
@@ -127,23 +155,27 @@ export async function POST(request: NextRequest) {
       title,
       display_title: display_title || null,
       author,
-      language: language || 'Unknown',
-      published: published || 'Unknown',
+      language: original_language || 'Unknown',
+      original_language: original_language || 'Unknown',
+      published: year ? String(year) : 'Unknown',
+      year: year || null,
       categories: categories || [],
-      gallica_ark: ark,
+      mdz_id: normalizedId,
+      bsb_id: normalizedId,
       thumbnail: getThumbnailUrl(0),
       pageCount,
       pages_count: pageCount,
       dublin_core: {
-        dc_identifier: [`GALLICA:${ark}`],
-        dc_source: `https://gallica.bnf.fr/ark:/12148/${ark}`
+        dc_identifier: [`MDZ:${normalizedId}`, `URN:${normalizedId}`],
+        dc_source: `https://www.digitale-sammlungen.de/de/view/${normalizedId}`,
+        dc_title: manifestTitle,
       },
       image_source: {
-        provider: 'gallica',
-        provider_name: 'Gallica (Bibliothèque nationale de France)',
-        source_url: `https://gallica.bnf.fr/ark:/12148/${ark}`,
+        provider: 'mdz',
+        provider_name: 'Münchener DigitalisierungsZentrum (Bavarian State Library)',
+        source_url: `https://www.digitale-sammlungen.de/de/view/${normalizedId}`,
         iiif_manifest: manifestUrl,
-        identifier: ark,
+        identifier: normalizedId,
         license: licenseUrl || 'publicdomain',
         license_url: licenseUrl,
         attribution: attribution,
@@ -168,9 +200,9 @@ export async function POST(request: NextRequest) {
         page_number: i + 1,
         photo: getPageImageUrl(i),
         thumbnail: getThumbnailUrl(i),
-        photo_original: getPageImageUrl(i),
+        photo_original: getFullResUrl(i),
         ocr: {
-          language: language || 'Unknown',
+          language: original_language || 'Unknown',
           model: null,
           data: ''
         },
@@ -187,7 +219,6 @@ export async function POST(request: NextRequest) {
     await db.collection('pages').insertMany(pageDocs);
 
     // Fire off split detection check (non-blocking)
-    // This will set book.needs_splitting based on aspect ratio of pages 10 & 15
     const baseUrl = process.env.NEXT_PUBLIC_URL || process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : request.headers.get('origin') || 'http://localhost:3000';
@@ -195,24 +226,23 @@ export async function POST(request: NextRequest) {
     fetch(`${baseUrl}/api/books/${bookIdStr}/check-needs-split`, {
       method: 'GET',
     }).catch(() => {
-      // Ignore errors - split check is optional
-      console.log(`[Import] Split check queued for ${bookIdStr}`);
+      console.log(`[MDZ Import] Split check queued for ${bookIdStr}`);
     });
 
     return NextResponse.json({
       success: true,
       bookId: bookIdStr,
       title,
-      gallica_ark: ark,
+      mdz_id: normalizedId,
       pagesCreated: pageDocs.length,
       bookUrl: `/book/${bookIdStr}`,
-      gallicaUrl: `https://gallica.bnf.fr/ark:/12148/${ark}`,
+      mdzUrl: `https://www.digitale-sammlungen.de/de/view/${normalizedId}`,
       splitCheckQueued: true,
-      message: `Created book with ${pageDocs.length} pages from Gallica. Split detection queued.`
+      message: `Created book with ${pageDocs.length} pages from MDZ (Bavarian State Library). Split detection queued.`
     });
 
   } catch (error) {
-    console.error('Gallica Import error:', error);
+    console.error('MDZ Import error:', error);
     return NextResponse.json(
       { error: 'Import failed', details: String(error) },
       { status: 500 }

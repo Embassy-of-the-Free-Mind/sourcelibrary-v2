@@ -119,6 +119,11 @@ export async function POST(request: NextRequest) {
     const getThumbnailUrl = (pageNum: number) =>
       `https://archive.org/download/${ia_identifier}/page/n${pageNum}/full/pct:15/0/default.jpg`;
 
+    // Extract license from IA metadata
+    const iaMetadata = metadata.metadata || {};
+    const licenseUrl = iaMetadata.licenseurl || iaMetadata.license || null;
+    const rights = iaMetadata.rights || iaMetadata.possible_copyright_status || null;
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
@@ -143,7 +148,9 @@ export async function POST(request: NextRequest) {
         provider_name: 'Internet Archive',
         source_url: `https://archive.org/details/${ia_identifier}`,
         identifier: ia_identifier,
-        license: 'publicdomain',
+        license: licenseUrl || 'publicdomain',
+        license_url: licenseUrl,
+        rights: rights,
         access_date: new Date(),
       },
       status: 'draft',
