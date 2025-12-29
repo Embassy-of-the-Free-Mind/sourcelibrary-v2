@@ -210,3 +210,136 @@
 
 ---
 
+### 8. De hermetica Aegyptiorum vetere et Paracelsicorum nova medicina
+
+**Book ID:** 2e046860-d037-472d-ac44-51690d93a652
+**USTC:** 2051060
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | De hermetica Aegyptiorum vetere et Paracelsicorum nova medicina | HERMANNI CONRINGII De HERMETICA AEGYPTIORUM VETERVM ET PARACELSICORVM NOVA MEDICINA | Match |
+| Author | Conring, Hermann | HERMANNI CONRINGII | Match |
+| Year | 1648 | CIO IƆ C XLIIX (1648) | Match |
+| Place | Helmstedt | HELMESTADIIS | Match |
+| Publisher | Henning Müller / Martin Richter | Typis HENNINGI MVLLERI acad. typ. Sumptibus MARTINI RICHTERI | Match |
+
+**Metadata Issues:**
+- None - metadata is complete and accurate
+- Correctly distinguishes printer (Müller) from publisher (Richter)
+
+**Translation Quality:** 100% (218 pages)
+- No copy issues found
+- Scholarly Latin with Greek terms accurately rendered
+- Complex philosophical/medical argumentation well translated
+- References to classical authors (Pliny, Gellius, Censorinus) properly handled
+- Alchemical terminology (menstrua, salt, sulfur, mercury) accurately translated
+- Minor OCR artifact on page 100 ("ocrHere is the OCRed text...") but translation is proper
+
+---
+
+### 9. Novum lumen chymicum
+
+**Book ID:** 690986dccf28baa1b4cae0e3
+**USTC:** Not identified (1628 Geneva edition)
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Novum lumen chymicum | NOVUM LUMEN CHYMICUM | Match |
+| Author | [Sendivogius, Michael] | DIVI LESCHI GENVS AMO (anagram) | Match |
+| Year | 1628 | M.DC.XXVIII (1628) | Match |
+| Place | N/A | GENEVÆ (Geneva) | Missing |
+| Publisher | N/A | Typis & Sumptibus IOANN. DE TOURNES | Missing |
+
+**Metadata Issues:**
+- Place missing: should be "Geneva"
+- Publisher missing: should be "Jean de Tournes"
+- Author correctly marked with brackets to indicate pseudonymous publication
+- Note: Contains handwritten French bibliographic notes (page 3) about Sendivogius and other alchemists
+
+**Translation Quality:** 100% (209 pages)
+- No copy issues found
+- Exceptional alchemical translation with extensive scholarly notes
+- Dialogue between Mercury and Alchemist (pages 96+) well rendered
+- Technical terminology (Philosopher's Stone, Philosophical Mercury, Sulphur) explained
+- References to other alchemical authors (Van Drebbel, Augurelli) annotated
+
+---
+
+### 10. Pansophiae Diatyposis
+
+**Book ID:** 4f4ff6f9-f0bd-4307-910c-65da7c36c0ef
+**USTC:** Not yet identified
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Pansophiae Diatyposis | J. A. COMENII PANSOPHIAE DIATYPOSIS | Match |
+| Author | Jan Amos Comenius | J. A. COMENII | Match |
+| Year | (empty) | M. DC. XL V. (1645) | Missing |
+| Place | N/A | Amsterodami (Amsterdam) | Missing |
+| Publisher | N/A | Apud Ludovicum Elzevirium | Missing |
+
+**Metadata Issues:**
+- Published year missing: should be "1645"
+- Place missing: should be "Amsterdam"
+- Publisher missing: should be "Ludovicus Elzevir" (famous Elzevir press)
+- Display title correctly notes "(1645 Elzevier)"
+- Title page features "NE EXTRA OLEAS" motto with woodcut
+
+**Translation Quality:** 100% (148 pages)
+- No copy issues found
+- Philosophical/theological Latin well translated
+- References to Ezekiel's Temple properly contextualized
+- Pansophic terminology (Ichnography, Orthography) accurately rendered
+- Complex theological argumentation clearly expressed
+
+---
+
+### 11. Astronomica et astrologica
+
+**Book ID:** 6867c208aadfee9e955ec955
+**USTC:** 613790
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Astronomica et astrologica | ASTRONOMICA ET ASTROLOGICA | Match |
+| Author | Paracelsus, Theophrastus | AVREOLI THEOPHRASTI von Hohenhaim, PARACELSI | Match |
+| Year | 1567 | Anno 1567 | Match |
+| Place | N/A | Cöln (Cologne) | Missing |
+| Publisher | N/A | Arnoldi Byrckmans Erben | Missing |
+
+**Metadata Issues:**
+- Place missing: should be "Cologne"
+- Publisher missing: should be "Arnold Birckman's Heirs"
+- USTC ID correctly assigned
+- Dedication to Duke August of Saxony (page 4)
+- Imperial privilege noted on title page
+
+**Translation Quality:** 95% (135 pages)
+- Early Modern German well translated
+- Paracelsian terminology (Magi, Gamahey/talismans) accurately rendered
+- Astrological concepts and biblical references properly contextualized
+- Minor issues: some pages have "ocrHere" prefix artifacts in OCR (pages 1, 50, 100)
+- Page 1 appears to be placeholder ("ocrHere" only)
+
+---
+
+## Session Summary (Books 7-11)
+
+**Books Audited This Session:** 5
+
+| Book | Pages | Quality | Metadata |
+|------|-------|---------|----------|
+| Nova et accurata vestibuli Comeniani | 1113 | 95% | Complete |
+| De hermetica Aegyptiorum | 218 | 100% | Complete |
+| Novum lumen chymicum | 209 | 100% | Missing place/publisher |
+| Pansophiae Diatyposis | 148 | 100% | Missing year/place/publisher |
+| Astronomica et astrologica | 135 | 95% | Missing place/publisher |
+
+**Common Issues:**
+- Missing place/publisher metadata (3 of 5 books)
+- OCR artifacts on some older imports
+
+**Overall Quality:** Very high - all books have functional translations with no major copy issues.
+
+---
+

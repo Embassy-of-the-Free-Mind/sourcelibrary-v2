@@ -310,7 +310,12 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 
 | Date | Title | ID | Pages | Language | Notes |
 |------|-------|-----|-------|----------|-------|
-| *Imports will be logged here as completed* | | | | | |
+| 2025-12-29 | Utriusque cosmi | 69520176ab34727b1f04136b | 848 | Latin | Fludd - from Gallica |
+| 2025-12-29 | Tomus secundus (Microcosmi) | 695201a9ab34727b1f041826 | 416 | Latin | Fludd - from Gallica |
+| 2025-12-29 | Philosophia sacra | 695201adab34727b1f0419c7 | 314 | Latin | Fludd - from Gallica |
+| 2025-12-29 | Aurora thesaurusque philosophorum | 69520185ab34727b1f0416bc | 192 | Latin | Paracelsus - from Gallica |
+| 2025-12-29 | De Restituta medicinae | 695201c3ab34727b1f041b02 | 330 | Latin | Paracelsus/Dorn - from Gallica |
+| 2025-12-29 | De nobilitate foeminei sexus | 6952018fab34727b1f04177d | 168 | Latin | Agrippa 1529 - from Gallica |
 
 ---
 

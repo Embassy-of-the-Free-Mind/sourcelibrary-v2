@@ -61,6 +61,12 @@ export default function BookSummaryPage() {
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'summary' | 'pages' | 'index'>('summary');
+  const [progress, setProgress] = useState<{
+    message: string;
+    currentBatch?: number;
+    totalBatches?: number;
+    quotesFound?: number;
+  } | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -97,34 +103,64 @@ export default function BookSummaryPage() {
   const regenerateIndex = async () => {
     setGenerating(true);
     setError(null);
+    setProgress({ message: 'Starting...' });
+
     try {
-      // Force clear cache
-      const clearRes = await fetch(`/api/books/${bookId}/index`, { method: 'POST' });
-      if (!clearRes.ok) {
-        const errData = await clearRes.json();
-        throw new Error(errData.error || 'Failed to clear cache');
-      }
+      // Clear cache first
+      await fetch(`/api/books/${bookId}/index`, { method: 'POST' });
 
-      // Fetch fresh (this triggers generation)
-      const res = await fetch(`/api/books/${bookId}/index`);
-      if (res.ok) {
-        const newIndex = await res.json();
-        console.log('Generated index:', newIndex);
-        setIndex(newIndex);
+      // Use streaming endpoint for progress updates
+      const res = await fetch(`/api/books/${bookId}/index/stream`);
+      if (!res.ok) throw new Error('Failed to start generation');
 
-        // Check if summary was actually generated
-        if (!newIndex.bookSummary?.brief && !newIndex.bookSummary?.abstract) {
-          setError('Summary generation completed but no content was produced. The book title/author may not have been found in research.');
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error('No response stream');
+
+      const decoder = new TextDecoder();
+      let totalQuotes = 0;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const text = decoder.decode(value);
+        const lines = text.split('\n').filter(Boolean);
+
+        for (const line of lines) {
+          try {
+            const event = JSON.parse(line);
+
+            if (event.type === 'status') {
+              setProgress({
+                message: event.message,
+                totalBatches: event.totalBatches
+              });
+            } else if (event.type === 'batch') {
+              if (event.quotesFound) totalQuotes += event.quotesFound;
+              setProgress({
+                message: event.message || `Processing batch ${event.current}/${event.total}`,
+                currentBatch: event.current,
+                totalBatches: event.total,
+                quotesFound: totalQuotes
+              });
+            } else if (event.type === 'complete') {
+              setProgress({ message: 'Complete!', quotesFound: event.quotesExtracted });
+              // Refresh the index data
+              await fetchData();
+            } else if (event.type === 'error') {
+              throw new Error(event.message);
+            }
+          } catch (parseErr) {
+            console.log('Parse error for line:', line, parseErr);
+          }
         }
-      } else {
-        const errData = await res.json();
-        throw new Error(errData.error || 'Failed to generate index');
       }
     } catch (e) {
       console.error('Failed to regenerate:', e);
       setError(e instanceof Error ? e.message : 'Failed to generate summary');
     } finally {
       setGenerating(false);
+      setProgress(null);
     }
   };
 
@@ -182,7 +218,24 @@ export default function BookSummaryPage() {
               className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition-colors disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${generating ? 'animate-spin' : ''}`} />
-              {generating ? 'Generating...' : 'Regenerate'}
+              {generating && progress ? (
+                <span className="flex items-center gap-2">
+                  {progress.currentBatch && progress.totalBatches ? (
+                    <>
+                      <span>Batch {progress.currentBatch}/{progress.totalBatches}</span>
+                      {progress.quotesFound ? (
+                        <span className="text-amber-600">({progress.quotesFound} quotes)</span>
+                      ) : null}
+                    </>
+                  ) : (
+                    progress.message
+                  )}
+                </span>
+              ) : generating ? (
+                'Starting...'
+              ) : (
+                'Regenerate'
+              )}
             </button>
           </div>
         </div>
@@ -265,7 +318,11 @@ export default function BookSummaryPage() {
                 {generating ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
-                    Generating Summary...
+                    {progress?.currentBatch && progress?.totalBatches ? (
+                      <span>Batch {progress.currentBatch}/{progress.totalBatches}</span>
+                    ) : (
+                      <span>{progress?.message || 'Starting...'}</span>
+                    )}
                   </>
                 ) : (
                   <>
@@ -282,10 +339,29 @@ export default function BookSummaryPage() {
                 Process Pages First
               </Link>
             </div>
-            {generating && (
-              <p className="text-stone-400 text-sm mt-4">
-                Researching the book and generating summary... This may take a minute.
-              </p>
+            {generating && progress && (
+              <div className="mt-6 max-w-md mx-auto">
+                {progress.totalBatches && (
+                  <div className="mb-2">
+                    <div className="h-2 bg-stone-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-amber-500 transition-all duration-300"
+                        style={{
+                          width: `${((progress.currentBatch || 0) / progress.totalBatches) * 100}%`
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+                <p className="text-stone-500 text-sm text-center">
+                  {progress.message}
+                  {progress.quotesFound ? (
+                    <span className="text-amber-600 ml-2">
+                      • {progress.quotesFound} quotes found
+                    </span>
+                  ) : null}
+                </p>
+              </div>
             )}
             {error && !generating && (
               <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm max-w-md mx-auto">

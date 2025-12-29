@@ -86,6 +86,18 @@ https://gallica.bnf.fr/iiif/ark:/12148/{ARK}/manifest.json
 ```
 
 ### Action Required
-Need to create Gallica import route (`/api/import/gallica`) using IIIF manifest.
+~~Need to create Gallica import route (`/api/import/gallica`) using IIIF manifest.~~ **DONE**
+
+### Imports Completed
+| Title | Author | Date | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Utriusque cosmi | Robert Fludd | 1617-1618 | 848 | 69520176ab34727b1f04136b |
+| Tomus secundus (Microcosmi) | Robert Fludd | 1619 | 416 | 695201a9ab34727b1f041826 |
+| Philosophia sacra | Robert Fludd | 1626 | 314 | 695201adab34727b1f0419c7 |
+| Aurora thesaurusque philosophorum | Paracelsus | 1577 | 192 | 69520185ab34727b1f0416bc |
+| De Restituta medicinae | Paracelsus (Dorn) | 1578 | 330 | 695201c3ab34727b1f041b02 |
+| De nobilitate foeminei sexus | Agrippa | 1529 | 168 | 6952018fab34727b1f04177d |
+
+**Total: 6 books, 2,268 new pages**
 
 ---

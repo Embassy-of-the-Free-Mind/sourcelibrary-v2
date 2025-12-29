@@ -121,22 +121,27 @@ async function processBatch(
 ${batchContent}
 
 ## Task
-Extract structured information from these pages. Be thorough but accurate - only include what's actually in the text.
+Extract structured information from these pages.
 
 Output as JSON:
 {
   "themes": ["Main theme 1", "Main theme 2"],
   "quotes": [
-    {"text": "Exact memorable quote from the text", "page": 5, "context": "Why this quote matters"},
-    {"text": "Another significant passage", "page": 7, "context": "Its significance"}
+    {"text": "Copy the EXACT words from the text - a striking, memorable, or important sentence or passage", "page": 5, "context": "Brief note on why this quote matters"},
+    {"text": "Another VERBATIM quote copied directly from the pages above", "page": 7, "context": "Its significance"}
   ],
   "people": ["Person Name 1", "Person Name 2"],
   "places": ["Place Name 1", "Place Name 2"],
   "concepts": ["Key concept 1", "Technical term 2"],
-  "summary": "2-3 sentence summary of what these pages cover and their key arguments or ideas."
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments."
 }
 
-Include 3-5 of the most notable quotes. For people/places/concepts, include all that appear prominently.`;
+CRITICAL for quotes:
+- Copy EXACT text from the pages - do not paraphrase or summarize
+- Find memorable, striking, or important passages readers would want to highlight
+- Look for: bold claims, definitions, vivid descriptions, key arguments
+- Include the page number where each quote appears
+- 3-5 quotes per batch`;
 
   try {
     const result = await model.generateContent(prompt);
