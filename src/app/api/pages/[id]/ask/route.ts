@@ -24,46 +24,68 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
 }
 
 // Fetch author's works from Source Library API
-async function fetchAuthorSources(searchTerms: string[], question: string): Promise<SourceQuote[]> {
+async function fetchAuthorSources(searchTerms: string[]): Promise<SourceQuote[]> {
   const API_BASE = 'https://sourcelibrary.org/api';
   const sources: SourceQuote[] = [];
+  const seenBooks = new Set<string>();
 
   try {
     // Search for each term and combine results
     for (const term of searchTerms.slice(0, 2)) { // Limit to first 2 terms
-      const searchUrl = `${API_BASE}/search?q=${encodeURIComponent(term)}&has_translation=true&limit=5`;
+      const searchUrl = `${API_BASE}/search?q=${encodeURIComponent(term)}&has_translation=true&limit=8`;
       const searchRes = await fetch(searchUrl);
 
       if (!searchRes.ok) continue;
 
       const searchData = await searchRes.json();
 
-      // Get quotes from top matching pages
-      for (const result of (searchData.results || []).slice(0, 3)) {
-        if (result.page_number) {
-          try {
-            const quoteUrl = `${API_BASE}/books/${result.book_id}/quote?page=${result.page_number}`;
-            const quoteRes = await fetch(quoteUrl);
+      for (const result of (searchData.results || [])) {
+        if (sources.length >= 3) break;
+        if (seenBooks.has(result.book_id)) continue;
+        seenBooks.add(result.book_id);
 
-            if (quoteRes.ok) {
-              const quoteData = await quoteRes.json();
-              if (quoteData.quote?.translation) {
-                sources.push({
-                  translation: quoteData.quote.translation.slice(0, 500), // Limit length
-                  page: quoteData.quote.page,
-                  bookTitle: quoteData.quote.display_title || quoteData.quote.book_title,
-                  author: quoteData.quote.author,
-                  citation: quoteData.citation?.inline || `(${quoteData.quote.author}, p. ${quoteData.quote.page})`,
-                });
+        try {
+          // Use page_number if available (page result), otherwise pick a representative page
+          const pageNum = result.page_number || 10;
+          const quoteUrl = `${API_BASE}/books/${result.book_id}/quote?page=${pageNum}`;
+          const quoteRes = await fetch(quoteUrl);
+
+          if (quoteRes.ok) {
+            const quoteData = await quoteRes.json();
+            const translation = quoteData.quote?.translation || '';
+
+            // Skip blank/empty pages
+            if (translation.length < 100 || translation.includes('[[warning:')) {
+              // Try a different page
+              const altQuoteRes = await fetch(`${API_BASE}/books/${result.book_id}/quote?page=15`);
+              if (altQuoteRes.ok) {
+                const altData = await altQuoteRes.json();
+                if (altData.quote?.translation && altData.quote.translation.length > 100) {
+                  sources.push({
+                    translation: altData.quote.translation.slice(0, 500),
+                    page: altData.quote.page,
+                    bookTitle: altData.quote.display_title || altData.quote.book_title,
+                    author: altData.quote.author,
+                    citation: altData.citation?.inline || `(${altData.quote.author}, p. ${altData.quote.page})`,
+                  });
+                }
               }
+            } else {
+              sources.push({
+                translation: translation.slice(0, 500),
+                page: quoteData.quote.page,
+                bookTitle: quoteData.quote.display_title || quoteData.quote.book_title,
+                author: quoteData.quote.author,
+                citation: quoteData.citation?.inline || `(${quoteData.quote.author}, p. ${quoteData.quote.page})`,
+              });
             }
-          } catch {
-            // Skip failed quote fetches
           }
+        } catch {
+          // Skip failed quote fetches
         }
       }
 
-      if (sources.length >= 3) break; // Limit total sources
+      if (sources.length >= 3) break;
     }
   } catch (error) {
     console.error('Failed to fetch author sources:', error);
@@ -155,7 +177,7 @@ export async function POST(
     // Fetch author's sources from Source Library if search terms provided
     let authorSources = '';
     if (authorSearchTerms && authorSearchTerms.length > 0 && personaName) {
-      const sources = await fetchAuthorSources(authorSearchTerms, question);
+      const sources = await fetchAuthorSources(authorSearchTerms);
       authorSources = formatSourcesForPrompt(sources, personaName);
     }
 
