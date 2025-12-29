@@ -317,6 +317,19 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 | 2025-12-29 | De Restituta medicinae | 695201c3ab34727b1f041b02 | 330 | Latin | Paracelsus/Dorn - from Gallica |
 | 2025-12-29 | De nobilitate foeminei sexus | 6952018fab34727b1f04177d | 168 | Latin | Agrippa 1529 - from Gallica |
 
+## Batch OCR Jobs Queued (2025-12-29 05:25 CET)
+
+| Job ID | Book | Pages | Status |
+|--------|------|-------|--------|
+| ICni4X0G-41y | Utriusque cosmi (Fludd) | 848 | pending |
+| UyDsSpniCLEC | Tomus secundus (Fludd) | 416 | pending |
+| XsC0-lgux49T | Philosophia sacra (Fludd) | 314 | pending |
+| UJUvKBOaZkG4 | Aurora (Paracelsus) | 192 | pending |
+| 3eZEC5Njm_lU | De Restituta (Paracelsus) | 330 | pending |
+| VoRKaLbErRui | De nobilitate (Agrippa) | 168 | pending |
+
+**Total: 2,268 pages queued for OCR**
+
 ---
 
 # QA Spot Checks

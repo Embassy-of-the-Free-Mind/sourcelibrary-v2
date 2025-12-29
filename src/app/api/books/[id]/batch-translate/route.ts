@@ -252,12 +252,45 @@ Return each translation clearly separated with the exact format:
 
     const failedCount = results.filter(r => !r.success).length;
 
+    // Check if we should trigger summary generation
+    // Trigger when: translation complete (remaining=0) OR >50% translated
+    const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
+    const translatedCount = await db.collection('pages').countDocuments({
+      book_id: bookId,
+      'translation.data': { $exists: true, $nin: [null, ''] }
+    });
+    const translationPercent = totalPages > 0 ? (translatedCount / totalPages) * 100 : 0;
+    const shouldGenerateSummary = remainingCount === 0 || translationPercent > 50;
+
+    // Auto-trigger summary generation in background if threshold met
+    // and no recent summary exists
+    let summaryTriggered = false;
+    if (shouldGenerateSummary && successCount > 0) {
+      const existingIndex = book.index;
+      const indexAge = existingIndex?.generatedAt
+        ? Date.now() - new Date(existingIndex.generatedAt).getTime()
+        : Infinity;
+      const oneHour = 60 * 60 * 1000;
+
+      // Only trigger if no index or index is stale (>1 hour old)
+      if (!existingIndex || indexAge > oneHour) {
+        summaryTriggered = true;
+        // Clear cache to force regeneration (non-blocking)
+        db.collection('books').updateOne(
+          { id: bookId },
+          { $unset: { index: '' } }
+        ).catch(console.error);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       processed: results.length,
       successful: successCount,
       failed: failedCount,
       remaining: remainingCount,
+      translationPercent: Math.round(translationPercent),
+      summaryTriggered,
       usage: {
         inputTokens: totalInputTokens,
         outputTokens: totalOutputTokens,

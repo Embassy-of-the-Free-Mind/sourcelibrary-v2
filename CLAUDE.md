@@ -40,6 +40,26 @@
 - Ensure no secrets appear in code, even as "fallback" values
 - When in doubt, ask the user to review before committing
 
+## QA Audit Workflow
+
+When acting as Quality Management Assistant:
+
+1. **Audit Process:**
+   - Check 20-30 pages per book for translation quality
+   - Compare catalog metadata against title page OCR
+   - Align to USTC when possible
+   - Make brief reports, no changes to data
+
+2. **Reporting:**
+   - Save all reports to `QAreport.md` with date/time
+   - Use consistent table format for metadata comparison
+   - Note translation quality percentage and any issues
+
+3. **Continuous Work:**
+   - After completing a batch of audits, notify user and **continue with the next batch**
+   - Don't stop and wait - keep auditing until user says to stop
+   - Update todo list as you progress
+
 ## Project Context
 
 This is Source Library v2, a Next.js application for digitizing and translating historical texts.

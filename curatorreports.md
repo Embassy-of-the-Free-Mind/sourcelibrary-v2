@@ -100,4 +100,13 @@ https://gallica.bnf.fr/iiif/ark:/12148/{ARK}/manifest.json
 
 **Total: 6 books, 2,268 new pages**
 
+### OCR Jobs Created (05:25 CET)
+All 6 books queued for batch OCR processing:
+- `ICni4X0G-41y` - Fludd Utriusque (848 pages)
+- `UyDsSpniCLEC` - Fludd Tomus (416 pages)
+- `XsC0-lgux49T` - Fludd Philosophia (314 pages)
+- `UJUvKBOaZkG4` - Paracelsus Aurora (192 pages)
+- `3eZEC5Njm_lU` - Paracelsus De Restituta (330 pages)
+- `VoRKaLbErRui` - Agrippa De nobilitate (168 pages)
+
 ---
