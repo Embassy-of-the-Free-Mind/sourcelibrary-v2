@@ -160,7 +160,7 @@ async function BookInfo({ id }: { id: string }) {
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
-  const hasTranslations = translatedCount > 0;
+  const hasTranslations = translatedCount > pages.length / 2; // >50% translated
   const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
   const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);

@@ -120,7 +120,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [action, setAction] = useState<ActionType>('ocr');
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
-  const [concurrency, setConcurrency] = useState(5); // Parallel batches for OCR (speed optimized)
+  const [concurrency, setConcurrency] = useState(10); // Parallel batches for OCR (experiment-validated)
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
   const [useBatchApi, setUseBatchApi] = useState(false); // Use Gemini Batch API (50% off, 2-24h)
@@ -1207,8 +1207,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 >
                   <option value={1}>1 (sequential)</option>
                   <option value={2}>2</option>
-                  <option value={5}>5 (recommended)</option>
-                  <option value={10}>10 (max speed)</option>
+                  <option value={5}>5</option>
+                  <option value={10}>10 (recommended)</option>
                 </select>
               </div>
             )}

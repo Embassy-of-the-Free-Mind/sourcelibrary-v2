@@ -35,6 +35,22 @@
 
 ## Acquisition Protocol
 
+### Selection Rules (CRITICAL)
+
+**ACQUIRE:**
+- Original historical editions (pre-1800 primary sources)
+- Early printed books in original language
+- First editions and important early printings
+- Contemporary translations (e.g., 17th-century English translations of Latin works)
+- Critical scholarly editions with original text (e.g., Flasch's Bruno, Tocco's Bruno)
+
+**REJECT:**
+- Modern translations (20th-21st century) without original text
+- Secondary literature and commentaries (unless exceptional)
+- Facsimile reprints when original scans exist
+- Anthologies that excerpt rather than present complete works
+- Books already in collection (check before importing)
+
 ### Scoring Criteria (1-10 scale)
 | Criterion | Weight | Notes |
 |-----------|--------|-------|
@@ -44,6 +60,7 @@
 | Completeness | 1x | Full text vs fragments |
 | Image quality | 1x | Readable scans |
 | Research value | 1x | Citations, scholarly interest |
+| Historical authenticity | 2x | Original vs modern editions |
 
 ### Batch Size
 - **Target**: 5-20 books per acquisition session
@@ -149,11 +166,11 @@
 # Acquisition Batch 2025-12-29-001 — Basil Valentine & Alchemical Corpus
 
 ## Summary
-- **Books selected**: 6
+- **Books selected**: 6 → **3 to import** (3 already in collection or skipped)
 - **Theme**: Alchemical practice, Basil Valentine corpus, early chemical philosophy
 - **Languages**: Latin, English, German
 - **Date range**: 1599-1678
-- **Status**: PENDING IMPORT
+- **Status**: IMPORTING (Archive.org 503 - retrying)
 
 ## Thematic Rationale
 Basil Valentine is a cornerstone of practical alchemy, bridging medieval and early modern chemical philosophy. The Twelve Keys and Triumphant Chariot are foundational texts cited throughout the tradition. We have scattered Valentine references but lack his major individual works. This batch fills a critical gap in our alchemical holdings.
@@ -166,7 +183,7 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 **Theme**: Alchemy, practical operations
 **Score**: 9/10
 **Notes**: Contains the Twelve Keys with symbolic woodcuts. First English compendium of Valentine's practical works. Critical for understanding alchemical laboratory practice.
-**Status**: pending
+**Status**: ALREADY IN COLLECTION (ID: 7fad466b-fc3a-4869-8b8d-8b121fd2def6)
 
 ### 2. Triumphant Chariot of Antimony (1678)
 **Author**: Basilius Valentinus, with annotations by Theodore Kerckring
@@ -182,7 +199,7 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 **Theme**: Natural philosophy, cosmology, mathematics
 **Score**: 10/10
 **Notes**: Contains De Monade, De Minimo, De Immenso — Bruno's mature Latin trilogy. Essential for understanding his mathematical-metaphysical cosmology. 1879-1891 critical edition.
-**Status**: pending
+**Status**: SKIPPED - We have jordanibruninola2pt2brun (same critical edition)
 
 ### 4. The Hermetic Museum Restored and Enlarged (1678)
 **Author**: Various (anthology)
@@ -206,7 +223,7 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 **Theme**: Natural magic, Kabbalah, Neoplatonism
 **Score**: 7/10 (we have a 1533 edition already, but this is Jung's copy)
 **Notes**: From Carl Jung's personal library. Provenance value — shows continuity of esoteric tradition into depth psychology. Consider as supplement or replacement for existing copy.
-**Status**: pending
+**Status**: SKIPPED - We already have TWO 1533 editions (McGill + henricicoragrip00unkngoog)
 
 ## Quality Notes
 - Verify page completeness on all imports
@@ -220,5 +237,51 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 - Dee: Liber Mysteriorum, True Relation
 - Fludd: Additional volumes of Utriusque Cosmi
 - Paracelsus: Individual treatises beyond Opera Omnia
+
+---
+
+# Acquisition Roadmap
+
+## Priority 1: Core Gaps
+| Author/Text | What We Need | Why | Status |
+|-------------|--------------|-----|--------|
+| Basil Valentine | Twelve Keys, Triumphant Chariot | Foundational alchemy | In progress |
+| Sendivogius | Novum Lumen Chymicum | Key 17th c. alchemy | Pending |
+| Thomas Vaughan | Lumen de Lumine, Aula Lucis | English Hermeticism | Pending |
+| John Dee | Monas Hieroglyphica, True Relation | Angelic magic | Pending |
+| Fludd | Utriusque Cosmi (complete) | Macrocosm/microcosm | Partial |
+
+## Priority 2: Expanding Holdings
+| Theme | Target | Notes |
+|-------|--------|-------|
+| Paracelsus | Individual treatises in German | Beyond Opera Omnia |
+| Emblemata | Atalanta Fugiens, Splendor Solis | Alchemical imagery |
+| Neoplatonism | Ficino's Plotinus, Proclus | Florentine sources |
+| Architecture | Vitruvius, Palladio | Sacred geometry |
+
+## Priority 3: Rare Finds
+- Incunabula (pre-1500) - when available
+- Manuscript digitizations
+- Amsterdam printing tradition (Elzevier, etc.)
+
+---
+
+# Rejects Log
+
+| Date | Title | Author | Reason |
+|------|-------|--------|--------|
+| 2025-12-29 | Three Books of Occult Philosophy (Llewellyn 1993) | Agrippa/Tyson trans. | Modern translation, not original |
+| 2025-12-29 | Giordano Bruno: Philosopher/Heretic | Rowland | Secondary literature |
+| 2025-12-29 | The Chemical Wedding of Christian Rosenkreutz (Foxcroft trans.) | Andreae | Modern translation exists |
+
+*Rationale: We acquire PRIMARY SOURCES in original language or contemporary translations. Modern translations and secondary literature go elsewhere.*
+
+---
+
+# Successes Log
+
+| Date | Title | ID | Pages | Language | Notes |
+|------|-------|-----|-------|----------|-------|
+| *Imports will be logged here as completed* | | | | | |
 
 ---
