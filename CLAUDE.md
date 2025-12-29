@@ -67,3 +67,22 @@ This is Source Library v2, a Next.js application for digitizing and translating 
 - **Stack**: Next.js 14, MongoDB, Gemini AI for OCR/translation
 - **Database**: MongoDB Atlas (credentials in .env.local - DO NOT READ)
 - **Deployment**: Vercel
+
+## Gemini Models
+
+Use the latest available Gemini models. As of December 2025:
+
+**Gemini 3 (Latest)**
+- `gemini-3-pro-preview` - Best multimodal understanding
+- `gemini-3-flash-preview` - Balanced speed/scale/intelligence (use for summarization)
+
+**Gemini 2.5**
+- `gemini-2.5-flash` - Stable flash model
+- `gemini-2.5-pro` - Stable pro model
+
+**Current Usage**
+- Summary/Index generation: `gemini-3-flash-preview`
+- OCR: Check batch-ocr route
+- Translation: Check translate route
+
+Reference: https://ai.google.dev/gemini-api/docs/models

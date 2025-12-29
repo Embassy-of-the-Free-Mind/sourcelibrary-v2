@@ -76,7 +76,7 @@ async function processBatch(
   bookLanguage?: string
 ): Promise<BatchExtraction> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-3-flash-preview',
     generationConfig: {
       temperature: 0.2, // Low temperature for consistent extraction
       maxOutputTokens: 2000,
@@ -567,7 +567,7 @@ async function generateBookSummary(
   researchContext?: string,
   chapters?: ChapterInfo[]
 ): Promise<GeneratedSummary> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
   // If no batch extractions, fall back to research-only summary
   if (batchExtractions.length === 0) {
@@ -916,7 +916,7 @@ export async function GET(
         data: bookSummary.brief,
         generated_at: new Date(),
         page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
-        model: 'gemini-2.0-flash'
+        model: 'gemini-3-flash-preview'
       };
     }
 
