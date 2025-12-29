@@ -213,16 +213,19 @@ export async function GET(
           const text = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
 
           if (text) {
+            // Set the full translation object (not nested fields) to handle cases where translation is null
             await db.collection('pages').updateOne(
               { id: pageId },
               {
                 $set: {
-                  'translation.data': text,
-                  'translation.updated_at': now,
-                  'translation.model': jobDoc.model,
-                  'translation.source_language': jobDoc.source_language,
-                  'translation.target_language': jobDoc.target_language,
-                  'translation.source': 'batch_api',
+                  translation: {
+                    data: text,
+                    updated_at: now,
+                    model: jobDoc.model,
+                    source_language: jobDoc.source_language,
+                    target_language: jobDoc.target_language,
+                    source: 'batch_api',
+                  },
                   updated_at: new Date()
                 }
               }
