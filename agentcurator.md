@@ -145,3 +145,80 @@
 *Session reports appended below*
 
 ---
+
+# Acquisition Batch 2025-12-29-001 — Basil Valentine & Alchemical Corpus
+
+## Summary
+- **Books selected**: 6
+- **Theme**: Alchemical practice, Basil Valentine corpus, early chemical philosophy
+- **Languages**: Latin, English, German
+- **Date range**: 1599-1678
+- **Status**: PENDING IMPORT
+
+## Thematic Rationale
+Basil Valentine is a cornerstone of practical alchemy, bridging medieval and early modern chemical philosophy. The Twelve Keys and Triumphant Chariot are foundational texts cited throughout the tradition. We have scattered Valentine references but lack his major individual works. This batch fills a critical gap in our alchemical holdings.
+
+## Books Selected
+
+### 1. The Last Will and Testament of Basil Valentine (1671)
+**Author**: Basilius Valentinus (pseudo.)
+**Language**: English | **Source**: [archive.org/details/lastvvilltestame00basi](https://archive.org/details/lastvvilltestame00basi)
+**Theme**: Alchemy, practical operations
+**Score**: 9/10
+**Notes**: Contains the Twelve Keys with symbolic woodcuts. First English compendium of Valentine's practical works. Critical for understanding alchemical laboratory practice.
+**Status**: pending
+
+### 2. Triumphant Chariot of Antimony (1678)
+**Author**: Basilius Valentinus, with annotations by Theodore Kerckring
+**Language**: English | **Source**: [archive.org/details/b30336909](https://archive.org/details/b30336909)
+**Theme**: Alchemy, iatrochemistry, antimony
+**Score**: 9/10
+**Notes**: The foundational text on antimony in Western alchemy. Kerckring's annotations add medical-chemical context. 4 engraved plates of apparatus.
+**Status**: pending
+
+### 3. Bruno: Opera Latine conscripta Vol. II
+**Author**: Giordano Bruno
+**Language**: Latin | **Source**: [archive.org/details/operalatineconsc02brun](https://archive.org/details/operalatineconsc02brun)
+**Theme**: Natural philosophy, cosmology, mathematics
+**Score**: 10/10
+**Notes**: Contains De Monade, De Minimo, De Immenso — Bruno's mature Latin trilogy. Essential for understanding his mathematical-metaphysical cosmology. 1879-1891 critical edition.
+**Status**: pending
+
+### 4. The Hermetic Museum Restored and Enlarged (1678)
+**Author**: Various (anthology)
+**Language**: English | **Source**: [archive.org/details/b24927363_0001](https://archive.org/details/b24927363_0001)
+**Theme**: Alchemy, Hermetica
+**Score**: 10/10
+**Notes**: Major alchemical anthology containing Valentine's Twelve Keys, Sendivogius, Philalethes, and other key texts. We have Musaeum Hermeticum (Latin) but not this expanded English edition.
+**Status**: pending
+
+### 5. Agrippa: Fourth Book of Occult Philosophy (1655)
+**Author**: Pseudo-Agrippa, with Peter de Abano, Arbatel
+**Language**: English | **Source**: [archive.org/details/bib_fict_4103360](https://archive.org/details/bib_fict_4103360)
+**Theme**: Ceremonial magic, goetia, geomancy
+**Score**: 8/10
+**Notes**: Spurious "fourth book" with practical magical elements. Contains Arbatel of Magic, Heptameron, geomantic texts. Important for reception history of Agrippa.
+**Status**: pending
+
+### 6. De Occulta Philosophia (Jung Collection 1533)
+**Author**: Heinrich Cornelius Agrippa
+**Language**: Latin | **Source**: [archive.org/details/DeOccultaPhilosophiaJungCollection1533](https://archive.org/details/DeOccultaPhilosophiaJungCollection1533)
+**Theme**: Natural magic, Kabbalah, Neoplatonism
+**Score**: 7/10 (we have a 1533 edition already, but this is Jung's copy)
+**Notes**: From Carl Jung's personal library. Provenance value — shows continuity of esoteric tradition into depth psychology. Consider as supplement or replacement for existing copy.
+**Status**: pending
+
+## Quality Notes
+- Verify page completeness on all imports
+- Check OCR quality on Gothic/blackletter texts (Valentine)
+- Bruno critical edition may need special attention for Greek/mathematical notation
+- Cross-reference Hermetic Museum contents with existing Musaeum Hermeticum to avoid duplication
+
+## Gaps Identified for Future Batches
+- Sendivogius: Novum Lumen Chymicum (earlier editions)
+- Thomas Vaughan: Lumen de Lumine, Aula Lucis
+- Dee: Liber Mysteriorum, True Relation
+- Fludd: Additional volumes of Utriusque Cosmi
+- Paracelsus: Individual treatises beyond Opera Omnia
+
+---
