@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, getPageImageUrl } from '@/lib/utils';
 import type { Page } from '@/lib/types';
 import { recordLoadingMetric } from '@/lib/analytics';
 
@@ -45,16 +45,25 @@ export default function PageThumbnail({ page, bookId, index }: PageThumbnailProp
 
   // Build image URL with crop if available
   const getImageUrl = () => {
-    // If we have a pre-generated cropped photo, use it
-    const croppedPhoto = (page as unknown as Record<string, unknown>).cropped_photo as string | undefined;
-    if (page.crop && croppedPhoto) {
-      return croppedPhoto;
-    }
-    const baseUrl = page.photo_original || page.photo;
+    // Use utility to get best available image (archived > original)
+    const baseUrl = getPageImageUrl(page);
     if (!baseUrl) return null;
+
+    // If we already have a cropped photo or archived photo, use directly with resize
+    if (page.crop && (page as { cropped_photo?: string }).cropped_photo) {
+      return (page as { cropped_photo?: string }).cropped_photo;
+    }
+
+    // If we have an archived photo (no crop needed), use it with resize
+    if ((page as { archived_photo?: string }).archived_photo && !page.crop) {
+      return `/api/image?url=${encodeURIComponent((page as { archived_photo?: string }).archived_photo!)}&w=150&q=60`;
+    }
+
+    // Apply crop via image proxy if needed
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
       return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
     }
+
     return page.thumbnail || `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
   };
 

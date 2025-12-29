@@ -161,10 +161,22 @@ export async function POST(
 
       // Prepare images for this batch
       const imagePromises = batch.map(async (page) => {
-        const baseUrl = page.photo_original || page.photo;
-        const imageUrl = page.crop
-          ? buildCroppedImageUrl(baseUrl, page.crop)
-          : baseUrl;
+        // Prefer archived/cropped images over live IA URLs
+        let imageUrl: string;
+
+        if (page.crop && page.cropped_photo) {
+          // Use pre-cropped image if available
+          imageUrl = page.cropped_photo;
+        } else if (page.archived_photo && !page.crop) {
+          // Use archived image for non-cropped pages
+          imageUrl = page.archived_photo;
+        } else {
+          // Fall back to original URL (with crop proxy if needed)
+          const baseUrl = page.archived_photo || page.photo_original || page.photo;
+          imageUrl = page.crop
+            ? buildCroppedImageUrl(baseUrl, page.crop)
+            : baseUrl;
+        }
 
         const image = await fetchImageAsBase64(imageUrl);
         return { page, image, imageUrl }; // Track URL for audit

@@ -115,15 +115,15 @@ export interface PipelineState {
 
 // Available Gemini models for processing
 export const GEMINI_MODELS = [
-  { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Best for tables, symbols, complex layouts (5x cost)' },
-  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Good for normal text (recommended default)' },
+  { id: 'gemini-3-flash-preview', name: 'Gemini 3 Flash', description: 'Latest model - best quality (recommended)' },
+  { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash', description: 'Previous generation - lower cost' },
 ] as const;
 
 // Default model for single-page realtime operations (best quality)
 export const DEFAULT_MODEL = 'gemini-3-flash-preview';
 
 // Default model for batch operations (50% cheaper via Batch API)
-export const DEFAULT_BATCH_MODEL = 'gemini-2.5-flash';
+export const DEFAULT_BATCH_MODEL = 'gemini-3-flash-preview';
 
 // ============================================
 // PROMPT VERSIONING
@@ -280,6 +280,20 @@ export interface Book {
 
   // Automated processing pipeline state
   pipeline?: PipelineState;
+
+  // Split detection for two-page spreads
+  needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous
+  split_check?: {
+    checked_at: Date;
+    confidence: 'high' | 'medium' | 'low';
+    reasoning: string;
+    sample_results?: Array<{
+      pageNumber: number;
+      aspectRatio: number;
+      classification: 'single' | 'spread' | 'ambiguous';
+      error?: string;
+    }>;
+  };
 }
 
 // Processing metadata for reproducibility and cost tracking
