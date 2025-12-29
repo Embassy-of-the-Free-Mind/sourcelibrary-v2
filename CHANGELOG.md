@@ -6,6 +6,7 @@ All notable changes to Source Library will be documented in this file.
 
 ### Fixed
 - **Gemini Batch API file upload** - Use `text/plain` MIME type as workaround for known Google API bug where `application/jsonl` returns malformed response missing the `file` key. See [googleapis/python-genai#1590](https://github.com/googleapis/python-genai/issues/1590)
+- **Batch job from file** - Fix `input_config` structure (use `file_name` directly, not nested under `requests.file_input_source`)
 - **Batch job status endpoint** - Use `/batches` endpoint instead of `/batchJobs` (404)
 - **Batch state normalization** - Map `BATCH_STATE_*` to `JOB_STATE_*` for consistent status handling
 
@@ -14,6 +15,7 @@ All notable changes to Source Library will be documented in this file.
 ### Added
 - **Image archiving** - `/api/books/[id]/archive-images` stores IA images in Vercel Blob
 - **Simple Batch OCR** - `/api/books/[id]/batch-ocr-async` direct Gemini Batch API (50% cheaper)
+- **Simple Batch Translation** - `/api/books/[id]/batch-translate-async` direct Gemini Batch API (50% cheaper)
 - Script to sync book page counts
 
 ### Fixed

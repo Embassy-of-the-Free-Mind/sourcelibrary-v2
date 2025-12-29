@@ -236,11 +236,7 @@ export async function createBatchJobFromFile(
         batch: {
           display_name: displayName,
           input_config: {
-            requests: {
-              file_input_source: {
-                file_name: fileName,
-              },
-            },
+            file_name: fileName,
           },
         },
       }),
