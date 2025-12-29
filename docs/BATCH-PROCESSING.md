@@ -2,6 +2,28 @@
 
 All batch OCR and translation jobs use Google's Gemini Batch API for **50% cost savings**. Results are typically ready within 2-24 hours.
 
+## Two Approaches
+
+### 1. Simple Direct API (`batch-ocr-async`) - Recommended for single books
+
+```bash
+# Submit batch job
+POST /api/books/{id}/batch-ocr-async
+{ "limit": 100, "language": "Latin", "model": "gemini-2.5-flash" }
+
+# Check status / collect results
+GET /api/books/{id}/batch-ocr-async?jobName=batches/xxx
+```
+
+- Uses `@google/genai` SDK directly
+- One-shot submit (no phased preparation)
+- Results stored in `batch_jobs` collection
+- Best for: Processing a single book
+
+### 2. Job System (`/api/jobs`) - For bulk processing
+
+Phased approach with preparation step. Better for processing many books at once.
+
 ## Architecture
 
 ```
@@ -362,7 +384,8 @@ db.jobs.updateOne({ id: "JOB_ID" }, {
 
 ## Files
 
-- `/src/lib/gemini-batch.ts` - Gemini Batch API client
+- `/src/app/api/books/[id]/batch-ocr-async/route.ts` - Simple direct batch OCR (recommended)
+- `/src/lib/gemini-batch.ts` - Gemini Batch API client (job system)
 - `/src/app/api/jobs/[id]/process/route.ts` - Phased batch processing
 - `/src/app/api/batch-jobs/route.ts` - Direct batch job management
 - `/src/lib/types.ts` - DEFAULT_MODEL / DEFAULT_BATCH_MODEL constants

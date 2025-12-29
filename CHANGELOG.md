@@ -12,7 +12,8 @@ All notable changes to Source Library will be documented in this file.
 ## [2025-12-29]
 
 ### Added
-- Image archiving and Gemini Batch API for OCR (50% cost savings)
+- **Image archiving** - `/api/books/[id]/archive-images` stores IA images in Vercel Blob
+- **Simple Batch OCR** - `/api/books/[id]/batch-ocr-async` direct Gemini Batch API (50% cheaper)
 - Script to sync book page counts
 
 ### Fixed
