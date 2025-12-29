@@ -439,6 +439,28 @@ export async function POST(
         { id: jobId },
         { $set: { status: finalStatus, completed_at: new Date(), updated_at: new Date() } }
       );
+
+      // Update book's page counts when job completes
+      const ocrCount = await db.collection('pages').countDocuments({
+        book_id: bookId,
+        'ocr.data': { $exists: true, $nin: [null, ''] }
+      });
+      const translatedCount = await db.collection('pages').countDocuments({
+        book_id: bookId,
+        'translation.data': { $exists: true, $nin: [null, ''] }
+      });
+
+      await db.collection('books').updateOne(
+        { id: bookId },
+        {
+          $set: {
+            pages_ocr: ocrCount,
+            pages_translated: translatedCount,
+            last_translation_at: new Date(),
+            updated_at: new Date()
+          }
+        }
+      );
     }
 
     const finalJob = await db.collection('jobs').findOne({ id: jobId });

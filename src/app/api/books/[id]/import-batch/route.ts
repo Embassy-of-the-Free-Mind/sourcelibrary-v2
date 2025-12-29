@@ -233,6 +233,27 @@ export async function POST(
       updatedCount++;
     }
 
+    // Update book's page counts
+    const ocrCount = await db.collection('pages').countDocuments({
+      book_id: actualBookId,
+      'ocr.data': { $exists: true, $nin: [null, ''] }
+    });
+    const translatedCount = await db.collection('pages').countDocuments({
+      book_id: actualBookId,
+      'translation.data': { $exists: true, $nin: [null, ''] }
+    });
+
+    await db.collection('books').updateOne(
+      { id: actualBookId },
+      {
+        $set: {
+          pages_ocr: ocrCount,
+          pages_translated: translatedCount,
+          updated_at: now
+        }
+      }
+    );
+
     return NextResponse.json({
       success: true,
       bookId: actualBookId,
