@@ -3,7 +3,8 @@
  */
 import { config } from 'dotenv';
 import { MongoClient } from 'mongodb';
-config({ path: '.env.local' });
+config({ path: '.env.prod' });
+config({ path: '.env.local', override: true });
 
 async function checkStatus() {
   const client = new MongoClient(process.env.MONGODB_URI);

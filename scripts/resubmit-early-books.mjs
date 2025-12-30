@@ -8,7 +8,8 @@
 import { config } from 'dotenv';
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
-config({ path: '.env.local' });
+config({ path: '.env.prod' });
+config({ path: '.env.local', override: true });
 
 const API_KEY = process.env.GEMINI_API_KEY;
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta';

@@ -104,7 +104,9 @@ function parseLicense(licenseUrl: string | null, attribution: string | null, pro
  *   language?: string,
  *   published?: string,
  *   categories?: string[],
- *   provider?: string        // e.g., "Vatican", "IRHT", "Bodleian"
+ *   provider?: string,       // e.g., "Vatican", "IRHT", "Bodleian"
+ *   start_page?: number,     // 1-indexed start page (for extracting portion of manifest)
+ *   end_page?: number        // 1-indexed end page (inclusive)
  * }
  */
 export async function POST(request: NextRequest) {
@@ -119,6 +121,8 @@ export async function POST(request: NextRequest) {
       published,
       categories,
       provider,
+      start_page,
+      end_page,
     } = body;
 
     if (!manifest_url || !title || !author) {
@@ -145,22 +149,37 @@ export async function POST(request: NextRequest) {
     const manifest: IIIFManifest = await manifestRes.json();
 
     // Get page count from IIIF canvases
-    const canvases = manifest.sequences?.[0]?.canvases || [];
-    const pageCount = canvases.length;
+    let canvases = manifest.sequences?.[0]?.canvases || [];
 
-    if (pageCount === 0) {
+    if (canvases.length === 0) {
       return NextResponse.json(
         { error: 'No pages found in IIIF manifest' },
         { status: 400 }
       );
     }
 
+    // Support extracting a page range from the manifest
+    const startIdx = start_page ? Math.max(0, start_page - 1) : 0;
+    const endIdx = end_page ? Math.min(canvases.length, end_page) : canvases.length;
+
+    if (startIdx > 0 || endIdx < canvases.length) {
+      canvases = canvases.slice(startIdx, endIdx);
+      console.log(`[IIIF Import] Extracting pages ${startIdx + 1}-${endIdx} (${canvases.length} pages)`);
+    }
+
+    const pageCount = canvases.length;
+
     const db = await getDb();
 
-    // Check if book already exists
-    const existing = await db.collection('books').findOne({
+    // Check if book already exists (with same page range if specified)
+    const existingQuery: Record<string, unknown> = {
       'image_source.iiif_manifest': manifest_url
-    });
+    };
+    if (start_page || end_page) {
+      // If extracting a page range, check for exact match
+      existingQuery['image_source.page_range'] = `${startIdx + 1}-${endIdx}`;
+    }
+    const existing = await db.collection('books').findOne(existingQuery);
 
     if (existing) {
       return NextResponse.json(
@@ -261,6 +280,7 @@ export async function POST(request: NextRequest) {
         license_url,
         attribution: creditText,
         access_date: new Date(),
+        ...(start_page || end_page ? { page_range: `${startIdx + 1}-${endIdx}` } : {}),
       },
       status: 'draft',
       created_at: new Date(),
