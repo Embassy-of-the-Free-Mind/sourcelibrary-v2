@@ -60,6 +60,52 @@ When acting as Quality Management Assistant:
    - Don't stop and wait - keep auditing until user says to stop
    - Update todo list as you progress
 
+## Import APIs
+
+Source Library supports importing from three digital library sources:
+
+### Gallica (Bibliothèque nationale de France)
+```
+POST /api/import/gallica
+{
+  "ark": "bpt6k61073880",        // Gallica ARK identifier
+  "title": "Book Title",
+  "author": "Author Name",
+  "year": 1617,                   // Optional
+  "original_language": "Latin"    // Optional
+}
+```
+
+### Internet Archive
+```
+POST /api/import/ia
+{
+  "ia_identifier": "bookid123",   // Archive.org identifier
+  "title": "Book Title",
+  "author": "Author Name",
+  "year": 1617,                   // Optional
+  "original_language": "Latin"    // Optional
+}
+```
+
+### MDZ (Münchener DigitalisierungsZentrum / Bavarian State Library)
+```
+POST /api/import/mdz
+{
+  "bsb_id": "bsb00029099",        // BSB identifier (with or without 'bsb' prefix)
+  "title": "Book Title",
+  "author": "Author Name",
+  "year": 1473,                   // Optional
+  "original_language": "Latin"    // Optional
+}
+```
+
+All import routes:
+- Fetch IIIF manifests to get page counts and image URLs
+- Create book and page records in MongoDB
+- Queue split detection for two-page spreads
+- Return book ID and URL on success
+
 ## Project Context
 
 This is Source Library v2, a Next.js application for digitizing and translating historical texts.
