@@ -358,6 +358,14 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
                   {book.language && <span>{book.language}</span>}
                   {book.pages_count && <span>{book.pages_count} pages</span>}
+                  {book.pages_count && book.pages_count > 0 && (() => {
+                    const ocrPercent = Math.round(((book.pages_ocr || 0) / book.pages_count) * 100);
+                    return (
+                      <span className={ocrPercent === 100 ? 'text-blue-600' : ocrPercent > 0 ? 'text-blue-400' : 'text-gray-400'}>
+                        {ocrPercent === 100 ? '✓ OCR' : ocrPercent > 0 ? `${ocrPercent}% OCR` : 'No OCR'}
+                      </span>
+                    );
+                  })()}
                   {book.translation_percent !== undefined && (
                     <span className={book.translation_percent === 100 ? 'text-green-600' : 'text-amber-600'}>
                       {book.translation_percent === 100 ? '✓ Translated' : `${book.translation_percent}% translated`}
