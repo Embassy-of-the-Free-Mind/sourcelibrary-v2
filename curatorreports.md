@@ -2690,11 +2690,33 @@ Primary sources of the Scientific Revolution (1543-1700): Copernicus, Galileo, K
 #### Gilbert De Mundo
 - Posthumous work on cosmology, extending De Magnete's magnetic philosophy to the cosmos
 
+### Session 021 Part 3: British Moral Philosophy
+
+#### Hutcheson & Shaftesbury
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Inquiry into Beauty and Virtue (1726) | Francis Hutcheson | 344 | 6953efda1479a63c1108830b |
+| Essay on Passions and Moral Sense (1728) | Francis Hutcheson | 380 | 6953efdf1479a63c11088464 |
+| Characteristicks (1714 original) | Earl of Shaftesbury | 462 | 6953efe21479a63c110885e1 |
+| Characteristics Vol. I (Robertson 1900) | Earl of Shaftesbury | 408 | 6953efe61479a63c110887b0 |
+| Characteristics Vol. II (Robertson 1900) | Earl of Shaftesbury | 396 | 6953efe91479a63c11088949 |
+| Inquiry Concerning Virtue or Merit | Earl of Shaftesbury | 132 | 6953efed1479a63c11088ad6 |
+
+**British Moral Philosophy Total: 6 books, 2,122 pages**
+
+### Session 021 Final Summary
+| Category | Books | Pages |
+|----------|-------|-------|
+| Part 1: Scientific Revolution Core | 35 | 16,938 |
+| Part 2: Euler, Natural Magic, Leibniz, Descartes, Gilbert | 19 | 11,740 |
+| Part 3: British Moral Philosophy | 6 | 2,122 |
+| **Session 021 Total** | **60** | **30,800** |
+
 ### Cumulative Totals
 | Session | Books | Pages |
 |---------|-------|-------|
 | Sessions 001-020 | 395 | 179,431 |
-| Session 021 | 54 | 28,678 |
-| **GRAND TOTAL** | **449** | **208,109** |
+| Session 021 | 60 | 30,800 |
+| **GRAND TOTAL** | **455** | **210,231** |
 
 ---
