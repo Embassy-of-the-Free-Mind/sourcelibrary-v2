@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins, ListChecks, CheckCircle, XCircle, Pause, Loader2 } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins, ListChecks, CheckCircle, XCircle, Pause, Loader2, Database, HardDrive, Archive } from 'lucide-react';
 
 interface MetricStat {
   name: string;
@@ -61,6 +61,17 @@ interface UsageData {
     totalTokens: number;
     costByDay: Array<{ date: string; cost: number; tokens: number }>;
     costByAction: Array<{ action: string; cost: number; count: number }>;
+  };
+  collectionStats?: {
+    blobStorage: {
+      pagesWithCroppedPhoto: number;
+      pagesWithArchivedPhoto: number;
+      totalBlobPages: number;
+      booksWithSplitPages: number;
+    };
+    byLanguage: Array<{ language: string; count: number }>;
+    byCategory: Array<{ category: string; count: number }>;
+    byImageSource: Array<{ provider: string; count: number }>;
   };
 }
 
@@ -431,6 +442,244 @@ export default function AnalyticsPage() {
                   </div>
                   <div className="text-xs mt-1" style={{ color: '#22c55e' }}>
                     {usageData.costStats ? formatTokens(usageData.costStats.totalTokens) : '0'} tokens
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Collection Overview - Processing Pipeline */}
+            {usageData?.collectionStats && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <Database className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                  Collection Processing Pipeline
+                </h2>
+
+                {/* Pipeline Progress Bars */}
+                <div className="space-y-4">
+                  {/* Total Pages Bar */}
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span style={{ color: 'var(--text-primary)' }}>Total Pages</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{formatNumber(usageData.summary.totalPages)}</span>
+                    </div>
+                    <div className="h-8 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
+                      {/* Archived to Blob */}
+                      <div
+                        className="h-full flex items-center justify-center text-xs font-medium text-white"
+                        style={{
+                          width: `${(usageData.collectionStats.blobStorage.totalBlobPages / usageData.summary.totalPages) * 100}%`,
+                          background: '#22c55e',
+                          minWidth: usageData.collectionStats.blobStorage.totalBlobPages > 0 ? '60px' : '0',
+                        }}
+                        title={`${formatNumber(usageData.collectionStats.blobStorage.totalBlobPages)} pages archived to Vercel Blob`}
+                      >
+                        {((usageData.collectionStats.blobStorage.totalBlobPages / usageData.summary.totalPages) * 100).toFixed(0)}% Blob
+                      </div>
+                      {/* Not archived */}
+                      <div
+                        className="h-full flex items-center justify-center text-xs"
+                        style={{
+                          flex: 1,
+                          color: 'var(--text-muted)',
+                        }}
+                      >
+                        {formatNumber(usageData.summary.totalPages - usageData.collectionStats.blobStorage.totalBlobPages)} from external sources
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* OCR Progress Bar */}
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span style={{ color: 'var(--text-primary)' }}>OCR Progress</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{formatNumber(usageData.summary.pagesWithOcr)} / {formatNumber(usageData.summary.totalPages)}</span>
+                    </div>
+                    <div className="h-6 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
+                      <div
+                        className="h-full flex items-center justify-center text-xs font-medium text-white"
+                        style={{
+                          width: `${usageData.summary.ocrPercentage}%`,
+                          background: 'var(--accent-sage)',
+                          minWidth: usageData.summary.ocrPercentage > 0 ? '40px' : '0',
+                        }}
+                      >
+                        {usageData.summary.ocrPercentage}%
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Translation Progress Bar */}
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span style={{ color: 'var(--text-primary)' }}>Translation Progress</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{formatNumber(usageData.summary.pagesWithTranslation)} / {formatNumber(usageData.summary.totalPages)}</span>
+                    </div>
+                    <div className="h-6 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
+                      <div
+                        className="h-full flex items-center justify-center text-xs font-medium text-white"
+                        style={{
+                          width: `${usageData.summary.translationPercentage}%`,
+                          background: 'var(--accent-rust)',
+                          minWidth: usageData.summary.translationPercentage > 0 ? '40px' : '0',
+                        }}
+                      >
+                        {usageData.summary.translationPercentage}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Storage Breakdown Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Archive className="w-4 h-4" style={{ color: '#22c55e' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Archived</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.pagesWithArchivedPhoto)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>full pages</div>
+                  </div>
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <HardDrive className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Cropped</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.pagesWithCroppedPhoto)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>split pages</div>
+                  </div>
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Split Books</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.booksWithSplitPages)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>books processed</div>
+                  </div>
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Database className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Total Blob</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.totalBlobPages)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      {((usageData.collectionStats.blobStorage.totalBlobPages / usageData.summary.totalPages) * 100).toFixed(1)}% of collection
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Collection Breakdown Charts */}
+            {usageData?.collectionStats && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Languages */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <Languages className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+                    By Language
+                  </h2>
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {usageData.collectionStats.byLanguage.map((lang, i) => {
+                      const total = usageData.collectionStats!.byLanguage.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (lang.count / total) * 100 : 0;
+                      const colors = ['var(--accent-rust)', 'var(--accent-sage)', 'var(--accent-violet)', '#f59e0b', '#22c55e'];
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: 'var(--text-primary)' }}>{lang.language}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{lang.count}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: colors[i % colors.length] }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Categories */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+                    By Category
+                  </h2>
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {usageData.collectionStats.byCategory.map((cat, i) => {
+                      const total = usageData.collectionStats!.byCategory.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (cat.count / total) * 100 : 0;
+                      const colors = ['var(--accent-sage)', 'var(--accent-violet)', 'var(--accent-rust)', '#22c55e', '#f59e0b'];
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="truncate" style={{ color: 'var(--text-primary)' }} title={cat.category}>{cat.category}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{cat.count}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: colors[i % colors.length] }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Image Sources */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <HardDrive className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                    Image Sources
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.collectionStats.byImageSource.map((src, i) => {
+                      const total = usageData.collectionStats!.byImageSource.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (src.count / total) * 100 : 0;
+                      const providerLabels: Record<string, string> = {
+                        internet_archive: 'Internet Archive',
+                        gallica: 'Gallica (BnF)',
+                        mdz: 'MDZ (Bavarian)',
+                        efm: 'EFM Manuscripts',
+                        iiif: 'IIIF Generic',
+                        vercel_blob: 'Vercel Blob',
+                      };
+                      const providerColors: Record<string, string> = {
+                        internet_archive: '#f59e0b',
+                        gallica: '#3b82f6',
+                        mdz: '#22c55e',
+                        efm: 'var(--accent-violet)',
+                        iiif: 'var(--accent-rust)',
+                        vercel_blob: '#22c55e',
+                      };
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: 'var(--text-primary)' }}>{providerLabels[src.provider] || src.provider}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{src.count} ({pct.toFixed(0)}%)</span>
+                          </div>
+                          <div className="h-3 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: providerColors[src.provider] || 'var(--accent-sage)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

@@ -281,6 +281,56 @@ export async function GET(request: NextRequest) {
       console.error('Error fetching prompt usage:', e);
     }
 
+    // Get collection breakdown stats
+    let collectionStats = {
+      blobStorage: {
+        pagesWithCroppedPhoto: 0,
+        pagesWithArchivedPhoto: 0,
+        totalBlobPages: 0,
+        booksWithSplitPages: 0,
+      },
+      byLanguage: [] as Array<{ language: string; count: number }>,
+      byCategory: [] as Array<{ category: string; count: number }>,
+      byImageSource: [] as Array<{ provider: string; count: number }>,
+    };
+
+    try {
+      const [croppedCount, archivedCount, splitBooks, langAgg, catAgg, providerAgg] = await Promise.all([
+        db.collection('pages').countDocuments({ cropped_photo: { $exists: true, $nin: [null, ''] } }),
+        db.collection('pages').countDocuments({ archived_photo: { $exists: true, $nin: [null, ''] } }),
+        db.collection('pages').distinct('book_id', { 'crop.xStart': { $exists: true } }),
+        db.collection('books').aggregate([
+          { $group: { _id: '$language', count: { $sum: 1 } } },
+          { $sort: { count: -1 } },
+          { $limit: 15 }
+        ]).toArray(),
+        db.collection('books').aggregate([
+          { $unwind: '$categories' },
+          { $group: { _id: '$categories', count: { $sum: 1 } } },
+          { $sort: { count: -1 } },
+          { $limit: 15 }
+        ]).toArray(),
+        db.collection('books').aggregate([
+          { $group: { _id: '$image_source.provider', count: { $sum: 1 } } },
+          { $sort: { count: -1 } }
+        ]).toArray(),
+      ]);
+
+      collectionStats = {
+        blobStorage: {
+          pagesWithCroppedPhoto: croppedCount,
+          pagesWithArchivedPhoto: archivedCount,
+          totalBlobPages: croppedCount + archivedCount,
+          booksWithSplitPages: splitBooks.length,
+        },
+        byLanguage: langAgg.map(l => ({ language: l._id || 'Unknown', count: l.count })),
+        byCategory: catAgg.map(c => ({ category: c._id || 'Unknown', count: c.count })),
+        byImageSource: providerAgg.map(p => ({ provider: p._id || 'unknown', count: p.count })),
+      };
+    } catch (e) {
+      console.error('Error fetching collection stats:', e);
+    }
+
     // Get cost tracking stats
     try {
       // Total costs
@@ -395,6 +445,7 @@ export async function GET(request: NextRequest) {
         costByDay: costStats.costByDay,
         costByAction: costStats.costByAction,
       },
+      collectionStats,
       query: { days },
     });
   } catch (error) {
