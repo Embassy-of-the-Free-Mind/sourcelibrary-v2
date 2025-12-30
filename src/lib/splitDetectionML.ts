@@ -65,6 +65,15 @@ export interface SplitFeatures {
   rightTextStartIdx: number; // first column with significant text on right side
   textGapWidth: number;     // gap between left text end and right text start
   textGapCenter: number;    // center of the text gap (ideal split point)
+
+  // New: Text block boundary features (0-1000 scale like split position)
+  leftPageTextStart?: number;   // where left page text block begins
+  leftPageTextEnd?: number;     // where left page text block ends (rightmost edge)
+  rightPageTextStart?: number;  // where right page text block begins (leftmost edge)
+  rightPageTextEnd?: number;    // where right page text block ends
+  leftMargin?: number;          // left page outer margin (0-100%)
+  rightMargin?: number;         // right page outer margin (0-100%)
+  idealSplitFromText?: number;  // computed ideal split from text block analysis (0-1000)
 }
 
 /**
@@ -234,27 +243,73 @@ export async function extractFeatures(
   const textThreshold = 20; // columns with >20 transitions likely have text
   const center = Math.floor(width / 2);
 
-  // Scan left from center to find where text ends (transitions drop)
-  let leftTextEndIdx = center;
-  for (let i = center; i >= 0; i--) {
-    if (columns[i].transitions > textThreshold) {
-      leftTextEndIdx = i;
+  // Use a sliding window to detect sustained text regions (more robust than single column)
+  const windowSize = Math.max(3, Math.floor(width * 0.01)); // 1% of width or min 3 columns
+
+  const hasTextAt = (idx: number): boolean => {
+    let textCols = 0;
+    for (let i = Math.max(0, idx - windowSize); i <= Math.min(width - 1, idx + windowSize); i++) {
+      if (columns[i].transitions > textThreshold) textCols++;
+    }
+    return textCols > windowSize; // majority of window has text
+  };
+
+  // Scan from LEFT EDGE inward to find where left page text starts
+  let leftPageTextStart = 0;
+  for (let i = 0; i < center; i++) {
+    if (hasTextAt(i)) {
+      leftPageTextStart = i;
       break;
     }
   }
 
-  // Scan right from center to find where text starts (transitions rise)
-  let rightTextStartIdx = center;
-  for (let i = center; i < width; i++) {
-    if (columns[i].transitions > textThreshold) {
-      rightTextStartIdx = i;
+  // Scan from CENTER leftward to find where left page text ends (rightmost text on left page)
+  let leftPageTextEnd = center;
+  for (let i = center; i >= leftPageTextStart; i--) {
+    if (hasTextAt(i)) {
+      leftPageTextEnd = i;
       break;
     }
   }
 
-  // Calculate gap metrics (normalized to 0-100 range relative to center region)
-  const textGapWidth = rightTextStartIdx - leftTextEndIdx;
-  const textGapCenter = (leftTextEndIdx + rightTextStartIdx) / 2;
+  // Scan from RIGHT EDGE inward to find where right page text ends
+  let rightPageTextEnd = width - 1;
+  for (let i = width - 1; i > center; i--) {
+    if (hasTextAt(i)) {
+      rightPageTextEnd = i;
+      break;
+    }
+  }
+
+  // Scan from CENTER rightward to find where right page text starts (leftmost text on right page)
+  let rightPageTextStart = center;
+  for (let i = center; i <= rightPageTextEnd; i++) {
+    if (hasTextAt(i)) {
+      rightPageTextStart = i;
+      break;
+    }
+  }
+
+  // Legacy variables for backward compatibility
+  const leftTextEndIdx = leftPageTextEnd;
+  const rightTextStartIdx = rightPageTextStart;
+
+  // Calculate gap metrics
+  const textGapWidth = rightPageTextStart - leftPageTextEnd;
+  const textGapCenter = (leftPageTextEnd + rightPageTextStart) / 2;
+
+  // New: Calculate margins (how much space between page edge and text)
+  const leftMargin = leftPageTextStart; // pixels from left edge to text start
+  const rightMargin = (width - 1) - rightPageTextEnd; // pixels from text end to right edge
+
+  // New: Inner margins (space between text blocks and the gap)
+  const leftInnerMargin = leftPageTextEnd - leftPageTextStart; // width of left text block
+  const rightInnerMargin = rightPageTextEnd - rightPageTextStart; // width of right text block
+
+  // New: Ideal split point considering margins
+  // If left margin is larger, shift split slightly left to balance
+  const marginBias = (leftMargin - rightMargin) / 2;
+  const idealSplitFromText = textGapCenter + marginBias;
 
   return {
     aspectRatio: width / height,
@@ -278,6 +333,15 @@ export async function extractFeatures(
     rightTextStartIdx: (rightTextStartIdx / width) * 100,
     textGapWidth: (textGapWidth / width) * 100,
     textGapCenter: (textGapCenter / width) * 1000, // scale to 0-1000 like split position
+
+    // New text block boundary features
+    leftPageTextStart: (leftPageTextStart / width) * 1000,   // where left page text begins
+    leftPageTextEnd: (leftPageTextEnd / width) * 1000,       // where left page text ends (rightmost)
+    rightPageTextStart: (rightPageTextStart / width) * 1000, // where right page text begins (leftmost)
+    rightPageTextEnd: (rightPageTextEnd / width) * 1000,     // where right page text ends
+    leftMargin: (leftMargin / width) * 100,                  // left page outer margin %
+    rightMargin: (rightMargin / width) * 100,                // right page outer margin %
+    idealSplitFromText: (idealSplitFromText / width) * 1000, // computed ideal split from text analysis
   };
 }
 
@@ -296,6 +360,11 @@ export interface SplitModel {
     pagePositionOffset: number;  // early/late pages may differ
     textGapCenterWeight: number; // weight for text gap center feature
     bookSizeOffset: number;      // adjustment for book size
+    // New text block boundary weights
+    idealSplitFromTextWeight: number;  // weight for computed ideal split from text analysis
+    leftPageTextEndWeight: number;     // where left page text ends
+    rightPageTextStartWeight: number;  // where right page text starts
+    marginBalanceWeight: number;       // balance between left and right margins
   };
   trainedAt: Date;
   trainingSize: number;
@@ -348,6 +417,11 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     pagePositionOffset: 0,
     textGapCenterWeight: 0,
     bookSizeOffset: 0,
+    // New text block boundary weights
+    idealSplitFromTextWeight: 0,
+    leftPageTextEndWeight: 0,
+    rightPageTextStartWeight: 0,
+    marginBalanceWeight: 0,
   };
 
   const learningRate = 0.0001;
@@ -364,6 +438,10 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       pagePositionOffset: 0,
       textGapCenterWeight: 0,
       bookSizeOffset: 0,
+      idealSplitFromTextWeight: 0,
+      leftPageTextEndWeight: 0,
+      rightPageTextStartWeight: 0,
+      marginBalanceWeight: 0,
     };
 
     for (const example of train) {
@@ -379,6 +457,12 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       // Text gap center (normalized to deviation from 500)
       const textGapCenterDev = (f.textGapCenter ?? 500) - 500;
 
+      // New text block features (normalized to deviation from 500)
+      const idealSplitDev = (f.idealSplitFromText ?? 500) - 500;
+      const leftTextEndDev = (f.leftPageTextEnd ?? 500) - 500;
+      const rightTextStartDev = (f.rightPageTextStart ?? 500) - 500;
+      const marginBalance = (f.leftMargin ?? 5) - (f.rightMargin ?? 5); // positive = more left margin
+
       // Prediction - use simpler features that are more robust
       const pred =
         weights.bias +
@@ -389,7 +473,12 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
         weights.aspectRatioOffset * (f.aspectRatio - 1.5) +
         weights.pagePositionOffset * (pagePos - 0.5) + // Center around middle of book
         weights.textGapCenterWeight * (textGapCenterDev / 100) + // Text gap center contribution
-        weights.bookSizeOffset * (bookSize - 1); // Center around medium books
+        weights.bookSizeOffset * (bookSize - 1) + // Center around medium books
+        // New text block features
+        weights.idealSplitFromTextWeight * (idealSplitDev / 100) +
+        weights.leftPageTextEndWeight * (leftTextEndDev / 100) +
+        weights.rightPageTextStartWeight * (rightTextStartDev / 100) +
+        weights.marginBalanceWeight * (marginBalance / 10);
 
       const error = pred - target;
 
@@ -404,6 +493,11 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       gradients.pagePositionOffset += clip(error * (pagePos - 0.5));
       gradients.textGapCenterWeight += clip(error * (textGapCenterDev / 100));
       gradients.bookSizeOffset += clip(error * (bookSize - 1));
+      // New feature gradients
+      gradients.idealSplitFromTextWeight += clip(error * (idealSplitDev / 100));
+      gradients.leftPageTextEndWeight += clip(error * (leftTextEndDev / 100));
+      gradients.rightPageTextStartWeight += clip(error * (rightTextStartDev / 100));
+      gradients.marginBalanceWeight += clip(error * (marginBalance / 10));
     }
 
     // Update weights
@@ -417,6 +511,11 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     weights.pagePositionOffset -= learningRate * (gradients.pagePositionOffset / n);
     weights.textGapCenterWeight -= learningRate * (gradients.textGapCenterWeight / n);
     weights.bookSizeOffset -= learningRate * (gradients.bookSizeOffset / n);
+    // New feature weight updates
+    weights.idealSplitFromTextWeight -= learningRate * (gradients.idealSplitFromTextWeight / n);
+    weights.leftPageTextEndWeight -= learningRate * (gradients.leftPageTextEndWeight / n);
+    weights.rightPageTextStartWeight -= learningRate * (gradients.rightPageTextStartWeight / n);
+    weights.marginBalanceWeight -= learningRate * (gradients.marginBalanceWeight / n);
   }
 
   // Compute validation MSE
@@ -427,6 +526,10 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
     const pagePos = f.pagePosition ?? 0.5;
     const bookSize = f.bookSizeCategory ?? 1;
     const textGapCenterDev = (f.textGapCenter ?? 500) - 500;
+    const idealSplitDev = (f.idealSplitFromText ?? 500) - 500;
+    const leftTextEndDev = (f.leftPageTextEnd ?? 500) - 500;
+    const rightTextStartDev = (f.rightPageTextStart ?? 500) - 500;
+    const marginBalance = (f.leftMargin ?? 5) - (f.rightMargin ?? 5);
 
     const pred =
       weights.bias +
@@ -437,7 +540,11 @@ export function trainModel(examples: TrainingExample[]): SplitModel {
       weights.aspectRatioOffset * (f.aspectRatio - 1.5) +
       weights.pagePositionOffset * (pagePos - 0.5) +
       weights.textGapCenterWeight * (textGapCenterDev / 100) +
-      weights.bookSizeOffset * (bookSize - 1);
+      weights.bookSizeOffset * (bookSize - 1) +
+      weights.idealSplitFromTextWeight * (idealSplitDev / 100) +
+      weights.leftPageTextEndWeight * (leftTextEndDev / 100) +
+      weights.rightPageTextStartWeight * (rightTextStartDev / 100) +
+      weights.marginBalanceWeight * (marginBalance / 10);
 
     validationMSE += Math.pow(pred - target, 2);
   }
@@ -460,6 +567,10 @@ export function predictWithModel(features: SplitFeatures, model: SplitModel): nu
   const pagePos = f.pagePosition ?? 0.5;
   const bookSize = f.bookSizeCategory ?? 1;
   const textGapCenterDev = (f.textGapCenter ?? 500) - 500;
+  const idealSplitDev = (f.idealSplitFromText ?? 500) - 500;
+  const leftTextEndDev = (f.leftPageTextEnd ?? 500) - 500;
+  const rightTextStartDev = (f.rightPageTextStart ?? 500) - 500;
+  const marginBalance = (f.leftMargin ?? 5) - (f.rightMargin ?? 5);
 
   // Use same normalization as training
   const position =
@@ -471,7 +582,12 @@ export function predictWithModel(features: SplitFeatures, model: SplitModel): nu
     w.aspectRatioOffset * (f.aspectRatio - 1.5) +
     (w.pagePositionOffset ?? 0) * (pagePos - 0.5) +
     (w.textGapCenterWeight ?? 0) * (textGapCenterDev / 100) +
-    (w.bookSizeOffset ?? 0) * (bookSize - 1);
+    (w.bookSizeOffset ?? 0) * (bookSize - 1) +
+    // New text block features (with fallback for older models)
+    (w.idealSplitFromTextWeight ?? 0) * (idealSplitDev / 100) +
+    (w.leftPageTextEndWeight ?? 0) * (leftTextEndDev / 100) +
+    (w.rightPageTextStartWeight ?? 0) * (rightTextStartDev / 100) +
+    (w.marginBalanceWeight ?? 0) * (marginBalance / 10);
 
   // Clamp to valid range (allow wider range for off-center splits)
   return Math.max(200, Math.min(800, Math.round(position)));
