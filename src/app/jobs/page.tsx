@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, Trash2, CheckCircle, XCircle, Clock, Loader2, Cloud, Zap, BookOpen, FileText, Plus } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, CheckCircle, XCircle, Clock, Loader2, Cloud, Zap, BookOpen, FileText, Plus, StopCircle } from 'lucide-react';
 import type { Job, JobStatus } from '@/lib/types';
 
 interface PendingStats {
@@ -42,7 +42,10 @@ export default function JobsPage() {
   const [creatingJobs, setCreatingJobs] = useState(false);
   const [createResult, setCreateResult] = useState<string | null>(null);
   const [processingAll, setProcessingAll] = useState(false);
+  const [resumingStale, setResumingStale] = useState(false);
   const processingRef = useRef(false);
+  const resumingStaleRef = useRef(false);
+  const staleTimeoutMinutes = 5;
 
   const fetchJobs = useCallback(async () => {
     try {
@@ -174,6 +177,60 @@ export default function JobsPage() {
     }
   }, [fetchJobs]);
 
+  // Get stale jobs (processing but not updated recently)
+  const getStaleJobs = useCallback(() => {
+    const now = Date.now();
+    return jobs.filter(job => {
+      if (job.status !== 'processing') return false;
+      const lastUpdate = new Date(job.updated_at).getTime();
+      return (now - lastUpdate) > staleTimeoutMinutes * 60 * 1000;
+    });
+  }, [jobs]);
+
+  // Cancel bulk resume
+  const cancelResumeAll = () => {
+    resumingStaleRef.current = false;
+  };
+
+  // Resume all stale jobs sequentially
+  const resumeAllStale = async () => {
+    const staleJobs = getStaleJobs();
+    if (staleJobs.length === 0) return;
+    if (resumingStaleRef.current) return; // Already resuming
+
+    resumingStaleRef.current = true;
+    setResumingStale(true);
+    try {
+      for (const job of staleJobs) {
+        if (!resumingStaleRef.current) break; // Allow cancellation via ref
+
+        // Process this job until done or paused
+        let done = false;
+        let paused = false;
+
+        while (!done && !paused && resumingStaleRef.current) {
+          const res = await fetch(`/api/jobs/${job.id}/process`, { method: 'POST' });
+          if (!res.ok) break;
+
+          const data = await res.json();
+          done = data.done;
+          paused = data.paused;
+
+          await fetchJobs();
+
+          if (!done && !paused) {
+            await new Promise(r => setTimeout(r, 500));
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Error resuming stale jobs:', e);
+    } finally {
+      resumingStaleRef.current = false;
+      setResumingStale(false);
+    }
+  };
+
   const handleAction = async (jobId: string, action: 'pause' | 'resume' | 'cancel' | 'retry') => {
     try {
       const res = await fetch(`/api/jobs/${jobId}`, {
@@ -196,8 +253,6 @@ export default function JobsPage() {
   };
 
   const handleDelete = async (jobId: string) => {
-    if (!confirm('Are you sure you want to delete this job?')) return;
-
     try {
       const res = await fetch(`/api/jobs/${jobId}`, { method: 'DELETE' });
       if (res.ok) {
@@ -228,6 +283,7 @@ export default function JobsPage() {
   const batchApiJobs = activeJobs.filter(j => (j as Job & { config?: { use_batch_api?: boolean } }).config?.use_batch_api);
   const preparingJobs = batchApiJobs.filter(j => !(j as Job & { gemini_batch_job?: string }).gemini_batch_job);
   const submittedJobs = batchApiJobs.filter(j => (j as Job & { gemini_batch_job?: string }).gemini_batch_job);
+  const staleJobs = getStaleJobs();
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
@@ -427,6 +483,56 @@ export default function JobsPage() {
             </div>
           </div>
         )}
+
+        {/* Resume All Stale Jobs */}
+        {(staleJobs.length > 0 || resumingStale) && (
+          <div className="mb-6 p-4 rounded-xl" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%)', border: '1px solid #fbbf24' }}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-amber-200 rounded-lg">
+                  <Clock className="w-5 h-5 text-amber-700" />
+                </div>
+                <div>
+                  <div className="font-medium text-amber-900">
+                    {resumingStale
+                      ? `Resuming stale jobs... (${staleJobs.length} remaining)`
+                      : `${staleJobs.length} Stale Job${staleJobs.length !== 1 ? 's' : ''} Detected`
+                    }
+                  </div>
+                  <div className="text-sm text-amber-700">
+                    {resumingStale
+                      ? 'Processing jobs sequentially'
+                      : `Jobs stuck for ${staleTimeoutMinutes}+ minutes without updates`
+                    }
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {resumingStale ? (
+                  <button
+                    onClick={cancelResumeAll}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-opacity hover:opacity-90"
+                    style={{ background: '#fef3c7', color: '#92400e', border: '1px solid #fbbf24' }}
+                  >
+                    <X className="w-4 h-4" />
+                    Stop
+                  </button>
+                ) : (
+                  <button
+                    onClick={resumeAllStale}
+                    disabled={processingJobId !== null}
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+                    style={{ background: '#d97706' }}
+                  >
+                    <Play className="w-4 h-4" />
+                    Resume All Stale
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {loading && jobs.length === 0 ? (
           <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
             <RefreshCw className="w-8 h-8 mx-auto mb-4 animate-spin opacity-30" />
@@ -518,7 +624,7 @@ export default function JobsPage() {
                     </div>
                     <div className="flex items-center gap-1">
                       {/* Actions */}
-                      {job.status === 'pending' && !isProcessingThis && (
+                      {job.status === 'pending' && !isProcessingThis && !resumingStale && (
                         <button
                           onClick={() => processJob(job.id)}
                           className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
@@ -527,7 +633,7 @@ export default function JobsPage() {
                           <Play className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
                         </button>
                       )}
-                      {job.status === 'processing' && isStale && !isProcessingThis && (
+                      {job.status === 'processing' && isStale && !isProcessingThis && !resumingStale && (
                         <button
                           onClick={() => processJob(job.id)}
                           className="p-1.5 rounded-lg hover:bg-amber-100 transition-colors"
@@ -545,7 +651,7 @@ export default function JobsPage() {
                           <Pause className="w-4 h-4" style={{ color: 'var(--accent-gold)' }} />
                         </button>
                       )}
-                      {job.status === 'paused' && (
+                      {job.status === 'paused' && !resumingStale && (
                         <button
                           onClick={() => handleAction(job.id, 'resume')}
                           className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
@@ -554,16 +660,18 @@ export default function JobsPage() {
                           <Play className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
                         </button>
                       )}
-                      {isActive && (
+                      {isActive && !resumingStale && (
                         <button
                           onClick={() => handleAction(job.id, 'cancel')}
-                          className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
-                          title="Cancel"
+                          className="flex items-center gap-1 px-2 py-1 rounded-lg text-xs font-medium hover:bg-red-50 transition-colors"
+                          style={{ color: 'var(--accent-rust)' }}
+                          title="Cancel job"
                         >
-                          <X className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />
+                          <StopCircle className="w-3.5 h-3.5" />
+                          Cancel
                         </button>
                       )}
-                      {(job.status === 'failed' || job.status === 'cancelled') && (
+                      {(job.status === 'failed' || job.status === 'cancelled') && !resumingStale && (
                         <button
                           onClick={() => handleAction(job.id, 'retry')}
                           className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
@@ -572,15 +680,14 @@ export default function JobsPage() {
                           <RotateCcw className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
                         </button>
                       )}
-                      {!isActive && (
-                        <button
-                          onClick={() => handleDelete(job.id)}
-                          className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-                        </button>
-                      )}
+                      {/* X to remove from list */}
+                      <button
+                        onClick={() => handleDelete(job.id)}
+                        className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors opacity-40 hover:opacity-100"
+                        title="Remove from list"
+                      >
+                        <X className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                      </button>
                     </div>
                   </div>
 
