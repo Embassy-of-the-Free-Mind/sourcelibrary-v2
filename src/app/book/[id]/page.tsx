@@ -55,21 +55,51 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = book.display_title || book.title;
   const description = `Read the English translation of "${title}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized and translated with AI from the original ${book.language || 'manuscript'}.`;
+  const bookUrl = `/book/${book.id}`;
+
+  // Get publication date for OG tags
+  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
+  const publishedDate = currentEdition?.published_at
+    ? new Date(currentEdition.published_at).toISOString()
+    : book.created_at
+    ? new Date(book.created_at).toISOString()
+    : undefined;
+  const modifiedDate = book.updated_at
+    ? new Date(book.updated_at).toISOString()
+    : undefined;
 
   return {
     title: `${title} - Source Library`,
     description,
+    alternates: {
+      canonical: bookUrl,
+    },
     openGraph: {
       title,
       description,
       type: 'article',
       siteName: 'Source Library',
       locale: 'en_US',
+      url: bookUrl,
+      ...(book.thumbnail && {
+        images: [
+          {
+            url: book.thumbnail,
+            width: 200,
+            height: 300,
+            alt: `${title} - cover page`,
+          },
+        ],
+      }),
+      ...(publishedDate && { publishedTime: publishedDate }),
+      ...(modifiedDate && { modifiedTime: modifiedDate }),
+      authors: [book.author],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      ...(book.thumbnail && { images: [book.thumbnail] }),
     },
   };
 }

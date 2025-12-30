@@ -6,6 +6,8 @@ interface SchemaOrgMetadataProps {
   translatedCount: number;
   currentEdition?: TranslationEdition;
   baseUrl?: string;
+  /** Current page number if viewing a specific page */
+  currentPage?: number;
 }
 
 /**
@@ -18,6 +20,7 @@ export default function SchemaOrgMetadata({
   translatedCount,
   currentEdition,
   baseUrl = 'https://sourcelibrary.org',
+  currentPage,
 }: SchemaOrgMetadataProps) {
   // Original work metadata
   const originalWork = {
@@ -93,14 +96,51 @@ export default function SchemaOrgMetadata({
   } : null;
 
   // Main page metadata
+  const pageUrl = currentPage
+    ? `${baseUrl}/book/${book.id}/page/${currentPage}`
+    : `${baseUrl}/book/${book.id}`;
+
   const webPage = {
     '@type': 'WebPage',
-    '@id': `${baseUrl}/book/${book.id}`,
-    name: book.display_title || book.title,
+    '@id': pageUrl,
+    name: currentPage
+      ? `${book.display_title || book.title} - Page ${currentPage}`
+      : book.display_title || book.title,
     description: getDescription(book, translatedCount, pageCount),
-    url: `${baseUrl}/book/${book.id}`,
+    url: pageUrl,
     mainEntity: translationWork ? { '@id': `${baseUrl}/book/${book.id}#translation` } : { '@id': `${baseUrl}/book/${book.id}#original` },
     ...(book.thumbnail && { thumbnailUrl: book.thumbnail }),
+  };
+
+  // Breadcrumb navigation
+  const breadcrumbItems = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: baseUrl,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: book.display_title || book.title,
+      item: `${baseUrl}/book/${book.id}`,
+    },
+  ];
+
+  // Add page breadcrumb if viewing a specific page
+  if (currentPage) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: `Page ${currentPage}`,
+      item: `${baseUrl}/book/${book.id}/page/${currentPage}`,
+    });
+  }
+
+  const breadcrumbList = {
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems,
   };
 
   const jsonLd = {
@@ -109,6 +149,7 @@ export default function SchemaOrgMetadata({
       webPage,
       originalWork,
       ...(translationWork ? [translationWork] : []),
+      breadcrumbList,
     ],
   };
 

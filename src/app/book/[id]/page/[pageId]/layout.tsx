@@ -58,20 +58,35 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     ? `Page ${pageNum} of "${bookTitle}" by ${book.author}. ${excerpt}`
     : `Page ${pageNum} of "${bookTitle}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized from the original ${book.language || 'manuscript'}.`;
 
+  const pageUrl = `/book/${id}/page/${pageId}`;
+
   return {
     title: `${title} - Source Library`,
     description,
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
       title,
       description,
       type: 'article',
       siteName: 'Source Library',
       locale: 'en_US',
+      url: pageUrl,
+      ...(page.photo && {
+        images: [
+          {
+            url: page.photo,
+            alt: `${bookTitle} - Page ${pageNum}`,
+          },
+        ],
+      }),
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      ...(page.photo && { images: [page.photo] }),
     },
   };
 }
