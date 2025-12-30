@@ -52,3 +52,4 @@ check-books.js
 
 # Experimental tools
 tools/
+.env*.local

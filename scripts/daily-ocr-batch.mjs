@@ -1,21 +1,24 @@
+#!/usr/bin/env node
 /**
- * Submit OCR batch jobs for all books that need OCR
- * Uses Gemini Batch API (50% cost savings)
+ * Daily OCR batch submission script
+ * Submits a limited number of books per run to stay within quota
+ * Run via cron: 0 6 * * * cd /path/to/sourcelibrary-v2 && node scripts/daily-ocr-batch.mjs
  */
 import { config } from 'dotenv';
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
-config({ path: '.env.prod' });
-config({ path: '.env.local', override: true });
+config({ path: '.env.local' });
 
 const API_KEY = process.env.GEMINI_API_KEY;
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const MODEL = 'gemini-2.5-flash';
-const BATCH_SIZE = 25; // Pages per batch job (reduced for smaller files)
-const MAX_IMAGE_WIDTH = 800; // Resize images to max 800px width for OCR (tested: identical quality, 78% smaller)
+
+// Daily limits to stay within quota
+const BOOKS_PER_DAY = 10; // Process 10 books per day
+const BATCH_SIZE = 25; // Pages per batch
+const MAX_IMAGE_WIDTH = 800; // Tested: identical OCR quality, 78% smaller files
 
 async function resizeImage(buffer) {
-  // Resize to max width, maintaining aspect ratio, and convert to JPEG
   return sharp(buffer)
     .resize({ width: MAX_IMAGE_WIDTH, withoutEnlargement: true })
     .jpeg({ quality: 85 })
@@ -24,7 +27,6 @@ async function resizeImage(buffer) {
 
 async function uploadBatchFile(jsonlContent, displayName) {
   const contentLength = Buffer.byteLength(jsonlContent);
-
   const startRes = await fetch(
     `https://generativelanguage.googleapis.com/upload/v1beta/files?key=${API_KEY}`,
     {
@@ -39,7 +41,6 @@ async function uploadBatchFile(jsonlContent, displayName) {
       body: JSON.stringify({ file: { displayName } }),
     }
   );
-
   if (!startRes.ok) throw new Error(`Upload start failed: ${await startRes.text()}`);
 
   const uploadUrl = startRes.headers.get('X-Goog-Upload-URL');
@@ -52,10 +53,8 @@ async function uploadBatchFile(jsonlContent, displayName) {
     },
     body: jsonlContent,
   });
-
   if (!uploadRes.ok) throw new Error(`Upload failed: ${await uploadRes.text()}`);
-  const fileInfo = await uploadRes.json();
-  return fileInfo.file.name;
+  return (await uploadRes.json()).file.name;
 }
 
 async function createBatchJob(fileName, displayName) {
@@ -72,18 +71,14 @@ async function createBatchJob(fileName, displayName) {
       }),
     }
   );
-
   if (!res.ok) throw new Error(`Batch creation failed: ${await res.text()}`);
   return res.json();
 }
 
 async function deleteFile(fileName) {
-  // Delete uploaded file to free quota (files count against 20GB storage limit)
   try {
     await fetch(`${API_BASE}/${fileName}?key=${API_KEY}`, { method: 'DELETE' });
-  } catch (e) {
-    // Ignore delete errors - file will expire anyway
-  }
+  } catch (e) { /* ignore */ }
 }
 
 const OCR_PROMPT = `You are an expert paleographer and OCR specialist. Transcribe the text from this historical document image.
@@ -99,32 +94,32 @@ Instructions:
 
 Output the transcription directly without any commentary.`;
 
-async function submitAllOcr() {
+async function main() {
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db(process.env.MONGODB_DB);
 
-  console.log('=== Submitting OCR Batch Jobs ===\n');
+  console.log(`=== Daily OCR Batch - ${new Date().toISOString()} ===\n`);
 
-  // Get books that already have batch jobs
-  const booksWithJobs = await db.collection('batch_jobs').distinct('book_id');
-  const booksWithJobsSet = new Set(booksWithJobs);
-  console.log(`Books already with jobs: ${booksWithJobs.length}`);
+  // Get books that already have jobs
+  const booksWithJobs = new Set(await db.collection('batch_jobs').distinct('book_id'));
 
-  // Get all books, skip those with existing jobs
-  const allBooks = await db.collection('books').find({}).toArray();
-  const books = allBooks.filter(b => !booksWithJobsSet.has(b.id || b._id?.toString()));
-  console.log(`Checking ${books.length} books (skipping ${allBooks.length - books.length} with existing jobs)...\n`);
+  // Get books needing OCR (no jobs yet)
+  const books = await db.collection('books')
+    .find({ id: { $nin: [...booksWithJobs] } })
+    .limit(BOOKS_PER_DAY)
+    .toArray();
 
-  let totalJobsCreated = 0;
-  let totalPagesQueued = 0;
-  let booksProcessed = 0;
+  console.log(`Processing ${books.length} books today (${booksWithJobs.size} already have jobs)\n`);
+
+  let totalJobs = 0;
+  let totalPages = 0;
 
   for (const book of books) {
     const bookId = book.id || book._id?.toString();
     const bookTitle = book.title || 'Untitled';
 
-    // Get pages needing OCR for this book
+    // Get pages needing OCR
     const pages = await db.collection('pages')
       .find({
         book_id: bookId,
@@ -140,17 +135,14 @@ async function submitAllOcr() {
 
     if (pages.length === 0) continue;
 
-    booksProcessed++;
-    console.log(`\n[${booksProcessed}] ${bookTitle} (${pages.length} pages)`);
+    console.log(`\n${bookTitle} (${pages.length} pages)`);
 
-    // Split into batches
+    // Process in batches
     for (let i = 0; i < pages.length; i += BATCH_SIZE) {
       const batch = pages.slice(i, i + BATCH_SIZE);
       const batchNum = Math.floor(i / BATCH_SIZE) + 1;
-      const totalBatches = Math.ceil(pages.length / BATCH_SIZE);
 
       try {
-        // Build JSONL requests
         const requests = [];
         for (const page of batch) {
           const imageUrl = page.cropped_photo || page.photo;
@@ -161,10 +153,8 @@ async function submitAllOcr() {
             if (!imgRes.ok) continue;
 
             const buf = await imgRes.arrayBuffer();
-            // Resize image to reduce file size (1200px max width, 85% JPEG quality)
             const resizedBuf = await resizeImage(Buffer.from(buf));
             const base64 = resizedBuf.toString('base64');
-            const mimeType = 'image/jpeg'; // Always JPEG after resize
 
             requests.push({
               key: page.id,
@@ -172,28 +162,22 @@ async function submitAllOcr() {
                 contents: [{
                   parts: [
                     { text: OCR_PROMPT },
-                    { inlineData: { mimeType, data: base64 } },
+                    { inlineData: { mimeType: 'image/jpeg', data: base64 } },
                   ],
                 }],
                 generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
               },
             });
-          } catch (e) {
-            // Skip failed image fetches
-          }
+          } catch (e) { /* skip */ }
         }
 
         if (requests.length === 0) continue;
 
-        // Create JSONL
         const jsonlContent = requests.map(r => JSON.stringify(r)).join('\n');
         const displayName = `ocr-${bookId.slice(0, 8)}-batch${batchNum}`;
 
-        // Upload and create batch job
         const fileName = await uploadBatchFile(jsonlContent, `${displayName}.jsonl`);
         const batchJob = await createBatchJob(fileName, displayName);
-
-        // Delete file to free quota (batch API copies data, original file not needed)
         await deleteFile(fileName);
 
         // Save to database
@@ -216,28 +200,31 @@ async function submitAllOcr() {
           updated_at: new Date(),
         });
 
-        console.log(`  Batch ${batchNum}/${totalBatches}: ${batchJob.name} (${requests.length} pages)`);
-        totalJobsCreated++;
-        totalPagesQueued += requests.length;
+        console.log(`  Batch ${batchNum}: ${requests.length} pages`);
+        totalJobs++;
+        totalPages += requests.length;
 
-        // Small delay to avoid rate limits
-        await new Promise(r => setTimeout(r, 500));
+        // Delay between batches
+        await new Promise(r => setTimeout(r, 1000));
 
       } catch (e) {
         console.error(`  Batch ${batchNum} failed: ${e.message}`);
+        if (e.message.includes('quota')) {
+          console.log('\nQuota exceeded - stopping for today');
+          break;
+        }
       }
     }
   }
 
-  console.log(`\n=== Complete ===`);
-  console.log(`Books processed: ${booksProcessed}`);
-  console.log(`Jobs created: ${totalJobsCreated}`);
-  console.log(`Pages queued: ${totalPagesQueued}`);
+  console.log(`\n=== Summary ===`);
+  console.log(`Jobs created: ${totalJobs}`);
+  console.log(`Pages queued: ${totalPages}`);
 
   await client.close();
 }
 
-submitAllOcr().catch(e => {
+main().catch(e => {
   console.error('Error:', e);
   process.exit(1);
 });

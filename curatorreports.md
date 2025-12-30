@@ -2033,3 +2033,668 @@ The standard reference edition for Greek Church Fathers (161 volumes total). Key
 | **GRAND TOTAL** | **260** | **113,893** |
 
 ---
+
+## Session 017: Byzantine Greek Manuscripts & Patristics (Extended)
+
+**Date:** December 30, 2024
+**Focus:** Major Greek manuscript facsimiles, biblical codices, Byzantine historians, hesychast texts, and hymnography
+
+### Biblical Codices & Critical Editions
+| Title | Author/Editor | Pages | Book ID |
+|-------|---------------|-------|---------|
+| Monumenta Sacra Inedita | Tischendorf | 767 | 6953a86177f38f6761bd0d10 |
+| Codex Vaticanus (B) Facsimile | Vatican Library | 134 | 6953a86577f38f6761bd1010 |
+| Novum Testamentum Graece | Tischendorf | 2,109 | 6953a88c77f38f6761bd19d6 |
+| Greek Old Testament (10 vols) | Tischendorf | 4,369 | 6953a8a477f38f6761bd2334 |
+| Septuagint Codex Vaticanus Edition | Brooke/McLean | 287 | 6953a89077f38f6761bd2214 |
+| Codex Sinaiticus Facsimile | Tischendorf | 628 | 6953a8b277f38f6761bd365c |
+| Chester Beatty Biblical Papyri | Kenyon | 82 | 6953a8ac77f38f6761bd3609 |
+| Interlinear Greek-English Septuagint | Various | 3,665 | 6953a8d677f38f6761bd3ac2 |
+
+**Biblical Codices Total: 8 books, 12,041 pages**
+
+### Byzantine Court & History
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Synaxarium Constantinopolitanae | Delehaye (ed.) | 174 | 6953a86877f38f6761bd1097 |
+| De Ceremoniis Aulae Byzantinae | Constantine VII | 877 | 6953a86d77f38f6761bd1146 |
+| De Administrando Imperio | Constantine VII | 457 | 6953a88377f38f6761bd16b9 |
+| Digenes Akrites (Byzantine Epic) | Anonymous | 262 | 6953a88877f38f6761bd18cf |
+| Chronographia | Michael Psellus | 450 | 6953a8a877f38f6761bd3446 |
+| Nicephori Gregorae Historia | Nicephorus Gregoras | 811 | 6953a96577f38f6761bd61d8 |
+| Leonis Diaconi Historia | Leo the Deacon | 675 | 6953a96877f38f6761bd6504 |
+
+**Byzantine History Total: 7 books, 3,706 pages**
+
+### Hesychasm & Mystical Theology
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Traités Théologiques - Symeon | Symeon New Theologian | 542 | 6953a8e577f38f6761bd4914 |
+| Defense des Saints Hesychastes | Gregory Palamas | 1,925 | 6953a8f977f38f6761bd4b33 |
+| The Way of a Pilgrim | Anonymous (Russian) | 204 | 6953a8fd77f38f6761bd52b9 |
+| On the Prayer of Jesus | Ignatius Brianchaninov | 214 | 6953a90077f38f6761bd5386 |
+
+**Hesychasm Total: 4 books, 2,885 pages**
+
+### Desert Fathers & Monasticism
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Anonymous Sayings of Desert Fathers | Wortley (trans.) | 496 | 6953a8d277f38f6761bd38d1 |
+| Apophthegmata Studien | W. Bousset | 362 | 6953a93177f38f6761bd5789 |
+| Institutions de Cassien | John Cassian | 322 | 6953a92e77f38f6761bd5646 |
+
+**Monasticism Total: 3 books, 1,180 pages**
+
+### Syriac/Greek Patristics
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Ephraem Syri Opera Omnia | Ephrem the Syrian | 100 | 6953a91277f38f6761bd545d |
+| Rhythms of Saint Ephrem | Ephrem the Syrian | 387 | 6953a91677f38f6761bd54c2 |
+| Nicephorus & Theodore Studite Opera | Nicephorus/Theodore | 741 | 6953a96277f38f6761bd5ef2 |
+
+**Patristics Total: 3 books, 1,228 pages**
+
+### Byzantine Music & Hymnography
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| History of Byzantine Music | Egon Wellesz | 498 | 6953a94277f38f6761bd5b21 |
+| Three Byzantine Sacred Poets | Various | 90 | 6953a94577f38f6761bd5d14 |
+| Essays on Music in Byzantine World | Oliver Strunk | 386 | 6953a94777f38f6761bd5d6f |
+
+**Hymnography Total: 3 books, 974 pages**
+
+### Session 017 Summary
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Biblical Codices & Critical Editions | 8 | 12,041 |
+| Byzantine Court & History | 7 | 3,706 |
+| Hesychasm & Mystical Theology | 4 | 2,885 |
+| Desert Fathers & Monasticism | 3 | 1,180 |
+| Syriac/Greek Patristics | 3 | 1,228 |
+| Byzantine Music & Hymnography | 3 | 974 |
+| **Session 017 Total** | **28** | **22,014** |
+
+### Key Acquisitions Notes
+
+#### Biblical Manuscripts
+- **Tischendorf Monumenta Sacra Inedita**: Previously unpublished sacred manuscripts from various libraries
+- **Codex Vaticanus/Sinaiticus**: The two most important 4th century biblical manuscripts
+- **Chester Beatty Papyri**: 3rd century biblical papyri, among oldest witnesses to NT text
+- **Tischendorf Greek OT (10 vols)**: Critical apparatus for Septuagint text
+
+#### Byzantine Sources
+- **De Ceremoniis**: Constantine VII's detailed account of Byzantine court ritual
+- **De Administrando Imperio**: Byzantine statecraft and foreign policy manual
+- **Digenes Akrites**: The great Byzantine frontier epic
+- **Psellus Chronographia**: 11th century court insider history
+- **Nicephorus Gregoras**: 14th century Byzantine historian (Palaeologan period)
+- **Leo the Deacon**: 10th century military history
+
+#### Hesychast Tradition
+- **Palamas Triads**: Foundational defense of hesychast prayer and theology of divine energies
+- **Symeon New Theologian**: 11th century mystic, central figure in Byzantine spirituality
+- **Way of a Pilgrim**: 19th century Russian classic on Jesus Prayer practice
+
+### Access Notes
+- **LOC Mt Athos Collection**: 209 manuscripts digitized from 1952 microfilms, available at loc.gov
+- **British Library Greek MSS**: 900+ manuscripts, IIIF-enabled but requires individual manifest lookup
+- **Vatican Digital Library**: Free access at digi.vatlib.it
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-015 | 233 | 108,882 |
+| Session 016 | 27 | 5,011 |
+| Session 017 | 28 | 22,014 |
+| **GRAND TOTAL** | **288** | **135,907** |
+
+---
+
+## 2025-12-30 — Session 018: Ancient Manuscript Facsimiles
+
+### Focus
+Import of ancient manuscript facsimiles - actual photographic reproductions of original handwritten/inscribed sources rather than printed editions.
+
+### Biblical Codex Facsimiles
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Codex Alexandrinus Facsimile | Frederic G. Kenyon | 346 | 6953cbb777f38f6761bdfc4d |
+| Nag Hammadi Codices - Codex II | Egyptian Coptic Museum | 194 | 6953cbbb77f38f6761bdfda8 |
+| Nag Hammadi Codices - Codex V | Egyptian Coptic Museum | 130 | 6953cbbe77f38f6761bdfe6b |
+| Nag Hammadi Codices - Codex VII | Egyptian Coptic Museum | 162 | 6953cbc177f38f6761bdfeee |
+| Nag Hammadi Codices - Codex III | Egyptian Coptic Museum | 184 | 6953cbc477f38f6761bdff91 |
+| Codex Nuttall (Pre-Columbian Mixtec) | Zelia Nuttall | 94 | 6953cbc877f38f6761be004a |
+
+**Biblical Codex Facsimiles Total: 6 books, 1,110 pages**
+
+### Dead Sea Scrolls
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Dead Sea Scrolls Translated | Florentino Garcia Martinez | 588 | 6953cbde77f38f6761be00a9 |
+| Dead Sea Scrolls Bible | Abegg, Flint, Ulrich | 680 | 6953cbe177f38f6761be02f7 |
+| Complete Dead Sea Scrolls in English | Geza Vermes | 678 | 6953cbe577f38f6761be05a0 |
+| Dead Sea Scrolls - A New Translation | Wise, Abegg, Cook | 692 | 6953cbea77f38f6761be0847 |
+| Meaning of the Dead Sea Scrolls | VanderKam, Flint | 489 | 6953cbef77f38f6761be0afc |
+| Dead Sea Scrolls and First Christians | Robert Eisenman | 497 | 6953cbf577f38f6761be0ce6 |
+
+**Dead Sea Scrolls Total: 6 books, 3,624 pages**
+
+### Insular Gospel Manuscripts (Celtic)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Book of Kells Facsimile | Edward Sullivan | 192 | 6953cc0c77f38f6761be0ed8 |
+| Book of Kells Latin Text (Codex Kenanensis) | Thomas Kingsmill Abbott | 502 | 6953cc1077f38f6761be0f99 |
+| Lindisfarne Gospels Vol. 4 | Stevenson, Waring | 313 | 6953cc1377f38f6761be1190 |
+| Lindisfarne Gospels Vol. 2 | Stevenson, Waring | 259 | 6953cc1777f38f6761be12ca |
+| Lindisfarne Gospels Vol. 3 | Stevenson, Waring | 308 | 6953cc1b77f38f6761be13ce |
+| Lindisfarne Gospels Illustrated Study | Janet Backhouse | 106 | 6953cc1e77f38f6761be1503 |
+
+**Insular Gospels Total: 6 books, 1,680 pages**
+
+### Papyrus Collections
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Fragmenta Herculanensia | Walter Scott | 398 | 6953cc3677f38f6761be156e |
+| Zenon Papyri Vol. I (Cairo Museum) | Campbell Edgar | 125 | 6953cc3977f38f6761be16fd |
+| Zenon Papyri Vol. II | Campbell Edgar | 142 | 6953cc3d77f38f6761be177b |
+| Zenon Papyri Vol. III | Campbell Edgar | 185 | 6953cc4077f38f6761be180a |
+| Zenon Papyri Vol. IV | Campbell Edgar | 179 | 6953cc4377f38f6761be18c4 |
+| Graeco-Roman Memoirs | Egypt Exploration Society | 368 | 6953cc4577f38f6761be1978 |
+| Sammelbuch Griechischer Urkunden | Friedrich Preisigke | 686 | 6953cc4977f38f6761be1ae9 |
+
+**Papyrus Collections Total: 7 books, 2,083 pages**
+
+### Medieval Codex Facsimiles
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Cloisters Apocalypse (14th c.) | Metropolitan Museum | 86 | 6953cc6477f38f6761be1d98 |
+| Lapidario del Rey Alfonso X | Alfonso X of Castile | 384 | 6953cc6777f38f6761be1def |
+| Codex Vercellensis (Anglo-Saxon) | Max Förster | 312 | 6953cc6a77f38f6761be1f70 |
+| De Proprietatibus Rerum | Bartholomaeus Anglicus | 530 | 6953cc6d77f38f6761be20a9 |
+| Illuminated Medieval Bible | Free Library Philadelphia | 1,023 | 6953cc7077f38f6761be22bc |
+| Decretals with Glossa Ordinaria | Bernardo da Parma | 603 | 6953cc7277f38f6761be26bc |
+| Illuminated Manuscripts (Classical/Medieval) | J.H. Middleton | 307 | 6953cc7577f38f6761be2918 |
+| Einsiedeln Codex (Pilgrims Guide Rome) | Unknown | 248 | 6953cc7a77f38f6761be2a4c |
+
+**Medieval Codex Total: 8 books, 3,493 pages**
+
+### Egyptian & Mysterious Manuscripts
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Book of Dead - Papyrus of Ani Facsimile | British Museum | 168 | 6953cca677f38f6761be2b45 |
+| Book of Dead - Hieroglyphic Transcript | E.A. Wallis Budge | 746 | 6953ccaa77f38f6761be2bee |
+| Book of Dead - Papyrus of Ani Translation | E.A. Wallis Budge | 556 | 6953ccad77f38f6761be2ed9 |
+| Egyptian Book of Dead - Going Forth by Day | Unknown | 186 | 6953ccb077f38f6761be3106 |
+| Voynich Manuscript (High Res Scans) | Beinecke Library, Yale | 100 | 6953ccb377f38f6761be31c1 |
+| Voynich Manuscript - NSA Analysis | National Security Agency | 330 | 6953ccb677f38f6761be3226 |
+
+**Egyptian & Mysterious Total: 6 books, 2,086 pages**
+
+### Session 018 Summary
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Biblical Codex Facsimiles | 6 | 1,110 |
+| Dead Sea Scrolls | 6 | 3,624 |
+| Insular Gospel Manuscripts | 6 | 1,680 |
+| Papyrus Collections | 7 | 2,083 |
+| Medieval Codex Facsimiles | 8 | 3,493 |
+| Egyptian & Mysterious Manuscripts | 6 | 2,086 |
+| **Session 018 Total** | **39** | **14,076** |
+
+### Key Acquisitions Notes
+
+#### Nag Hammadi Codices
+- Photographic facsimiles of the 4th century Coptic manuscripts discovered at Nag Hammadi in 1945
+- Includes Gospel of Thomas, Gospel of Philip, Apocryphon of John, and other Gnostic texts
+- Original manuscripts now in Coptic Museum, Cairo
+
+#### Dead Sea Scrolls Collection
+- Four major translations covering all extant scroll fragments
+- Eisenman's controversial interpretations linking scrolls to early Christianity
+- Garcia Martinez's scholarly Spanish translation
+- Includes Community Rule, War Scroll, Temple Scroll
+
+#### Insular Gospel Manuscripts
+- **Book of Kells**: 9th century masterpiece of Celtic illumination (Trinity College Dublin)
+- **Lindisfarne Gospels**: 8th century Anglo-Saxon manuscript with interlinear gloss (British Library)
+- These represent pinnacles of early medieval manuscript art
+
+#### Herculaneum & Zenon Papyri
+- **Herculaneum**: Carbonized papyri from villa buried by Vesuvius 79 CE (mostly Epicurean philosophy)
+- **Zenon Archive**: 3rd century BCE papyri from Ptolemaic Egypt (administrative/economic documents)
+
+#### Voynich Manuscript
+- 15th century manuscript in unknown script and language
+- NSA cryptographic analysis included
+- One of the most studied unsolved ciphers in history
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-017 | 288 | 135,907 |
+| Session 018 | 39 | 14,076 |
+| **GRAND TOTAL** | **327** | **149,983** |
+
+---
+
+## 2025-12-30 — Session 019: Islamic Philosophy & Christian Mysticism
+
+### Focus
+Filling gaps in Islamic philosophy (Al-Ghazali, Ibn Arabi, Averroes) and Christian mysticism (Rhineland/Flemish mystics, English mysticism).
+
+### Islamic Philosophy & Sufism
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Alchemy of Happiness | Al-Ghazali | 141 | 6953dd3077f38f6761be703a |
+| Confessions (Deliverance from Error) | Al-Ghazali | 76 | 6953dd3677f38f6761be70c8 |
+| Der Erretter aus dem Irrtum (German) | Al-Ghazali | 101 | 6953dd3977f38f6761be7115 |
+| Tarjuman al-Ashwaq (Interpreter of Desires) | Ibn Arabi | 176 | 6953dd3c77f38f6761be717b |
+| Awrad Ibn Arabi (Daily Prayers) | Ibn Arabi | 365 | 6953dd3e77f38f6761be722c |
+| Kitab Falsafat - Philosophy | Averroes | 160 | 6953dd4277f38f6761be739a |
+
+**Islamic Philosophy Total: 6 books, 1,019 pages**
+
+### Meister Eckhart & Rhineland Mysticism
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Meister Eckhart - Complete Works | Meister Eckhart | 514 | 6953dd5b77f38f6761be743b |
+| Meister Eckhart - Sermons | Meister Eckhart | 366 | 6953dd6077f38f6761be763e |
+| Meister Eckhart der Mystiker | Adolf Lasson | 388 | 6953dd6477f38f6761be77ad |
+| Eckhart und seine Jünger - Ungedruckte Texte | Meister Eckhart | 204 | 6953dd6777f38f6761be7932 |
+| Essential Sermons, Commentaries, Treatises | Meister Eckhart | 100 | 6953dd6c77f38f6761be79ff |
+| Teacher and Preacher | Meister Eckhart | 454 | 6953dd6f77f38f6761be7a64 |
+| Mystics of the Renaissance | Rudolf Steiner | 306 | 6953dd7177f38f6761be7c2b |
+
+**Meister Eckhart Total: 7 books, 2,332 pages**
+
+### Jan van Ruysbroeck (Flemish Mysticism)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Ruysbroeck - Study by Underhill | Evelyn Underhill | 224 | 6953dd8b77f38f6761be7d5e |
+| Spiritual Espousals and Other Works | Jan van Ruusbroec | 310 | 6953dd8f77f38f6761be7e3f |
+| Ruysbroeck the Admirable | Alfred Wautier | 382 | 6953dd9477f38f6761be7f76 |
+| Ruysbroeck and the Mystics | Maurice Maeterlinck | 169 | 6953dd9a77f38f6761be80f5 |
+| Die Zierde der geistlichen Hochzeit | Jan van Ruusbroec | 220 | 6953dd9d77f38f6761be819f |
+| A Mediaeval Mystic - Life of Ruysbroeck | Vincent Scully | 158 | 6953dda277f38f6761be827c |
+
+**Ruysbroeck Total: 6 books, 1,463 pages**
+
+### Cloud of Unknowing & English Mysticism
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Cloud of Unknowing and Other Treatises | Anonymous | 474 | 6953ddbb77f38f6761be831b |
+| Cloud of Unknowing - Underhill Edition | Evelyn Underhill (ed.) | 330 | 6953ddbf77f38f6761be84f6 |
+| Cloud of Unknowing - Walsh Translation | James Walsh (trans.) | 326 | 6953ddc377f38f6761be8641 |
+| Cloud of Unknowing - Progoff Commentary | Ira Progoff (ed.) | 262 | 6953ddc877f38f6761be8788 |
+| Cloud of Unknowing & Book of Privy Counseling | Anonymous | 206 | 6953ddcc77f38f6761be888f |
+| Way of Paradox - Eckhart Spirituality | Cyprian Smith | 150 | 6953ddd077f38f6761be895e |
+
+**Cloud of Unknowing Total: 6 books, 1,748 pages**
+
+### Session 019 Summary
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Islamic Philosophy & Sufism | 6 | 1,019 |
+| Meister Eckhart & Rhineland Mysticism | 7 | 2,332 |
+| Jan van Ruysbroeck (Flemish) | 6 | 1,463 |
+| Cloud of Unknowing & English Mysticism | 6 | 1,748 |
+| **Session 019 Total** | **25** | **6,562** |
+
+### Key Acquisitions Notes
+
+#### Islamic Philosophy
+- **Al-Ghazali**: Most influential medieval Islamic theologian. "Alchemy of Happiness" = Persian abridgement of Ihya Ulum al-Din. "Deliverance from Error" = autobiographical account of spiritual crisis and turn to Sufism.
+- **Ibn Arabi**: "Greatest Master" (al-Shaykh al-Akbar) of Sufi metaphysics. Tarjuman al-Ashwaq = mystical love poetry with esoteric commentary.
+- **Averroes**: Leading Aristotelian commentator, major influence on Scholasticism.
+
+#### Rhineland Mysticism
+- **Meister Eckhart** (c.1260-1328): Dominican theologian, central figure in German mysticism. Teachings on detachment (Gelassenheit), the birth of the Word in the soul, and the "ground" (Grunt) of the soul.
+- **Steiner's Mystics of the Renaissance**: Links Eckhart to Tauler, Paracelsus, Boehme, and Bruno.
+
+#### Flemish Mysticism
+- **Jan van Ruusbroec** (1293-1381): "The Admirable" - Flemish mystic whose "Spiritual Espousals" describes three stages of union with God. Major influence on Devotio Moderna and Thomas à Kempis.
+
+#### English Mysticism
+- **Cloud of Unknowing** (14th c.): Anonymous masterpiece of apophatic (negative) theology. Teaches contemplative prayer through unknowing and forgetting all concepts.
+- **Book of Privy Counseling**: Sequel/companion to the Cloud, offering more direct instruction.
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-018 | 327 | 149,983 |
+| Session 019 | 25 | 6,562 |
+| **GRAND TOTAL** | **352** | **156,545** |
+
+---
+
+## 2025-12-30 — Session 020: Chinese Classics, Indian Tantra, Theosophy & Modern Occultism
+
+### Focus
+Comprehensive import of four major esoteric traditions: Chinese philosophy, Indian Tantra, Theosophy, and Golden Dawn/Thelema.
+
+### Chinese Classics
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| I Ching - Wilhelm/Baynes Translation | Richard Wilhelm | 818 | 6953e27077f38f6761be89f5 |
+| I Ching - Sacred Books of China (Legge) | James Legge | 502 | 6953e27477f38f6761be8d28 |
+| Total I Ching - Myths for Change | Stephen Karcher | 474 | 6953e27877f38f6761be8f1f |
+| Four Books of Confucius | James Legge | 1,028 | 6953e27b77f38f6761be90fa |
+| Analects of Confucius - Soothill | William Soothill | 1,058 | 6953e27f77f38f6761be94ff |
+| Confucius Sinarum Philosophus (1687 Latin) | Jesuit Missionaries | 568 | 6953e28477f38f6761be9922 |
+| Zen Buddhism - D.T. Suzuki Selected | D.T. Suzuki | 326 | 6953e29e77f38f6761be9b5b |
+| Zen Comes West | Christmas Humphreys | 218 | 6953e2a277f38f6761be9ca2 |
+| Maps of Consciousness | Ralph Metzner | 180 | 6953e2a577f38f6761be9d7d |
+| Secrets of the I Ching | Joseph Murphy | 232 | 6953e2a877f38f6761be9e32 |
+| Economic Principles of Confucius | Chen Huan-Chang | 780 | 6953e2ab77f38f6761be9f1b |
+| Ethics of Confucius | Miles Dawson | 366 | 6953e2af77f38f6761bea228 |
+
+**Chinese Classics Total: 12 books, 6,550 pages**
+
+### Indian Tantra (Kashmir Shaivism & Shakta)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Tantraloka of Abhinavagupta (Complete) | Abhinavagupta | 3,938 | 6953e2f677f38f6761bea397 |
+| Tantraloka Vol. 1 with Jayaratha Commentary | Abhinavagupta | 372 | 6953e2ff77f38f6761beb2fa |
+| Kularnava Tantra (Sanskrit) | Traditional | 303 | 6953e30277f38f6761beb46f |
+| Kularnava Tantra - English (Avalon) | Arthur Avalon | 132 | 6953e30577f38f6761beb59f |
+| Karpuradi Stotram - Hymn to Kali | Vimalananda; Avalon | 138 | 6953e30877f38f6761beb624 |
+| Yantra Mantra Tantra Vidya | Kunthu Sagar Ji | 732 | 6953e30b77f38f6761beb6af |
+
+**Indian Tantra Total: 6 books, 5,615 pages**
+
+### Theosophy (Blavatsky & Steiner)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Secret Doctrine Vol. I - Cosmogenesis | H.P. Blavatsky | 776 | 6953e32877f38f6761beb98c |
+| Secret Doctrine Vol. III - Esoterica | H.P. Blavatsky | 634 | 6953e32f77f38f6761bebc95 |
+| Isis Unveiled Vol. I - Science | H.P. Blavatsky | 745 | 6953e33477f38f6761bebf10 |
+| Isis Unveiled Vol. II - Theology | H.P. Blavatsky | 743 | 6953e33877f38f6761bec1fa |
+| Key to Theosophy | H.P. Blavatsky | 410 | 6953e33c77f38f6761bec4e2 |
+| Theosophical Glossary | H.P. Blavatsky | 380 | 6953e33f77f38f6761bec67d |
+| Way of Initiation | Rudolf Steiner | 260 | 6953e35a77f38f6761bec7fa |
+| Gates of Knowledge | Rudolf Steiner | 208 | 6953e35e77f38f6761bec8ff |
+| Christianity as Mystical Fact | Rudolf Steiner | 270 | 6953e36177f38f6761bec9d0 |
+| Initiation and Its Results | Rudolf Steiner | 180 | 6953e36477f38f6761becadf |
+| Occult Significance of Blood | Rudolf Steiner | 56 | 6953e36777f38f6761becb94 |
+| Lucifer-Gnosis (GA 34) | Rudolf Steiner | 660 | 6953e36a77f38f6761becbcd |
+
+**Theosophy Total: 12 books, 5,322 pages**
+
+### Modern Occultism (Golden Dawn & Crowley)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Complete Golden Dawn System of Magic | Israel Regardie | 1,077 | 6953e38c77f38f6761bece62 |
+| The Golden Dawn (Black Brick Edition) | Israel Regardie | 717 | 6953e38f77f38f6761bed298 |
+| The Golden Dawn Vol. 2 (1938) | Israel Regardie | 295 | 6953e39277f38f6761bed566 |
+| Complete Golden Dawn Initiate | Steven Ashe | 589 | 6953e39577f38f6761bed68e |
+| Magicians of the Golden Dawn - History | Ellic Howe | 177 | 6953e39777f38f6761bed8dc |
+| Secrets of a Golden Dawn Temple | Cicero & Cicero | 390 | 6953e39b77f38f6761bed98e |
+| Magick in Theory and Practice | Aleister Crowley | 482 | 6953e3b577f38f6761bedb15 |
+| Book Four - Magick | Aleister Crowley | 228 | 6953e3b777f38f6761bedcf8 |
+| Qabalah of Aleister Crowley | Aleister Crowley | 344 | 6953e3ba77f38f6761bedddd |
+| Book of Thoth - Tarot | Aleister Crowley | 310 | 6953e3be77f38f6761bedf36 |
+| Book of the Law (Liber AL) | Aleister Crowley | 134 | 6953e3c077f38f6761bee06d |
+| Magical Diaries of the Beast 666 | Aleister Crowley | 262 | 6953e3c377f38f6761bee0f4 |
+| Diary of a Drug Fiend | Aleister Crowley | 394 | 6953e3c677f38f6761bee1fb |
+
+**Modern Occultism Total: 13 books, 5,399 pages**
+
+### Session 020 Summary
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Chinese Classics | 12 | 6,550 |
+| Indian Tantra | 6 | 5,615 |
+| Theosophy | 12 | 5,322 |
+| Modern Occultism | 13 | 5,399 |
+| **Session 020 Total** | **43** | **22,886** |
+
+### Key Acquisitions Notes
+
+#### Chinese Classics
+- **I Ching**: Three major translations - Wilhelm/Baynes (psychological/Jungian), Legge (scholarly), Karcher (mythological)
+- **Confucius**: Four Books complete (Analects, Great Learning, Doctrine of Mean, Mencius), plus rare 1687 Latin Jesuit translation
+- **Zen**: D.T. Suzuki's foundational works introducing Zen to the West
+
+#### Indian Tantra
+- **Tantraloka**: Abhinavagupta's magnum opus - complete encyclopedia of Kashmir Shaiva tantra (nearly 4,000 pages)
+- **Kularnava Tantra**: Key Kaula text on ritual practice
+- **Arthur Avalon (John Woodroffe)**: Pioneer translator of Hindu tantra for Western audiences
+
+#### Theosophy
+- **Blavatsky**: Secret Doctrine (Vols I & III), Isis Unveiled (complete), Key to Theosophy, Glossary
+- **Steiner**: Initiation texts, Christianity as Mystical Fact, Lucifer-Gnosis journal
+
+#### Golden Dawn & Thelema
+- **Regardie**: Complete Golden Dawn corpus - the definitive publication of GD rituals and teachings
+- **Crowley**: Core Thelemic works - Magick, Book of Thoth, Liber AL, 777/Qabalah, plus diaries
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-019 | 352 | 156,545 |
+| Session 020 | 43 | 22,886 |
+| **GRAND TOTAL** | **395** | **179,431** |
+
+---
+
+## 2025-12-30 — Session 021: Scientific Revolution & Ancient Medicine
+
+### Focus
+Primary sources of the Scientific Revolution (1543-1700): Copernicus, Galileo, Kepler, Newton, Bacon, Descartes, Harvey, Vesalius, Boyle, Hooke, Huygens, Gilbert, Leibniz, Pascal, Leeuwenhoek. Plus Galen's ancient medical corpus.
+
+### Astronomical Revolution
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| De Revolutionibus (German Translation) | Nicolaus Copernicus | 466 | 6953e42e77f38f6761beed60 |
+| Sidereus Nuncius (1610 First Edition) | Galileo Galilei | 68 | 6953e45877f38f6761bee67c |
+| Sidereal Messenger (English Translation) | Galileo Galilei | 150 | 6953e45c77f38f6761bee6dd |
+| Dialogo sopra i due massimi sistemi (1632) | Galileo Galilei | 520 | 6953e46277f38f6761bee798 |
+| Dialogue Concerning Two World Systems (German) | Galileo Galilei | 686 | 6953e46677f38f6761beeafb |
+| Discorsi e Dimostrazioni (Two New Sciences) | Galileo Galilei | 346 | 6953e48077f38f6761beeda0 |
+| Tabulae Rudolphinae (1627) | Johannes Kepler | 276 | 6953e49377f38f6761beee27 |
+| Kepler Opera Omnia Vol. I | Johannes Kepler | 1,150 | 6953e4a277f38f6761beed5d |
+
+**Astronomical Revolution Total: 8 books, 3,662 pages**
+
+### Newton, Bacon & Descartes (Natural Philosophy)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Philosophiae Naturalis Principia Mathematica (1687 First Edition) | Isaac Newton | 526 | 6953e4fa77f38f6761bef1dc |
+| Mathematical Principles of Natural Philosophy (Motte 1729) | Isaac Newton | 417 | 6953e4ff77f38f6761bef3eb |
+| Opticks (1704 First Edition) | Isaac Newton | 458 | 6953e50277f38f6761bef58d |
+| Novum Organum Scientiarum (1762) | Francis Bacon | 408 | 6953e50577f38f6761bef758 |
+| Novum Organum (English Translation) | Francis Bacon | 300 | 6953e50877f38f6761bef8f1 |
+| Of the Advancement and Proficience of Learning (1640) | Francis Bacon | 628 | 6953e50b77f38f6761befa1e |
+| Discours de la Méthode suivi des Méditations | René Descartes | 485 | 6953e51c77f38f6761befc93 |
+| Discourse on Method, Meditations, Principles of Philosophy | René Descartes | 296 | 6953e51e77f38f6761befe79 |
+| Oeuvres de Descartes Vol. VI (La Géométrie) | René Descartes | 758 | 6953e52177f38f6761beffa2 |
+
+**Natural Philosophy Total: 9 books, 4,276 pages**
+
+### Medicine & Anatomy
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Exercitatio Anatomica de Motu Cordis (1628 First Edition) | William Harvey | 88 | 6953e55177f38f6761bf0299 |
+| Works of William Harvey (Sydenham Society 1847) | William Harvey | 732 | 6953e55477f38f6761bf02f2 |
+| De Humani Corporis Fabrica (1543 First Edition) | Andreas Vesalius | 734 | 6953e55777f38f6761bf05cf |
+
+**Medicine & Anatomy Total: 3 books, 1,554 pages**
+
+### Chemistry, Microscopy & Physics
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| The Sceptical Chymist (1661 First Edition) | Robert Boyle | 472 | 6953e55c77f38f6761bf08ae |
+| New Experiments Physico-Mechanical (1660) | Robert Boyle | 243 | 6953e56277f38f6761bf0a87 |
+| Micrographia (1665 First Edition) | Robert Hooke | 384 | 6953e56577f38f6761bf0b7b |
+| Traité de la Lumière (1690) | Christiaan Huygens | 201 | 6953e58d77f38f6761bf0cfc |
+| Horologium Oscillatorium (1673) | Christiaan Huygens | 186 | 6953e59077f38f6761bf0dc6 |
+| De Magnete (1600 First Edition) | William Gilbert | 270 | 6953e59377f38f6761bf0e81 |
+| On the Loadstone and Magnetic Bodies (English) | William Gilbert | 436 | 6953e59677f38f6761bf0f90 |
+
+**Chemistry, Microscopy & Physics Total: 7 books, 2,192 pages**
+
+### Mathematics
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Mathematische Schriften Vol. IV | Gottfried Wilhelm Leibniz | 556 | 6953e5ef1479a63c1108408e |
+| Oeuvres de Blaise Pascal Vol. I | Blaise Pascal | 476 | 6953e5f21479a63c110842bb |
+| Arcana Naturae Detecta (1695) | Antony van Leeuwenhoek | 659 | 6953e5f41479a63c11084498 |
+
+**Mathematics & Natural History Total: 3 books, 1,691 pages**
+
+### Galen (Ancient Medicine)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Opera Omnia Vol. I | Galen | 967 | 6953e60b1479a63c1108472c |
+| On the Natural Faculties (Loeb Classical Library) | Galen | 420 | 6953e60e1479a63c11084af4 |
+| De Simplicium Medicamentorum Facultatibus (1561) | Galen | 764 | 6953e6111479a63c11084c99 |
+| The Writings of Hippocrates and Galen | Hippocrates and Galen | 436 | 6953e6141479a63c11084f96 |
+| Opera Omnia (Kühn Edition) Vol. I | Galen | 976 | 6953e6171479a63c1108514b |
+
+**Galen Total: 5 books, 3,563 pages**
+
+### Session 021 Summary
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Astronomical Revolution | 8 | 3,662 |
+| Newton, Bacon, Descartes | 9 | 4,276 |
+| Medicine & Anatomy | 3 | 1,554 |
+| Chemistry, Microscopy & Physics | 7 | 2,192 |
+| Mathematics & Natural History | 3 | 1,691 |
+| Galen (Ancient Medicine) | 5 | 3,563 |
+| **Session 021 Total** | **35** | **16,938** |
+
+### Key Acquisitions Notes
+
+#### Astronomical Revolution
+- **Copernicus De Revolutionibus**: The book that launched the heliocentric revolution (1543)
+- **Galileo's Works**: Sidereus Nuncius (first telescopic observations), Dialogue (defense of heliocentrism), Two New Sciences (kinematics and materials science)
+- **Kepler's Tabulae Rudolphinae**: Definitive planetary tables using elliptical orbits, foundation of modern astronomy
+
+#### Natural Philosophy
+- **Newton Principia (1687)**: Foundation of classical mechanics; both original Latin first edition and Motte's 1729 English translation
+- **Newton Opticks (1704)**: Corpuscular theory of light, experimentalism
+- **Bacon Novum Organum**: New method of scientific inquiry (induction), rejection of Aristotelian syllogism
+- **Descartes**: Discourse on Method (methodical doubt), Meditations (cogito), La Géométrie (analytic geometry)
+
+#### Medicine & Physiology
+- **Harvey De Motu Cordis (1628)**: Discovery of blood circulation - overthrew Galenic physiology
+- **Vesalius De Humani Corporis Fabrica (1543)**: Modern scientific anatomy, direct observation vs. ancient authority
+- **Galen's Corpus**: The ancient authority Harvey and Vesalius built upon and corrected - foundational for understanding the revolution
+
+#### Chemistry & Physics
+- **Boyle Sceptical Chymist (1661)**: Transformed alchemy into chemistry, atomic theory of matter
+- **Hooke Micrographia (1665)**: First microscopic observations, coined "cell"
+- **Huygens**: Wave theory of light (Traité), pendulum clock mathematics (Horologium)
+- **Gilbert De Magnete (1600)**: First systematic study of magnetism, coined "electricity"
+
+#### Mathematics
+- **Leibniz Mathematische Schriften**: Development of calculus (independently of Newton)
+- **Pascal Oeuvres**: Probability theory, hydraulics, calculating machines
+- **Leeuwenhoek Arcana Naturae**: First observations of bacteria and protozoa
+
+### Session 021 Part 2: Extended Scientific Revolution
+
+#### Euler (Mathematics & Mechanics)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Elements of Algebra | Leonhard Euler | 642 | 6953e9e71479a63c1108551c |
+| Mechanica Vol. I (1736) | Leonhard Euler | 544 | 6953e9f41479a63c1108579f |
+| Mechanica Vol. II (1736) | Leonhard Euler | 556 | 6953e9ff1479a63c110859c0 |
+| Einleitung in die Analysis des Unendlichen | Leonhard Euler | 632 | 6953ea0a1479a63c11085bed |
+| Methodus Inveniendi (Calculus of Variations, 1744) | Leonhard Euler | 354 | 6953ea151479a63c11085e66 |
+| Vollständige Anleitung zur Algebra (1771) | Leonhard Euler | 669 | 6953ea1d1479a63c11085fc9 |
+
+**Euler Total: 6 books, 3,397 pages**
+
+#### Natural Magic (Della Porta & Wilkins)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Natural Magick (1658 English) | Giambattista della Porta | 438 | 6953ea371479a63c11086267 |
+| Magia Naturalis (1619 Latin) | Giambattista della Porta | 1,356 | 6953ea3e1479a63c1108641e |
+| Mathematical and Philosophical Works | John Wilkins | 598 | 6953ea4a1479a63c1108696b |
+
+**Natural Magic Total: 3 books, 2,392 pages**
+
+#### Additional Leibniz (Philosophy)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Philosophical Works (Monadology, Theodicy, Clarke) | Gottfried Wilhelm Leibniz | 418 | 6953ea641479a63c11086bc2 |
+| Die philosophischen Schriften Vol. IV | Gottfried Wilhelm Leibniz | 648 | 6953ea711479a63c11086d65 |
+| Die philosophischen Schriften Vol. I | Gottfried Wilhelm Leibniz | 633 | 6953ea7c1479a63c11086fee |
+| The Monadology and Other Philosophical Writings | Gottfried Wilhelm Leibniz | 472 | 6953ea881479a63c11087268 |
+
+**Additional Leibniz Total: 4 books, 2,171 pages**
+
+#### Additional Descartes (Complete Works)
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Oeuvres de Descartes Vol. I (Correspondance) | René Descartes | 714 | 6953eaad1479a63c11087441 |
+| Oeuvres de Descartes Vol. VII (Meditationes) | René Descartes | 650 | 6953eab81479a63c1108770c |
+| Oeuvres de Descartes Vol. VIII (Principia Philosophiae) | René Descartes | 786 | 6953eac21479a63c11087997 |
+| Oeuvres de Descartes Vol. XI (Le Monde) | René Descartes | 804 | 6953eae01479a63c11087e87 |
+| Philosophical Works Vol. I (Haldane-Ross) | René Descartes | 476 | 6953eacc1479a63c11087caa |
+
+**Additional Descartes Total: 5 books, 3,430 pages**
+
+#### Additional Gilbert
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| De Mundo Nostro Sublunari Philosophia Nova (1651) | William Gilbert | 350 | 6953eaf41479a63c110881ac |
+
+**Additional Gilbert Total: 1 book, 350 pages**
+
+### Session 021 Extended Summary
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Part 1: Astronomical Revolution | 8 | 3,662 |
+| Part 1: Newton, Bacon, Descartes | 9 | 4,276 |
+| Part 1: Medicine & Anatomy | 3 | 1,554 |
+| Part 1: Chemistry, Microscopy & Physics | 7 | 2,192 |
+| Part 1: Mathematics & Natural History | 3 | 1,691 |
+| Part 1: Galen (Ancient Medicine) | 5 | 3,563 |
+| Part 2: Euler | 6 | 3,397 |
+| Part 2: Natural Magic | 3 | 2,392 |
+| Part 2: Additional Leibniz | 4 | 2,171 |
+| Part 2: Additional Descartes | 5 | 3,430 |
+| Part 2: Additional Gilbert | 1 | 350 |
+| **Session 021 Total** | **54** | **28,678** |
+
+### Key Acquisitions Notes (Part 2)
+
+#### Euler
+- **Mechanica (1736)**: First systematic treatise on analytical mechanics, foundation of classical mechanics alongside Newton
+- **Analysis of the Infinite**: Introduction to infinitesimal calculus
+- **Calculus of Variations (1744)**: Foundational work on optimization, variational principles
+- **Elements of Algebra**: One of the most influential algebra textbooks ever written
+
+#### Natural Magic
+- **Della Porta Magia Naturalis**: 20-book encyclopedia of "natural magic" - experiments in optics, magnetism, alchemy, cryptography. Major influence on early modern science.
+- **Wilkins Mathematical Magick**: Explains mechanical wonders (automata, perpetual motion) - bridges magic and science
+
+#### Leibniz Philosophy
+- **Monadology**: Central metaphysical work - monads, pre-established harmony, best of all possible worlds
+- **Die philosophischen Schriften**: Gerhardt's critical German edition of philosophical works
+
+#### Descartes Extended
+- **Adam-Tannery Edition**: Definitive critical edition of complete works
+- **Le Monde**: Descartes' suppressed cosmological treatise
+- **Haldane-Ross Translation**: Standard English philosophical translation
+
+#### Gilbert De Mundo
+- Posthumous work on cosmology, extending De Magnete's magnetic philosophy to the cosmos
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-020 | 395 | 179,431 |
+| Session 021 | 54 | 28,678 |
+| **GRAND TOTAL** | **449** | **208,109** |
+
+---

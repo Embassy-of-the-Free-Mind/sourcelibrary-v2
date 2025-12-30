@@ -259,6 +259,102 @@ export default function ResearchPage() {
           </div>
         </section>
 
+        {/* Study 2: De Voluptate */}
+        <section className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-green-100 rounded-lg">
+              <BookOpen className="w-5 h-5 text-green-600" />
+            </div>
+            <h2 className="text-xl font-semibold text-stone-900">
+              Study 2: De Voluptate (Latin → English)
+            </h2>
+          </div>
+
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4 text-sm">
+            <strong className="text-yellow-800">In Progress:</strong>
+            <span className="text-yellow-700"> Awaiting unpublished scholarly translation for comparison</span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+            <div className="bg-stone-50 rounded-lg p-3">
+              <div className="text-stone-500 mb-1">Source Text</div>
+              <div className="font-medium text-stone-900">Ficino, De Voluptate (On Pleasure)</div>
+              <div className="text-stone-600">Renaissance Latin, 1457</div>
+            </div>
+            <div className="bg-stone-50 rounded-lg p-3">
+              <div className="text-stone-500 mb-1">Benchmark</div>
+              <div className="font-medium text-stone-900">Unpublished Scholarly Translation</div>
+              <div className="text-stone-600">Blind comparison (not in training data)</div>
+            </div>
+          </div>
+
+          <h3 className="font-medium text-stone-800 mb-3">Content OCR&apos;d (Chapters 1-2)</h3>
+          <ul className="text-sm text-stone-600 space-y-1 mb-4">
+            <li>• Ch. 1: Parts of the soul — joy (laeticia), gladness (gaudium), pleasure (voluptas)</li>
+            <li>• Ch. 2: What pleasure is, and why it is not good (Plato&apos;s arguments)</li>
+          </ul>
+
+          <div className="bg-stone-50 border border-stone-200 rounded-lg p-4">
+            <p className="text-sm text-stone-700 italic">
+              &quot;Therefore, Plato, when he divided the soul into two parts, namely, mind and senses,
+              assigned joy and gladness to the mind, and pleasure to the senses. But he thinks these
+              first two differ from each other, because all gladness is worthy of praise, while joy
+              is partly to be praised and partly to be blamed.&quot;
+            </p>
+            <p className="text-xs text-stone-500 mt-2">— AI Translation, De Voluptate Ch. 1</p>
+          </div>
+        </section>
+
+        {/* Methodology: Benchmark vs Pipeline */}
+        <section className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+          <h2 className="text-lg font-semibold text-stone-900 mb-4">Benchmark vs Standard Pipeline</h2>
+          <p className="text-stone-600 mb-4 text-sm">
+            These benchmark translations use enhanced methodology compared to the standard library pipeline:
+          </p>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-stone-200">
+                  <th className="text-left py-2 pr-4 font-medium text-stone-700">Aspect</th>
+                  <th className="text-left py-2 px-4 font-medium text-blue-700">Benchmark Method</th>
+                  <th className="text-left py-2 pl-4 font-medium text-stone-500">Standard Pipeline</th>
+                </tr>
+              </thead>
+              <tbody className="text-stone-600">
+                <tr className="border-b border-stone-100">
+                  <td className="py-2 pr-4 font-medium">Context</td>
+                  <td className="py-2 px-4 text-blue-800">Named work, author, specific terminology</td>
+                  <td className="py-2 pl-4">Generic &quot;scholarly translator&quot;</td>
+                </tr>
+                <tr className="border-b border-stone-100">
+                  <td className="py-2 pr-4 font-medium">Terminology</td>
+                  <td className="py-2 px-4 text-blue-800">Explicit guidance (laeticia=joy, etc.)</td>
+                  <td className="py-2 pl-4">AI decides</td>
+                </tr>
+                <tr className="border-b border-stone-100">
+                  <td className="py-2 pr-4 font-medium">Batch size</td>
+                  <td className="py-2 px-4 text-blue-800">Full section as continuous text</td>
+                  <td className="py-2 pl-4">10 pages, parsed separately</td>
+                </tr>
+                <tr className="border-b border-stone-100">
+                  <td className="py-2 pr-4 font-medium">Output</td>
+                  <td className="py-2 px-4 text-blue-800">Continuous scholarly prose</td>
+                  <td className="py-2 pl-4">Per-page fragments</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+            <p className="text-sm text-blue-900">
+              <strong>Implication:</strong> Benchmark translations with domain-specific prompts
+              may outperform the standard pipeline. Future work: test whether adding work-specific
+              context to the pipeline improves translation quality across the library.
+            </p>
+          </div>
+        </section>
+
         {/* Future Studies */}
         <section className="bg-white rounded-xl border border-stone-200 p-6">
           <h2 className="text-lg font-semibold text-stone-900 mb-4">Future Studies</h2>
