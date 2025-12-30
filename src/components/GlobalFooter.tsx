@@ -65,6 +65,13 @@ export default function GlobalFooter() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
           <span>CC0 Public Domain</span>
           <span className="hidden sm:inline">•</span>
+          <Link
+            href="/about/research"
+            className="text-amber-600 hover:text-amber-500 transition-colors"
+          >
+            Research
+          </Link>
+          <span className="hidden sm:inline">•</span>
           <a
             href="mailto:derek@ancientwisdomtrust.org"
             className="text-amber-600 hover:text-amber-500 transition-colors"
