@@ -22,12 +22,24 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
     loadStartTime.current = performance.now();
   }, []);
 
+  // Determine image source type for analytics
+  const getImageSource = (): 'blob' | 'ia' | 'local' | 'other' => {
+    if (!book.thumbnail) return 'other';
+    if (book.thumbnail.includes('blob.vercel-storage.com')) return 'blob';
+    if (book.thumbnail.includes('archive.org')) return 'ia';
+    if (book.thumbnail.startsWith('/api/')) return 'local';
+    return 'other';
+  };
+
   const handleImageLoad = () => {
     if (loadStartTime.current !== null) {
       const loadTime = performance.now() - loadStartTime.current;
+      const source = getImageSource();
       recordLoadingMetric('book_card_image_load', loadTime, {
         bookId: book.id,
-        priority
+        priority,
+        source, // 'blob' = Vercel Blob, 'ia' = Internet Archive, 'local' = API proxy, 'other' = unknown
+        isArchived: source === 'blob'
       });
     }
     setImageLoaded(true);

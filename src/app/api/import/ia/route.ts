@@ -53,16 +53,27 @@ export async function POST(request: NextRequest) {
     // Find the main document file (usually a PDF or DJVU) to get page count
     // Or look for JP2 files which are individual page images
     const files = metadata.files || [];
+    const iaMetadataRaw = metadata.metadata || {};
 
-    // Look for leaf images or calculate from PDF
+    // First, try the reliable imagecount field from IA metadata
     let pageCount = 0;
-    const jp2Files = files.filter((f: { name: string }) =>
-      f.name.endsWith('.jp2') && !f.name.includes('thumb')
-    );
+    if (iaMetadataRaw.imagecount) {
+      pageCount = parseInt(iaMetadataRaw.imagecount, 10);
+    }
 
-    if (jp2Files.length > 0) {
-      pageCount = jp2Files.length;
-    } else {
+    // Fallback: Look for leaf images or calculate from PDF
+    if (pageCount === 0) {
+      const jp2Files = files.filter((f: { name: string }) =>
+        f.name.endsWith('.jp2') && !f.name.includes('thumb')
+      );
+
+      if (jp2Files.length > 1) {
+        // Only use jp2 count if there's more than 1 (some items list just 1 even for multi-page books)
+        pageCount = jp2Files.length;
+      }
+    }
+
+    if (pageCount === 0) {
       // Try to get from scandata.xml or estimate from file list
       const scandata = files.find((f: { name: string }) => f.name === 'scandata.xml');
       if (scandata) {

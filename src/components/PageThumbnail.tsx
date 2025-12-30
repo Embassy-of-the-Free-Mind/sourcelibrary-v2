@@ -24,15 +24,25 @@ export default function PageThumbnail({ page, bookId, index }: PageThumbnailProp
     loadStartTime.current = performance.now();
   }, []);
 
+  // Determine image source type for analytics
+  const getImageSource = (): 'blob' | 'ia' | 'other' => {
+    if ((page as { archived_photo?: string }).archived_photo) return 'blob';
+    if (page.photo?.includes('archive.org')) return 'ia';
+    return 'other';
+  };
+
   const handleImageLoad = () => {
     if (loadStartTime.current !== null) {
       const loadTime = performance.now() - loadStartTime.current;
+      const source = getImageSource();
       recordLoadingMetric('page_thumbnail_load', loadTime, {
         bookId,
         pageId: page.id,
         pageNumber: page.page_number,
         index,
-        eager: index < 10
+        eager: index < 10,
+        source, // 'blob' = Vercel Blob, 'ia' = Internet Archive, 'other' = unknown
+        isArchived: source === 'blob'
       });
     }
     setImageLoaded(true);
