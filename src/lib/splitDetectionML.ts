@@ -73,7 +73,7 @@ export interface SplitFeatures {
  */
 export async function detectSplitWithGemini(
   imageUrl: string,
-  modelId: string = 'gemini-2.0-flash'
+  modelId: string = 'gemini-3-flash-preview'
 ): Promise<GeminiSplitResult> {
   if (!process.env.GEMINI_API_KEY) {
     throw new Error('GEMINI_API_KEY not set');

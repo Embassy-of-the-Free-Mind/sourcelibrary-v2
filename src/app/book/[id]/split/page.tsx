@@ -440,6 +440,33 @@ export default function SplitPage({ params }: PageProps) {
     }));
   };
 
+  // Bulk adjust all selected pages by delta
+  const adjustAllSelected = (delta: number) => {
+    setSplitPositions(prev => {
+      const updated = { ...prev };
+      selectedPages.forEach(pageId => {
+        updated[pageId] = Math.max(100, Math.min(900, (prev[pageId] ?? 500) + delta));
+      });
+      return updated;
+    });
+  };
+
+  // Set all selected pages to a specific position
+  const setAllSelectedPosition = (position: number) => {
+    setSplitPositions(prev => {
+      const updated = { ...prev };
+      selectedPages.forEach(pageId => {
+        updated[pageId] = position;
+      });
+      return updated;
+    });
+  };
+
+  // Calculate average position for display
+  const averagePosition = selectedPages.size > 0
+    ? Math.round(Array.from(selectedPages).reduce((sum, id) => sum + (splitPositions[id] ?? 500), 0) / selectedPages.size)
+    : 500;
+
   // Track detected vs chosen positions for learning
   const [detectedPositions, setDetectedPositions] = useState<Record<string, number>>({});
   const lastSelectedIndexRef = useRef<number | null>(null);
@@ -685,6 +712,49 @@ export default function SplitPage({ params }: PageProps) {
                     <RotateCcw className="w-3 h-3" />
                     Re-detect All
                   </button>
+
+                  {/* Bulk adjustment controls */}
+                  <div className="flex items-center gap-2 ml-4 pl-4 border-l border-stone-200">
+                    <span className="text-xs text-stone-500">Adjust all:</span>
+                    <button
+                      onClick={() => adjustAllSelected(-20)}
+                      className="px-2 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 rounded"
+                      title="Move all splits 2% left"
+                    >
+                      -2%
+                    </button>
+                    <button
+                      onClick={() => adjustAllSelected(-5)}
+                      className="px-2 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 rounded"
+                      title="Move all splits 0.5% left"
+                    >
+                      -0.5%
+                    </button>
+                    <span className="px-2 py-1 text-xs font-medium bg-amber-100 text-amber-800 rounded min-w-[4rem] text-center">
+                      {(averagePosition / 10).toFixed(1)}%
+                    </span>
+                    <button
+                      onClick={() => adjustAllSelected(5)}
+                      className="px-2 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 rounded"
+                      title="Move all splits 0.5% right"
+                    >
+                      +0.5%
+                    </button>
+                    <button
+                      onClick={() => adjustAllSelected(20)}
+                      className="px-2 py-1 text-xs font-medium bg-stone-100 hover:bg-stone-200 rounded"
+                      title="Move all splits 2% right"
+                    >
+                      +2%
+                    </button>
+                    <button
+                      onClick={() => setAllSelectedPosition(500)}
+                      className="px-2 py-1 text-xs font-medium text-stone-500 hover:text-stone-700 hover:bg-stone-100 rounded"
+                      title="Reset all to center (50%)"
+                    >
+                      Reset
+                    </button>
+                  </div>
                 </>
               )}
             </div>
