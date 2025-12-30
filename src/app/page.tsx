@@ -115,6 +115,41 @@ export default async function HomePage() {
               className="h-20 md:h-24 w-auto object-contain"
             />
           </div>
+
+          {/* Dedication */}
+          <div className="max-w-3xl border-t border-stone-300 pt-10 mt-8">
+            <p className="text-sm uppercase tracking-[0.2em] text-stone-500 mb-4">
+              Dedicated to
+            </p>
+            <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16">
+              <div className="flex-1">
+                <h3 className="text-xl md:text-2xl text-stone-800 mb-2" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                  Marsilio Ficino
+                </h3>
+                <p className="text-stone-600 text-sm leading-relaxed italic">
+                  1433–1499
+                </p>
+                <p className="text-stone-600 text-sm leading-relaxed mt-2">
+                  Who brought Plato, Hermes, and the prisca theologia back to light—translating not merely words, but the soul of antiquity itself.
+                </p>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-xl md:text-2xl text-stone-800 mb-2" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                  Cosimo de&apos; Medici
+                </h3>
+                <p className="text-stone-600 text-sm leading-relaxed italic">
+                  1389–1464
+                </p>
+                <p className="text-stone-600 text-sm leading-relaxed mt-2">
+                  Whose vision and patronage made possible the Platonic Academy—proving that wisdom flourishes when freely given to the world.
+                </p>
+              </div>
+            </div>
+            <p className="text-stone-500 text-sm mt-8 italic border-l-2 border-amber-400 pl-4">
+              "All things are full of signs, and it is a wise man who can learn about one thing from another."
+              <span className="block mt-1 not-italic text-stone-400">— Plotinus, as translated by Ficino</span>
+            </p>
+          </div>
         </div>
 
         {/* Footer Links */}
