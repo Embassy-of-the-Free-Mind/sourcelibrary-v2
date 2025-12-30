@@ -117,38 +117,39 @@ export default async function HomePage() {
           </div>
 
           {/* Dedication */}
-          <div className="max-w-3xl border-t border-stone-300 pt-10 mt-8">
-            <p className="text-sm uppercase tracking-[0.2em] text-stone-500 mb-4">
-              Dedicated to
+          <div className="max-w-4xl border-t border-stone-300 pt-10 mt-8">
+            <p className="text-sm uppercase tracking-[0.2em] text-stone-500 mb-6">
+              In the spirit of
             </p>
-            <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16">
+            <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
               <div className="flex-1">
-                <h3 className="text-xl md:text-2xl text-stone-800 mb-2" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-                  Marsilio Ficino
+                <h3 className="text-xl md:text-2xl text-stone-800 mb-1" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                  Cosimo de&apos; Medici
                 </h3>
-                <p className="text-stone-600 text-sm leading-relaxed italic">
-                  1433–1499
+                <p className="text-stone-500 text-sm mb-3">
+                  1389–1464 · Florence
                 </p>
-                <p className="text-stone-600 text-sm leading-relaxed mt-2">
-                  Who brought Plato, Hermes, and the prisca theologia back to light—translating not merely words, but the soul of antiquity itself.
+                <p className="text-stone-600 text-sm leading-relaxed">
+                  In 1460, when a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, Cosimo ordered its translation before even Plato—sensing that Hermes Trismegistus held the key to ancient wisdom. He founded the Platonic Academy in his villa at Careggi, creating the first institution dedicated to freely sharing philosophical knowledge since antiquity.
                 </p>
               </div>
               <div className="flex-1">
-                <h3 className="text-xl md:text-2xl text-stone-800 mb-2" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-                  Cosimo de&apos; Medici
+                <h3 className="text-xl md:text-2xl text-stone-800 mb-1" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                  Marsilio Ficino
                 </h3>
-                <p className="text-stone-600 text-sm leading-relaxed italic">
-                  1389–1464
+                <p className="text-stone-500 text-sm mb-3">
+                  1433–1499 · Philosopher & Translator
                 </p>
-                <p className="text-stone-600 text-sm leading-relaxed mt-2">
-                  Whose vision and patronage made possible the Platonic Academy—proving that wisdom flourishes when freely given to the world.
+                <p className="text-stone-600 text-sm leading-relaxed">
+                  Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin—making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all seekers of truth.
                 </p>
               </div>
             </div>
-            <p className="text-stone-500 text-sm mt-8 italic border-l-2 border-amber-400 pl-4">
-              "All things are full of signs, and it is a wise man who can learn about one thing from another."
-              <span className="block mt-1 not-italic text-stone-400">— Plotinus, as translated by Ficino</span>
-            </p>
+            <div className="mt-8 bg-amber-50/50 rounded-lg p-5 border border-amber-100">
+              <p className="text-stone-700 text-sm leading-relaxed">
+                <strong>Source Library continues their work.</strong> Just as Cosimo funded translations to make ancient wisdom freely available, and Ficino labored to render Greek and Latin texts accessible to readers across Europe, we use modern tools to digitize, translate, and openly share these same traditions with the world. The mission remains unchanged: <em>wisdom belongs to everyone</em>.
+              </p>
+            </div>
           </div>
         </div>
 
