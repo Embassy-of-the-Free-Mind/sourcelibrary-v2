@@ -4,12 +4,17 @@ import { getDb } from '@/lib/mongodb';
 /**
  * GET /api/detections
  *
- * Fetch pages with detected images for review.
+ * Fetch pages for image review.
  * Query params:
  *   - status: 'pending' | 'approved' | 'rejected' | 'all' (default: 'pending')
  *   - bookId: filter by book
  *   - limit: max pages (default 20)
  *   - offset: pagination
+ *
+ * Status is PAGE-level (not detection-level):
+ *   - pending: pages with OCR image tags that haven't been manually reviewed
+ *   - approved: pages marked as having good images (manually_reviewed=true, manually_skipped=false)
+ *   - rejected: pages marked as no good images (manually_reviewed=true, manually_skipped=true)
  */
 export async function GET(request: NextRequest) {
   try {
@@ -21,9 +26,8 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
 
-    // Build query for pages with detections
-    const query: Record<string, unknown> = {
-      'detected_images.0': { $exists: true },
+    // Base query: pages with image URLs
+    const baseImageQuery = {
       $or: [
         { cropped_photo: { $exists: true, $ne: '' } },
         { photo_original: { $exists: true, $ne: '' } },
@@ -31,25 +35,58 @@ export async function GET(request: NextRequest) {
       ]
     };
 
-    if (bookId) {
-      query.book_id = bookId;
-    }
+    // Build query based on status
+    let query: Record<string, unknown>;
 
-    // Filter by detection status
-    if (status !== 'all') {
-      if (status === 'pending') {
-        // Pending = no status field or status === 'pending'
-        query['detected_images'] = {
-          $elemMatch: {
+    if (status === 'pending') {
+      // Pending: pages with OCR image tags that haven't been manually reviewed
+      query = {
+        $and: [
+          baseImageQuery,
+          {
             $or: [
-              { status: { $exists: false } },
-              { status: 'pending' }
+              { 'ocr.data': { $regex: '<image-desc>', $options: 'i' } },
+              { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
+            ]
+          },
+          { manually_reviewed: { $ne: true } }
+        ]
+      };
+    } else if (status === 'approved') {
+      // Approved: manually reviewed and NOT skipped
+      query = {
+        $and: [
+          baseImageQuery,
+          { manually_reviewed: true },
+          { manually_skipped: { $ne: true } }
+        ]
+      };
+    } else if (status === 'rejected') {
+      // Rejected: manually reviewed and skipped
+      query = {
+        $and: [
+          baseImageQuery,
+          { manually_reviewed: true },
+          { manually_skipped: true }
+        ]
+      };
+    } else {
+      // All: any page with OCR image tags
+      query = {
+        $and: [
+          baseImageQuery,
+          {
+            $or: [
+              { 'ocr.data': { $regex: '<image-desc>', $options: 'i' } },
+              { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
             ]
           }
-        };
-      } else {
-        query['detected_images.status'] = status;
-      }
+        ]
+      };
+    }
+
+    if (bookId) {
+      (query.$and as Record<string, unknown>[]).push({ book_id: bookId });
     }
 
     const total = await db.collection('pages').countDocuments(query);
@@ -77,15 +114,24 @@ export async function GET(request: NextRequest) {
           photo_original: 1,
           cropped_photo: 1,
           detected_images: 1,
+          manually_reviewed: 1,
+          manually_skipped: 1,
           'book.title': 1,
           'book.author': 1
         }
       }
     ]).toArray();
 
-    // Get unique books for filter
+    // Get unique books for filter (from pages with image tags)
     const books = await db.collection('pages').aggregate([
-      { $match: { 'detected_images.0': { $exists: true } } },
+      {
+        $match: {
+          $or: [
+            { 'ocr.data': { $regex: '<image-desc>', $options: 'i' } },
+            { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
+          ]
+        }
+      },
       { $group: { _id: '$book_id' } },
       {
         $lookup: {
@@ -100,28 +146,28 @@ export async function GET(request: NextRequest) {
       { $sort: { title: 1 } }
     ]).toArray();
 
-    // Count by status
-    const statusCounts = await db.collection('pages').aggregate([
-      { $match: { 'detected_images.0': { $exists: true } } },
-      { $unwind: '$detected_images' },
-      {
-        $group: {
-          _id: { $ifNull: ['$detected_images.status', 'pending'] },
-          count: { $sum: 1 }
-        }
-      }
-    ]).toArray();
-
-    const counts = {
-      pending: 0,
-      approved: 0,
-      rejected: 0
+    // Count by page-level review status
+    const imageTagQuery = {
+      $or: [
+        { 'ocr.data': { $regex: '<image-desc>', $options: 'i' } },
+        { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
+      ]
     };
-    for (const s of statusCounts) {
-      if (s._id in counts) {
-        counts[s._id as keyof typeof counts] = s.count;
-      }
-    }
+
+    const pendingCount = await db.collection('pages').countDocuments({
+      ...imageTagQuery,
+      manually_reviewed: { $ne: true }
+    });
+
+    const approvedCount = await db.collection('pages').countDocuments({
+      manually_reviewed: true,
+      manually_skipped: { $ne: true }
+    });
+
+    const rejectedCount = await db.collection('pages').countDocuments({
+      manually_reviewed: true,
+      manually_skipped: true
+    });
 
     return NextResponse.json({
       pages: pages.map(p => ({
@@ -137,7 +183,11 @@ export async function GET(request: NextRequest) {
       limit,
       offset,
       books,
-      counts
+      counts: {
+        pending: pendingCount,
+        approved: approvedCount,
+        rejected: rejectedCount
+      }
     });
   } catch (error) {
     console.error('Detections GET error:', error);

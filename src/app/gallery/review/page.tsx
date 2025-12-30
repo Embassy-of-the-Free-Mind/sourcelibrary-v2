@@ -15,8 +15,7 @@ import {
   Eye,
   EyeOff,
   PenTool,
-  Trash2,
-  Save
+  Trash2
 } from 'lucide-react';
 
 interface BBox {
@@ -181,6 +180,29 @@ export default function DetectionReviewPage() {
     }
   };
 
+  const markReviewed = async (pageId: string, approved: boolean) => {
+    try {
+      const res = await fetch('/api/detections/mark-reviewed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pageId, skipped: !approved })
+      });
+      if (!res.ok) throw new Error('Failed to mark reviewed');
+
+      // Remove page from local state (it's been reviewed)
+      setData(prev => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          pages: prev.pages.filter(p => p.pageId !== pageId),
+          total: prev.total - 1
+        };
+      });
+    } catch (e) {
+      console.error('Mark reviewed error:', e);
+    }
+  };
+
   const totalPages = data ? Math.ceil(data.total / limit) : 0;
 
   return (
@@ -304,6 +326,7 @@ export default function DetectionReviewPage() {
                 onUpdateStatus={updateStatus}
                 onAddManualDetection={addManualDetection}
                 onDeleteDetection={deleteDetection}
+                onMarkReviewed={markReviewed}
                 saving={saving}
               />
             ))}
@@ -351,12 +374,14 @@ function PageReviewCard({
   onUpdateStatus,
   onAddManualDetection,
   onDeleteDetection,
+  onMarkReviewed,
   saving
 }: {
   page: PageWithDetections;
   onUpdateStatus: (pageId: string, index: number, status: 'approved' | 'rejected' | 'pending') => void;
   onAddManualDetection: (pageId: string, bbox: BBox, description: string) => Promise<void>;
   onDeleteDetection: (pageId: string, index: number) => Promise<void>;
+  onMarkReviewed: (pageId: string, approved: boolean) => Promise<void>;
   saving: string | null;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -364,8 +389,8 @@ function PageReviewCard({
   const [isDrawing, setIsDrawing] = useState(false);
   const [drawStart, setDrawStart] = useState<{ x: number; y: number } | null>(null);
   const [currentBox, setCurrentBox] = useState<BBox | null>(null);
-  const [newDescription, setNewDescription] = useState('');
-  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [drawnBoxes, setDrawnBoxes] = useState<Array<{ bbox: BBox; description: string }>>([]);
+  const [reviewSaving, setReviewSaving] = useState(false);
 
   const getRelativeCoords = (e: React.MouseEvent) => {
     if (!containerRef.current) return { x: 0, y: 0 };
@@ -396,26 +421,27 @@ function PageReviewCard({
 
   const handleMouseUp = () => {
     if (isDrawing && currentBox && currentBox.width > 0.02 && currentBox.height > 0.02) {
-      setShowSaveModal(true);
-    } else {
-      setCurrentBox(null);
+      // Add to drawn boxes immediately
+      setDrawnBoxes(prev => [...prev, { bbox: currentBox, description: 'illustration' }]);
     }
+    setCurrentBox(null);
     setIsDrawing(false);
     setDrawStart(null);
   };
 
-  const saveManualBox = async () => {
-    if (!currentBox) return;
-    await onAddManualDetection(page.pageId, currentBox, newDescription || 'Manual selection');
-    setCurrentBox(null);
-    setNewDescription('');
-    setShowSaveModal(false);
+  const removeDrawnBox = (index: number) => {
+    setDrawnBoxes(prev => prev.filter((_, i) => i !== index));
   };
 
-  const cancelDraw = () => {
-    setCurrentBox(null);
-    setNewDescription('');
-    setShowSaveModal(false);
+  const handleApprove = async () => {
+    setReviewSaving(true);
+    // Save all drawn boxes first
+    for (const box of drawnBoxes) {
+      await onAddManualDetection(page.pageId, box.bbox, box.description);
+    }
+    // Then mark as reviewed
+    await onMarkReviewed(page.pageId, true);
+    setReviewSaving(false);
   };
 
   // Filter detections for display
@@ -509,7 +535,7 @@ function PageReviewCard({
           );
         })}
 
-        {/* Manual detections (always shown) */}
+        {/* Manual detections (already saved) */}
         {manualDetections.map((det, idx) => {
           if (!det.bbox) return null;
           const actualIdx = page.detections.indexOf(det);
@@ -517,7 +543,7 @@ function PageReviewCard({
           return (
             <div
               key={`manual-${idx}`}
-              className="absolute border-3 border-green-500 bg-green-500/20"
+              className="absolute border-2 border-green-500 bg-green-500/20"
               style={{
                 left: `${det.bbox.x * 100}%`,
                 top: `${det.bbox.y * 100}%`,
@@ -538,6 +564,30 @@ function PageReviewCard({
           );
         })}
 
+        {/* Drawn boxes (not yet saved - will save on Approve) */}
+        {drawnBoxes.map((box, idx) => (
+          <div
+            key={`drawn-${idx}`}
+            className="absolute border-2 border-blue-500 bg-blue-500/20"
+            style={{
+              left: `${box.bbox.x * 100}%`,
+              top: `${box.bbox.y * 100}%`,
+              width: `${box.bbox.width * 100}%`,
+              height: `${box.bbox.height * 100}%`
+            }}
+          >
+            <span className="absolute -top-5 left-0 px-1 bg-blue-600 text-white text-xs rounded">
+              {idx + 1}
+            </span>
+            <button
+              onClick={(e) => { e.stopPropagation(); removeDrawnBox(idx); }}
+              className="absolute -top-5 right-0 p-0.5 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              <Trash2 className="w-3 h-3" />
+            </button>
+          </div>
+        ))}
+
         {/* Currently drawing box */}
         {currentBox && (
           <div
@@ -552,39 +602,38 @@ function PageReviewCard({
         )}
       </div>
 
-      {/* Save modal */}
-      {showSaveModal && currentBox && (
-        <div className="p-4 bg-blue-50 border-t border-blue-200">
-          <div className="flex items-center gap-3">
-            <input
-              type="text"
-              placeholder="Description (e.g., 'woodcut of dragon')"
-              value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
-              className="flex-1 px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              autoFocus
-            />
-            <button
-              onClick={saveManualBox}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-            >
-              <Save className="w-4 h-4" />
-              Save
-            </button>
-            <button
-              onClick={cancelDraw}
-              className="px-4 py-2 bg-stone-200 text-stone-700 rounded-lg hover:bg-stone-300"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Approve/Reject buttons */}
+      <div className="p-4 border-t border-stone-200 flex items-center justify-center gap-4">
+        <button
+          onClick={async () => {
+            setReviewSaving(true);
+            await onMarkReviewed(page.pageId, false);
+            setReviewSaving(false);
+          }}
+          disabled={reviewSaving}
+          className="flex items-center gap-2 px-6 py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 disabled:opacity-50 transition-colors"
+        >
+          <XCircle className="w-5 h-5" />
+          Reject
+        </button>
+        <button
+          onClick={handleApprove}
+          disabled={reviewSaving}
+          className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+        >
+          {reviewSaving ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <CheckCircle className="w-5 h-5" />
+          )}
+          Approve{drawnBoxes.length > 0 ? ` (${drawnBoxes.length})` : ''}
+        </button>
+      </div>
 
       {/* Instructions */}
       <div className="px-4 py-2 bg-stone-50 border-t border-stone-200 text-sm text-stone-500">
         <PenTool className="w-4 h-4 inline mr-1" />
-        Click and drag to draw a bounding box around illustrations
+        Draw bounding boxes (optional), then Approve or Reject
       </div>
 
       {/* Manual detection list */}
