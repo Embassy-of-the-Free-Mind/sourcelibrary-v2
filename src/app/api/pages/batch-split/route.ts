@@ -181,6 +181,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Trigger ML model auto-update with new training data (non-blocking)
+    // This imports the user splits as training examples and retrains if we have enough data
+    const leftPageIds = splits.map(s => s.pageId);
+    fetch(`${process.env.NEXT_PUBLIC_URL || ''}/api/split-ml/auto-update`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        pageIds: leftPageIds,
+        bookId,
+        autoRetrain: true,
+        minExamplesForRetrain: 20,
+      }),
+    }).catch((error) => {
+      console.log('[Split Learning] Auto-update trigger failed:', error);
+    });
+
     return NextResponse.json({
       success: true,
       splitCount: newPages.length,
