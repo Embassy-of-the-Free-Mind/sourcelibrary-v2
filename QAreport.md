@@ -2394,3 +2394,277 @@ Based on sampling, approximately **80-90% of books** may have empty OCR. Books w
 4. Consider re-importing from Internet Archive with OCR
 
 ---
+
+---
+
+## Audit Session: 2025-12-30 06:00
+
+### Random Sample Audit: Newly Acquired Books
+
+---
+
+### 1. Pansophiae Diatyposis
+
+**Book ID:** 4f4ff6f9-f0bd-4307-910c-65da7c36c0ef
+**Author:** Jan Amos Comenius
+**Language:** Latin
+**Translation Progress:** 148/148 (100%)
+
+**Sample Pages Checked:** 11, 26, 51, 76, 101
+
+**Translation Quality:** Excellent
+- Latin philosophical terminology accurately rendered
+- Italicized Latin quotations preserved
+- Reference to Ecclesiasticus and scripture properly handled
+- Technical vocabulary (FULLNESS, TRUTH, EASE, METHOD) capitalized appropriately
+- Page structure and formatting preserved
+
+**Issues:** None
+
+---
+
+### 2. Obeliscus Pamphilius
+
+**Book ID:** 69527350ab34727b1f048c2e
+**Author:** Athanasius Kircher
+**Language:** Latin
+**Translation Progress:** 41/777 (5%)
+
+**Sample Pages Checked:** 6, 16, 26, 36
+
+**Translation Quality:** Good
+- Proper meta-tagging for uncertain/incomplete text
+- References to Iamblichus correctly contextualized
+- Dedication to Pope Innocent X properly handled
+- Hieroglyphic discourse accurately summarized
+
+**Issues:**
+- Page 6 has empty OCR/translation (likely blank or decorative page)
+- Low overall translation coverage (early stage)
+
+---
+
+### 3. Mosaicall Philosophy
+
+**Book ID:** 6952722bab34727b1f047e18
+**Author:** Robert Fludd
+**Language:** English (Early Modern)
+**Translation Progress:** 40/581 (7%)
+
+**Sample Pages Checked:** 6, 16, 26, 36
+
+**Translation Quality:** Appropriate for English text
+- Provides contextual meta-commentary instead of translation
+- OCR preserves Early Modern English spelling ("Mofaicall," "Philoſophy")
+- Scientific instrument descriptions (thermoscope) properly explained
+- Hermetic philosophy references noted
+
+**Issues:**
+- Page 16 empty (likely blank page)
+- English texts get summaries, not translations (expected behavior)
+
+---
+
+### 4. Opera Omnia (Plato - Ficino translation)
+
+**Book ID:** 694fd600435f95fd0c9556d1
+**Author:** Plato (Ficino translation)
+**Language:** Latin
+**Translation Progress:** 145/718 (20%)
+
+**Sample Pages Checked:** 21, 51, 101
+
+**Translation Quality:** Excellent
+- Socratic dialogue format preserved (SOC., HIP.)
+- Philosophical arguments clearly rendered
+- Latin nuances ("lucricupidus" → profit-seeker) accurate
+- Marginal notes (Proba poëtę rogatio) integrated
+
+**Issues:** None significant
+
+---
+
+### Summary
+
+| Book | Quality | Coverage | Status |
+|------|---------|----------|--------|
+| Pansophiae Diatyposis | Excellent | 100% | Complete |
+| Obeliscus Pamphilius | Good | 5% | In Progress |
+| Mosaicall Philosophy | Appropriate | 7% | In Progress |
+| Opera Omnia (Plato) | Excellent | 20% | In Progress |
+
+**Overall Assessment:** Translation quality across sampled newly acquired books is high. No systematic errors detected. In-progress books show consistent quality in completed sections.
+
+---
+
+### Metadata Fixes Applied This Session
+
+Fixed publication dates for 22 books:
+- The Hexaglot Bible → 1901
+- Erasmus Opera Omnia → 1705
+- Vetus Testamentum (Bos) → 1822
+- Novum Testamentum Graece (Tischendorf) → 1869
+- Biblia Sacra Vulgatae → 1804
+- Biblia Hebraica (Michaelis) → 1720
+- Septuaginta → 1855
+- Aurora Consurgens → 1966
+- Philosophy Reformed and Improved → 1657
+- Opere di Giordano Bruno → 1830
+- Delle donne famose → 1881
+- De claris mulieribus (Italian trans.) → 1841
+- Les nobles et cleres dames → 1493
+- Angela of Foligno → 1921
+- Teresa - Way of Perfection → 1911
+- Teresa - Sept méditations → 1601
+- Teresa - Vie → 1857
+- Marguerite Porete → 1927
+- Julian of Norwich → 1864
+- Madame Guyon → 1699
+- Ptolemy Cosmographia → 1482
+- Plato Opera Omnia → 1557
+
+**Remaining:** Christopher Plantius (needs research)
+
+---
+
+### Import Code Fix
+
+Fixed IA import bug in `src/app/api/import/ia/route.ts`:
+- Now checks `metadata.imagecount` field first (most reliable)
+- Falls back to `.jp2` file count only if `imagecount` missing AND >1 jp2 files
+- Resolved issue where Henry More's Divine Dialogues was importing with only 1 page
+
+**Books Re-imported:**
+- Divine Dialogues (1713 edition, better quality): 682 pages
+
+
+---
+
+## Audit Session: 2025-12-30 06:30 (continued)
+
+### Additional Translation Quality Audits
+
+---
+
+### 5. Morgenröte im Aufgang (Aurora)
+
+**Book ID:** 6902ed49583dd7d2641408a5
+**Author:** Jacob Boehme
+**Language:** German (Early Modern)
+**Translation Progress:** 446/447 (99%)
+
+**Sample Pages Checked:** 51, 151, 251, 351
+
+**Translation Quality:** Good
+- Complex mystical German terminology handled
+- Theological concepts (Lord Lucifer, Kingdom of Heaven/Hell) clear
+- Fraktur script OCR accurate
+
+**Issues:**
+- Minor: Page number alignment between OCR and translation sometimes diverges (chapter references don't always match)
+
+---
+
+### 6. De laudibus sanctae crucis opus
+
+**Book ID:** 6909c214cf28baa1b4caf83f
+**Author:** Rabanus Maurus
+**Language:** Latin (Medieval)
+**Translation Progress:** 168/174 (96%)
+
+**Sample Pages Checked:** 11, 51, 101, 151
+
+**Translation Quality:** Excellent
+- Carmina figurata (figured poems/visual poetry) properly noted
+- Numerical symbolism explained (X=10, Jubilee=50)
+- Red ink features documented in metadata
+- Historical citations from medieval authorities properly contextualized
+
+**Issues:** None
+
+---
+
+### 7. Abhandlung von freier Untersuchung des Canon
+
+**Book ID:** 690c293de0787282ad5932fd
+**Author:** Johann Salomo Semler
+**Language:** German (18th c.)
+**Translation Progress:** 238/317 (75%)
+
+**Sample Pages Checked:** 21, 81, 151, 201
+
+**Translation Quality:** Excellent
+- Complex theological argumentation clear
+- Latin terms (compendia, anathema) properly annotated
+- Critical scholarly notes preserved
+- Two-column layout handled appropriately
+
+**Issues:** None
+
+---
+
+### 8. Erzählungen zum Vergnügen und zur Seelenbildung
+
+**Book ID:** 6909f42ecf28baa1b4cb0dc3
+**Author:** Karl von Eckartshausen
+**Language:** German (18th c.)
+**Translation Progress:** 416/424 (98%)
+
+**Sample Pages Checked:** 51, 151, 251, 351
+
+**Translation Quality:** Excellent
+- 18th-century German fiction rendered naturally
+- Period terminology ("empfindsame Herzen" - Enlightenment lit.) annotated
+- Archaic vocabulary (Memmenthaten) explained
+- Narrative flow preserved
+
+**Issues:** None
+
+---
+
+### 9. Magnes
+
+**Book ID:** 69527376ab34727b1f04948a
+**Author:** Athanasius Kircher
+**Language:** Latin
+**Translation Progress:** 37/1828 (2%)
+
+**Sample Pages Checked:** 6, 16, 26, 36
+
+**Translation Quality:** Good (early stage)
+- Roman calendar dates correctly converted (4. Nonas Maij → May 4th)
+- Technical Latin (Armatura Magnetis) properly translated
+- Greek terms (καλυβολιςτεος → Chalyboscope) handled
+- Synopsis/table of contents structure preserved
+
+**Issues:**
+- Low coverage (2%) - early in translation process
+- Page 6 empty (likely blank/decorative)
+
+---
+
+### Metadata Fix Applied
+
+**Christopher Plantius** → **Plantarum seu Stirpium Icones (preface)**
+- Author: Matthias de Lobel; pub. Christophe Plantin
+- Published: 1581
+- This was a 10-page excerpt from the famous botanical compendium
+
+---
+
+### Summary (All Books This Session)
+
+| Book | Language | Quality | Coverage | Status |
+|------|----------|---------|----------|--------|
+| Pansophiae Diatyposis | Latin | Excellent | 100% | Complete |
+| Obeliscus Pamphilius | Latin | Good | 5% | In Progress |
+| Mosaicall Philosophy | English | Appropriate | 7% | In Progress |
+| Opera Omnia (Plato) | Latin | Excellent | 20% | In Progress |
+| Morgenröte im Aufgang | German | Good | 99% | Near Complete |
+| De laudibus sanctae crucis | Latin | Excellent | 96% | Near Complete |
+| Abhandlung (Semler) | German | Excellent | 75% | In Progress |
+| Erzählungen (Eckartshausen) | German | Excellent | 98% | Near Complete |
+| Magnes (Kircher) | Latin | Good | 2% | Early Stage |
+
+**Overall Assessment:** Translation quality consistently high across all sampled books. German translations (both Early Modern mystical and 18th-century) are particularly strong. Latin translations accurately handle both classical and medieval sources. No systematic errors detected.
+

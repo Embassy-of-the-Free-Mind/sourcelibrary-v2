@@ -1787,3 +1787,249 @@ Following Peter J. Forshaw's scholarship on Khunrath, imported key primary sourc
 | **GRAND TOTAL** | **207** | **100,630** |
 
 ---
+
+## Session 015: Non-Western Esoteric Traditions
+
+**Date:** December 30, 2024
+**Focus:** Arabic alchemy, Hebrew Kabbalah, Mandaean scriptures, Sanskrit Tantra, and Taoist inner alchemy (neidan)
+
+### Arabic Alchemy
+| Title | Author | Date | Pages | Source | Book ID |
+|-------|--------|------|-------|--------|---------|
+| Majmu nafis fi al-kimiya | Jabir ibn Hayyan | MS | 390 | IA | 6953619d9c494f9f9f042608 |
+| The Works of Geber (1678) | Jabir ibn Hayyan | 1678 | 319 | IA | 695361a09c494f9f9f04278f |
+| The Alchemical Works of Geber | Jabir / E.J. Holmyard | 1928 | 330 | IA | 695361c79c494f9f9f042bcb |
+| Alchemical Compendium (Herat) | Ibrahim al-Husayni | 1499 | 353 | IA | 695361ba9c494f9f9f042a69 |
+| Picatrix (Ghāyat al-Ḥakīm) | al-Majriti (attrib.) | c. 1000 | 275 | IA | 695361879c494f9f9f0424f4 |
+| Ghayat al-Hakim (Arabic MS) | Maslama al-Majriti | MS | 748 | IA | 695361cd9c494f9f9f042f19 |
+
+**Arabic Alchemy Total: 6 books, 2,415 pages**
+
+### Hebrew Kabbalah
+| Title | Author | Date | Pages | Source | Book ID |
+|-------|--------|------|-------|--------|---------|
+| Sefer HaBahir (Book of Illumination) | Aryeh Kaplan | 1979 | 278 | IA | 695361b59c494f9f9f0428cf |
+| Origins of the Kabbalah | Gershom Scholem | 1987 | 514 | IA | 695361cb9c494f9f9f042d16 |
+
+**Hebrew Kabbalah Total: 2 books, 792 pages**
+
+### Ethiopian Magic
+| Title | Author | Date | Pages | Source | Book ID |
+|-------|--------|------|-------|--------|---------|
+| Ethiopian Magic Scrolls | Jacques Mercier | 1979 | 130 | IA | 695361b79c494f9f9f0429e6 |
+
+**Ethiopian Total: 1 book, 130 pages**
+
+### Mandaean Scriptures
+| Title | Author | Date | Pages | Source | Book ID |
+|-------|--------|------|-------|--------|---------|
+| Ginza Rabba (Mandaean Holy Book) | Lidzbarski / Ram Al-Sabiry | 2012 | 393 | IA | 695362099c494f9f9f043206 |
+| Canonical Prayer Book of the Mandaeans | E.S. Drower | 1959 | 435 | IA | 6953621ee5b8ba20744132a1 |
+
+**Mandaean Total: 2 books, 828 pages**
+
+### Sanskrit Tantra
+| Title | Author | Date | Pages | Source | Book ID |
+|-------|--------|------|-------|--------|---------|
+| Tantric Texts Series | Arthur Avalon / John Woodroffe | 1913-1940 | 452 | IA | 6953620c9c494f9f9f043390 |
+| Tantra Manuscripts | Haraprasada Shastri | 1939 | 846 | IA | 695362109c494f9f9f043555 |
+| Yoga Tantra Vimarshini | Gopinath Kaviraj | 1963 | 283 | IA | 69536223e5b8ba2074413455 |
+
+**Sanskrit Total: 3 books, 1,581 pages**
+
+### Taoist Alchemy (Neidan)
+| Title | Author | Date | Pages | Source | Book ID |
+|-------|--------|------|-------|--------|---------|
+| The Secret of the Golden Flower | Richard Wilhelm (tr.) | 1931 | 363 | IA | 695363bc77f38f6761bcddfa |
+| The Secret of the Golden Flower (Cleary) | Lu Dongbin / Thomas Cleary | 1991 | 83 | IA | 695363dd77f38f6761bce25f |
+| Baopuzi (Nei Pien of Ko Hung) | Ge Hong / James R. Ware | 1967 | 418 | IA | 695363c077f38f6761bcdf66 |
+| Taoist Yoga: Alchemy and Immortality | Lu Kuan Yu (Charles Luk) | 1970 | 186 | IA | 695363c377f38f6761bce109 |
+| Understanding Reality (Wuzhen pian) | Zhang Boduan / Thomas Cleary | 1988 | 62 | IA | 695363c577f38f6761bce1c4 |
+| Vitality, Energy, Spirit: A Taoist Sourcebook | Thomas Cleary (ed.) | 1991 | 91 | IA | 695363db77f38f6761bce203 |
+| Science and Civilisation in China Vol. 5 | Joseph Needham | 1974 | 578 | IA | 695363df77f38f6761bce2b3 |
+| Alchemy of the Ancient Orient | Masumi Chikashige | 1936 | 158 | IA | 695363e177f38f6761bce4f6 |
+| Immortal Sisters | Thomas Cleary (tr.) | 1989 | 90 | IA | 695363f477f38f6761bce595 |
+| Early Chinese Mysticism | Livia Kohn | 1991 | 238 | IA | 695363f677f38f6761bce5f0 |
+| The Book of Master Lie (Liezi) | Thomas Cleary (tr.) | 1991 | 184 | IA | 695363f877f38f6761bce6df |
+| The Taoism Reader | Thomas Cleary (ed.) | 2000 | 55 | IA | 695363fa77f38f6761bce798 |
+
+**Taoist Alchemy Total: 12 books, 2,506 pages**
+
+### Session 015 Summary
+
+| Tradition | Books | Pages |
+|-----------|-------|-------|
+| Arabic Alchemy | 6 | 2,415 |
+| Hebrew Kabbalah | 2 | 792 |
+| Ethiopian Magic | 1 | 130 |
+| Mandaean Scriptures | 2 | 828 |
+| Sanskrit Tantra | 3 | 1,581 |
+| Taoist Alchemy | 12 | 2,506 |
+| **Session 015 Total** | **26** | **8,252** |
+
+### Key Acquisitions Notes
+
+#### Arabic Alchemy
+- **Jabir ibn Hayyan MS**: Original Arabic alchemical manuscript from NLM collection
+- **Works of Geber (1678)**: Early English translation of Pseudo-Geber corpus
+- **Holmyard Geber (1928)**: Scholarly critical edition of Latin Geber texts
+- **Herat Compendium (1499)**: 15th century Arabic alchemical compilation from LJS collection
+- **Picatrix/Ghayat al-Hakim**: The most influential Arabic grimoire, foundational for Renaissance magic
+
+#### Mandaean Scriptures
+- **Ginza Rabba**: The "Great Treasure" - central scripture of the Mandaean Gnostic religion
+- **Canonical Prayer Book**: E.S. Drower's edition of Mandaean liturgical texts
+
+#### Sanskrit Tantra
+- **Arthur Avalon/Woodroffe Series**: Foundational English translations of Tantric texts
+- **Shastri Manuscripts**: Critical editions of Bengali Tantric manuscripts
+- **Kaviraj Yoga Tantra**: Commentary on yoga and tantra synthesis
+
+#### Taoist Inner Alchemy
+- **Secret of the Golden Flower**: Two translations (Wilhelm 1931, Cleary 1991) of this foundational neidan text
+- **Baopuzi (Nei Pien)**: Ge Hong's 4th century classic on external and internal alchemy
+- **Wuzhen pian**: Zhang Boduan's masterpiece on internal alchemy (11th century)
+- **Needham Vol. 5**: Definitive scholarly treatment of Chinese alchemy in its scientific context
+- **Lu Kuan Yu Taoist Yoga**: Detailed practical guide to neidan meditation
+
+### Languages Added
+- **Arabic**: Classical alchemical manuscripts
+- **Hebrew**: Kabbalistic texts
+- **Mandaic**: Gnostic scriptures
+- **Sanskrit**: Tantric texts
+- **Chinese**: Taoist internal alchemy (English translations)
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Session 001 | 17 | 6,831 |
+| Session 002 | 10 | 3,563 |
+| Session 003 | 10 | 3,106 |
+| Session 004 | 11 | 4,554 |
+| Session 005 | 7 | 2,399 |
+| Session 006 | 4 | 733 |
+| Session 007 | 14 | 14,998 |
+| Session 008 | 22 | 9,696 |
+| Session 009 | 30 | 10,773 |
+| Session 010 | 10 | 5,608 |
+| Session 011 | 26 | 12,796 |
+| Session 012 | 14 | 5,729 |
+| Session 013 | 21 | 13,227 |
+| Session 014 | 11 | 6,617 |
+| Session 015 | 26 | 8,252 |
+| **GRAND TOTAL** | **233** | **108,882** |
+
+---
+
+## Session 016: Byzantine Greek Texts
+
+**Date:** December 30, 2024
+**Focus:** Greek patristics, Byzantine historians, and monastic literature from Internet Archive
+
+### Research Notes
+- **Mount Athos Digital Heritage**: 2.2M manuscript images, 15,000+ manuscripts digitized but access restricted
+- **Library of Congress**: Greek manuscripts from Mt Athos photographed in 1952
+- **Princeton Byzantine Studies**: 3,360+ manuscript descriptions
+- **Key Public Access Sources**: Internet Archive Patrologia Graeca and Corpus Byzantinae
+
+### Patrologia Graeca (Migne) Imports
+| Title | Author | Vol. | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| PG Vol. 1 - Clement of Rome | Migne (ed.) | 1 | 100 | 6953a5a377f38f6761bcff67 |
+| PG Vol. 5 - Justin Martyr | Migne (ed.) | 5 | 100 | 6953a5a877f38f6761bcffcc |
+| PG Vol. 7 - Irenaeus of Lyon | Migne (ed.) | 7 | 100 | 6953a5f877f38f6761bd0359 |
+| PG Vol. 11 - Origen | Migne (ed.) | 11 | 100 | 6953a5ad77f38f6761bd0031 |
+| PG Vol. 25 - Athanasius | Migne (ed.) | 25 | 100 | 6953a5bc77f38f6761bd0096 |
+| PG Vol. 31 - Basil of Caesarea | Migne (ed.) | 31 | 100 | 6953a5ce77f38f6761bd00fb |
+| PG Vol. 36 - Gregory of Nazianzus | Migne (ed.) | 36 | 100 | 6953a5f377f38f6761bd02f4 |
+| PG Vol. 44 - Gregory of Nyssa | Migne (ed.) | 44 | 100 | 6953a5d377f38f6761bd0160 |
+| PG Vol. 47 - John Chrysostom I | Migne (ed.) | 47 | 100 | 6953a5d877f38f6761bd01c5 |
+| PG Vol. 65 - Desert Fathers (Apophthegmata) | Migne (ed.) | 65 | 100 | 6953a5fd77f38f6761bd03be |
+| PG Vol. 90 - Maximus Confessor | Migne (ed.) | 90 | 100 | 6953a5dd77f38f6761bd022a |
+| PG Vol. 94 - John of Damascus | Migne (ed.) | 94 | 100 | 6953a5ee77f38f6761bd028f |
+
+**Patrologia Graeca Total: 12 books, 1,200 pages**
+
+### Corpus Scriptorum Historiae Byzantinae
+| Title | Author/Editor | Vol. | Pages | Book ID |
+|-------|---------------|------|-------|---------|
+| CSHB Vol. 1 - Procopius | Niebuhr (ed.) | 1 | 100 | 6953a61877f38f6761bd0423 |
+| CSHB Vol. 3 - Agathias | Niebuhr (ed.) | 3 | 100 | 6953a61c77f38f6761bd0488 |
+| CSHB Vol. 14 | Niebuhr (ed.) | 14 | 1,028 | 6953a55277f38f6761bcfb62 |
+| CSHB Vol. 20 - Anna Comnena Alexiad | Niebuhr (ed.) | 20 | 100 | 6953a62177f38f6761bd04ed |
+| CSHB Vol. 34 - Theophanes | Niebuhr (ed.) | 34 | 100 | 6953a62677f38f6761bd0552 |
+
+**Corpus Byzantinae Total: 5 books, 1,428 pages**
+
+### Byzantine Greek Standalone Texts
+| Title | Author | Date | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Philokalia (Greek Text) | Various | 1893 | 884 | 6953a54c77f38f6761bcf531 |
+| Origenis Philocalia | Origen / Robinson | 1677 | 699 | 6953a54f77f38f6761bcf8a6 |
+| Dionysius Areopagita Opera Omnia | Pseudo-Dionysius | - | 100 | 6953a63877f38f6761bd05b7 |
+| Scala Paradisi | John Climacus | - | 100 | 6953a63d77f38f6761bd061c |
+| Ecclesiastical History | Eusebius of Caesarea | - | 100 | 6953a64277f38f6761bd0681 |
+| Bibliotheca (Codex) | Photius I | - | 100 | 6953a64977f38f6761bd06e6 |
+| Works (Greek) | Cyril of Alexandria | - | 100 | 6953a65b77f38f6761bd074b |
+| Church History | Theodoret of Cyrus | - | 100 | 6953a66077f38f6761bd07b0 |
+| Church History | Socrates Scholasticus | - | 100 | 6953a66677f38f6761bd0815 |
+| Panarion | Epiphanius of Salamis | - | 100 | 6953a66b77f38f6761bd087a |
+
+**Standalone Texts Total: 10 books, 2,383 pages**
+
+### Session 016 Summary
+
+| Category | Books | Pages |
+|----------|-------|-------|
+| Patrologia Graeca | 12 | 1,200 |
+| Corpus Byzantinae | 5 | 1,428 |
+| Standalone Texts | 10 | 2,383 |
+| **Session 016 Total** | **27** | **5,011** |
+
+### Key Acquisitions Notes
+
+#### Patrologia Graeca
+The standard reference edition for Greek Church Fathers (161 volumes total). Key volumes imported:
+- **Vol. 1**: Clement of Rome - earliest post-apostolic writings
+- **Vol. 7**: Irenaeus - foundational anti-heretical work
+- **Vol. 25**: Athanasius - key Nicene theologian
+- **Vol. 31**: Basil the Great - Cappadocian Father, monastic legislator
+- **Vol. 44**: Gregory of Nyssa - philosophical theologian
+- **Vol. 47**: John Chrysostom - greatest Greek preacher
+- **Vol. 65**: Apophthegmata Patrum - Desert Fathers sayings
+- **Vol. 90**: Maximus Confessor - Byzantine mystical theology
+- **Vol. 94**: John of Damascus - systematic Byzantine theology
+
+#### Byzantine Historians
+- **Procopius**: 6th century historian of Justinian's wars
+- **Agathias**: Continuation of Procopius
+- **Anna Comnena**: Alexiad - 12th century Byzantine princess historian
+- **Theophanes**: Chronicle covering 284-813 CE
+
+#### Mystical Texts
+- **Philokalia (Athens 1893)**: Standard Greek edition of hesychast spiritual texts
+- **Pseudo-Dionysius**: Foundational mystical theology (Celestial/Ecclesiastical Hierarchies)
+- **John Climacus**: Ladder of Divine Ascent - classic of ascetic spirituality
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Session 001 | 17 | 6,831 |
+| Session 002 | 10 | 3,563 |
+| Session 003 | 10 | 3,106 |
+| Session 004 | 11 | 4,554 |
+| Session 005 | 7 | 2,399 |
+| Session 006 | 4 | 733 |
+| Session 007 | 14 | 14,998 |
+| Session 008 | 22 | 9,696 |
+| Session 009 | 30 | 10,773 |
+| Session 010 | 10 | 5,608 |
+| Session 011 | 26 | 12,796 |
+| Session 012 | 14 | 5,729 |
+| Session 013 | 21 | 13,227 |
+| Session 014 | 11 | 6,617 |
+| Session 015 | 26 | 8,252 |
+| Session 016 | 27 | 5,011 |
+| **GRAND TOTAL** | **260** | **113,893** |
+
+---

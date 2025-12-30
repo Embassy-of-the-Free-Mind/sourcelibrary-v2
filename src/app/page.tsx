@@ -38,8 +38,14 @@ async function getBooks(): Promise<Book[]> {
         }
       },
       {
-        // Sort by most recent translation activity first, then by last updated, then title
-        $sort: { last_translation_at: -1, last_processed: -1, title: 1 }
+        // Add sort key: books with translations first (1), others last (0)
+        $addFields: {
+          has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } }
+        }
+      },
+      {
+        // Sort: books with translations first, then by most recent, then by last updated
+        $sort: { has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 }
       }
     ]).toArray();
 

@@ -63,7 +63,7 @@ export default function DetectionReviewPage() {
   const [statusFilter, setStatusFilter] = useState<'pending' | 'approved' | 'rejected' | 'all'>('pending');
   const [page, setPage] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
-  const limit = 10;
+  const limit = 20;
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -189,17 +189,64 @@ export default function DetectionReviewPage() {
       });
       if (!res.ok) throw new Error('Failed to mark reviewed');
 
-      // Remove page from local state (it's been reviewed)
+      // Remove page from local state and update counts
       setData(prev => {
         if (!prev) return prev;
         return {
           ...prev,
           pages: prev.pages.filter(p => p.pageId !== pageId),
-          total: prev.total - 1
+          total: prev.total - 1,
+          counts: {
+            ...prev.counts,
+            pending: prev.counts.pending - 1,
+            approved: approved ? prev.counts.approved + 1 : prev.counts.approved,
+            rejected: !approved ? prev.counts.rejected + 1 : prev.counts.rejected
+          }
         };
+      });
+
+      // If we're running low on pages, fetch more
+      setData(prev => {
+        if (!prev) return prev;
+        if (prev.pages.length <= 3 && prev.total > prev.pages.length) {
+          // Trigger a refetch to get more pages
+          setTimeout(() => fetchMorePages(), 100);
+        }
+        return prev;
       });
     } catch (e) {
       console.error('Mark reviewed error:', e);
+    }
+  };
+
+  const fetchMorePages = async () => {
+    if (statusFilter !== 'pending') return; // Only auto-fetch for pending
+    try {
+      const params = new URLSearchParams({
+        status: 'pending',
+        limit: limit.toString(),
+        offset: '0' // Always get fresh pages from the start
+      });
+      if (selectedBook) params.set('bookId', selectedBook);
+
+      const res = await fetch(`/api/detections?${params}`);
+      if (!res.ok) return;
+      const json = await res.json();
+
+      // Merge new pages, avoiding duplicates
+      setData(prev => {
+        if (!prev) return json;
+        const existingIds = new Set(prev.pages.map(p => p.pageId));
+        const newPages = json.pages.filter((p: PageWithDetections) => !existingIds.has(p.pageId));
+        return {
+          ...prev,
+          pages: [...prev.pages, ...newPages].slice(0, limit),
+          total: json.total,
+          counts: json.counts
+        };
+      });
+    } catch (e) {
+      console.error('Fetch more error:', e);
     }
   };
 
@@ -316,9 +363,9 @@ export default function DetectionReviewPage() {
           </div>
         )}
 
-        {/* Pages with detections */}
+        {/* Pages with detections - Grid layout */}
         {!loading && data && (
-          <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {data.pages.map(pageData => (
               <PageReviewCard
                 key={pageData.pageId}
@@ -450,39 +497,24 @@ function PageReviewCard({
 
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-      {/* Header */}
-      <div className="px-4 py-3 bg-stone-50 border-b border-stone-200">
-        <div className="flex items-center justify-between">
-          <div>
-            <Link
-              href={`/book/${page.bookId}/read?page=${page.pageNumber}`}
-              className="font-medium text-stone-900 hover:text-amber-700"
-            >
-              {page.bookTitle}
-            </Link>
-            <span className="text-stone-500 ml-2">p. {page.pageNumber}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowAutoBoxes(!showAutoBoxes)}
-              className={`flex items-center gap-1 px-3 py-1 rounded text-sm transition-colors ${
-                showAutoBoxes ? 'bg-amber-100 text-amber-700' : 'bg-stone-200 text-stone-600'
-              }`}
-            >
-              {showAutoBoxes ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
-              Auto ({autoDetections.length})
-            </button>
-            <span className="text-sm text-green-600">
-              {manualDetections.length} manual
-            </span>
-          </div>
+      {/* Compact Header */}
+      <div className="px-2 py-1.5 bg-stone-50 border-b border-stone-200">
+        <div className="flex items-center justify-between text-xs">
+          <Link
+            href={`/book/${page.bookId}/read?page=${page.pageNumber}`}
+            className="font-medium text-stone-700 hover:text-amber-700 truncate max-w-[70%]"
+            title={page.bookTitle}
+          >
+            {page.bookTitle}
+          </Link>
+          <span className="text-stone-400">p.{page.pageNumber}</span>
         </div>
       </div>
 
       {/* Full page image with drawing */}
       <div
         ref={containerRef}
-        className="relative bg-stone-800 cursor-crosshair select-none max-w-md mx-auto"
+        className="relative bg-stone-800 cursor-crosshair select-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -603,7 +635,7 @@ function PageReviewCard({
       </div>
 
       {/* Approve/Reject buttons */}
-      <div className="p-4 border-t border-stone-200 flex items-center justify-center gap-4">
+      <div className="p-2 border-t border-stone-200 flex items-center justify-center gap-2">
         <button
           onClick={async () => {
             setReviewSaving(true);
@@ -611,60 +643,25 @@ function PageReviewCard({
             setReviewSaving(false);
           }}
           disabled={reviewSaving}
-          className="flex items-center gap-2 px-6 py-3 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-1 px-3 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 disabled:opacity-50 transition-colors text-sm"
         >
-          <XCircle className="w-5 h-5" />
+          <XCircle className="w-4 h-4" />
           Reject
         </button>
         <button
           onClick={handleApprove}
           disabled={reviewSaving}
-          className="flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors text-sm"
         >
           {reviewSaving ? (
-            <Loader2 className="w-5 h-5 animate-spin" />
+            <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
-            <CheckCircle className="w-5 h-5" />
+            <CheckCircle className="w-4 h-4" />
           )}
           Approve{drawnBoxes.length > 0 ? ` (${drawnBoxes.length})` : ''}
         </button>
       </div>
 
-      {/* Instructions */}
-      <div className="px-4 py-2 bg-stone-50 border-t border-stone-200 text-sm text-stone-500">
-        <PenTool className="w-4 h-4 inline mr-1" />
-        Draw bounding boxes (optional), then Approve or Reject
-      </div>
-
-      {/* Manual detection list */}
-      {manualDetections.length > 0 && (
-        <div className="p-4 space-y-2 border-t border-stone-200">
-          <h4 className="font-medium text-stone-700 text-sm">Your selections:</h4>
-          {manualDetections.map((det, idx) => {
-            const actualIdx = page.detections.indexOf(det);
-            return (
-              <div
-                key={idx}
-                className="flex items-center justify-between p-3 rounded-lg bg-green-50"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-sm font-medium text-green-800">
-                    {idx + 1}
-                  </span>
-                  <span className="font-medium">{det.description}</span>
-                </div>
-                <button
-                  onClick={() => onDeleteDetection(page.pageId, actualIdx)}
-                  className="p-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors"
-                  title="Delete"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      )}
     </div>
   );
 }
