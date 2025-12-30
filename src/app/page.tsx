@@ -99,17 +99,10 @@ export default async function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="min-h-[60vh] flex flex-col justify-between bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-12 md:py-16">
-        <div className="px-6 md:px-12 max-w-5xl">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Initiation is to be open for information.
-          </h2>
-          <p className="text-lg md:text-xl text-gray-700 leading-relaxed max-w-3xl mb-12">
-            The Renaissance was born because patrons stepped forward to preserve and share hidden wisdom. Source Library continues the tradition—illuminating thousands of texts on hermeticism, alchemy, and esotericism to the world.
-          </p>
-
+      <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
           {/* Partner Logos */}
-          <div className="flex items-center gap-8 mb-12">
+          <div className="flex items-center gap-8 mb-16">
             <img
               src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
               alt="Embassy of the Free Mind"
@@ -160,8 +153,8 @@ export default async function HomePage() {
         </div>
 
         {/* Footer Links */}
-        <div className="px-6 md:px-12 mt-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-gray-400 max-w-7xl mx-auto">
+        <div className="px-6 md:px-12 mt-16">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-stone-300 max-w-5xl mx-auto">
             <div className="mb-4 md:mb-0 text-gray-600">
               &copy; {new Date().getFullYear()} Source Library — A project of the Ancient Wisdom Trust
             </div>
