@@ -81,7 +81,7 @@ export async function POST(
     const {
       limit = 100,
       language = 'Latin',
-      model = 'gemini-2.5-flash',
+      model = 'gemini-3-flash-preview',
     } = body;
 
     const db = await getDb();
@@ -92,15 +92,25 @@ export async function POST(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Find pages needing OCR
+    // Find pages needing OCR (no ocr.data or empty ocr.data)
     const pagesToProcess = await db.collection('pages')
       .find({
         book_id: bookId,
-        $or: [
-          { photo: { $exists: true, $ne: null } },
-          { photo_original: { $exists: true, $ne: null } }
-        ],
-        'ocr.data': { $exists: false }
+        $and: [
+          {
+            $or: [
+              { photo: { $exists: true, $ne: null } },
+              { photo_original: { $exists: true, $ne: null } }
+            ]
+          },
+          {
+            $or: [
+              { 'ocr.data': { $exists: false } },
+              { 'ocr.data': null },
+              { 'ocr.data': '' }
+            ]
+          }
+        ]
       })
       .sort({ page_number: 1 })
       .limit(limit)
