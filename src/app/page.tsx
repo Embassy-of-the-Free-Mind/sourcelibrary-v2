@@ -84,7 +84,7 @@ export default async function HomePage() {
       </section>
 
       {/* About Section */}
-      <section className="bg-white py-16 md:py-24">
+      <section id="about" className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
             Source Library continues the Ficino Society's mission to transform 2500+ years of wisdom texts into a living archive.
@@ -166,6 +166,13 @@ export default async function HomePage() {
               &copy; {new Date().getFullYear()} Source Library — A project of the Ancient Wisdom Trust
             </div>
             <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
+              <a
+                href="#about"
+                className="hover:text-gray-900 transition-colors"
+              >
+                About
+              </a>
+              <span className="hidden md:inline">•</span>
               <span>CC0 Public Domain</span>
               <span className="hidden md:inline">•</span>
               <a
