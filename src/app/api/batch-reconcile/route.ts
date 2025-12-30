@@ -19,7 +19,7 @@ export async function GET() {
 
     // Get our DB jobs with gemini_job_name
     const dbJobs = await db.collection('batch_jobs')
-      .find({ gemini_job_name: { $exists: true, $ne: null, $ne: '' } })
+      .find({ gemini_job_name: { $exists: true, $nin: [null, ''] } })
       .project({ id: 1, gemini_job_name: 1, book_id: 1, status: 1 })
       .toArray();
 
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
 
     // Get linked job names
     const dbJobs = await db.collection('batch_jobs')
-      .find({ gemini_job_name: { $exists: true, $ne: null, $ne: '' } })
+      .find({ gemini_job_name: { $exists: true, $nin: [null, ''] } })
       .project({ gemini_job_name: 1 })
       .toArray();
 

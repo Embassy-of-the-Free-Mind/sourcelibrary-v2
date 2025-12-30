@@ -20,7 +20,7 @@ export async function POST() {
     const jobs = await db.collection('batch_jobs')
       .find({
         status: { $nin: ['saved', 'cancelled', 'failed', 'expired'] },
-        gemini_job_name: { $exists: true, $ne: null, $ne: '' },
+        gemini_job_name: { $exists: true, $nin: [null, ''] },
       })
       .toArray();
 
