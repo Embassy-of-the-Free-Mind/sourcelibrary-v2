@@ -8,6 +8,14 @@ export const metadata: Metadata = {
   title: "Source Library",
   description: "Digitizing and translating rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.",
   metadataBase: new URL('https://sourcelibrary.org'),
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-icon', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     title: "Source Library",
     description: "Rare Hermetic & Renaissance texts digitized and translated with AI",
