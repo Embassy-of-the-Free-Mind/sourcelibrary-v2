@@ -332,12 +332,42 @@ export async function getBatchJobResults(jobName: string): Promise<BatchResponse
 
   const jobData = await jobResponse.json();
 
-  // Check for inline responses
+  // Check for file-based output (metadata.destFile)
+  if (jobData.metadata?.destFile) {
+    const fileName = jobData.metadata.destFile;
+    const fileResponse = await fetch(
+      `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${apiKey}`,
+      {
+        method: 'GET',
+      }
+    );
+
+    if (!fileResponse.ok) {
+      const error = await fileResponse.text();
+      throw new Error(`Failed to download results file: ${error}`);
+    }
+
+    // Parse JSONL response
+    const text = await fileResponse.text();
+    const lines = text.trim().split('\n').filter(line => line.trim());
+    return lines.map(line => JSON.parse(line));
+  }
+
+  // Check for inline responses (double nested in metadata.output)
+  if (jobData.metadata?.output?.inlinedResponses?.inlinedResponses) {
+    return jobData.metadata.output.inlinedResponses.inlinedResponses;
+  }
+
+  // Alternative location for inline responses
+  if (jobData.response?.inlinedResponses) {
+    return jobData.response.inlinedResponses;
+  }
+
+  // Legacy format check
   if (jobData.dest?.inlinedResponses) {
     return jobData.dest.inlinedResponses;
   }
 
-  // Check for file-based responses
   if (jobData.dest?.fileName) {
     const fileResponse = await fetch(
       `https://generativelanguage.googleapis.com/download/v1beta/${jobData.dest.fileName}:download?alt=media&key=${apiKey}`,
@@ -351,7 +381,6 @@ export async function getBatchJobResults(jobName: string): Promise<BatchResponse
       throw new Error(`Failed to download results file: ${error}`);
     }
 
-    // Parse JSONL response
     const text = await fileResponse.text();
     const lines = text.trim().split('\n').filter(line => line.trim());
     return lines.map(line => JSON.parse(line));
