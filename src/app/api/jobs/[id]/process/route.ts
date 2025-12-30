@@ -517,7 +517,7 @@ async function handleBatchApiJob(
     const chunkIndex = existingBatchJobs.length;
     const displayName = `${job.type}-${jobId}-chunk${chunkIndex}`;
     const geminiJob = await createBatchJobInline(
-      job.config.model || 'gemini-2.5-flash',
+      job.config.model || 'gemini-3-flash-preview',
       batchRequests,
       displayName
     );
@@ -755,7 +755,7 @@ export async function POST(
                 job.config.language || 'Latin',
                 previousOcr,
                 ocrPrompt?.text,
-                job.config.model || 'gemini-2.0-flash'
+                job.config.model || 'gemini-3-flash-preview'
               );
             } else {
               // No cropped_photo yet - crop inline and use buffer directly (faster!)
@@ -798,7 +798,7 @@ export async function POST(
                 job.config.language || 'Latin',
                 previousOcr,
                 ocrPrompt?.text,
-                job.config.model || 'gemini-2.0-flash'
+                job.config.model || 'gemini-3-flash-preview'
               );
 
               // Upload cropped image in background for future use/viewing
@@ -824,7 +824,7 @@ export async function POST(
               job.config.language || 'Latin',
               previousOcr,
               ocrPrompt?.text,
-              job.config.model || 'gemini-2.0-flash'
+              job.config.model || 'gemini-3-flash-preview'
             );
           }
 
@@ -838,7 +838,7 @@ export async function POST(
                 ocr: {
                   data: ocrResult.text,
                   language: job.config.language || 'Latin',
-                  model: job.config.model || 'gemini-2.0-flash',
+                  model: job.config.model || 'gemini-3-flash-preview',
                   prompt: ocrPrompt?.reference,
                   updated_at: new Date(),
                   source: 'ai',  // Mark as AI-generated
@@ -877,7 +877,7 @@ export async function POST(
             'English',
             previousTranslation,
             translationPrompt?.text,
-            job.config.model || 'gemini-2.0-flash'
+            job.config.model || 'gemini-3-flash-preview'
           );
           const translateDuration = performance.now() - translateStart;
 
@@ -890,7 +890,7 @@ export async function POST(
                   data: translationResult.text,
                   language: 'English',
                   source_language: job.config.language || 'Latin',
-                  model: job.config.model || 'gemini-2.0-flash',
+                  model: job.config.model || 'gemini-3-flash-preview',
                   prompt: translationPrompt?.reference,
                   updated_at: new Date(),
                   source: 'ai',  // Mark as AI-generated

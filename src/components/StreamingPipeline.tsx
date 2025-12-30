@@ -37,7 +37,7 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
   const [starting, setStarting] = useState(false);
   const [stats, setStats] = useState<PipelineStats | null>(null);
   const [job, setJob] = useState<JobState | null>(null);
-  const [model, setModel] = useState('gemini-2.5-flash');
+  const [model, setModel] = useState('gemini-3-flash-preview');
   const [parallelPages, setParallelPages] = useState(3);
   const [overwrite, setOverwrite] = useState(false);
   const [pollErrors, setPollErrors] = useState(0);
@@ -350,8 +350,8 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
                 onChange={(e) => setModel(e.target.value)}
                 className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
               >
-                <option value="gemini-2.5-flash">Gemini 2.5 Flash (recommended)</option>
-                <option value="gemini-3-flash-preview">Gemini 3 Flash (for complex layouts)</option>
+                <option value="gemini-3-flash-preview">Gemini 3 Flash (recommended)</option>
+                <option value="gemini-2.5-flash">Gemini 2.5 Flash (lower cost)</option>
               </select>
             </div>
             <div>
