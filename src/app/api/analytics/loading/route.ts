@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
       query.name = metricName;
     }
 
-    // Aggregate stats
+    // Aggregate stats by metric name
     const pipeline = [
       { $match: query },
       {
@@ -79,6 +79,30 @@ export async function GET(request: NextRequest) {
 
     const stats = await db.collection('loading_metrics').aggregate(pipeline).toArray();
 
+    // Aggregate stats by source (blob vs IA) for image loading metrics
+    const sourceQuery = {
+      ...query,
+      name: { $in: ['page_thumbnail_load', 'book_card_image_load'] },
+      'metadata.source': { $exists: true },
+    };
+    const sourcePipeline = [
+      { $match: sourceQuery },
+      {
+        $group: {
+          _id: '$metadata.source',
+          count: { $sum: 1 },
+          avg_duration: { $avg: '$duration' },
+          min_duration: { $min: '$duration' },
+          max_duration: { $max: '$duration' },
+          p50: { $percentile: { input: '$duration', p: [0.5], method: 'approximate' } },
+          p95: { $percentile: { input: '$duration', p: [0.95], method: 'approximate' } },
+        },
+      },
+      { $sort: { _id: 1 as const } },
+    ];
+
+    const sourceStats = await db.collection('loading_metrics').aggregate(sourcePipeline).toArray();
+
     // Get recent samples
     const recentSamples = await db
       .collection('loading_metrics')
@@ -90,6 +114,15 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       stats: stats.map((s) => ({
         name: s._id,
+        count: s.count,
+        avg: Math.round(s.avg_duration * 100) / 100,
+        min: Math.round(s.min_duration * 100) / 100,
+        max: Math.round(s.max_duration * 100) / 100,
+        p50: s.p50?.[0] ? Math.round(s.p50[0] * 100) / 100 : null,
+        p95: s.p95?.[0] ? Math.round(s.p95[0] * 100) / 100 : null,
+      })),
+      sourceStats: sourceStats.map((s) => ({
+        source: s._id || 'unknown',
         count: s.count,
         avg: Math.round(s.avg_duration * 100) / 100,
         min: Math.round(s.min_duration * 100) / 100,

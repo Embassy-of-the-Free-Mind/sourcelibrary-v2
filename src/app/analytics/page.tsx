@@ -14,6 +14,16 @@ interface MetricStat {
   p95: number | null;
 }
 
+interface SourceStat {
+  source: string;
+  count: number;
+  avg: number;
+  min: number;
+  max: number;
+  p50: number | null;
+  p95: number | null;
+}
+
 interface RecentSample {
   name: string;
   duration: number;
@@ -23,6 +33,7 @@ interface RecentSample {
 
 interface PerformanceData {
   stats: MetricStat[];
+  sourceStats: SourceStat[];
   recentSamples: RecentSample[];
   query: { hours: number; metricName: string | null };
 }
@@ -703,6 +714,100 @@ export default function AnalyticsPage() {
         ) : activeTab === 'performance' ? (
           /* Performance Tab */
           <div className="space-y-6">
+            {/* Blob vs IA Comparison */}
+            {perfData?.sourceStats && perfData.sourceStats.length > 0 && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                  Image Loading: Blob vs Internet Archive
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {perfData.sourceStats.map((stat) => {
+                    const sourceLabels: Record<string, string> = {
+                      blob: 'Vercel Blob (Archived)',
+                      ia: 'Internet Archive',
+                      local: 'API Proxy',
+                      other: 'Other',
+                    };
+                    const sourceColors: Record<string, string> = {
+                      blob: '#22c55e',
+                      ia: '#f59e0b',
+                      local: 'var(--accent-sage)',
+                      other: 'var(--text-muted)',
+                    };
+                    const color = sourceColors[stat.source] || sourceColors.other;
+                    return (
+                      <div
+                        key={stat.source}
+                        className="p-4 rounded-lg"
+                        style={{ background: 'var(--bg-warm)', borderLeft: `4px solid ${color}` }}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
+                            {sourceLabels[stat.source] || stat.source}
+                          </span>
+                          <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--bg-white)', color: 'var(--text-muted)' }}>
+                            {stat.count} loads
+                          </span>
+                        </div>
+                        <div className="text-2xl font-semibold mb-2" style={{ color }}>
+                          {formatDuration(stat.avg)}
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>P50: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{stat.p50 ? formatDuration(stat.p50) : '-'}</span>
+                          </div>
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>P95: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{stat.p95 ? formatDuration(stat.p95) : '-'}</span>
+                          </div>
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>Min: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{formatDuration(stat.min)}</span>
+                          </div>
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>Max: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{formatDuration(stat.max)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Comparison Bar */}
+                {perfData.sourceStats.length >= 2 && (() => {
+                  const blob = perfData.sourceStats.find(s => s.source === 'blob');
+                  const ia = perfData.sourceStats.find(s => s.source === 'ia');
+                  if (blob && ia) {
+                    const speedup = ((ia.avg - blob.avg) / ia.avg * 100).toFixed(0);
+                    const faster = blob.avg < ia.avg ? 'blob' : 'ia';
+                    return (
+                      <div className="mt-4 p-4 rounded-lg text-center" style={{ background: 'var(--bg-cream)' }}>
+                        {faster === 'blob' ? (
+                          <p style={{ color: 'var(--text-primary)' }}>
+                            <span className="font-semibold" style={{ color: '#22c55e' }}>Vercel Blob</span> is{' '}
+                            <span className="font-semibold">{speedup}% faster</span> than Internet Archive
+                            <span className="text-sm ml-2" style={{ color: 'var(--text-muted)' }}>
+                              ({formatDuration(blob.avg)} vs {formatDuration(ia.avg)})
+                            </span>
+                          </p>
+                        ) : (
+                          <p style={{ color: 'var(--text-primary)' }}>
+                            <span className="font-semibold" style={{ color: '#f59e0b' }}>Internet Archive</span> is{' '}
+                            <span className="font-semibold">{Math.abs(Number(speedup))}% faster</span> than Vercel Blob
+                            <span className="text-sm ml-2" style={{ color: 'var(--text-muted)' }}>
+                              ({formatDuration(ia.avg)} vs {formatDuration(blob.avg)})
+                            </span>
+                          </p>
+                        )}
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
+              </div>
+            )}
+
             {perfData?.stats && perfData.stats.length > 0 ? (
               <>
                 <h2 className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
