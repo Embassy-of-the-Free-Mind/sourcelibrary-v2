@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { ArrowLeft, Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb } from 'lucide-react';
+import { Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookHistory from '@/components/BookHistory';
@@ -492,10 +492,13 @@ export default async function BookDetailPage({ params }: PageProps) {
     <div className="min-h-screen bg-stone-50">
       {/* Header - renders immediately */}
       <header className="bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link href="/" className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Library
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-2 text-stone-700 hover:text-stone-900 transition-colors" title="Back to Library">
+            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
+              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
+              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
+            </svg>
           </Link>
         </div>
       </header>

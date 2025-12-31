@@ -2,7 +2,6 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { recordLoadingMetric } from '@/lib/analytics';
 
 export default function HeroSection() {
@@ -51,7 +50,11 @@ export default function HeroSection() {
       {/* Header Navigation - visible immediately */}
       <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
         <Link href="/" className="text-white flex items-center gap-3">
-          <Image src="/logo.svg" alt="Source Library" width={48} height={48} className="w-10 h-10 md:w-12 md:h-12" priority />
+          <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
+            <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
+            <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
+          </svg>
           <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
             <span className="font-semibold text-white">Source</span>
             <span className="font-light text-white">Library</span>
