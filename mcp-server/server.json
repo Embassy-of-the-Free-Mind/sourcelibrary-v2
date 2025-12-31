@@ -1,0 +1,21 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.Embassy-of-the-Free-Mind/source-library",
+  "description": "Search rare historical texts with OCR, translations & DOI citations.",
+  "repository": {
+    "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2",
+    "source": "github",
+    "subfolder": "mcp-server"
+  },
+  "version": "1.0.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@source-library/mcp-server",
+      "version": "1.0.1",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "name": "@source-library/mcp-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "mcpName": "io.github.Embassy-of-the-Free-Mind/source-library",
   "description": "MCP server for searching and citing Source Library historical texts with DOI-backed citations",
   "type": "module",
   "main": "dist/index.js",
