@@ -74,8 +74,12 @@ export async function GET(request: NextRequest) {
 
     let sharpInstance = sharp(buffer);
 
-    // Auto-rotate based on EXIF orientation
-    sharpInstance = sharpInstance.rotate();
+    // Auto-rotate based on EXIF orientation for sources that have correct EXIF data
+    // Skip for S3 images which have incorrect/missing EXIF orientation
+    const shouldAutoRotate = !url.includes('amazonaws.com');
+    if (shouldAutoRotate) {
+      sharpInstance = sharpInstance.rotate();
+    }
 
     // Apply crop if specified (coordinates are 0-1000 scale)
     if (cropXStart !== null && cropXEnd !== null) {
