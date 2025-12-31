@@ -1,0 +1,531 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Source Library API",
+    "description": "Search and cite rare historical texts (alchemy, Hermeticism, Renaissance philosophy) from Source Library. All translations include DOI-backed academic citations.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Source Library",
+      "url": "https://sourcelibrary.org",
+      "email": "hello@sourcelibrary.org"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://sourcelibrary.org/api",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/search": {
+      "get": {
+        "operationId": "searchLibrary",
+        "summary": "Search the library",
+        "description": "Search across all books, translations, and page content. Returns matching books and pages with snippets.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "Search query (min 2 characters). Searches titles, authors, and translation content.",
+            "schema": {
+              "type": "string",
+              "minLength": 2
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Filter by original language",
+            "schema": {
+              "type": "string",
+              "enum": ["Latin", "German", "French", "Italian", "English", "Dutch", "Spanish"]
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Filter by category",
+            "schema": {
+              "type": "string",
+              "enum": ["alchemy", "hermeticism", "jewish-kabbalah", "christian-cabala", "neoplatonism", "rosicrucianism", "natural-philosophy", "astrology", "natural-magic", "ritual-magic", "theurgy", "mysticism", "theology", "medicine", "gnosticism"]
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "Publication year start (e.g., 1500)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "Publication year end (e.g., 1700)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "has_doi",
+            "in": "query",
+            "description": "Only return books with DOIs",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "has_translation",
+            "in": "query",
+            "description": "Only return books with translations",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum results (default 20, max 100)",
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Pagination offset",
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query"
+          }
+        }
+      }
+    },
+    "/books": {
+      "get": {
+        "operationId": "listBooks",
+        "summary": "List all books",
+        "description": "Get all books in the library with metadata.",
+        "responses": {
+          "200": {
+            "description": "List of books",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "operationId": "getBook",
+        "summary": "Get book details",
+        "description": "Get detailed information about a specific book including summary, edition info, and DOI.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Book ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found"
+          }
+        }
+      }
+    },
+    "/books/{id}/quote": {
+      "get": {
+        "operationId": "getQuote",
+        "summary": "Get a quote with citation",
+        "description": "Get a passage from a specific page with formatted academic citations (inline, footnote, BibTeX, Chicago, MLA) and DOI.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Book ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "description": "Page number",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          {
+            "name": "include_original",
+            "in": "query",
+            "description": "Include original language text (default true)",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "include_context",
+            "in": "query",
+            "description": "Include adjacent pages for context",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Quote with citation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuoteResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book or page not found, or no translation available"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SearchResponse": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchResult"
+            }
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["book", "page"]
+          },
+          "book_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "display_title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "published": {
+            "type": "string"
+          },
+          "page_count": {
+            "type": "integer"
+          },
+          "translated_count": {
+            "type": "integer"
+          },
+          "has_doi": {
+            "type": "boolean"
+          },
+          "doi": {
+            "type": "string"
+          },
+          "page_number": {
+            "type": "integer",
+            "description": "For page results only"
+          },
+          "snippet": {
+            "type": "string",
+            "description": "Text excerpt matching the query"
+          }
+        }
+      },
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "display_title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "published": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "place_published": {
+            "type": "string"
+          },
+          "pages_count": {
+            "type": "integer"
+          },
+          "pages_translated": {
+            "type": "integer"
+          },
+          "doi": {
+            "type": "string"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BookDetail": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "display_title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "published": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "place_published": {
+            "type": "string"
+          },
+          "pages_count": {
+            "type": "integer"
+          },
+          "pages_translated": {
+            "type": "integer"
+          },
+          "doi": {
+            "type": "string"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "summary": {
+            "type": "string"
+          },
+          "editions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Edition"
+            }
+          }
+        }
+      },
+      "Edition": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["draft", "published"]
+          },
+          "doi": {
+            "type": "string"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "license": {
+            "type": "string"
+          }
+        }
+      },
+      "QuoteResponse": {
+        "type": "object",
+        "properties": {
+          "quote": {
+            "type": "object",
+            "properties": {
+              "translation": {
+                "type": "string",
+                "description": "English translation of the passage"
+              },
+              "original": {
+                "type": "string",
+                "description": "Original language text (Latin, German, etc.)"
+              },
+              "page": {
+                "type": "integer"
+              },
+              "book_id": {
+                "type": "string"
+              },
+              "book_title": {
+                "type": "string"
+              },
+              "display_title": {
+                "type": "string"
+              },
+              "author": {
+                "type": "string"
+              },
+              "published": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              }
+            }
+          },
+          "citation": {
+            "type": "object",
+            "properties": {
+              "inline": {
+                "type": "string",
+                "description": "Short inline citation, e.g., (Drebbel 1628, p. 15)"
+              },
+              "footnote": {
+                "type": "string",
+                "description": "Full footnote citation"
+              },
+              "bibliography": {
+                "type": "string",
+                "description": "Bibliography entry"
+              },
+              "bibtex": {
+                "type": "string",
+                "description": "BibTeX format citation"
+              },
+              "chicago": {
+                "type": "string",
+                "description": "Chicago style citation"
+              },
+              "mla": {
+                "type": "string",
+                "description": "MLA style citation"
+              },
+              "url": {
+                "type": "string",
+                "description": "Direct URL to the page"
+              },
+              "short_url": {
+                "type": "string",
+                "description": "Short URL for sharing"
+              },
+              "doi_url": {
+                "type": "string",
+                "description": "DOI URL if available"
+              }
+            }
+          },
+          "context": {
+            "type": "object",
+            "properties": {
+              "previous_page": {
+                "type": "string"
+              },
+              "next_page": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

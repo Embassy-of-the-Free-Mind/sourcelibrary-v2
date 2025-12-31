@@ -1,13 +1,49 @@
 {
   "name": "@source-library/mcp-server",
   "version": "1.0.0",
-  "description": "MCP server for searching and citing Source Library texts",
+  "description": "MCP server for searching and citing Source Library historical texts with DOI-backed citations",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "source-library-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "historical-texts",
+    "alchemy",
+    "hermeticism",
+    "latin",
+    "translation",
+    "citation",
+    "doi",
+    "research"
+  ],
+  "author": "Source Library <hello@sourcelibrary.org>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2.git",
+    "directory": "mcp-server"
+  },
+  "homepage": "https://sourcelibrary.org",
+  "bugs": {
+    "url": "https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0"

@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Source Library",
+  "name_for_model": "source_library",
+  "description_for_human": "Search and cite rare historical texts (alchemy, Hermeticism, Renaissance philosophy) with DOI-backed academic citations.",
+  "description_for_model": "Search translated 15th-18th century Latin and German historical texts from Source Library. Returns passages with properly formatted academic citations including DOIs. Use for: finding primary sources on alchemy, Hermeticism, natural philosophy, Renaissance thought; getting quotes with inline citations, footnotes, and DOI URLs; researching historical concepts, people, and terminology. All translations preserve original language for scholarly verification.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://sourcelibrary.org/api/openapi.json"
+  },
+  "logo_url": "https://sourcelibrary.org/icon.svg",
+  "contact_email": "hello@sourcelibrary.org",
+  "legal_info_url": "https://sourcelibrary.org/about"
+}

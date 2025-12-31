@@ -1,86 +1,102 @@
 # Source Library MCP Server
 
-An MCP (Model Context Protocol) server that allows Claude and other AI agents to search, retrieve quotes, and cite sources from the Source Library collection of translated historical texts.
+[![npm version](https://badge.fury.io/js/@source-library%2Fmcp-server.svg)](https://www.npmjs.com/package/@source-library/mcp-server)
 
-## Installation
+An MCP (Model Context Protocol) server for searching and citing rare historical texts from [Source Library](https://sourcelibrary.org). Access translated Latin and German manuscripts from the 15th-18th centuries with DOI-backed academic citations.
 
-```bash
-cd mcp-server
-npm install
-npm run build
-```
+## Features
 
-## Usage with Claude Desktop
+- **Search** translated historical texts (alchemy, Hermeticism, Renaissance philosophy)
+- **Get quotes** with properly formatted academic citations
+- **DOI support** for all published editions via Zenodo
+- **Original language** preserved alongside English translations
 
-Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+## Quick Start
+
+### Claude Desktop
+
+Add to your Claude Desktop config:
+
+**macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows:** `%APPDATA%\Claude\claude_desktop_config.json`
 
 ```json
 {
   "mcpServers": {
     "source-library": {
-      "command": "node",
-      "args": ["/path/to/sourcelibrary-v2/mcp-server/dist/index.js"],
-      "env": {
-        "SOURCE_LIBRARY_API": "https://sourcelibrary.org/api"
-      }
+      "command": "npx",
+      "args": ["-y", "@source-library/mcp-server"]
     }
   }
 }
+```
+
+Restart Claude Desktop, and you can now ask:
+
+> "Search Source Library for texts about the philosopher's stone and cite a passage"
+
+### Global Install
+
+```bash
+npm install -g @source-library/mcp-server
+source-library-mcp
+```
+
+### From Source
+
+```bash
+git clone https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2.git
+cd sourcelibrary-v2/mcp-server
+npm install && npm run build
+npm start
 ```
 
 ## Available Tools
 
 ### search_library
 
-Search across all translated books.
+Search the Source Library collection.
 
-```
-Arguments:
-  query: string (required) - Search query
-  language: string - Filter by original language (Latin, German, etc.)
-  date_from: string - Publication year start
-  date_to: string - Publication year end
-  has_doi: boolean - Only books with DOIs
-  has_translation: boolean - Only books with translations
-  limit: number - Max results (default 10)
-```
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | Yes | Search query |
+| `language` | string | No | Filter: Latin, German, French, etc. |
+| `date_from` | string | No | Publication year start |
+| `date_to` | string | No | Publication year end |
+| `has_doi` | boolean | No | Only books with DOIs |
+| `has_translation` | boolean | No | Only translated books |
+| `limit` | number | No | Max results (default 10) |
 
 **Example:**
-```
-search_library(query="quinta essentia", language="Latin", has_doi=true)
+```json
+{ "query": "quinta essentia", "language": "Latin", "has_doi": true }
 ```
 
 ### get_quote
 
-Get a quote from a specific page with formatted citations.
+Get a passage with formatted citations.
 
-```
-Arguments:
-  book_id: string (required) - Book ID from search
-  page: number (required) - Page number
-  include_original: boolean - Include Latin/German text
-  include_context: boolean - Include adjacent pages
-```
-
-**Example:**
-```
-get_quote(book_id="6836f8ee811c8ab472a49e36", page=15)
-```
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `book_id` | string | Yes | Book ID from search results |
+| `page` | number | Yes | Page number |
+| `include_original` | boolean | No | Include original language (default true) |
+| `include_context` | boolean | No | Include adjacent pages |
 
 **Returns:**
 ```json
 {
   "quote": "The fifth essence is that most pure...",
   "original": "Quinta essentia est purissima illa...",
-  "page": 15,
+  "page": 57,
   "book": {
     "title": "Two Treatises",
-    "author": "Drebbel, Cornelius",
+    "author": "Cornelius Drebbel",
     "published": "1628"
   },
   "citation": {
-    "inline": "(Drebbel 1628, p. 15)",
-    "footnote": "Cornelius Drebbel, Two Treatises...",
+    "inline": "(Drebbel 1628, p. 57)",
+    "footnote": "Cornelius Drebbel, Two Treatises, trans. Source Library (2025), 57. DOI: 10.5281/zenodo.18053504.",
     "doi_url": "https://doi.org/10.5281/zenodo.18053504"
   }
 }
@@ -88,12 +104,11 @@ get_quote(book_id="6836f8ee811c8ab472a49e36", page=15)
 
 ### get_book
 
-Get detailed book information.
+Get detailed book information including summary, edition info, and DOI.
 
-```
-Arguments:
-  book_id: string (required) - Book ID
-```
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `book_id` | string | Yes | Book ID |
 
 ## Resources
 
@@ -102,26 +117,54 @@ The server also supports `book://` URIs:
 - `book://[id]` - Get book metadata
 - `book://[id]/page/[n]` - Get page translation
 
+## Example Conversations
+
+**Research query:**
+> "What did Paracelsus write about the quinta essentia? Give me a quote with citation."
+
+**Historical investigation:**
+> "Find 16th century Latin texts about transmutation and summarize their main arguments"
+
+**Academic writing:**
+> "I need a primary source quote about Renaissance alchemy for my paper, with proper DOI citation"
+
+## REST API
+
+The underlying API is also available directly:
+
+```
+GET https://sourcelibrary.org/api/search?q={query}
+GET https://sourcelibrary.org/api/books/{id}/quote?page={n}
+GET https://sourcelibrary.org/api/books/{id}
+```
+
+Full documentation: [sourcelibrary.org/llms.txt](https://sourcelibrary.org/llms.txt)
+
+## Content
+
+The library contains translated texts from:
+
+- Latin alchemical and Hermetic manuscripts (1450-1700)
+- German mystical and Paracelsian works
+- Renaissance philosophical treatises
+- Rosicrucian manifestos and related texts
+
+All translations are AI-assisted with original language preserved for scholarly verification.
+
 ## Development
 
 ```bash
-npm run dev  # Run with hot reload
+npm run dev    # Run with hot reload (tsx)
+npm run build  # Compile TypeScript
+npm start      # Run compiled version
 ```
 
-## Example Conversation
+## License
 
-**User:** What did 17th century alchemists believe about the elements?
+MIT
 
-**Claude:** Let me search for relevant texts...
+## Links
 
-*Uses search_library("elements alchemy 17th century")*
-
-I found several relevant texts. Let me get a quote from Cornelius Drebbel's 1628 treatise on elements:
-
-*Uses get_quote(book_id="...", page=8)*
-
-According to Drebbel:
-
-> "Fire nourishes itself upon air, and air in turn is kindled by fire. These two elements share a hidden affinity through their shared quality of heat."
-
-(Drebbel 1628, p. 8. DOI: 10.5281/zenodo.18053504)
+- **Website:** [sourcelibrary.org](https://sourcelibrary.org)
+- **API Docs:** [sourcelibrary.org/llms.txt](https://sourcelibrary.org/llms.txt)
+- **GitHub:** [Embassy-of-the-Free-Mind/sourcelibrary-v2](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2)
