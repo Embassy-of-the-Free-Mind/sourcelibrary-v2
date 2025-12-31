@@ -22,32 +22,11 @@ export function BookLoader({ label = 'Loading...', className }: BookLoaderProps)
         {/* Core logo - concentric circles matching logo.svg exactly */}
         <svg
           viewBox="0 0 24 24"
-          className="w-16 h-16 relative z-10"
+          className="w-16 h-16 relative z-10 text-stone-700"
         >
-          {/* Outer ring - r=10, matching logo */}
-          <circle
-            cx="12" cy="12" r="10"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-stone-700"
-          />
-          {/* Middle ring - r=7, matching logo */}
-          <circle
-            cx="12" cy="12" r="7"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-stone-600"
-          />
-          {/* Inner ring - r=4, matching logo */}
-          <circle
-            cx="12" cy="12" r="4"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            className="text-stone-500"
-          />
+          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1" />
+          <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" strokeWidth="1" />
+          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1" />
         </svg>
       </div>
 
