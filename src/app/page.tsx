@@ -95,7 +95,7 @@ async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
           book_count: countMap.get(id) || 0,
         };
       })
-      .filter((cat): cat is CategoryWithCount => cat !== null && cat.book_count > 0);
+      .filter((cat): cat is CategoryWithCount => cat !== null);
   } catch (error) {
     console.error('Error fetching topics:', error);
     return [];
