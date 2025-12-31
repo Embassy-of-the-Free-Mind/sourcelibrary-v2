@@ -2,10 +2,23 @@ import { getDb } from '@/lib/mongodb';
 import HeroSection from '@/components/HeroSection';
 import BookLibrary from '@/components/BookLibrary';
 import { Book } from '@/lib/types';
+import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
 // Force dynamic rendering (no static generation)
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+// Featured topics to show on home page (curated order)
+const FEATURED_TOPIC_IDS = [
+  'alchemy',
+  'hermeticism',
+  'neoplatonism',
+  'rosicrucianism',
+  'natural-philosophy',
+  'astrology',
+  'jewish-kabbalah',
+  'mysticism',
+];
 
 async function getBooks(): Promise<Book[]> {
   try {
@@ -57,8 +70,43 @@ async function getBooks(): Promise<Book[]> {
   }
 }
 
+async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
+  try {
+    const db = await getDb();
+
+    // Get category counts from books
+    const categoryCounts = await db.collection('books').aggregate([
+      { $unwind: '$categories' },
+      { $group: { _id: '$categories', count: { $sum: 1 } } },
+    ]).toArray();
+
+    const countMap = new Map<string, number>();
+    for (const item of categoryCounts) {
+      countMap.set(item._id as string, item.count as number);
+    }
+
+    // Return featured topics in curated order with counts
+    return FEATURED_TOPIC_IDS
+      .map(id => {
+        const cat = LIBRARY_CATEGORIES.find(c => c.id === id);
+        if (!cat) return null;
+        return {
+          ...cat,
+          book_count: countMap.get(id) || 0,
+        };
+      })
+      .filter((cat): cat is CategoryWithCount => cat !== null && cat.book_count > 0);
+  } catch (error) {
+    console.error('Error fetching topics:', error);
+    return [];
+  }
+}
+
 export default async function HomePage() {
-  const books = await getBooks();
+  const [books, featuredTopics] = await Promise.all([
+    getBooks(),
+    getFeaturedTopics(),
+  ]);
 
   // Get unique languages for filter
   const languages = [...new Set(books.map(b => b.language))].filter(Boolean) as string[];
@@ -79,7 +127,7 @@ export default async function HomePage() {
           </div>
 
           {/* Search, Filter & Book Grid */}
-          <BookLibrary books={books} languages={languages} />
+          <BookLibrary books={books} languages={languages} featuredTopics={featuredTopics} />
         </div>
       </section>
 

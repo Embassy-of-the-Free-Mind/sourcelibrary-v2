@@ -7,9 +7,17 @@ import BookCard from '@/components/BookCard';
 import { Book } from '@/lib/types';
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check } from 'lucide-react';
 
+interface FeaturedTopic {
+  id: string;
+  name: string;
+  icon: string;
+  book_count: number;
+}
+
 interface BookLibraryProps {
   books: Book[];
   languages: string[];
+  featuredTopics?: FeaturedTopic[];
 }
 
 interface CatalogResult {
@@ -27,10 +35,11 @@ interface CatalogResult {
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
-export default function BookLibrary({ books, languages }: BookLibraryProps) {
+export default function BookLibrary({ books, languages, featuredTopics = [] }: BookLibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
 
@@ -69,6 +78,13 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
       result = result.filter(book => book.language === selectedLanguage);
     }
 
+    // Filter by category
+    if (selectedCategory) {
+      result = result.filter(book =>
+        book.categories && book.categories.includes(selectedCategory)
+      );
+    }
+
     // Sort
     switch (sortBy) {
       case 'recent-translation':
@@ -91,7 +107,7 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
     }
 
     return result;
-  }, [books, searchQuery, selectedLanguage, sortBy]);
+  }, [books, searchQuery, selectedLanguage, selectedCategory, sortBy]);
 
   // Search external catalogs
   const searchCatalogs = useCallback(async () => {
@@ -284,6 +300,39 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
         </div>
       </div>
 
+      {/* Topic Chips */}
+      {featuredTopics.length > 0 && (
+        <div className="mb-6">
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setSelectedCategory('')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                selectedCategory === ''
+                  ? 'bg-gray-900 text-white shadow-sm'
+                  : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              All Topics
+            </button>
+            {featuredTopics.map(topic => (
+              <button
+                key={topic.id}
+                onClick={() => setSelectedCategory(selectedCategory === topic.id ? '' : topic.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  selectedCategory === topic.id
+                    ? 'bg-amber-600 text-white shadow-sm'
+                    : 'bg-white text-gray-600 border border-gray-200 hover:border-amber-300 hover:bg-amber-50'
+                }`}
+              >
+                <span className="mr-1.5">{topic.icon}</span>
+                {topic.name}
+                <span className="ml-1.5 text-xs opacity-70">({topic.book_count})</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Book Count */}
       <div className="mb-8 text-gray-700">
         <span className="font-semibold">{filteredAndSortedBooks.length}</span>
@@ -293,6 +342,11 @@ export default function BookLibrary({ books, languages }: BookLibraryProps) {
         {' '}book{filteredAndSortedBooks.length !== 1 ? 's' : ''} in library
         {searchQuery && <span className="text-gray-500"> matching &ldquo;{searchQuery}&rdquo;</span>}
         {selectedLanguage && <span className="text-gray-500"> in {selectedLanguage}</span>}
+        {selectedCategory && (
+          <span className="text-gray-500">
+            {' '}in {featuredTopics.find(t => t.id === selectedCategory)?.name || selectedCategory}
+          </span>
+        )}
       </div>
 
       {/* Library Results */}
