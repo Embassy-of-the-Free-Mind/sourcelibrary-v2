@@ -45,7 +45,18 @@ export async function GET(request: NextRequest) {
       buffer = fs.readFileSync(localPath);
     } else {
       // Only allow trusted image hosts for security
-      const allowedHosts = ['amazonaws.com', 'archive.org', 'vercel-storage.com', 'blob.vercel-storage.com'];
+      const allowedHosts = [
+        'amazonaws.com',
+        'archive.org',
+        'vercel-storage.com',
+        'blob.vercel-storage.com',
+        // IIIF sources
+        'gallica.bnf.fr',
+        'api.digitale-sammlungen.de',  // MDZ/BSB
+        'digi.vatlib.it',              // Vatican
+        'digital.bodleian.ox.ac.uk',   // Bodleian
+        'iiif.bodleian.ox.ac.uk',
+      ];
       const urlObj = new URL(url);
       if (!allowedHosts.some(host => urlObj.hostname.endsWith(host))) {
         return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
@@ -62,6 +73,9 @@ export async function GET(request: NextRequest) {
     }
 
     let sharpInstance = sharp(buffer);
+
+    // Auto-rotate based on EXIF orientation
+    sharpInstance = sharpInstance.rotate();
 
     // Apply crop if specified (coordinates are 0-1000 scale)
     if (cropXStart !== null && cropXEnd !== null) {
