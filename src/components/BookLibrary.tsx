@@ -324,7 +324,6 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
                     : 'bg-white text-gray-600 border border-gray-200 hover:border-amber-300 hover:bg-amber-50'
                 }`}
               >
-                <span className="mr-1.5">{topic.icon}</span>
                 {topic.name}
                 <span className="ml-1.5 text-xs opacity-70">({topic.book_count})</span>
               </button>
