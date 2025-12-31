@@ -30,7 +30,9 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
   }, [isOpen, handleClose]);
 
   const getPageImageUrl = (page: Page, width: number = 150) => {
-    const baseUrl = page.photo_original || page.photo;
+    // Priority: archived_photo > photo_original > photo (same as utils.ts)
+    const typedPage = page as Page & { archived_photo?: string };
+    const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
     if (!baseUrl) return null;
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
       return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
@@ -115,7 +117,9 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
               <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
                 {pages.map((page) => {
                   const imageUrl = getPageImageUrl(page);
-                  const isCurrentCover = currentThumbnail?.includes(encodeURIComponent(page.photo_original || page.photo));
+                  const typedPage = page as Page & { archived_photo?: string };
+                  const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
+                  const isCurrentCover = currentThumbnail?.includes(encodeURIComponent(baseUrl));
                   const isSaving = saving === page.id;
 
                   return (
