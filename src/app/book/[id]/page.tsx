@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { ArrowLeft, Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb } from 'lucide-react';
+import { Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookHistory from '@/components/BookHistory';
@@ -492,10 +492,14 @@ export default async function BookDetailPage({ params }: PageProps) {
     <div className="min-h-screen bg-stone-50">
       {/* Header - renders immediately */}
       <header className="bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link href="/" className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900">
-            <ArrowLeft className="w-4 h-4" />
-            Back to Library
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-4">
+          <Link href="/" className="flex items-center gap-2 text-stone-700 hover:text-amber-700 transition-colors" title="Source Library">
+            <svg className="w-7 h-7" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 6C16 6 12 4 6 4C4 4 2 5 2 7V24C2 25 3 26 4 26C4 26 10 26 16 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M16 6C16 6 20 4 26 4C28 4 30 5 30 7V24C30 25 29 26 28 26C28 26 22 26 16 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M16 6V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+            <span className="font-serif text-lg hidden sm:inline">Source Library</span>
           </Link>
         </div>
       </header>

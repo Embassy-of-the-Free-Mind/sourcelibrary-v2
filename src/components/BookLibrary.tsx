@@ -35,13 +35,43 @@ interface CatalogResult {
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
+// Extract century from published date string
+function extractCentury(published: string | undefined): number | null {
+  if (!published) return null;
+  // Try to find a 4-digit year
+  const yearMatch = published.match(/\b(\d{4})\b/);
+  if (yearMatch) {
+    const year = parseInt(yearMatch[1], 10);
+    return Math.floor(year / 100) + 1; // 1500 -> 16th century
+  }
+  // Try century format like "12th-13th century"
+  const centuryMatch = published.match(/(\d{1,2})(?:th|st|nd|rd)\s*century/i);
+  if (centuryMatch) {
+    return parseInt(centuryMatch[1], 10);
+  }
+  return null;
+}
+
 export default function BookLibrary({ books, languages, featuredTopics = [] }: BookLibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCentury, setSelectedCentury] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
+
+  // Get available centuries from books
+  const availableCenturies = useMemo(() => {
+    const centuries = new Set<number>();
+    books.forEach(book => {
+      const century = extractCentury(book.published);
+      if (century && century >= 12 && century <= 21) {
+        centuries.add(century);
+      }
+    });
+    return Array.from(centuries).sort((a, b) => a - b);
+  }, [books]);
 
   // Catalog search state
   const [catalogResults, setCatalogResults] = useState<CatalogResult[]>([]);
@@ -85,6 +115,15 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
       );
     }
 
+    // Filter by century
+    if (selectedCentury) {
+      const targetCentury = parseInt(selectedCentury, 10);
+      result = result.filter(book => {
+        const century = extractCentury(book.published);
+        return century === targetCentury;
+      });
+    }
+
     // Sort
     switch (sortBy) {
       case 'recent-translation':
@@ -107,7 +146,7 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
     }
 
     return result;
-  }, [books, searchQuery, selectedLanguage, selectedCategory, sortBy]);
+  }, [books, searchQuery, selectedLanguage, selectedCategory, selectedCentury, sortBy]);
 
   // Search external catalogs
   const searchCatalogs = useCallback(async () => {
@@ -261,6 +300,20 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
             ))}
           </select>
 
+          {/* Century Filter */}
+          <select
+            value={selectedCentury}
+            onChange={(e) => setSelectedCentury(e.target.value)}
+            className="px-4 py-3 bg-white border border-gray-200 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat"
+          >
+            <option value="">All Centuries</option>
+            {availableCenturies.map(century => (
+              <option key={century} value={century}>
+                {century === 21 ? '21st' : century === 12 ? '12th' : century === 13 ? '13th' : `${century}th`} Century
+              </option>
+            ))}
+          </select>
+
           {/* Sort */}
           <select
             value={sortBy}
@@ -344,6 +397,11 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
         {selectedCategory && (
           <span className="text-gray-500">
             {' '}in {featuredTopics.find(t => t.id === selectedCategory)?.name || selectedCategory}
+          </span>
+        )}
+        {selectedCentury && (
+          <span className="text-gray-500">
+            {' '}from the {selectedCentury === '21' ? '21st' : selectedCentury === '12' ? '12th' : selectedCentury === '13' ? '13th' : `${selectedCentury}th`} century
           </span>
         )}
       </div>
