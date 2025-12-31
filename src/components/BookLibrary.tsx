@@ -257,7 +257,9 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
           >
             <option value="">All Languages</option>
             {languages.map(lang => (
-              <option key={lang} value={lang}>{lang}</option>
+              <option key={lang} value={lang}>
+                {lang.startsWith('Multiple') ? 'Multiple' : lang}
+              </option>
             ))}
           </select>
 

@@ -13,11 +13,18 @@ const FEATURED_TOPIC_IDS = [
   'alchemy',
   'hermeticism',
   'neoplatonism',
-  'rosicrucianism',
   'natural-philosophy',
-  'astrology',
-  'jewish-kabbalah',
+  'renaissance',
+  'florentine-platonism',
   'mysticism',
+  'theology',
+  'theosophy',
+  'christian-mysticism',
+  'natural-magic',
+  'jewish-kabbalah',
+  'rosicrucianism',
+  'astrology',
+  'medicine',
 ];
 
 async function getBooks(): Promise<Book[]> {
