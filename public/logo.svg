@@ -1,10 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <!-- Open book icon with rays - symbolizing illuminated knowledge -->
-  <path d="M16 6C16 6 12 4 6 4C4 4 2 5 2 7V24C2 25 3 26 4 26C4 26 10 26 16 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M16 6C16 6 20 4 26 4C28 4 30 5 30 7V24C30 25 29 26 28 26C28 26 22 26 16 22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M16 6V22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-  <!-- Light rays -->
-  <path d="M16 2V0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-  <path d="M10 3L8 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-  <path d="M22 3L24 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+>
+  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1" />
+  <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="1" />
+  <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1" />
 </svg>
