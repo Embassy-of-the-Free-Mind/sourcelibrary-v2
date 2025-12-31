@@ -20,6 +20,7 @@ interface SearchResult {
   has_doi: boolean;
   doi?: string;
   summary?: string;
+  categories?: string[];
   page_number?: number;
   snippet?: string;
   snippet_type?: 'translation' | 'ocr' | 'summary';
@@ -75,48 +76,18 @@ const INDEX_TYPES = [
   { value: 'vocabulary', label: 'Vocabulary', icon: Languages },
 ];
 
-const LANGUAGES = [
-  { value: '', label: 'All Languages' },
-  { value: 'Latin', label: 'Latin' },
-  { value: 'German', label: 'German' },
-  { value: 'French', label: 'French' },
-  { value: 'Italian', label: 'Italian' },
-  { value: 'English', label: 'English' },
-  { value: 'Dutch', label: 'Dutch' },
-  { value: 'Spanish', label: 'Spanish' },
-];
+interface LanguageOption {
+  value: string;
+  label: string;
+  book_count?: number;
+}
 
-const CATEGORIES = [
-  { value: '', label: 'All Categories' },
-  { value: 'alchemy', label: 'Alchemy' },
-  { value: 'hermeticism', label: 'Hermeticism' },
-  { value: 'jewish-kabbalah', label: 'Jewish Kabbalah' },
-  { value: 'christian-cabala', label: 'Christian Cabala' },
-  { value: 'neoplatonism', label: 'Neoplatonism' },
-  { value: 'rosicrucianism', label: 'Rosicrucianism' },
-  { value: 'freemasonry', label: 'Freemasonry' },
-  { value: 'natural-philosophy', label: 'Natural Philosophy' },
-  { value: 'astrology', label: 'Astrology' },
-  { value: 'natural-magic', label: 'Natural Magic' },
-  { value: 'ritual-magic', label: 'Ritual Magic' },
-  { value: 'theurgy', label: 'Theurgy' },
-  { value: 'mysticism', label: 'Mysticism' },
-  { value: 'theology', label: 'Theology' },
-  { value: 'medicine', label: 'Medicine & Healing' },
-  { value: 'gnosticism', label: 'Gnosticism' },
-  { value: 'theosophy', label: 'Theosophy' },
-  { value: 'pythagoreanism', label: 'Pythagoreanism' },
-  { value: 'divination', label: 'Divination' },
-  { value: 'paracelsian', label: 'Paracelsian' },
-  { value: 'spiritual-alchemy', label: 'Spiritual Alchemy' },
-  { value: 'christian-mysticism', label: 'Christian Mysticism' },
-  { value: 'prisca-theologia', label: 'Prisca Theologia' },
-  { value: 'florentine-platonism', label: 'Florentine Platonism' },
-  { value: 'renaissance', label: 'Renaissance' },
-  { value: 'reformation', label: 'Reformation Era' },
-  { value: 'enlightenment', label: 'Enlightenment' },
-  { value: '19th-century-revival', label: '19th Century Revival' },
-];
+interface CategoryOption {
+  value: string;
+  label: string;
+  icon?: string;
+  book_count?: number;
+}
 
 export default function SearchPage() {
   const router = useRouter();
@@ -134,6 +105,10 @@ export default function SearchPage() {
   );
   const [indexType, setIndexType] = useState(searchParams.get('type') || '');
 
+  // Dynamic filter options
+  const [languages, setLanguages] = useState<LanguageOption[]>([{ value: '', label: 'All Languages' }]);
+  const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
+
   // Filters
   const [language, setLanguage] = useState(searchParams.get('language') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
@@ -141,6 +116,48 @@ export default function SearchPage() {
   const [dateTo, setDateTo] = useState(searchParams.get('date_to') || '');
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
   const [hasTranslation, setHasTranslation] = useState(searchParams.get('has_translation') === 'true');
+
+  // Fetch languages and categories on mount
+  useEffect(() => {
+    const fetchFilterOptions = async () => {
+      try {
+        // Fetch languages
+        const langResponse = await fetch('/api/languages');
+        const langData = await langResponse.json();
+        if (langData.languages) {
+          setLanguages([
+            { value: '', label: 'All Languages' },
+            ...langData.languages.map((lang: any) => ({
+              value: lang.code,
+              label: `${lang.name} (${lang.book_count})`,
+              book_count: lang.book_count,
+            })),
+          ]);
+        }
+
+        // Fetch categories
+        const catResponse = await fetch('/api/categories');
+        const catData = await catResponse.json();
+        if (catData.categories) {
+          setCategories([
+            { value: '', label: 'All Categories' },
+            ...catData.categories
+              .filter((cat: any) => cat.book_count > 0)
+              .map((cat: any) => ({
+                value: cat.id,
+                label: `${cat.icon ? cat.icon + ' ' : ''}${cat.name} (${cat.book_count})`,
+                icon: cat.icon,
+                book_count: cat.book_count,
+              })),
+          ]);
+        }
+      } catch (error) {
+        console.error('Error fetching filter options:', error);
+      }
+    };
+
+    fetchFilterOptions();
+  }, []);
 
   const performSearch = useCallback(async (searchQuery: string, mode: 'books' | 'index' = searchMode) => {
     if (!searchQuery || searchQuery.length < 2) {
@@ -238,6 +255,40 @@ export default function SearchPage() {
   };
 
   const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation;
+
+  // Group results by category
+  const groupedResults = () => {
+    if (category) {
+      // If filtering by category, don't group (all results are same category)
+      return { [category]: results };
+    }
+
+    const groups: Record<string, SearchResult[]> = {
+      uncategorized: [],
+    };
+
+    results.forEach(result => {
+      if (!result.categories || result.categories.length === 0) {
+        groups.uncategorized.push(result);
+      } else {
+        // Add to the first category (primary category)
+        const primaryCategory = result.categories[0];
+        if (!groups[primaryCategory]) {
+          groups[primaryCategory] = [];
+        }
+        groups[primaryCategory].push(result);
+      }
+    });
+
+    // Remove empty groups
+    Object.keys(groups).forEach(key => {
+      if (groups[key].length === 0) {
+        delete groups[key];
+      }
+    });
+
+    return groups;
+  };
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -366,7 +417,7 @@ export default function SearchPage() {
                     onChange={(e) => setLanguage(e.target.value)}
                     className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
-                    {LANGUAGES.map((lang) => (
+                    {languages.map((lang) => (
                       <option key={lang.value} value={lang.value}>
                         {lang.label}
                       </option>
@@ -374,13 +425,13 @@ export default function SearchPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-stone-600 mb-1">Category</label>
+                  <label className="block text-sm text-stone-600 mb-1">Subject</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
-                    {CATEGORIES.map((cat) => (
+                    {categories.map((cat) => (
                       <option key={cat.value} value={cat.value}>
                         {cat.label}
                       </option>
@@ -469,9 +520,29 @@ export default function SearchPage() {
         )}
 
         {/* Book/Page Results */}
-        {searchMode === 'books' && (
-          <div className="space-y-4">
-            {results.map((result) => (
+        {searchMode === 'books' && results.length > 0 && (
+          <div className="space-y-8">
+            {Object.entries(groupedResults()).map(([categoryId, categoryResults]) => {
+              const categoryInfo = categories.find(c => c.value === categoryId);
+              const categoryName = categoryInfo?.label.replace(/\s*\(\d+\)$/, '') ||
+                                   (categoryId === 'uncategorized' ? 'Other' :
+                                   categoryId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '));
+              const categoryIcon = categoryInfo?.icon;
+
+              return (
+                <div key={categoryId} className="space-y-4">
+                  {!category && ( // Only show category headers when not filtering by a specific category
+                    <div className="flex items-center gap-2 pb-2 border-b border-stone-200">
+                      {categoryIcon && <span className="text-xl">{categoryIcon}</span>}
+                      <h2 className="text-lg font-semibold text-stone-800">
+                        {categoryName}
+                      </h2>
+                      <span className="text-sm text-stone-500">
+                        ({categoryResults.length})
+                      </span>
+                    </div>
+                  )}
+                  {categoryResults.map((result) => (
               <Link
                 key={result.id}
                 href={result.type === 'page'
@@ -532,7 +603,10 @@ export default function SearchPage() {
                   </div>
                 </div>
               </Link>
-            ))}
+                  ))}
+                </div>
+              );
+            })}
           </div>
         )}
 

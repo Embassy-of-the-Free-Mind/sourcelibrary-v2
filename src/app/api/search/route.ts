@@ -16,6 +16,7 @@ interface SearchResult {
   has_doi: boolean;
   doi?: string;
   summary?: string;
+  categories?: string[];
   // For page results
   page_number?: number;
   snippet?: string;
@@ -139,6 +140,7 @@ export async function GET(request: NextRequest) {
           translated_count: typedBook.pages_translated,
           has_doi: !!typedBook.doi,
           doi: typedBook.doi,
+          categories: typedBook.categories,
           summary: summaryText ? extractSnippet(summaryText, query) : undefined,
           snippet_type: summaryText ? 'summary' : undefined,
         });
@@ -224,6 +226,7 @@ export async function GET(request: NextRequest) {
           translated_count: book.pages_translated,
           has_doi: !!book.doi,
           doi: book.doi,
+          categories: book.categories,
           page_number: page.page_number as number,
           snippet: extractSnippet(translationText, query),
           snippet_type: 'translation',
