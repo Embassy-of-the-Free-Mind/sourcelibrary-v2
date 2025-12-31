@@ -410,7 +410,7 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
                 <h3 className="font-medium text-gray-900 truncate">{book.display_title || book.title}</h3>
                 {book.author && <p className="text-sm text-gray-500 truncate">{book.author}</p>}
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
-                  {book.language && <span>{book.language}</span>}
+                  {book.language && <span>{book.language.startsWith('Multiple') ? 'Multiple' : book.language}</span>}
                   {book.pages_count && <span>{book.pages_count} pages</span>}
                   {book.pages_count && book.pages_count > 0 && (() => {
                     const ocrPercent = Math.round(((book.pages_ocr || 0) / book.pages_count) * 100);

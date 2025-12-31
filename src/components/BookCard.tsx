@@ -84,7 +84,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
           </h3>
           <p className="text-sm text-stone-600 mt-1">{book.author}</p>
           <div className="flex items-center gap-2 mt-2 text-xs text-stone-500">
-            <span className="px-2 py-0.5 bg-stone-100 rounded">{book.language}</span>
+            <span className="px-2 py-0.5 bg-stone-100 rounded">
+              {book.language?.startsWith('Multiple') ? 'Multiple' : book.language}
+            </span>
             {book.published && <span>{book.published}</span>}
             {book.pages_count !== undefined && (
               <span>{book.pages_count} pages</span>
