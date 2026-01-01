@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, List, Info, X } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, List, Info, X, Image as ImageIcon } from 'lucide-react';
+import Image from 'next/image';
 import { Book, Page } from '@/lib/types';
 import { QuoteShare } from '@/components/ShareButton';
 import SectionsNav from '@/components/SectionsNav';
@@ -28,6 +29,17 @@ interface BookSummary {
   generated_at?: Date;
 }
 
+interface GalleryItem {
+  pageId: string;
+  bookId: string;
+  pageNumber: number;
+  detectionIndex: number;
+  imageUrl: string;
+  description: string;
+  type?: string;
+  bbox?: { x: number; y: number; width: number; height: number };
+}
+
 export default function GuidePage({ params }: GuidePageProps) {
   const [bookId, setBookId] = useState<string | null>(null);
   const [book, setBook] = useState<Book | null>(null);
@@ -39,6 +51,8 @@ export default function GuidePage({ params }: GuidePageProps) {
   const [showBookInfo, setShowBookInfo] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [showSections, setShowSections] = useState(true);
+  const [illustrations, setIllustrations] = useState<GalleryItem[]>([]);
+  const [showIllustrations, setShowIllustrations] = useState(true);
 
   // Resolve params
   useEffect(() => {
@@ -76,6 +90,17 @@ export default function GuidePage({ params }: GuidePageProps) {
         // Load section summaries from index
         if (bookData.index?.sectionSummaries && Array.isArray(bookData.index.sectionSummaries)) {
           setSections(bookData.index.sectionSummaries);
+        }
+
+        // Fetch illustrations for this book
+        try {
+          const galleryRes = await fetch(`/api/gallery?bookId=${bookId}&verified=true&limit=50`);
+          if (galleryRes.ok) {
+            const galleryData = await galleryRes.json();
+            setIllustrations(galleryData.items || []);
+          }
+        } catch (e) {
+          console.error('Failed to fetch illustrations:', e);
         }
 
         setError(null);
@@ -359,6 +384,78 @@ export default function GuidePage({ params }: GuidePageProps) {
                 sections={sections}
                 pages={pages.map(p => ({ id: p.id, page_number: p.page_number }))}
               />
+            )}
+          </section>
+        )}
+
+        {/* Illustrations Section */}
+        {illustrations.length > 0 && (
+          <section className="mb-8">
+            <button
+              onClick={() => setShowIllustrations(!showIllustrations)}
+              className="w-full flex items-center justify-between p-5 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors mb-4"
+            >
+              <span
+                className="text-xl text-stone-900 flex items-center gap-3"
+                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              >
+                <ImageIcon className="w-5 h-5 text-amber-600" />
+                Illustrations
+                <span className="text-sm text-stone-500 font-normal" style={{ fontFamily: 'inherit' }}>
+                  ({illustrations.length} images)
+                </span>
+              </span>
+              {showIllustrations ? (
+                <ChevronUp className="w-5 h-5 text-stone-500" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-stone-500" />
+              )}
+            </button>
+            {showIllustrations && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {illustrations.map((item) => {
+                  const imageId = `${item.pageId}:${item.detectionIndex}`;
+                  // Build cropped URL if bbox exists
+                  const cropUrl = item.bbox
+                    ? `/api/crop?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
+                    : item.imageUrl;
+
+                  return (
+                    <Link
+                      key={imageId}
+                      href={`/gallery/image/${imageId}`}
+                      className="group relative aspect-square bg-stone-100 rounded-lg overflow-hidden border border-stone-200 hover:border-amber-400 transition-colors"
+                    >
+                      <Image
+                        src={cropUrl}
+                        alt={item.description || 'Illustration'}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      {/* Overlay with description */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute bottom-0 left-0 right-0 p-2">
+                          <p className="text-white text-xs line-clamp-2">
+                            {item.description || `Page ${item.pageNumber}`}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+            {illustrations.length > 0 && (
+              <div className="mt-4 text-center">
+                <Link
+                  href={`/gallery?bookId=${bookId}`}
+                  className="inline-flex items-center gap-2 text-sm text-amber-600 hover:text-amber-700"
+                >
+                  View all in Gallery
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             )}
           </section>
         )}
