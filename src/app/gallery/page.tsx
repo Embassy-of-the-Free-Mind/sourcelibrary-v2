@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Image as ImageIcon, BookOpen, ExternalLink, Filter, ChevronLeft, ChevronRight, CheckCircle, AlertCircle } from 'lucide-react';
+import { Image as ImageIcon, BookOpen, ExternalLink, Filter, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
 
 interface BBox {
   x: number;
@@ -25,6 +26,7 @@ interface GalleryItem {
   bbox?: BBox;
   confidence?: number;
   model?: 'gemini' | 'mistral' | 'grounding-dino';
+  detectionIndex?: number;
 }
 
 interface GalleryResponse {
@@ -49,15 +51,24 @@ function getCroppedImageUrl(imageUrl: string, bbox: BBox): string {
 }
 
 export default function GalleryPage() {
+  const searchParams = useSearchParams();
   const [data, setData] = useState<GalleryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedBook, setSelectedBook] = useState<string>('');
+  const [selectedBook, setSelectedBook] = useState<string>(searchParams.get('bookId') || '');
   const [verifiedOnly, setVerifiedOnly] = useState(true);
   const [selectedModel, setSelectedModel] = useState<'gemini' | 'mistral' | 'grounding-dino' | ''>('');
   const [page, setPage] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const limit = 24;
+
+  // Sync with URL params
+  useEffect(() => {
+    const bookId = searchParams.get('bookId');
+    if (bookId && bookId !== selectedBook) {
+      setSelectedBook(bookId);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetchGallery();
@@ -82,6 +93,33 @@ export default function GalleryPage() {
       setError(e instanceof Error ? e.message : 'Failed to load gallery');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async (item: GalleryItem, displayIndex: number) => {
+    if (!confirm('Delete this image from the gallery?')) return;
+
+    try {
+      const params = new URLSearchParams({
+        description: item.description
+      });
+      const res = await fetch(`/api/detections/${item.pageId}?${params}`, {
+        method: 'DELETE'
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Failed to delete');
+      }
+
+      // Remove from local state
+      if (data) {
+        const newItems = [...data.items];
+        newItems.splice(displayIndex, 1);
+        setData({ ...data, items: newItems, total: data.total - 1 });
+      }
+    } catch (e) {
+      alert(e instanceof Error ? e.message : 'Failed to delete');
     }
   };
 
@@ -269,7 +307,11 @@ export default function GalleryPage() {
         {!loading && data && data.items.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {data.items.map((item, idx) => (
-              <GalleryCard key={`${item.bookId}-${item.pageNumber}-${idx}`} item={item} />
+              <GalleryCard
+                key={`${item.bookId}-${item.pageNumber}-${idx}`}
+                item={item}
+                onDelete={() => handleDelete(item, idx)}
+              />
             ))}
           </div>
         )}
@@ -317,8 +359,9 @@ export default function GalleryPage() {
   );
 }
 
-function GalleryCard({ item }: { item: GalleryItem }) {
+function GalleryCard({ item, onDelete }: { item: GalleryItem; onDelete: () => void }) {
   const [imageError, setImageError] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   // Use cropped image if bbox available, otherwise full page
   const displayUrl = item.bbox
@@ -346,14 +389,28 @@ function GalleryCard({ item }: { item: GalleryItem }) {
             </div>
           )}
 
+          {/* Delete button */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onDelete();
+            }}
+            disabled={deleting}
+            className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-red-600/80 hover:bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity"
+            title="Delete from gallery"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+
           {/* Overlay on hover */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
             <ExternalLink className="w-8 h-8 text-white drop-shadow-lg" />
           </div>
 
           {/* Type badge */}
           {item.type && (
-            <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full text-xs bg-black/60 text-white capitalize">
+            <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-full text-xs bg-black/60 text-white capitalize">
               {item.type}
             </span>
           )}

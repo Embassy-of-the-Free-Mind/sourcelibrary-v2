@@ -36,9 +36,12 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
 
-    // Build query - for verified, only get vision-extracted images with bboxes
+    // Build query - for verified, get vision-extracted OR manual images with bboxes
     const elemMatchConditions: Record<string, unknown> = {
-      detection_source: 'vision_model',
+      $or: [
+        { detection_source: 'vision_model' },
+        { detection_source: 'manual' }
+      ],
       bbox: { $exists: true }
     };
     if (modelFilter) {
@@ -81,7 +84,10 @@ export async function GET(request: NextRequest) {
     // For verified images, we need to unwind detected_images to get individual items
     if (verifiedOnly) {
       const unwindMatch: Record<string, unknown> = {
-        'detected_images.detection_source': 'vision_model',
+        $or: [
+          { 'detected_images.detection_source': 'vision_model' },
+          { 'detected_images.detection_source': 'manual' }
+        ],
         'detected_images.bbox': { $exists: true }
       };
       if (modelFilter) {
