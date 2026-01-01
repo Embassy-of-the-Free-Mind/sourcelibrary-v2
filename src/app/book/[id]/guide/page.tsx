@@ -1,16 +1,11 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, Highlighter, StickyNote, MessageSquare, List, Info, X } from 'lucide-react';
+import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, List, Info, X } from 'lucide-react';
 import { Book, Page } from '@/lib/types';
-import HighlightSelection from '@/components/HighlightSelection';
-import HighlightsPanel from '@/components/HighlightsPanel';
-import AnnotationPanel from '@/components/AnnotationPanel';
 import { QuoteShare } from '@/components/ShareButton';
-import NotesRenderer from '@/components/NotesRenderer';
 import SectionsNav from '@/components/SectionsNav';
-import PageMetadataPanel from '@/components/PageMetadataPanel';
 
 interface SectionSummary {
   title: string;
@@ -40,60 +35,14 @@ export default function GuidePage({ params }: GuidePageProps) {
   const [loading, setLoading] = useState(true);
   const [generatingSummary, setGeneratingSummary] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showFullText, setShowFullText] = useState(false);
-  const [showHighlights, setShowHighlights] = useState(false);
-  const [highlightCount, setHighlightCount] = useState(0);
-  const [showAnnotations, setShowAnnotations] = useState(false);
-  const [annotationCount, setAnnotationCount] = useState(0);
-  const [currentPageId, setCurrentPageId] = useState<string | null>(null);
-  const [currentPageNumber, setCurrentPageNumber] = useState(1);
-  const [showNotes, setShowNotes] = useState(false);
   const [showBookInfo, setShowBookInfo] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [showSections, setShowSections] = useState(true);
-  const [metadataPage, setMetadataPage] = useState<Page | null>(null);
-  const textRef = useRef<HTMLDivElement>(null);
 
   // Resolve params
   useEffect(() => {
     params.then(p => setBookId(p.id));
   }, [params]);
-
-  // Fetch highlight count
-  const fetchHighlightCount = async () => {
-    if (!bookId) return;
-    try {
-      const res = await fetch(`/api/highlights?book_id=${bookId}`);
-      if (res.ok) {
-        const data = await res.json();
-        const highlights = data.highlights || data;
-        setHighlightCount(highlights.length);
-      }
-    } catch (e) {
-      console.error('Failed to fetch highlights:', e);
-    }
-  };
-
-  // Fetch annotation count for the book
-  const fetchAnnotationCount = async () => {
-    if (!bookId) return;
-    try {
-      const res = await fetch(`/api/annotations?book_id=${bookId}&limit=1`);
-      if (res.ok) {
-        const data = await res.json();
-        setAnnotationCount(data.total || 0);
-      }
-    } catch (e) {
-      console.error('Failed to fetch annotations:', e);
-    }
-  };
-
-  useEffect(() => {
-    if (bookId) {
-      fetchHighlightCount();
-      fetchAnnotationCount();
-    }
-  }, [bookId]);
 
   // Fetch book data
   useEffect(() => {
@@ -218,63 +167,14 @@ export default function GuidePage({ params }: GuidePageProps) {
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Back to Book</span>
             </Link>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setShowBookInfo(true)}
-                className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 transition-colors"
-                title="Book metadata"
-              >
-                <Info className="w-4 h-4" />
-                <span className="hidden sm:inline">Info</span>
-              </button>
-              <button
-                onClick={() => setShowNotes(!showNotes)}
-                className={`inline-flex items-center gap-1.5 text-sm transition-colors ${
-                  showNotes
-                    ? 'text-teal-600 hover:text-teal-700'
-                    : 'text-stone-400 hover:text-stone-600'
-                }`}
-                title={showNotes ? 'Hide margin notes & annotations' : 'Show margin notes & annotations'}
-              >
-                <StickyNote className="w-4 h-4" />
-                <span className="hidden sm:inline">{showNotes ? 'Notes On' : 'Notes'}</span>
-              </button>
-              <button
-                onClick={() => setShowHighlights(true)}
-                className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-600 transition-colors"
-              >
-                <Highlighter className="w-4 h-4" />
-                <span className="hidden sm:inline">Highlights</span>
-                {highlightCount > 0 && (
-                  <span className="bg-amber-100 text-amber-700 text-xs px-1.5 py-0.5 rounded-full">
-                    {highlightCount}
-                  </span>
-                )}
-              </button>
-              <button
-                onClick={() => {
-                  // Use first translated page as default
-                  const firstPage = translatedPages[0];
-                  if (firstPage) {
-                    setCurrentPageId(firstPage.id);
-                    setCurrentPageNumber(firstPage.page_number);
-                  }
-                  setShowAnnotations(true);
-                }}
-                className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-blue-600 transition-colors"
-              >
-                <MessageSquare className="w-4 h-4" />
-                <span className="hidden sm:inline">Annotations</span>
-                {annotationCount > 0 && (
-                  <span className="bg-blue-100 text-blue-700 text-xs px-1.5 py-0.5 rounded-full">
-                    {annotationCount}
-                  </span>
-                )}
-              </button>
-              <span className="text-sm text-stone-500">
-                {translatedPages.length}/{pages.length} pages
-              </span>
-            </div>
+            <button
+              onClick={() => setShowBookInfo(true)}
+              className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 transition-colors"
+              title="Book metadata"
+            >
+              <Info className="w-4 h-4" />
+              <span className="hidden sm:inline">Info</span>
+            </button>
           </div>
         </div>
       </header>
@@ -432,134 +332,7 @@ export default function GuidePage({ params }: GuidePageProps) {
           </section>
         )}
 
-        {/* Full Text Section */}
-        {translatedPages.length > 0 && (
-          <section>
-            <button
-              onClick={() => setShowFullText(!showFullText)}
-              className="w-full flex items-center justify-between p-4 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors"
-            >
-              <span className="font-semibold text-stone-900">
-                Full Translation ({translatedPages.length} pages)
-              </span>
-              {showFullText ? (
-                <ChevronUp className="w-5 h-5 text-stone-500" />
-              ) : (
-                <ChevronDown className="w-5 h-5 text-stone-500" />
-              )}
-            </button>
-
-            {showFullText && (
-              <div
-                ref={textRef}
-                className="mt-4 bg-white rounded-xl border border-stone-200 p-6 sm:p-8"
-              >
-                <p className="text-xs text-stone-400 mb-4 text-center">
-                  Select text to save highlights
-                </p>
-                <div className="prose prose-stone max-w-none font-serif text-lg leading-relaxed">
-                  {translatedPages.map((page) => (
-                    <HighlightSelection
-                      key={page.id}
-                      bookId={bookId!}
-                      pageId={page.id}
-                      pageNumber={page.page_number}
-                      bookTitle={book?.display_title || book?.title || ''}
-                      bookAuthor={book?.author}
-                      bookYear={book?.published}
-                      doi={book?.doi}
-                      onHighlightSaved={fetchHighlightCount}
-                      onAnnotationSaved={fetchAnnotationCount}
-                    >
-                      <div className="mb-8">
-                        <div className="flex items-center gap-4 my-8 text-stone-400">
-                          <div className="flex-1 h-px bg-stone-200" />
-                          <div className="flex items-center gap-2">
-                            <Link
-                              href={`/book/${bookId}/page/${page.id}`}
-                              className="text-xs hover:text-amber-600 transition-colors"
-                            >
-                              Page {page.page_number}
-                            </Link>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                e.preventDefault();
-                                setMetadataPage(page);
-                              }}
-                              className="p-1 hover:bg-stone-100 rounded transition-colors text-stone-400 hover:text-stone-600"
-                              title="View page metadata"
-                            >
-                              <Info className="w-4 h-4" />
-                            </button>
-                          </div>
-                          <div className="flex-1 h-px bg-stone-200" />
-                        </div>
-
-                        <NotesRenderer
-                          key={`translation-${page.id}-${showNotes}`}
-                          text={page.translation?.data || ''}
-                          showNotes={showNotes}
-                          showMetadata={false}
-                        />
-                      </div>
-                    </HighlightSelection>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Quick Navigation */}
-        {pages.length > 0 && (
-          <section className="mt-8 pt-8 border-t border-stone-200">
-            <h3 className="text-sm font-semibold text-stone-600 mb-4">Jump to Page</h3>
-            <div className="flex flex-wrap gap-2">
-              {pages.slice(0, 20).map(page => (
-                <Link
-                  key={page.id}
-                  href={`/book/${bookId}/page/${page.id}`}
-                  className={`w-10 h-10 flex items-center justify-center rounded-lg text-sm transition-colors ${
-                    page.translation?.data
-                      ? 'bg-amber-100 text-amber-800 hover:bg-amber-200'
-                      : 'bg-stone-100 text-stone-500 hover:bg-stone-200'
-                  }`}
-                >
-                  {page.page_number}
-                </Link>
-              ))}
-              {pages.length > 20 && (
-                <span className="w-10 h-10 flex items-center justify-center text-stone-400 text-sm">
-                  +{pages.length - 20}
-                </span>
-              )}
-            </div>
-          </section>
-        )}
       </main>
-
-      {/* Highlights Panel */}
-      <HighlightsPanel
-        bookId={bookId || undefined}
-        isOpen={showHighlights}
-        onClose={() => setShowHighlights(false)}
-        onHighlightDeleted={fetchHighlightCount}
-      />
-
-      {/* Annotations Panel */}
-      {currentPageId && (
-        <AnnotationPanel
-          bookId={bookId!}
-          pageId={currentPageId}
-          pageNumber={currentPageNumber}
-          bookTitle={book?.display_title || book?.title}
-          bookAuthor={book?.author}
-          isOpen={showAnnotations}
-          onClose={() => setShowAnnotations(false)}
-          onAnnotationChange={fetchAnnotationCount}
-        />
-      )}
 
       {/* Book Info Modal */}
       {showBookInfo && (
@@ -744,13 +517,6 @@ export default function GuidePage({ params }: GuidePageProps) {
         </div>
       )}
 
-      {/* Page Metadata Panel */}
-      {metadataPage && (
-        <PageMetadataPanel
-          page={metadataPage}
-          onClose={() => setMetadataPage(null)}
-        />
-      )}
     </div>
   );
 }
