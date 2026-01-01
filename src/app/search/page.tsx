@@ -622,9 +622,9 @@ export default function SearchPage() {
                 <Link
                   key={`${result.book_id}-${result.type}-${idx}`}
                   href={isQuote && result.quote_page
-                    ? `/book/${result.book_id}/read?page=${result.quote_page}`
+                    ? `/book/${result.book_id}/guide?page=${result.quote_page}`
                     : result.pages && result.pages.length > 0
-                    ? `/book/${result.book_id}/read?page=${result.pages[0]}`
+                    ? `/book/${result.book_id}/guide?page=${result.pages[0]}`
                     : `/book/${result.book_id}`
                   }
                   className="block bg-white rounded-xl border border-stone-200 p-5 hover:border-amber-300 hover:shadow-md transition-all"

@@ -501,7 +501,7 @@ function PageReviewCard({
       <div className="px-2 py-1.5 bg-stone-50 border-b border-stone-200">
         <div className="flex items-center justify-between text-xs">
           <Link
-            href={`/book/${page.bookId}/read?page=${page.pageNumber}`}
+            href={`/book/${page.bookId}/guide?page=${page.pageNumber}`}
             className="font-medium text-stone-700 hover:text-amber-700 truncate max-w-[70%]"
             title={page.bookTitle}
           >

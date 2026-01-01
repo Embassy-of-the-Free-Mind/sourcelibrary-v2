@@ -162,7 +162,7 @@ export default function HighlightsPage() {
                       <div className="flex items-center justify-between text-xs">
                         <div className="flex items-center gap-3 text-stone-500">
                           <Link
-                            href={`/book/${highlight.book_id}/read#page-${highlight.page_number}`}
+                            href={`/book/${highlight.book_id}/guide#page-${highlight.page_number}`}
                             className="text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
                           >
                             p. {highlight.page_number}

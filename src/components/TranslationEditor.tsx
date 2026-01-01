@@ -37,6 +37,7 @@ import HighlightsPanel from './HighlightsPanel';
 import AnnotationPanel from './AnnotationPanel';
 import HighlightSelection from './HighlightSelection';
 import { BookShare } from './ShareButton';
+import { GoogleTranslate } from './GoogleTranslate';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
@@ -779,6 +780,11 @@ export default function TranslationEditor({
               >
                 <StickyNote className="w-4 h-4" />
               </button>
+            </div>
+
+            {/* Google Translate */}
+            <div className="hidden sm:block">
+              <GoogleTranslate />
             </div>
 
             <button

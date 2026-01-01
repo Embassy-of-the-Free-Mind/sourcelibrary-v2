@@ -11,7 +11,6 @@ import { QuoteShare } from '@/components/ShareButton';
 import NotesRenderer from '@/components/NotesRenderer';
 import SectionsNav from '@/components/SectionsNav';
 import PageMetadataPanel from '@/components/PageMetadataPanel';
-import { GoogleTranslate } from '@/components/GoogleTranslate';
 
 interface SectionSummary {
   title: string;
@@ -22,7 +21,7 @@ interface SectionSummary {
   concepts?: string[];
 }
 
-interface ReadPageProps {
+interface GuidePageProps {
   params: Promise<{ id: string }>;
 }
 
@@ -33,7 +32,7 @@ interface BookSummary {
   generated_at?: Date;
 }
 
-export default function ReadPage({ params }: ReadPageProps) {
+export default function GuidePage({ params }: GuidePageProps) {
   const [bookId, setBookId] = useState<string | null>(null);
   const [book, setBook] = useState<Book | null>(null);
   const [pages, setPages] = useState<Page[]>([]);
@@ -272,9 +271,6 @@ export default function ReadPage({ params }: ReadPageProps) {
                   </span>
                 )}
               </button>
-              <div className="hidden sm:block border-l border-stone-200 pl-4">
-                <GoogleTranslate />
-              </div>
               <span className="text-sm text-stone-500">
                 {translatedPages.length}/{pages.length} pages
               </span>
