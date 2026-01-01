@@ -21,6 +21,7 @@ User-invoked for interactive audit sessions.
 /qa-audit originals            # Focus on verifying original vs modern texts
 /qa-audit metadata-only        # Skip translation quality, check metadata only
 /qa-audit find-moderns         # Scan for modern translations to flag
+/qa-audit google-posters       # Find and fix Google Books poster images
 ```
 
 ### 2. Task Subagent
@@ -373,6 +374,76 @@ Audit in this order:
 3. Recently imported books (no audit yet)
 4. High-visibility books (Agrippa, Fludd, Boehme)
 5. Books with known metadata gaps
+6. **Google Books posters** - Replace with book frontispiece
+
+---
+
+## Google Poster Audit (FIX)
+
+**Mission**: Find books with Google Books poster images and replace with the actual book frontispiece.
+
+### Detection
+
+Google Books posters have thumbnail URLs containing `books.google`:
+- `https://books.google.com/books/content?id=...`
+- Any URL with `books.google` in it
+
+### API Endpoint
+
+```bash
+# List all books with Google posters
+curl -s "https://sourcelibrary.org/api/admin/fix-google-posters"
+
+# Fix a specific book
+curl -X POST "https://sourcelibrary.org/api/admin/fix-google-posters" \
+  -H "Content-Type: application/json" \
+  -d '{"book_id": "BOOK_ID"}'
+
+# Fix all books with Google posters
+curl -X POST "https://sourcelibrary.org/api/admin/fix-google-posters" \
+  -H "Content-Type: application/json" \
+  -d '{"fix_all": true}'
+```
+
+### Smart Frontispiece Detection
+
+The API uses OCR text to find the actual title page:
+1. Scans first 5 pages for publishing indicators (excudebat, typis, apud, anno, etc.)
+2. Matches book title and author against OCR text
+3. Selects the page that looks most like a title page
+4. Falls back to page 1 if no match found
+5. Uses `cropped_photo` → `archived_photo` → `photo` (in priority order)
+
+### Workflow for Batch Fix
+
+```
+/qa-audit google-posters     # Find and fix all Google poster books
+```
+
+**Steps:**
+1. Call `GET /api/admin/fix-google-posters` to list affected books
+2. Review the list
+3. Call `POST /api/admin/fix-google-posters` with `{"fix_all": true}` to fix all
+4. Report results (shows which page was selected for each book)
+
+### Flag for Report
+
+| Flag | Meaning |
+|------|---------|
+| `FLAG:GOOGLE-POSTER` | Book has Google Books poster (needs fix) |
+| `FIXED:POSTER` | Poster replaced with frontispiece |
+
+### Report Format
+
+```markdown
+### Google Poster Audit
+
+**Books with Google Posters:** N
+
+| Book | Old Poster | New Frontispiece | Status |
+|------|-----------|------------------|--------|
+| [Title] | Google Books | Page 1 | Fixed |
+```
 
 ---
 
