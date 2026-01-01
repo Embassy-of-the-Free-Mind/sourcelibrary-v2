@@ -1,41 +1,68 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { MongoClient } from 'mongodb';
 
-const VERCEL_API_TOKEN = process.env.VERCEL_API_TOKEN;
-const VERCEL_PROJECT_ID = process.env.VERCEL_PROJECT_ID || 'sourcelibrary-v2';
-const VERCEL_TEAM_ID = process.env.VERCEL_TEAM_ID;
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB = process.env.MONGODB_DB;
 
 export async function GET(request: NextRequest) {
-  if (!VERCEL_API_TOKEN) {
+  if (!MONGODB_URI || !MONGODB_DB) {
     return NextResponse.json(
-      { error: 'Analytics API token not configured' },
+      { error: 'Database not configured' },
       { status: 500 }
     );
   }
 
   try {
-    const headers = {
-      'Authorization': `Bearer ${VERCEL_API_TOKEN}`,
-      'Content-Type': 'application/json',
-    };
+    const client = new MongoClient(MONGODB_URI);
+    await client.connect();
+    const db = client.db(MONGODB_DB);
 
-    // Build URL with optional team ID
-    let url = `https://api.vercel.com/v1/analytics?projectId=${VERCEL_PROJECT_ID}`;
-    if (VERCEL_TEAM_ID) {
-      url += `&teamId=${VERCEL_TEAM_ID}`;
-    }
+    const collection = db.collection('analytics_pageviews');
 
-    const res = await fetch(url, { headers });
+    // Get totals
+    const totalPageviews = await collection.countDocuments();
+    const totalVisitors = await collection.distinct('ip');
 
-    if (!res.ok) {
-      console.error('Vercel API error:', res.status, await res.text());
-      return NextResponse.json(
-        { error: 'Failed to fetch analytics from Vercel' },
-        { status: res.status }
-      );
-    }
+    // Get top pages (last 30 days)
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const topPages = await collection
+      .aggregate([
+        { $match: { timestamp: { $gte: thirtyDaysAgo } } },
+        { $group: { _id: '$path', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ])
+      .toArray();
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    // Get top referrers
+    const topReferrers = await collection
+      .aggregate([
+        { $match: { timestamp: { $gte: thirtyDaysAgo } } },
+        { $group: { _id: '$referrer', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ])
+      .toArray();
+
+    // Get top countries
+    const topCountries = await collection
+      .aggregate([
+        { $match: { timestamp: { $gte: thirtyDaysAgo } } },
+        { $group: { _id: '$country', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ])
+      .toArray();
+
+    await client.close();
+
+    return NextResponse.json({
+      totalPageviews,
+      totalVisitors: totalVisitors.length,
+      topPages: topPages.map(p => ({ path: p._id, count: p.count })),
+      topReferrers: topReferrers.map(r => ({ referrer: r._id, count: r.count })),
+      topCountries: topCountries.map(c => ({ country: c._id, count: c.count })),
+    });
   } catch (error) {
     console.error('Analytics API error:', error);
     return NextResponse.json(

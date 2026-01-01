@@ -3,6 +3,7 @@ import "./globals.css";
 import GlobalFooter from "@/components/GlobalFooter";
 import Providers from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/react";
+import PageTracker from "@/components/PageTracker";
 
 export const metadata: Metadata = {
   title: "Source Library",
@@ -62,6 +63,7 @@ export default function RootLayout({
           <GlobalFooter />
         </Providers>
         <Analytics />
+        <PageTracker />
       </body>
     </html>
   );
