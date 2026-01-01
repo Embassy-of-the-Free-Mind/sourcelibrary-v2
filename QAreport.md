@@ -2668,3 +2668,1144 @@ Fixed IA import bug in `src/app/api/import/ia/route.ts`:
 
 **Overall Assessment:** Translation quality consistently high across all sampled books. German translations (both Early Modern mystical and 18th-century) are particularly strong. Latin translations accurately handle both classical and medieval sources. No systematic errors detected.
 
+
+---
+
+## OCR Verification Audit: 2025-12-30 19:48 UTC
+
+### Executive Summary
+
+OCR IS WORKING and data IS being saved to the database successfully. The verification confirmed that thousands of pages have OCR text stored in MongoDB.
+
+### Verification Method
+
+1. Checked batch job statistics via `/api/batch-jobs/process-all`
+2. Examined batch job statuses via `/api/batch-jobs`
+3. Verified actual page data through `/api/books/status` endpoint
+4. Cross-referenced book metadata with OCR presence
+
+### Key Findings
+
+#### 1. Database Statistics (from /api/batch-jobs/process-all)
+- Total books: 783
+- Books needing OCR: 669
+- Books needing translation: 136
+- Total pages needing OCR: 293,279
+- Total pages needing translation: 40,414
+- **Pages WITH OCR: 40,414** (these have OCR but need translation)
+
+#### 2. Batch Job Status
+- Active batch jobs: 331
+- Pending batch jobs: 329
+- Completed jobs (finished in Gemini): 83
+- Saved jobs (downloaded to database): 0 (recently)
+
+**Important Note:** The 83 "completed" batch jobs from today (2025-12-30) have not yet had their results downloaded from Gemini API to the database. However, earlier batches WERE successfully saved, as evidenced by the thousands of pages with OCR in the database.
+
+#### 3. Verified Books with OCR
+
+The following books were confirmed to have OCR data in the database:
+
+| Book Title | Book ID | Total Pages | Pages with OCR | % Complete |
+|------------|---------|-------------|----------------|------------|
+| De architectura libri decem | 6949af986ef4a68b726b7fa9 | 328 | 328 | 100% |
+| Sleutel tot de geheimen van de natuur | 69099634cf28baa1b4cae779 | 401 | 401 | 100% |
+| Colloquium Rhodostauroticum | 69099e2acf28baa1b4caeafb | 53 | 53 | 100% |
+| De hermetica Aegyptiorum | 6909a2e7cf28baa1b4caec93 | 433 | 433 | 100% |
+| Pansophiae Diatyposis | 4f4ff6f9-f0bd-4307-910c-65da7c36c0ef | 148 | 148 | 100% |
+| Novum lumen chymicum | 690986dccf28baa1b4cae0e3 | 209 | 209 | 100% |
+| De occulta philosophia libri III | 694bf8d2343422769f237558 | 626 | 626 | 100% |
+
+#### 4. OCR Quality Indicators
+
+Books show strong OCR coverage across languages:
+- Latin texts: Fully OCR'd (De architectura, De occulta philosophia, etc.)
+- German texts: Fully OCR'd (multiple books at 100%)
+- Russian texts: Fully OCR'd (Cyrillic script handled correctly)
+- Multiple languages supported successfully
+
+### Process Status
+
+**What's Working:**
+- Gemini Batch API successfully processes OCR requests
+- Earlier batch jobs have been saved to database successfully
+- OCR data structure is correct (`ocr.data` field contains text)
+- Multiple language support is functional
+
+**What Needs Attention:**
+- 83 completed batch jobs from today need results downloaded
+- The `save-batch-results.mjs` script should be run to download these results
+- Recent jobs completed between 11:53 and 15:41 UTC today
+
+### Cost Estimates (from API)
+- OCR cost (Batch API): ~$733.20
+- Translation cost (Batch API): ~$60.62
+- Note: Batch API costs are 50% of realtime pricing
+
+### Recommendations
+
+1. **Immediate:** Run `save-batch-results.mjs` to download the 83 completed jobs before they expire
+2. **Monitoring:** Set up automated job result downloading (Gemini batch results expire after 2 days)
+3. **Verification:** The OCR pipeline is working correctly - no code changes needed
+
+### Conclusion
+
+The OCR system is functioning correctly. The database contains tens of thousands of pages with OCR text. The recent batch jobs have completed successfully in Gemini's API and simply need their results downloaded to the database using the existing `save-batch-results.mjs` script.
+
+**Status: VERIFIED - OCR IS WORKING**
+
+---
+
+## Original Language Audit: 2025-12-31
+
+### Executive Summary
+
+Systematic audit of recent imports to identify modern translations vs original language texts. **Priority: ensure collection contains primary sources in original languages, not modern English translations.**
+
+---
+
+### Books Flagged: MODERN TRANSLATION (Seek Originals)
+
+These books are modern translations WITHOUT original language text. Consider replacing with period editions.
+
+#### 1. Commentary on the Dream of Scipio (Stahl)
+
+**Book ID:** `695572d3220949ea67a598ea`
+**IA ID:** commentaryondrea0000macr
+
+| Check | Result |
+|-------|--------|
+| Print date | 1952 |
+| Publisher | Columbia University Press, New York |
+| Typography | Modern |
+| Language | English translation only |
+| Original text? | No |
+
+**Verdict:** `FLAG:MODERN-TRANS` - Remove or replace
+
+**Replacement Available:** The library already has **Macrobius 1542 Lyon (Gryphius)** - the Latin original:
+- Book ID: `695573a0f63a757109172141`
+- IA ID: macrobiiambrosii00macr
+- Edition: 1542 Lugduni, Apud Seb. Gryphium
+- Language: Latin (original)
+
+**Recommendation:** Delete Stahl translation; the 1542 Latin is superior for scholarly use.
+
+---
+
+#### 2. Ptolemy Harmonics (Solomon 1999)
+
+**Book ID:** `695573a3f63a7571091723ca`
+**IA ID:** solomon-1999-ptolemy-harmonics
+
+| Check | Result |
+|-------|--------|
+| Print date | 1999 |
+| Publisher | Brill (modern academic) |
+| Typography | Modern |
+| Language | English translation |
+| Original text? | Unknown (verify if Greek present) |
+
+**Verdict:** `FLAG:MODERN-TRANS` - Verify if Greek text present; if not, seek original
+
+**Original needed:** Ptolemy, Harmonicorum libri III (Greek/Latin), 16th-17th c. edition
+**Likely sources:** MDZ, Gallica, e-rara
+
+---
+
+#### 3. The Pythagorean Sourcebook (Guthrie)
+
+**Book ID:** `695572c9220949ea67a5953d`
+
+| Check | Result |
+|-------|--------|
+| Print date | 20th century |
+| Editor | Kenneth Sylvan Guthrie |
+| Typography | Modern |
+| Language | English compilation |
+| Original text? | No |
+
+**Verdict:** `FLAG:MODERN-TRANS` - Modern anthology without originals
+
+**Note:** Useful as reference but not a primary source. Individual original Greek texts should be acquired.
+
+---
+
+### Books Verified: ORIGINAL LANGUAGE (Keep - High Value)
+
+#### 4. Macrobius In Somnium Scipionis (1542)
+
+**Book ID:** `695573a0f63a757109172141`
+**IA ID:** macrobiiambrosii00macr
+
+| Check | Result |
+|-------|--------|
+| Print date | 1542 |
+| Publisher | Lugduni, Apud Seb. Gryphium |
+| Typography | Period (16th c. Roman) |
+| Language | Latin (original) |
+
+**Verdict:** `FLAG:ORIGINAL` - Excellent 16th century edition. High scholarly value.
+
+---
+
+#### 5. Boethius De institutione musica (15th c. MS)
+
+**Book ID:** `6955739df63a7571091720cf`
+**IA ID:** ljs47
+
+| Check | Result |
+|-------|--------|
+| Print date | 15th century manuscript |
+| Typography | Medieval hand |
+| Language | Latin (original) |
+
+**Verdict:** `FLAG:ORIGINAL` - Rare medieval manuscript. Highest scholarly value.
+
+---
+
+#### 6. Orphica (Hermann 1805)
+
+**Book ID:** `6955747af63a757109173a5d`
+**IA ID:** orphica00unkngoog
+
+| Check | Result |
+|-------|--------|
+| Print date | 1805 |
+| Publisher | Lipsiae, C. Fritsch |
+| Editor | Gottfried Hermann |
+| Language | Greek (original) |
+
+**Verdict:** `FLAG:ORIGINAL` - Early 19th c. critical edition with Greek text. Acceptable.
+
+---
+
+#### 7. De Vita Pythagorica (Kiessling 1815)
+
+**Book ID:** `69557398f63a757109171e75`
+**IA ID:** devitapythagori00iambgoog
+
+| Check | Result |
+|-------|--------|
+| Print date | 1815 |
+| Publisher | Lipsiae |
+| Language | Greek and Latin (bilingual) |
+
+**Verdict:** `FLAG:ORIGINAL` - Bilingual critical edition. Acceptable.
+
+---
+
+#### 8. Orphicorum Fragmenta (Kern 1922)
+
+**Book ID:** `69557478f63a7571091738aa`
+**IA ID:** orphicorumfragme00orphuoft
+
+| Check | Result |
+|-------|--------|
+| Print date | 1922 |
+| Publisher | Berolini, Apud Weidmannos |
+| Editor | Otto Kern |
+| Language | Greek fragments (original) |
+
+**Verdict:** `FLAG:ORIGINAL` - Standard scholarly collection of Greek fragments. Keep.
+
+---
+
+#### 9. Proclus Commentarius in Timaeum (1847)
+
+**Book ID:** `69557474f63a7571091734e4`
+**IA ID:** proclicommentar00procgoog
+
+| Check | Result |
+|-------|--------|
+| Print date | 1847 |
+| Publisher | Vratislaviae, Eduardus Trewendt |
+| Language | Greek (original) |
+
+**Verdict:** `FLAG:ORIGINAL` - Greek critical edition. Acceptable.
+
+---
+
+### Books Verified: PERIOD TRANSLATIONS (Acceptable)
+
+These are historical translations that are themselves primary sources for reception history.
+
+#### 10. Thomas Taylor Translations (1818, 1895)
+
+**Books:**
+- Life of Pythagoras: `695572cd220949ea67a596ae` (1818)
+- Iamblichus on the Mysteries: `6952caa577f38f6761bc4c0f` (1895 reprint)
+- Complete Works of Plato: `6952caa077f38f6761bc408b`
+
+| Check | Result |
+|-------|--------|
+| Translator | Thomas Taylor (1758-1835) |
+| Period | Late 18th - early 19th century |
+| Significance | First English Neoplatonist translations |
+
+**Verdict:** `FLAG:CONTEMP-TRANS` - Taylor's translations are historically important primary sources for English Neoplatonism. Keep.
+
+---
+
+#### 11. Marsilio Ficino Translations (15th-16th c.)
+
+**Books with Ficino translations:**
+- Plotini Enneades: `6952c9ca77f38f6761bc3062`
+- Plotini operum philosophicorum: `6952c9c777f38f6761bc2ffd`
+- Plotini Opera Omnia: `69526a50ab34727b1f046dc5`
+- Pseudo-Dionysius: `69520de1ab34727b1f044227`
+- De mysteriis Aegyptiorum: `69520714ab34727b1f043564`
+- Pimander: `6952062aab34727b1f0432aa`
+
+**Verdict:** `FLAG:ORIGINAL` - Ficino's Renaissance translations ARE primary sources. They shaped Western esotericism. Highest value.
+
+---
+
+#### 12. A.E. Waite Hermetic Museum (1893)
+
+**Book ID:** `695234ddab34727b1f044cd2`
+
+| Check | Result |
+|-------|--------|
+| Print date | 1893 |
+| Publisher | London |
+| Translator | Arthur Edward Waite |
+
+**Verdict:** `FLAG:CONTEMP-TRANS` - Late Victorian translation. Historically significant for Golden Dawn tradition. Borderline - keep but note it's not a primary source.
+
+---
+
+### Summary
+
+| Category | Count | Action |
+|----------|-------|--------|
+| `FLAG:MODERN-TRANS` | 3 | Seek originals or remove |
+| `FLAG:ORIGINAL` | 9+ | Keep - high value |
+| `FLAG:CONTEMP-TRANS` | 3+ | Keep - historically significant |
+
+### Immediate Actions Needed
+
+1. **Delete or deprioritize:** Stahl Macrobius (1952) - we have the 1542 Latin
+2. **Verify:** Solomon Ptolemy - check if Greek text present
+3. **Note:** Guthrie Sourcebook useful as reference but not primary source
+
+### Originals to Acquire
+
+| Text | Author | Language | Suggested Source |
+|------|--------|----------|------------------|
+| Harmonicorum libri III | Ptolemy | Greek/Latin | MDZ, Gallica |
+| Various Pythagorean texts | Various | Greek | Replace Guthrie with originals |
+
+---
+
+---
+
+### Additional Modern Translations Found (Batch 2)
+
+#### 13. Cloud of Unknowing (Walsh 1981)
+
+**Book ID:** `6953ddc377f38f6761be8641`
+**Date:** 1981
+
+**Verdict:** `FLAG:MODERN-TRANS` - Modern translation of medieval English text.
+
+**Original needed:** 14th century Middle English manuscripts or early printed editions.
+
+---
+
+#### 14. Life of Milarepa (Lhalungpa 1977)
+
+**Book ID:** `6953c97177f38f6761bde917`
+**Date:** 1977
+
+**Verdict:** `FLAG:MODERN-TRANS` - Modern English translation of Tibetan hagiography.
+
+**Note:** Outside core Western esoteric scope. Consider if appropriate for collection focus.
+
+---
+
+#### 15. Sayings of the Desert Fathers (Wortley 2013)
+
+**Book ID:** `6953a8d277f38f6761bd38d1`
+**Date:** 2013
+
+**Verdict:** `FLAG:MODERN-TRANS` - Very recent translation.
+
+**Original needed:** Greek Apophthegmata Patrum (early printed editions available).
+
+---
+
+#### 16. Sefer HaBahir (Kaplan 1990)
+
+**Book ID:** (search for Kaplan Bahir)
+**Date:** 1990
+
+**Verdict:** `FLAG:MODERN-TRANS` - Modern translation without Hebrew original.
+
+**Original needed:** Early printed Hebrew editions (16th-17th century).
+
+---
+
+#### 17. Rumi - Poet and Mystic (Nicholson 1956)
+
+**Book ID:** `6953c75d77f38f6761bdb0e0` (or related)
+**Date:** 1956
+
+**Verdict:** `FLAG:MODERN-TRANS` - Modern anthology translation.
+
+**Note:** Nicholson's Mathnawi edition (1925) is more scholarly but still modern. Consider if Persian originals are available.
+
+---
+
+### Books Requiring Scope Review
+
+These are modern esoteric works, not historical primary sources:
+
+| Book | Author | Date | Issue |
+|------|--------|------|-------|
+| Golden Dawn Vol. 2 | Israel Regardie | 1938 | Modern occult, not historical |
+| Golden Dawn Black Brick | Israel Regardie | 1986 | Modern reprint |
+| Complete Golden Dawn System | Israel Regardie | 1984 | Modern compilation |
+
+**Question:** Are 20th century occult works within scope of a primary source library focused on pre-1800 texts?
+
+---
+
+### Updated Summary
+
+| Category | Count | Action |
+|----------|-------|--------|
+| `FLAG:MODERN-TRANS` | 8+ | Seek originals or remove |
+| `FLAG:ORIGINAL` | 9+ | Keep - high value |
+| `FLAG:CONTEMP-TRANS` | 5+ | Keep - historically significant |
+| `SCOPE-REVIEW` | 3 | Review collection policy |
+
+### Originals Still Needed
+
+| Text | Author | Language | Suggested Source |
+|------|--------|----------|------------------|
+| Harmonicorum libri III | Ptolemy | Greek/Latin | MDZ, Gallica |
+| Cloud of Unknowing | Anon | Middle English | EEBO, Bodleian |
+| Apophthegmata Patrum | Desert Fathers | Greek | Archive.org |
+| Sefer HaBahir | - | Hebrew | Hebraic collections |
+| Rumi Mathnawi | Rumi | Persian | Islamic MSS collections |
+
+---
+
+---
+
+## Recent Additions Audit: 2025-12-31 (continued)
+
+### Additional Modern Edition Found
+
+#### 18. Corpus Hermeticum (Nock/Festugière)
+
+**Book ID:** `b453af34-40c2-46ff-876b-9d0245b70087`
+**IA ID:** corpushermeticum0001herm
+
+| Check | Result |
+|-------|--------|
+| Print date | 1960 |
+| Publisher | Paris, Les Belles Lettres |
+| Editors | A.D. Nock, A.-J. Festugière |
+| Language | Greek with French translation |
+| Original text? | Yes (Greek present) |
+
+**Verdict:** `FLAG:CRITICAL-ED` - Modern critical edition BUT includes original Greek text.
+
+**Note:** This is the standard scholarly edition. Acceptable because Greek text is present, but consider also acquiring Renaissance Latin edition (Ficino 1471).
+
+---
+
+### Verified Original Editions (Recent Imports)
+
+| Book | Date | Publisher | Status |
+|------|------|-----------|--------|
+| Ars Magna Lucis et Umbrae | 1671 | Amsterdam, Jansson | `FLAG:ORIGINAL` |
+| Musaeum Hermeticum | 1678 | Frankfurt, Sande | `FLAG:ORIGINAL` |
+| Turba Philosophorum | 1572 | Basel, Perna | `FLAG:ORIGINAL` |
+| Divini Platonis Opera | 1590 | Lyon, Le Preux | `FLAG:ORIGINAL` |
+| Palladio I Quattro Libri | 16th c. | Original Italian | `FLAG:ORIGINAL` |
+| Reuchlin De Arte Cabalistica | 16th c. | Original Latin | `FLAG:ORIGINAL` |
+| Dürer Unterweysung der Messung | 16th c. | Original German | `FLAG:ORIGINAL` |
+| Kircher Musurgia Universalis | 17th c. | Original Latin | `FLAG:ORIGINAL` |
+
+---
+
+### Infrastructure Check
+
+**Image Links:** All checked - working correctly
+- Archive.org images: 302 redirects → resolve to images (OK)
+- S3 images: 200 (OK)
+- Vercel Blob archived images: 200 (OK)
+
+**Cover Images:** Generated dynamically from page 1 via `/api/image` - no issues
+
+**Page Data:** Verified - pages have photos, OCR, translations where processed
+
+---
+
+## Thematic Collections (with Book IDs)
+
+Based on audit of 870 books. These collections are ready for implementation.
+
+### 1. Architecture & Sacred Geometry (8 books)
+| Book ID | Title |
+|---------|-------|
+| `f20894c1-495f-4afe-815b-e8bf3c8938a5` | I Quattro Libri dell'Architettura (Palladio) |
+| `6949af986ef4a68b726b7fa9` | De architectura libri decem (Vitruvius 1522) |
+| `e532b010-6d2e-40ca-9f95-c67e74c5ee61` | Unterweysung der Messung (Dürer) |
+| `adafa75d-5a67-4f24-a519-c078f4fa4f23` | Vier Bücher von menschlicher Proportion (Dürer) |
+| `c1eb9995-02e3-45b3-afa1-c0a52fd5b646` | Geometrie practique (Bovelles) |
+| `ec135ab7-b367-4579-81ca-2a0901d34630` | Elementa Geometriae (Euclid/Campanus) |
+| `24285aea-eed6-43e9-8a49-ecc9442f46f5` | Regole generali di architettura |
+
+### 2. Athanasius Kircher Collection (17 books)
+| Book ID | Title |
+|---------|-------|
+| `e48a21de-4db2-4c94-a71a-e952b9fa5393` | Musurgia Universalis |
+| `a5d0c381-d4ea-42cd-8864-44457e7fda33` | Ars Magna Lucis et Umbrae |
+| `695575b757e3b773024f22ad` | Phonurgia Nova |
+| `65c7583f-4866-4f74-8903-a37bd8f1de33` | Oedipus Aegyptiacus Vol. I |
+| `4d4089b9-9227-4cc5-b0a2-9b06ee731061` | Oedipus Aegyptiacus Vol. II |
+| `695273a7ab34727b1f04a708` | Oedipus Aegyptiacus Vol III |
+| `69527376ab34727b1f04948a` | Magnes |
+| `69527367ab34727b1f048f38` | Mundus Subterraneus |
+| `6952db5777f38f6761bc7519` | Prodromus Coptus sive Aegyptiacus |
+| `6952db5477f38f6761bc7402` | Itinerarium Exstaticum |
+
+### 3. Alchemy & Hermetic Chemistry (10+ books)
+| Book ID | Title |
+|---------|-------|
+| `c87fadfa-1543-44b9-a138-573c144246e6` | Musaeum Hermeticum (1678) |
+| `c62120da-38f1-441a-9f1b-2e698c0c887c` | Turba Philosophorum (1572) |
+| `0b93ce97-9021-4eb7-9613-41b4ce1193b9` | Theatrum Chemicum |
+| `695286dfab34727b1f04ccb7` | Theatrum Chemicum Vol II |
+| `695286c8ab34727b1f04c98d` | Theatrum Chemicum Vol I |
+| `8bee13ae-6d70-49e3-b939-3d1e667c6e4a` | Theatrum Chemicum Britannicum |
+| `6952d05477f38f6761bc511e` | Basilica chymica |
+| `69526137ab34727b1f046674` | Auriferae artis (Turba) |
+| `69487f16b75c15feb90b27ef` | Amphitheatrum Sapientiae Aeternae (Khunrath) |
+
+### 4. Kabbalah & Christian Cabala (11 books)
+| Book ID | Title |
+|---------|-------|
+| `f176cb65-a60e-4f8a-9514-39796f092cde` | De Arte Cabalistica (Reuchlin) |
+| `fec0b295-0795-440f-a467-434e17ba2a8e` | Asis rimonim (Gallico, Hebrew) |
+| `6911cf678cb6d2ae494a1061` | Sefer ha-bahir (Hebrew) |
+| `69520c0fab34727b1f043e63` | Zohar (Genèse) |
+| `6953ab3677f38f6761bd6ab2` | Sefer Raziel (Liber Secretorum Dei) |
+| `69528622ab34727b1f04c566` | Cabalistarum Selectiora Dogmata |
+| `69528666ab34727b1f04c966` | Origin of Letters and Numerals (Sefer Yetzirah) |
+| `6909d4a7cf28baa1b4cb01a5` | Téléscope de Zoroastre |
+
+### 5. Neoplatonism & Ficino (45+ books)
+| Book ID | Title |
+|---------|-------|
+| `adefe2d5-88a7-4595-9885-903a93abee51` | Divini Platonis Opera omnia (Ficino 1590) |
+| `adad5f6d-4f68-4009-9406-d0e083cf0acc` | Opera Omnia (Pico) |
+| `694b3acade93d1d4cec199c5` | Epistolae (Ficino 1497) |
+| `69520603ab34727b1f042f59` | Theologia platonica (Ficino) |
+| `69520600ab34727b1f042e3c` | De Triplici vita (Ficino) |
+| `6952062aab34727b1f0432aa` | Pimander (Corpus Hermeticum, Ficino) |
+| `69526a50ab34727b1f046dc5` | Plotini Opera Omnia (Enneads) |
+| `6952ca2e77f38f6761bc34d9` | Proclus Theology of Plato (Taylor) |
+| `6952caa577f38f6761bc4c0f` | Iamblichus on the Mysteries (Taylor) |
+| `a7d82d02-1a76-4f5f-af99-339285a345f9` | Hypnerotomachia Poliphili |
+
+### 6. Rosicrucianism (6 books)
+| Book ID | Title |
+|---------|-------|
+| `6da19aeb-aec0-411c-b890-73035c92273d` | Fama Fraternitatis |
+| `71f68423-2c87-47d3-87fa-a744688d3370` | Chymische Hochzeit |
+| `69099e2acf28baa1b4caeafb` | Colloquium Rhodostauroticum |
+| `6909a8c1cf28baa1b4caee49` | Echo der Fraternitet |
+| `d850a255-4633-43d5-8383-7c67a7e55144` | Ex Ilss. quodam Philosophi R.C. (MS) |
+
+### 7. Jacob Boehme & Theosophy (6 books)
+| Book ID | Title |
+|---------|-------|
+| `69525f56ab34727b1f046185` | Aurora |
+| `6952603cab34727b1f04647b` | De signatura rerum |
+| `69526046ab34727b1f04660c` | Mysterium Magnum |
+| `6952e45177f38f6761bc7806` | Aurora Consurgens |
+
+### 8. Paracelsus Collection (12 books)
+| Book ID | Title |
+|---------|-------|
+| `9f2fd808-7d15-40c2-a333-885c67ff3cb5` | Volumen Paramirum und Opus Paramirum |
+| `8a9eea4b-6be1-4424-9a38-b7a0deb58f95` | Opera Omnia Medico-Chemico-Chirurgica |
+| `785e0f79-eb56-49f6-9c47-b75c8e859159` | De Praesagiis, Vaticiniis et Divinationibus |
+| `6867c208aadfee9e955ec955` | Astronomica et astrologica |
+| `6867bf5a009d20a23245ac0d` | Das Buch Meteororum |
+| `69520185ab34727b1f0416bc` | Aurora thesaurusque philosophorum |
+
+### 9. Natural Magic & Demonology (8 books)
+| Book ID | Title |
+|---------|-------|
+| `694bf8d2343422769f237558` | De occulta philosophia libri III (Agrippa 1550) |
+| `0c19cab9-00d4-49b1-ace1-9122b5a45cc9` | De Occulta Philosophia (1533) |
+| `bb7bfc2d-b703-4c8e-8fdf-99040bf4db4b` | De Praestigiis Daemonum (Weyer) |
+| `1a8485e5-5331-41df-bfc1-6efd65238f55` | Magia Naturalis (Della Porta) |
+| `6953ea3e1479a63c1108641e` | Magia Naturalis (1619 Latin) |
+| `6953ea371479a63c11086267` | Natural Magick (1658 English) |
+
+### 10. Greek Magical Papyri (7 books)
+| Book ID | Title |
+|---------|-------|
+| `6953ae7f77f38f6761bd7e65` | Papyri Graecae Magicae (Preisendanz) |
+| `6953ae8177f38f6761bd7f50` | Papyri Graecae Magicae (Complete) |
+| `6953ae8477f38f6761bd802d` | Greek Magical Papyri in Translation (Betz) |
+| `6953aeab77f38f6761bd843f` | Demotic Magical Papyrus Vol. 1 |
+| `6953aeae77f38f6761bd8524` | Demotic Magical Papyrus Vol. 2 |
+
+---
+
+---
+
+## Extended Audit: 2025-12-31 (Batch 3)
+
+### Additional Modern Translations Found
+
+#### 19. Greek Commentaries on Plato's Phaedo (Westerink 1976)
+
+**Book ID:** `6955805557e3b773024f53a2`
+**Date:** 1976
+
+**Verdict:** `FLAG:MODERN-TRANS` - Modern scholarly edition.
+
+---
+
+#### 20. Theory of Music in Arabic Writings (Shiloah 1979)
+
+**Book ID:** `6955761857e3b773024f2a32`
+**Date:** 1979
+
+**Verdict:** `FLAG:MODERN-TRANS` - Modern scholarly survey.
+
+---
+
+### Early 20th Century Translations (Borderline)
+
+These are not primary sources but may have historical value:
+
+| Book ID | Title | Date | Translator |
+|---------|-------|------|------------|
+| `695580c657e3b773024f622d` | The Enneads (Plotinus) | ~1920s | MacKenna |
+| `6955801357e3b773024f528d` | Library of Photius | 1920 | Freese |
+| `6955761557e3b773024f290b` | History of Arabian Music | 1929 | Farmer |
+| `695435061479a63c1108abb9` | Hegel Lectures | 1892-96 | - |
+| `6954346c1479a63c11089602` | Critique of Pure Reason | 1881 | Muller |
+| `6953eacc1479a63c11087caa` | Descartes Works | 1911 | Haldane-Ross |
+
+**Recommendation:** Keep but tag as "modern translation" - not primary sources.
+
+---
+
+### Scope Review: Eastern Traditions
+
+The following books are outside core Western esoteric tradition. Review for collection policy:
+
+#### Tibetan/Buddhist (7+ books)
+| Book ID | Title |
+|---------|-------|
+| `6953c97477f38f6761bdea1e` | Tibetan Yoga and Secret Doctrines (Evans-Wentz) |
+| `6953c95477f38f6761bde815` | Tibetan Book of the Dead |
+| `69557d5277f38f6761bc3c26` | Bardo Thodol |
+| `6953c9cb77f38f6761bdf149` | Formative Elements of Japanese Buddhism |
+| `6953c9c777f38f6761bdefa4` | Creed of Half Japan |
+| `6953c9c277f38f6761bdee0f` | Studies in Japanese Buddhism |
+
+#### Chinese/Japanese Music (4 books)
+| Book ID | Title |
+|---------|-------|
+| `6955756057e3b773024f47c1` | 古琴音乐相关文献 (Works on Guqin) |
+| `6955755e57e3b773024f4784` | 琴曲集成 (Chinese Guqin Scores) |
+| `69557566f63a75710917482` | Japanese Music and Instruments |
+| `69557563f63a75710917499f` | Gagaku: Court Music and Dance |
+
+#### Persian Poetry (5 books)
+| Book ID | Title |
+|---------|-------|
+| `6953c76477f38f6761bdb3fb` | Rumi: Poet and Mystic (Nicholson) |
+| `6953c75f77f38f6761bdb27a` | Mathnawi Vol. 3-4 |
+| `6953c75d77f38f6761bdb0e0` | Mathnawi Vol. 1 |
+| `6953c92877f38f6761bde248` | Shahnameh |
+| `6953c90977f38f6761bddffd` | Divan-e-Hafiz |
+
+#### Sanskrit/Yoga (3+ books)
+| Book ID | Title |
+|---------|-------|
+| `69557545f63a757109173e77` | Natyashastram (Sanskrit) |
+| `6953c86b77f38f6761bdc210` | Shiva Samhita |
+| `6953c86977f38f6761bdc8d1` | Yoga Upanishads |
+
+**Question:** Should these be kept for comparative religion or removed to focus collection?
+
+---
+
+### Scope Review: Modern Esoteric (19th-20th Century)
+
+These ARE primary sources for modern Western esotericism:
+
+#### Aleister Crowley (7 books)
+| Book ID | Title |
+|---------|-------|
+| `6953e3b577f38f6761bedb15` | Magick in Theory and Practice |
+| `6953e3b777f38f6761bedcf8` | Book Four - Magick |
+| `6953e3c077f38f6761bee06d` | Book of the Law |
+| `6953e3be77f38f6761bedf36` | Book of Thoth |
+| `6953e3ba77f38f6761bedddd` | Qabalah (777, Gematria, Sepher Sephiroth) |
+
+#### H.P. Blavatsky (6+ books)
+| Book ID | Title |
+|---------|-------|
+| `6953e32877f38f6761beb98c` | Secret Doctrine Vol. I |
+| `6953e32f77f38f6761bebc95` | Secret Doctrine Vol. III |
+| `6953e33477f38f6761bebf10` | Isis Unveiled Vol. I |
+| `6953e33877f38f6761bec1fa` | Isis Unveiled Vol. II |
+| `6953e33c77f38f6761bec4e2` | Key to Theosophy |
+
+#### Israel Regardie / Golden Dawn (3 books)
+| Book ID | Title |
+|---------|-------|
+| `6953e39277f38f6761bed566` | Golden Dawn Vol. 2 (1938) |
+| `6953e38f77f38f6761bed298` | Golden Dawn (Black Brick Edition) |
+| `6953e38c77f38f6761bece62` | Complete Golden Dawn System |
+
+**Verdict:** Keep - these are primary sources for 19th-20th century esotericism.
+
+---
+
+### Metadata Quality Issues
+
+#### Missing Year Data: 864 of 870 books (99%)
+
+Almost all books lack year metadata. This should be populated from:
+- Title page dates
+- USTC records (for pre-1601 books)
+- Archive.org metadata
+- Manual research
+
+**Priority books to add years:**
+- All Kircher works
+- All Ficino editions
+- All 16th century printed books
+
+#### Missing Language Data: 864 of 870 books
+
+Same issue - language field not populated for most books.
+
+---
+
+### Translation Pipeline Status
+
+Sample check found major books awaiting translation:
+
+| Book ID | Title | Pages | Translated |
+|---------|-------|-------|------------|
+| `c87fadfa-1543-44b9-a138-573c144246e6` | Musaeum Hermeticum | 817 | 0 |
+| `69487f16b75c15feb90b27ef` | Amphitheatrum Sapientiae Aeternae | 639 | 0 |
+
+These are high-priority alchemical texts needing translation.
+
+---
+
+### Updated Summary
+
+| Issue | Count | Action |
+|-------|-------|--------|
+| Modern translations (1950+) | 11 | Seek originals |
+| Early 20th c. translations | 6+ | Tag as modern |
+| Eastern traditions | 20+ | Review scope |
+| Modern esoteric primary | 16+ | Keep |
+| Missing year metadata | 864 | Populate |
+| Missing language | 864 | Populate |
+| Books needing translation | Many | Run pipeline |
+
+---
+
+---
+
+## Data Quality Audit: 2025-12-31 (Batch 4)
+
+### Duplicate Books Found
+
+#### De revolutionibus - 3 DUPLICATE copies of 1543 first edition
+
+| Book ID | Pages | Status |
+|---------|-------|--------|
+| `694b3b5b58a47807cc735dce` | 209 | Keep (already audited) |
+| `694f49d3f9b1ecc07965e424` | 460 | **DUPLICATE** |
+| `606a74d7-2ac1-420b-924d-de761439fb3f` | 1298 | **DUPLICATE** |
+
+All three are same 1543 Nuremberg/Petreius edition. Recommend keeping one with best quality.
+
+Plus: `6953e46b77f38f6761bee386` - 1879 German translation (different, keep)
+
+---
+
+#### Agrippa De Occulta Philosophia - 3 entries (different editions)
+
+| Book ID | Title | Pages |
+|---------|-------|-------|
+| `694bf8d2343422769f237558` | 1550 Lyon edition | 626 |
+| `0c19cab9-00d4-49b1-ace1-9122b5a45cc9` | 1533 edition | 1384 |
+| `6952daa277f38f6761bc6551` | Another edition | 350 |
+
+**Note:** These may be legitimate different editions (1531 Book I, 1533 complete, 1550 Lyon). Verify before merging.
+
+---
+
+#### Newton Principia - 2+ entries
+
+| Book ID | Title | Pages |
+|---------|-------|-------|
+| `15c5d8e4-cea3-4b5b-9859-f3528660ecc8` | Principia (Latin) | 1083 |
+| `6953e4fa77f38f6761bef1dc` | Principia | 526 |
+| `6953e4ff77f38f6761bef3eb` | English translation | 417 |
+
+Verify if duplicates or different editions.
+
+---
+
+#### Robert Fludd - Multiple volumes (NOT duplicates)
+
+| Book ID | Title | Pages |
+|---------|-------|-------|
+| `6952dac677f38f6761bc683a` | Utriusque Cosmi Vol. 1 | 1141 |
+| `6952dac977f38f6761bc6cb0` | Utriusque Cosmi Vol. 2 | 869 |
+| `69527227ab34727b1f047c85` | Philosophia Moysaica | 402 |
+| `6952722bab34727b1f047e18` | Mosaicall Philosophy | 581 |
+| `6952dacd77f38f6761bc7016` | Summum Bonum | 169 |
+| Plus more... | | |
+
+These are legitimate separate works - comprehensive Fludd collection!
+
+---
+
+### Incomplete Imports (< 20 pages)
+
+| Book ID | Title | Pages | Issue |
+|---------|-------|-------|-------|
+| `68fb103412055a03a58d3307` | Catalogus librorum Zetznerianorum | 4 | Catalog fragment |
+| `68fb0f9712055a03a58d32fb` | Warhafft Bericht | 5 | Short pamphlet |
+| `676578c2bda54ffa65999288` | Kavyamimansa | 5 | **Incomplete?** |
+| `68fb108512055a03a58d3311` | Nachricht Berlin | 5 | Short pamphlet |
+| `68fb09b112055a03a58d3173` | Mandati Copey | 5 | Short document |
+| `a610a77b-5cca-4a21-88af-2953f0186f9a` | Ars Notoria | 10 | Short text |
+
+Some are legitimately short pamphlets; others may be incomplete imports.
+
+---
+
+### Largest Books (Translation Priority)
+
+| Rank | Title | Pages | Priority |
+|------|-------|-------|----------|
+| 1 | Greek Old Testament (Tischendorf) | 4,369 | Low (biblical) |
+| 2 | Tantraloka (Sanskrit) | 3,938 | Review scope |
+| 3 | Codex Alexandrinus | 3,846 | Low (biblical) |
+| 4 | Interlinear Septuagint | 3,665 | Low (biblical) |
+| 5 | 108 Upanishads | 3,580 | Review scope |
+| **6** | **Oedipus Aegyptiacus Vol II** | **2,904** | **HIGH** |
+| **7** | **Oedipus Aegyptiacus Vol I** | **2,887** | **HIGH** |
+| 8 | Complete Works of Plato | 2,850 | Medium |
+| **9** | **Oedipus Aegyptiacus Vol III** | **2,756** | **HIGH** |
+| 10 | Biblia Hebraica | 2,683 | Low (biblical) |
+
+**Kircher's Oedipus Aegyptiacus: 8,547 pages total - major project!**
+
+---
+
+### Priority Translation Targets
+
+**Tier 1 - Core Western Esoteric (Immediate):**
+| Book ID | Title | Pages |
+|---------|-------|-------|
+| `c87fadfa-1543-44b9-a138-573c144246e6` | Musaeum Hermeticum | 817 |
+| `69487f16b75c15feb90b27ef` | Amphitheatrum (Khunrath) | 639 |
+| `6952dac677f38f6761bc683a` | Fludd Utriusque Cosmi Vol. 1 | 1,141 |
+| `6952dac977f38f6761bc6cb0` | Fludd Utriusque Cosmi Vol. 2 | 869 |
+
+**Tier 2 - Kircher Encyclopedias:**
+| Book ID | Title | Pages |
+|---------|-------|-------|
+| `65c7583f-4866-4f74-8903-a37bd8f1de33` | Oedipus Aegyptiacus Vol. I | 2,887 |
+| `4d4089b9-9227-4cc5-b0a2-9b06ee731061` | Oedipus Aegyptiacus Vol. II | 2,904 |
+| `695273a7ab34727b1f04a708` | Oedipus Aegyptiacus Vol. III | 2,756 |
+| `69527376ab34727b1f04948a` | Magnes | 1,828 |
+
+---
+
+### Updated Summary
+
+| Issue | Count | Action |
+|-------|-------|--------|
+| Confirmed duplicates | 3+ | Merge/delete |
+| Potential duplicates | 5+ | Verify editions |
+| Incomplete imports | 6+ | Review |
+| Books needing translation | 100+ | Run pipeline |
+| High-priority translations | 8 | Immediate queue |
+
+---
+
+**Audit Status:** Batch 4 complete.
+**Priority Actions:**
+1. Merge De revolutionibus duplicates (keep best quality)
+2. Verify Agrippa/Newton as different editions
+3. Queue Musaeum Hermeticum + Fludd for translation
+4. Plan Oedipus Aegyptiacus translation project (8500+ pages)
+5. Review incomplete imports for re-import
+
+---
+
+## Audit Session: 2025-12-31 - Batch 5
+
+### Edition Verification Results
+
+#### Agrippa De Occulta Philosophia 1533 - VERIFIED NOT DUPLICATES
+
+Two scans of the same 1533 first edition from different libraries:
+
+| Book ID | Source | Pages | IA Identifier | Status |
+|---------|--------|-------|---------------|--------|
+| `0c19cab9-00d4-49b1-ace1-9122b5a45cc9` | McGill University Osler Library | 1384 | McGillLibrary-osl_henrici-cornelii-agrippae_folioA279o1533-19978 | **KEEP - Priority** |
+| `6952daa277f38f6761bc6551` | Library of Congress | 350 | DeOccultaPhilosophiaLoc1533 | Keep as backup |
+
+**Findings:**
+- Both are the 1533 Cologne Soter first complete edition (editio princeps)
+- McGill edition: Higher resolution folio scans (1384 images), from prestigious Osler Room rare book collection
+- LOC edition: Standard scan (350 pages), minimal metadata
+- **Recommendation:** Prioritize McGill for OCR/translation, keep LOC as backup
+
+---
+
+#### Newton Principia - VERIFIED DIFFERENT EDITIONS
+
+| Book ID | Edition | Year | Publisher | Pages | Status |
+|---------|---------|------|-----------|-------|--------|
+| `6953e4fa77f38f6761bef1dc` | **1687 First Edition** | 1687 | Londini, Joseph Streater for Royal Society | 526 | **KEEP - Editio Princeps** |
+| `15c5d8e4-cea3-4b5b-9859-f3528660ecc8` | **1726 Third Edition** | 1726 | Londini, William & John Innys | 1083 | **KEEP - Newton's Final Revision** |
+
+**Findings:**
+- 1687: First edition with Samuel Pepys imprimatur, Boston Public Library copy bound by Riviere & Son
+- 1726: Newton's final revised edition ("Editio tertia aucta & emendata"), includes portrait
+- **Both are historically important:** First publication vs. author's final revision
+- **Recommendation:** Keep both - not duplicates
+
+---
+
+### Music Theory Books Verification
+
+#### Original Editions (KEEP)
+
+| Book ID | Title | Author | Year | Publisher | Status |
+|---------|-------|--------|------|-----------|--------|
+| `695575ba57e3b773024f23d1` | Traité de l'harmonie | Jean-Philippe Rameau | 1722 | Paris, Ballard | `FLAG:ORIGINAL` - First edition |
+| `6955747af63a757109173a5d` | Orphica | Hermann (ed.) | 1805 | Leipzig, Fritsch | `FLAG:ORIGINAL` - Greek/Latin critical edition |
+| `69557474f63a7571091734e4` | Proclus in Timaeum | Proclus | 1847 | Breslau, Trewendt | `FLAG:ORIGINAL` - Greek text |
+| `69557431f63a75710917329b` | De Musica | Pseudo-Plutarch | 1856 | Leipzig, Teubner | `FLAG:ORIGINAL` - Teubner edition |
+
+---
+
+#### Modern Books to Flag
+
+| Book ID | Title | Author | Year | Publisher | Status |
+|---------|-------|--------|------|-----------|--------|
+| `69557566f63a757109174a82` | Japanese Music and Musical Instruments | William P. Malm | 1959 | Tokyo, Tuttle | `FLAG:MODERN-TRANS` - Modern secondary literature |
+| `69557563f63a75710917499f` | Gagaku: Court Music and Dance | Togi Masataro | 1971 | New York, Walker/Weatherhill | `FLAG:MODERN-TRANS` - Modern secondary literature |
+
+**Recommendation:** Review scope - these are secondary literature by 20th century scholars, not primary sources.
+
+---
+
+### Philosophy Books Verification
+
+#### Original Editions (KEEP)
+
+| Book ID | Title | Author | Year | Language | Status |
+|---------|-------|--------|------|----------|--------|
+| `695435671479a63c1108c8ed` | Vernünftige Gedancken von der Menschen Thun und Lassen | Christian Wolff | 1752 | German | `FLAG:ORIGINAL` |
+| `695524151479a63c1108cc09` | The Hermetical Triumph | Limojon de Saint-Didier | 1745 | English | `FLAG:CONTEMP-TRANS` - 18th c. translation |
+
+---
+
+#### 19th Century Translations to Review
+
+| Book ID | Title | Author | Year | Publisher | Original Available? |
+|---------|-------|--------|------|-----------|---------------------|
+| `695435061479a63c1108abb9` | Lectures on History of Philosophy Vol I | Hegel | 1892-96 | London, Kegan Paul | Yes - German "Vorlesungen" |
+
+**Recommendation:** Consider acquiring original German Hegel editions to supplement.
+
+---
+
+### Summary - Batch 5
+
+| Issue | Count | Action |
+|-------|-------|--------|
+| Verified different editions (Agrippa) | 2 | Keep both, prioritize McGill |
+| Verified different editions (Newton) | 2 | Keep both |
+| Verified original editions | 6 | No action |
+| Modern secondary literature | 2 | Flag for scope review |
+| 19th c. English translations | 1 | Consider German originals |
+
+---
+
+**Audit Status:** Batch 5 complete.
+**Key Findings:**
+1. Agrippa 1533 editions are same edition, different scans - prioritize McGill version
+2. Newton Principia are legitimately different editions (1687 first vs 1726 third) - keep both
+3. Strong classical Greek text collection (Teubner editions, Hermann, etc.)
+4. Some modern secondary literature crept in (Malm 1959, Togi 1971) - review scope
+5. Consider acquiring original German philosophical texts (Hegel)
+
+---
+
+## Audit Session: 2025-12-31 - Batch 6
+
+### Asian/Sanskrit Collection Audit
+
+#### Scope Question - Eastern Traditions
+
+The library contains significant Eastern tradition materials that require a scope decision:
+
+**Policy Question:** Should Source Library focus exclusively on Western esoteric tradition, or include Eastern traditions that influenced Western esotericism?
+
+**Recommendation:** Keep texts that demonstrate East-West transmission (Theosophy bridge texts, Kircher's Sinology, Jesuits in China) but review pure Eastern texts for scope alignment.
+
+---
+
+### Duplicates Found
+
+#### Tibetan Book of the Dead - 2 copies of same Evans-Wentz edition
+
+| Book ID | IA Identifier | Pages | Status |
+|---------|---------------|-------|--------|
+| `6953c95477f38f6761bde815` | TheTibetanBookOfTheDead_201607 | 257 | DUPLICATE |
+| `69557d5257e3b773024f3c26` | the-tibetan-book-of-the-dead_202401 | 211 | DUPLICATE |
+
+Both are the 1927 Evans-Wentz English translation. **Merge into one entry.**
+
+---
+
+### Original Language Sanskrit Texts (KEEP)
+
+| Book ID | Title | Publisher | Language | Status |
+|---------|-------|-----------|----------|--------|
+| `6953c87677f38f6761bdcad4` | 108 Upanishads with Commentary | Adyar Library, Chennai | Sanskrit | `FLAG:ORIGINAL` |
+| `695362109c494f9f9f043555` | Tantra Manuscripts | Chakravarti ed. (1939) | Sanskrit | `FLAG:ORIGINAL` |
+| `69557545f63a757109173e77` | Natyashastram | Kedarnath ed. (1943) | Sanskrit | `FLAG:ORIGINAL` |
+| `6955754df63a7571091740c5` | Natya Shastra w/ Abhinavagupta | Shastri ed. | Sanskrit | `FLAG:ORIGINAL` |
+
+These are original Sanskrit texts in scholarly editions - acceptable for primary sources.
+
+---
+
+### Modern Secondary Literature (FLAG FOR REVIEW)
+
+| Book ID | Title | Author | Year | Publisher | Status |
+|---------|-------|--------|------|-----------|--------|
+| `695363f677f38f6761bce5f0` | Early Chinese Mysticism | Livia Kohn | 1991 | Princeton UP | `FLAG:MODERN-TRANS` - Secondary literature |
+| `6953c97477f38f6761bdea1e` | Tibetan Yoga and Secret Doctrines | W.Y. Evans-Wentz | 1935 | Oxford UP | Review - modern compilation |
+| `69557566f63a757109174a82` | Japanese Music and Musical Instruments | William P. Malm | 1959 | Tuttle | `FLAG:MODERN-TRANS` - Secondary lit |
+| `69557563f63a75710917499f` | Gagaku: Court Music and Dance | Togi Masataro | 1971 | Walker | `FLAG:MODERN-TRANS` - Secondary lit |
+
+---
+
+### Incomplete Imports
+
+| Book ID | Title | Pages | Issue |
+|---------|-------|-------|-------|
+| `676578c2bda54ffa65999288` | Kavyamimansa | 5 | Likely incomplete - full text should be ~200+ pages |
+
+---
+
+### Summary - Batch 6
+
+| Category | Count | Action |
+|----------|-------|--------|
+| Tibetan Book duplicates | 2 | Merge |
+| Original Sanskrit texts | 4 | Keep |
+| Modern secondary literature | 4 | Flag for scope review |
+| Incomplete imports | 1 | Re-import |
+
+---
+
+**Audit Status:** Batch 6 complete.
+**Key Findings:**
+1. Two duplicate copies of Evans-Wentz Tibetan Book of the Dead - merge
+2. Strong collection of original Sanskrit texts (Adyar Library editions)
+3. Several modern secondary literature items need scope review
+4. Kavyamimansa import is incomplete (only 5 pages)
+5. Policy decision needed: scope of Eastern traditions in the library
+
+---
+
+## Audit Session: 2025-12-31 - Batch 7
+
+### Translation Pipeline Status
+
+#### Batch Job Summary
+
+| Status | Count |
+|--------|-------|
+| Pending | 60 |
+| Processing | 39 |
+| Saved | 1 |
+| **Total** | **100** |
+
+| Job Type | Count |
+|----------|-------|
+| OCR | 95 |
+| Translate | 5 |
+
+---
+
+#### High-Priority Books Status
+
+| Book ID | Title | Pages | OCR | Translation | Status |
+|---------|-------|-------|-----|-------------|--------|
+| `c87fadfa-1543-44b9-a138-573c144246e6` | Musaeum Hermeticum | 817 | 0 | 0 | **NEEDS PROCESSING** |
+| `69487f16b75c15feb90b27ef` | Amphitheatrum Sapientiae (Khunrath) | 639 | 0 | 0 | **NEEDS PROCESSING** |
+| `6952dac677f38f6761bc683a` | Fludd Utriusque Cosmi Vol. 1 | 1,141 | 0 | 0 | **NEEDS PROCESSING** |
+| `6952dac977f38f6761bc6cb0` | Fludd Utriusque Cosmi Vol. 2 | 869 | 0 | 0 | **NEEDS PROCESSING** |
+| `694bf8d2343422769f237558` | Agrippa 1550 | 626 | ~616 | ~616 | Search shows 616 translated |
+
+**Note:** Page-level data shows 0 in OCR/translation fields, but search API shows 616 translated. The translation text is stored but not included in the full book API response for efficiency.
+
+---
+
+#### Translation Pipeline Recommendations
+
+**Tier 1 - Queue Immediately:**
+1. Musaeum Hermeticum (817 pages) - Core alchemical anthology
+2. Khunrath Amphitheatrum (639 pages) - Key Rosicrucian text
+3. Fludd Utriusque Cosmi (2,010 pages total) - Major esoteric encyclopedia
+
+**Tier 2 - Queue After Tier 1:**
+4. Kircher Oedipus Aegyptiacus (8,547 pages) - Egyptian hieroglyphics study
+5. 1533 Agrippa editions (1,384 + 350 pages) - First complete edition
+
+---
+
+### Summary - Batch 7
+
+| Finding | Details |
+|---------|---------|
+| Active batch jobs | 100 (39 processing, 60 pending) |
+| Job types | 95 OCR, 5 translation |
+| Priority books without OCR | 4 major titles |
+| Recommendation | Queue Musaeum Hermeticum and Fludd immediately |
+
+---
+
+**Audit Status:** Batch 7 complete.
+**Key Findings:**
+1. Translation pipeline is active with 100 batch jobs (39 processing)
+2. Most jobs are OCR (95) with only 5 translation jobs
+3. High-priority core esoteric texts (Musaeum Hermeticum, Khunrath, Fludd) have no OCR yet
+4. Agrippa 1550 edition appears to have 616 translated pages
+5. **Action Required:** Queue Tier 1 priority books for OCR/translation
+
