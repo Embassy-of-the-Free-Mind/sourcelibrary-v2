@@ -1,30 +1,35 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus } from '@/lib/gemini-batch';
 
 export const maxDuration = 300;
 
 /**
- * POST /api/batch-jobs/sync
+ * POST /api/batch-sync?limit=20
  *
- * Sync all pending/processing batch jobs with Gemini API.
+ * Sync pending/processing batch jobs with Gemini API.
  * Updates our database with latest status from Gemini.
  */
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const limit = parseInt(searchParams.get('limit') || '0') || 0;
+
     const db = await getDb();
 
-    console.log('[batch-jobs/sync] Starting sync...');
+    console.log('[batch-sync] Starting sync...');
 
     // Get all jobs that aren't saved or terminal
-    const jobs = await db.collection('batch_jobs')
+    const query = db.collection('batch_jobs')
       .find({
         status: { $nin: ['saved', 'cancelled', 'failed', 'expired'] },
         gemini_job_name: { $exists: true, $nin: [null, ''] },
       })
-      .toArray();
+      .sort({ created_at: 1 }); // Oldest first
 
-    console.log(`[batch-jobs/sync] Found ${jobs.length} jobs to sync`);
+    const jobs = await (limit > 0 ? query.limit(limit) : query).toArray();
+
+    console.log(`[batch-sync] Found ${jobs.length} jobs to sync${limit ? ` (limit: ${limit})` : ''}`);
 
     const stats = {
       synced: 0,

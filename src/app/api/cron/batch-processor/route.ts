@@ -21,12 +21,7 @@ const API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
  *
  * Recommended: Set up Vercel cron
  * Add to vercel.json:
- * {
- *   "crons": [{
- *     "path": "/api/cron/batch-processor",
- *     "schedule": "0 */6 * * *"
- *   }]
- * }
+ *   crons: [{ path: "/api/cron/batch-processor", schedule: "0 *​/6 * * *" }]
  */
 export async function POST(request: NextRequest) {
   const stats = {

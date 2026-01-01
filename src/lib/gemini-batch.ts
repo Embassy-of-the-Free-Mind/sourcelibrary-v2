@@ -332,7 +332,36 @@ export async function getBatchJobResults(jobName: string): Promise<BatchResponse
 
   const jobData = await jobResponse.json();
 
-  // Check for file-based output (metadata.destFile)
+  // Debug: log the response structure
+  console.log('[getBatchJobResults] Response keys:', Object.keys(jobData));
+  console.log('[getBatchJobResults] metadata keys:', jobData.metadata ? Object.keys(jobData.metadata) : 'no metadata');
+  if (jobData.metadata?.output) {
+    console.log('[getBatchJobResults] metadata.output keys:', Object.keys(jobData.metadata.output));
+  }
+
+  // Check for file-based output (metadata.output.responsesFile - current Gemini API format)
+  if (jobData.metadata?.output?.responsesFile) {
+    const fileName = jobData.metadata.output.responsesFile;
+    console.log('[getBatchJobResults] Downloading from responsesFile:', fileName);
+    const fileResponse = await fetch(
+      `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${apiKey}`,
+      {
+        method: 'GET',
+      }
+    );
+
+    if (!fileResponse.ok) {
+      const error = await fileResponse.text();
+      throw new Error(`Failed to download results file: ${error}`);
+    }
+
+    // Parse JSONL response
+    const text = await fileResponse.text();
+    const lines = text.trim().split('\n').filter(line => line.trim());
+    return lines.map(line => JSON.parse(line));
+  }
+
+  // Check for file-based output (metadata.destFile - legacy format)
   if (jobData.metadata?.destFile) {
     const fileName = jobData.metadata.destFile;
     const fileResponse = await fetch(

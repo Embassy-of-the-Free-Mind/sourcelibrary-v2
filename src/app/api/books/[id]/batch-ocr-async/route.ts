@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
+import { getOcrPrompt } from '@/lib/prompts';
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -79,9 +80,9 @@ export async function POST(
     const { id: bookId } = await params;
     const body = await request.json().catch(() => ({}));
     const {
-      limit = 100,
+      limit = 10, // Default to 10 pages per batch (research shows >10 causes quality degradation)
       language = 'Latin',
-      model = 'gemini-3-flash-preview',
+      model = 'gemini-2.5-flash',
     } = body;
 
     const db = await getDb();
@@ -126,6 +127,10 @@ export async function POST(
     // Build batch requests - each page is a separate request
     const batchRequests = [];
 
+    // Get the main OCR prompt with language substituted
+    const ocrPromptResult = await getOcrPrompt(language);
+    const prompt = ocrPromptResult.text;
+
     for (const page of pagesToProcess) {
       const typedPage = page as unknown as {
         cropped_photo?: string;
@@ -141,17 +146,6 @@ export async function POST(
         console.warn(`Failed to fetch image for page ${page.page_number}`);
         continue;
       }
-
-      const prompt = `You are an expert OCR system specializing in historical ${language} manuscripts and printed books.
-
-Transcribe the text from this page image accurately:
-- Preserve original spelling, punctuation, and formatting
-- Maintain paragraph structure
-- Note any unclear or damaged text with [unclear] or [damaged]
-- Keep line breaks where they appear significant
-- Transcribe in reading order (left to right, top to bottom)
-
-Output only the transcribed text, no commentary.`;
 
       batchRequests.push({
         key: page.id, // Use page ID as key for matching results

@@ -266,6 +266,7 @@ export async function POST(request: NextRequest) {
       book_title: bookTitle || book.title,
       model,
       language,
+      prompt_reference: ocrPrompt.reference, // Track which prompt version was used
       status: 'pending',
       gemini_state: geminiJob.state,
       page_ids: batchRequests.map((r) => r.key),
@@ -332,6 +333,7 @@ export async function GET() {
     return NextResponse.json({
       jobs: jobs.map((job) => ({
         id: job.id,
+        gemini_job_name: job.gemini_job_name,
         type: job.type,
         book_id: job.book_id,
         book_title: job.book_title,

@@ -115,6 +115,7 @@ export async function POST(request: NextRequest) {
                     language: job.language,
                     source: 'batch_api',
                     batch_job_id: job.id,
+                    prompt_reference: job.prompt_reference, // Track which prompt was used
                     input_tokens: usage?.promptTokenCount || 0,
                     output_tokens: usage?.candidatesTokenCount || 0,
                   },
