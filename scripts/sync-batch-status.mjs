@@ -93,6 +93,19 @@ async function syncStatuses() {
       process.stdout.write('.');
     } catch (e) {
       stats.errors++;
+      // Mark as expired if we get 404 from Gemini
+      if (e.message.includes('404') || e.message.includes('NOT_FOUND')) {
+        await db.collection('batch_jobs').updateOne(
+          { id: job.id },
+          {
+            $set: {
+              status: 'expired',
+              gemini_state: 'EXPIRED',
+              updated_at: new Date(),
+            },
+          }
+        );
+      }
       process.stdout.write('x');
     }
   }

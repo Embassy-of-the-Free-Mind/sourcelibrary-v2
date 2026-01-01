@@ -1,5 +1,7 @@
 /**
- * Cleanup orphan batch jobs that were never submitted to Gemini
+ * Cleanup batch jobs:
+ * - Orphan jobs (never submitted to Gemini)
+ * - Expired jobs (submitted but results not saved within 2-day window)
  */
 import { config } from 'dotenv';
 import { MongoClient } from 'mongodb';
@@ -18,27 +20,48 @@ async function cleanup() {
 
   // Categorize jobs
   const orphanJobs = allJobs.filter(j => !j.gemini_job_name);
-  const pendingWithGemini = allJobs.filter(j => j.gemini_job_name && j.status === 'pending');
-  const succeeded = allJobs.filter(j => j.gemini_state === 'JOB_STATE_SUCCEEDED' || j.status === 'saved');
-  const running = allJobs.filter(j => j.gemini_state === 'JOB_STATE_RUNNING' || j.gemini_state === 'JOB_STATE_PENDING');
+  const savedJobs = allJobs.filter(j => j.status === 'saved');
+
+  // After running sync-batch-status.mjs, expired jobs are marked with status='expired'
+  const expiredJobs = allJobs.filter(j => j.status === 'expired' || j.gemini_state === 'EXPIRED');
+
+  const activeJobs = allJobs.filter(j =>
+    j.gemini_job_name &&
+    j.status !== 'saved' &&
+    j.status !== 'expired'
+  );
 
   console.log(`\nBreakdown:`);
+  console.log(`  - Saved (results in DB): ${savedJobs.length}`);
+  console.log(`  - Active (< 2 days old): ${activeJobs.length}`);
+  console.log(`  - Expired (> 2 days, not saved): ${expiredJobs.length}`);
   console.log(`  - Orphan (no gemini_job_name): ${orphanJobs.length}`);
-  console.log(`  - Pending with Gemini job: ${pendingWithGemini.length}`);
-  console.log(`  - Succeeded/Saved: ${succeeded.length}`);
-  console.log(`  - Running/Pending at Gemini: ${running.length}`);
-
-  // Show orphan books
-  const orphanBooks = [...new Set(orphanJobs.map(j => j.book_title))];
-  console.log(`\nOrphan jobs span ${orphanBooks.length} unique books`);
 
   // Delete orphan jobs
   if (orphanJobs.length > 0) {
     console.log(`\nDeleting ${orphanJobs.length} orphan jobs...`);
     const result = await db.collection('batch_jobs').deleteMany({
-      gemini_job_name: { $in: [null, ''] }
+      $or: [
+        { gemini_job_name: null },
+        { gemini_job_name: '' },
+        { gemini_job_name: { $exists: false } }
+      ]
     });
-    console.log(`Deleted: ${result.deletedCount} jobs`);
+    console.log(`Deleted: ${result.deletedCount} orphan jobs`);
+  }
+
+  // Delete expired jobs
+  if (expiredJobs.length > 0) {
+    console.log(`\nDeleting ${expiredJobs.length} expired jobs...`);
+    const expiredIds = expiredJobs.map(j => j._id);
+    const result = await db.collection('batch_jobs').deleteMany({
+      _id: { $in: expiredIds }
+    });
+    console.log(`Deleted: ${result.deletedCount} expired jobs`);
+
+    // Show affected books
+    const expiredBooks = [...new Set(expiredJobs.map(j => j.book_title))];
+    console.log(`Affected ${expiredBooks.length} unique books (will need re-OCR)`);
   }
 
   // Also clean up the 'jobs' collection (the old job queue)
@@ -49,7 +72,6 @@ async function cleanup() {
 
   if (queuedJobs.length > 0) {
     console.log(`\nFound ${queuedJobs.length} pending jobs in 'jobs' collection`);
-    // Don't delete these - they might be needed
   }
 
   console.log('\n=== Cleanup Complete ===');

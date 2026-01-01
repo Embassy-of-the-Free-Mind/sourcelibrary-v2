@@ -15,7 +15,18 @@ async function getBatchResults(jobName) {
   if (!jobRes.ok) throw new Error(`Failed to get job: ${await jobRes.text()}`);
   const job = await jobRes.json();
 
-  // Check for file-based output
+  // Check for file-based output (responsesFile - newer format)
+  if (job.metadata?.output?.responsesFile) {
+    const fileName = job.metadata.output.responsesFile;
+    const fileRes = await fetch(
+      `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${API_KEY}`
+    );
+    if (!fileRes.ok) throw new Error(`Failed to download results from ${fileName}`);
+    const text = await fileRes.text();
+    return text.trim().split('\n').filter(l => l).map(l => JSON.parse(l));
+  }
+
+  // Check for legacy destFile
   if (job.metadata?.destFile) {
     const fileName = job.metadata.destFile;
     const fileRes = await fetch(
@@ -47,9 +58,10 @@ async function saveResults() {
   console.log('=== Saving Batch Results ===\n');
 
   // Get completed jobs that haven't been saved
+  // Handle both state naming conventions (BATCH_STATE_* and JOB_STATE_*)
   const jobs = await db.collection('batch_jobs')
     .find({
-      gemini_state: 'BATCH_STATE_SUCCEEDED',
+      gemini_state: { $in: ['BATCH_STATE_SUCCEEDED', 'JOB_STATE_SUCCEEDED'] },
       status: { $ne: 'saved' }
     })
     .toArray();
@@ -151,6 +163,17 @@ async function saveResults() {
 
     } catch (e) {
       console.error(`  Error: ${e.message}`);
+      // Mark as failed so we don't retry infinitely
+      await db.collection('batch_jobs').updateOne(
+        { id: job.id },
+        {
+          $set: {
+            status: 'failed',
+            error_message: e.message,
+            updated_at: new Date(),
+          },
+        }
+      );
     }
   }
 

@@ -444,19 +444,24 @@ export default function TranslationEditor({
   // Tier 2: Display (1200px) - for main reading view
   // Tier 3: Full (2400px) - for magnifier, fullscreen
   const getImageUrl = (p: Page, tier: 'thumbnail' | 'display' | 'full' = 'display') => {
-    const baseUrl = p.photo_original || p.photo;
-    if (!baseUrl) return '';
-
     const widths = { thumbnail: 150, display: 1200, full: 2400 };
     const qualities = { thumbnail: 60, display: 80, full: 90 };
     const width = widths[tier];
     const quality = qualities[tier];
 
-    // If we have a pre-generated cropped photo and it's display tier, use it
-    const croppedPhoto = (p as unknown as Record<string, unknown>).cropped_photo as string | undefined;
-    if (tier === 'display' && p.crop && croppedPhoto) {
+    // Cast to access optional fields
+    const pageData = p as unknown as Record<string, unknown>;
+    const croppedPhoto = pageData.cropped_photo as string | undefined;
+    const archivedPhoto = pageData.archived_photo as string | undefined;
+
+    // If we have a pre-generated cropped photo (for split pages), use it directly
+    if (p.crop && croppedPhoto) {
       return croppedPhoto;
     }
+
+    // Prefer archived photo (Vercel Blob) for faster/reliable loading
+    const baseUrl = archivedPhoto || p.photo_original || p.photo;
+    if (!baseUrl) return '';
 
     // Build URL with crop parameters if available
     if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
@@ -504,8 +509,10 @@ export default function TranslationEditor({
     const getSmallImageUrl = (p: Page) => {
       if (p.thumbnail) return p.thumbnail;
       if (p.compressed_photo) return p.compressed_photo;
-      // Use resize API for small version
-      return `/api/image?url=${encodeURIComponent(p.photo)}&w=150&q=60`;
+      // Use resize API for small version, prefer archived_photo
+      const pageData = p as unknown as Record<string, unknown>;
+      const baseUrl = (pageData.archived_photo as string) || p.photo;
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
     };
 
     const prefetchImage = (url: string) => {

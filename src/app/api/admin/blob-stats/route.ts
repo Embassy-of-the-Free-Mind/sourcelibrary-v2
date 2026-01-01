@@ -56,6 +56,24 @@ export async function GET() {
       { projection: { photo: 1, book_id: 1, id: 1 } }
     );
 
+    // Count pages with summaries
+    const pagesWithSummary = await db.collection('pages').countDocuments({
+      'summary.data': { $exists: true, $nin: [null, ''] }
+    });
+
+    // Count pages with OCR
+    const pagesWithOcr = await db.collection('pages').countDocuments({
+      'ocr.data': { $exists: true, $nin: [null, ''] }
+    });
+
+    // Count pages with translation
+    const pagesWithTranslation = await db.collection('pages').countDocuments({
+      'translation.data': { $exists: true, $nin: [null, ''] }
+    });
+
+    // Total pages
+    const totalPages = await db.collection('pages').countDocuments({});
+
     // Get books by image_source provider
     const booksByProvider = await db.collection('books').aggregate([
       {
@@ -71,6 +89,12 @@ export async function GET() {
     const totalBlobPages = pagesWithCroppedPhoto + pagesWithArchivedPhoto + pagesWithBlobPhoto;
 
     return NextResponse.json({
+      totalPages,
+      processing: {
+        pagesWithOcr,
+        pagesWithTranslation,
+        pagesWithSummary,
+      },
       vercelBlob: {
         pagesWithCroppedPhoto,
         pagesWithArchivedPhoto,
