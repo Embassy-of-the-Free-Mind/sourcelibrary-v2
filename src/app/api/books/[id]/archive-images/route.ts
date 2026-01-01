@@ -5,11 +5,15 @@ import { getDb } from '@/lib/mongodb';
 // Increase timeout for archiving many images
 export const maxDuration = 300;
 
+// Regex pattern to match pages from external sources that can be archived
+const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de/;
+
 /**
  * POST /api/books/[id]/archive-images
  *
- * Download images from Internet Archive and upload to Vercel Blob.
- * This makes images available even when IA is down.
+ * Download images from external sources and upload to Vercel Blob.
+ * Supports: Internet Archive, Gallica (BnF), MDZ (Bavarian State Library)
+ * This makes images available even when source sites are down.
  */
 export async function POST(
   request: NextRequest,
@@ -32,12 +36,12 @@ export async function POST(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Find pages that need archiving
+    // Find pages that need archiving (from IA, Gallica, or MDZ)
     const query: Record<string, unknown> = {
       book_id: bookId,
       $or: [
-        { photo: { $regex: /archive\.org/ } },
-        { photo_original: { $regex: /archive\.org/ } },
+        { photo: { $regex: ARCHIVABLE_SOURCES_REGEX } },
+        { photo_original: { $regex: ARCHIVABLE_SOURCES_REGEX } },
       ],
     };
 
@@ -82,7 +86,7 @@ export async function POST(
       });
     }
 
-    // Process in batches of 5 to avoid overwhelming IA
+    // Process in batches of 5 to avoid overwhelming source servers
     const batchSize = 5;
     const results: Array<{
       pageId: string;
@@ -103,7 +107,7 @@ export async function POST(
           const sourceUrl = page.photo_original || page.photo;
 
           try {
-            // Download from IA
+            // Download from source (IA, Gallica, or MDZ)
             const response = await fetch(sourceUrl);
             if (!response.ok) {
               return {
@@ -160,7 +164,7 @@ export async function POST(
 
       results.push(...batchResults);
 
-      // Small delay between batches to be nice to IA
+      // Small delay between batches to be nice to source servers
       if (i + batchSize < pagesToArchive.length) {
         await new Promise(r => setTimeout(r, 500));
       }
@@ -176,8 +180,8 @@ export async function POST(
       book_id: bookId,
       archived_photo: { $exists: false },
       $or: [
-        { photo: { $regex: /archive\.org/ } },
-        { photo_original: { $regex: /archive\.org/ } },
+        { photo: { $regex: ARCHIVABLE_SOURCES_REGEX } },
+        { photo_original: { $regex: ARCHIVABLE_SOURCES_REGEX } },
       ],
     });
 
@@ -238,12 +242,12 @@ export async function GET(
       archived_photo: { $exists: true, $ne: null }
     });
 
-    const iaPages = await db.collection('pages').countDocuments({
+    const externalPages = await db.collection('pages').countDocuments({
       book_id: bookId,
       archived_photo: { $exists: false },
       $or: [
-        { photo: { $regex: /archive\.org/ } },
-        { photo_original: { $regex: /archive\.org/ } },
+        { photo: { $regex: ARCHIVABLE_SOURCES_REGEX } },
+        { photo_original: { $regex: ARCHIVABLE_SOURCES_REGEX } },
       ],
     });
 
@@ -272,7 +276,7 @@ export async function GET(
       title: book.title,
       totalPages,
       archivedPages,
-      iaPages,
+      externalPages,
       percentArchived: totalPages > 0 ? Math.round((archivedPages / totalPages) * 100) : 0,
       storage: {
         archivedBytes: totalArchivedBytes,
