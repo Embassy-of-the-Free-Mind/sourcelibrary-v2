@@ -106,6 +106,47 @@ All import routes:
 - Queue split detection for two-page spreads
 - Return book ID and URL on success
 
+## Image Archiving & Provenance
+
+Images from external sources (IA, Gallica, MDZ) are archived to Vercel Blob for reliability and performance. **Original provenance is always preserved.**
+
+### Archive Endpoint
+```
+POST /api/books/[id]/archive-images
+{ "limit": 100 }    // Archive up to 100 pages
+```
+
+### Provenance Fields (Book Level)
+Every imported book has an `image_source` object:
+```json
+{
+  "provider": "gallica",
+  "provider_name": "Gallica (Bibliothèque nationale de France)",
+  "source_url": "https://gallica.bnf.fr/ark:/12148/btv1b107201676",
+  "iiif_manifest": "https://gallica.bnf.fr/iiif/ark:/12148/.../manifest.json",
+  "identifier": "btv1b107201676",
+  "license": "https://gallica.bnf.fr/html/und/conditions-dutilisation...",
+  "license_url": "https://...",
+  "attribution": "Bibliothèque nationale de France",
+  "access_date": "2026-01-01T21:46:58.840Z"
+}
+```
+
+Dublin Core identifiers also stored: `dublin_core.dc_source`, `dublin_core.dc_identifier`
+
+### Provenance Fields (Page Level)
+- `photo_original` - Original IIIF URL from source institution (never overwritten)
+- `archived_photo` - Vercel Blob URL (used for display when available)
+- `archive_metadata.source_url` - URL archived from
+- `archive_metadata.archived_at` - Timestamp of archiving
+- `archive_metadata.bytes` - File size
+
+### Why Archive?
+- Source IIIF servers can be slow or rate-limited
+- Vercel Blob CDN provides faster, more reliable access
+- Original URLs preserved for citation and verification
+- No data loss - originals always accessible via `photo_original`
+
 ## Project Context
 
 This is Source Library v2, a Next.js application for digitizing and translating historical texts.
