@@ -6,6 +6,7 @@ import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, 
 import { Book, Page } from '@/lib/types';
 import { QuoteShare } from '@/components/ShareButton';
 import SectionsNav from '@/components/SectionsNav';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface SectionSummary {
   title: string;
@@ -135,7 +136,7 @@ export default function GuidePage({ params }: GuidePageProps) {
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader label="Loading reading guide..." />
       </div>
     );
   }
@@ -180,12 +181,16 @@ export default function GuidePage({ params }: GuidePageProps) {
       </header>
 
       {/* Book info */}
-      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-8 sm:py-10">
+      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-10 sm:py-14">
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1 className="text-2xl sm:text-3xl font-serif font-bold">
+          <p className="text-amber-400 text-sm uppercase tracking-widest mb-3">Reading Guide</p>
+          <h1
+            className="text-3xl sm:text-4xl italic leading-tight"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+          >
             {book.display_title || book.title}
           </h1>
-          <p className="text-stone-300 mt-2">{book.author}</p>
+          <p className="text-stone-300 mt-3 text-lg">{book.author}</p>
           {book.published && (
             <p className="text-stone-400 text-sm mt-1">{book.published}</p>
           )}
@@ -197,18 +202,28 @@ export default function GuidePage({ params }: GuidePageProps) {
         <section className="mb-8">
           {summary ? (
             <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-              <div className="p-6">
-                <h2 className="text-lg font-semibold text-stone-900 mb-4">Overview</h2>
-                <div className="prose prose-stone prose-sm max-w-none">
+              <div className="p-6 sm:p-8">
+                <h2
+                  className="text-2xl text-stone-900 mb-5"
+                  style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                >
+                  Overview
+                </h2>
+                <div className="prose prose-stone max-w-none">
                   {summary.overview.split('\n\n').map((p, i) => (
-                    <p key={i} className="text-stone-700 leading-relaxed mb-3">{p}</p>
+                    <p key={i} className="text-stone-700 leading-relaxed mb-4 text-base">{p}</p>
                   ))}
                 </div>
 
                 {/* Key Quotes */}
                 {summary.quotes && summary.quotes.length > 0 && (
-                  <div className="mt-6 pt-6 border-t border-stone-100">
-                    <h3 className="text-sm font-semibold text-stone-600 mb-4">Notable Passages</h3>
+                  <div className="mt-8 pt-8 border-t border-stone-100">
+                    <h3
+                      className="text-xl text-stone-800 mb-5"
+                      style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                    >
+                      Notable Passages
+                    </h3>
                     <div className="space-y-4">
                       {summary.quotes.map((quote, i) => (
                         <blockquote
@@ -245,8 +260,13 @@ export default function GuidePage({ params }: GuidePageProps) {
 
                 {/* Themes */}
                 {summary.themes && summary.themes.length > 0 && (
-                  <div className="mt-6 pt-6 border-t border-stone-100">
-                    <h3 className="text-sm font-semibold text-stone-600 mb-3">Key Themes</h3>
+                  <div className="mt-8 pt-8 border-t border-stone-100">
+                    <h3
+                      className="text-xl text-stone-800 mb-4"
+                      style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                    >
+                      Key Themes
+                    </h3>
                     <div className="flex flex-wrap gap-2">
                       {summary.themes.map((theme, i) => (
                         <span
@@ -262,10 +282,15 @@ export default function GuidePage({ params }: GuidePageProps) {
               </div>
             </div>
           ) : translatedPages.length > 0 ? (
-            <div className="bg-white rounded-xl border border-stone-200 p-6 text-center">
-              <Sparkles className="w-8 h-8 text-amber-500 mx-auto mb-3" />
-              <h2 className="text-lg font-semibold text-stone-900 mb-2">Generate Reading Guide</h2>
-              <p className="text-stone-600 text-sm mb-4">
+            <div className="bg-white rounded-xl border border-stone-200 p-8 sm:p-10 text-center">
+              <Sparkles className="w-10 h-10 text-amber-500 mx-auto mb-4" />
+              <h2
+                className="text-2xl text-stone-900 mb-3"
+                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              >
+                Generate Reading Guide
+              </h2>
+              <p className="text-stone-600 mb-6 max-w-md mx-auto">
                 Create an overview of this text with key quotes and themes.
               </p>
               <button
@@ -310,11 +335,17 @@ export default function GuidePage({ params }: GuidePageProps) {
           <section className="mb-8">
             <button
               onClick={() => setShowSections(!showSections)}
-              className="w-full flex items-center justify-between p-4 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors mb-4"
+              className="w-full flex items-center justify-between p-5 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors mb-4"
             >
-              <span className="font-semibold text-stone-900 flex items-center gap-2">
-                <List className="w-4 h-4 text-amber-600" />
-                Table of Contents ({sections.length} sections)
+              <span
+                className="text-xl text-stone-900 flex items-center gap-3"
+                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              >
+                <List className="w-5 h-5 text-amber-600" />
+                Table of Contents
+                <span className="text-sm text-stone-500 font-normal" style={{ fontFamily: 'inherit' }}>
+                  ({sections.length} sections)
+                </span>
               </span>
               {showSections ? (
                 <ChevronUp className="w-5 h-5 text-stone-500" />
