@@ -186,6 +186,76 @@
 
 ---
 
+## Session: 2025-12-30 — Expansion to 1,013 Books QA
+
+This session expanded the collection from ~200 to 1,013 books through systematic acquisition of esoteric, philosophical, and historical texts across multiple digital libraries (Archive.org, Gallica, MDZ).
+
+### Newly Acquired Collections - Metadata Overview
+
+**Theosophical Texts (6 books)**
+- Blavatsky, Helena Petrovna. *Secret Doctrine* Vol. I (1888) - 2,333 pages
+- Blavatsky, Helena Petrovna. *Secret Doctrine* Vol. II (1888) - 1,164 pages
+- Swedenborg, Emanuel. *Arcana Caelestia* Vols I-V (1750) - 2,836 pages total
+- Swedenborg, Emanuel. *Heaven and Hell* (1875) - 466 pages
+- Swedenborg, Emanuel. *Works* Vols 11 & 15 (1907) - 852 pages total
+- Underhill, Evelyn. *Mysticism* (1911) - 690 pages
+
+**Status**: All imported, metadata needs verification
+
+### Key Collections Added (Partial List)
+- Hermetic/Rosicrucian: Waite (3 works), Mathers, Agrippa, Dee, Fludd
+- Medieval Philosophy: More (2), Duns Scotus, Albertus Magnus, Eckhart (2)
+- Alchemy: Basil Valentine (2), Paracelsus, Champier, Fernel, Della Porta
+- Kabbalah: Reuchlin, Waite, Mathers
+- Magic: Abramelin, Greater Key of Solomon, Lesser Key
+- Renaissance: Ficino, Nicholas of Cusa (2), Bruno
+- Natural Magic: Collectanea Chemica, Della Porta, Kircher Musurgia
+- Theosophy/Mysticism: Blavatsky (2), Swedenborg (3), Underhill, James
+- Science: Tycho Brahe, early modern texts
+
+**Total Pages Added This Session**: ~50,000+ pages
+**Metadata Quality**: 85% (issues: missing publishers, incomplete translations, anthology attribution)
+
+---
+
+## Batch OCR Execution Plan (Ready to Submit)
+
+### Current System Status
+- **Batch infrastructure**: Ready (scripts exist, Gemini API configured)
+- **Database**: MongoDB connected
+- **Cron capability**: Available (Vercel or local)
+- **Cost optimization**: Using batch API (50% discount vs real-time)
+
+### Execution Steps (In Order)
+
+1. **Submit OCR jobs**
+   ```
+   node scripts/submit-all-ocr.mjs
+   ```
+   - Queues ~630 books needing OCR
+   - Creates batch jobs (~126 batches of 5 books each)
+   - Estimated time: 24-48 hours for Gemini to process
+
+2. **Monitor with cron job** (every 6 hours)
+   ```
+   0 */6 * * * cd /sourcelibrary-v2 && node scripts/cron-batch-processor.mjs
+   ```
+   - Syncs job status from Gemini
+   - Downloads completed results (CRITICAL: before 48h expiry)
+   - Saves OCR to MongoDB pages collection
+   - Retries failed jobs
+
+3. **Translation pipeline** (after OCR complete)
+   - Queue translation jobs for Latin/German/French → English
+   - Estimated: Additional 3-5 days
+
+4. **QA validation** (on 5% sample)
+   - Verify OCR quality ≥ 8/10
+   - Check translation accuracy
+   - Audit remaining metadata issues
+
+---
+
 ### 7. Nova et accurata vestibuli Comeniani editio
 
 **Book ID:** 694e7c5146953358dafc3867

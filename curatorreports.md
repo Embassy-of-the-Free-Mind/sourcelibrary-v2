@@ -2720,3 +2720,507 @@ Primary sources of the Scientific Revolution (1543-1700): Copernicus, Galileo, K
 | **GRAND TOTAL** | **455** | **210,231** |
 
 ---
+
+## Session 022: 2025-12-31 — Intelligence, Mind & Consciousness (Cross-Cultural)
+
+### Mission Statement
+Acquisition session focused on philosophical and esoteric texts dealing with intelligence, mind, and consciousness across diverse cultural traditions. This session expanded beyond the Western esoteric canon to include Islamic, Chinese, and Buddhist philosophical traditions.
+
+### Summary
+- **Books acquired**: 4
+- **Total pages**: 1,778
+- **Languages**: Latin, English, Chinese, Sanskrit
+- **Date range**: 1546-1960
+- **Traditions**: Islamic, Christian Platonist, Neo-Confucian, Buddhist
+
+---
+
+### Acquired Works
+
+#### 1. Compendium de anima (1546)
+**Author**: Avicenna (Ibn Sina)
+**Language**: Latin | **Pages**: 290 | **Source**: Archive.org `bub_gb_39sJapY8Q-QC`
+**Theme**: Islamic philosophy of soul and intellect
+**Score**: 10/10
+**Book ID**: `6955808657e3b773024f5899`
+**URL**: https://sourcelibrary.org/book/6955808657e3b773024f5899
+
+**Notes**: 16th-century Latin translation of Avicenna's pivotal work on the soul, including De mahad (disposition after death), Aphorismi de anima, and De divisionibus scientiarum. Translated by Andrea Alpago from Arabic. Central text for understanding Islamic Peripatetic philosophy of mind and its influence on medieval European thought. Complements existing Canon Medicinae in collection.
+
+**Significance**: Avicenna's psychology was foundational for both Islamic and Latin medieval philosophy. His theory of the "flying man" thought experiment and doctrine of the intellect influenced Aquinas, Albertus Magnus, and the entire scholastic tradition.
+
+---
+
+#### 2. The Immortality of the Soul (1659)
+**Author**: Henry More
+**Language**: English | **Pages**: 634 | **Source**: Archive.org `moreimmortalityofthesoul`
+**Theme**: Cambridge Platonist philosophy of consciousness
+**Score**: 10/10
+**Book ID**: `695580a857e3b773024f59bc`
+**URL**: https://sourcelibrary.org/book/695580a857e3b773024f59bc
+
+**Notes**: First edition of More's systematic defense of the soul's immortality using both rational demonstration and natural philosophy. Published by J. Flesher for William Morden, Cambridge. More argues for the reality of spiritual substance against materialist atheism, developing a Neoplatonic-Christian metaphysics of consciousness. Important companion to his "Antidote Against Atheism" (already in collection).
+
+**Significance**: Henry More was a leading Cambridge Platonist whose philosophy of "Spirit of Nature" and defense of immaterial substance influenced Newton's concepts of absolute space and influenced later idealist philosophy. His work represents a crucial bridge between Renaissance Neoplatonism and early modern philosophy of mind.
+
+---
+
+#### 3. Confucian Cosmogony (1874)
+**Author**: Zhu Xi (朱熹, 1130-1200)
+**Language**: Chinese (with English translation) | **Pages**: 192 | **Source**: Archive.org `cu31924023157765`
+**Theme**: Neo-Confucian philosophy of principle (理) and mind (心)
+**Score**: 8.5/10
+**Book ID**: `695580ac57e3b773024f5c37`
+**URL**: https://sourcelibrary.org/book/695580ac57e3b773024f5c37
+
+**Notes**: Translation of Section 49 from Zhu Xi's Complete Works (朱子全書), published by American Presbyterian Mission Press, Shanghai. Bilingual Chinese-English edition providing access to Zhu Xi's cosmological philosophy. Discusses the relationship between principle (li 理), material force (qi 氣), and the Supreme Ultimate (taiji 太極) - foundational concepts for understanding Neo-Confucian theories of mind and consciousness.
+
+**Significance**: Zhu Xi synthesized earlier Neo-Confucian thought into the orthodox system that dominated Chinese intellectual life for centuries. His philosophy of mind distinguishes between the "mind of the Way" (道心) and "human mind" (人心), parallel to Western distinctions between rational intellect and sensory consciousness. Essential for comparative philosophy of mind.
+
+---
+
+#### 4. Madhyamaka Shastra (c. 1960)
+**Author**: Nagarjuna (龍樹, c. 150-250 CE)
+**Language**: Sanskrit (with English) | **Pages**: 662 | **Source**: Archive.org `MadhyamakaShastraOfNagarjunaDr.P.L.Vaidya`
+**Theme**: Buddhist philosophy of emptiness and consciousness
+**Score**: 8.2/10
+**Book ID**: `695580ca57e3b773024f64ec`
+**URL**: https://sourcelibrary.org/book/695580ca57e3b773024f64ec
+
+**Notes**: Critical Sanskrit edition by Dr. P.L. Vaidya of Nagarjuna's Mulamadhyamakakarika (Root Verses on the Middle Way). While a 20th-century scholarly edition, it provides access to the original Sanskrit alongside English for this foundational Buddhist philosophical text. Nagarjuna's analysis of consciousness, emptiness (śūnyatā), and dependent origination revolutionized Buddhist philosophy and influenced later Yogacara consciousness-only (vijñaptimātra) doctrine.
+
+**Significance**: Nagarjuna founded the Madhyamaka school of Buddhism and his dialectical method of demonstrating emptiness through reductio ad absurdum influenced East Asian Buddhist philosophy for two millennia. His analysis of consciousness as lacking inherent existence provides a radical alternative to both Western substance metaphysics and Hindu Atman doctrines. Essential for understanding Buddhist contributions to philosophy of mind.
+
+---
+
+### Thematic Rationale
+
+This acquisition session addresses the user's request for works on intelligence, mind, and consciousness from **both Western and diverse philosophical traditions**. The selection creates a cross-cultural dialogue:
+
+**Islamic Contribution**: Avicenna's De Anima represents the Peripatetic-Neoplatonic synthesis that transmitted Greek philosophy through Arabic to Latin Europe. His theory of the intellect as separate substance influenced both Eastern and Western philosophy.
+
+**Christian Platonist Contribution**: Henry More's Immortality of the Soul represents Cambridge Platonism's integration of Platonic metaphysics with Christian theology and early modern natural philosophy, addressing consciousness and immaterial substance.
+
+**Chinese Contribution**: Zhu Xi's Confucian Cosmogony provides the Neo-Confucian perspective on principle (li) and mind-heart (xin), offering a non-dualistic metaphysics distinct from both Western substance philosophy and Buddhist emptiness.
+
+**Buddhist Contribution**: Nagarjuna's Madhyamaka Shastra presents the Buddhist analysis of consciousness as empty of inherent existence, challenging substantialist assumptions about mind found in other traditions.
+
+Together, these works enable comparative study of how different philosophical traditions conceptualized intelligence, consciousness, and the nature of mind.
+
+---
+
+### Collection Context
+
+**Existing related holdings** (confirmed in collection):
+- Ralph Cudworth: *The True Intellectual System of the Universe* (1678) - Cambridge Platonist cosmology
+- Henry More: *Divine Dialogues* and *Philosophical Writings* - Other More works
+- Agrippa: *De Occulta Philosophia* (1533) - Renaissance philosophy of mind and magic
+- Pico della Mirandola: *Opera Omnia*, *Oratio de hominis dignitate* - Florentine Platonism
+- Proclus: *Elements of Theology*, *Commentary on Timaeus* - Neoplatonic metaphysics
+- Averroes: *Kitab Falsafat* - Islamic Aristotelianism (though not specifically De Anima commentary)
+
+**Gaps filled by this acquisition**:
+1. Avicenna's specific treatise on the soul (previously only had Canon Medicinae)
+2. Henry More's major work on immortality and consciousness
+3. Chinese Neo-Confucian philosophy (first acquisition)
+4. Buddhist Madhyamaka philosophy (first acquisition)
+
+---
+
+### Next Steps & Future Acquisitions
+
+**High Priority**:
+1. **Averroes' Long Commentary on De Anima** from Juntine edition (1562-1574) - Complete the Islamic Peripatetic trilogy
+2. **Ibn Gabirol's Fons Vitae** (Latin edition) - Jewish Neoplatonism on matter, form, and intellect
+3. **Thomas Aquinas' De Anima commentary** - Scholastic synthesis of Aristotle and Avicenna
+4. **Yogacara texts** (Vasubandhu, Asanga) - Buddhist consciousness-only school
+
+**Medium Priority**:
+5. **Wang Yangming's works** in Chinese - Ming dynasty Neo-Confucian philosophy of mind
+6. **Maimonides' Guide for the Perplexed** (Latin/Hebrew 16th-17th c.) - Jewish philosophy of intellect
+7. **Marsilio Ficino's Theologia Platonica** - Renaissance psychology and immortality
+8. **John Smith's Select Discourses** - Another Cambridge Platonist on reason and spirit
+
+---
+
+### Research Value
+
+This collection now supports scholarly research in:
+- **Comparative philosophy of mind**: Western, Islamic, Chinese, Buddhist perspectives
+- **History of psychology**: Pre-modern theories of intellect and consciousness
+- **Translation studies**: Transmission of philosophical concepts across languages/cultures
+- **Intellectual history**: How different civilizations conceptualized mind and intelligence
+- **Esoteric philosophy**: Spiritual dimensions of consciousness in multiple traditions
+
+The bilingual editions (Chinese-English, Sanskrit-English) are particularly valuable for scholars working across languages.
+
+---
+
+### Session Statistics
+
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Compendium de anima (1546) | Avicenna (Ibn Sina) | 290 | 6955808657e3b773024f5899 |
+| The Immortality of the Soul (1659) | Henry More | 634 | 695580a857e3b773024f59bc |
+| Confucian Cosmogony (1874) | Zhu Xi | 192 | 695580ac57e3b773024f5c37 |
+| Madhyamaka Shastra (c. 1960) | Nagarjuna | 662 | 695580ca57e3b773024f64ec |
+
+**Session 022 Total: 4 books, 1,778 pages**
+
+### Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-021 | 455 | 210,231 |
+| Session 022 | 4 | 1,778 |
+| **GRAND TOTAL** | **459** | **212,009** |
+
+---
+
+## Session 022 Part 2: Continuation - Scholastic & Comparative Philosophy
+
+### Additional Acquisitions (5 books, 4,005 pages)
+
+#### 5. Long Commentary on the De Anima of Aristotle (1953)
+**Author**: Averroes (Ibn Rushd)
+**Language**: Latin & English | **Pages**: 618 | **Source**: Archive.org `longcommentaryon0000aver`
+**Theme**: Islamic Aristotelian commentary on soul and intellect
+**Score**: 9.5/10
+**Book ID**: `695582f657e3b773024f6ec5`
+**URL**: https://sourcelibrary.org/book/695582f657e3b773024f6ec5
+
+**Notes**: Critical edition by F. Stuart Crawford of Averroes' comprehensive commentary on Aristotle's De Anima. This is the "Long Commentary" (as opposed to middle and short commentaries), representing Averroes' most detailed analysis of Aristotelian psychology. Includes the medieval Latin translation that was foundational for scholastic debates about the unity of the intellect. Completes the Islamic Peripatetic trilogy with Avicenna and Al-Farabi.
+
+**Significance**: Averroes' doctrine of the single, universal Active Intellect shared by all humanity sparked major controversies in medieval Europe. Thomas Aquinas wrote "De Unitate Intellectus" specifically to refute Averroist interpretations. This commentary was central to debates about individual immortality, the relationship between faith and reason, and the nature of human cognition.
+
+---
+
+#### 6. Commentary on Aristotle's Treatise on the Soul (1946)
+**Author**: Thomas Aquinas
+**Language**: Latin & English | **Pages**: 100 | **Source**: Archive.org `CommentaryOfSt.ThomasAquinasOnAristotlesTreatiseOnTheSoul`
+**Theme**: Scholastic synthesis of Aristotle, Avicenna, and Christian theology
+**Score**: 9/10
+**Book ID**: `695582f957e3b773024f7130`
+**URL**: https://sourcelibrary.org/book/695582f957e3b773024f7130
+
+**Notes**: Translation by R.A. Kocourek of Aquinas' commentary on Aristotle's De Anima. Aquinas attempts to synthesize Aristotelian hylomorphism with Christian doctrines of personal immortality and divine creation. He navigates between Averroes' monopsychism and Avicenna's separate Active Intellect, developing his own account of the rational soul as the substantial form of the body yet subsisting after death.
+
+**Significance**: Aquinas' commentary became the orthodox Catholic interpretation of Aristotelian psychology, resolving apparent conflicts between Greek philosophy and Christian faith. His concept of the soul as forma substantialis was definitive for scholastic anthropology and remains influential in Thomistic philosophy.
+
+---
+
+#### 7. Select Discourses (1660)
+**Author**: John Smith (Cambridge Platonist)
+**Language**: English | **Pages**: 596 | **Source**: Archive.org `selectdiscourses00smit`
+**Theme**: Cambridge Platonist spirituality and reason
+**Score**: 9/10
+**Book ID**: `6955831157e3b773024f7195`
+**URL**: https://sourcelibrary.org/book/6955831157e3b773024f7195
+
+**Notes**: First edition, edited by John Worthington and printed by J. Flesher for W. Morden, Cambridge. Contains Smith's ten discourses treating: (1) Divine knowledge, (2) Superstition, (3) Atheism, (4) Immortality of the soul, (5) Existence and nature of God, (6) Prophecy, (7) Legal vs. evangelical righteousness, (8) Pharisaick righteousness, (9) Excellency of true religion, (10) Christian conflicts with Satan. Represents the spiritual-mystical dimension of Cambridge Platonism, complementing More and Cudworth's metaphysical works.
+
+**Significance**: John Smith (1618-1652) died young but his Select Discourses became a classic of English spirituality. He emphasized the "deiformity" of the soul and experiential knowledge of God through reason purified by virtue. His work bridges rational theology and mysticism, influencing later Anglican thought and American Transcendentalism.
+
+---
+
+#### 8. Fons Vitae (1895 critical edition of 12th c. Latin)
+**Author**: Ibn Gabirol (Avicebron)
+**Language**: Latin | **Pages**: 483 | **Source**: Archive.org `avencebrolisibn00domigoog`
+**Theme**: Jewish Neoplatonism on matter, form, and universal hylomorphism
+**Score**: 9/10
+**Book ID**: `6955831457e3b773024f74ca`
+**URL**: https://sourcelibrary.org/book/6955831457e3b773024f74ca
+
+**Notes**: Clemens Baeumker's critical edition (1892-1895) of the 12th-century Latin translation by Johannes Hispanus and Dominicus Gundissalinus. Ibn Gabirol's "Fountain of Life" presents a Neoplatonic metaphysics where all beings (including spiritual substances) are composed of matter and form. Only God is absolutely simple. The work was influential in medieval scholasticism, though Gabirol's Jewish authorship was unknown - he was thought to be a Muslim or Christian philosopher named "Avicebron."
+
+**Significance**: Gabirol's universal hylomorphism (matter-form composition in all creatures, even angels) was adopted by Franciscan scholastics like Bonaventure but rejected by Thomists. His doctrine of spiritual matter influenced debates about angelology and the composition of the soul. The work represents Jewish philosophy's contribution to medieval Christian thought, transmitted unknowingly.
+
+---
+
+#### 9. Abhidharmakosa with Bhashya (c. 1970 Sanskrit edition)
+**Author**: Vasubandhu
+**Language**: Sanskrit & English | **Pages**: 2208 | **Source**: Archive.org `abhidharmakosawithbhashyaofvasubandhuandsuptarthacommentaryofyasomitra`
+**Theme**: Buddhist Abhidharma psychology and analysis of consciousness
+**Score**: 8.5/10
+**Book ID**: `6955831757e3b773024f76ae`
+**URL**: https://sourcelibrary.org/book/6955831757e3b773024f76ae
+
+**Notes**: Comprehensive Sanskrit edition with Vasubandhu's root verses (karikas), his own commentary (Bhashya), and Yasomitra's sub-commentary (Sputartha). The Abhidharmakosa is a systematic exposition of Sarvastivada Buddhist psychology, analyzing mental factors (cetasikas), consciousness (citta), matter (rupa), and conditioned phenomena. Before his conversion to Yogacara, Vasubandhu synthesized Abhidharma traditions into this encyclopedic "Treasury of Higher Knowledge."
+
+**Significance**: The Abhidharmakosa became the standard Buddhist textbook on psychology and phenomenology across East Asian Buddhism. Vasubandhu analyzes consciousness into moments, enumerates mental factors, and describes the mechanics of perception, volition, and rebirth. His later Yogacara works (Twenty Verses, Thirty Verses) build on this foundation to develop the consciousness-only (vijñaptimātra) doctrine. Essential for understanding Buddhist philosophy of mind.
+
+---
+
+### Session 022 Part 2 Summary
+
+| Title | Author | Pages | Book ID |
+|-------|--------|-------|---------|
+| Long Commentary on De Anima | Averroes | 618 | 695582f657e3b773024f6ec5 |
+| Commentary on Treatise on Soul | Aquinas | 100 | 695582f957e3b773024f7130 |
+| Select Discourses | John Smith | 596 | 6955831157e3b773024f7195 |
+| Fons Vitae | Ibn Gabirol | 483 | 6955831457e3b773024f74ca |
+| Abhidharmakosa with Bhashya | Vasubandhu | 2208 | 6955831757e3b773024f76ae |
+
+**Part 2 Total: 5 books, 4,005 pages**
+
+**Note**: Ficino's *Platonica Theologia* (1482) was found to already exist in collection (ID: 694f395923a1d0c2ad1d8633)
+
+### Session 022 Complete Summary
+
+| Session Part | Books | Pages |
+|--------------|-------|-------|
+| Part 1: Cross-Cultural Foundations | 4 | 1,778 |
+| Part 2: Scholastic & Comparative | 5 | 4,005 |
+| **Session 022 Total** | **9** | **5,783** |
+
+### Grand Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-021 | 455 | 210,231 |
+| Session 022 | 9 | 5,783 |
+| **GRAND TOTAL** | **464** | **216,014** |
+
+---
+
+### Thematic Coherence
+
+Session 022 has created a **complete comparative philosophical library on mind, consciousness, and intellect** spanning:
+
+**Islamic Falsafa**:
+- Avicenna: *Compendium de Anima* (1546) - Active Intellect, flying man
+- Averroes: *Long Commentary on De Anima* (1953) - Universal Intellect
+- Completes with existing Al-Farabi materials
+
+**Scholastic Synthesis**:
+- Aquinas: *Commentary on Aristotle's De Anima* (1946) - Christian Aristotelianism
+- Bridges Islamic and Christian philosophy
+
+**Jewish Philosophy**:
+- Ibn Gabirol: *Fons Vitae* (1895) - Universal hylomorphism, spiritual matter
+
+**Cambridge Platonism**:
+- Henry More: *Immortality of the Soul* (1659) - Immaterial substance
+- John Smith: *Select Discourses* (1660) - Deiformity of soul
+- Completes with existing Cudworth *True Intellectual System*
+
+**Renaissance Neoplatonism**:
+- Already in collection: Ficino *Platonica Theologia* (1482)
+- Already in collection: Pico della Mirandola complete works
+
+**Chinese Neo-Confucianism**:
+- Zhu Xi: *Confucian Cosmogony* (1874) - Principle (li) and mind (xin)
+
+**Buddhist Philosophy**:
+- Nagarjuna: *Madhyamaka Shastra* (1960) - Emptiness of consciousness
+- Vasubandhu: *Abhidharmakosa* (1970) - Abhidharma psychology
+
+### Research Impact
+
+The collection now enables scholars to:
+
+1. **Trace the transmission of Aristotelian psychology** from Greek → Arabic (Avicenna, Averroes) → Latin (Aquinas) → Cambridge (More, Smith)
+
+2. **Compare substance metaphysics** across traditions: Aristotelian hylomorphism (Aquinas), universal hylomorphism (Gabirol), spiritual substance (More), principle-energy (Zhu Xi), emptiness (Nagarjuna)
+
+3. **Study theories of intellect**: Active/Passive (Avicenna), Universal (Averroes), Individual subsisting (Aquinas), Participatory (More), Mind-principle (Zhu Xi), Non-dual awareness (Nagarjuna, Vasubandhu)
+
+4. **Examine immortality arguments**: Philosophical (Ficino, More, Smith), Theological (Aquinas), Neo-Confucian (Zhu Xi), Buddhist rebirth (Vasubandhu)
+
+5. **Access primary sources** in original languages: Latin, English, Chinese, Sanskrit, enabling textual scholarship
+
+This acquisition session represents a **major expansion into comparative philosophy of mind**, with unprecedented depth across Western, Islamic, Chinese, and Buddhist traditions.
+
+---
+
+## Session 023: 2025-12-31 — Robert Hooke Complete Works
+
+### Mission Statement
+Comprehensive acquisition of Robert Hooke's scientific works - the great polymath of the Royal Society, architect, natural philosopher, microscopist, and curator of experiments.
+
+### Summary
+- **Books acquired**: 6 new works
+- **Total pages**: 2,181
+- **Already in collection**: Micrographia (1665)
+- **Period covered**: 1677-1726 (plus 1968 diary transcription)
+- **Complete coverage**: Cutler Lectures, Posthumous Works, Scientific Papers, Diary
+
+---
+
+### Robert Hooke (1635-1703): Scientific Polymath
+
+Robert Hooke was one of the most versatile scientists of the 17th century. As Curator of Experiments for the Royal Society, he demonstrated experiments weekly, contributed to architecture (Monument to the Great Fire of London, designed with Wren), advanced microscopy, proposed the wave theory of light, formulated Hooke's Law of elasticity, contributed to astronomy, and engaged in priority disputes with Newton.
+
+---
+
+### Acquired Works
+
+#### 1. The Posthumous Works of Robert Hooke (1705)
+**Editor**: Richard Waller, R.S.
+**Language**: English | **Pages**: 594 | **Source**: Archive.org `b30454621_0001`
+**Score**: 10/10
+**Book ID**: `695595e17bd6d2cd1d61f4fb`
+**URL**: https://sourcelibrary.org/book/695595e17bd6d2cd1d61f4fb
+
+**Contents**: Published by Richard Waller with Hooke's biography. Contains Cutlerian lectures and discourses read at Royal Society meetings, including:
+- The present deficiency of natural philosophy
+- The nature, motion and effects of light
+- An hypothetical explication of memory
+- An hypothesis and explication of the cause of gravity  
+- Lectures on earthquakes and subterraneous eruptions
+- Discourses on navigation, astronomy, and mechanics
+
+**Significance**: These posthumous works reveal Hooke's wide-ranging investigations and speculative natural philosophy. His discourse on memory anticipates modern cognitive science, while his work on gravity predates Newton's Principia. The earthquake lectures founded geological stratigraphy. Essential for understanding 17th-century experimental philosophy.
+
+---
+
+#### 2. Lectiones Cutlerianae (1679)
+**Language**: English | **Pages**: 442 | **Source**: Archive.org `LectionesCutler00Hook`
+**Score**: 10/10
+**Book ID**: `695595e47bd6d2cd1d61f74e`
+**URL**: https://sourcelibrary.org/book/695595e47bd6d2cd1d61f74e
+
+**Contents**: Collection of lectures delivered at Gresham College (1674-1679), endowed by Sir John Cutler, including:
+- An Attempt to Prove the Motion of the Earth by Observations (1674)
+- Animadversions on the First Part of Machina Coelestis of Hevelius (1674)
+- A Description of Helioscopes and Other Instruments (1676)
+- Lampas: Descriptions of Mechanical Improvements of Lamps & Waterpoises (1677)
+- Lectures and Collections on Comets (1678)
+- De Potentia Restitutiva, or of Spring (1678) - contains Hooke's Law
+
+**Significance**: The Cutler Lectures showcase Hooke's experimental method and instrumental innovation. The 1674 "Attempt" contains Hooke's claim to discover stellar parallax (disputed). "De Potentia Restitutiva" formulates Hooke's Law (ut tensio, sic vis - as the extension, so the force), foundational for mechanics and materials science. The dispute with Hevelius concerned telescopic vs. naked-eye observations.
+
+---
+
+#### 3. Philosophical Experiments and Observations (1726)
+**Editor**: William Derham, F.R.S.
+**Language**: English | **Pages**: 446 | **Source**: Archive.org `b30513315`
+**Score**: 9/10
+**Book ID**: `695595e67bd6d2cd1d620227`
+**URL**: https://sourcelibrary.org/book/695595e67bd6d2cd1d620227
+
+**Contents**: Published posthumously by Derham in 1726, collecting Hooke's experiments and observations on:
+- Meteorological phenomena
+- Optical experiments
+- Pneumatics and air pressure
+- Fossils and natural history
+- Mechanical inventions and instruments
+- Astronomical observations
+
+**Significance**: Derham's compilation preserves experiments and observations not included in Waller's 1705 Posthumous Works. Shows Hooke's empirical approach and instrumental creativity. Important for history of experimental science and Royal Society activities in the late 17th century.
+
+---
+
+#### 4. The Diary of Robert Hooke 1672-1680 (1968 transcription)
+**Editors**: Henry W. Robinson and Walter Adams
+**Language**: English | **Pages**: 582 | **Source**: Archive.org `diaryofroberthoo0000robe`
+**Score**: 9.5/10
+**Book ID**: `695595e97bd6d2cd1d6203e6`
+**URL**: https://sourcelibrary.org/book/695595e97bd6d2cd1d6203e6
+
+**Contents**: Transcription from original manuscript at Guildhall Library, London. Daily entries recording:
+- Scientific observations and experiments
+- Meetings at Royal Society and coffee houses
+- Financial transactions and personal affairs
+- Interactions with Boyle, Wren, Newton, and other savants
+- Architectural work and surveying
+- Health complaints and remedies
+
+**Significance**: Invaluable primary source for understanding Hooke's daily scientific practice, social networks, and the intellectual life of Restoration London. Documents collaborations, priority disputes, and the material culture of 17th-century science. Shows Hooke's wide professional and social connections.
+
+---
+
+#### 5. Lectures de Potentia Restitutiva, or of Spring (1678)
+**Language**: English | **Pages**: 59 | **Source**: Archive.org `bim_early-english-books-1641-1700_lectures-de-potentia-res_hooke-robert_1678`
+**Score**: 10/10
+**Book ID**: `695595ec7bd6d2cd1d620aba`
+**URL**: https://sourcelibrary.org/book/695595ec7bd6d2cd1d620aba
+
+**Contents**: Contains:
+- Lectures on the power of springs and elastic bodies
+- Formulation of Hooke's Law: "ut tensio, sic vis"
+- Description of the spring-regulated watch
+- Applications to pendulums and vibrating bodies
+- Discourse on the true theory of elasticity
+
+**Significance**: One of the founding texts of materials science and elasticity theory. Hooke's Law became fundamental to physics and engineering. The spring watch addressed the longitude problem. First systematic treatment of elastic deformation. Essential for history of mechanics.
+
+---
+
+#### 6. Lampas (1677)
+**Language**: English | **Pages**: 58 | **Source**: Archive.org `ldpd_6430933_000`
+**Score**: 8/10
+**Book ID**: `695595ee7bd6d2cd1d620af6`
+**URL**: https://sourcelibrary.org/book/695595ee7bd6d2cd1d620af6
+
+**Contents**:
+- Descriptions of mechanical improvements of lamps
+- Inventions for waterpoises (water levels/balances)
+- Other physical and mechanical discoveries
+- Practical applications of natural philosophy
+
+**Significance**: Demonstrates Hooke's attention to practical improvements and instruments. Shows the applied dimension of Royal Society natural philosophy - not just theoretical knowledge but useful arts. Illuminates 17th-century lighting technology and hydraulic engineering.
+
+---
+
+### Collection Context
+
+**Already in Collection**:
+- **Micrographia** (1665) - Hooke's masterpiece of microscopy, first scientific bestseller
+
+**Now Complete**:
+With these 6 additions, Source Library now has comprehensive coverage of Hooke's published works, including:
+- His major scientific treatise (Micrographia)
+- Cutler Lectures (complete collection)
+- Posthumous works (both Waller 1705 and Derham 1726 editions)
+- Personal diary revealing daily scientific practice
+- Individual pamphlets on specific topics
+
+**Not Acquired** (less essential):
+- Micrographia Restaurata (1745) - 18th c. excerpts, derivative
+- Modern biographies and studies - secondary literature
+- Extracts and selections - partial compilations
+
+---
+
+### Session Statistics
+
+| Title | Pages | Book ID |
+|-------|-------|---------|
+| Posthumous Works (1705) | 594 | 695595e17bd6d2cd1d61f4fb |
+| Lectiones Cutlerianae (1679) | 442 | 695595e47bd6d2cd1d61f74e |
+| Philosophical Experiments (1726) | 446 | 695595e67bd6d2cd1d620227 |
+| Diary 1672-1680 (1968) | 582 | 695595e97bd6d2cd1d6203e6 |
+| De Potentia Restitutiva (1678) | 59 | 695595ec7bd6d2cd1d620aba |
+| Lampas (1677) | 58 | 695595ee7bd6d2cd1d620af6 |
+
+**Session 023 Total: 6 books, 2,181 pages**
+**Plus already in collection: Micrographia (1665)**
+
+### Grand Cumulative Totals
+| Session | Books | Pages |
+|---------|-------|-------|
+| Sessions 001-022 | 464 | 216,014 |
+| Session 023 (Hooke) | 6 | 2,181 |
+| **GRAND TOTAL** | **470** | **218,195** |
+
+---
+
+### Research Value
+
+The complete Robert Hooke collection enables scholarship on:
+
+1. **Experimental Philosophy**: Hooke as exemplar of Royal Society empiricism and instrumental practice
+2. **Scientific Method**: Weekly demonstrations, hypothesis testing, collaborative observation
+3. **Priority Disputes**: Hooke vs. Newton on gravity, light, planetary motion
+4. **Interdisciplinary Science**: Microscopy, physics, astronomy, geology, architecture, horology
+5. **Material Culture**: Instruments, apparatus, laboratory practice in 17th century
+6. **Social Networks**: Coffee house culture, Royal Society meetings, patronage
+7. **History of Physics**: Elasticity, optics, mechanics, gravitation
+8. **History of Geology**: Stratigraphy, fossils, earth history
+9. **History of Technology**: Microscopes, telescopes, barometers, watches, surveying instruments
+10. **Scientific Biography**: Primary sources for understanding Hooke's life and work
+
+### Hooke's Legacy
+
+Often overshadowed by Newton, Hooke was arguably equally brilliant but more practically oriented. His law of elasticity, wave theory of light, use of springs in watches, architectural work, and microscopic discoveries each merit lasting fame. The diary and complete works reveal a restless, curious mind engaging with every aspect of natural philosophy. This collection restores Hooke to his rightful place in the Scientific Revolution.
+
+---
