@@ -96,7 +96,7 @@ export async function GET(request: NextRequest) {
 
       const pipeline = [
         { $match: fullQuery },
-        { $unwind: '$detected_images' },
+        { $unwind: { path: '$detected_images', includeArrayIndex: 'detectionIndex' } },
         { $match: unwindMatch },
         {
           $lookup: {
@@ -107,7 +107,19 @@ export async function GET(request: NextRequest) {
           }
         },
         { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-        { $sort: { 'detected_images.confidence': -1, book_id: 1, page_number: 1 } },
+        // Add sort priority: manual first (0), then vision_model (1)
+        {
+          $addFields: {
+            sortPriority: {
+              $cond: {
+                if: { $eq: ['$detected_images.detection_source', 'manual'] },
+                then: 0,
+                else: 1
+              }
+            }
+          }
+        },
+        { $sort: { sortPriority: 1, 'detected_images.confidence': -1, book_id: 1, page_number: 1 } },
         {
           $facet: {
             items: [
@@ -118,6 +130,7 @@ export async function GET(request: NextRequest) {
                   pageId: '$id',
                   bookId: '$book_id',
                   pageNumber: '$page_number',
+                  detectionIndex: '$detectionIndex',
                   imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
                   bookTitle: { $ifNull: ['$book.title', 'Unknown'] },
                   author: '$book.author',
@@ -126,7 +139,8 @@ export async function GET(request: NextRequest) {
                   type: '$detected_images.type',
                   bbox: '$detected_images.bbox',
                   confidence: '$detected_images.confidence',
-                  model: '$detected_images.model'
+                  model: '$detected_images.model',
+                  detectionSource: '$detected_images.detection_source'
                 }
               }
             ],

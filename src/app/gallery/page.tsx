@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Image as ImageIcon, BookOpen, ExternalLink, Filter, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, Trash2 } from 'lucide-react';
+import { Image as ImageIcon, BookOpen, ExternalLink, Filter, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, Trash2, Square, CheckSquare, X } from 'lucide-react';
 
 interface BBox {
   x: number;
@@ -17,6 +17,7 @@ interface GalleryItem {
   pageId: string;
   bookId: string;
   pageNumber: number;
+  detectionIndex: number;
   imageUrl: string;
   bookTitle: string;
   author?: string;
@@ -26,7 +27,7 @@ interface GalleryItem {
   bbox?: BBox;
   confidence?: number;
   model?: 'gemini' | 'mistral' | 'grounding-dino';
-  detectionIndex?: number;
+  detectionSource?: string;
 }
 
 interface GalleryResponse {
@@ -60,7 +61,79 @@ export default function GalleryPage() {
   const [selectedModel, setSelectedModel] = useState<'gemini' | 'mistral' | 'grounding-dino' | ''>('');
   const [page, setPage] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [deleting, setDeleting] = useState(false);
   const limit = 24;
+
+  // Generate unique key for an item
+  const getItemKey = (item: GalleryItem, idx: number) => `${item.pageId}-${item.description}-${idx}`;
+
+  // Toggle selection
+  const toggleSelect = (key: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(key)) {
+        next.delete(key);
+      } else {
+        next.add(key);
+      }
+      return next;
+    });
+  };
+
+  // Select all on current page
+  const selectAll = () => {
+    if (!data) return;
+    const allKeys = data.items.map((item, idx) => getItemKey(item, idx));
+    setSelected(new Set(allKeys));
+  };
+
+  // Clear selection
+  const clearSelection = () => setSelected(new Set());
+
+  // Delete selected items
+  const deleteSelected = async () => {
+    if (selected.size === 0 || !data) return;
+    if (!confirm(`Delete ${selected.size} selected image${selected.size > 1 ? 's' : ''}?`)) return;
+
+    setDeleting(true);
+    const errors: string[] = [];
+    const deletedKeys = new Set<string>();
+
+    for (const key of selected) {
+      const idx = data.items.findIndex((item, i) => getItemKey(item, i) === key);
+      if (idx === -1) continue;
+
+      const item = data.items[idx];
+      try {
+        const params = new URLSearchParams({ description: item.description });
+        const res = await fetch(`/api/detections/${item.pageId}?${params}`, { method: 'DELETE' });
+        if (res.ok) {
+          deletedKeys.add(key);
+        } else {
+          const err = await res.json();
+          errors.push(err.error || 'Unknown error');
+        }
+      } catch (e) {
+        errors.push(e instanceof Error ? e.message : 'Unknown error');
+      }
+    }
+
+    // Update local state
+    const newItems = data.items.filter((item, idx) => !deletedKeys.has(getItemKey(item, idx)));
+    setData({ ...data, items: newItems, total: data.total - deletedKeys.size });
+    setSelected(new Set());
+    setDeleting(false);
+
+    if (errors.length > 0) {
+      alert(`Deleted ${deletedKeys.size} items. ${errors.length} failed.`);
+    }
+  };
+
+  // Clear selection when page/filters change
+  useEffect(() => {
+    clearSelection();
+  }, [page, selectedBook, verifiedOnly, selectedModel]);
 
   // Sync with URL params
   useEffect(() => {
@@ -273,15 +346,60 @@ export default function GalleryPage() {
           )}
         </div>
 
-        {/* Stats */}
-        {data && (
-          <div className="flex items-center gap-4 text-sm mb-4">
-            <span className="text-stone-500">
-              {data.total === 0
-                ? 'No illustrations found'
-                : `${data.total} illustration${data.total !== 1 ? 's' : ''}`}
+        {/* Selection toolbar */}
+        {data && data.items.length > 0 && (
+          <div className="flex items-center gap-4 mb-4 p-3 bg-white rounded-lg shadow-sm">
+            <button
+              onClick={selected.size === data.items.length ? clearSelection : selectAll}
+              className="flex items-center gap-2 text-sm text-stone-600 hover:text-stone-900"
+            >
+              {selected.size === data.items.length ? (
+                <>
+                  <CheckSquare className="w-4 h-4" />
+                  Deselect all
+                </>
+              ) : (
+                <>
+                  <Square className="w-4 h-4" />
+                  Select all
+                </>
+              )}
+            </button>
+
+            {selected.size > 0 && (
+              <>
+                <span className="text-sm text-stone-500">
+                  {selected.size} selected
+                </span>
+                <button
+                  onClick={deleteSelected}
+                  disabled={deleting}
+                  className="flex items-center gap-2 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  {deleting ? 'Deleting...' : `Delete ${selected.size}`}
+                </button>
+                <button
+                  onClick={clearSelection}
+                  className="text-stone-400 hover:text-stone-600"
+                  title="Clear selection"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </>
+            )}
+
+            <span className="ml-auto text-sm text-stone-500">
+              {data.total} illustration{data.total !== 1 ? 's' : ''}
             </span>
-            {verifiedOnly && data.total === 0 && (
+          </div>
+        )}
+
+        {/* Stats - only show when no items */}
+        {data && data.items.length === 0 && (
+          <div className="flex items-center gap-4 text-sm mb-4">
+            <span className="text-stone-500">No illustrations found</span>
+            {verifiedOnly && (
               <span className="text-amber-600">
                 Run image extraction to populate the gallery
               </span>
@@ -306,13 +424,18 @@ export default function GalleryPage() {
         {/* Gallery Grid */}
         {!loading && data && data.items.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.items.map((item, idx) => (
-              <GalleryCard
-                key={`${item.bookId}-${item.pageNumber}-${idx}`}
-                item={item}
-                onDelete={() => handleDelete(item, idx)}
-              />
-            ))}
+            {data.items.map((item, idx) => {
+              const key = getItemKey(item, idx);
+              return (
+                <GalleryCard
+                  key={key}
+                  item={item}
+                  isSelected={selected.has(key)}
+                  onToggleSelect={() => toggleSelect(key)}
+                  onDelete={() => handleDelete(item, idx)}
+                />
+              );
+            })}
           </div>
         )}
 
@@ -359,9 +482,13 @@ export default function GalleryPage() {
   );
 }
 
-function GalleryCard({ item, onDelete }: { item: GalleryItem; onDelete: () => void }) {
+function GalleryCard({ item, isSelected, onToggleSelect, onDelete }: {
+  item: GalleryItem;
+  isSelected: boolean;
+  onToggleSelect: () => void;
+  onDelete: () => void;
+}) {
   const [imageError, setImageError] = useState(false);
-  const [deleting, setDeleting] = useState(false);
 
   // Use cropped image if bbox available, otherwise full page
   const displayUrl = item.bbox
@@ -369,9 +496,9 @@ function GalleryCard({ item, onDelete }: { item: GalleryItem; onDelete: () => vo
     : item.imageUrl;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow group">
-      {/* Image */}
-      <Link href={`/book/${item.bookId}/read?page=${item.pageNumber}`}>
+    <div className={`bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow group ${isSelected ? 'ring-2 ring-amber-500' : ''}`}>
+      {/* Image - links to detail view */}
+      <Link href={`/gallery/image/${item.pageId}:${item.detectionIndex}`}>
         <div className="relative aspect-square bg-stone-200">
           {!imageError ? (
             <Image
@@ -389,6 +516,25 @@ function GalleryCard({ item, onDelete }: { item: GalleryItem; onDelete: () => vo
             </div>
           )}
 
+          {/* Checkbox for selection */}
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleSelect();
+            }}
+            className={`absolute top-2 left-2 z-10 p-1 rounded transition-opacity ${
+              isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+            }`}
+            title={isSelected ? 'Deselect' : 'Select'}
+          >
+            {isSelected ? (
+              <CheckSquare className="w-5 h-5 text-amber-500" />
+            ) : (
+              <Square className="w-5 h-5 text-white drop-shadow-lg" />
+            )}
+          </button>
+
           {/* Delete button */}
           <button
             onClick={(e) => {
@@ -396,7 +542,6 @@ function GalleryCard({ item, onDelete }: { item: GalleryItem; onDelete: () => vo
               e.stopPropagation();
               onDelete();
             }}
-            disabled={deleting}
             className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-red-600/80 hover:bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity"
             title="Delete from gallery"
           >
@@ -417,7 +562,7 @@ function GalleryCard({ item, onDelete }: { item: GalleryItem; onDelete: () => vo
 
           {/* Model badge */}
           {item.model && (
-            <span className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-xs text-white ${
+            <span className={`absolute bottom-2 left-2 px-2 py-0.5 rounded-full text-xs text-white ${
               item.model === 'gemini' ? 'bg-blue-600/80' :
               item.model === 'grounding-dino' ? 'bg-green-600/80' : 'bg-orange-600/80'
             }`}>
@@ -450,7 +595,7 @@ function GalleryCard({ item, onDelete }: { item: GalleryItem; onDelete: () => vo
             )}
           </div>
           <Link
-            href={`/book/${item.bookId}/read?page=${item.pageNumber}`}
+            href={`/book/${item.bookId}/page/${item.pageId}`}
             className="shrink-0 text-xs text-stone-500 hover:text-amber-700"
           >
             p. {item.pageNumber}
