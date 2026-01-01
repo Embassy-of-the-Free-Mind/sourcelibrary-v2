@@ -11,6 +11,14 @@
     {
       "path": "/api/cron/process-batches",
       "schedule": "0 */2 * * *"
+    },
+    {
+      "path": "/api/cron/submit-ocr",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/batch-processor",
+      "schedule": "0 */6 * * *"
     }
   ]
 }
