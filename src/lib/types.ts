@@ -1,7 +1,7 @@
 export type BookStatus = 'draft' | 'in_progress' | 'complete' | 'published';
 
 // Job management for long-running tasks
-export type JobType = 'ocr' | 'translate' | 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_split' | 'book_import' | 'generate_cropped_images' | 'pipeline_stream';
+export type JobType = 'ocr' | 'translate' | 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_split' | 'book_import' | 'generate_cropped_images' | 'pipeline_stream' | 'batch_extract_images';
 export type JobStatus = 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
 
 export interface JobProgress {
@@ -432,7 +432,7 @@ export type DetectionStatus = 'pending' | 'approved' | 'rejected';
 export interface DetectedImage {
   id?: string;                  // Unique ID for this detection
   description: string;          // What the image depicts
-  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'unknown';
+  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'emblem' | 'engraving' | 'portrait' | 'frontispiece' | 'unknown';
   // Bounding box (0-1 normalized coordinates, for future extraction)
   bbox?: {
     x: number;      // Left edge (0-1)
@@ -448,6 +448,10 @@ export interface DetectedImage {
   status?: DetectionStatus;     // Review status: pending (default), approved, rejected
   reviewed_at?: Date;
   reviewed_by?: string;
+  // Gallery curation
+  gallery_quality?: number;     // 0-1 score: how gallery-worthy is this image?
+  gallery_rationale?: string;   // Why it scored high/low (visual appeal, historical significance, etc.)
+  featured?: boolean;           // Manually marked as gallery-worthy
 }
 
 export interface Page {

@@ -23,21 +23,33 @@ The bounding box should TIGHTLY enclose just the illustration, not the surroundi
 For each illustration found, return:
 {
   "description": "Brief description of what it depicts",
-  "type": "woodcut|diagram|chart|illustration|map|symbol|decorative|table",
+  "type": "woodcut|emblem|engraving|portrait|frontispiece|diagram|chart|illustration|map|symbol|decorative|table",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
-  "confidence": 0.95
+  "confidence": 0.95,
+  "gallery_quality": 0.85,
+  "gallery_rationale": "Brief explanation of why this image is or isn't gallery-worthy"
 }
+
+GALLERY QUALITY SCORING (0.0 to 1.0):
+- 0.9-1.0: Exceptional - striking emblems, significant allegorical scenes, beautiful engravings, historically important diagrams
+- 0.7-0.9: Good - well-executed illustrations with clear subject matter, interesting diagrams
+- 0.4-0.7: Moderate - standard frontispieces, common decorative elements, simple diagrams
+- 0.0-0.4: Low - page ornaments, generic borders, printer's marks, marbled papers, simple geometric figures
+
+Consider: Visual appeal, historical/scholarly significance, uniqueness, composition quality, shareability on social media.
 
 Return ONLY a valid JSON array. If no illustrations exist (text-only page), return: []
 
-Example for a woodcut in the upper-right quadrant:
-[{"description": "Alchemical furnace with dragon", "type": "woodcut", "bbox": {"x": 0.55, "y": 0.10, "width": 0.40, "height": 0.35}, "confidence": 0.95}]`;
+Example:
+[{"description": "Emblem showing Nature guiding an alchemist through a labyrinth", "type": "emblem", "bbox": {"x": 0.15, "y": 0.20, "width": 0.70, "height": 0.55}, "confidence": 0.95, "gallery_quality": 0.92, "gallery_rationale": "Striking allegorical scene with rich symbolic content, excellent composition"}]`;
 
 interface DetectedImage {
   description: string;
   type?: string;
   bbox?: { x: number; y: number; width: number; height: number };
   confidence?: number;
+  gallery_quality?: number;
+  gallery_rationale?: string;
   detected_at: Date;
   detection_source: 'vision_model';
   model: 'gemini' | 'mistral' | 'grounding-dino';
@@ -106,6 +118,8 @@ async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
       height: parseFloat(item.bbox.height) || 0,
     } : undefined,
     confidence: item.confidence,
+    gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
+    gallery_rationale: item.gallery_rationale || undefined,
     detected_at: new Date(),
     detection_source: 'vision_model' as const,
     model: 'gemini' as const,
@@ -169,6 +183,8 @@ async function extractWithMistral(imageUrl: string): Promise<DetectedImage[]> {
       height: parseFloat(item.bbox.height) || 0,
     } : undefined,
     confidence: item.confidence,
+    gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
+    gallery_rationale: item.gallery_rationale || undefined,
     detected_at: new Date(),
     detection_source: 'vision_model' as const,
     model: 'mistral' as const,

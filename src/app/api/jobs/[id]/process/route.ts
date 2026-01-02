@@ -102,6 +102,122 @@ async function processCroppedImage(
   }
 }
 
+// ========== IMAGE EXTRACTION WITH GEMINI ==========
+// Extract illustrations with bounding boxes and gallery quality scoring
+
+const IMAGE_EXTRACTION_PROMPT = `You are analyzing a historical book page scan. Your task is to identify and PRECISELY locate all illustrations, diagrams, woodcuts, charts, maps, or decorative elements.
+
+CRITICAL: Provide EXACT bounding box coordinates. Measure carefully:
+- x: horizontal position of LEFT edge (0.0 = left margin, 1.0 = right margin)
+- y: vertical position of TOP edge (0.0 = top margin, 1.0 = bottom margin)
+- width: horizontal span of the illustration
+- height: vertical span of the illustration
+
+The bounding box should TIGHTLY enclose just the illustration, not the surrounding text.
+
+For each illustration found, return:
+{
+  "description": "Brief description of what it depicts",
+  "type": "woodcut|emblem|engraving|portrait|frontispiece|diagram|chart|illustration|map|symbol|decorative|table",
+  "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "confidence": 0.95,
+  "gallery_quality": 0.85,
+  "gallery_rationale": "Brief explanation of why this image is or isn't gallery-worthy"
+}
+
+GALLERY QUALITY SCORING (0.0 to 1.0):
+- 0.9-1.0: Exceptional - striking emblems, significant allegorical scenes, beautiful engravings, historically important diagrams
+- 0.7-0.9: Good - well-executed illustrations with clear subject matter, interesting diagrams
+- 0.4-0.7: Moderate - standard frontispieces, common decorative elements, simple diagrams
+- 0.0-0.4: Low - page ornaments, generic borders, printer's marks, marbled papers, simple geometric figures
+
+Consider: Visual appeal, historical/scholarly significance, uniqueness, composition quality, shareability on social media.
+
+Return ONLY a valid JSON array. If no illustrations exist (text-only page), return: []`;
+
+interface ExtractedImage {
+  description: string;
+  type?: string;
+  bbox?: { x: number; y: number; width: number; height: number };
+  confidence?: number;
+  gallery_quality?: number;
+  gallery_rationale?: string;
+  detected_at: Date;
+  detection_source: 'vision_model';
+  model: 'gemini';
+}
+
+async function extractImagesWithGemini(imageUrl: string): Promise<ExtractedImage[]> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error('GEMINI_API_KEY not set');
+  }
+
+  // Fetch and encode image
+  const imageResponse = await fetch(imageUrl);
+  if (!imageResponse.ok) {
+    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
+  }
+
+  const imageBuffer = await imageResponse.arrayBuffer();
+  const base64Image = Buffer.from(imageBuffer).toString('base64');
+  const mimeType = imageResponse.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
+
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{
+          parts: [
+            { text: IMAGE_EXTRACTION_PROMPT },
+            { inline_data: { mime_type: mimeType, data: base64Image } }
+          ]
+        }],
+        generationConfig: {
+          temperature: 0.1,
+          maxOutputTokens: 2048,
+        }
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Gemini API error: ${response.status} - ${error.slice(0, 200)}`);
+  }
+
+  const data = await response.json();
+  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+  // Parse JSON from response
+  const jsonMatch = text.match(/\[[\s\S]*\]/);
+  if (!jsonMatch) {
+    return [];
+  }
+
+  const parsed = JSON.parse(jsonMatch[0]);
+  if (!Array.isArray(parsed)) return [];
+
+  return parsed.map(item => ({
+    description: item.description || '',
+    type: item.type || 'unknown',
+    bbox: item.bbox ? {
+      x: parseFloat(item.bbox.x) || 0,
+      y: parseFloat(item.bbox.y) || 0,
+      width: parseFloat(item.bbox.width) || 0,
+      height: parseFloat(item.bbox.height) || 0,
+    } : undefined,
+    confidence: item.confidence,
+    gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
+    gallery_rationale: item.gallery_rationale || undefined,
+    detected_at: new Date(),
+    detection_source: 'vision_model' as const,
+    model: 'gemini' as const,
+  }));
+}
+
 // ========== GEMINI BATCH API HANDLER ==========
 // Phases: prepare -> submit -> poll
 // - prepare: Fetch images in chunks, store in batch_preparations collection
@@ -948,6 +1064,40 @@ export async function POST(
             pageId,
             success: true,
             duration: performance.now() - itemStart,
+          });
+
+        } else if (job.type === 'batch_extract_images') {
+          // Extract images with bounding boxes and gallery quality scores
+          const imageUrl = page.cropped_photo || page.photo;
+          if (!imageUrl) {
+            results.push({ pageId, success: false, error: 'No image URL' });
+            continue;
+          }
+
+          const extractedImages = await extractImagesWithGemini(imageUrl);
+
+          if (extractedImages.length > 0) {
+            // Update page with extracted images
+            await db.collection('pages').updateOne(
+              { id: pageId },
+              {
+                $set: {
+                  detected_images: extractedImages,
+                  updated_at: new Date(),
+                },
+              }
+            );
+          }
+
+          results.push({
+            pageId,
+            success: true,
+            duration: performance.now() - itemStart,
+            // Include extraction summary in result
+            ...(extractedImages.length > 0 && {
+              imagesFound: extractedImages.length,
+              highQuality: extractedImages.filter(i => (i.gallery_quality || 0) >= 0.7).length,
+            }),
           });
 
         }
