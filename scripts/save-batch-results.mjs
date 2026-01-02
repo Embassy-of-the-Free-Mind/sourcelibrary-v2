@@ -1,13 +1,35 @@
 /**
  * Save completed batch job results to pages
+ *
+ * Logs all operations to:
+ * - logs/batch-save.log (file)
+ * - Console output
  */
 import { config } from 'dotenv';
 import { MongoClient } from 'mongodb';
+import fs from 'fs';
+import path from 'path';
 config({ path: '.env.prod' });
 config({ path: '.env.local', override: true });
 
 const API_KEY = process.env.GEMINI_API_KEY;
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
+
+const LOG_DIR = 'logs';
+const LOG_FILE = path.join(LOG_DIR, 'batch-save.log');
+
+function ensureLogDir() {
+  if (!fs.existsSync(LOG_DIR)) {
+    fs.mkdirSync(LOG_DIR, { recursive: true });
+  }
+}
+
+function log(message) {
+  const timestamp = new Date().toISOString();
+  const line = `[${timestamp}] ${message}`;
+  console.log(message); // Console without timestamp for readability
+  fs.appendFileSync(LOG_FILE, line + '\n');
+}
 
 async function getBatchResults(jobName) {
   // First get job details to find output
@@ -51,11 +73,14 @@ async function getBatchResults(jobName) {
 }
 
 async function saveResults() {
+  ensureLogDir();
+
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db(process.env.MONGODB_DB);
 
-  console.log('=== Saving Batch Results ===\n');
+  log('=== Saving Batch Results ===');
+  log(`Started at: ${new Date().toISOString()}`);
 
   // Get completed jobs that haven't been saved
   // Handle both state naming conventions (BATCH_STATE_* and JOB_STATE_*)
@@ -66,17 +91,18 @@ async function saveResults() {
     })
     .toArray();
 
-  console.log(`Found ${jobs.length} completed jobs to save\n`);
+  log(`Found ${jobs.length} completed jobs to save`);
 
   let totalSaved = 0;
   let totalFailed = 0;
+  let jobsProcessed = 0;
 
   for (const job of jobs) {
     try {
-      console.log(`\nProcessing: ${job.book_title} (${job.type})`);
+      log(`\nProcessing: ${job.book_title} (${job.type})`);
 
       const results = await getBatchResults(job.gemini_job_name);
-      console.log(`  Got ${results.length} results`);
+      log(`  Got ${results.length} results`);
 
       let saved = 0;
       let failed = 0;
@@ -157,12 +183,13 @@ async function saveResults() {
         }
       );
 
-      console.log(`  Saved: ${saved}, Failed: ${failed}`);
+      log(`  Saved: ${saved}, Failed: ${failed}`);
       totalSaved += saved;
       totalFailed += failed;
+      jobsProcessed++;
 
     } catch (e) {
-      console.error(`  Error: ${e.message}`);
+      log(`  Error: ${e.message}`);
       // Mark as failed so we don't retry infinitely
       await db.collection('batch_jobs').updateOne(
         { id: job.id },
@@ -177,14 +204,17 @@ async function saveResults() {
     }
   }
 
-  console.log(`\n=== Complete ===`);
-  console.log(`Total saved: ${totalSaved} pages`);
-  console.log(`Total failed: ${totalFailed} pages`);
+  log(`\n=== Save Complete ===`);
+  log(`Jobs processed: ${jobsProcessed}`);
+  log(`Total pages saved: ${totalSaved}`);
+  log(`Total pages failed: ${totalFailed}`);
+  log(`Completed at: ${new Date().toISOString()}`);
 
   await client.close();
 }
 
 saveResults().catch(e => {
+  log(`FATAL ERROR: ${e.message}`);
   console.error('Error:', e);
   process.exit(1);
 });

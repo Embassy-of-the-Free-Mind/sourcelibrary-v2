@@ -58,3 +58,4 @@ tools/
 mcp-server/.mcpregistry_*
 mcp-server/node_modules/
 mcp-server/dist/
+logs/*.log

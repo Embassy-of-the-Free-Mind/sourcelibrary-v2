@@ -1,10 +1,16 @@
 /**
  * Submit OCR batch jobs for all books that need OCR
  * Uses Gemini Batch API (50% cost savings)
+ *
+ * Logs all submissions to:
+ * - logs/batch-submit.log (file)
+ * - Console output
  */
 import { config } from 'dotenv';
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
 config({ path: '.env.prod' });
 config({ path: '.env.local', override: true });
 
@@ -13,6 +19,22 @@ const API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const MODEL = 'gemini-2.5-flash';
 const BATCH_SIZE = 25; // Pages per batch job (reduced for smaller files)
 const MAX_IMAGE_WIDTH = 800; // Resize images to max 800px width for OCR (tested: identical quality, 78% smaller)
+
+const LOG_DIR = 'logs';
+const LOG_FILE = path.join(LOG_DIR, 'batch-submit.log');
+
+function ensureLogDir() {
+  if (!fs.existsSync(LOG_DIR)) {
+    fs.mkdirSync(LOG_DIR, { recursive: true });
+  }
+}
+
+function log(message) {
+  const timestamp = new Date().toISOString();
+  const line = `[${timestamp}] ${message}`;
+  console.log(message);
+  fs.appendFileSync(LOG_FILE, line + '\n');
+}
 
 async function resizeImage(buffer) {
   // Resize to max width, maintaining aspect ratio, and convert to JPEG
@@ -134,21 +156,24 @@ const OCR_PROMPT = `Transcribe this {language} manuscript page to Markdown.
 **If image has quality issues**, start with <warning>describe issue</warning>`;
 
 async function submitAllOcr() {
+  ensureLogDir();
+
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db(process.env.MONGODB_DB);
 
-  console.log('=== Submitting OCR Batch Jobs ===\n');
+  log('=== Submitting OCR Batch Jobs ===');
+  log(`Started at: ${new Date().toISOString()}`);
 
   // Get books that already have batch jobs
   const booksWithJobs = await db.collection('batch_jobs').distinct('book_id');
   const booksWithJobsSet = new Set(booksWithJobs);
-  console.log(`Books already with jobs: ${booksWithJobs.length}`);
+  log(`Books already with jobs: ${booksWithJobs.length}`);
 
   // Get all books, skip those with existing jobs
   const allBooks = await db.collection('books').find({}).toArray();
   const books = allBooks.filter(b => !booksWithJobsSet.has(b.id || b._id?.toString()));
-  console.log(`Checking ${books.length} books (skipping ${allBooks.length - books.length} with existing jobs)...\n`);
+  log(`Checking ${books.length} books (skipping ${allBooks.length - books.length} with existing jobs)...`);
 
   let totalJobsCreated = 0;
   let totalPagesQueued = 0;
@@ -182,7 +207,7 @@ async function submitAllOcr() {
     if (pages.length === 0) continue;
 
     booksProcessed++;
-    console.log(`\n[${booksProcessed}] ${bookTitle} (${pages.length} pages)`);
+    log(`\n[${booksProcessed}] ${bookTitle} (${pages.length} pages)`);
 
     // Split into batches
     for (let i = 0; i < pages.length; i += BATCH_SIZE) {
@@ -257,7 +282,7 @@ async function submitAllOcr() {
           updated_at: new Date(),
         });
 
-        console.log(`  Batch ${batchNum}/${totalBatches}: ${batchJob.name} (${requests.length} pages)`);
+        log(`  Batch ${batchNum}/${totalBatches}: ${batchJob.name} (${requests.length} pages)`);
         totalJobsCreated++;
         totalPagesQueued += requests.length;
 
@@ -265,20 +290,22 @@ async function submitAllOcr() {
         await new Promise(r => setTimeout(r, 500));
 
       } catch (e) {
-        console.error(`  Batch ${batchNum} failed: ${e.message}`);
+        log(`  Batch ${batchNum} failed: ${e.message}`);
       }
     }
   }
 
-  console.log(`\n=== Complete ===`);
-  console.log(`Books processed: ${booksProcessed}`);
-  console.log(`Jobs created: ${totalJobsCreated}`);
-  console.log(`Pages queued: ${totalPagesQueued}`);
+  log(`\n=== Submit Complete ===`);
+  log(`Books processed: ${booksProcessed}`);
+  log(`Jobs created: ${totalJobsCreated}`);
+  log(`Pages queued: ${totalPagesQueued}`);
+  log(`Completed at: ${new Date().toISOString()}`);
 
   await client.close();
 }
 
 submitAllOcr().catch(e => {
+  log(`FATAL ERROR: ${e.message}`);
   console.error('Error:', e);
   process.exit(1);
 });
