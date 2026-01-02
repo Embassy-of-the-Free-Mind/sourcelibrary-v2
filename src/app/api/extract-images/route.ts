@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import Replicate from 'replicate';
 import sharp from 'sharp';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 /**
  * POST /api/extract-images
@@ -428,6 +429,22 @@ export async function POST(request: NextRequest) {
       (sum, r) => sum + r.extractedImages.filter(i => i.bbox).length,
       0
     );
+
+    // Log Gemini usage (only for gemini model)
+    if (model === 'gemini' && results.length > 0) {
+      await logGeminiCall({
+        type: 'extract_images',
+        mode: 'realtime',
+        model: 'gemini-2.0-flash',
+        book_id: bookId || undefined,
+        page_ids: results.map(r => r.pageId),
+        page_count: results.length,
+        input_tokens: 0, // Not tracked with raw fetch
+        output_tokens: 0,
+        status: errors > 0 ? 'failed' : 'success',
+        endpoint: '/api/extract-images',
+      });
+    }
 
     return NextResponse.json({
       summary: {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 export const maxDuration = 300;
 
@@ -149,6 +150,34 @@ export async function GET(request: NextRequest) {
 
           // Update book page counts
           await updateBookCounts(db, job.book_id);
+
+          // Calculate total tokens from results
+          let totalInputTokens = 0;
+          let totalOutputTokens = 0;
+          for (const result of batchResults) {
+            const usage = result.response?.usageMetadata;
+            if (usage) {
+              totalInputTokens += usage.promptTokenCount || 0;
+              totalOutputTokens += usage.candidatesTokenCount || 0;
+            }
+          }
+
+          // Log batch job completion
+          await logGeminiCall({
+            type: job.type === 'ocr' ? 'ocr' : 'translate',
+            mode: 'batch',
+            model: job.model,
+            book_id: job.book_id,
+            book_title: job.book_title,
+            page_ids: job.page_ids,
+            page_count: successCount,
+            batch_job_id: job.id,
+            gemini_job_name: job.gemini_job_name,
+            input_tokens: totalInputTokens,
+            output_tokens: totalOutputTokens,
+            status: successCount > 0 ? 'success' : 'failed',
+            endpoint: '/api/cron/process-batches',
+          });
 
           results.collected.push({
             job_id: job.id,

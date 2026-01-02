@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { DEFAULT_MODEL } from '@/lib/types';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -130,14 +131,31 @@ export async function POST(
 
     // Track usage
     const usageMetadata = result.response.usageMetadata;
+    const inputTokens = usageMetadata?.promptTokenCount || 0;
+    const outputTokens = usageMetadata?.candidatesTokenCount || 0;
+
     await db.collection('cost_tracking').insertOne({
       book_id: bookId,
       action: 'book_summary',
       model,
       pages_analyzed: translatedPages.length,
-      input_tokens: usageMetadata?.promptTokenCount || 0,
-      output_tokens: usageMetadata?.candidatesTokenCount || 0,
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
       created_at: new Date()
+    });
+
+    // Log to gemini_usage for auditing
+    await logGeminiCall({
+      type: 'summarize',
+      mode: 'realtime',
+      model,
+      book_id: bookId,
+      book_title: book?.title,
+      page_count: translatedPages.length,
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      status: 'success',
+      endpoint: '/api/books/[id]/summarize',
     });
 
     return NextResponse.json(summary);

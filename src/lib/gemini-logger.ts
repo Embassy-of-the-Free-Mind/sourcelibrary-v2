@@ -44,7 +44,7 @@ const BATCH_DISCOUNT = 0.5;
 
 export type GeminiCallType = 'ocr' | 'translate' | 'summarize' | 'extract_images' | 'index' | 'other';
 export type GeminiMode = 'realtime' | 'batch';
-export type GeminiStatus = 'success' | 'failed' | 'pending';
+export type GeminiStatus = 'success' | 'failed' | 'pending' | 'submitted';
 
 export interface GeminiUsageLog {
   id?: string;
@@ -299,7 +299,10 @@ export async function getUsageSummary(params: {
   };
 
   return {
-    ...summary,
+    total_calls: summary.total_calls,
+    total_input_tokens: summary.total_input_tokens,
+    total_output_tokens: summary.total_output_tokens,
+    total_cost_usd: summary.total_cost_usd,
     by_type: Object.fromEntries(byType.map(r => [r._id, { calls: r.calls, cost: r.cost }])),
     by_model: Object.fromEntries(byModel.map(r => [r._id, { calls: r.calls, cost: r.cost }])),
   };

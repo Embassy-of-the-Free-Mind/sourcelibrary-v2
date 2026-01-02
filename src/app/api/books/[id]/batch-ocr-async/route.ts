@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -196,6 +197,23 @@ export async function POST(
       updated_at: new Date(),
     });
 
+    // Log batch job submission
+    await logGeminiCall({
+      type: 'ocr',
+      mode: 'batch',
+      model,
+      book_id: bookId,
+      book_title: book?.title,
+      page_ids: batchRequests.map(r => r.key),
+      page_count: batchRequests.length,
+      batch_job_id: batchJob.name,
+      gemini_job_name: batchJob.name,
+      input_tokens: 0, // Not available until job completes
+      output_tokens: 0,
+      status: 'submitted',
+      endpoint: '/api/books/[id]/batch-ocr-async',
+    });
+
     return NextResponse.json({
       success: true,
       jobName: batchJob.name,
@@ -308,6 +326,34 @@ export async function GET(
             }
           }
         );
+
+        // Calculate total tokens from responses
+        let totalInputTokens = 0;
+        let totalOutputTokens = 0;
+        for (const response of responses) {
+          const usage = response.response?.usageMetadata;
+          if (usage) {
+            totalInputTokens += usage.promptTokenCount || 0;
+            totalOutputTokens += usage.candidatesTokenCount || 0;
+          }
+        }
+
+        // Log batch job completion
+        await logGeminiCall({
+          type: 'ocr',
+          mode: 'batch',
+          model: jobDoc.model,
+          book_id: bookId,
+          book_title: undefined, // Could fetch from book if needed
+          page_ids: pageIds.slice(0, successCount),
+          page_count: successCount,
+          batch_job_id: jobName,
+          gemini_job_name: jobName,
+          input_tokens: totalInputTokens,
+          output_tokens: totalOutputTokens,
+          status: successCount > 0 ? 'success' : 'failed',
+          endpoint: '/api/books/[id]/batch-ocr-async',
+        });
 
         return NextResponse.json({
           jobName,

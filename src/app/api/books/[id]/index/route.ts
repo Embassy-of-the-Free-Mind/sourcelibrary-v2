@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -146,6 +147,19 @@ CRITICAL for quotes:
   try {
     const result = await model.generateContent(prompt);
     const responseText = result.response.text();
+
+    // Log the Gemini call
+    const usageMetadata = result.response.usageMetadata;
+    logGeminiCall({
+      type: 'index',
+      mode: 'realtime',
+      model: 'gemini-3-flash-preview',
+      page_count: pages.length,
+      input_tokens: usageMetadata?.promptTokenCount || 0,
+      output_tokens: usageMetadata?.candidatesTokenCount || 0,
+      status: 'success',
+      endpoint: '/api/books/[id]/index (processBatch)',
+    }).catch(console.error); // Non-blocking
 
     const jsonMatch = responseText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
@@ -676,6 +690,19 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
 
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
+
+  // Log the Gemini call
+  const usageMetadata = result.response.usageMetadata;
+  logGeminiCall({
+    type: 'summarize',
+    mode: 'realtime',
+    model: 'gemini-3-flash-preview',
+    page_count: batchExtractions.length, // Number of batch sections processed
+    input_tokens: usageMetadata?.promptTokenCount || 0,
+    output_tokens: usageMetadata?.candidatesTokenCount || 0,
+    status: 'success',
+    endpoint: '/api/books/[id]/index (generateBookSummary)',
+  }).catch(console.error); // Non-blocking
 
   // Parse JSON from response
   const jsonMatch = responseText.match(/\{[\s\S]*\}/);
