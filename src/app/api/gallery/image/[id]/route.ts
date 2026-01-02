@@ -104,6 +104,11 @@ export async function GET(
       model: detection.model,
       detectionSource: detection.detection_source,
 
+      // Gallery curation
+      galleryQuality: detection.gallery_quality ?? null,
+      galleryRationale: detection.gallery_rationale ?? null,
+      featured: detection.featured ?? false,
+
       // Bounding box (normalized 0-1)
       bbox: detection.bbox,
 
@@ -130,6 +135,70 @@ export async function GET(
     console.error('Gallery image error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to fetch image' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * PATCH /api/gallery/image/[id]
+ *
+ * Update gallery curation fields for an image.
+ * Body: { galleryQuality?: number, featured?: boolean }
+ */
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const body = await request.json();
+
+    // Parse compound ID: pageId:index
+    const [pageId, indexStr] = id.split(':');
+    const detectionIndex = parseInt(indexStr, 10);
+
+    if (!pageId || isNaN(detectionIndex)) {
+      return NextResponse.json(
+        { error: 'Invalid image ID format. Expected pageId:index' },
+        { status: 400 }
+      );
+    }
+
+    const db = await getDb();
+
+    // Build update object for the specific array element
+    const updateFields: Record<string, unknown> = {};
+
+    if (typeof body.galleryQuality === 'number') {
+      updateFields[`detected_images.${detectionIndex}.gallery_quality`] = Math.max(0, Math.min(1, body.galleryQuality));
+    }
+
+    if (typeof body.featured === 'boolean') {
+      updateFields[`detected_images.${detectionIndex}.featured`] = body.featured;
+    }
+
+    if (Object.keys(updateFields).length === 0) {
+      return NextResponse.json(
+        { error: 'No valid fields to update' },
+        { status: 400 }
+      );
+    }
+
+    const result = await db.collection('pages').updateOne(
+      { id: pageId },
+      { $set: updateFields }
+    );
+
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ success: true, updated: updateFields });
+  } catch (error) {
+    console.error('Gallery image update error:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed to update image' },
       { status: 500 }
     );
   }

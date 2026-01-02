@@ -47,6 +47,9 @@ interface ImageData {
   confidence?: number;
   model?: string;
   detectionSource?: string;
+  galleryQuality?: number | null;
+  galleryRationale?: string | null;
+  featured?: boolean;
   bbox?: { x: number; y: number; width: number; height: number };
   book: {
     id: string;
@@ -73,6 +76,9 @@ export default function ImageDetailPage({
   const [copied, setCopied] = useState(false);
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [zoom, setZoom] = useState(1);
+  const [editingQuality, setEditingQuality] = useState(false);
+  const [qualityValue, setQualityValue] = useState<number>(0);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     params.then(p => setImageId(p.id));
@@ -99,6 +105,33 @@ export default function ImageDetailPage({
 
     fetchImage();
   }, [imageId]);
+
+  // Initialize quality value when data loads
+  useEffect(() => {
+    if (data?.galleryQuality != null) {
+      setQualityValue(data.galleryQuality);
+    }
+  }, [data?.galleryQuality]);
+
+  const saveQuality = async (newQuality: number) => {
+    if (!data) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/gallery/image/${data.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ galleryQuality: newQuality })
+      });
+      if (res.ok) {
+        setData({ ...data, galleryQuality: newQuality });
+        setEditingQuality(false);
+      }
+    } catch (e) {
+      console.error('Failed to save quality:', e);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const copyLink = async () => {
     const url = window.location.href;
@@ -251,6 +284,83 @@ export default function ImageDetailPage({
                     <Sparkles className="w-3 h-3" />
                     Identified by {data.model}
                     {data.confidence && ` (${Math.round(data.confidence * 100)}% confidence)`}
+                  </p>
+                )}
+              </div>
+
+              {/* Gallery Quality Rating */}
+              <div className="bg-stone-800 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-stone-400">Gallery Quality</p>
+                  <span className="text-xs text-stone-500">Guide cutoff: 0.75</span>
+                </div>
+
+                {editingQuality ? (
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        value={qualityValue}
+                        onChange={(e) => setQualityValue(parseFloat(e.target.value))}
+                        className="flex-1 h-2 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                      />
+                      <span className="text-lg font-mono text-amber-500 w-12 text-right">
+                        {qualityValue.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => saveQuality(qualityValue)}
+                        disabled={saving}
+                        className="flex-1 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50"
+                      >
+                        {saving ? 'Saving...' : 'Save'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setQualityValue(data.galleryQuality ?? 0);
+                          setEditingQuality(false);
+                        }}
+                        className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-32 h-2 bg-stone-700 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full transition-all ${
+                            (data.galleryQuality ?? 0) >= 0.75 ? 'bg-green-500' :
+                            (data.galleryQuality ?? 0) >= 0.5 ? 'bg-amber-500' : 'bg-red-500'
+                          }`}
+                          style={{ width: `${(data.galleryQuality ?? 0) * 100}%` }}
+                        />
+                      </div>
+                      <span className={`text-lg font-mono ${
+                        (data.galleryQuality ?? 0) >= 0.75 ? 'text-green-500' :
+                        (data.galleryQuality ?? 0) >= 0.5 ? 'text-amber-500' : 'text-red-500'
+                      }`}>
+                        {data.galleryQuality != null ? data.galleryQuality.toFixed(2) : 'N/A'}
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => setEditingQuality(true)}
+                      className="text-xs text-amber-500 hover:text-amber-400"
+                    >
+                      Adjust
+                    </button>
+                  </div>
+                )}
+
+                {data.galleryRationale && (
+                  <p className="text-xs text-stone-500 mt-2 italic">
+                    {data.galleryRationale}
                   </p>
                 )}
               </div>
