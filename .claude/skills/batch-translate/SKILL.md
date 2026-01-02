@@ -44,9 +44,37 @@ This workflow handles the full processing pipeline for historical book scans:
 | `POST /api/process/batch-ocr` | OCR up to 5 pages directly |
 | `POST /api/process/batch-translate` | Translate up to 10 pages directly |
 
-## Batch API vs Realtime
+## Batch Processing Options
 
-All batch jobs (batch_ocr, batch_translate) use **Gemini Batch API** for 50% cost savings.
+### Option 1: Vercel Cron (Recommended for Bulk)
+
+Two serverless functions automate the entire batch OCR pipeline:
+
+| Endpoint | Purpose | Schedule |
+|----------|---------|----------|
+| `POST /api/cron/submit-ocr` | Creates batch jobs for all pages needing OCR | Daily midnight |
+| `POST /api/cron/batch-processor` | Downloads results, saves to DB | Every 6 hours |
+
+```bash
+# Manual trigger - submit all pending OCR
+curl -X POST https://sourcelibrary.org/api/cron/submit-ocr
+
+# Manual trigger - process completed batches
+curl -X POST https://sourcelibrary.org/api/cron/batch-processor
+```
+
+**Timeline:**
+- T+0h: Submit batch jobs
+- T+2-24h: Gemini processing
+- T+24h: Batch processor saves results (runs every 6h)
+
+**Critical:** Results expire after 48h - batch-processor must run at least once every 48 hours.
+
+See `docs/BATCH-OCR-CRON-SETUP.md` for full documentation.
+
+### Option 2: Job System (for targeted processing)
+
+All batch jobs use **Gemini Batch API** for 50% cost savings.
 
 | Job Type | API | Model | Cost |
 |----------|-----|-------|------|
@@ -63,6 +91,47 @@ See `docs/BATCH-PROCESSING.md` for full documentation.
 3. **When all prepared** → Submits to Gemini Batch API
 4. **Call `/process` again** → Polls for results (ready in 2-24 hours)
 5. **When done** → Results saved, job complete
+
+## OCR Output Format
+
+OCR uses **Markdown output** with semantic tags:
+
+### Markdown Formatting
+- `# ## ###` for headings (bigger text = bigger heading)
+- `**bold**`, `*italic*` for emphasis
+- `->centered text<-` for centered lines (NOT for headings)
+- `> blockquotes` for quotes/prayers
+- `---` for dividers
+- Tables only for actual tabular data
+
+### Metadata Tags (hidden from readers)
+| Tag | Purpose |
+|-----|---------|
+| `<lang>X</lang>` | Detected language |
+| `<page-num>N</page-num>` | Page/folio number |
+| `<header>X</header>` | Running headers |
+| `<sig>X</sig>` | Printer's marks (A2, B1) |
+| `<meta>X</meta>` | Hidden metadata |
+| `<warning>X</warning>` | Quality issues |
+| `<vocab>X</vocab>` | Key terms for indexing |
+
+### Inline Annotations (visible to readers)
+| Tag | Purpose |
+|-----|---------|
+| `<margin>X</margin>` | Marginal notes (before paragraph) |
+| `<gloss>X</gloss>` | Interlinear annotations |
+| `<insert>X</insert>` | Boxed text, additions |
+| `<unclear>X</unclear>` | Illegible readings |
+| `<note>X</note>` | Interpretive notes |
+| `<term>X</term>` | Technical vocabulary |
+| `<image-desc>X</image-desc>` | Describe illustrations |
+
+### Critical OCR Rules
+1. Preserve original spelling, capitalization, punctuation
+2. Page numbers/headers/signatures go in metadata tags only
+3. IGNORE partial text at edges (from facing page in spread)
+4. Describe images/diagrams with `<image-desc>`, never tables
+5. End with `<vocab>key terms, names, concepts</vocab>`
 
 ## Step 1: Analyze Book Status
 

@@ -53,3 +53,8 @@ check-books.js
 # Experimental tools
 tools/
 .env*.local
+
+# MCP server secrets and build
+mcp-server/.mcpregistry_*
+mcp-server/node_modules/
+mcp-server/dist/

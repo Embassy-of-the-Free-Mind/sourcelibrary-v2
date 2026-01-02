@@ -3879,3 +3879,131 @@ These are original Sanskrit texts in scholarly editions - acceptable for primary
 4. Agrippa 1550 edition appears to have 616 translated pages
 5. **Action Required:** Queue Tier 1 priority books for OCR/translation
 
+
+---
+
+## Audit Session: 2026-01-01 16:30
+
+### Focus: Modern Editions & Metadata Cleanup
+
+---
+
+### Collection Health Summary
+
+| Metric | Count |
+|--------|-------|
+| Total books | 1,031 |
+| Unknown language | 170 |
+| Unknown year | 510 |
+| 20th-21st century | 68 |
+
+---
+
+### 5. The Enneads (MacKenna Translation)
+
+**Book ID:** 695580c657e3b773024f622d
+**IA:** plotinustheennea033190mbp
+
+| Check | Result |
+|-------|--------|
+| Print date | 1956 |
+| Typography | Modern |
+| Language | English (translation only) |
+| Original text included? | No |
+
+**Verdict:** FLAG:MODERN-TRANS
+
+**Reason:** English-only translation without Greek original. MacKenna's translation is literary but not scholarly.
+
+**Recommendation:** Replace with Loeb Classical Library edition (Greek + English facing pages) or keep alongside original Greek edition.
+
+**OCR Status:** 0/702 pages - needs processing
+
+---
+
+### 6. Chaldaean Oracles and Theurgy
+
+**Book ID:** 6955805957e3b773024f5545
+
+| Check | Result |
+|-------|--------|
+| Print date | 1956 |
+| Typography | Modern |
+| Language | English (scholarly study) |
+| Original text included? | Partial (quotations) |
+
+**Verdict:** FLAG:MODERN-TRANS (borderline)
+
+**Reason:** Hans Lewy's scholarly study includes Greek quotations but is primarily a modern academic work, not a primary source.
+
+**Recommendation:** Keep as secondary source if it includes substantial Greek fragments. Otherwise flag for review.
+
+**OCR Status:** 0/480 pages - needs processing
+
+---
+
+### 7. Byzantine Philosophy and Its Ancient Sources
+
+**Book ID:** 6955800c57e3b773024f4ed4
+
+| Check | Result |
+|-------|--------|
+| Print date | 2002 |
+| Typography | Modern |
+| Language | English |
+| Original text included? | No |
+
+**Verdict:** REJECT
+
+**Reason:** 21st century academic anthology. No primary source texts. Outside collection scope.
+
+**Action Required:** Delete or move to secondary sources collection.
+
+**OCR Status:** 0/347 pages
+
+---
+
+### 8. Die Fragmente der Vorsokratiker (Diels-Kranz)
+
+**Book ID:** 6955770b57e3b773024f3177
+
+| Check | Result |
+|-------|--------|
+| Print date | 1951 |
+| Typography | Modern critical edition |
+| Language | German/Greek |
+| Original text included? | Yes (all fragments in Greek) |
+
+**Verdict:** FLAG:CRITICAL-ED ✓ KEEP
+
+**Reason:** Standard scholarly edition containing original Greek fragments of Pre-Socratic philosophers. Essential reference work with original texts.
+
+**OCR Status:** 0/1649 pages - HIGH PRIORITY for OCR
+
+---
+
+### Metadata Fixed This Session
+
+| Book | Field | Before | After |
+|------|-------|--------|-------|
+| La Loi | year | Unknown | 1850 |
+| La Loi | language | Unknown | French |
+| Clavicula Salomonis | year | Unknown | 1903 |
+| Clavicula Salomonis | language | Unknown | Hebrew |
+
+---
+
+### Recommendations
+
+1. **Delete:** Byzantine Philosophy (2002) - modern academic book, not primary source
+2. **Flag for review:** MacKenna Enneads, Hans Lewy - modern translations without originals
+3. **Prioritize OCR:** Diels-Kranz (1649 pages of Greek fragments)
+4. **Metadata cleanup:** 170 books with Unknown language, 510 with Unknown year
+
+### Books Needing Original Editions
+
+| Modern Translation | Original Needed |
+|--------------------|-----------------|
+| Enneads (MacKenna) | Plotinus, Enneades (Greek, Teubner/Loeb) |
+| Chaldaean Oracles (Lewy) | Oracula Chaldaica (Greek ed.) |
+

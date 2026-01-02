@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Loader2, Sparkles, Quote, ChevronDown, ChevronUp, ExternalLink, List, Info, X, Image as ImageIcon } from 'lucide-react';
+import { Loader2, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { Book, Page } from '@/lib/types';
 import { QuoteShare } from '@/components/ShareButton';
@@ -48,7 +48,6 @@ export default function GuidePage({ params }: GuidePageProps) {
   const [loading, setLoading] = useState(true);
   const [generatingSummary, setGeneratingSummary] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showBookInfo, setShowBookInfo] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [showSections, setShowSections] = useState(true);
   const [illustrations, setIllustrations] = useState<GalleryItem[]>([]);
@@ -170,7 +169,6 @@ export default function GuidePage({ params }: GuidePageProps) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
         <div className="text-center">
-          <BookOpen className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--text-muted)' }} />
           <h1 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Book Not Found</h1>
           <Link href="/" style={{ color: 'var(--accent-rust)' }} className="hover:opacity-80">
             Back to Library
@@ -187,51 +185,108 @@ export default function GuidePage({ params }: GuidePageProps) {
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between">
             <Link
-              href={`/book/${bookId}`}
+              href="/"
               className="inline-flex items-center gap-2 hover:opacity-70 transition-opacity"
-              style={{ color: 'var(--text-muted)' }}
+              style={{ color: 'var(--text-primary)' }}
             >
-              <BookOpen className="w-5 h-5" />
-              <span
-                className="hidden sm:inline text-base font-medium truncate max-w-[300px]"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+              {/* Source Library Logo - Concentric Circles */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="w-6 h-6"
+                style={{ color: 'var(--accent-rust)' }}
               >
-                {book.display_title || book.title}
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1" />
+                <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" strokeWidth="1" />
+                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1" />
+              </svg>
+              <span
+                className="hidden sm:inline text-base font-medium"
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+              >
+                Source Library
               </span>
             </Link>
-            <div className="flex items-center gap-2">
-              <span
-                className="text-xs uppercase tracking-wider px-2 py-1 rounded"
-                style={{ background: 'var(--bg-warm)', color: 'var(--accent-rust)' }}
-              >
-                Reading Guide
-              </span>
-              <button
-                onClick={() => setShowBookInfo(true)}
-                className="p-1.5 rounded-md hover:bg-stone-100 transition-colors"
-                style={{ color: 'var(--text-muted)' }}
-                title="Book metadata"
-              >
-                <Info className="w-4 h-4" />
-              </button>
-            </div>
+            <span
+              className="text-xs uppercase tracking-wider px-2 py-1 rounded"
+              style={{ background: 'var(--bg-warm)', color: 'var(--accent-rust)' }}
+            >
+              Reading Guide
+            </span>
           </div>
         </div>
       </header>
 
-      {/* Book Title Section */}
+      {/* Book Title Section with Poster */}
       <div className="py-10 sm:py-14 border-b" style={{ borderColor: 'var(--border-light)' }}>
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h1
-            className="text-3xl sm:text-4xl leading-tight"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
-          >
-            {book.display_title || book.title}
-          </h1>
-          <p className="mt-3 text-lg" style={{ color: 'var(--text-secondary)' }}>{book.author}</p>
-          {book.published && (
-            <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{book.published}</p>
-          )}
+        <div className="max-w-3xl mx-auto px-4">
+          <div className="flex flex-col sm:flex-row gap-8 items-start">
+            {/* Poster Image */}
+            {book.thumbnail && (
+              <Link
+                href={`/book/${bookId}`}
+                className="flex-shrink-0 mx-auto sm:mx-0 hover:opacity-90 transition-opacity"
+              >
+                <div
+                  className="relative w-32 sm:w-40 aspect-[3/4] rounded-lg overflow-hidden shadow-lg"
+                  style={{ border: '1px solid var(--border-light)' }}
+                >
+                  <Image
+                    src={book.thumbnail}
+                    alt={book.display_title || book.title}
+                    fill
+                    sizes="160px"
+                    className="object-cover"
+                  />
+                </div>
+              </Link>
+            )}
+
+            {/* Title and Meta */}
+            <div className={`flex-1 ${book.thumbnail ? 'text-left' : 'text-center'}`}>
+              <h1
+                className="text-3xl sm:text-4xl leading-tight"
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+              >
+                {book.display_title || book.title}
+              </h1>
+
+              {/* Author */}
+              <p className="mt-3 text-lg" style={{ color: 'var(--text-secondary)' }}>
+                {book.author}
+              </p>
+
+              {/* Publication Info */}
+              {(book.published || book.place_published) && (
+                <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
+                  {[book.place_published, book.published].filter(Boolean).join(', ')}
+                </p>
+              )}
+
+              {/* Brief Abstract */}
+              {(book.index?.bookSummary?.brief || book.reading_summary?.overview) && (
+                <p
+                  className="mt-5 text-lg leading-relaxed"
+                  style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}
+                >
+                  {book.index?.bookSummary?.brief ||
+                   (book.reading_summary?.overview && book.reading_summary.overview.split('\n\n')[0]?.slice(0, 300) + (book.reading_summary.overview.length > 300 ? '...' : ''))}
+                </p>
+              )}
+
+              {/* Link to Book */}
+              <div className="mt-5">
+                <Link
+                  href={`/book/${bookId}`}
+                  className="inline-flex items-center gap-2 text-sm hover:opacity-70"
+                  style={{ color: 'var(--accent-rust)' }}
+                >
+                  View Book
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -269,7 +324,6 @@ export default function GuidePage({ params }: GuidePageProps) {
                           className="relative pl-5"
                           style={{ borderLeft: '2px solid var(--accent-gold)' }}
                         >
-                          <Quote className="absolute -left-2 -top-0.5 w-4 h-4" style={{ color: 'var(--accent-gold)', background: 'var(--bg-white)' }} />
                           <p className="italic leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
                             &ldquo;{quote.text}&rdquo;
                           </p>
@@ -324,7 +378,6 @@ export default function GuidePage({ params }: GuidePageProps) {
             </div>
           ) : translatedPages.length > 0 ? (
             <div className="rounded-xl p-8 sm:p-10 text-center" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-              <Sparkles className="w-10 h-10 mx-auto mb-4" style={{ color: 'var(--accent-gold)' }} />
               <h2
                 className="text-2xl mb-3"
                 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
@@ -346,16 +399,12 @@ export default function GuidePage({ params }: GuidePageProps) {
                     Generating...
                   </>
                 ) : (
-                  <>
-                    <Sparkles className="w-4 h-4" />
-                    Generate Overview
-                  </>
+                  'Generate Overview'
                 )}
               </button>
             </div>
           ) : (
             <div className="rounded-xl p-6 text-center" style={{ background: 'var(--bg-warm)' }}>
-              <BookOpen className="w-8 h-8 mx-auto mb-3" style={{ color: 'var(--text-muted)' }} />
               <p style={{ color: 'var(--text-secondary)' }}>
                 Translate pages to generate a reading guide.
               </p>
@@ -384,7 +433,6 @@ export default function GuidePage({ params }: GuidePageProps) {
                 className="text-xl flex items-center gap-3"
                 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
               >
-                <List className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
                 Table of Contents
                 <span className="text-sm font-normal" style={{ color: 'var(--text-muted)' }}>
                   ({sections.length} sections)
@@ -419,7 +467,6 @@ export default function GuidePage({ params }: GuidePageProps) {
                 className="text-xl flex items-center gap-3"
                 style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
               >
-                <ImageIcon className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
                 Illustrations
                 <span className="text-sm font-normal" style={{ color: 'var(--text-muted)' }}>
                   ({illustrations.length} images)
@@ -483,190 +530,6 @@ export default function GuidePage({ params }: GuidePageProps) {
         )}
 
       </main>
-
-      {/* Book Info Modal */}
-      {showBookInfo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <div className="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b border-stone-200 px-4 py-3 flex items-center justify-between">
-              <h2 className="font-semibold text-stone-900">Book Information</h2>
-              <button
-                onClick={() => setShowBookInfo(false)}
-                className="p-1 text-stone-400 hover:text-stone-600 rounded"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="p-4 space-y-4">
-              {/* Title */}
-              <div>
-                <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Title</h3>
-                <p className="text-stone-900">{book.display_title || book.title}</p>
-                {book.display_title && book.title !== book.display_title && (
-                  <p className="text-sm text-stone-500 mt-0.5 italic">{book.title}</p>
-                )}
-              </div>
-
-              {/* Author */}
-              <div>
-                <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Author</h3>
-                <p className="text-stone-900">{book.author}</p>
-              </div>
-
-              {/* Publication */}
-              <div className="grid grid-cols-2 gap-4">
-                {book.published && (
-                  <div>
-                    <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Published</h3>
-                    <p className="text-stone-900">{book.published}</p>
-                  </div>
-                )}
-                {book.place_published && (
-                  <div>
-                    <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Place</h3>
-                    <p className="text-stone-900">{book.place_published}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Publisher */}
-              {book.publisher && (
-                <div>
-                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Publisher</h3>
-                  <p className="text-stone-900">{book.publisher}</p>
-                </div>
-              )}
-
-              {/* Language & Format */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Language</h3>
-                  <p className="text-stone-900">{book.language}</p>
-                </div>
-                {book.format && (
-                  <div>
-                    <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Format</h3>
-                    <p className="text-stone-900">{book.format}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Categories */}
-              {book.categories && book.categories.length > 0 && (
-                <div>
-                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Categories</h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {book.categories.map((cat, i) => (
-                      <span key={i} className="px-2 py-0.5 bg-amber-100 text-amber-800 text-sm rounded">
-                        {cat}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Identifiers */}
-              {(book.doi || book.ustc_id || book.ia_identifier) && (
-                <div>
-                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Identifiers</h3>
-                  <div className="space-y-1 text-sm">
-                    {book.doi && (
-                      <p>
-                        <span className="text-stone-500">DOI:</span>{' '}
-                        <a
-                          href={`https://doi.org/${book.doi}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-amber-600 hover:text-amber-700"
-                        >
-                          {book.doi}
-                        </a>
-                      </p>
-                    )}
-                    {book.ustc_id && (
-                      <p>
-                        <span className="text-stone-500">USTC:</span>{' '}
-                        <a
-                          href={`https://www.ustc.ac.uk/editions/${book.ustc_id}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-amber-600 hover:text-amber-700"
-                        >
-                          {book.ustc_id}
-                        </a>
-                      </p>
-                    )}
-                    {book.ia_identifier && (
-                      <p>
-                        <span className="text-stone-500">Internet Archive:</span>{' '}
-                        <a
-                          href={`https://archive.org/details/${book.ia_identifier}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-amber-600 hover:text-amber-700"
-                        >
-                          {book.ia_identifier}
-                        </a>
-                      </p>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* License */}
-              {book.license && (
-                <div>
-                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">License</h3>
-                  <p className="text-stone-900">{book.license}</p>
-                </div>
-              )}
-
-              {/* Image Source */}
-              {book.image_source && (
-                <div>
-                  <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-1">Image Source</h3>
-                  <p className="text-stone-900">
-                    {book.image_source.provider_name || book.image_source.provider}
-                    {book.image_source.source_url && (
-                      <>
-                        {' '}
-                        <a
-                          href={book.image_source.source_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-amber-600 hover:text-amber-700"
-                        >
-                          <ExternalLink className="w-3 h-3 inline" />
-                        </a>
-                      </>
-                    )}
-                  </p>
-                  {book.image_source.license && (
-                    <p className="text-sm text-stone-500">{book.image_source.license}</p>
-                  )}
-                </div>
-              )}
-
-              {/* Translation Progress */}
-              <div className="pt-2 border-t border-stone-200">
-                <h3 className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">Translation Progress</h3>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 bg-stone-200 rounded-full h-2">
-                    <div
-                      className="bg-amber-500 h-2 rounded-full transition-all"
-                      style={{ width: `${translationProgress}%` }}
-                    />
-                  </div>
-                  <span className="text-sm text-stone-600">
-                    {translatedPages.length}/{pages.length} pages ({translationProgress}%)
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
