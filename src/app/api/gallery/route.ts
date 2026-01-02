@@ -10,6 +10,9 @@ interface DetectedImage {
   confidence?: number;
   detection_source?: string;
   model?: 'gemini' | 'mistral' | 'grounding-dino';
+  gallery_quality?: number;
+  gallery_rationale?: string;
+  featured?: boolean;
 }
 
 /**

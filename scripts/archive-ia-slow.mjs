@@ -155,14 +155,14 @@ async function archiveHumanLike() {
       console.log(`✗ ${error.message.slice(0, 40)}`);
     }
 
-    // Human-like delays
+    // Human-like delays (~9/min average = ~6.5s avg delay)
     if (shouldTakeBreak()) {
-      const breakTime = randomDelay(20000, 45000);
+      const breakTime = randomDelay(15000, 30000);
       console.log(`   ☕ Taking a ${(breakTime/1000).toFixed(0)}s break...`);
       await new Promise(r => setTimeout(r, breakTime));
     } else {
-      // Normal random delay between 2-12 seconds
-      await new Promise(r => setTimeout(r, randomDelay(2000, 12000)));
+      // Normal random delay between 3-10 seconds (~6.5s avg)
+      await new Promise(r => setTimeout(r, randomDelay(3000, 10000)));
     }
   }
 

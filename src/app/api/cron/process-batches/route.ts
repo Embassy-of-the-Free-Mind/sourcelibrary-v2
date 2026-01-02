@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
       try {
         const geminiStatus = await getBatchJobStatus(job.gemini_job_name);
 
-        if (geminiStatus.state === 'JOB_STATE_SUCCEEDED') {
+        if ((geminiStatus.state as string) === 'JOB_STATE_SUCCEEDED' || (geminiStatus.state as string) === 'BATCH_STATE_SUCCEEDED') {
           // Job complete - collect results
           console.log(`[cron] Collecting results for ${job.id} (${job.book_title})`);
 

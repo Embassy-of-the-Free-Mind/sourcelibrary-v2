@@ -274,6 +274,24 @@ export interface Book {
     pages_analyzed?: number;
   };
 
+  // Generated book index with summaries
+  index?: {
+    bookSummary?: {
+      brief?: string;
+      abstract?: string;
+      detailed?: string;
+    };
+    sectionSummaries?: Array<{
+      title: string;
+      startPage: number;
+      endPage: number;
+      summary: string;
+      quotes?: Array<{ text: string; page: number; significance?: string }>;
+      concepts?: string[];
+    }>;
+    generatedAt?: Date;
+  };
+
   // Published editions (immutable snapshots for citation)
   editions?: TranslationEdition[];
   current_edition_id?: string;    // Most recent published edition
