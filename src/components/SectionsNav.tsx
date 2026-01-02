@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronDown, ChevronRight, Quote, BookOpen, Sparkles, ImageIcon } from 'lucide-react';
+import { ChevronDown, ChevronRight } from 'lucide-react';
 
 interface SectionSummary {
   title: string;
@@ -63,7 +63,6 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
   return (
     <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
       <div className="p-4 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
-        <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />
         <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>Sections</h3>
         <span className="text-xs ml-auto" style={{ color: 'var(--text-muted)' }}>{sections.length} sections</span>
       </div>
@@ -119,8 +118,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                   {/* Section Illustrations */}
                   {sectionImages.length > 0 && (
                     <div className="pl-7">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <ImageIcon className="w-3 h-3" style={{ color: 'var(--accent-rust)' }} />
+                      <div className="mb-2">
                         <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                           Illustrations
                         </span>
@@ -170,8 +168,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                   {/* Key Concepts */}
                   {section.concepts && section.concepts.length > 0 && (
                     <div className="pl-7">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <Sparkles className="w-3 h-3" style={{ color: 'var(--accent-gold)' }} />
+                      <div className="mb-2">
                         <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                           Key Concepts
                         </span>
@@ -193,8 +190,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                   {/* Notable Quotes */}
                   {section.quotes && section.quotes.length > 0 && (
                     <div className="pl-7">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <Quote className="w-3 h-3" style={{ color: 'var(--accent-gold)' }} />
+                      <div className="mb-2">
                         <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                           Notable Quotes
                         </span>
@@ -245,8 +241,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                         className="inline-flex items-center gap-1.5 text-sm font-medium hover:opacity-70"
                         style={{ color: 'var(--accent-rust)' }}
                       >
-                        <BookOpen className="w-4 h-4" />
-                        Read this section
+                        Read this section →
                       </Link>
                     </div>
                   )}
