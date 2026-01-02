@@ -401,6 +401,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                 bookId={bookId!}
                 sections={sections}
                 pages={pages.map(p => ({ id: p.id, page_number: p.page_number }))}
+                illustrations={illustrations}
               />
             )}
           </section>
