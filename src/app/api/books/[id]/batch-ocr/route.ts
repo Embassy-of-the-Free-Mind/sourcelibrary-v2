@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 // Increase timeout for batch OCR
 export const maxDuration = 300;
@@ -309,7 +310,7 @@ Return each transcription clearly separated with the exact format:
       }
     }
 
-    // Track total cost
+    // Track total cost (legacy)
     try {
       await db.collection('cost_tracking').insertOne({
         timestamp: new Date(),
@@ -325,6 +326,22 @@ Return each transcription clearly separated with the exact format:
     } catch (e) {
       console.error('Failed to track cost:', e);
     }
+
+    // Log to gemini_usage for auditing
+    const successfulPageIds = results.filter(r => r.success).map(r => r.pageId);
+    await logGeminiCall({
+      type: 'ocr',
+      mode: 'realtime',
+      model: modelId,
+      book_id: bookId,
+      book_title: book?.title,
+      page_ids: successfulPageIds,
+      page_count: successfulPageIds.length,
+      input_tokens: totalInputTokens,
+      output_tokens: totalOutputTokens,
+      status: successfulPageIds.length > 0 ? 'success' : 'failed',
+      endpoint: '/api/books/[id]/batch-ocr',
+    });
 
     // Get remaining count
     const remainingCount = await db.collection('pages').countDocuments({
