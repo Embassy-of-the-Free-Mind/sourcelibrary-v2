@@ -180,7 +180,7 @@ export async function GET(request: NextRequest) {
         offset,
         books,
         verified: true,
-        imageTypes: ['woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'decorative', 'table']
+        imageTypes: ['woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'decorative', 'table', 'emblem', 'engraving']
       });
     }
 
