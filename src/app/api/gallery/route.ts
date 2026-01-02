@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+// Force rebuild: 2026-01-02T08:33
+
 interface DetectedImage {
   description: string;
   type?: string;
