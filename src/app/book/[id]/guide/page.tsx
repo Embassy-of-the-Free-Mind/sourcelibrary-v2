@@ -91,9 +91,9 @@ export default function GuidePage({ params }: GuidePageProps) {
           setSections(bookData.index.sectionSummaries);
         }
 
-        // Fetch illustrations for this book
+        // Fetch high-quality illustrations for this book (minQuality=0.75 filters out decorative elements)
         try {
-          const galleryRes = await fetch(`/api/gallery?bookId=${bookId}&verified=true&limit=50`);
+          const galleryRes = await fetch(`/api/gallery?bookId=${bookId}&verified=true&limit=50&minQuality=0.75`);
           if (galleryRes.ok) {
             const galleryData = await galleryRes.json();
             setIllustrations(galleryData.items || []);

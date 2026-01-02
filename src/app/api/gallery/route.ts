@@ -23,6 +23,7 @@ interface DetectedImage {
  *   - type: filter by image type (woodcut, diagram, etc.)
  *   - verified: if "true", only show vision-extracted images with bboxes
  *   - model: filter by extraction model ('gemini' or 'mistral')
+ *   - minQuality: minimum gallery_quality score (0-1), e.g. 0.8 for high quality only
  */
 export async function GET(request: NextRequest) {
   try {
@@ -33,6 +34,7 @@ export async function GET(request: NextRequest) {
     const imageType = searchParams.get('type');
     const verifiedOnly = searchParams.get('verified') === 'true';
     const modelFilter = searchParams.get('model') as 'gemini' | 'mistral' | null;
+    const minQuality = searchParams.get('minQuality') ? parseFloat(searchParams.get('minQuality')!) : null;
 
     const db = await getDb();
 
@@ -46,6 +48,9 @@ export async function GET(request: NextRequest) {
     };
     if (modelFilter) {
       elemMatchConditions.model = modelFilter;
+    }
+    if (minQuality !== null) {
+      elemMatchConditions.gallery_quality = { $gte: minQuality };
     }
 
     const query: Record<string, unknown> = verifiedOnly
@@ -92,6 +97,9 @@ export async function GET(request: NextRequest) {
       };
       if (modelFilter) {
         unwindMatch['detected_images.model'] = modelFilter;
+      }
+      if (minQuality !== null) {
+        unwindMatch['detected_images.gallery_quality'] = { $gte: minQuality };
       }
 
       const pipeline = [

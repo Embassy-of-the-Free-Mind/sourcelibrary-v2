@@ -31,12 +31,16 @@ For each illustration found, return:
 }
 
 GALLERY QUALITY SCORING (0.0 to 1.0):
-- 0.9-1.0: Exceptional - striking emblems, significant allegorical scenes, beautiful engravings, historically important diagrams
-- 0.7-0.9: Good - well-executed illustrations with clear subject matter, interesting diagrams
-- 0.4-0.7: Moderate - standard frontispieces, common decorative elements, simple diagrams
-- 0.0-0.4: Low - page ornaments, generic borders, printer's marks, marbled papers, simple geometric figures
+- 0.9-1.0: Exceptional - striking emblems, portraits, significant allegorical scenes with people/figures, beautiful engravings depicting humans or mythological figures
+- 0.8-0.9: High - any illustration featuring people or figures, well-composed scenes with human activity, portraits, personifications
+- 0.6-0.8: Good - well-executed illustrations without people, interesting diagrams, decorative elements with artistic merit
+- 0.4-0.6: Moderate - standard frontispieces without figures, musical scores, common decorative elements, simple diagrams
+- 0.2-0.4: Low - page ornaments, generic borders, printer's marks, simple geometric figures
+- 0.0-0.2: Minimal - marbled papers, blank decorative frames, rule lines
 
-Consider: Visual appeal, historical/scholarly significance, uniqueness, composition quality, shareability on social media.
+PRIORITY: Images featuring people, human figures, or personifications should ALWAYS score 0.8 or higher. Musical scores, notation, and sheet music should score 0.4-0.6 (they are interesting but not gallery highlights).
+
+Consider: Visual appeal, presence of human figures, historical/scholarly significance, uniqueness, composition quality, shareability on social media.
 
 Return ONLY a valid JSON array. If no illustrations exist (text-only page), return: []
 
