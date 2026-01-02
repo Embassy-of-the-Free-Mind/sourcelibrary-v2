@@ -354,19 +354,19 @@ export default function GuidePage({ params }: GuidePageProps) {
               </button>
             </div>
           ) : (
-            <div className="bg-stone-100 rounded-xl p-6 text-center">
-              <BookOpen className="w-8 h-8 text-stone-400 mx-auto mb-3" />
-              <p className="text-stone-600">
+            <div className="rounded-xl p-6 text-center" style={{ background: 'var(--bg-warm)' }}>
+              <BookOpen className="w-8 h-8 mx-auto mb-3" style={{ color: 'var(--text-muted)' }} />
+              <p style={{ color: 'var(--text-secondary)' }}>
                 Translate pages to generate a reading guide.
               </p>
               <div className="mt-3">
-                <div className="w-full bg-stone-200 rounded-full h-2 max-w-xs mx-auto">
+                <div className="w-full rounded-full h-2 max-w-xs mx-auto" style={{ background: 'var(--border-light)' }}>
                   <div
-                    className="bg-amber-500 h-2 rounded-full transition-all"
-                    style={{ width: `${translationProgress}%` }}
+                    className="h-2 rounded-full transition-all"
+                    style={{ width: `${translationProgress}%`, background: 'var(--accent-rust)' }}
                   />
                 </div>
-                <p className="text-xs text-stone-500 mt-1">{translationProgress}% translated</p>
+                <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>{translationProgress}% translated</p>
               </div>
             </div>
           )}
@@ -377,22 +377,23 @@ export default function GuidePage({ params }: GuidePageProps) {
           <section className="mb-8">
             <button
               onClick={() => setShowSections(!showSections)}
-              className="w-full flex items-center justify-between p-5 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors mb-4"
+              className="w-full flex items-center justify-between p-5 rounded-xl transition-colors mb-4 hover:opacity-90"
+              style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
             >
               <span
-                className="text-xl text-stone-900 flex items-center gap-3"
-                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                className="text-xl flex items-center gap-3"
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
               >
-                <List className="w-5 h-5 text-amber-600" />
+                <List className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
                 Table of Contents
-                <span className="text-sm text-stone-500 font-normal" style={{ fontFamily: 'inherit' }}>
+                <span className="text-sm font-normal" style={{ color: 'var(--text-muted)' }}>
                   ({sections.length} sections)
                 </span>
               </span>
               {showSections ? (
-                <ChevronUp className="w-5 h-5 text-stone-500" />
+                <ChevronUp className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
               ) : (
-                <ChevronDown className="w-5 h-5 text-stone-500" />
+                <ChevronDown className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
               )}
             </button>
             {showSections && (
@@ -410,22 +411,23 @@ export default function GuidePage({ params }: GuidePageProps) {
           <section className="mb-8">
             <button
               onClick={() => setShowIllustrations(!showIllustrations)}
-              className="w-full flex items-center justify-between p-5 bg-white rounded-xl border border-stone-200 hover:bg-stone-50 transition-colors mb-4"
+              className="w-full flex items-center justify-between p-5 rounded-xl transition-colors mb-4 hover:opacity-90"
+              style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
             >
               <span
-                className="text-xl text-stone-900 flex items-center gap-3"
-                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                className="text-xl flex items-center gap-3"
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
               >
-                <ImageIcon className="w-5 h-5 text-amber-600" />
+                <ImageIcon className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
                 Illustrations
-                <span className="text-sm text-stone-500 font-normal" style={{ fontFamily: 'inherit' }}>
+                <span className="text-sm font-normal" style={{ color: 'var(--text-muted)' }}>
                   ({illustrations.length} images)
                 </span>
               </span>
               {showIllustrations ? (
-                <ChevronUp className="w-5 h-5 text-stone-500" />
+                <ChevronUp className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
               ) : (
-                <ChevronDown className="w-5 h-5 text-stone-500" />
+                <ChevronDown className="w-5 h-5" style={{ color: 'var(--text-muted)' }} />
               )}
             </button>
             {showIllustrations && (
@@ -441,7 +443,8 @@ export default function GuidePage({ params }: GuidePageProps) {
                     <Link
                       key={imageId}
                       href={`/gallery/image/${imageId}`}
-                      className="group relative aspect-square bg-stone-100 rounded-lg overflow-hidden border border-stone-200 hover:border-amber-400 transition-colors"
+                      className="group relative aspect-square rounded-lg overflow-hidden transition-all hover:shadow-md"
+                      style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                     >
                       <Image
                         src={cropUrl}
@@ -467,7 +470,8 @@ export default function GuidePage({ params }: GuidePageProps) {
               <div className="mt-4 text-center">
                 <Link
                   href={`/gallery?bookId=${bookId}`}
-                  className="inline-flex items-center gap-2 text-sm text-amber-600 hover:text-amber-700"
+                  className="inline-flex items-center gap-2 text-sm hover:opacity-70"
+                  style={{ color: 'var(--accent-rust)' }}
                 >
                   View all in Gallery
                   <ExternalLink className="w-3.5 h-3.5" />
