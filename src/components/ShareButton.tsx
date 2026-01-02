@@ -196,7 +196,7 @@ export function QuoteShare({
     : 'https://sourcelibrary.org';
 
   const url = page
-    ? `${baseUrl}/book/${bookId}/guide#page-${page}`
+    ? `${baseUrl}/book/${bookId}/page-number/${page}`
     : `${baseUrl}/book/${bookId}`;
 
   return (

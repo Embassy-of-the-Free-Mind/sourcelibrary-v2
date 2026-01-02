@@ -192,7 +192,7 @@ export default function EntityDetailPage() {
                   {book.pages.slice(0, 10).map((page) => (
                     <Link
                       key={page}
-                      href={`/book/${book.book_id}/guide#page-${page}`}
+                      href={`/book/${book.book_id}/page-number/${page}`}
                       className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-amber-100 hover:text-amber-700 transition-colors"
                     >
                       p. {page}

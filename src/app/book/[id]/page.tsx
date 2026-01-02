@@ -321,7 +321,7 @@ async function BookInfo({ id }: { id: string }) {
                 <h2 className="text-lg font-semibold text-stone-900">About This Book</h2>
                 {hasTranslations ? (
                   <Link
-                    href={`/book/${book.id}/summary`}
+                    href={`/book/${book.id}/guide`}
                     className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
                   >
                     <BookText className="w-4 h-4" />
