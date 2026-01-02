@@ -160,7 +160,7 @@ export default function GuidePage({ params }: GuidePageProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
         <BookLoader label="Loading reading guide..." />
       </div>
     );
@@ -168,11 +168,11 @@ export default function GuidePage({ params }: GuidePageProps) {
 
   if (error || !book) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
         <div className="text-center">
-          <BookOpen className="w-12 h-12 text-stone-400 mx-auto mb-4" />
-          <h1 className="text-xl font-semibold mb-2">Book Not Found</h1>
-          <Link href="/" className="text-amber-600 hover:text-amber-700">
+          <BookOpen className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--text-muted)' }} />
+          <h1 className="text-xl font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Book Not Found</h1>
+          <Link href="/" style={{ color: 'var(--accent-rust)' }} className="hover:opacity-80">
             Back to Library
           </Link>
         </div>
@@ -181,43 +181,56 @@ export default function GuidePage({ params }: GuidePageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       {/* Header */}
-      <header className="bg-white border-b border-stone-200 sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto px-4 py-3">
+      <header className="sticky top-0 z-10 px-4 py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
+        <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between">
             <Link
               href={`/book/${bookId}`}
-              className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900"
+              className="inline-flex items-center gap-2 hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--text-muted)' }}
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="hidden sm:inline">Back to Book</span>
+              <BookOpen className="w-5 h-5" />
+              <span
+                className="hidden sm:inline text-base font-medium truncate max-w-[300px]"
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+              >
+                {book.display_title || book.title}
+              </span>
             </Link>
-            <button
-              onClick={() => setShowBookInfo(true)}
-              className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-stone-900 transition-colors"
-              title="Book metadata"
-            >
-              <Info className="w-4 h-4" />
-              <span className="hidden sm:inline">Info</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <span
+                className="text-xs uppercase tracking-wider px-2 py-1 rounded"
+                style={{ background: 'var(--bg-warm)', color: 'var(--accent-rust)' }}
+              >
+                Reading Guide
+              </span>
+              <button
+                onClick={() => setShowBookInfo(true)}
+                className="p-1.5 rounded-md hover:bg-stone-100 transition-colors"
+                style={{ color: 'var(--text-muted)' }}
+                title="Book metadata"
+              >
+                <Info className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Book info */}
-      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-10 sm:py-14">
+      {/* Book Title Section */}
+      <div className="py-10 sm:py-14 border-b" style={{ borderColor: 'var(--border-light)' }}>
         <div className="max-w-3xl mx-auto px-4 text-center">
-          <p className="text-amber-400 text-sm uppercase tracking-widest mb-3">Reading Guide</p>
           <h1
-            className="text-3xl sm:text-4xl italic leading-tight"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl sm:text-4xl leading-tight"
+            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
           >
             {book.display_title || book.title}
           </h1>
-          <p className="text-stone-300 mt-3 text-lg">{book.author}</p>
+          <p className="mt-3 text-lg" style={{ color: 'var(--text-secondary)' }}>{book.author}</p>
           {book.published && (
-            <p className="text-stone-400 text-sm mt-1">{book.published}</p>
+            <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{book.published}</p>
           )}
         </div>
       </div>
@@ -226,43 +239,45 @@ export default function GuidePage({ params }: GuidePageProps) {
         {/* Summary Section */}
         <section className="mb-8">
           {summary ? (
-            <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+            <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
               <div className="p-6 sm:p-8">
                 <h2
-                  className="text-2xl text-stone-900 mb-5"
-                  style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                  className="text-2xl mb-5"
+                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
                 >
                   Overview
                 </h2>
-                <div className="prose prose-stone max-w-none">
+                <div className="prose max-w-none" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
                   {summary.overview.split('\n\n').map((p, i) => (
-                    <p key={i} className="text-stone-700 leading-relaxed mb-4 text-base">{p}</p>
+                    <p key={i} className="leading-relaxed mb-4 text-base" style={{ color: 'var(--text-secondary)' }}>{p}</p>
                   ))}
                 </div>
 
                 {/* Key Quotes */}
                 {summary.quotes && summary.quotes.length > 0 && (
-                  <div className="mt-8 pt-8 border-t border-stone-100">
+                  <div className="mt-8 pt-8" style={{ borderTop: '1px solid var(--border-light)' }}>
                     <h3
-                      className="text-xl text-stone-800 mb-5"
-                      style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                      className="text-xl mb-5"
+                      style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
                     >
                       Notable Passages
                     </h3>
-                    <div className="space-y-4">
+                    <div className="space-y-5">
                       {summary.quotes.map((quote, i) => (
                         <blockquote
                           key={i}
-                          className="relative pl-4 border-l-2 border-amber-300"
+                          className="relative pl-5"
+                          style={{ borderLeft: '2px solid var(--accent-gold)' }}
                         >
-                          <Quote className="absolute -left-1.5 -top-0.5 w-3 h-3 text-amber-400 bg-white" />
-                          <p className="text-stone-600 italic text-sm leading-relaxed">
+                          <Quote className="absolute -left-2 -top-0.5 w-4 h-4" style={{ color: 'var(--accent-gold)', background: 'var(--bg-white)' }} />
+                          <p className="italic leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
                             &ldquo;{quote.text}&rdquo;
                           </p>
-                          <div className="flex items-center gap-2 mt-1">
+                          <div className="flex items-center gap-2 mt-2">
                             <Link
                               href={`/book/${bookId}/page/${pages.find(p => p.page_number === quote.page)?.id || ''}`}
-                              className="text-xs text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
+                              className="text-xs hover:opacity-70 inline-flex items-center gap-1"
+                              style={{ color: 'var(--accent-rust)' }}
                             >
                               Page {quote.page}
                               <ExternalLink className="w-3 h-3" />
@@ -285,10 +300,10 @@ export default function GuidePage({ params }: GuidePageProps) {
 
                 {/* Themes */}
                 {summary.themes && summary.themes.length > 0 && (
-                  <div className="mt-8 pt-8 border-t border-stone-100">
+                  <div className="mt-8 pt-8" style={{ borderTop: '1px solid var(--border-light)' }}>
                     <h3
-                      className="text-xl text-stone-800 mb-4"
-                      style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                      className="text-xl mb-4"
+                      style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
                     >
                       Key Themes
                     </h3>
@@ -296,7 +311,8 @@ export default function GuidePage({ params }: GuidePageProps) {
                       {summary.themes.map((theme, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1 bg-amber-50 text-amber-800 text-sm rounded-full"
+                          className="px-3 py-1.5 text-sm rounded-full"
+                          style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
                         >
                           {theme}
                         </span>
@@ -307,21 +323,22 @@ export default function GuidePage({ params }: GuidePageProps) {
               </div>
             </div>
           ) : translatedPages.length > 0 ? (
-            <div className="bg-white rounded-xl border border-stone-200 p-8 sm:p-10 text-center">
-              <Sparkles className="w-10 h-10 text-amber-500 mx-auto mb-4" />
+            <div className="rounded-xl p-8 sm:p-10 text-center" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+              <Sparkles className="w-10 h-10 mx-auto mb-4" style={{ color: 'var(--accent-gold)' }} />
               <h2
-                className="text-2xl text-stone-900 mb-3"
-                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                className="text-2xl mb-3"
+                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
               >
                 Generate Reading Guide
               </h2>
-              <p className="text-stone-600 mb-6 max-w-md mx-auto">
+              <p className="mb-6 max-w-md mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 Create an overview of this text with key quotes and themes.
               </p>
               <button
                 onClick={generateSummary}
                 disabled={generatingSummary}
-                className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-white rounded-lg disabled:opacity-50 transition-colors hover:opacity-90"
+                style={{ background: 'var(--accent-rust)' }}
               >
                 {generatingSummary ? (
                   <>
@@ -417,7 +434,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                   const imageId = `${item.pageId}:${item.detectionIndex}`;
                   // Build cropped URL if bbox exists
                   const cropUrl = item.bbox
-                    ? `/api/crop?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
+                    ? `/api/crop-image?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
                     : item.imageUrl;
 
                   return (
