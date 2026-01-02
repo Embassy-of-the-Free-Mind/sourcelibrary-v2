@@ -140,7 +140,10 @@ export async function GET(request: NextRequest) {
                   bbox: '$detected_images.bbox',
                   confidence: '$detected_images.confidence',
                   model: '$detected_images.model',
-                  detectionSource: '$detected_images.detection_source'
+                  detectionSource: '$detected_images.detection_source',
+                  galleryQuality: '$detected_images.gallery_quality',
+                  galleryRationale: '$detected_images.gallery_rationale',
+                  featured: '$detected_images.featured'
                 }
               }
             ],
@@ -229,6 +232,9 @@ export async function GET(request: NextRequest) {
       bbox?: { x: number; y: number; width: number; height: number };
       confidence?: number;
       model?: 'gemini' | 'mistral' | 'grounding-dino';
+      galleryQuality?: number;
+      galleryRationale?: string;
+      featured?: boolean;
     }> = [];
 
     for (const page of pages) {
@@ -250,7 +256,10 @@ export async function GET(request: NextRequest) {
             type: img.type,
             bbox: img.bbox,
             confidence: img.confidence,
-            model: img.model
+            model: img.model,
+            galleryQuality: img.gallery_quality,
+            galleryRationale: img.gallery_rationale,
+            featured: img.featured
           });
         }
       } else if (page.ocr?.data) {
