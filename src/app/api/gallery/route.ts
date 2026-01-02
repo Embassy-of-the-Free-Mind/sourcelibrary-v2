@@ -141,9 +141,10 @@ export async function GET(request: NextRequest) {
                   confidence: '$detected_images.confidence',
                   model: '$detected_images.model',
                   detectionSource: '$detected_images.detection_source',
-                  galleryQuality: { $ifNull: ['$detected_images.gallery_quality', null] },
-                  galleryRationale: { $ifNull: ['$detected_images.gallery_rationale', null] },
-                  featured: { $ifNull: ['$detected_images.featured', null] }
+                  galleryQuality: '$detected_images.gallery_quality',
+                  galleryRationale: '$detected_images.gallery_rationale',
+                  featured: '$detected_images.featured',
+                  _debug_detected_images: '$detected_images'
                 }
               }
             ],
