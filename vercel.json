@@ -10,7 +10,7 @@
   "crons": [
     {
       "path": "/api/cron/process-batches",
-      "schedule": "0 */2 * * *"
+      "schedule": "0 * * * *"
     },
     {
       "path": "/api/cron/submit-ocr",
