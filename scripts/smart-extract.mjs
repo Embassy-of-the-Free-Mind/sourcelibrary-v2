@@ -107,7 +107,7 @@ Return ONLY a JSON array of page numbers, most interesting first:
 [pageNum1, pageNum2, ...]`;
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -132,14 +132,27 @@ Return ONLY a JSON array of page numbers, most interesting first:
   return [];
 }
 
+function getMimeType(url, headerType) {
+  // S3 often returns application/octet-stream, so detect from URL extension
+  if (headerType && headerType !== 'application/octet-stream') {
+    return headerType;
+  }
+  const ext = url.split('.').pop()?.toLowerCase().split('?')[0];
+  if (ext === 'png') return 'image/png';
+  if (ext === 'gif') return 'image/gif';
+  if (ext === 'webp') return 'image/webp';
+  return 'image/jpeg'; // Default to JPEG
+}
+
 async function extractPage(imageUrl) {
   const imageResponse = await fetch(imageUrl);
   const imageBuffer = await imageResponse.arrayBuffer();
   const base64Image = Buffer.from(imageBuffer).toString('base64');
-  const mimeType = imageResponse.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
+  const headerType = imageResponse.headers.get('content-type')?.split(';')[0];
+  const mimeType = getMimeType(imageUrl, headerType);
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -185,7 +198,7 @@ async function extractPage(imageUrl) {
           museum_description: item.museum_description || undefined,
           detected_at: new Date(),
           detection_source: 'vision_model',
-          model: 'gemini-2.0-flash',
+          model: 'gemini-2.5-flash',
         }));
       }
     } catch {

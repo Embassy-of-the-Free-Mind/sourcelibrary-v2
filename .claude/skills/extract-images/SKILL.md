@@ -159,7 +159,7 @@ https://sourcelibrary.org/gallery/image/PAGE_ID:INDEX
 
 ## Cost Estimation
 
-Using Gemini 2.0 Flash:
+Using Gemini 2.5 Flash:
 
 | Metric | Cost |
 |--------|------|

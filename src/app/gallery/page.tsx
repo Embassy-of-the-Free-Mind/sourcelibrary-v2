@@ -1,16 +1,27 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Image as ImageIcon, BookOpen, ExternalLink, Filter, ChevronLeft, ChevronRight, CheckCircle, AlertCircle, Trash2, Square, CheckSquare, X } from 'lucide-react';
+import {
+  Search, Image as ImageIcon, BookOpen, X, ChevronLeft, ChevronRight,
+  SlidersHorizontal, Loader2, ImagePlus, AlertCircle
+} from 'lucide-react';
 
 interface BBox {
   x: number;
   y: number;
   width: number;
   height: number;
+}
+
+interface ImageMetadata {
+  subjects?: string[];
+  figures?: string[];
+  symbols?: string[];
+  style?: string;
+  technique?: string;
 }
 
 interface GalleryItem {
@@ -25,9 +36,29 @@ interface GalleryItem {
   description: string;
   type?: string;
   bbox?: BBox;
-  confidence?: number;
-  model?: 'gemini' | 'mistral' | 'grounding-dino';
-  detectionSource?: string;
+  galleryQuality?: number;
+  museumDescription?: string;
+  metadata?: ImageMetadata;
+}
+
+interface BookInfo {
+  id: string;
+  title: string;
+  author?: string;
+  year?: number;
+  pagesCount?: number;
+  hasOcr: boolean;
+  ocrPageCount: number;
+  hasImages: boolean;
+  imagesPageCount: number;
+}
+
+interface GalleryFilters {
+  types: string[];
+  subjects: string[];
+  figures: string[];
+  symbols: string[];
+  yearRange: { minYear: number | null; maxYear: number | null };
 }
 
 interface GalleryResponse {
@@ -35,9 +66,15 @@ interface GalleryResponse {
   total: number;
   limit: number;
   offset: number;
-  books: Array<{ id: string; title: string }>;
-  imageTypes: string[];
-  verified: boolean;
+  bookInfo: BookInfo | null;
+  filters: GalleryFilters;
+}
+
+interface BookSearchResult {
+  id: string;
+  title: string;
+  display_title?: string;
+  author?: string;
 }
 
 function getCroppedImageUrl(imageUrl: string, bbox: BBox): string {
@@ -53,554 +90,547 @@ function getCroppedImageUrl(imageUrl: string, bbox: BBox): string {
 
 export default function GalleryPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // State
   const [data, setData] = useState<GalleryResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedBook, setSelectedBook] = useState<string>(searchParams.get('bookId') || '');
-  const [verifiedOnly, setVerifiedOnly] = useState(true);
-  const [selectedModel, setSelectedModel] = useState<'gemini' | 'mistral' | 'grounding-dino' | ''>('');
   const [page, setPage] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
-  const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [deleting, setDeleting] = useState(false);
+
+  // Search state
+  const [bookSearchQuery, setBookSearchQuery] = useState('');
+  const [bookSearchResults, setBookSearchResults] = useState<BookSearchResult[]>([]);
+  const [bookSearchLoading, setBookSearchLoading] = useState(false);
+  const [showBookDropdown, setShowBookDropdown] = useState(false);
+  const bookSearchRef = useRef<HTMLDivElement>(null);
+
+  // Image search state
+  const [imageSearchQuery, setImageSearchQuery] = useState(searchParams.get('q') || '');
+
+  // Filter state from URL
+  const bookId = searchParams.get('bookId') || '';
+  const typeFilter = searchParams.get('type') || '';
+  const subjectFilter = searchParams.get('subject') || '';
+  const yearStart = searchParams.get('yearStart') || '';
+  const yearEnd = searchParams.get('yearEnd') || '';
+
   const limit = 24;
 
-  // Generate unique key for an item
-  const getItemKey = (item: GalleryItem, idx: number) => `${item.pageId}-${item.description}-${idx}`;
-
-  // Toggle selection
-  const toggleSelect = (key: string) => {
-    setSelected(prev => {
-      const next = new Set(prev);
-      if (next.has(key)) {
-        next.delete(key);
+  // Update URL params
+  const updateParams = useCallback((updates: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
       } else {
-        next.add(key);
+        params.delete(key);
       }
-      return next;
     });
-  };
+    // Reset to first page when filters change
+    params.delete('offset');
+    router.push(`/gallery?${params.toString()}`);
+  }, [searchParams, router]);
 
-  // Select all on current page
-  const selectAll = () => {
-    if (!data) return;
-    const allKeys = data.items.map((item, idx) => getItemKey(item, idx));
-    setSelected(new Set(allKeys));
-  };
-
-  // Clear selection
-  const clearSelection = () => setSelected(new Set());
-
-  // Delete selected items
-  const deleteSelected = async () => {
-    if (selected.size === 0 || !data) return;
-    if (!confirm(`Delete ${selected.size} selected image${selected.size > 1 ? 's' : ''}?`)) return;
-
-    setDeleting(true);
-    const errors: string[] = [];
-    const deletedKeys = new Set<string>();
-
-    for (const key of selected) {
-      const idx = data.items.findIndex((item, i) => getItemKey(item, i) === key);
-      if (idx === -1) continue;
-
-      const item = data.items[idx];
+  // Fetch gallery data
+  useEffect(() => {
+    const fetchGallery = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        const params = new URLSearchParams({ description: item.description });
-        const res = await fetch(`/api/detections/${item.pageId}?${params}`, { method: 'DELETE' });
-        if (res.ok) {
-          deletedKeys.add(key);
-        } else {
-          const err = await res.json();
-          errors.push(err.error || 'Unknown error');
-        }
+        const params = new URLSearchParams({
+          limit: limit.toString(),
+          offset: (page * limit).toString()
+        });
+        if (bookId) params.set('bookId', bookId);
+        if (imageSearchQuery) params.set('q', imageSearchQuery);
+        if (typeFilter) params.set('type', typeFilter);
+        if (subjectFilter) params.set('subject', subjectFilter);
+        if (yearStart) params.set('yearStart', yearStart);
+        if (yearEnd) params.set('yearEnd', yearEnd);
+
+        const res = await fetch(`/api/gallery?${params}`);
+        if (!res.ok) throw new Error('Failed to fetch gallery');
+        const json = await res.json();
+        setData(json);
       } catch (e) {
-        errors.push(e instanceof Error ? e.message : 'Unknown error');
+        setError(e instanceof Error ? e.message : 'Failed to load gallery');
+      } finally {
+        setLoading(false);
       }
-    }
+    };
 
-    // Update local state
-    const newItems = data.items.filter((item, idx) => !deletedKeys.has(getItemKey(item, idx)));
-    setData({ ...data, items: newItems, total: data.total - deletedKeys.size });
-    setSelected(new Set());
-    setDeleting(false);
-
-    if (errors.length > 0) {
-      alert(`Deleted ${deletedKeys.size} items. ${errors.length} failed.`);
-    }
-  };
-
-  // Clear selection when page/filters change
-  useEffect(() => {
-    clearSelection();
-  }, [page, selectedBook, verifiedOnly, selectedModel]);
-
-  // Sync with URL params
-  useEffect(() => {
-    const bookId = searchParams.get('bookId');
-    if (bookId && bookId !== selectedBook) {
-      setSelectedBook(bookId);
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
     fetchGallery();
-  }, [selectedBook, verifiedOnly, selectedModel, page]);
+  }, [bookId, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page]);
 
-  const fetchGallery = async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams({
-        limit: limit.toString(),
-        offset: (page * limit).toString()
-      });
-      if (selectedBook) params.set('bookId', selectedBook);
-      if (verifiedOnly) params.set('verified', 'true');
-      if (selectedModel) params.set('model', selectedModel);
-
-      const res = await fetch(`/api/gallery?${params}`);
-      if (!res.ok) throw new Error('Failed to fetch');
-      const json = await res.json();
-      setData(json);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to load gallery');
-    } finally {
-      setLoading(false);
+  // Book search with debounce
+  useEffect(() => {
+    if (!bookSearchQuery.trim()) {
+      setBookSearchResults([]);
+      return;
     }
-  };
 
-  const handleDelete = async (item: GalleryItem, displayIndex: number) => {
-    if (!confirm('Delete this image from the gallery?')) return;
-
-    try {
-      const params = new URLSearchParams({
-        description: item.description
-      });
-      const res = await fetch(`/api/detections/${item.pageId}?${params}`, {
-        method: 'DELETE'
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || 'Failed to delete');
+    const timer = setTimeout(async () => {
+      setBookSearchLoading(true);
+      try {
+        const res = await fetch(`/api/books/search?q=${encodeURIComponent(bookSearchQuery)}&limit=10`);
+        if (res.ok) {
+          const json = await res.json();
+          setBookSearchResults(json.results || []);
+        }
+      } catch {
+        // Ignore search errors
+      } finally {
+        setBookSearchLoading(false);
       }
+    }, 300);
 
-      // Remove from local state
-      if (data) {
-        const newItems = [...data.items];
-        newItems.splice(displayIndex, 1);
-        setData({ ...data, items: newItems, total: data.total - 1 });
+    return () => clearTimeout(timer);
+  }, [bookSearchQuery]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (bookSearchRef.current && !bookSearchRef.current.contains(e.target as Node)) {
+        setShowBookDropdown(false);
       }
-    } catch (e) {
-      alert(e instanceof Error ? e.message : 'Failed to delete');
-    }
-  };
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const totalPages = data ? Math.ceil(data.total / limit) : 0;
 
+  const handleBookSelect = (book: BookSearchResult) => {
+    setBookSearchQuery('');
+    setShowBookDropdown(false);
+    updateParams({ bookId: book.id });
+  };
+
+  const clearBookFilter = () => {
+    updateParams({ bookId: '' });
+  };
+
+  const handleImageSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateParams({ q: imageSearchQuery });
+  };
+
   return (
-    <div className="min-h-screen bg-stone-100">
+    <div className="min-h-screen bg-stone-50">
       {/* Header */}
-      <header className="bg-stone-900 text-white py-6">
+      <header className="bg-stone-900 text-white py-6 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <ImageIcon className="w-8 h-8 text-amber-500" />
+              <ImageIcon className="w-7 h-7 text-amber-500" />
               <div>
-                <h1 className="text-2xl font-serif">Image Gallery</h1>
+                <h1 className="text-xl font-serif">Image Gallery</h1>
                 <p className="text-stone-400 text-sm">
-                  Illustrations from historical texts
+                  {data?.total || 0} illustrations from historical texts
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Link
-                href="/gallery/review"
-                className="text-amber-400 hover:text-amber-300 transition-colors flex items-center gap-2"
-              >
-                Review Detections
-              </Link>
-              <Link
-                href="/"
-                className="text-stone-400 hover:text-white transition-colors flex items-center gap-2"
-              >
-                <BookOpen className="w-4 h-4" />
-                Back to Library
-              </Link>
+            <Link
+              href="/"
+              className="text-stone-400 hover:text-white transition-colors flex items-center gap-2"
+            >
+              <BookOpen className="w-4 h-4" />
+              Library
+            </Link>
+          </div>
+
+          {/* Search Bar */}
+          <div className="flex gap-3">
+            {/* Book Search */}
+            <div className="relative flex-1 max-w-xs" ref={bookSearchRef}>
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+              <input
+                type="text"
+                value={bookSearchQuery}
+                onChange={(e) => {
+                  setBookSearchQuery(e.target.value);
+                  setShowBookDropdown(true);
+                }}
+                onFocus={() => setShowBookDropdown(true)}
+                placeholder="Find a book..."
+                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
+              />
+              {bookSearchLoading && (
+                <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 animate-spin" />
+              )}
+
+              {/* Book Search Dropdown */}
+              {showBookDropdown && bookSearchResults.length > 0 && (
+                <div className="absolute top-full mt-1 left-0 right-0 bg-white rounded-lg shadow-lg border border-stone-200 max-h-64 overflow-y-auto z-30">
+                  {bookSearchResults.map((book) => (
+                    <button
+                      key={book.id}
+                      onClick={() => handleBookSelect(book)}
+                      className="w-full px-4 py-2 text-left text-stone-800 hover:bg-amber-50 border-b border-stone-100 last:border-0"
+                    >
+                      <div className="font-medium text-sm line-clamp-1">
+                        {book.display_title || book.title}
+                      </div>
+                      {book.author && (
+                        <div className="text-xs text-stone-500">{book.author}</div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
+
+            {/* Image Content Search */}
+            <form onSubmit={handleImageSearch} className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+              <input
+                type="text"
+                value={imageSearchQuery}
+                onChange={(e) => setImageSearchQuery(e.target.value)}
+                placeholder="Search image content (serpent, Mercury, emblem...)"
+                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
+              />
+            </form>
+
+            {/* Filter Toggle */}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
+                showFilters ? 'bg-amber-600 text-white' : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+              }`}
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              Filters
+            </button>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Filters */}
-        <div className="mb-6 space-y-4">
-          {/* Verified toggle */}
-          <div className="flex items-center gap-4 flex-wrap">
-            <button
-              onClick={() => { setVerifiedOnly(true); setPage(0); }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                verifiedOnly
-                  ? 'bg-green-600 text-white'
-                  : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-              }`}
-            >
-              <CheckCircle className="w-4 h-4" />
-              Verified only
-            </button>
-            <button
-              onClick={() => { setVerifiedOnly(false); setPage(0); }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                !verifiedOnly
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-              }`}
-            >
-              <AlertCircle className="w-4 h-4" />
-              All (including unverified)
-            </button>
-          </div>
-
-          {/* Model filter */}
-          {verifiedOnly && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-stone-500">Model:</span>
-              <button
-                onClick={() => { setSelectedModel(''); setPage(0); }}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  !selectedModel
-                    ? 'bg-stone-700 text-white'
-                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-                }`}
-              >
-                All
-              </button>
-              <button
-                onClick={() => { setSelectedModel('gemini'); setPage(0); }}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  selectedModel === 'gemini'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-                }`}
-              >
-                Gemini
-              </button>
-              <button
-                onClick={() => { setSelectedModel('mistral'); setPage(0); }}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  selectedModel === 'mistral'
-                    ? 'bg-orange-600 text-white'
-                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-                }`}
-              >
-                Mistral
-              </button>
-              <button
-                onClick={() => { setSelectedModel('grounding-dino'); setPage(0); }}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
-                  selectedModel === 'grounding-dino'
-                    ? 'bg-green-600 text-white'
-                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-                }`}
-              >
-                Grounding DINO
-              </button>
-            </div>
-          )}
-
-          {/* Book filter */}
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors"
-          >
-            <Filter className="w-4 h-4" />
-            Filter by book
-          </button>
-
-          {showFilters && data?.books && (
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => { setSelectedBook(''); setPage(0); }}
-                className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
-                  !selectedBook
-                    ? 'bg-amber-600 text-white'
-                    : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-                }`}
-              >
-                All books
-              </button>
-              {data.books.map(book => (
-                <button
-                  key={book.id}
-                  onClick={() => { setSelectedBook(book.id); setPage(0); }}
-                  className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
-                    selectedBook === book.id
-                      ? 'bg-amber-600 text-white'
-                      : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
-                  }`}
-                >
-                  {book.title}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Selection toolbar */}
-        {data && data.items.length > 0 && (
-          <div className="flex items-center gap-4 mb-4 p-3 bg-white rounded-lg shadow-sm">
-            <button
-              onClick={selected.size === data.items.length ? clearSelection : selectAll}
-              className="flex items-center gap-2 text-sm text-stone-600 hover:text-stone-900"
-            >
-              {selected.size === data.items.length ? (
-                <>
-                  <CheckSquare className="w-4 h-4" />
-                  Deselect all
-                </>
-              ) : (
-                <>
-                  <Square className="w-4 h-4" />
-                  Select all
-                </>
-              )}
-            </button>
-
-            {selected.size > 0 && (
-              <>
-                <span className="text-sm text-stone-500">
-                  {selected.size} selected
-                </span>
-                <button
-                  onClick={deleteSelected}
-                  disabled={deleting}
-                  className="flex items-center gap-2 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors disabled:opacity-50"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  {deleting ? 'Deleting...' : `Delete ${selected.size}`}
-                </button>
-                <button
-                  onClick={clearSelection}
-                  className="text-stone-400 hover:text-stone-600"
-                  title="Clear selection"
-                >
+        {/* Active Filters / Book Info */}
+        {(data?.bookInfo || typeFilter || subjectFilter || imageSearchQuery) && (
+          <div className="mb-4 flex flex-wrap items-center gap-2">
+            {data?.bookInfo && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-800 rounded-full">
+                <BookOpen className="w-4 h-4" />
+                <span className="text-sm font-medium">{data.bookInfo.title}</span>
+                {data.bookInfo.year && <span className="text-xs">({data.bookInfo.year})</span>}
+                <button onClick={clearBookFilter} className="ml-1 hover:text-amber-600">
                   <X className="w-4 h-4" />
                 </button>
-              </>
+              </div>
             )}
-
-            <span className="ml-auto text-sm text-stone-500">
-              {data.total} illustration{data.total !== 1 ? 's' : ''}
-            </span>
+            {typeFilter && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
+                Type: {typeFilter}
+                <button onClick={() => updateParams({ type: '' })} className="hover:text-stone-900">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
+            {subjectFilter && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
+                Subject: {subjectFilter}
+                <button onClick={() => updateParams({ subject: '' })} className="hover:text-stone-900">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
+            {imageSearchQuery && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm">
+                Search: &quot;{imageSearchQuery}&quot;
+                <button onClick={() => { setImageSearchQuery(''); updateParams({ q: '' }); }} className="hover:text-blue-600">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            )}
           </div>
         )}
 
-        {/* Stats - only show when no items */}
-        {data && data.items.length === 0 && (
-          <div className="flex items-center gap-4 text-sm mb-4">
-            <span className="text-stone-500">No illustrations found</span>
-            {verifiedOnly && (
-              <span className="text-amber-600">
-                Run image extraction to populate the gallery
-              </span>
-            )}
+        {/* Filter Panel */}
+        {showFilters && data?.filters && (
+          <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border border-stone-200">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Image Type */}
+              <div>
+                <label className="block text-xs font-medium text-stone-500 mb-2">Image Type</label>
+                <div className="flex flex-wrap gap-1">
+                  {data.filters.types.map((type) => (
+                    <button
+                      key={type}
+                      onClick={() => updateParams({ type: typeFilter === type ? '' : type })}
+                      className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                        typeFilter === type
+                          ? 'bg-amber-600 text-white'
+                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Subjects */}
+              {data.filters.subjects.length > 0 && (
+                <div>
+                  <label className="block text-xs font-medium text-stone-500 mb-2">Subjects</label>
+                  <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
+                    {data.filters.subjects.slice(0, 15).map((subject) => (
+                      <button
+                        key={subject}
+                        onClick={() => updateParams({ subject: subjectFilter === subject ? '' : subject })}
+                        className={`px-2 py-1 text-xs rounded-full transition-colors ${
+                          subjectFilter === subject
+                            ? 'bg-amber-600 text-white'
+                            : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                        }`}
+                      >
+                        {subject}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Year Range */}
+              {data.filters.yearRange.minYear && (
+                <div>
+                  <label className="block text-xs font-medium text-stone-500 mb-2">
+                    Year Range ({data.filters.yearRange.minYear} - {data.filters.yearRange.maxYear})
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="number"
+                      placeholder="From"
+                      value={yearStart}
+                      onChange={(e) => updateParams({ yearStart: e.target.value })}
+                      className="w-20 px-2 py-1 text-sm border border-stone-300 rounded"
+                    />
+                    <span className="text-stone-400">-</span>
+                    <input
+                      type="number"
+                      placeholder="To"
+                      value={yearEnd}
+                      onChange={(e) => updateParams({ yearEnd: e.target.value })}
+                      className="w-20 px-2 py-1 text-sm border border-stone-300 rounded"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
-        {/* Loading state */}
+        {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600" />
+            <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
           </div>
         )}
 
-        {/* Error state */}
+        {/* Error State */}
         {error && (
-          <div className="text-center py-20 text-red-600">
-            {error}
+          <div className="text-center py-20">
+            <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
+            <p className="text-red-600">{error}</p>
           </div>
         )}
 
-        {/* Gallery Grid */}
-        {!loading && data && data.items.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {data.items.map((item, idx) => {
-              const key = getItemKey(item, idx);
-              return (
-                <GalleryCard
-                  key={key}
-                  item={item}
-                  isSelected={selected.has(key)}
-                  onToggleSelect={() => toggleSelect(key)}
-                  onDelete={() => handleDelete(item, idx)}
-                />
-              );
-            })}
-          </div>
+        {/* Empty State for Book with No Images */}
+        {!loading && data?.bookInfo && data.items.length === 0 && (
+          <BookEmptyState bookInfo={data.bookInfo} />
         )}
 
-        {/* Empty state */}
-        {!loading && data?.items.length === 0 && (
+        {/* Empty State for Search with No Results */}
+        {!loading && !data?.bookInfo && data?.items.length === 0 && (
           <div className="text-center py-20">
             <ImageIcon className="w-16 h-16 text-stone-300 mx-auto mb-4" />
-            <p className="text-stone-500 mb-2">No verified illustrations yet</p>
-            {verifiedOnly && (
-              <p className="text-stone-400 text-sm">
-                Add MISTRAL_API_KEY to Vercel and run extraction via
-                <code className="mx-1 px-2 py-0.5 bg-stone-200 rounded">/api/extract-images</code>
-              </p>
-            )}
+            <p className="text-stone-500 mb-2">No images found</p>
+            <p className="text-stone-400 text-sm">
+              Try a different search or browse all images
+            </p>
           </div>
         )}
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-4 mt-8">
-            <button
-              onClick={() => setPage(p => Math.max(0, p - 1))}
-              disabled={page === 0}
-              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-stone-200 text-stone-700 hover:bg-stone-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Previous
-            </button>
-            <span className="text-stone-600">
-              Page {page + 1} of {totalPages}
-            </span>
-            <button
-              onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
-              disabled={page >= totalPages - 1}
-              className="flex items-center gap-1 px-4 py-2 rounded-lg bg-stone-200 text-stone-700 hover:bg-stone-300 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              Next
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+        {/* Image Grid */}
+        {!loading && data && data.items.length > 0 && (
+          <>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {data.items.map((item, idx) => (
+                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4 mt-8">
+                <button
+                  onClick={() => setPage(p => Math.max(0, p - 1))}
+                  disabled={page === 0}
+                  className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  Previous
+                </button>
+                <span className="text-stone-600 text-sm">
+                  Page {page + 1} of {totalPages}
+                </span>
+                <button
+                  onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+                  disabled={page >= totalPages - 1}
+                  className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Next
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
   );
 }
 
-function GalleryCard({ item, isSelected, onToggleSelect, onDelete }: {
-  item: GalleryItem;
-  isSelected: boolean;
-  onToggleSelect: () => void;
-  onDelete: () => void;
-}) {
+function GalleryCard({ item }: { item: GalleryItem }) {
   const [imageError, setImageError] = useState(false);
 
-  // Use cropped image if bbox available, otherwise full page
   const displayUrl = item.bbox
     ? getCroppedImageUrl(item.imageUrl, item.bbox)
     : item.imageUrl;
 
   return (
-    <div className={`bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow group ${isSelected ? 'ring-2 ring-amber-500' : ''}`}>
-      {/* Image - links to detail view */}
-      <Link href={`/gallery/image/${item.pageId}:${item.detectionIndex}`}>
-        <div className="relative aspect-square bg-stone-200">
-          {!imageError ? (
-            <Image
-              src={displayUrl}
-              alt={item.description}
-              fill
-              className="object-contain group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              onError={() => setImageError(true)}
-              unoptimized={!!item.bbox} // Skip Next.js optimization for cropped images
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-stone-400">
-              <ImageIcon className="w-12 h-12" />
-            </div>
-          )}
-
-          {/* Checkbox for selection */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onToggleSelect();
-            }}
-            className={`absolute top-2 left-2 z-10 p-1 rounded transition-opacity ${
-              isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-            }`}
-            title={isSelected ? 'Deselect' : 'Select'}
-          >
-            {isSelected ? (
-              <CheckSquare className="w-5 h-5 text-amber-500" />
-            ) : (
-              <Square className="w-5 h-5 text-white drop-shadow-lg" />
-            )}
-          </button>
-
-          {/* Delete button */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              onDelete();
-            }}
-            className="absolute top-2 right-2 z-10 p-1.5 rounded-full bg-red-600/80 hover:bg-red-600 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-            title="Delete from gallery"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-
-          {/* Overlay on hover */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 pointer-events-none">
-            <ExternalLink className="w-8 h-8 text-white drop-shadow-lg" />
+    <Link
+      href={`/gallery/image/${item.pageId}:${item.detectionIndex}`}
+      className="group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5"
+    >
+      <div className="relative aspect-square bg-stone-100">
+        {!imageError ? (
+          <Image
+            src={displayUrl}
+            alt={item.description}
+            fill
+            className="object-contain group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
+            onError={() => setImageError(true)}
+            unoptimized={!!item.bbox}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-stone-300">
+            <ImageIcon className="w-8 h-8" />
           </div>
+        )}
 
-          {/* Type badge */}
-          {item.type && (
-            <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-full text-xs bg-black/60 text-white capitalize">
-              {item.type}
-            </span>
-          )}
+        {/* Type badge */}
+        {item.type && (
+          <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
+            {item.type}
+          </span>
+        )}
 
-          {/* Model badge */}
-          {item.model && (
-            <span className={`absolute bottom-2 left-2 px-2 py-0.5 rounded-full text-xs text-white ${
-              item.model === 'gemini' ? 'bg-blue-600/80' :
-              item.model === 'grounding-dino' ? 'bg-green-600/80' : 'bg-orange-600/80'
-            }`}>
-              {item.model === 'grounding-dino' ? 'DINO' : item.model}
-            </span>
-          )}
-        </div>
-      </Link>
+        {/* Quality indicator */}
+        {item.galleryQuality && item.galleryQuality >= 0.9 && (
+          <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-amber-500 text-white">
+            ★
+          </span>
+        )}
+      </div>
 
-      {/* Metadata */}
-      <div className="p-3">
-        <p className="text-sm text-stone-800 line-clamp-2 mb-2" title={item.description}>
+      <div className="p-2">
+        <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
           {item.description}
         </p>
+        <p className="text-[10px] text-stone-400 line-clamp-1">
+          {item.bookTitle}
+        </p>
+      </div>
+    </Link>
+  );
+}
 
-        <div className="flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <Link
-              href={`/book/${item.bookId}`}
-              className="text-xs text-amber-700 hover:text-amber-800 font-medium line-clamp-1"
-              title={item.bookTitle}
-            >
-              {item.bookTitle}
-            </Link>
-            {item.author && (
-              <p className="text-xs text-stone-500 line-clamp-1">
-                {item.author}
-                {item.year && ` (${item.year})`}
+function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
+  const [extracting, setExtracting] = useState(false);
+
+  const handleExtract = async () => {
+    setExtracting(true);
+    try {
+      // Call the extraction API
+      const res = await fetch('/api/extract-images', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bookId: bookInfo.id,
+          limit: 20
+        })
+      });
+      if (res.ok) {
+        // Refresh the page to show new images
+        window.location.reload();
+      }
+    } catch {
+      // Ignore errors
+    } finally {
+      setExtracting(false);
+    }
+  };
+
+  return (
+    <div className="text-center py-16 max-w-md mx-auto">
+      <div className="bg-white rounded-xl p-8 shadow-sm border border-stone-200">
+        <BookOpen className="w-12 h-12 text-stone-300 mx-auto mb-4" />
+        <h2 className="text-lg font-serif text-stone-800 mb-2">{bookInfo.title}</h2>
+        {bookInfo.author && (
+          <p className="text-stone-500 text-sm mb-4">by {bookInfo.author}</p>
+        )}
+
+        {!bookInfo.hasImages && bookInfo.hasOcr && (
+          <>
+            <div className="bg-amber-50 rounded-lg p-4 mb-4">
+              <ImagePlus className="w-8 h-8 text-amber-600 mx-auto mb-2" />
+              <p className="text-amber-800 text-sm">
+                This book has OCR data but no extracted images yet.
               </p>
-            )}
+            </div>
+            <button
+              onClick={handleExtract}
+              disabled={extracting}
+              className="px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
+            >
+              {extracting ? (
+                <span className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Extracting...
+                </span>
+              ) : (
+                'Extract Images'
+              )}
+            </button>
+          </>
+        )}
+
+        {!bookInfo.hasImages && !bookInfo.hasOcr && (
+          <div className="bg-stone-100 rounded-lg p-4">
+            <AlertCircle className="w-8 h-8 text-stone-400 mx-auto mb-2" />
+            <p className="text-stone-600 text-sm">
+              This book needs OCR processing before images can be extracted.
+            </p>
+            <Link
+              href={`/book/${bookInfo.id}`}
+              className="inline-block mt-3 text-amber-600 hover:text-amber-700 text-sm"
+            >
+              Go to book page →
+            </Link>
           </div>
-          <Link
-            href={`/book/${item.bookId}/page/${item.pageId}`}
-            className="shrink-0 text-xs text-stone-500 hover:text-amber-700"
-          >
-            p. {item.pageNumber}
-          </Link>
-        </div>
+        )}
+
+        {bookInfo.hasImages && (
+          <p className="text-stone-500 text-sm">
+            No images match your current filters.
+          </p>
+        )}
       </div>
     </div>
   );

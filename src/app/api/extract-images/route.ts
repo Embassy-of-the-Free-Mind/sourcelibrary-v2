@@ -84,6 +84,18 @@ interface DetectedImage {
   model: 'gemini' | 'mistral' | 'grounding-dino';
 }
 
+function getMimeType(url: string, headerType: string | null | undefined): string {
+  // S3 often returns application/octet-stream, so detect from URL extension
+  if (headerType && headerType !== 'application/octet-stream') {
+    return headerType;
+  }
+  const ext = url.split('.').pop()?.toLowerCase().split('?')[0];
+  if (ext === 'png') return 'image/png';
+  if (ext === 'gif') return 'image/gif';
+  if (ext === 'webp') return 'image/webp';
+  return 'image/jpeg'; // Default to JPEG
+}
+
 async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -98,10 +110,11 @@ async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
 
   const imageBuffer = await imageResponse.arrayBuffer();
   const base64Image = Buffer.from(imageBuffer).toString('base64');
-  const mimeType = imageResponse.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
+  const headerType = imageResponse.headers.get('content-type')?.split(';')[0];
+  const mimeType = getMimeType(imageUrl, headerType);
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -468,7 +481,7 @@ export async function POST(request: NextRequest) {
       await logGeminiCall({
         type: 'extract_images',
         mode: 'realtime',
-        model: 'gemini-2.0-flash',
+        model: 'gemini-2.5-flash',
         book_id: bookId || undefined,
         page_ids: results.map(r => r.pageId),
         page_count: results.length,

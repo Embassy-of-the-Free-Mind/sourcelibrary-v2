@@ -1,34 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
-// Force rebuild: 2026-01-02T08:33
-
-interface DetectedImage {
-  description: string;
-  type?: string;
-  bbox?: { x: number; y: number; width: number; height: number };
-  confidence?: number;
-  detection_source?: string;
-  model?: 'gemini' | 'mistral' | 'grounding-dino';
-  gallery_quality?: number;
-  gallery_rationale?: string;
-  featured?: boolean;
-}
-
 /**
  * GET /api/gallery
  *
- * Fetch illustrations for gallery view with quality scores.
- * Returns individual images (not pages) with bounding boxes for cropping.
+ * Image discovery and search interface.
+ * Returns individual images with rich metadata for browsing and filtering.
  *
  * Query params:
  *   - limit: number of images (default 50, max 200)
  *   - offset: pagination offset
  *   - bookId: filter by book
- *   - type: filter by image type (woodcut, diagram, etc.)
- *   - verified: if "true", only show vision-extracted images with bboxes
- *   - model: filter by extraction model ('gemini' or 'mistral')
- *   - minQuality: minimum gallery_quality score (0-1), e.g. 0.8 for high quality only
+ *   - q: text search across descriptions, subjects, figures, symbols
+ *   - type: filter by image type (emblem, woodcut, engraving, etc.)
+ *   - yearStart, yearEnd: filter by book publication year range
+ *   - subject: filter by subject tag
+ *   - figure: filter by figure tag
+ *   - symbol: filter by symbol tag
+ *   - minQuality: minimum gallery_quality score (0-1), default 0.5
  */
 export async function GET(request: NextRequest) {
   try {
@@ -37,42 +26,22 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
     const bookId = searchParams.get('bookId');
     const imageType = searchParams.get('type');
-    const verifiedOnly = searchParams.get('verified') === 'true';
-    const modelFilter = searchParams.get('model') as 'gemini' | 'mistral' | null;
-    const minQuality = searchParams.get('minQuality') ? parseFloat(searchParams.get('minQuality')!) : null;
+    const minQuality = searchParams.get('minQuality') ? parseFloat(searchParams.get('minQuality')!) : 0.5;
+    const searchQuery = searchParams.get('q');
+    const yearStart = searchParams.get('yearStart') ? parseInt(searchParams.get('yearStart')!) : null;
+    const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
+    const subjectFilter = searchParams.get('subject');
+    const figureFilter = searchParams.get('figure');
+    const symbolFilter = searchParams.get('symbol');
 
     const db = await getDb();
 
-    // Build query - for verified, get vision-extracted OR manual images with bboxes
-    const elemMatchConditions: Record<string, unknown> = {
-      $or: [
-        { detection_source: 'vision_model' },
-        { detection_source: 'manual' }
-      ],
-      bbox: { $exists: true }
-    };
-    if (modelFilter) {
-      elemMatchConditions.model = modelFilter;
-    }
-    if (minQuality !== null) {
-      elemMatchConditions.gallery_quality = { $gte: minQuality };
-    }
+    // Build aggregation pipeline
+    const pipeline: object[] = [];
 
-    const query: Record<string, unknown> = verifiedOnly
-      ? {
-          'detected_images': {
-            $elemMatch: elemMatchConditions
-          }
-        }
-      : {
-          $or: [
-            { 'detected_images.0': { $exists: true } },
-            { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
-          ]
-        };
-
-    // Must have an image URL
-    const imageUrlCondition = {
+    // Stage 1: Match pages with detected images and image URLs
+    const pageMatch: Record<string, unknown> = {
+      'detected_images.0': { $exists: true },
       $or: [
         { cropped_photo: { $exists: true, $ne: '' } },
         { photo_original: { $exists: true, $ne: '' } },
@@ -81,257 +50,196 @@ export async function GET(request: NextRequest) {
     };
 
     if (bookId) {
-      query.book_id = bookId;
+      pageMatch.book_id = bookId;
     }
 
+    pipeline.push({ $match: pageMatch });
+
+    // Stage 2: Lookup book info (needed for year filtering)
+    pipeline.push({
+      $lookup: {
+        from: 'books',
+        localField: 'book_id',
+        foreignField: 'id',
+        as: 'book'
+      }
+    });
+    pipeline.push({ $unwind: { path: '$book', preserveNullAndEmptyArrays: true } });
+
+    // Stage 3: Filter by year range if specified
+    if (yearStart !== null || yearEnd !== null) {
+      const yearMatch: Record<string, unknown> = {};
+      if (yearStart !== null) {
+        yearMatch['book.year'] = { $gte: yearStart };
+      }
+      if (yearEnd !== null) {
+        yearMatch['book.year'] = { ...yearMatch['book.year'] as object, $lte: yearEnd };
+      }
+      pipeline.push({ $match: yearMatch });
+    }
+
+    // Stage 4: Unwind detected_images to get individual items
+    pipeline.push({ $unwind: { path: '$detected_images', includeArrayIndex: 'detectionIndex' } });
+
+    // Stage 5: Filter individual images
+    const imageMatch: Record<string, unknown> = {
+      'detected_images.bbox': { $exists: true },
+      $or: [
+        { 'detected_images.detection_source': 'vision_model' },
+        { 'detected_images.detection_source': 'manual' }
+      ]
+    };
+
+    if (minQuality !== null) {
+      imageMatch['detected_images.gallery_quality'] = { $gte: minQuality };
+    }
     if (imageType) {
-      query['detected_images.type'] = imageType;
+      imageMatch['detected_images.type'] = imageType;
+    }
+    if (subjectFilter) {
+      imageMatch['detected_images.metadata.subjects'] = subjectFilter;
+    }
+    if (figureFilter) {
+      imageMatch['detected_images.metadata.figures'] = figureFilter;
+    }
+    if (symbolFilter) {
+      imageMatch['detected_images.metadata.symbols'] = symbolFilter;
+    }
+    if (searchQuery) {
+      imageMatch['$or'] = [
+        { 'detected_images.description': { $regex: searchQuery, $options: 'i' } },
+        { 'detected_images.museum_description': { $regex: searchQuery, $options: 'i' } },
+        { 'detected_images.metadata.subjects': { $regex: searchQuery, $options: 'i' } },
+        { 'detected_images.metadata.figures': { $regex: searchQuery, $options: 'i' } },
+        { 'detected_images.metadata.symbols': { $regex: searchQuery, $options: 'i' } }
+      ];
     }
 
-    // Combine conditions
-    const fullQuery = { $and: [query, imageUrlCondition] };
+    pipeline.push({ $match: imageMatch });
 
-    // For verified images, we need to unwind detected_images to get individual items
-    if (verifiedOnly) {
-      const unwindMatch: Record<string, unknown> = {
-        $or: [
-          { 'detected_images.detection_source': 'vision_model' },
-          { 'detected_images.detection_source': 'manual' }
-        ],
-        'detected_images.bbox': { $exists: true }
-      };
-      if (modelFilter) {
-        unwindMatch['detected_images.model'] = modelFilter;
+    // Stage 6: Sort by quality, then by book/page
+    pipeline.push({
+      $sort: {
+        'detected_images.gallery_quality': -1,
+        'book.year': 1,
+        'book_id': 1,
+        'page_number': 1
       }
-      if (minQuality !== null) {
-        unwindMatch['detected_images.gallery_quality'] = { $gte: minQuality };
-      }
+    });
 
-      const pipeline = [
-        { $match: fullQuery },
-        { $unwind: { path: '$detected_images', includeArrayIndex: 'detectionIndex' } },
-        { $match: unwindMatch },
-        {
-          $lookup: {
-            from: 'books',
-            localField: 'book_id',
-            foreignField: 'id',
-            as: 'book'
-          }
-        },
-        { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-        // Add sort priority: manual first (0), then vision_model (1)
-        {
-          $addFields: {
-            sortPriority: {
-              $cond: {
-                if: { $eq: ['$detected_images.detection_source', 'manual'] },
-                then: 0,
-                else: 1
-              }
+    // Stage 7: Facet for pagination and aggregations
+    pipeline.push({
+      $facet: {
+        items: [
+          { $skip: offset },
+          { $limit: limit },
+          {
+            $project: {
+              pageId: '$id',
+              bookId: '$book_id',
+              pageNumber: '$page_number',
+              detectionIndex: '$detectionIndex',
+              imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
+              bookTitle: { $ifNull: ['$book.display_title', { $ifNull: ['$book.title', 'Unknown'] }] },
+              author: '$book.author',
+              year: '$book.year',
+              description: '$detected_images.description',
+              type: '$detected_images.type',
+              bbox: '$detected_images.bbox',
+              confidence: '$detected_images.confidence',
+              galleryQuality: '$detected_images.gallery_quality',
+              museumDescription: '$detected_images.museum_description',
+              metadata: '$detected_images.metadata'
             }
           }
-        },
-        { $sort: { sortPriority: 1, 'detected_images.confidence': -1, book_id: 1, page_number: 1 } },
-        {
-          $facet: {
-            items: [
-              { $skip: offset },
-              { $limit: limit },
-              {
-                $project: {
-                  pageId: '$id',
-                  bookId: '$book_id',
-                  pageNumber: '$page_number',
-                  detectionIndex: '$detectionIndex',
-                  imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
-                  bookTitle: { $ifNull: ['$book.title', 'Unknown'] },
-                  author: '$book.author',
-                  year: '$book.year',
-                  description: '$detected_images.description',
-                  type: '$detected_images.type',
-                  bbox: '$detected_images.bbox',
-                  confidence: '$detected_images.confidence',
-                  model: '$detected_images.model',
-                  detectionSource: '$detected_images.detection_source',
-                  galleryQuality: '$detected_images.gallery_quality',
-                  galleryRationale: '$detected_images.gallery_rationale',
-                  featured: '$detected_images.featured'
-                }
-              }
-            ],
-            total: [{ $count: 'count' }]
-          }
-        }
-      ];
-
-      const [result] = await db.collection('pages').aggregate(pipeline).toArray();
-      const items = result.items || [];
-      const total = result.total[0]?.count || 0;
-
-      // Get unique books
-      const books = await db.collection('pages').aggregate([
-        { $match: fullQuery },
-        { $group: { _id: '$book_id' } },
-        {
-          $lookup: {
-            from: 'books',
-            localField: '_id',
-            foreignField: 'id',
-            as: 'book'
-          }
-        },
-        { $unwind: '$book' },
-        { $project: { id: '$_id', title: '$book.title' } },
-        { $sort: { title: 1 } }
-      ]).toArray();
-
-      return NextResponse.json({
-        items,
-        total,
-        limit,
-        offset,
-        books,
-        verified: true,
-        imageTypes: ['woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'decorative', 'table', 'emblem', 'engraving']
-      });
-    }
-
-    // Non-verified: return pages with any image indicators
-    const total = await db.collection('pages').countDocuments(fullQuery);
-
-    const pages = await db.collection('pages').aggregate([
-      { $match: fullQuery },
-      { $sort: { book_id: 1, page_number: 1 } },
-      { $skip: offset },
-      { $limit: limit },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'book_id',
-          foreignField: 'id',
-          as: 'book'
-        }
-      },
-      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-      {
-        $project: {
-          id: 1,
-          page_number: 1,
-          book_id: 1,
-          photo: 1,
-          photo_original: 1,
-          cropped_photo: 1,
-          detected_images: 1,
-          'ocr.data': 1,
-          'book.title': 1,
-          'book.author': 1,
-          'book.year': 1
-        }
+        ],
+        total: [{ $count: 'count' }],
+        // Aggregate available filters
+        types: [
+          { $group: { _id: '$detected_images.type' } },
+          { $match: { _id: { $ne: null } } },
+          { $sort: { _id: 1 } }
+        ],
+        subjects: [
+          { $unwind: { path: '$detected_images.metadata.subjects', preserveNullAndEmptyArrays: false } },
+          { $group: { _id: '$detected_images.metadata.subjects' } },
+          { $sort: { _id: 1 } },
+          { $limit: 50 }
+        ],
+        figures: [
+          { $unwind: { path: '$detected_images.metadata.figures', preserveNullAndEmptyArrays: false } },
+          { $group: { _id: '$detected_images.metadata.figures' } },
+          { $sort: { _id: 1 } },
+          { $limit: 50 }
+        ],
+        symbols: [
+          { $unwind: { path: '$detected_images.metadata.symbols', preserveNullAndEmptyArrays: false } },
+          { $group: { _id: '$detected_images.metadata.symbols' } },
+          { $sort: { _id: 1 } },
+          { $limit: 50 }
+        ],
+        yearRange: [
+          { $group: {
+            _id: null,
+            minYear: { $min: '$book.year' },
+            maxYear: { $max: '$book.year' }
+          }}
+        ]
       }
-    ]).toArray();
+    });
 
-    // Flatten: each detected_image becomes a gallery item
-    const items: Array<{
-      pageId: string;
-      bookId: string;
-      pageNumber: number;
-      imageUrl: string;
-      bookTitle: string;
-      author?: string;
-      year?: number;
-      description: string;
-      type?: string;
-      bbox?: { x: number; y: number; width: number; height: number };
-      confidence?: number;
-      model?: 'gemini' | 'mistral' | 'grounding-dino';
-      galleryQuality?: number;
-      galleryRationale?: string;
-      featured?: boolean;
-    }> = [];
+    const [result] = await db.collection('pages').aggregate(pipeline).toArray();
 
-    for (const page of pages) {
-      const imageUrl = page.cropped_photo || page.photo_original || page.photo;
-      if (!imageUrl) continue;
+    const items = result.items || [];
+    const total = result.total[0]?.count || 0;
+    const types = result.types?.map((t: { _id: string }) => t._id).filter(Boolean) || [];
+    const subjects = result.subjects?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
+    const figures = result.figures?.map((f: { _id: string }) => f._id).filter(Boolean) || [];
+    const symbols = result.symbols?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
+    const yearRange = result.yearRange?.[0] || { minYear: null, maxYear: null };
 
-      if (page.detected_images?.length > 0) {
-        // Add each detected image as separate item
-        for (const img of page.detected_images as DetectedImage[]) {
-          items.push({
-            pageId: page.id,
-            bookId: page.book_id,
-            pageNumber: page.page_number,
-            imageUrl,
-            bookTitle: page.book?.title || 'Unknown',
-            author: page.book?.author,
-            year: page.book?.year,
-            description: img.description,
-            type: img.type,
-            bbox: img.bbox,
-            confidence: img.confidence,
-            model: img.model,
-            galleryQuality: img.gallery_quality,
-            galleryRationale: img.gallery_rationale,
-            featured: img.featured
-          });
-        }
-      } else if (page.ocr?.data) {
-        // Parse <image-desc>...</image-desc> (new) and [[image: description]] (legacy) from OCR
-        const xmlMatches = page.ocr.data.matchAll(/<image-desc>([\s\S]*?)<\/image-desc>/gi);
-        for (const match of xmlMatches) {
-          items.push({
-            pageId: page.id,
-            bookId: page.book_id,
-            pageNumber: page.page_number,
-            imageUrl,
-            bookTitle: page.book?.title || 'Unknown',
-            author: page.book?.author,
-            year: page.book?.year,
-            description: match[1].trim()
-          });
-        }
-        // Legacy bracket syntax
-        const bracketMatches = page.ocr.data.matchAll(/\[\[image:\s*([^\]]+)\]\]/gi);
-        for (const match of bracketMatches) {
-          items.push({
-            pageId: page.id,
-            bookId: page.book_id,
-            pageNumber: page.page_number,
-            imageUrl,
-            bookTitle: page.book?.title || 'Unknown',
-            author: page.book?.author,
-            year: page.book?.year,
-            description: match[1].trim()
-          });
-        }
+    // Get book info if filtered by bookId
+    let bookInfo = null;
+    if (bookId) {
+      const book = await db.collection('books').findOne({ id: bookId });
+      if (book) {
+        // Check if book has OCR
+        const hasOcr = await db.collection('pages').countDocuments({
+          book_id: bookId,
+          'ocr.data': { $exists: true, $ne: '' }
+        });
+        // Check if book has extracted images
+        const hasImages = await db.collection('pages').countDocuments({
+          book_id: bookId,
+          'detected_images.0': { $exists: true }
+        });
+        bookInfo = {
+          id: book.id,
+          title: book.display_title || book.title,
+          author: book.author,
+          year: book.year,
+          pagesCount: book.pages_count,
+          hasOcr: hasOcr > 0,
+          ocrPageCount: hasOcr,
+          hasImages: hasImages > 0,
+          imagesPageCount: hasImages
+        };
       }
     }
-
-    // Get unique books
-    const books = await db.collection('pages').aggregate([
-      { $match: fullQuery },
-      { $group: { _id: '$book_id' } },
-      {
-        $lookup: {
-          from: 'books',
-          localField: '_id',
-          foreignField: 'id',
-          as: 'book'
-        }
-      },
-      { $unwind: '$book' },
-      { $project: { id: '$_id', title: '$book.title' } },
-      { $sort: { title: 1 } }
-    ]).toArray();
 
     return NextResponse.json({
       items,
-      total: items.length, // Actual count after flattening
+      total,
       limit,
       offset,
-      books,
-      verified: false,
-      imageTypes: ['woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'decorative', 'table']
+      bookInfo,
+      filters: {
+        types,
+        subjects,
+        figures,
+        symbols,
+        yearRange
+      }
     });
   } catch (error) {
     console.error('Gallery error:', error);
