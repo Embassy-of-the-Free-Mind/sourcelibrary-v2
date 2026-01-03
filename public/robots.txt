@@ -1,0 +1,11 @@
+# Source Library - sourcelibrary.org
+# Rare Hermetic & Renaissance texts digitized and translated
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://sourcelibrary.org/sitemap.xml
+
+# Crawl-delay for politeness (optional)
+Crawl-delay: 1
