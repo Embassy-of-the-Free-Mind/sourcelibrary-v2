@@ -42,40 +42,28 @@
 
 ## IA Page Count Audit
 
-Books imported from Internet Archive before Dec 30, 2025 may have incorrect page counts due to a bug in the import code that estimated pages from jp2.zip file size instead of using IA's `imagecount` metadata.
+Books imported from Internet Archive before Dec 30, 2025 may have incorrect page counts. See full report: `docs/ia-page-count-bug-report.md`
 
-### Symptoms
-- Books show calibration target images (color cards with rulers) instead of content
-- Page count significantly higher than actual book content
-- Blank pages or repeated images at end of book
+### Quick Reference
 
-### Audit Script
+**Audit:** `npx tsx scripts/audit-ia-page-counts.ts`
+
+**Fix TOO MANY pages** (safe, preserves OCR):
 ```bash
-npx tsx scripts/audit-ia-page-counts.ts
+npx tsx scripts/fix-ia-page-counts.ts --book-id=XXX --correct-count=YYY
 ```
 
-This compares each IA book's `pages_count` against IA's authoritative `imagecount` metadata and reports discrepancies.
-
-### Fix Scripts
-
-**For books with TOO MANY pages** (calibration targets, blank pages):
-- Use `scripts/fix-atalanta-excess-pages.ts` as template
-- Delete pages beyond the correct count
-- Update `pages_count`, `pages_ocr`, `pages_translated`
-
-**For books with TOO FEW pages** (missing content):
+**Fix TOO FEW pages** (loses OCR):
 ```bash
 curl -X POST https://sourcelibrary.org/api/books/{id}/reimport \
-  -H "Content-Type: application/json" \
-  -d '{"mode":"full"}'
+  -H "Content-Type: application/json" -d '{"mode":"full"}'
 ```
 
-### Root Cause (Fixed Dec 30, 2025)
-Old code fell back to `jp2.zip size / 500KB` when:
-1. No individual .jp2 files found (most IA items bundle them)
-2. `scandata.xml` not found (IA uses `{identifier}_scandata.xml`)
-
-Now checks `imagecount` first, which is always correct.
+### Issue Types
+| Type | Symptom | Fix |
+|------|---------|-----|
+| TOO MANY | Calibration targets, Google disclaimers after content | Trim excess pages |
+| TOO FEW | 100 pages when book has more | Reimport (loses OCR) |
 
 ## QA Audit Workflow
 

@@ -163,10 +163,20 @@ async function main() {
     console.log(`Dry run: ${dryRun}\n`);
 
     const fixes: BookFix[] = [];
+    let checked = 0;
+    let errors = 0;
 
     for (const book of iaBooks) {
+      checked++;
+      if (checked % 50 === 0) {
+        process.stdout.write(`\r[${checked}/${iaBooks.length}] Scanning... (${fixes.length} found, ${errors} errors)`);
+      }
+
       const iaImagecount = await fetchIAImagecount(book.ia_identifier);
-      if (!iaImagecount) continue;
+      if (!iaImagecount) {
+        errors++;
+        continue;
+      }
 
       const diff = (book.pages_count || 0) - iaImagecount;
 
@@ -187,9 +197,10 @@ async function main() {
         });
       }
 
-      // Rate limit
-      await new Promise(r => setTimeout(r, 100));
+      // Rate limit (50ms is fine for IA)
+      await new Promise(r => setTimeout(r, 50));
     }
+    console.log(`\r[${checked}/${iaBooks.length}] Scan complete.                    `);
 
     console.log(`Found ${fixes.length} books to ${mode}\n`);
 

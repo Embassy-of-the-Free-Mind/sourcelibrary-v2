@@ -210,6 +210,20 @@ export async function PATCH(
       }
     }
 
+    // Handle bbox updates
+    if (body.bbox && typeof body.bbox === 'object') {
+      const b = body.bbox;
+      if (typeof b.x === 'number' && typeof b.y === 'number' &&
+          typeof b.width === 'number' && typeof b.height === 'number') {
+        updateFields[`detected_images.${detectionIndex}.bbox`] = {
+          x: Math.max(0, Math.min(1, b.x)),
+          y: Math.max(0, Math.min(1, b.y)),
+          width: Math.max(0.01, Math.min(1 - b.x, b.width)),
+          height: Math.max(0.01, Math.min(1 - b.y, b.height))
+        };
+      }
+    }
+
     if (Object.keys(updateFields).length === 0) {
       return NextResponse.json(
         { error: 'No valid fields to update' },
