@@ -1,9 +1,106 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins, ListChecks, CheckCircle, XCircle, Pause, Loader2, Database, HardDrive, Archive, BarChart3 } from 'lucide-react';
 
-interface AnalyticsData {
+interface MetricStat {
+  name: string;
+  count: number;
+  avg: number;
+  min: number;
+  max: number;
+  p50: number | null;
+  p95: number | null;
+}
+
+interface SourceStat {
+  source: string;
+  count: number;
+  avg: number;
+  min: number;
+  max: number;
+  p50: number | null;
+  p95: number | null;
+}
+
+interface RecentSample {
+  name: string;
+  duration: number;
+  timestamp: number;
+  metadata?: Record<string, unknown>;
+}
+
+interface PerformanceData {
+  stats: MetricStat[];
+  sourceStats: SourceStat[];
+  recentSamples: RecentSample[];
+  query: { hours: number; metricName: string | null };
+}
+
+interface UsageData {
+  summary: {
+    totalBooks: number;
+    totalPages: number;
+    pagesWithOcr: number;
+    pagesWithTranslation: number;
+    ocrPercentage: number;
+    translationPercentage: number;
+    totalHits: number;
+    uniqueVisitors: number;
+  };
+  hitsByDay: Array<{ date: string; hits: number; uniqueVisitors: number }>;
+  processingByDay: Array<{ date: string; ocr: number; translation: number }>;
+  modelUsage: Array<{ model: string; count: number }>;
+  promptUsage: Array<{ prompt: string; count: number }>;
+  recentBooks: Array<{ title: string; author: string; created_at: string; pages_count: number }>;
+  visitorsByCountry: Array<{ country: string; countryCode: string; hits: number; visitors: number }>;
+  visitorLocations: Array<{ city: string; country: string; countryCode: string; hits: number; lat: number; lon: number }>;
+  costStats?: {
+    totalCost: number;
+    totalTokens: number;
+    costByDay: Array<{ date: string; cost: number; tokens: number }>;
+    costByAction: Array<{ action: string; cost: number; count: number }>;
+  };
+  collectionStats?: {
+    blobStorage: {
+      pagesWithCroppedPhoto: number;
+      pagesWithArchivedPhoto: number;
+      totalBlobPages: number;
+      booksWithSplitPages: number;
+    };
+    byLanguage: Array<{ language: string; count: number }>;
+    byCategory: Array<{ category: string; count: number }>;
+    byImageSource: Array<{ provider: string; count: number }>;
+  };
+}
+
+interface JobLog {
+  id: string;
+  type: 'batch_ocr' | 'batch_translate' | 'batch_split' | 'book_import';
+  status: 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
+  progress: {
+    total: number;
+    completed: number;
+    failed: number;
+  };
+  book_id?: string;
+  book_title?: string;
+  initiated_by?: string;
+  created_at: string;
+  updated_at: string;
+  started_at?: string;
+  completed_at?: string;
+  error?: string;
+  config: {
+    model?: string;
+    prompt_name?: string;
+    language?: string;
+    page_ids?: string[];
+  };
+}
+
+interface VercelAnalytics {
   topPages?: Array<{ path: string; count: number }>;
   topReferrers?: Array<{ referrer: string; count: number }>;
   topCountries?: Array<{ country: string; count: number }>;
@@ -13,126 +110,1323 @@ interface AnalyticsData {
 }
 
 export default function AnalyticsPage() {
-  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [perfData, setPerfData] = useState<PerformanceData | null>(null);
+  const [usageData, setUsageData] = useState<UsageData | null>(null);
+  const [vercelData, setVercelData] = useState<VercelAnalytics | null>(null);
+  const [jobLogs, setJobLogs] = useState<JobLog[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hours, setHours] = useState(24);
+  const [days, setDays] = useState(30);
+  const [jobLimit, setJobLimit] = useState(50);
+  const [jobTypeFilter, setJobTypeFilter] = useState<string>('');
+  const [jobStatusFilter, setJobStatusFilter] = useState<string>('');
+  const [activeTab, setActiveTab] = useState<'usage' | 'performance' | 'logs' | 'vercel'>('usage');
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchAnalytics = async () => {
-      try {
-        const res = await fetch('/api/analytics');
-        if (!res.ok) {
-          throw new Error('Failed to fetch analytics');
-        }
-        const analyticsData = await res.json();
-        setData(analyticsData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const [perfRes, usageRes] = await Promise.all([
+        fetch(`/api/analytics/loading?hours=${hours}`),
+        fetch(`/api/analytics/usage?days=${days}`),
+      ]);
 
-    fetchAnalytics();
-    const interval = setInterval(fetchAnalytics, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+      if (!perfRes.ok || !usageRes.ok) throw new Error('Failed to fetch analytics');
+
+      const [perfJson, usageJson] = await Promise.all([
+        perfRes.json(),
+        usageRes.json(),
+      ]);
+
+      setPerfData(perfJson);
+      setUsageData(usageJson);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchVercelData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch('/api/analytics');
+      if (!res.ok) throw new Error('Failed to fetch Vercel analytics');
+      const data = await res.json();
+      setVercelData(data);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchJobLogs = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const params = new URLSearchParams({ limit: jobLimit.toString() });
+      if (jobTypeFilter) params.set('type', jobTypeFilter);
+      if (jobStatusFilter) params.set('status', jobStatusFilter);
+
+      const res = await fetch(`/api/jobs?${params}`);
+      if (!res.ok) throw new Error('Failed to fetch job logs');
+
+      const data = await res.json();
+      setJobLogs(data.jobs || []);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === 'usage' || activeTab === 'performance') {
+      fetchData();
+    }
+  }, [hours, days, activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'logs') {
+      fetchJobLogs();
+    }
+  }, [activeTab, jobLimit, jobTypeFilter, jobStatusFilter]);
+
+  useEffect(() => {
+    if (activeTab === 'vercel') {
+      fetchVercelData();
+    }
+  }, [activeTab]);
+
+  const formatDuration = (ms: number) => {
+    if (ms < 1000) return `${Math.round(ms)}ms`;
+    return `${(ms / 1000).toFixed(2)}s`;
+  };
+
+  const formatTime = (timestamp: number) => {
+    return new Date(timestamp).toLocaleString();
+  };
+
+  const formatNumber = (n: number) => {
+    return n.toLocaleString();
+  };
+
+  const formatCost = (cost: number) => {
+    if (cost < 0.01) return `$${cost.toFixed(4)}`;
+    if (cost < 1) return `$${cost.toFixed(3)}`;
+    return `$${cost.toFixed(2)}`;
+  };
+
+  const formatTokens = (tokens: number) => {
+    if (tokens >= 1000000) return `${(tokens / 1000000).toFixed(1)}M`;
+    if (tokens >= 1000) return `${(tokens / 1000).toFixed(1)}K`;
+    return tokens.toString();
+  };
+
+  const formatJobType = (type: string) => {
+    const labels: Record<string, string> = {
+      batch_ocr: 'OCR',
+      batch_translate: 'Translate',
+      batch_split: 'Split',
+      book_import: 'Import',
+    };
+    return labels[type] || type;
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed': return <CheckCircle className="w-4 h-4" style={{ color: '#22c55e' }} />;
+      case 'failed': return <XCircle className="w-4 h-4" style={{ color: '#ef4444' }} />;
+      case 'processing': return <Loader2 className="w-4 h-4 animate-spin" style={{ color: 'var(--accent-sage)' }} />;
+      case 'paused': return <Pause className="w-4 h-4" style={{ color: '#f59e0b' }} />;
+      case 'cancelled': return <XCircle className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />;
+      default: return <Clock className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />;
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed': return '#22c55e';
+      case 'failed': return '#ef4444';
+      case 'processing': return 'var(--accent-sage)';
+      case 'paused': return '#f59e0b';
+      case 'cancelled': return 'var(--text-muted)';
+      default: return 'var(--text-muted)';
+    }
+  };
+
+  const handleRefresh = () => {
+    if (activeTab === 'logs') {
+      fetchJobLogs();
+    } else if (activeTab === 'vercel') {
+      fetchVercelData();
+    } else {
+      fetchData();
+    }
+  };
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-12">
-      <div className="mb-8">
-        <Link href="/" className="text-sm text-gray-600 hover:text-gray-900">
-          ← Back to home
-        </Link>
-        <h1 className="text-4xl font-bold mt-4 mb-2">Analytics</h1>
-        <p className="text-gray-600">Source Library visitor statistics</p>
-      </div>
-
-      {loading && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-8 text-center">
-          <p className="text-gray-700">Loading analytics...</p>
-        </div>
-      )}
-
-      {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-8">
-          <p className="text-red-800 font-semibold">Error loading analytics</p>
-          <p className="text-red-600 text-sm mt-2">{error}</p>
-          <p className="text-gray-600 text-sm mt-4">
-            Analytics data is available in the{' '}
-            <a href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
-              Vercel dashboard
-            </a>
-          </p>
-        </div>
-      )}
-
-      {data && !error && (
-        <div className="space-y-8">
-          {(data.totalVisitors || data.totalPageviews) && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {data.totalVisitors && (
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-6">
-                  <p className="text-gray-600 text-sm font-semibold">TOTAL VISITORS</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-2">{data.totalVisitors.toLocaleString()}</p>
-                </div>
-              )}
-              {data.totalPageviews && (
-                <div className="bg-gradient-to-br from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-6">
-                  <p className="text-gray-600 text-sm font-semibold">TOTAL PAGEVIEWS</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-2">{data.totalPageviews.toLocaleString()}</p>
-                </div>
-              )}
+    <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
+      {/* Header */}
+      <header className="px-6 py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Link href="/" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
+              <ChevronLeft className="w-5 h-5" />
+            </Link>
+            <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+              Analytics
+            </h1>
+            <Link
+              href="/jobs"
+              className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+              style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
+            >
+              Jobs
+            </Link>
+          </div>
+          <div className="flex items-center gap-4">
+            {/* Tab toggle */}
+            <div className="flex rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
+              <button
+                onClick={() => setActiveTab('usage')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'usage' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'usage' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'usage' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Usage
+              </button>
+              <button
+                onClick={() => setActiveTab('performance')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'performance' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'performance' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'performance' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Performance
+              </button>
+              <button
+                onClick={() => setActiveTab('logs')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'logs' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'logs' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'logs' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Logs
+              </button>
+              <button
+                onClick={() => setActiveTab('vercel')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'vercel' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'vercel' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'vercel' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Vercel
+              </button>
             </div>
-          )}
 
-          {data.topPages && data.topPages.length > 0 && (
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-bold mb-4">Top Pages</h2>
-              <div className="space-y-3">
-                {data.topPages.map((page, idx) => (
-                  <div key={idx} className="flex items-center justify-between pb-3 border-b border-gray-100 last:border-0">
-                    <p className="text-gray-900 font-medium truncate">{page.path}</p>
-                    <p className="text-gray-600 text-sm ml-4">{page.count.toLocaleString()} views</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+            {activeTab === 'usage' && (
+              <select
+                value={days}
+                onChange={(e) => setDays(parseInt(e.target.value))}
+                className="px-3 py-1.5 rounded-lg text-sm"
+                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+              >
+                <option value={7}>Last 7 days</option>
+                <option value={30}>Last 30 days</option>
+                <option value={90}>Last 90 days</option>
+              </select>
+            )}
+            {activeTab === 'performance' && (
+              <select
+                value={hours}
+                onChange={(e) => setHours(parseInt(e.target.value))}
+                className="px-3 py-1.5 rounded-lg text-sm"
+                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+              >
+                <option value={1}>Last hour</option>
+                <option value={6}>Last 6 hours</option>
+                <option value={24}>Last 24 hours</option>
+                <option value={72}>Last 3 days</option>
+                <option value={168}>Last week</option>
+              </select>
+            )}
+            {activeTab === 'logs' && (
+              <>
+                <select
+                  value={jobTypeFilter}
+                  onChange={(e) => setJobTypeFilter(e.target.value)}
+                  className="px-3 py-1.5 rounded-lg text-sm"
+                  style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+                >
+                  <option value="">All Types</option>
+                  <option value="batch_ocr">OCR</option>
+                  <option value="batch_translate">Translate</option>
+                  <option value="batch_split">Split</option>
+                  <option value="book_import">Import</option>
+                </select>
+                <select
+                  value={jobStatusFilter}
+                  onChange={(e) => setJobStatusFilter(e.target.value)}
+                  className="px-3 py-1.5 rounded-lg text-sm"
+                  style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+                >
+                  <option value="">All Status</option>
+                  <option value="completed">Completed</option>
+                  <option value="failed">Failed</option>
+                  <option value="processing">Processing</option>
+                  <option value="paused">Paused</option>
+                  <option value="pending">Pending</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+                <select
+                  value={jobLimit}
+                  onChange={(e) => setJobLimit(parseInt(e.target.value))}
+                  className="px-3 py-1.5 rounded-lg text-sm"
+                  style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+                >
+                  <option value={25}>Last 25</option>
+                  <option value={50}>Last 50</option>
+                  <option value={100}>Last 100</option>
+                  <option value={200}>Last 200</option>
+                </select>
+              </>
+            )}
 
-          {data.topReferrers && data.topReferrers.length > 0 && (
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-bold mb-4">Traffic Sources</h2>
-              <div className="space-y-3">
-                {data.topReferrers.map((referrer, idx) => (
-                  <div key={idx} className="flex items-center justify-between pb-3 border-b border-gray-100 last:border-0">
-                    <p className="text-gray-900 font-medium truncate">{referrer.referrer || 'Direct traffic'}</p>
-                    <p className="text-gray-600 text-sm ml-4">{referrer.count.toLocaleString()} visitors</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {data.topCountries && data.topCountries.length > 0 && (
-            <div className="bg-white border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-bold mb-4">Visitor Locations</h2>
-              <div className="space-y-3">
-                {data.topCountries.map((country, idx) => (
-                  <div key={idx} className="flex items-center justify-between pb-3 border-b border-gray-100 last:border-0">
-                    <p className="text-gray-900 font-medium">{country.country}</p>
-                    <p className="text-gray-600 text-sm ml-4">{country.count.toLocaleString()} visitors</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
-            <p>📊 Real-time analytics provided by <a href="https://vercel.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Vercel Analytics</a>. Data refreshes every 5 minutes.</p>
+            <button
+              onClick={handleRefresh}
+              disabled={loading}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--accent-rust)' }}
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
           </div>
         </div>
-      )}
-    </main>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-6 py-8">
+        {error && (
+          <div className="p-4 rounded-lg mb-6" style={{ background: '#fef2f2', color: '#991b1b' }}>
+            {error}
+          </div>
+        )}
+
+        {loading ? (
+          <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+            <RefreshCw className="w-8 h-8 mx-auto mb-4 animate-spin opacity-30" />
+            <p>Loading analytics...</p>
+          </div>
+        ) : activeTab === 'usage' ? (
+          /* Usage Tab */
+          <div className="space-y-8">
+            {/* Summary Cards */}
+            {usageData?.summary && (
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Books</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.totalBooks)}
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Pages OCR'd</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.pagesWithOcr)}
+                    <span className="text-sm font-normal ml-1" style={{ color: 'var(--text-muted)' }}>
+                      / {formatNumber(usageData.summary.totalPages)}
+                    </span>
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--accent-sage)' }}>
+                    {usageData.summary.ocrPercentage}% complete
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Languages className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Translated</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.pagesWithTranslation)}
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--accent-rust)' }}>
+                    {usageData.summary.translationPercentage}% complete
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Users className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Visitors</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {formatNumber(usageData.summary.uniqueVisitors)}
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                    {formatNumber(usageData.summary.totalHits)} total hits
+                  </div>
+                </div>
+
+                {/* API Cost Card */}
+                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <DollarSign className="w-4 h-4" style={{ color: '#22c55e' }} />
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>API Cost</span>
+                  </div>
+                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    {usageData.costStats ? formatCost(usageData.costStats.totalCost) : '$0.00'}
+                  </div>
+                  <div className="text-xs mt-1" style={{ color: '#22c55e' }}>
+                    {usageData.costStats ? formatTokens(usageData.costStats.totalTokens) : '0'} tokens
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Collection Overview - Processing Pipeline */}
+            {usageData?.collectionStats && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <Database className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                  Collection Processing Pipeline
+                </h2>
+
+                {/* Pipeline Progress Bars */}
+                <div className="space-y-4">
+                  {/* Total Pages Bar */}
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span style={{ color: 'var(--text-primary)' }}>Total Pages</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{formatNumber(usageData.summary.totalPages)}</span>
+                    </div>
+                    <div className="h-8 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
+                      {/* Archived to Blob */}
+                      <div
+                        className="h-full flex items-center justify-center text-xs font-medium text-white"
+                        style={{
+                          width: `${(usageData.collectionStats.blobStorage.totalBlobPages / usageData.summary.totalPages) * 100}%`,
+                          background: '#22c55e',
+                          minWidth: usageData.collectionStats.blobStorage.totalBlobPages > 0 ? '60px' : '0',
+                        }}
+                        title={`${formatNumber(usageData.collectionStats.blobStorage.totalBlobPages)} pages archived to Vercel Blob`}
+                      >
+                        {((usageData.collectionStats.blobStorage.totalBlobPages / usageData.summary.totalPages) * 100).toFixed(0)}% Blob
+                      </div>
+                      {/* Not archived */}
+                      <div
+                        className="h-full flex items-center justify-center text-xs"
+                        style={{
+                          flex: 1,
+                          color: 'var(--text-muted)',
+                        }}
+                      >
+                        {formatNumber(usageData.summary.totalPages - usageData.collectionStats.blobStorage.totalBlobPages)} from external sources
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* OCR Progress Bar */}
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span style={{ color: 'var(--text-primary)' }}>OCR Progress</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{formatNumber(usageData.summary.pagesWithOcr)} / {formatNumber(usageData.summary.totalPages)}</span>
+                    </div>
+                    <div className="h-6 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
+                      <div
+                        className="h-full flex items-center justify-center text-xs font-medium text-white"
+                        style={{
+                          width: `${usageData.summary.ocrPercentage}%`,
+                          background: 'var(--accent-sage)',
+                          minWidth: usageData.summary.ocrPercentage > 0 ? '40px' : '0',
+                        }}
+                      >
+                        {usageData.summary.ocrPercentage}%
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Translation Progress Bar */}
+                  <div>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span style={{ color: 'var(--text-primary)' }}>Translation Progress</span>
+                      <span style={{ color: 'var(--text-muted)' }}>{formatNumber(usageData.summary.pagesWithTranslation)} / {formatNumber(usageData.summary.totalPages)}</span>
+                    </div>
+                    <div className="h-6 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
+                      <div
+                        className="h-full flex items-center justify-center text-xs font-medium text-white"
+                        style={{
+                          width: `${usageData.summary.translationPercentage}%`,
+                          background: 'var(--accent-rust)',
+                          minWidth: usageData.summary.translationPercentage > 0 ? '40px' : '0',
+                        }}
+                      >
+                        {usageData.summary.translationPercentage}%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Storage Breakdown Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Archive className="w-4 h-4" style={{ color: '#22c55e' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Archived</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.pagesWithArchivedPhoto)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>full pages</div>
+                  </div>
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <HardDrive className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Cropped</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.pagesWithCroppedPhoto)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>split pages</div>
+                  </div>
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Split Books</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.booksWithSplitPages)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>books processed</div>
+                  </div>
+                  <div className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Database className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />
+                      <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Total Blob</span>
+                    </div>
+                    <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(usageData.collectionStats.blobStorage.totalBlobPages)}
+                    </div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      {((usageData.collectionStats.blobStorage.totalBlobPages / usageData.summary.totalPages) * 100).toFixed(1)}% of collection
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Collection Breakdown Charts */}
+            {usageData?.collectionStats && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {/* Languages */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <Languages className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+                    By Language
+                  </h2>
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {usageData.collectionStats.byLanguage.map((lang, i) => {
+                      const total = usageData.collectionStats!.byLanguage.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (lang.count / total) * 100 : 0;
+                      const colors = ['var(--accent-rust)', 'var(--accent-sage)', 'var(--accent-violet)', '#f59e0b', '#22c55e'];
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: 'var(--text-primary)' }}>{lang.language}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{lang.count}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: colors[i % colors.length] }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Categories */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+                    By Category
+                  </h2>
+                  <div className="space-y-2 max-h-64 overflow-y-auto">
+                    {usageData.collectionStats.byCategory.map((cat, i) => {
+                      const total = usageData.collectionStats!.byCategory.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (cat.count / total) * 100 : 0;
+                      const colors = ['var(--accent-sage)', 'var(--accent-violet)', 'var(--accent-rust)', '#22c55e', '#f59e0b'];
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="truncate" style={{ color: 'var(--text-primary)' }} title={cat.category}>{cat.category}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{cat.count}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: colors[i % colors.length] }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Image Sources */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <HardDrive className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                    Image Sources
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.collectionStats.byImageSource.map((src, i) => {
+                      const total = usageData.collectionStats!.byImageSource.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (src.count / total) * 100 : 0;
+                      const providerLabels: Record<string, string> = {
+                        internet_archive: 'Internet Archive',
+                        gallica: 'Gallica (BnF)',
+                        mdz: 'MDZ (Bavarian)',
+                        efm: 'EFM Manuscripts',
+                        iiif: 'IIIF Generic',
+                        vercel_blob: 'Vercel Blob',
+                      };
+                      const providerColors: Record<string, string> = {
+                        internet_archive: '#f59e0b',
+                        gallica: '#3b82f6',
+                        mdz: '#22c55e',
+                        efm: 'var(--accent-violet)',
+                        iiif: 'var(--accent-rust)',
+                        vercel_blob: '#22c55e',
+                      };
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: 'var(--text-primary)' }}>{providerLabels[src.provider] || src.provider}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{src.count} ({pct.toFixed(0)}%)</span>
+                          </div>
+                          <div className="h-3 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: providerColors[src.provider] || 'var(--accent-sage)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Traffic Chart */}
+            {usageData?.hitsByDay && usageData.hitsByDay.length > 0 && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                  Traffic Over Time
+                </h2>
+                <div className="h-48 flex items-end gap-1">
+                  {usageData.hitsByDay.map((day, i) => {
+                    const maxHits = Math.max(...usageData.hitsByDay.map(d => d.hits));
+                    const height = maxHits > 0 ? (day.hits / maxHits) * 100 : 0;
+                    return (
+                      <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                        <div
+                          className="w-full rounded-t transition-all hover:opacity-80"
+                          style={{
+                            height: `${height}%`,
+                            minHeight: day.hits > 0 ? '4px' : '0',
+                            background: 'var(--accent-sage)',
+                          }}
+                          title={`${day.date}: ${day.hits} hits, ${day.uniqueVisitors} visitors`}
+                        />
+                        {i % Math.ceil(usageData.hitsByDay.length / 7) === 0 && (
+                          <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                            {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Visitors by Country */}
+            {usageData?.visitorsByCountry && usageData.visitorsByCountry.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* World Map */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <Globe className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+                    Visitor Locations
+                  </h2>
+                  <div className="relative bg-stone-100 rounded-lg overflow-hidden" style={{ aspectRatio: '2/1' }}>
+                    {/* Simple world map background */}
+                    <svg viewBox="0 0 360 180" className="w-full h-full" style={{ background: 'var(--bg-warm)' }}>
+                      {/* Simplified continent outlines */}
+                      <path d="M80,40 Q100,30 120,35 L140,40 Q160,45 150,60 L130,70 Q110,75 90,65 L80,50 Z" fill="var(--border-light)" />
+                      <path d="M150,45 Q180,40 210,50 L240,55 Q260,60 250,80 L220,90 Q190,95 160,85 L145,70 Z" fill="var(--border-light)" />
+                      <path d="M250,50 Q280,45 310,55 L330,65 Q340,80 320,100 L290,110 Q260,115 240,100 L235,80 Z" fill="var(--border-light)" />
+                      <path d="M85,90 Q100,85 115,95 L120,110 Q115,130 95,135 L80,125 Q75,110 85,90 Z" fill="var(--border-light)" />
+                      <path d="M155,95 Q170,100 180,115 L175,135 Q160,145 145,135 L140,115 Q145,100 155,95 Z" fill="var(--border-light)" />
+                      <path d="M280,130 Q310,125 330,140 L325,160 Q300,170 275,160 L270,145 Z" fill="var(--border-light)" />
+
+                      {/* Visitor location dots */}
+                      {usageData.visitorLocations?.map((loc, i) => {
+                        // Convert lat/lon to SVG coordinates (simple equirectangular)
+                        const x = ((loc.lon + 180) / 360) * 360;
+                        const y = ((90 - loc.lat) / 180) * 180;
+                        const size = Math.min(8, Math.max(3, Math.log(loc.hits + 1) * 2));
+                        return (
+                          <g key={i}>
+                            <circle
+                              cx={x}
+                              cy={y}
+                              r={size}
+                              fill="var(--accent-rust)"
+                              opacity={0.7}
+                            >
+                              <title>{`${loc.city}, ${loc.country}: ${loc.hits} hits`}</title>
+                            </circle>
+                            <circle
+                              cx={x}
+                              cy={y}
+                              r={size + 3}
+                              fill="var(--accent-rust)"
+                              opacity={0.2}
+                            />
+                          </g>
+                        );
+                      })}
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Country List */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <MapPin className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+                    Visitors by Country
+                  </h2>
+                  <div className="space-y-3 max-h-64 overflow-y-auto">
+                    {usageData.visitorsByCountry.slice(0, 10).map((c, i) => {
+                      const total = usageData.visitorsByCountry.reduce((a, b) => a + b.hits, 0);
+                      const pct = total > 0 ? (c.hits / total) * 100 : 0;
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: 'var(--text-primary)' }}>
+                              {c.country}
+                            </span>
+                            <span style={{ color: 'var(--text-muted)' }}>
+                              {formatNumber(c.hits)} hits • {c.visitors} visitors
+                            </span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: 'var(--accent-rust)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Model & Prompt Usage */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {usageData?.modelUsage && usageData.modelUsage.length > 0 && (
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                    Model Usage
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.modelUsage.map((m, i) => {
+                      const total = usageData.modelUsage.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (m.count / total) * 100 : 0;
+                      const isUntracked = m.model === '__untracked__';
+                      const displayName = isUntracked ? 'Untracked (historical)' : (m.model || 'Unknown');
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span style={{ color: isUntracked ? 'var(--text-muted)' : 'var(--text-primary)', fontStyle: isUntracked ? 'italic' : 'normal' }}>
+                              {displayName}
+                            </span>
+                            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(m.count)}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: isUntracked ? 'var(--text-faint)' : 'var(--accent-sage)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {usageData?.promptUsage && usageData.promptUsage.length > 0 && (
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                    Prompt Usage
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.promptUsage.slice(0, 5).map((p, i) => {
+                      const total = usageData.promptUsage.reduce((a, b) => a + b.count, 0);
+                      const pct = total > 0 ? (p.count / total) * 100 : 0;
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="truncate" style={{ color: 'var(--text-primary)' }}>{p.prompt}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(p.count)}</span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: 'var(--accent-rust)' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Cost Breakdown */}
+            {usageData?.costStats && usageData.costStats.costByAction.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Cost by Action */}
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <DollarSign className="w-5 h-5" style={{ color: '#22c55e' }} />
+                    Cost by Action
+                  </h2>
+                  <div className="space-y-3">
+                    {usageData.costStats.costByAction.map((a, i) => {
+                      const totalCost = usageData.costStats!.costByAction.reduce((acc, b) => acc + b.cost, 0);
+                      const pct = totalCost > 0 ? (a.cost / totalCost) * 100 : 0;
+                      return (
+                        <div key={i}>
+                          <div className="flex justify-between text-sm mb-1">
+                            <span className="capitalize" style={{ color: 'var(--text-primary)' }}>{a.action}</span>
+                            <span style={{ color: 'var(--text-muted)' }}>
+                              {formatCost(a.cost)} ({a.count} calls)
+                            </span>
+                          </div>
+                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                            <div
+                              className="h-full rounded-full"
+                              style={{ width: `${pct}%`, background: '#22c55e' }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Cost Over Time */}
+                {usageData.costStats.costByDay.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <Coins className="w-5 h-5" style={{ color: '#22c55e' }} />
+                      Daily Cost
+                    </h2>
+                    <div className="h-48 flex items-end gap-1">
+                      {usageData.costStats.costByDay.map((day, i) => {
+                        const maxCost = Math.max(...usageData.costStats!.costByDay.map(d => d.cost));
+                        const height = maxCost > 0 ? (day.cost / maxCost) * 100 : 0;
+                        return (
+                          <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                            <div
+                              className="w-full rounded-t transition-all hover:opacity-80"
+                              style={{
+                                height: `${height}%`,
+                                minHeight: day.cost > 0 ? '4px' : '0',
+                                background: '#22c55e',
+                              }}
+                              title={`${day.date}: ${formatCost(day.cost)} (${formatTokens(day.tokens)} tokens)`}
+                            />
+                            {i % Math.ceil(usageData.costStats!.costByDay.length / 7) === 0 && (
+                              <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                                {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Recent Books */}
+            {usageData?.recentBooks && usageData.recentBooks.length > 0 && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                  Recently Added Books
+                </h2>
+                <div className="space-y-3">
+                  {usageData.recentBooks.map((book, i) => (
+                    <div key={i} className="flex items-center justify-between py-2" style={{ borderBottom: i < usageData.recentBooks.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                      <div>
+                        <div className="font-medium" style={{ color: 'var(--text-primary)' }}>{book.title}</div>
+                        <div className="text-sm" style={{ color: 'var(--text-muted)' }}>{book.author}</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-sm" style={{ color: 'var(--text-muted)' }}>{book.pages_count || 0} pages</div>
+                        <div className="text-xs" style={{ color: 'var(--text-faint)' }}>
+                          {new Date(book.created_at).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ) : activeTab === 'performance' ? (
+          /* Performance Tab */
+          <div className="space-y-6">
+            {/* Blob vs IA Comparison */}
+            {perfData?.sourceStats && perfData.sourceStats.length > 0 && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                  Image Loading: Blob vs Internet Archive
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {perfData.sourceStats.map((stat) => {
+                    const sourceLabels: Record<string, string> = {
+                      blob: 'Vercel Blob (Archived)',
+                      ia: 'Internet Archive',
+                      local: 'API Proxy',
+                      other: 'Other',
+                    };
+                    const sourceColors: Record<string, string> = {
+                      blob: '#22c55e',
+                      ia: '#f59e0b',
+                      local: 'var(--accent-sage)',
+                      other: 'var(--text-muted)',
+                    };
+                    const color = sourceColors[stat.source] || sourceColors.other;
+                    return (
+                      <div
+                        key={stat.source}
+                        className="p-4 rounded-lg"
+                        style={{ background: 'var(--bg-warm)', borderLeft: `4px solid ${color}` }}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
+                            {sourceLabels[stat.source] || stat.source}
+                          </span>
+                          <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--bg-white)', color: 'var(--text-muted)' }}>
+                            {stat.count} loads
+                          </span>
+                        </div>
+                        <div className="text-2xl font-semibold mb-2" style={{ color }}>
+                          {formatDuration(stat.avg)}
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>P50: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{stat.p50 ? formatDuration(stat.p50) : '-'}</span>
+                          </div>
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>P95: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{stat.p95 ? formatDuration(stat.p95) : '-'}</span>
+                          </div>
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>Min: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{formatDuration(stat.min)}</span>
+                          </div>
+                          <div>
+                            <span style={{ color: 'var(--text-muted)' }}>Max: </span>
+                            <span style={{ color: 'var(--text-primary)' }}>{formatDuration(stat.max)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {/* Comparison Bar */}
+                {perfData.sourceStats.length >= 2 && (() => {
+                  const blob = perfData.sourceStats.find(s => s.source === 'blob');
+                  const ia = perfData.sourceStats.find(s => s.source === 'ia');
+                  if (blob && ia) {
+                    const speedup = ((ia.avg - blob.avg) / ia.avg * 100).toFixed(0);
+                    const faster = blob.avg < ia.avg ? 'blob' : 'ia';
+                    return (
+                      <div className="mt-4 p-4 rounded-lg text-center" style={{ background: 'var(--bg-cream)' }}>
+                        {faster === 'blob' ? (
+                          <p style={{ color: 'var(--text-primary)' }}>
+                            <span className="font-semibold" style={{ color: '#22c55e' }}>Vercel Blob</span> is{' '}
+                            <span className="font-semibold">{speedup}% faster</span> than Internet Archive
+                            <span className="text-sm ml-2" style={{ color: 'var(--text-muted)' }}>
+                              ({formatDuration(blob.avg)} vs {formatDuration(ia.avg)})
+                            </span>
+                          </p>
+                        ) : (
+                          <p style={{ color: 'var(--text-primary)' }}>
+                            <span className="font-semibold" style={{ color: '#f59e0b' }}>Internet Archive</span> is{' '}
+                            <span className="font-semibold">{Math.abs(Number(speedup))}% faster</span> than Vercel Blob
+                            <span className="text-sm ml-2" style={{ color: 'var(--text-muted)' }}>
+                              ({formatDuration(ia.avg)} vs {formatDuration(blob.avg)})
+                            </span>
+                          </p>
+                        )}
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
+              </div>
+            )}
+
+            {perfData?.stats && perfData.stats.length > 0 ? (
+              <>
+                <h2 className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>
+                  Performance Metrics
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {perfData.stats.map((stat) => (
+                    <div
+                      key={stat.name}
+                      className="p-4 rounded-xl"
+                      style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>
+                          {stat.name.replace(/_/g, ' ')}
+                        </h3>
+                        <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
+                          {stat.count} calls
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>Avg</div>
+                          <div className="text-sm font-medium" style={{ color: 'var(--accent-sage)' }}>
+                            {formatDuration(stat.avg)}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>P50</div>
+                          <div className="text-sm font-medium" style={{ color: 'var(--text-secondary)' }}>
+                            {stat.p50 ? formatDuration(stat.p50) : '-'}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>P95</div>
+                          <div className="text-sm font-medium" style={{ color: 'var(--accent-rust)' }}>
+                            {stat.p95 ? formatDuration(stat.p95) : '-'}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 flex justify-between text-xs" style={{ borderTop: '1px solid var(--border-light)', color: 'var(--text-faint)' }}>
+                        <span>Min: {formatDuration(stat.min)}</span>
+                        <span>Max: {formatDuration(stat.max)}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Recent Samples */}
+                {perfData.recentSamples && perfData.recentSamples.length > 0 && (
+                  <div className="mt-8">
+                    <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                      Recent Activity
+                    </h2>
+                    <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr style={{ background: 'var(--bg-warm)' }}>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Metric</th>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Duration</th>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Time</th>
+                            <th className="px-4 py-2 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Details</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {perfData.recentSamples.map((sample, i) => (
+                            <tr key={i} style={{ borderTop: '1px solid var(--border-light)' }}>
+                              <td className="px-4 py-2" style={{ color: 'var(--text-primary)' }}>
+                                {sample.name.replace(/_/g, ' ')}
+                              </td>
+                              <td className="px-4 py-2 font-mono" style={{ color: 'var(--accent-sage)' }}>
+                                {formatDuration(sample.duration)}
+                              </td>
+                              <td className="px-4 py-2" style={{ color: 'var(--text-muted)' }}>
+                                {formatTime(sample.timestamp)}
+                              </td>
+                              <td className="px-4 py-2 text-xs" style={{ color: 'var(--text-faint)' }}>
+                                {sample.metadata ? Object.entries(sample.metadata).slice(0, 2).map(([k, v]) => `${k}: ${v}`).join(', ') : '-'}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+                <Clock className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p>No performance data yet</p>
+                <p className="text-sm mt-1">Metrics will appear here as the site is used</p>
+              </div>
+            )}
+          </div>
+        ) : activeTab === 'logs' ? (
+          /* Logs Tab */
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-medium flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <ListChecks className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                Batch Job History
+              </h2>
+              <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                {jobLogs.length} jobs
+              </span>
+            </div>
+
+            {jobLogs.length > 0 ? (
+              <div className="rounded-xl overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr style={{ background: 'var(--bg-warm)' }}>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Status</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Type</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>User</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Book</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Pages</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Model / Prompt</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Started</th>
+                        <th className="px-4 py-3 text-left font-medium" style={{ color: 'var(--text-muted)' }}>Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {jobLogs.map((job) => {
+                        const startTime = job.started_at ? new Date(job.started_at) : new Date(job.created_at);
+                        const endTime = job.completed_at ? new Date(job.completed_at) : new Date();
+                        const durationMs = job.started_at ? endTime.getTime() - startTime.getTime() : 0;
+                        const durationStr = durationMs > 0 ? formatDuration(durationMs) : '-';
+
+                        return (
+                          <tr key={job.id} style={{ borderTop: '1px solid var(--border-light)' }} className="hover:bg-stone-50 transition-colors">
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-2">
+                                {getStatusIcon(job.status)}
+                                <span className="capitalize text-xs font-medium" style={{ color: getStatusColor(job.status) }}>
+                                  {job.status}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-4 py-3">
+                              <span className="px-2 py-1 rounded-md text-xs font-medium" style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)' }}>
+                                {formatJobType(job.type)}
+                              </span>
+                            </td>
+                            <td className="px-4 py-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+                              {job.initiated_by || '-'}
+                            </td>
+                            <td className="px-4 py-3 max-w-[200px]">
+                              {job.book_id ? (
+                                <Link
+                                  href={`/book/${job.book_id}`}
+                                  className="block truncate hover:underline"
+                                  style={{ color: 'var(--text-primary)' }}
+                                  title={job.book_title || '-'}
+                                >
+                                  {job.book_title || '-'}
+                                </Link>
+                              ) : (
+                                <div className="truncate" style={{ color: 'var(--text-primary)' }} title={job.book_title || '-'}>
+                                  {job.book_title || '-'}
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-4 py-3">
+                              <div style={{ color: 'var(--text-primary)' }}>
+                                {job.progress.completed}
+                                <span style={{ color: 'var(--text-muted)' }}> / {job.progress.total}</span>
+                              </div>
+                              {job.progress.failed > 0 && (
+                                <div className="text-xs" style={{ color: '#ef4444' }}>
+                                  {job.progress.failed} failed
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-4 py-3 text-xs">
+                              <div style={{ color: 'var(--text-primary)' }}>{job.config.model || '-'}</div>
+                              {job.config.prompt_name && (
+                                <div style={{ color: 'var(--text-muted)' }}>{job.config.prompt_name}</div>
+                              )}
+                            </td>
+                            <td className="px-4 py-3 text-xs" style={{ color: 'var(--text-muted)' }}>
+                              {new Date(job.created_at).toLocaleDateString()}
+                              <br />
+                              {new Date(job.created_at).toLocaleTimeString()}
+                            </td>
+                            <td className="px-4 py-3 font-mono text-xs" style={{ color: 'var(--text-muted)' }}>
+                              {job.status === 'processing' ? (
+                                <span style={{ color: 'var(--accent-sage)' }}>In progress...</span>
+                              ) : (
+                                durationStr
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+                <ListChecks className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p>No batch jobs found</p>
+                <p className="text-sm mt-1">Jobs will appear here when you run batch operations</p>
+              </div>
+            )}
+          </div>
+        ) : activeTab === 'vercel' ? (
+          /* Vercel Analytics Tab */
+          <div className="space-y-8">
+            {vercelData && (
+              <>
+                {/* Summary Cards */}
+                {(vercelData.totalVisitors || vercelData.totalPageviews) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {vercelData.totalVisitors !== undefined && (
+                      <div className="p-6 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #f0f9ff)', border: '1px solid var(--border-light)' }}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Users className="w-5 h-5" style={{ color: '#3b82f6' }} />
+                          <span className="text-sm font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Total Visitors</span>
+                        </div>
+                        <div className="text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                          {vercelData.totalVisitors.toLocaleString()}
+                        </div>
+                      </div>
+                    )}
+                    {vercelData.totalPageviews !== undefined && (
+                      <div className="p-6 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #faf5ff)', border: '1px solid var(--border-light)' }}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <BarChart3 className="w-5 h-5" style={{ color: '#8b5cf6' }} />
+                          <span className="text-sm font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Total Pageviews</span>
+                        </div>
+                        <div className="text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                          {vercelData.totalPageviews.toLocaleString()}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Top Pages */}
+                {vercelData.topPages && vercelData.topPages.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>Top Pages</h2>
+                    <div className="space-y-3">
+                      {vercelData.topPages.map((page, idx) => (
+                        <div key={idx} className="flex items-center justify-between pb-3" style={{ borderBottom: idx < vercelData.topPages!.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                          <p className="font-medium truncate" style={{ color: 'var(--text-primary)' }}>{page.path}</p>
+                          <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{page.count.toLocaleString()} views</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Traffic Sources and Countries */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {vercelData.topReferrers && vercelData.topReferrers.length > 0 && (
+                    <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                      <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>Traffic Sources</h2>
+                      <div className="space-y-3">
+                        {vercelData.topReferrers.map((referrer, idx) => (
+                          <div key={idx} className="flex items-center justify-between pb-3" style={{ borderBottom: idx < vercelData.topReferrers!.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                            <p className="font-medium truncate" style={{ color: 'var(--text-primary)' }}>{referrer.referrer || 'Direct traffic'}</p>
+                            <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{referrer.count.toLocaleString()} visitors</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {vercelData.topCountries && vercelData.topCountries.length > 0 && (
+                    <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                      <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                        <Globe className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+                        Visitor Locations
+                      </h2>
+                      <div className="space-y-3">
+                        {vercelData.topCountries.map((country, idx) => (
+                          <div key={idx} className="flex items-center justify-between pb-3" style={{ borderBottom: idx < vercelData.topCountries!.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                            <p className="font-medium" style={{ color: 'var(--text-primary)' }}>{country.country}</p>
+                            <p className="text-sm ml-4" style={{ color: 'var(--text-muted)' }}>{country.count.toLocaleString()} visitors</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="p-4 rounded-lg text-sm" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
+                  <p>Real-time analytics from Vercel. For more detailed analytics, visit the{' '}
+                    <a href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80" style={{ color: 'var(--accent-rust)' }}>
+                      Vercel dashboard
+                    </a>.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {!vercelData && !loading && (
+              <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+                <BarChart3 className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p>No Vercel analytics data available</p>
+                <p className="text-sm mt-2">
+                  Check the{' '}
+                  <a href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80" style={{ color: 'var(--accent-rust)' }}>
+                    Vercel dashboard
+                  </a>{' '}
+                  for analytics.
+                </p>
+              </div>
+            )}
+          </div>
+        ) : null}
+      </main>
+    </div>
   );
 }
