@@ -59,13 +59,35 @@ curl -s "https://sourcelibrary.org/api/books" | jq '[.[] |
 
 ## Extract Images from a Book
 
-### Single Book Extraction
+### Smart Extraction (Recommended)
+
+Uses OCR `<image-desc>` tags to find pages with images, ranks them with AI, and only extracts the best 15-20:
 
 ```bash
-# Extract with evaluation script (includes cost tracking)
-node scripts/evaluate-extraction.mjs BOOK_ID --clear
+# Extract top 20 images from a book
+node scripts/smart-extract.mjs BOOK_ID --limit=20
 
-# Or via API (for individual pages)
+# Extract top 15 images
+node scripts/smart-extract.mjs BOOK_ID --limit=15
+```
+
+**How it works:**
+1. Finds pages with `<image-desc>` tags in OCR (from previous OCR pass)
+2. Uses AI to rank descriptions and pick the most interesting
+3. Only extracts those specific pages
+4. ~30 seconds for 20 images instead of scanning all pages
+
+### Full Extraction (All Pages)
+
+For comprehensive extraction of every page (slow, use sparingly):
+
+```bash
+node scripts/evaluate-extraction.mjs BOOK_ID --clear
+```
+
+### Via API (Individual Pages)
+
+```bash
 curl -s -X POST "https://sourcelibrary.org/api/extract-images" \
   -H "Content-Type: application/json" \
   -d '{
@@ -75,23 +97,17 @@ curl -s -X POST "https://sourcelibrary.org/api/extract-images" \
   }'
 ```
 
-### Batch Extraction (Multiple Books)
+### Books with OCR Image Descriptions
+
+Check which books have `<image-desc>` tags (best for smart extraction):
 
 ```bash
-#!/bin/bash
-# Extract images from all books without detections
-
-BASE_URL="https://sourcelibrary.org"
-
-# Get books needing extraction
-BOOKS=$(curl -s "$BASE_URL/api/books" | jq -r '.[] |
-  select((.detected_images_count // 0) == 0) | .id')
-
-for BOOK_ID in $BOOKS; do
-  echo "Extracting: $BOOK_ID"
-  node scripts/evaluate-extraction.mjs "$BOOK_ID" --clear
-  echo "---"
-done
+# Find books with image descriptions in OCR
+node -e "
+const { MongoClient } = require('mongodb');
+require('dotenv').config({ path: '.env.local' });
+// ... aggregation to find books with <image-desc> tags
+"
 ```
 
 ## Output Quality
