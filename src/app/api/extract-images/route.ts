@@ -11,42 +11,64 @@ import { logGeminiCall } from '@/lib/gemini-logger';
  * Body: { limit?: number, bookId?: string, model?: 'gemini' | 'mistral' | 'grounding-dino' }
  */
 
-const EXTRACTION_PROMPT = `You are analyzing a historical book page scan. Your task is to identify and PRECISELY locate all illustrations, diagrams, woodcuts, charts, maps, or decorative elements.
+const EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Create rich metadata for each illustration.
 
-CRITICAL: Provide EXACT bounding box coordinates. Measure carefully:
-- x: horizontal position of LEFT edge (0.0 = left margin, 1.0 = right margin)
-- y: vertical position of TOP edge (0.0 = top margin, 1.0 = bottom margin)
-- width: horizontal span of the illustration
-- height: vertical span of the illustration
+BOUNDING BOX (0.0-1.0 normalized coordinates):
+- x: LEFT edge (0=left, 1=right), y: TOP edge (0=top, 1=bottom)
+- width, height: span of illustration
+- TIGHTLY enclose the illustration only
 
-The bounding box should TIGHTLY enclose just the illustration, not the surrounding text.
+IMAGE TYPES (use these exactly):
+- emblem: Symbolic/allegorical with motto, often framed
+- woodcut: Bold relief print lines
+- engraving: Fine detailed intaglio lines, crosshatching
+- portrait: Depiction of a person
+- frontispiece: Decorative title page
+- musical_score: Sheet music, notation, fugues (NOT "table")
+- diagram: Technical/scientific illustration
+- symbol: Alchemical, astrological symbols
+- decorative: Ornaments, borders, initials
+- map: Geographic representation
 
-For each illustration found, return:
+For each illustration return:
 {
-  "description": "Brief description of what it depicts",
-  "type": "woodcut|emblem|engraving|portrait|frontispiece|diagram|chart|illustration|map|symbol|decorative|table",
+  "description": "Brief factual description",
+  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|decorative|map",
   "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
   "confidence": 0.95,
   "gallery_quality": 0.85,
-  "gallery_rationale": "Brief explanation of why this image is or isn't gallery-worthy"
+  "gallery_rationale": "Why gallery-worthy or not",
+  "metadata": {
+    "subjects": ["alchemy", "transformation"],
+    "figures": ["old man", "serpent"],
+    "symbols": ["ouroboros", "athanor"],
+    "style": "Northern European Renaissance",
+    "technique": "woodcut"
+  },
+  "museum_description": "A compelling allegorical scene depicting... This exemplifies early modern alchemical imagery..."
 }
 
-GALLERY QUALITY SCORING (0.0 to 1.0):
-- 0.9-1.0: Exceptional - striking emblems, portraits, significant allegorical scenes with people/figures, beautiful engravings depicting humans or mythological figures
-- 0.8-0.9: High - any illustration featuring people or figures, well-composed scenes with human activity, portraits, personifications
-- 0.6-0.8: Good - well-executed illustrations without people, interesting diagrams, decorative elements with artistic merit
-- 0.4-0.6: Moderate - standard frontispieces without figures, musical scores, common decorative elements, simple diagrams
-- 0.2-0.4: Low - page ornaments, generic borders, printer's marks, simple geometric figures
-- 0.0-0.2: Minimal - marbled papers, blank decorative frames, rule lines
+GALLERY QUALITY (0.0-1.0):
+- 0.9-1.0: Exceptional emblems, portraits, allegorical scenes with figures
+- 0.8-0.9: Illustrations with people/figures
+- 0.6-0.8: Good illustrations without people
+- 0.4-0.6: Musical scores, standard decorative elements
+- 0.2-0.4: Page ornaments, borders
+- 0.0-0.2: Marbled papers, blank frames
 
-PRIORITY: Images featuring people, human figures, or personifications should ALWAYS score 0.8 or higher. Musical scores, notation, and sheet music should score 0.4-0.6 (they are interesting but not gallery highlights).
+MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer sees and its significance.
 
-Consider: Visual appeal, presence of human figures, historical/scholarly significance, uniqueness, composition quality, shareability on social media.
+Return ONLY a valid JSON array. If no illustrations, return: []`;
 
-Return ONLY a valid JSON array. If no illustrations exist (text-only page), return: []
 
-Example:
-[{"description": "Emblem showing Nature guiding an alchemist through a labyrinth", "type": "emblem", "bbox": {"x": 0.15, "y": 0.20, "width": 0.70, "height": 0.55}, "confidence": 0.95, "gallery_quality": 0.92, "gallery_rationale": "Striking allegorical scene with rich symbolic content, excellent composition"}]`;
+interface ImageMetadata {
+  subjects?: string[];
+  figures?: string[];
+  symbols?: string[];
+  style?: string;
+  technique?: string;
+  condition?: string;
+}
 
 interface DetectedImage {
   description: string;
@@ -55,6 +77,8 @@ interface DetectedImage {
   confidence?: number;
   gallery_quality?: number;
   gallery_rationale?: string;
+  metadata?: ImageMetadata;
+  museum_description?: string;
   detected_at: Date;
   detection_source: 'vision_model';
   model: 'gemini' | 'mistral' | 'grounding-dino';
@@ -125,6 +149,15 @@ async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
     confidence: item.confidence,
     gallery_quality: typeof item.gallery_quality === 'number' ? item.gallery_quality : undefined,
     gallery_rationale: item.gallery_rationale || undefined,
+    metadata: item.metadata ? {
+      subjects: Array.isArray(item.metadata.subjects) ? item.metadata.subjects : undefined,
+      figures: Array.isArray(item.metadata.figures) ? item.metadata.figures : undefined,
+      symbols: Array.isArray(item.metadata.symbols) ? item.metadata.symbols : undefined,
+      style: item.metadata.style || undefined,
+      technique: item.metadata.technique || undefined,
+      condition: item.metadata.condition || undefined,
+    } : undefined,
+    museum_description: item.museum_description || undefined,
     detected_at: new Date(),
     detection_source: 'vision_model' as const,
     model: 'gemini' as const,

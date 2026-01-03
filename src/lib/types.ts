@@ -447,10 +447,20 @@ export interface CropData {
 // Detected illustration/image on a page (from OCR or vision model)
 export type DetectionStatus = 'pending' | 'approved' | 'rejected';
 
+// Structured metadata for indexing/search
+export interface ImageMetadata {
+  subjects?: string[];          // Topics: "alchemy", "transformation", "nature"
+  figures?: string[];           // People/beings: "old man", "serpent", "Mercury"
+  symbols?: string[];           // Symbols: "ouroboros", "philosophical egg", "athanor"
+  style?: string;               // Art style: "Northern European Renaissance"
+  technique?: string;           // Production: "woodcut", "engraving with crosshatching"
+  condition?: string;           // Physical state: "good", "fair", "poor"
+}
+
 export interface DetectedImage {
   id?: string;                  // Unique ID for this detection
-  description: string;          // What the image depicts
-  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'emblem' | 'engraving' | 'portrait' | 'frontispiece' | 'unknown';
+  description: string;          // What the image depicts (brief)
+  type?: 'woodcut' | 'diagram' | 'chart' | 'illustration' | 'symbol' | 'table' | 'map' | 'decorative' | 'emblem' | 'engraving' | 'portrait' | 'frontispiece' | 'musical_score' | 'unknown';
   // Bounding box (0-1 normalized coordinates, for future extraction)
   bbox?: {
     x: number;      // Left edge (0-1)
@@ -470,6 +480,9 @@ export interface DetectedImage {
   gallery_quality?: number;     // 0-1 score: how gallery-worthy is this image?
   gallery_rationale?: string;   // Why it scored high/low (visual appeal, historical significance, etc.)
   featured?: boolean;           // Manually marked as gallery-worthy
+  // Rich metadata for indexing and display
+  metadata?: ImageMetadata;     // Structured tags for search/filtering
+  museum_description?: string;  // 2-3 sentence museum-style label
 }
 
 export interface Page {

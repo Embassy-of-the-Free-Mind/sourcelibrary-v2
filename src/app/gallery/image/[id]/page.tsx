@@ -36,6 +36,14 @@ import {
   X
 } from 'lucide-react';
 
+interface ImageMetadata {
+  subjects?: string[];
+  figures?: string[];
+  symbols?: string[];
+  style?: string;
+  technique?: string;
+}
+
 interface ImageData {
   id: string;
   pageId: string;
@@ -50,6 +58,8 @@ interface ImageData {
   galleryQuality?: number | null;
   galleryRationale?: string | null;
   featured?: boolean;
+  metadata?: ImageMetadata | null;
+  museumDescription?: string | null;
   bbox?: { x: number; y: number; width: number; height: number };
   book: {
     id: string;
@@ -79,6 +89,8 @@ export default function ImageDetailPage({
   const [editingQuality, setEditingQuality] = useState(false);
   const [qualityValue, setQualityValue] = useState<number>(0);
   const [saving, setSaving] = useState(false);
+  const [editingDescription, setEditingDescription] = useState(false);
+  const [museumDescValue, setMuseumDescValue] = useState('');
 
   useEffect(() => {
     params.then(p => setImageId(p.id));
@@ -106,12 +118,15 @@ export default function ImageDetailPage({
     fetchImage();
   }, [imageId]);
 
-  // Initialize quality value when data loads
+  // Initialize values when data loads
   useEffect(() => {
     if (data?.galleryQuality != null) {
       setQualityValue(data.galleryQuality);
     }
-  }, [data?.galleryQuality]);
+    if (data?.museumDescription) {
+      setMuseumDescValue(data.museumDescription);
+    }
+  }, [data?.galleryQuality, data?.museumDescription]);
 
   const saveQuality = async (newQuality: number) => {
     if (!data) return;
@@ -128,6 +143,26 @@ export default function ImageDetailPage({
       }
     } catch (e) {
       console.error('Failed to save quality:', e);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const saveMuseumDescription = async () => {
+    if (!data) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/gallery/image/${data.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ museumDescription: museumDescValue })
+      });
+      if (res.ok) {
+        setData({ ...data, museumDescription: museumDescValue });
+        setEditingDescription(false);
+      }
+    } catch (e) {
+      console.error('Failed to save description:', e);
     } finally {
       setSaving(false);
     }
@@ -364,6 +399,93 @@ export default function ImageDetailPage({
                   </p>
                 )}
               </div>
+
+              {/* Museum Description */}
+              <div className="bg-stone-800 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-stone-400">Museum Description</p>
+                  {!editingDescription && (
+                    <button
+                      onClick={() => setEditingDescription(true)}
+                      className="text-xs text-amber-500 hover:text-amber-400"
+                    >
+                      Edit
+                    </button>
+                  )}
+                </div>
+
+                {editingDescription ? (
+                  <div className="space-y-3">
+                    <textarea
+                      value={museumDescValue}
+                      onChange={(e) => setMuseumDescValue(e.target.value)}
+                      className="w-full h-24 p-2 bg-stone-700 text-stone-200 rounded text-sm resize-none focus:outline-none focus:ring-1 focus:ring-amber-500"
+                      placeholder="Write a 2-3 sentence museum-style description..."
+                    />
+                    <div className="flex gap-2">
+                      <button
+                        onClick={saveMuseumDescription}
+                        disabled={saving}
+                        className="flex-1 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50"
+                      >
+                        {saving ? 'Saving...' : 'Save'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setMuseumDescValue(data.museumDescription || '');
+                          setEditingDescription(false);
+                        }}
+                        className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <p className="text-stone-300 text-sm leading-relaxed">
+                    {data.museumDescription || <span className="text-stone-500 italic">No description yet</span>}
+                  </p>
+                )}
+              </div>
+
+              {/* Metadata Tags */}
+              {data.metadata && (
+                <div className="bg-stone-800 rounded-lg p-4">
+                  <p className="text-sm text-stone-400 mb-3">Metadata</p>
+                  <div className="space-y-2 text-sm">
+                    {data.metadata.subjects && data.metadata.subjects.length > 0 && (
+                      <div>
+                        <span className="text-stone-500">Subjects: </span>
+                        <span className="text-stone-300">{data.metadata.subjects.join(', ')}</span>
+                      </div>
+                    )}
+                    {data.metadata.figures && data.metadata.figures.length > 0 && (
+                      <div>
+                        <span className="text-stone-500">Figures: </span>
+                        <span className="text-stone-300">{data.metadata.figures.join(', ')}</span>
+                      </div>
+                    )}
+                    {data.metadata.symbols && data.metadata.symbols.length > 0 && (
+                      <div>
+                        <span className="text-stone-500">Symbols: </span>
+                        <span className="text-stone-300">{data.metadata.symbols.join(', ')}</span>
+                      </div>
+                    )}
+                    {data.metadata.style && (
+                      <div>
+                        <span className="text-stone-500">Style: </span>
+                        <span className="text-stone-300">{data.metadata.style}</span>
+                      </div>
+                    )}
+                    {data.metadata.technique && (
+                      <div>
+                        <span className="text-stone-500">Technique: </span>
+                        <span className="text-stone-300">{data.metadata.technique}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* Citation */}
               <div className="bg-stone-800 rounded-lg p-4">

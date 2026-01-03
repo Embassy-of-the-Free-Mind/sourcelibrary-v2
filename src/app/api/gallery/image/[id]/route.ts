@@ -109,6 +109,10 @@ export async function GET(
       galleryRationale: detection.gallery_rationale ?? null,
       featured: detection.featured ?? false,
 
+      // Rich metadata
+      metadata: detection.metadata ?? null,
+      museumDescription: detection.museum_description ?? null,
+
       // Bounding box (normalized 0-1)
       bbox: detection.bbox,
 
@@ -144,7 +148,7 @@ export async function GET(
  * PATCH /api/gallery/image/[id]
  *
  * Update gallery curation fields for an image.
- * Body: { galleryQuality?: number, featured?: boolean }
+ * Body: { galleryQuality?, featured?, museumDescription?, metadata?, description? }
  */
 export async function PATCH(
   request: NextRequest,
@@ -176,6 +180,34 @@ export async function PATCH(
 
     if (typeof body.featured === 'boolean') {
       updateFields[`detected_images.${detectionIndex}.featured`] = body.featured;
+    }
+
+    if (typeof body.museumDescription === 'string') {
+      updateFields[`detected_images.${detectionIndex}.museum_description`] = body.museumDescription;
+    }
+
+    if (typeof body.description === 'string') {
+      updateFields[`detected_images.${detectionIndex}.description`] = body.description;
+    }
+
+    if (body.metadata && typeof body.metadata === 'object') {
+      // Update individual metadata fields
+      const m = body.metadata;
+      if (Array.isArray(m.subjects)) {
+        updateFields[`detected_images.${detectionIndex}.metadata.subjects`] = m.subjects;
+      }
+      if (Array.isArray(m.figures)) {
+        updateFields[`detected_images.${detectionIndex}.metadata.figures`] = m.figures;
+      }
+      if (Array.isArray(m.symbols)) {
+        updateFields[`detected_images.${detectionIndex}.metadata.symbols`] = m.symbols;
+      }
+      if (typeof m.style === 'string') {
+        updateFields[`detected_images.${detectionIndex}.metadata.style`] = m.style;
+      }
+      if (typeof m.technique === 'string') {
+        updateFields[`detected_images.${detectionIndex}.metadata.technique`] = m.technique;
+      }
     }
 
     if (Object.keys(updateFields).length === 0) {
