@@ -624,6 +624,12 @@ export default function TranslationEditor({
       if (result.ocr) setOcrText(result.ocr);
       if (result.translation) setTranslationText(result.translation);
       if (result.summary) setSummaryText(result.summary);
+
+      // Refresh parent data to sync page prop with new DB state
+      // This prevents the useEffect from resetting state to stale prop values
+      if (onRefresh) {
+        await onRefresh();
+      }
     } catch (error) {
       console.error('Processing error:', error);
       alert('Processing failed. Please try again.');
