@@ -72,6 +72,13 @@ export default function GlobalFooter() {
             Research
           </Link>
           <span className="hidden sm:inline">•</span>
+          <Link
+            href="/support"
+            className="text-amber-600 hover:text-amber-500 transition-colors"
+          >
+            Support
+          </Link>
+          <span className="hidden sm:inline">•</span>
           <a
             href="mailto:derek@ancientwisdomtrust.org"
             className="text-amber-600 hover:text-amber-500 transition-colors"
