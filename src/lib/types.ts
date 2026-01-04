@@ -1181,17 +1181,31 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - <unclear>X</unclear> — illegible readings
 - <note>X</note> — interpretive notes for readers
 - <term>X</term> — technical vocabulary
-- <image-desc>description</image-desc> — describe illustrations, diagrams, circular charts, woodcuts
 
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
 2. Page numbers/headers/signatures go in metadata tags only, never in body
 3. IGNORE partial text at left/right edges (from facing page in spread)
 4. Capture ALL text including margins and annotations
-5. Describe any images/diagrams with <image-desc>...</image-desc> using prose, never tables
-6. End with <vocab>key terms, names, concepts on this page</vocab>
+5. End with <vocab>key terms, names, concepts</vocab>
 
-**If image has quality issues**, start with <warning>describe issue</warning>`,
+**If image has quality issues**, start with <warning>describe issue</warning>
+
+**IMAGE DETECTION:** If the page contains ANY illustrations, diagrams, emblems, woodcuts, engravings, or decorative elements, add at the END:
+
+<detected-images>
+[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
+</detected-images>
+
+**Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY to tightly enclose each illustration.
+
+**Gallery quality:**
+- 0.9-1.0: Museum-worthy — striking emblems, allegorical scenes, beautiful engravings
+- 0.7-0.9: High — well-executed illustrations, interesting diagrams
+- 0.4-0.7: Moderate — standard frontispieces, simple diagrams
+- 0.0-0.4: Low — page ornaments, generic borders, printer's marks
+
+If text-only page, omit the <detected-images> block.`,
 
   translation: `You are translating a manuscript transcription into accessible English.
 

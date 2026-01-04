@@ -4,6 +4,7 @@ import { performOCR, performOCRWithBuffer, performTranslation } from '@/lib/ai';
 import { detectSplitFromBuffer } from '@/lib/splitDetection';
 import { getOcrPrompt, getTranslationPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { extractWithGemini, type DetectedImage } from '@/lib/image-extraction';
 import { put } from '@vercel/blob';
 import sharp from 'sharp';
 import type { Job, JobResult } from '@/lib/types';
@@ -145,6 +146,41 @@ interface ExtractedImage {
   detected_at: Date;
   detection_source: 'vision_model';
   model: 'gemini';
+}
+
+// Parse <detected-images> block from OCR output
+// Returns DetectedImage[] compatible with the Page interface
+function parseDetectedImagesFromOcr(ocrText: string): ExtractedImage[] | null {
+  const match = ocrText.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
+  if (!match) return null;
+
+  try {
+    const jsonText = match[1].trim();
+    const parsed = JSON.parse(jsonText);
+
+    if (!Array.isArray(parsed) || parsed.length === 0) return null;
+
+    // Transform OCR output format to DetectedImage format
+    return parsed.map((img: {
+      description?: string;
+      type?: string;
+      bbox?: { x: number; y: number; width: number; height: number };
+      gallery_quality?: number;
+      museum_rationale?: string;
+    }) => ({
+      description: img.description || 'Unknown image',
+      type: img.type,
+      bbox: img.bbox,
+      gallery_quality: img.gallery_quality,
+      gallery_rationale: img.museum_rationale,
+      detected_at: new Date(),
+      detection_source: 'vision_model' as const,
+      model: 'gemini' as const,
+    }));
+  } catch (error) {
+    console.error('Failed to parse <detected-images> from OCR:', error);
+    return null;
+  }
 }
 
 async function extractImagesWithGemini(imageUrl: string): Promise<ExtractedImage[]> {
@@ -946,28 +982,37 @@ export async function POST(
 
           const ocrDuration = performance.now() - ocrStart;
 
+          // Parse detected images from OCR output (if included via prompt)
+          const detectedImages = parseDetectedImagesFromOcr(ocrResult.text);
+
+          // Build update document
+          const updateDoc: Record<string, unknown> = {
+            ocr: {
+              data: ocrResult.text,
+              language: job.config.language || 'Latin',
+              model: job.config.model || 'gemini-3-flash-preview',
+              prompt: ocrPrompt?.reference,
+              updated_at: new Date(),
+              source: 'ai',  // Mark as AI-generated
+              // Processing metadata for reproducibility
+              input_tokens: ocrResult.usage.inputTokens,
+              output_tokens: ocrResult.usage.outputTokens,
+              cost_usd: ocrResult.usage.costUsd,
+              processing_ms: Math.round(ocrDuration),
+              image_url: imageUrlUsed,
+            },
+            updated_at: new Date(),
+          };
+
+          // Include detected images if found
+          if (detectedImages && detectedImages.length > 0) {
+            updateDoc.detected_images = detectedImages;
+          }
+
           // Save OCR result to page with full metadata
           await db.collection('pages').updateOne(
             { id: pageId },
-            {
-              $set: {
-                ocr: {
-                  data: ocrResult.text,
-                  language: job.config.language || 'Latin',
-                  model: job.config.model || 'gemini-3-flash-preview',
-                  prompt: ocrPrompt?.reference,
-                  updated_at: new Date(),
-                  source: 'ai',  // Mark as AI-generated
-                  // Processing metadata for reproducibility
-                  input_tokens: ocrResult.usage.inputTokens,
-                  output_tokens: ocrResult.usage.outputTokens,
-                  cost_usd: ocrResult.usage.costUsd,
-                  processing_ms: Math.round(ocrDuration),
-                  image_url: imageUrlUsed,
-                },
-                updated_at: new Date(),
-              },
-            }
+            { $set: updateDoc }
           );
 
           previousOcr = ocrResult.text;
@@ -1068,25 +1113,53 @@ export async function POST(
 
         } else if (job.type === 'batch_extract_images') {
           // Extract images with bounding boxes and gallery quality scores
+          const overwrite = job.config?.overwrite || false;
+
+          // Check if page already has detections (skip unless overwrite mode)
+          if (!overwrite && page.detected_images && page.detected_images.length > 0) {
+            results.push({
+              pageId,
+              success: true,
+              duration: performance.now() - itemStart,
+            });
+            continue;
+          }
+
           const imageUrl = page.cropped_photo || page.photo;
           if (!imageUrl) {
             results.push({ pageId, success: false, error: 'No image URL' });
             continue;
           }
 
-          const extractedImages = await extractImagesWithGemini(imageUrl);
+          const extractedImages = await extractWithGemini(imageUrl, 'gemini-2.5-flash');
 
           if (extractedImages.length > 0) {
-            // Update page with extracted images
-            await db.collection('pages').updateOne(
-              { id: pageId },
-              {
-                $set: {
-                  detected_images: extractedImages,
-                  updated_at: new Date(),
-                },
-              }
-            );
+            // Update page with extracted images (append or replace based on overwrite mode)
+            if (overwrite) {
+              // Replace existing detections
+              await db.collection('pages').updateOne(
+                { id: pageId },
+                {
+                  $set: {
+                    detected_images: extractedImages,
+                    updated_at: new Date(),
+                  },
+                }
+              );
+            } else {
+              // Append to existing detections
+              await db.collection('pages').updateOne(
+                { id: pageId },
+                {
+                  $push: {
+                    detected_images: { $each: extractedImages } as any
+                  },
+                  $set: {
+                    updated_at: new Date(),
+                  },
+                }
+              );
+            }
           }
 
           results.push({

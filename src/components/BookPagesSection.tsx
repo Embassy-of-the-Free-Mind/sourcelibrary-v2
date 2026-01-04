@@ -36,13 +36,14 @@ interface BookPagesSectionProps {
   pages: Page[];
 }
 
-type ActionType = 'ocr' | 'translation' | 'summary';
-type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary';
+type ActionType = 'ocr' | 'translation' | 'summary' | 'image_extraction';
+type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_extract_images';
 
 const actionToJobType: Record<ActionType, JobType> = {
   ocr: 'batch_ocr',
   translation: 'batch_translate',
   summary: 'batch_summary',
+  image_extraction: 'batch_extract_images',
 };
 
 // Retry settings
@@ -82,10 +83,11 @@ const ESTIMATED_TOKENS = {
   ocr: { input: 1500, output: 800 },        // Image (~1000) + prompt (~500), output ~800
   translation: { input: 1000, output: 1000 }, // Input text + prompt, similar output
   summary: { input: 800, output: 200 },      // Shorter input/output
+  image_extraction: { input: 1500, output: 800 }, // Similar to OCR (image + prompt)
 };
 
 // Calculate cost per page based on model
-function getEstimatedCost(action: 'ocr' | 'translation' | 'summary', model: string): number {
+function getEstimatedCost(action: ActionType, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
   const tokens = ESTIMATED_TOKENS[action];
   const inputCost = (tokens.input / 1_000_000) * pricing.input;
@@ -159,17 +161,20 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [prompts, setPrompts] = useState<Record<ActionType, Prompt[]>>({
     ocr: [],
     translation: [],
-    summary: []
+    summary: [],
+    image_extraction: []
   });
   const [selectedPromptIds, setSelectedPromptIds] = useState<Record<ActionType, string>>({
     ocr: '',
     translation: '',
-    summary: ''
+    summary: '',
+    image_extraction: ''
   });
   const [editedPrompts, setEditedPrompts] = useState<Record<ActionType, string>>({
     ocr: '',
     translation: '',
-    summary: ''
+    summary: '',
+    image_extraction: ''
   });
   const [promptsLoading, setPromptsLoading] = useState(true);
 
@@ -225,6 +230,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           }
         };
 
+        // Note: image_extraction doesn't have custom prompts (uses built-in), but initialize to empty
         await Promise.all([
           loadPrompts(ocrRes, 'ocr'),
           loadPrompts(transRes, 'translation'),
@@ -804,6 +810,128 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       }
 
       console.log(`[OCR] Complete: ${completed.length} succeeded, ${failed.length} failed`);
+    } else if (action === 'image_extraction') {
+      // Image extraction: parallel batch processing (like OCR)
+      const IMAGE_BATCH_SIZE = 3;
+      const PARALLEL_BATCHES = 5; // Process 15 images simultaneously
+
+      // Sort pages by page number
+      const sortedPageIds = [...pageIds].sort((a, b) => {
+        const pageA = pages.find(p => p.id === a);
+        const pageB = pages.find(p => p.id === b);
+        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
+      });
+
+      // Create all batches upfront
+      const allBatches: { batchIds: string[]; batchPages: Page[] }[] = [];
+      for (let i = 0; i < sortedPageIds.length; i += IMAGE_BATCH_SIZE) {
+        const batchIds = sortedPageIds.slice(i, Math.min(i + IMAGE_BATCH_SIZE, sortedPageIds.length));
+        const batchPages = batchIds
+          .map(id => pages.find(p => p.id === id))
+          .filter((p): p is Page => p !== undefined);
+        allBatches.push({ batchIds, batchPages });
+      }
+
+      console.log(`[ImageExtraction] Starting parallel processing: ${allBatches.length} batches, ${PARALLEL_BATCHES} at a time`);
+
+      // Process batches in parallel groups
+      for (let i = 0; i < allBatches.length; i += PARALLEL_BATCHES) {
+        if (stopRequestedRef.current) break;
+
+        const parallelBatches = allBatches.slice(i, Math.min(i + PARALLEL_BATCHES, allBatches.length));
+
+        // Process this group of batches in parallel
+        const batchPromises = parallelBatches.map(async ({ batchIds, batchPages }) => {
+          if (batchPages.length === 0) {
+            batchIds.forEach(id => failed.push(id));
+            return { processedCount: batchIds.length };
+          }
+
+          try {
+            const response = await fetchWithTimeout('/api/process/batch-image-extraction', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                pages: batchPages.map(p => ({
+                  pageId: p.id,
+                  imageUrl: p.photo,
+                  pageNumber: p.page_number,
+                })),
+                model: selectedModel,
+                overwrite: overwriteMode,
+              }),
+            }, FETCH_TIMEOUT * 5);
+
+            if (response.ok) {
+              const data = await response.json();
+              if (data.usage) {
+                runningCost += data.usage.costUsd || 0;
+                runningTokens += data.usage.totalTokens || 0;
+              }
+
+              // Track which pages were processed (with or without detections)
+              const processedIds = Object.keys(data.detectionResults || {});
+              processedIds.forEach(id => completed.push(id));
+
+              // Skipped pages (already have detections) count as completed
+              (data.skippedPageIds || []).forEach((id: string) => {
+                if (!completed.includes(id)) completed.push(id);
+              });
+
+              // Add failed pages
+              (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+
+              // Log detailed results if available
+              if (data.pageResults) {
+                data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
+                  if (pr.status === 'skipped_has_detections') {
+                    console.log(`[ImageExtraction] ${pr.message}`);
+                  } else if (pr.status.startsWith('failed')) {
+                    console.error(`[ImageExtraction] ${pr.message}`);
+                  } else {
+                    console.log(`[ImageExtraction] ${pr.message}`);
+                  }
+                });
+              }
+            } else {
+              const errorData = await response.json().catch(() => ({}));
+              const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
+              console.error('Batch image extraction error:', errorMsg);
+              batchIds.forEach(id => failed.push(id));
+              setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+            }
+          } catch (error) {
+            const errorMsg = error instanceof Error ? error.message : 'Network error';
+            console.error('Batch image extraction error:', errorMsg);
+            batchIds.forEach(id => failed.push(id));
+            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+          }
+
+          return { processedCount: batchIds.length };
+        });
+
+        // Wait for all parallel batches to complete
+        const results = await Promise.all(batchPromises);
+        const batchProcessedCount = results.reduce((sum, r) => sum + r.processedCount, 0);
+        processedCount += batchProcessedCount;
+
+        setProcessing(prev => ({
+          ...prev,
+          currentIndex: processedCount,
+          completed: [...completed],
+          failed: [...failed],
+          totalCost: runningCost,
+          totalTokens: runningTokens,
+        }));
+        updateJobProgress();
+
+        // Small delay between parallel groups to avoid overwhelming the API
+        if (i + PARALLEL_BATCHES < allBatches.length && !stopRequestedRef.current) {
+          await sleep(300);
+        }
+      }
+
+      console.log(`[ImageExtraction] Complete: ${completed.length} succeeded, ${failed.length} failed`);
     } else {
       // Summary: parallel per-page processing (text only, simpler)
       for (let i = 0; i < pageIds.length; i += concurrency) {
@@ -856,7 +984,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const actionConfig = {
     ocr: { label: 'OCR', icon: FileText, color: '#3b82f6' },
     translation: { label: 'Translation', icon: Languages, color: '#22c55e' },
-    summary: { label: 'Summary', icon: BookOpen, color: '#a855f7' }
+    summary: { label: 'Summary', icon: BookOpen, color: '#a855f7' },
+    image_extraction: { label: 'Images', icon: ImageIcon, color: '#f97316' }
   };
 
   const selectedCount = selectedPages.size;
@@ -1131,7 +1260,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             <div className="flex items-center gap-2">
               <span className="text-sm text-stone-600">Action:</span>
               <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
-                {(['ocr', 'translation'] as ActionType[]).map(type => {
+                {(['ocr', 'translation', 'image_extraction'] as ActionType[]).map(type => {
                   const { label, icon: Icon, color } = actionConfig[type];
                   const isSelected = action === type;
                   return (
