@@ -109,8 +109,8 @@ export default function GalleryPage() {
   // Image search state
   const [imageSearchQuery, setImageSearchQuery] = useState(searchParams.get('q') || '');
 
-  // Filter state from URL
-  const bookId = searchParams.get('bookId') || '';
+  // Filter state from URL (support both 'bookId' and 'book' params)
+  const bookId = searchParams.get('bookId') || searchParams.get('book') || '';
   const typeFilter = searchParams.get('type') || '';
   const subjectFilter = searchParams.get('subject') || '';
   const yearStart = searchParams.get('yearStart') || '';

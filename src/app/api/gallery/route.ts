@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
-    const bookId = searchParams.get('bookId');
+    const bookId = searchParams.get('bookId') || searchParams.get('book');
     const imageType = searchParams.get('type');
     const minQuality = searchParams.get('minQuality') ? parseFloat(searchParams.get('minQuality')!) : 0.5;
     const searchQuery = searchParams.get('q');
