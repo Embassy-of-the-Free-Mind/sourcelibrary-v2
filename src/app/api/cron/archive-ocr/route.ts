@@ -67,8 +67,13 @@ export async function POST(request: NextRequest) {
           const sourceUrl = page.photo;
 
           try {
-            // Download image
-            const response = await fetch(sourceUrl, { timeout: 30000 });
+            // Download image with timeout
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 30000);
+
+            const response = await fetch(sourceUrl, { signal: controller.signal });
+            clearTimeout(timeout);
+
             if (!response.ok) {
               return { success: false, pageId: page.id, error: `HTTP ${response.status}` };
             }
