@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb } from 'lucide-react';
+import { Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb, Images } from 'lucide-react';
 import SearchPanel from '@/components/SearchPanel';
 import BookPagesSection from '@/components/BookPagesSection';
 import BookHistory from '@/components/BookHistory';
@@ -293,6 +293,13 @@ async function BookInfo({ id }: { id: string }) {
                 >
                   <Workflow className="w-4 h-4" />
                   Pipeline
+                </Link>
+                <Link
+                  href={`/gallery?bookId=${book.id}`}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <Images className="w-4 h-4" />
+                  Gallery
                 </Link>
                 <DownloadButton
                   bookId={book.id}

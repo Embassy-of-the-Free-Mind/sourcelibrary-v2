@@ -218,27 +218,33 @@ export default function GalleryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
       {/* Header */}
-      <header className="bg-stone-900 text-white py-6 sticky top-0 z-20">
+      <header className="bg-stone-900 text-white py-4 sticky top-0 z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <ImageIcon className="w-7 h-7 text-amber-500" />
-              <div>
-                <h1 className="text-xl font-serif">Image Gallery</h1>
-                <p className="text-stone-400 text-sm">
-                  {data?.total || 0} illustrations from historical texts
+            {/* Source Library Logo */}
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
+                <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
+                <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
+              </svg>
+              <span className="text-xl uppercase tracking-wider">
+                <span className="font-semibold">Source</span>
+                <span className="font-light">Library</span>
+              </span>
+            </Link>
+
+            <div className="flex items-center gap-4">
+              <div className="text-right hidden sm:block">
+                <h1 className="text-lg font-serif">Image Gallery</h1>
+                <p className="text-stone-400 text-xs">
+                  {data?.total || 0} illustrations
                 </p>
               </div>
+              <ImageIcon className="w-6 h-6 text-amber-500" />
             </div>
-            <Link
-              href="/"
-              className="text-stone-400 hover:text-white transition-colors flex items-center gap-2"
-            >
-              <BookOpen className="w-4 h-4" />
-              Library
-            </Link>
           </div>
 
           {/* Search Bar */}
@@ -458,7 +464,7 @@ export default function GalleryPage() {
         {/* Image Grid */}
         {!loading && data && data.items.length > 0 && (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {data.items.map((item, idx) => (
                 <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} />
               ))}

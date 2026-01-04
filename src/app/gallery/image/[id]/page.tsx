@@ -28,16 +28,13 @@ import {
   Share2,
   Copy,
   Check,
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
   ExternalLink,
   Sparkles,
-  X,
   Move,
   Crop,
   Save
 } from 'lucide-react';
+import ImageWithMagnifier from '@/components/ImageWithMagnifier';
 
 interface ImageMetadata {
   subjects?: string[];
@@ -87,8 +84,6 @@ export default function ImageDetailPage({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [showFullscreen, setShowFullscreen] = useState(false);
-  const [zoom, setZoom] = useState(1);
   const [editingQuality, setEditingQuality] = useState(false);
   const [qualityValue, setQualityValue] = useState<number>(0);
   const [saving, setSaving] = useState(false);
@@ -343,13 +338,6 @@ export default function ImageDetailPage({
             >
               <Share2 className="w-5 h-5" />
             </button>
-            <button
-              onClick={() => setShowFullscreen(true)}
-              className="p-2 rounded-lg hover:bg-stone-800 transition-colors"
-              title="Fullscreen"
-            >
-              <Maximize2 className="w-5 h-5" />
-            </button>
           </div>
         </div>
       </header>
@@ -357,50 +345,29 @@ export default function ImageDetailPage({
       {/* Main content */}
       <main className="pt-16 pb-8">
         <div className="max-w-6xl mx-auto px-4">
-          {/* Image container */}
+          {/* Image container with magnifier */}
           <div className="relative bg-stone-800 rounded-xl overflow-hidden my-8">
-            <div className="aspect-[4/3] md:aspect-[16/10] relative flex items-center justify-center p-4">
-              <div
-                className="relative w-full h-full flex items-center justify-center"
-                style={{ transform: `scale(${zoom})`, transition: 'transform 0.2s' }}
-              >
-                <Image
-                  src={data.imageUrl}
-                  alt={data.description}
-                  fill
-                  className="object-contain"
-                  sizes="(max-width: 1200px) 100vw, 1200px"
-                  priority
-                  unoptimized={!!data.bbox}
-                />
-              </div>
-            </div>
-
-            {/* Zoom controls */}
-            <div className="absolute bottom-4 right-4 flex items-center gap-2 bg-stone-900/80 rounded-lg p-1">
-              <button
-                onClick={() => setZoom(z => Math.max(0.5, z - 0.25))}
-                className="p-2 hover:bg-stone-700 rounded transition-colors"
-                disabled={zoom <= 0.5}
-              >
-                <ZoomOut className="w-4 h-4" />
-              </button>
-              <span className="text-xs px-2">{Math.round(zoom * 100)}%</span>
-              <button
-                onClick={() => setZoom(z => Math.min(3, z + 0.25))}
-                className="p-2 hover:bg-stone-700 rounded transition-colors"
-                disabled={zoom >= 3}
-              >
-                <ZoomIn className="w-4 h-4" />
-              </button>
+            <div className="aspect-[4/3] md:aspect-[16/10] relative">
+              <ImageWithMagnifier
+                src={data.imageUrl}
+                alt={data.description}
+                className="w-full h-full"
+                magnifierSize={250}
+                zoomLevel={4}
+              />
             </div>
 
             {/* Type badge */}
             {data.type && (
-              <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm bg-amber-600/90 text-white capitalize">
+              <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm bg-amber-600/90 text-white capitalize z-10">
                 {data.type}
               </span>
             )}
+
+            {/* Hint for desktop users */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900/70 rounded-full text-xs text-stone-400 pointer-events-none">
+              Hover to magnify · Tap for fullscreen
+            </div>
           </div>
 
           {/* Metadata */}
@@ -871,30 +838,6 @@ export default function ImageDetailPage({
         </div>
       </main>
 
-      {/* Fullscreen modal */}
-      {showFullscreen && (
-        <div
-          className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-          onClick={() => setShowFullscreen(false)}
-        >
-          <button
-            className="absolute top-4 right-4 p-2 text-white/80 hover:text-white"
-            onClick={() => setShowFullscreen(false)}
-          >
-            <X className="w-8 h-8" />
-          </button>
-          <div className="relative w-full h-full p-8">
-            <Image
-              src={data.imageUrl}
-              alt={data.description}
-              fill
-              className="object-contain"
-              sizes="100vw"
-              unoptimized={!!data.bbox}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }
