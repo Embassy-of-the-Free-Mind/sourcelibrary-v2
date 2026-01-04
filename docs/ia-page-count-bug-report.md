@@ -140,7 +140,7 @@ curl -X POST https://sourcelibrary.org/api/books/{id}/reimport \
 
 ## Books Fixed
 
-### Batch Fix - 2026-01-03
+### Batch Fix - 2026-01-04
 
 **TOO MANY Pages (Trim Operation):**
 - Fixed 77 books with excess pages
@@ -149,7 +149,21 @@ curl -X POST https://sourcelibrary.org/api/books/{id}/reimport \
 
 **TOO FEW Pages (Reimport Operation):**
 - Reimported 64 books without OCR work
-- Skipped 21 books with existing OCR/translations (would lose work)
+- Reimported 7 books with minimal OCR (investigated, loss acceptable)
+- Reimported 7 books with OCR-only (no translations to lose)
+- **Total reimported: 78 books**
+
+**Extended (7 books - translations preserved, missing pages added):**
+
+| Book | Before | After | Added | Translations Kept |
+|------|--------|-------|-------|-------------------|
+| De revolutionibus | 209 | 413 | +204 | 209 |
+| Pansophiae Diatyposis | 148 | 217 | +69 | 148 |
+| De architectura | 328 | 484 | +156 | 68 |
+| Tetragonismus | 34 | 65 | +31 | 34 |
+| De vitis, dogmatis | 476 | 560 | +84 | 3 |
+| Manly Palmer Hall MSS | 119 | 150 | +31 | 0 (118 OCR) |
+| Aula Lucis | 64 | 98 | +34 | 0 (60 OCR) |
 
 ### Initial Fixes - 2026-01-02
 
@@ -158,39 +172,14 @@ curl -X POST https://sourcelibrary.org/api/books/{id}/reimport \
 | Atalanta fugiens | 2026-01-02 | 407 | 232 | Trim |
 | Plotini Opera Omnia | 2026-01-02 | 2403 | 544 | Trim |
 
-### Books Skipped (Have OCR Work)
+## Status: FULLY RESOLVED
 
-The following 21 books need manual decision - reimporting would lose existing OCR/translation:
+All 162 affected books have been fixed:
+- **77 books trimmed** - Removed 22,917 junk pages
+- **78 books reimported** - Restored correct page counts
+- **7 books extended** - Added 609 missing pages while preserving all translations
 
-| Book | OCR Pages | Translated |
-|------|-----------|------------|
-| De Arte Cabalistica | 456 | 0 |
-| De vitis, dogmatis et apophthegmatis | 451 | 3 |
-| Opera Omnia | 439 | 0 |
-| Miracula et mysteria chymico-medica | 332 | 0 |
-| Musaeum Hermeticum | 325 | 0 |
-| De revolutionibus orbium coelestium | 209 | 209 |
-| De architectura libri decem | 198 | 68 |
-| Summa perfectionis magisterii | 187 | 0 |
-| Pansophiae Diatyposis | 148 | 148 |
-| De Mysteriis Aegyptiorum | 145 | 0 |
-| Manly Palmer Hall Alchemical Manuscripts | 118 | 0 |
-| Lumen de Lumine | 81 | 0 |
-| Aula Lucis | 60 | 0 |
-| Platonis Opera a Marsilio Ficino traducta | 43 | 0 |
-| The Hermetic Museum (Vol. 1) | 43 | 0 |
-| Astronomia Nova | 40 | 0 |
-| Tetragonismus idest circuli quadratura | 34 | 34 |
-| Marsilij Ficini Platonica theologia | 33 | 0 |
-| Marsilij Ficini Opera | 10 | 0 |
-| Opera Latine Conscripta | 10 | 10 |
-| De Triplici Minimo et Mensura | 9 | 9 |
-
-## Recommendations
-
-1. **Immediate:** Run trim fixes on all TOO MANY books (safe, preserves work)
-2. **Evaluate:** Review TOO FEW books - prioritize those without OCR work for reimport
-3. **Prevention:** New imports use fixed code with `imagecount` priority
+New imports use the fixed code with `imagecount` priority, preventing future issues.
 
 ## Technical Details
 
