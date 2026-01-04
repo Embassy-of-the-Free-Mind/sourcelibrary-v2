@@ -4752,3 +4752,88 @@ Applied metadata corrections using BPH/EFM catalog matching and bibliographic re
 - **Key authors covered:** Trithemius, Reuchlin, Ficino, Cusanus, Paracelsus, Iamblichus
 - **Publications spanning:** 1482–1678
 
+---
+
+## Audit Session: 2026-01-04 (Continued - Alchemical Texts & Modern Translations)
+
+### Original Texts Verified
+
+| Book | ID | Year | Place | Language | Status |
+|------|-----|------|-------|----------|--------|
+| Astronomica et astrologica (Paracelsus) | 6867c208aadfee9e955ec955 | 1567 | Cologne | German | FLAG:ORIGINAL |
+| Cantus Circaeus (Bruno) | 69520579ab34727b1f042cb6 | 1582 | Paris | Latin | FLAG:ORIGINAL |
+| Aurora thesaurusque philosophorum | 69520185ab34727b1f0416bc | 1577 | Basel | Latin | FLAG:ORIGINAL |
+| Turba Philosophorum | c62120da-38f1-441a-9f1b-2e698c0c887c | 1572 | Basel | Latin | FLAG:ORIGINAL |
+| Splendor Solis | 6952dbf977f38f6761bc7720 | 1582 | — | German | FLAG:ORIGINAL (needs OCR) |
+
+**Notes:**
+- Paracelsus Astronomica: Dedicated to Duke August of Saxony, printed by Arnold Birckmann heirs
+- Bruno Cantus Circaeus: First edition, copy from Stanislas de Guaita's collection (famous occultist)
+- Aurora thesaurusque: Includes Gerard Dorn's Monarchia Physica, dedicated to François de Valois
+- Turba: Famous Arabic-Latin alchemical dialogue, Perna edition
+
+### Metadata Fixed This Session
+
+| Book | Fix Applied |
+|------|-------------|
+| Aurora thesaurusque | Publisher: Pietro Perna |
+| Turba Philosophorum | Publisher: Peter Perna, Year: 1572 |
+
+### Modern Translations Identified (FLAG:MODERN-TRANS)
+
+These require review - they're 19th-20th century translations without original text:
+
+| Book | ID | Year | Translator/Editor |
+|------|-----|------|-------------------|
+| Hermetical & Alchemical Writings of Paracelsus | 6953c87177f38f6761bdc555 | 1894 | A.E. Waite |
+| The Hermetic Museum (Vol. 1) | 695234ddab34727b1f044cd2 | — | A.E. Waite |
+| Alchemical Writings of Edward Kelly | 6952d13377f38f6761bc5e29 | — | A.E. Waite |
+| Transcendental Magic | 6953c88077f38f6761bdd8d1 | — | A.E. Waite (Levi) |
+| The Greater Key of Solomon | 6955d9568407b7c9ae21298e | — | S.L. MacGregor Mathers |
+| Lives of Alchemystical Philosophers | 6953c86e77f38f6761bdc3b8 | — | A.E. Waite |
+
+### Thomas Taylor Translations (FLAG:CONTEMP-TRANS - Borderline)
+
+Thomas Taylor (1758-1835) translations are historically significant as first English Neoplatonist translations:
+
+| Book | ID | Notes |
+|------|-----|-------|
+| Six Books of Proclus | 6952ca2e77f38f6761bc34d9 | 1816, already audited - KEEP |
+| Complete Works of Plato | 6952caa077f38f6761bc408b | Taylor edition |
+| Iamblichus on the Mysteries | 6952caa577f38f6761bc4c0f | Taylor edition |
+| Life of Pythagoras | 695572cd220949ea67a596ae | Taylor edition |
+
+**Recommendation:** Taylor translations are acceptable as scholarly historical works, but priority should be given to acquiring original Greek/Latin texts.
+
+### Critical Editions (FLAG:CRITICAL-ED - Acceptable)
+
+| Book | ID | Year | Notes |
+|------|-----|------|-------|
+| Aurora Consurgens | 6952e45177f38f6761bc7806 | 1966 | von Franz edition - includes Latin text |
+
+### 20th Century Occult Works (Not Primary Sources)
+
+These are modern compositions, not translations of historical texts:
+
+| Book | ID | Author |
+|------|-----|--------|
+| Magick in Theory and Practice | 6953e3b577f38f6761bedb15 | Crowley |
+| Book Four - Magick | 6953e3b777f38f6761bedcf8 | Crowley |
+
+**Note:** These are important for history of modern esotericism but are not primary historical sources.
+
+### Session Summary
+
+- **Originals verified:** 5 (Paracelsus, Bruno, Aurora, Turba, Splendor Solis)
+- **Metadata fixed:** 2 (Aurora, Turba)
+- **Modern translations flagged:** 6 (Waite, Mathers editions)
+- **Borderline cases:** 4 (Taylor translations - acceptable)
+- **Critical editions:** 1 (von Franz Aurora Consurgens)
+
+### Recommendations
+
+1. **Priority OCR:** Splendor Solis (famous illustrated manuscript, needs OCR)
+2. **Translation Priority:** Turba Philosophorum (748 pages Latin, foundational alchemical text)
+3. **Review for Removal:** Waite/Mathers translations if we acquire original Latin/German texts
+4. **Acquire Originals:** For texts where we only have modern translations
+
