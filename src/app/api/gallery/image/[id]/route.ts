@@ -71,7 +71,8 @@ export async function GET(
     }
 
     const detection = detections[detectionIndex];
-    const imageUrl = pageData.cropped_photo || pageData.photo_original || pageData.photo;
+    // Prefer archived photo (Vercel Blob - fast CDN), fall back to original source
+    const imageUrl = pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo;
 
     // Build the cropped image URL if bbox exists
     let croppedUrl = imageUrl;
