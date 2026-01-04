@@ -122,7 +122,7 @@ export async function POST(request: NextRequest) {
       for (const r of results) {
         if (r.success) {
           archived++;
-          totalBytes += r.bytes;
+          totalBytes += r.bytes || 0;
         } else {
           failed++;
         }
