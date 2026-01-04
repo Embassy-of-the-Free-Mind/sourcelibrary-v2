@@ -6,9 +6,42 @@
 
 Search and cite rare 15th-18th century texts translated from Latin and German. All quotes include proper academic citations with DOIs.
 
-## API Endpoints
+**Example tasks:**
+- "Find what Paracelsus wrote about the quinta essentia and cite a passage"
+- "Search for 16th century texts about transmutation and summarize them"
+- "Get a primary source quote about the philosopher's stone with DOI citation"
+- "What did Renaissance alchemists believe about the relationship between soul and matter?"
 
-Base URL: https://sourcelibrary.org/api
+## MCP Server (Recommended)
+
+For Claude Desktop or other MCP-compatible clients, install the MCP server for the best experience:
+
+```json
+{
+  "mcpServers": {
+    "source-library": {
+      "command": "npx",
+      "args": ["-y", "@source-library/mcp-server"]
+    }
+  }
+}
+```
+
+**Config locations:**
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+**Tools provided:**
+- `search_library` - Search across all translated books
+- `get_quote` - Get a passage with formatted citations
+- `get_book` - Get detailed book information
+
+**npm:** https://www.npmjs.com/package/@source-library/mcp-server
+**GitHub:** https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/mcp-server
+
+## REST API
+
+Base URL: `https://sourcelibrary.org/api`
 
 ### Search the Library
 
@@ -16,17 +49,38 @@ Base URL: https://sourcelibrary.org/api
 GET /search?q={query}
 ```
 
-Parameters:
-- q (required): Search query (searches titles, authors, and full text)
-- language: Filter by original language (Latin, German, French, etc.)
-- has_doi: true = only books with DOIs
-- has_translation: true = only books with translations
-- limit: Max results (default 20)
-- offset: Pagination offset
+**Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| q | string | Search query (required) - searches titles, authors, and full text |
+| language | string | Filter by original language: Latin, German, French, etc. |
+| has_doi | boolean | Only return books with DOIs |
+| has_translation | boolean | Only return books with translations |
+| limit | number | Max results (default 20) |
+| offset | number | Pagination offset |
 
-Example:
+**Example:**
 ```
-GET /search?q=quinta essentia&language=Latin&has_doi=true
+GET /search?q=philosopher's stone&language=Latin&has_doi=true
+```
+
+**Response:**
+```json
+{
+  "results": [
+    {
+      "id": "6836f8ee811c8ab472a49e36",
+      "title": "Novum lumen chemicum",
+      "display_title": "A New Light of Alchemy",
+      "author": "Michael Sendivogius",
+      "published": "1604",
+      "language": "Latin",
+      "translation_percent": 100,
+      "doi": "10.5281/zenodo.18053506"
+    }
+  ],
+  "total": 15
+}
 ```
 
 ### Get a Quote with Citation
@@ -35,28 +89,30 @@ GET /search?q=quinta essentia&language=Latin&has_doi=true
 GET /books/{book_id}/quote?page={page_number}
 ```
 
-Parameters:
-- page (required): Page number
-- include_original: Include original language text (default true)
-- include_context: Include adjacent pages for context
+**Parameters:**
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| page | number | Page number (required) |
+| include_original | boolean | Include original language text (default true) |
+| include_context | boolean | Include adjacent pages for context |
 
-Returns:
-- Translation text
-- Original language text (Latin/German)
-- Formatted citations (inline, footnote, DOI URL)
-
-Example:
+**Example:**
 ```
 GET /books/6836f8ee811c8ab472a49e36/quote?page=57
 ```
 
-Response:
+**Response:**
 ```json
 {
   "quote": {
-    "translation": "The fifth essence is that most pure...",
-    "original": "Quinta essentia est purissima illa...",
+    "translation": "The fifth essence is that most pure and subtle substance which, being separated from the grossness of the elements, retains the virtue of the whole...",
+    "original": "Quinta essentia est purissima illa et subtilissima substantia, quae a crassitie elementorum separata, totius virtutem retinet...",
     "page": 57
+  },
+  "book": {
+    "title": "Two Treatises",
+    "author": "Cornelius Drebbel",
+    "published": "1628"
   },
   "citation": {
     "inline": "(Drebbel 1628, p. 57)",
@@ -72,7 +128,7 @@ Response:
 GET /books/{book_id}
 ```
 
-Returns full book information: title, author, language, publication date, page count, DOI, edition info.
+Returns full book information including title, author, language, publication date, page count, DOI, edition info, and summary.
 
 ### List All Books
 
@@ -82,33 +138,50 @@ GET /books
 
 Returns all books in the library with metadata.
 
-## MCP Server
-
-For Claude Desktop or other MCP-compatible clients, an MCP server is available:
-
-Repository: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/mcp-server
-
-Tools provided:
-- search_library: Search across all translated books
-- get_quote: Get a passage with formatted citations
-- get_book: Get detailed book information
-
 ## Citation Format
 
-All published editions have DOIs via Zenodo. When citing:
+All published editions have DOIs via Zenodo. When citing Source Library translations:
 
-Inline: (Author Year, p. N)
-Footnote: Author, Title, trans. Source Library (2025), Page. DOI: ...
+**Inline:** (Author Year, p. N)
+**Footnote:** Author, Title, trans. Source Library (Year), Page. DOI: ...
+**Bibliography:** Author. Title. Translated by Source Library. Year. DOI: ...
 
-## Content
+## Collection Overview
 
-The library contains:
-- Latin alchemical and Hermetic texts (1450-1700)
-- German mystical and Paracelsian works
-- Renaissance philosophical treatises
-- All texts are AI-translated with original language preserved for verification
+The library contains 500+ texts focused on:
+
+- **Alchemy** - Transmutation, philosopher's stone, laboratory practices
+- **Hermeticism** - Corpus Hermeticum commentaries, prisca theologia
+- **Neoplatonism** - Ficino, Pico, Florentine Academy works
+- **Paracelsian medicine** - Chemical philosophy, spagyrics
+- **Rosicrucianism** - Fama Fraternitatis, manifestos, responses
+- **Kabbalah** - Christian Kabbalah, Renaissance interpretations
+- **Natural magic** - Agrippa, Porta, sympathetic correspondences
+
+**Languages:** Latin (primary), German, French, Italian
+**Period:** 1450-1750
+**Translations:** AI-assisted with original language preserved for verification
+
+## Example Conversations
+
+**Research query:**
+> "What did Paracelsus write about the quinta essentia? Give me a quote with citation."
+
+**Historical investigation:**
+> "Find 16th century Latin texts about transmutation and summarize their main arguments."
+
+**Academic writing:**
+> "I need a primary source quote about Renaissance alchemy for my paper, with proper DOI citation."
+
+**Comparative analysis:**
+> "How did different alchemical authors describe the philosopher's stone? Compare three sources."
+
+**Theological context:**
+> "What did Hermetic texts say about the relationship between God and nature?"
 
 ## Contact
 
-Website: https://sourcelibrary.org
-GitHub: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2
+- **Website:** https://sourcelibrary.org
+- **Developers:** https://sourcelibrary.org/developers
+- **GitHub:** https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2
+- **Email:** derek@ancientwisdomtrust.org
