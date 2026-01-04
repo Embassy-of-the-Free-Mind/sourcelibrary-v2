@@ -15,7 +15,7 @@ const DELAY_MS = 200; // Delay between batches
  *
  * Can be called via:
  * - curl https://your-domain.com/api/cron/archive-ocr
- * - Vercel cron: "0 */4 * * *" (every 4 hours)
+ * - Vercel cron: every 4 hours (0 */4 * * * schedule)
  */
 export async function POST(request: NextRequest) {
   try {
