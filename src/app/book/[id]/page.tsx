@@ -186,6 +186,7 @@ async function BookInfo({ id }: { id: string }) {
   // Note: projection excludes .data fields, so check for object existence instead
   const ocrCount = pages.filter(p => p.ocr).length;
   const translatedCount = pages.filter(p => p.translation).length;
+  const imageCount = pages.reduce((sum, p) => sum + ((p.detected_images as any[])?.length || 0), 0);
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
@@ -247,6 +248,16 @@ async function BookInfo({ id }: { id: string }) {
                   <FileText className="w-4 h-4" />
                   {pages.length} pages
                 </div>
+                {imageCount > 0 && (
+                  <Link
+                    href={`/gallery?bookId=${book.id}`}
+                    className="flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors"
+                    title="View identified images in gallery"
+                  >
+                    <Images className="w-4 h-4" />
+                    {imageCount} images
+                  </Link>
+                )}
               </div>
 
               {/* Actions - organized by progression */}
