@@ -73,6 +73,30 @@ interface UsageData {
     byCategory: Array<{ category: string; count: number }>;
     byImageSource: Array<{ provider: string; count: number }>;
   };
+  pipelineHealth?: {
+    splitting: {
+      needsSplitting: number;
+      alreadySplit: number;
+      noSplitNeeded: number;
+      unchecked: number;
+    };
+    enrichment: {
+      booksWithSummary: number;
+      booksWithIndex: number;
+      booksWithChapters: number;
+      booksWithEditions: number;
+      fullyTranslated: number;
+    };
+    images: {
+      pagesWithDetectedImages: number;
+      totalDetectedImages: number;
+    };
+    batchJobs: {
+      pending: number;
+      processing: number;
+      byType: Array<{ type: string; count: number }>;
+    };
+  };
 }
 
 interface JobLog {
@@ -630,6 +654,219 @@ export default function AnalyticsPage() {
                 </div>
               </div>
             )}
+
+            {/* Pipeline Health */}
+            {usageData?.pipelineHealth && (
+              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <ListChecks className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                  Pipeline Health
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {/* Split Detection */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Split Detection</h3>
+                    <div className="space-y-2">
+                      {[
+                        { label: 'Needs Splitting', value: usageData.pipelineHealth.splitting.needsSplitting, color: '#f59e0b' },
+                        { label: 'Already Split', value: usageData.pipelineHealth.splitting.alreadySplit, color: '#22c55e' },
+                        { label: 'No Split Needed', value: usageData.pipelineHealth.splitting.noSplitNeeded, color: 'var(--accent-sage)' },
+                        { label: 'Unchecked', value: usageData.pipelineHealth.splitting.unchecked, color: 'var(--text-muted)' },
+                      ].map((item, i) => (
+                        <div key={i} className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>{item.label}</span>
+                          <span className="font-medium px-2 py-0.5 rounded" style={{ background: 'var(--bg-warm)', color: item.color }}>
+                            {formatNumber(item.value)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Content Enrichment */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Content Enrichment</h3>
+                    <div className="space-y-2">
+                      {[
+                        { label: 'Fully Translated', value: usageData.pipelineHealth.enrichment.fullyTranslated, color: '#22c55e' },
+                        { label: 'With Summary', value: usageData.pipelineHealth.enrichment.booksWithSummary, color: 'var(--accent-sage)' },
+                        { label: 'With Index', value: usageData.pipelineHealth.enrichment.booksWithIndex, color: 'var(--accent-violet)' },
+                        { label: 'With Chapters', value: usageData.pipelineHealth.enrichment.booksWithChapters, color: 'var(--accent-rust)' },
+                        { label: 'With Editions', value: usageData.pipelineHealth.enrichment.booksWithEditions, color: '#3b82f6' },
+                      ].map((item, i) => (
+                        <div key={i} className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>{item.label}</span>
+                          <span className="font-medium px-2 py-0.5 rounded" style={{ background: 'var(--bg-warm)', color: item.color }}>
+                            {formatNumber(item.value)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Detected Images */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Image Detection</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center text-sm">
+                        <span style={{ color: 'var(--text-primary)' }}>Pages with Images</span>
+                        <span className="font-medium px-2 py-0.5 rounded" style={{ background: 'var(--bg-warm)', color: 'var(--accent-violet)' }}>
+                          {formatNumber(usageData.pipelineHealth.images.pagesWithDetectedImages)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-sm">
+                        <span style={{ color: 'var(--text-primary)' }}>Total Images Found</span>
+                        <span className="font-medium px-2 py-0.5 rounded" style={{ background: 'var(--bg-warm)', color: 'var(--accent-rust)' }}>
+                          {formatNumber(usageData.pipelineHealth.images.totalDetectedImages)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Active Batch Jobs */}
+                  <div className="space-y-3">
+                    <h3 className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Active Batch Jobs</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center text-sm">
+                        <span style={{ color: 'var(--text-primary)' }}>Pending</span>
+                        <span className="font-medium px-2 py-0.5 rounded" style={{ background: 'var(--bg-warm)', color: '#f59e0b' }}>
+                          {formatNumber(usageData.pipelineHealth.batchJobs.pending)}
+                        </span>
+                      </div>
+                      <div className="flex justify-between items-center text-sm">
+                        <span style={{ color: 'var(--text-primary)' }}>Processing</span>
+                        <span className="font-medium px-2 py-0.5 rounded" style={{ background: 'var(--bg-warm)', color: 'var(--accent-sage)' }}>
+                          {formatNumber(usageData.pipelineHealth.batchJobs.processing)}
+                        </span>
+                      </div>
+                      {usageData.pipelineHealth.batchJobs.byType.length > 0 && (
+                        <div className="pt-2 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                          {usageData.pipelineHealth.batchJobs.byType.map((job, i) => (
+                            <div key={i} className="flex justify-between items-center text-xs mt-1">
+                              <span className="capitalize" style={{ color: 'var(--text-muted)' }}>{job.type}</span>
+                              <span style={{ color: 'var(--text-primary)' }}>{job.count}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Cost to Complete */}
+            {usageData?.summary && usageData?.costStats && usageData.costStats.costByAction.length > 0 && (() => {
+              const ocrAction = usageData.costStats.costByAction.find(a => a.action === 'ocr');
+              const translationAction = usageData.costStats.costByAction.find(a => a.action === 'translation');
+
+              // Cost per page (from tracked data, fallback to estimates)
+              const ocrCostPerPage = ocrAction && ocrAction.count > 0
+                ? ocrAction.cost / ocrAction.count
+                : 0.00158;
+              const translationCostPerPage = translationAction && translationAction.count > 0
+                ? translationAction.cost / translationAction.count
+                : 0.00241;
+
+              // Remaining work
+              const pagesNeedingOcr = usageData.summary.totalPages - usageData.summary.pagesWithOcr;
+              const pagesNeedingTranslation = usageData.summary.totalPages - usageData.summary.pagesWithTranslation;
+
+              // Cost estimates (realtime)
+              const ocrCostRealtime = pagesNeedingOcr * ocrCostPerPage;
+              const translationCostRealtime = pagesNeedingTranslation * translationCostPerPage;
+              const totalRealtime = ocrCostRealtime + translationCostRealtime;
+
+              // Batch API is 50% cheaper
+              const ocrCostBatch = ocrCostRealtime * 0.5;
+              const translationCostBatch = translationCostRealtime * 0.5;
+              const totalBatch = ocrCostBatch + translationCostBatch;
+
+              // Time estimate (roughly 1000 pages/hour with batch)
+              const ocrHours = pagesNeedingOcr / 1000;
+              const translationHours = pagesNeedingTranslation / 1000;
+              const totalDays = Math.ceil((ocrHours + translationHours) / 24);
+
+              return (
+                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                    <Coins className="w-5 h-5" style={{ color: '#22c55e' }} />
+                    Cost to Complete
+                  </h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {/* Remaining Work */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Remaining Work</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>Pages need OCR</span>
+                          <span className="font-medium" style={{ color: 'var(--accent-sage)' }}>
+                            {formatNumber(pagesNeedingOcr)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>Pages need translation</span>
+                          <span className="font-medium" style={{ color: 'var(--accent-rust)' }}>
+                            {formatNumber(pagesNeedingTranslation)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Batch API Costs (Recommended) */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-medium flex items-center gap-2" style={{ color: 'var(--text-muted)' }}>
+                        Batch API <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: '#dcfce7', color: '#16a34a' }}>50% off</span>
+                      </h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>OCR</span>
+                          <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
+                            {formatCost(ocrCostBatch)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>Translation</span>
+                          <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
+                            {formatCost(translationCostBatch)}
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm pt-2 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                          <span className="font-medium" style={{ color: 'var(--text-primary)' }}>Total</span>
+                          <span className="font-bold text-lg" style={{ color: '#22c55e' }}>
+                            {formatCost(totalBatch)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Time & Realtime Cost */}
+                    <div className="space-y-3">
+                      <h3 className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>Estimates</h3>
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>Time (sequential)</span>
+                          <span className="font-medium" style={{ color: 'var(--accent-violet)' }}>
+                            ~{totalDays} days
+                          </span>
+                        </div>
+                        <div className="flex justify-between items-center text-sm">
+                          <span style={{ color: 'var(--text-primary)' }}>Realtime API cost</span>
+                          <span className="font-medium" style={{ color: 'var(--text-muted)' }}>
+                            {formatCost(totalRealtime)}
+                          </span>
+                        </div>
+                        <div className="text-xs pt-2" style={{ color: 'var(--text-faint)' }}>
+                          Based on ${ocrCostPerPage.toFixed(4)}/pg OCR, ${translationCostPerPage.toFixed(4)}/pg translate
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Collection Breakdown Charts */}
             {usageData?.collectionStats && (

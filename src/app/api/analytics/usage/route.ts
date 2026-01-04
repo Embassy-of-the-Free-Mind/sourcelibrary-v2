@@ -294,6 +294,32 @@ export async function GET(request: NextRequest) {
       byImageSource: [] as Array<{ provider: string; count: number }>,
     };
 
+    // Pipeline health stats
+    let pipelineHealth = {
+      splitting: {
+        needsSplitting: 0,
+        alreadySplit: 0,
+        noSplitNeeded: 0,
+        unchecked: 0,
+      },
+      enrichment: {
+        booksWithSummary: 0,
+        booksWithIndex: 0,
+        booksWithChapters: 0,
+        booksWithEditions: 0,
+        fullyTranslated: 0,
+      },
+      images: {
+        pagesWithDetectedImages: 0,
+        totalDetectedImages: 0,
+      },
+      batchJobs: {
+        pending: 0,
+        processing: 0,
+        byType: [] as Array<{ type: string; count: number }>,
+      },
+    };
+
     try {
       const [croppedCount, archivedCount, splitBooks, langAgg, catAgg, providerAgg] = await Promise.all([
         db.collection('pages').countDocuments({ cropped_photo: { $exists: true, $nin: [null, ''] } }),
@@ -329,6 +355,87 @@ export async function GET(request: NextRequest) {
       };
     } catch (e) {
       console.error('Error fetching collection stats:', e);
+    }
+
+    // Fetch pipeline health stats
+    try {
+      const [
+        needsSplitting,
+        noSplitNeeded,
+        splitChecked,
+        booksWithSummary,
+        booksWithIndex,
+        booksWithChapters,
+        booksWithEditions,
+        fullyTranslated,
+        pagesWithDetectedImages,
+        detectedImagesAgg,
+        batchJobsAgg,
+      ] = await Promise.all([
+        db.collection('books').countDocuments({ needs_splitting: true }),
+        db.collection('books').countDocuments({ needs_splitting: false }),
+        db.collection('books').countDocuments({ split_check: { $exists: true } }),
+        db.collection('books').countDocuments({ $or: [
+          { summary: { $exists: true, $ne: '', $type: 'string' } },
+          { 'summary.data': { $exists: true, $ne: '' } }
+        ]}),
+        db.collection('books').countDocuments({ 'index.bookSummary': { $exists: true } }),
+        db.collection('books').countDocuments({ chapters: { $exists: true, $not: { $size: 0 } } }),
+        db.collection('books').countDocuments({ editions: { $exists: true, $not: { $size: 0 } } }),
+        db.collection('books').countDocuments({ translation_percent: { $gte: 95 } }),
+        db.collection('pages').countDocuments({ detected_images: { $exists: true, $not: { $size: 0 } } }),
+        db.collection('pages').aggregate([
+          { $match: { detected_images: { $exists: true, $not: { $size: 0 } } } },
+          { $project: { count: { $size: '$detected_images' } } },
+          { $group: { _id: null, total: { $sum: '$count' } } }
+        ]).toArray(),
+        db.collection('batch_jobs').aggregate([
+          { $match: { status: { $in: ['pending', 'processing'] } } },
+          { $group: { _id: { status: '$status', type: '$type' }, count: { $sum: 1 } } }
+        ]).toArray(),
+      ]);
+
+      // Calculate unchecked (not split_checked and not already split)
+      const alreadySplit = collectionStats.blobStorage.booksWithSplitPages;
+      const unchecked = totalBooks - splitChecked - alreadySplit;
+
+      // Process batch jobs aggregation
+      let pendingJobs = 0;
+      let processingJobs = 0;
+      const jobsByType: Record<string, number> = {};
+      for (const item of batchJobsAgg) {
+        if (item._id.status === 'pending') pendingJobs += item.count;
+        if (item._id.status === 'processing') processingJobs += item.count;
+        const type = item._id.type || 'unknown';
+        jobsByType[type] = (jobsByType[type] || 0) + item.count;
+      }
+
+      pipelineHealth = {
+        splitting: {
+          needsSplitting,
+          alreadySplit,
+          noSplitNeeded,
+          unchecked: Math.max(0, unchecked),
+        },
+        enrichment: {
+          booksWithSummary,
+          booksWithIndex,
+          booksWithChapters,
+          booksWithEditions,
+          fullyTranslated,
+        },
+        images: {
+          pagesWithDetectedImages,
+          totalDetectedImages: detectedImagesAgg[0]?.total || 0,
+        },
+        batchJobs: {
+          pending: pendingJobs,
+          processing: processingJobs,
+          byType: Object.entries(jobsByType).map(([type, count]) => ({ type, count })),
+        },
+      };
+    } catch (e) {
+      console.error('Error fetching pipeline health stats:', e);
     }
 
     // Get cost tracking stats
@@ -446,6 +553,7 @@ export async function GET(request: NextRequest) {
         costByAction: costStats.costByAction,
       },
       collectionStats,
+      pipelineHealth,
       query: { days },
     });
   } catch (error) {
