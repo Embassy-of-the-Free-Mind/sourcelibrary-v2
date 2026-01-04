@@ -354,6 +354,7 @@ export default function ImageDetailPage({
                 className="w-full h-full"
                 magnifierSize={250}
                 zoomLevel={4}
+                highResSrc={data.highResUrl}
               />
             </div>
 

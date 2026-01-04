@@ -11,6 +11,7 @@ interface ImageWithMagnifierProps {
   magnifierSize?: number;
   zoomLevel?: number;
   scrollable?: boolean;
+  highResSrc?: string; // For magnifier/zoom, use higher resolution version
 }
 
 // Magnifier component for zooming into the source image
@@ -23,7 +24,8 @@ export default function ImageWithMagnifier({
   className = '',
   magnifierSize = 200,
   zoomLevel = 3,
-  scrollable = false
+  scrollable = false,
+  highResSrc
 }: ImageWithMagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
@@ -48,7 +50,8 @@ export default function ImageWithMagnifier({
   };
   const isApiUrl = src.startsWith('/api/');
   const displaySrc = thumbnail || (isApiUrl ? src : getResizedUrl(src, 400));
-  const magnifierSrc = src;
+  // Use high-res version for magnifier if available, otherwise use standard src
+  const magnifierSrc = highResSrc || src;
 
   // Detect touch device on mount
   useEffect(() => {

@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 /**
+ * Upgrade IIIF image URLs to higher resolution
+ * Gallica/IIIF URLs use format: /full/{width},/ where {width} is max width
+ * This function increases the width for higher resolution
+ */
+function upgradeIiifUrl(url: string, resolution: 'standard' | 'high' = 'standard'): string {
+  if (!url.includes('full/')) return url;
+
+  // Standard: 1000px, High: 2000px
+  const targetWidth = resolution === 'high' ? 2000 : 1000;
+
+  // Replace /full/1000,/ with /full/{targetWidth},/
+  return url.replace(/\/full\/\d+,\//, `/full/${targetWidth},/`);
+}
+
+/**
  * GET /api/gallery/image/[id]
  *
  * Fetch a single detected image with full context.
@@ -22,12 +37,17 @@ import { getDb } from '@/lib/mongodb';
  * - Source context (book, page, reading link)
  * - Citation information
  */
+/**
+ * Query parameters:
+ *   - resolution: 'high' for high-resolution magnifier image (2000px), default is standard (1000px)
+ */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
+    const resolution = new URL(request.url).searchParams.get('resolution') || 'standard';
 
     // Parse compound ID: pageId:index
     const [pageId, indexStr] = id.split(':');
@@ -72,10 +92,16 @@ export async function GET(
 
     const detection = detections[detectionIndex];
     // Prefer archived photo (Vercel Blob - fast CDN), fall back to original source
-    const imageUrl = pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo;
+    let imageUrl = pageData.archived_photo || pageData.cropped_photo || pageData.photo_original || pageData.photo;
+
+    // For IIIF sources, upgrade resolution if requested
+    const isIiif = imageUrl?.includes('/iiif/');
+    const fullResUrl = isIiif ? upgradeIiifUrl(imageUrl, 'high') : imageUrl;
 
     // Build the cropped image URL if bbox exists
     let croppedUrl = imageUrl;
+    let highResUrl = fullResUrl;
+
     if (detection.bbox && imageUrl) {
       const cropParams = new URLSearchParams({
         url: imageUrl,
@@ -85,6 +111,16 @@ export async function GET(
         h: detection.bbox.height.toString()
       });
       croppedUrl = `/api/crop-image?${cropParams}`;
+
+      // High-res version for magnifier
+      const highResCropParams = new URLSearchParams({
+        url: fullResUrl,
+        x: detection.bbox.x.toString(),
+        y: detection.bbox.y.toString(),
+        w: detection.bbox.width.toString(),
+        h: detection.bbox.height.toString()
+      });
+      highResUrl = `/api/crop-image?${highResCropParams}`;
     }
 
     // Build the response
@@ -97,6 +133,7 @@ export async function GET(
       // Image URLs
       imageUrl: croppedUrl,
       fullPageUrl: imageUrl,
+      highResUrl: highResUrl, // For magnifier/high-resolution viewing
 
       // AI-generated metadata
       description: detection.description,
