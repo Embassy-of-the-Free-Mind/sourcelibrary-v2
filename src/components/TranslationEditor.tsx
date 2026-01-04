@@ -705,11 +705,11 @@ export default function TranslationEditor({
 
           {/* Right: Panel Toggles + Edit Button */}
           <div className="flex items-center gap-1 sm:gap-2">
-            {/* Panel visibility toggles */}
-            <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+            {/* Panel visibility toggles - icon-only on mobile, with labels on larger screens */}
+            <div className="flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showImagePanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showImagePanel ? 'var(--bg-white)' : 'transparent',
                   color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -717,12 +717,12 @@ export default function TranslationEditor({
                 }}
                 title="Toggle source image"
               >
-                <ImageIcon className="w-3.5 h-3.5" />
-                Image
+                <ImageIcon className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <span className="hidden sm:inline">Image</span>
               </button>
               <button
                 onClick={() => setShowOcrPanel(!showOcrPanel)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showOcrPanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showOcrPanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
                   color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -730,12 +730,12 @@ export default function TranslationEditor({
                 }}
                 title="Toggle original text"
               >
-                <FileText className="w-3.5 h-3.5" />
-                OCR
+                <FileText className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <span className="hidden sm:inline">OCR</span>
               </button>
               <button
                 onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showTranslationPanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
                   color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -743,8 +743,8 @@ export default function TranslationEditor({
                 }}
                 title="Toggle translation"
               >
-                <Languages className="w-3.5 h-3.5" />
-                English
+                <Languages className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <span className="hidden sm:inline">English</span>
               </button>
             </div>
 
