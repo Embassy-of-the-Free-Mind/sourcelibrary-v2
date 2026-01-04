@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { Heart, Mail, ExternalLink } from 'lucide-react';
 
 // Fundraising progress
 const GOAL = 100000;
@@ -26,7 +25,7 @@ export default function SupportPage() {
         </video>
 
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/50 z-0" />
+        <div className="absolute inset-0 bg-black/40 z-0" />
 
         {/* Header */}
         <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
@@ -64,19 +63,19 @@ export default function SupportPage() {
         <div className="px-6 md:px-12 max-w-3xl mx-auto">
 
           {/* Thermometer */}
-          <div className="bg-white rounded-2xl border border-stone-200 p-8 mb-8 shadow-sm">
-            <div className="flex justify-between items-end mb-4">
+          <div className="mb-12">
+            <div className="flex justify-between items-end mb-3">
               <div>
-                <span className="text-4xl md:text-5xl font-bold text-green-600">${(RAISED / 1000).toFixed(0)}k</span>
+                <span className="text-4xl md:text-5xl font-bold text-stone-800">${(RAISED / 1000).toFixed(0)}k</span>
                 <span className="text-stone-500 ml-2">raised</span>
               </div>
               <div className="text-right">
                 <span className="text-stone-400">${(GOAL / 1000).toFixed(0)}k goal</span>
               </div>
             </div>
-            <div className="h-4 bg-stone-100 rounded-full overflow-hidden">
+            <div className="h-3 bg-stone-200 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full"
+                className="h-full bg-stone-800 rounded-full"
                 style={{ width: `${(RAISED / GOAL) * 100}%` }}
               />
             </div>
@@ -88,41 +87,38 @@ export default function SupportPage() {
               href="https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-3 w-full bg-amber-600 hover:bg-amber-700 text-white text-lg font-medium py-4 px-6 rounded-xl transition-colors"
+              className="block w-full text-center bg-stone-900 hover:bg-stone-800 text-white text-lg py-4 px-6 rounded-full transition-colors"
             >
-              <Heart className="w-5 h-5" />
               Donate Now
-              <ExternalLink className="w-4 h-4" />
             </a>
 
             <a
               href="mailto:derek@ancientwisdomtrust.org?subject=Source%20Library%20Pledge&body=I%20would%20like%20to%20pledge%20%24_____%20to%20support%20Source%20Library."
-              className="flex items-center justify-center gap-3 w-full bg-white hover:bg-stone-50 text-stone-700 text-lg font-medium py-4 px-6 rounded-xl transition-colors border border-stone-200"
+              className="block w-full text-center bg-white hover:bg-stone-50 text-stone-700 text-lg py-4 px-6 rounded-full transition-colors border border-stone-300"
             >
-              <Mail className="w-5 h-5" />
               Make a Pledge via Email
             </a>
           </div>
 
-          <p className="text-center text-stone-500 text-sm mt-6">
+          <p className="text-center text-stone-500 text-sm mt-8">
             Tax-deductible via the Netherland-America Foundation (501c3)
           </p>
         </div>
       </section>
 
       {/* Partner Logos */}
-      <section className="bg-white py-12">
+      <section className="bg-white py-16">
         <div className="px-6 md:px-12 max-w-3xl mx-auto">
-          <div className="flex items-center justify-center gap-8">
+          <div className="flex items-center justify-center gap-12">
             <img
               src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
               alt="Embassy of the Free Mind"
-              className="h-12 md:h-16 w-auto object-contain"
+              className="h-14 md:h-20 w-auto object-contain"
             />
             <img
               src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif"
               alt="UNESCO Memory of the World"
-              className="h-16 md:h-20 w-auto object-contain"
+              className="h-18 md:h-24 w-auto object-contain"
             />
           </div>
         </div>
