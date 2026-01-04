@@ -54,6 +54,92 @@ const TOOLS: Tool[] = [
     },
   },
   {
+    name: "search_images",
+    description: "Search historical illustrations, emblems, and engravings in the Source Library gallery. Find images by subject matter, depicted figures, symbols, image type, or time period.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        query: {
+          type: "string",
+          description: "Text search across descriptions, subjects, figures, and symbols (e.g., 'alchemical serpent', 'Mercury')",
+        },
+        type: {
+          type: "string",
+          enum: ["emblem", "woodcut", "engraving", "portrait", "frontispiece", "musical_score", "diagram", "symbol", "decorative", "map"],
+          description: "Filter by image type",
+        },
+        subject: {
+          type: "string",
+          description: "Filter by subject tag (e.g., 'alchemy', 'astronomy', 'medicine')",
+        },
+        figure: {
+          type: "string",
+          description: "Filter by depicted figure (e.g., 'Mercury', 'serpent', 'angel')",
+        },
+        symbol: {
+          type: "string",
+          description: "Filter by symbol (e.g., 'ouroboros', 'athanor', 'philosophical egg')",
+        },
+        year_from: {
+          type: "number",
+          description: "Filter by book publication year (start)",
+        },
+        year_to: {
+          type: "number",
+          description: "Filter by book publication year (end)",
+        },
+        book_id: {
+          type: "string",
+          description: "Filter to images from a specific book",
+        },
+        min_quality: {
+          type: "number",
+          description: "Minimum gallery quality score 0-1 (default 0.5)",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum results to return (default 20, max 50)",
+        },
+      },
+    },
+  },
+  {
+    name: "get_image",
+    description: "Get detailed information about a specific image including full metadata, museum description, and source book context.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        image_id: {
+          type: "string",
+          description: "The image ID (format: pageId:detectionIndex)",
+        },
+      },
+      required: ["image_id"],
+    },
+  },
+  {
+    name: "get_book_images",
+    description: "Get all extracted images from a specific book. Useful for exploring the visual content of a particular text.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        book_id: {
+          type: "string",
+          description: "The book ID",
+        },
+        min_quality: {
+          type: "number",
+          description: "Minimum gallery quality score 0-1 (default 0.5)",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum results to return (default 50)",
+        },
+      },
+      required: ["book_id"],
+    },
+  },
+  {
     name: "get_quote",
     description: "Get a quote from a specific page of a book with formatted citations. Use after searching to retrieve specific passages.",
     inputSchema: {
@@ -149,11 +235,70 @@ async function getBook(args: { book_id: string }) {
   return response.json();
 }
 
+async function searchImages(args: {
+  query?: string;
+  type?: string;
+  subject?: string;
+  figure?: string;
+  symbol?: string;
+  year_from?: number;
+  year_to?: number;
+  book_id?: string;
+  min_quality?: number;
+  limit?: number;
+}) {
+  const params = new URLSearchParams();
+  if (args.query) params.set("q", args.query);
+  if (args.type) params.set("type", args.type);
+  if (args.subject) params.set("subject", args.subject);
+  if (args.figure) params.set("figure", args.figure);
+  if (args.symbol) params.set("symbol", args.symbol);
+  if (args.year_from) params.set("yearStart", String(args.year_from));
+  if (args.year_to) params.set("yearEnd", String(args.year_to));
+  if (args.book_id) params.set("bookId", args.book_id);
+  if (args.min_quality !== undefined) params.set("minQuality", String(args.min_quality));
+  params.set("limit", String(Math.min(args.limit || 20, 50)));
+
+  const response = await fetch(`${API_BASE}/gallery?${params}`);
+  if (!response.ok) {
+    throw new Error(`Search images failed: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+async function getImage(args: { image_id: string }) {
+  const response = await fetch(`${API_BASE}/gallery/image/${args.image_id}`);
+  if (!response.ok) {
+    throw new Error(`Get image failed: ${response.statusText}`);
+  }
+  return response.json();
+}
+
+async function getBookImages(args: {
+  book_id: string;
+  min_quality?: number;
+  limit?: number;
+}) {
+  const params = new URLSearchParams({
+    bookId: args.book_id,
+    limit: String(args.limit || 50),
+  });
+  if (args.min_quality !== undefined) {
+    params.set("minQuality", String(args.min_quality));
+  }
+
+  const response = await fetch(`${API_BASE}/gallery?${params}`);
+  if (!response.ok) {
+    throw new Error(`Get book images failed: ${response.statusText}`);
+  }
+  return response.json();
+}
+
 // Create server
 const server = new Server(
   {
     name: "source-library",
-    version: "1.0.0",
+    version: "1.1.0",
   },
   {
     capabilities: {
@@ -222,6 +367,126 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             {
               type: "text" as const,
               text: JSON.stringify(result, null, 2),
+            },
+          ],
+        };
+      }
+
+      case "search_images": {
+        const result = await searchImages(args as Parameters<typeof searchImages>[0]);
+        // Format for easy reading
+        const formatted = {
+          total: result.total,
+          showing: result.items.length,
+          images: result.items.map((item: {
+            pageId: string;
+            detectionIndex: number;
+            description: string;
+            type?: string;
+            galleryQuality?: number;
+            bookTitle: string;
+            author?: string;
+            year?: number;
+            pageNumber: number;
+            metadata?: {
+              subjects?: string[];
+              figures?: string[];
+              symbols?: string[];
+            };
+            imageUrl: string;
+          }) => ({
+            id: `${item.pageId}:${item.detectionIndex}`,
+            description: item.description,
+            type: item.type,
+            quality: item.galleryQuality,
+            book: {
+              title: item.bookTitle,
+              author: item.author,
+              year: item.year,
+            },
+            page: item.pageNumber,
+            subjects: item.metadata?.subjects,
+            figures: item.metadata?.figures,
+            symbols: item.metadata?.symbols,
+            url: `https://sourcelibrary.org/gallery/image/${item.pageId}:${item.detectionIndex}`,
+            image_url: item.imageUrl,
+          })),
+          available_filters: result.filters,
+        };
+        return {
+          content: [
+            {
+              type: "text" as const,
+              text: JSON.stringify(formatted, null, 2),
+            },
+          ],
+        };
+      }
+
+      case "get_image": {
+        const result = await getImage(args as Parameters<typeof getImage>[0]);
+        const formatted = {
+          id: result.id,
+          description: result.description,
+          museum_description: result.museumDescription,
+          type: result.type,
+          quality: result.galleryQuality,
+          quality_rationale: result.galleryRationale,
+          metadata: result.metadata,
+          book: result.book,
+          page: result.pageNumber,
+          citation: result.citation,
+          urls: {
+            page: `https://sourcelibrary.org/gallery/image/${result.id}`,
+            read_in_context: `https://sourcelibrary.org${result.readUrl}`,
+            image: result.imageUrl,
+          },
+        };
+        return {
+          content: [
+            {
+              type: "text" as const,
+              text: JSON.stringify(formatted, null, 2),
+            },
+          ],
+        };
+      }
+
+      case "get_book_images": {
+        const result = await getBookImages(args as Parameters<typeof getBookImages>[0]);
+        const formatted = {
+          book: result.bookInfo,
+          total_images: result.total,
+          showing: result.items.length,
+          images: result.items.map((item: {
+            pageId: string;
+            detectionIndex: number;
+            description: string;
+            type?: string;
+            galleryQuality?: number;
+            pageNumber: number;
+            metadata?: {
+              subjects?: string[];
+              figures?: string[];
+              symbols?: string[];
+            };
+          }) => ({
+            id: `${item.pageId}:${item.detectionIndex}`,
+            description: item.description,
+            type: item.type,
+            quality: item.galleryQuality,
+            page: item.pageNumber,
+            subjects: item.metadata?.subjects,
+            figures: item.metadata?.figures,
+            symbols: item.metadata?.symbols,
+            url: `https://sourcelibrary.org/gallery/image/${item.pageId}:${item.detectionIndex}`,
+          })),
+        };
+        return {
+          content: [
+            {
+              type: "text" as const,
+              text: JSON.stringify(formatted, null, 2),
             },
           ],
         };

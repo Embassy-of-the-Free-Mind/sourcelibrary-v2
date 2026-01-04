@@ -1,8 +1,8 @@
 {
   "name": "@source-library/mcp-server",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "mcpName": "io.github.Embassy-of-the-Free-Mind/source-library",
-  "description": "MCP server for searching and citing Source Library historical texts with DOI-backed citations",
+  "description": "MCP server for searching and citing Source Library historical texts with DOI-backed citations, plus browsing historical illustrations and emblems",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -30,7 +30,11 @@
     "translation",
     "citation",
     "doi",
-    "research"
+    "research",
+    "images",
+    "emblems",
+    "engravings",
+    "illustrations"
   ],
   "author": "Source Library <hello@sourcelibrary.org>",
   "license": "MIT",
