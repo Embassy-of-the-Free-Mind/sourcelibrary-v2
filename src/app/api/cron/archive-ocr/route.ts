@@ -13,9 +13,8 @@ const DELAY_MS = 200; // Delay between batches
  * Archive OCR images to Vercel Blob storage.
  * Ensures all OCR'd pages have fast, reliable image access.
  *
- * Can be called via:
- * - curl https://your-domain.com/api/cron/archive-ocr
- * - Vercel cron: every 4 hours (0 */4 * * * schedule)
+ * Scheduled: Every 4 hours via Vercel cron
+ * Can also be called manually via: curl https://your-domain.com/api/cron/archive-ocr
  */
 export async function POST(request: NextRequest) {
   try {
