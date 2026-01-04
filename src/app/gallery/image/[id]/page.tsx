@@ -50,6 +50,7 @@ interface ImageData {
   detectionIndex: number;
   imageUrl: string;
   fullPageUrl: string;
+  highResUrl?: string;
   description: string;
   type?: string;
   confidence?: number;
