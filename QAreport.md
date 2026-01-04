@@ -4242,3 +4242,513 @@ These are original Sanskrit texts in scholarly editions - acceptable for primary
 3. Update metadata for all 5 books with missing place/language
 4. Correct publisher errors for Sylva Sylvarum and Drebbel
 
+---
+
+## Audit Session: 2026-01-04 (Batch 2)
+
+### Focus: Original Language Verification & Translation Quality
+
+---
+
+### 1. De gli eroici furori (Of Heroic Frenzies)
+
+**Book ID:** 69520588ab34727b1f042d0c
+**Source:** Gallica (BnF)
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | De gli eroici furori | Correct |
+| Display Title | Of Heroic Frenzies | Good English title |
+| Author | Giordano Bruno | Correct |
+| Year | 1585 | Correct |
+| Place | Paris | Correct |
+| Publisher | [missing] | **Missing** |
+| Language | Italian | Correct |
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1585
+- Source: Gallica (BnF ark:/12148/bpt6k8706241s)
+- Typography: Period (16th century Italian)
+- Original Italian philosophical dialogue
+- **Verdict:** KEEP - Important primary source
+
+**OCR Status:** 294/294 pages (100%)
+**Translation Status:** 268/294 pages (91%)
+
+**Translation Quality:** Verified via index keywords
+- Keywords extracted show accurate philosophical terminology
+- Neoplatonist concepts properly rendered (divine beauty, contemplation, intellect)
+- Italian literary figures preserved (Tansillo, sonnets, Diana/Actaeon allegory)
+- **Quality Rating:** Excellent
+
+**Metadata Issues:**
+1. Publisher missing: should identify Paris printer (likely Gilles Gourbin or similar)
+
+**Categories:** Philosophy, Poetry, neoplatonism - Appropriate
+
+---
+
+### 2. Conclusiones sive Theses DCCCC (900 Theses)
+
+**Book ID:** 694f8d99efce46492e19fdad
+**Source:** Internet Archive
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | Conclusiones sive Theses DCCCC | Correct |
+| Author | Pico della Mirandola, Giovanni (1463-1494) | Correct |
+| Year | 1486 | Correct |
+| Place | [missing] | **Missing** - should be Rome |
+| Publisher | [missing] | **Missing** - Eucharius Silber |
+| Language | Latin | Correct |
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1486 (December 7, 1486)
+- Original Latin text
+- The famous 900 theses condemned by Pope Innocent VIII
+- **Verdict:** KEEP - Major Renaissance philosophical document
+
+**OCR Status:** 35/35 pages (100%)
+**Translation Status:** 34/35 pages (97%)
+
+**Metadata Issues:**
+1. Place missing: should be "Rome"
+2. Publisher missing: should be "Eucharius Silber"
+3. Consider adding note: "Condemned by papal bull 1487"
+
+**Categories:** neoplatonism, philosophy, renaissance, humanism, kabbalah - Appropriate
+
+---
+
+### 3. The Six Books of Proclus on the Theology of Plato
+
+**Book ID:** 6952ca2e77f38f6761bc34d9
+**Source:** [Archive]
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | The Six Books of Proclus on the Theology of Plato | Correct |
+| Author | Proclus \| Taylor, Thomas (trans.) | Correct |
+| Year | 1816 | Correct |
+| Place | [missing] | **Missing** - London |
+| Publisher | [missing] | **Missing** |
+| Language | English | Correct |
+
+**Original Language Status:** FLAG:MODERN-TRANS
+- Print date: 1816
+- This is Thomas Taylor's English translation
+- **No Greek text included** in this edition
+- Modern (19th century) translation
+- **Verdict:** FLAG FOR REVIEW
+
+**OCR Status:** 517/517 pages (100%)
+**Translation Status:** 517/517 pages (100%) - N/A (already English)
+
+**Recommendation:**
+While Thomas Taylor translations are historically significant (first English translations of many Neoplatonist texts), the library should prioritize acquiring:
+1. Greek text edition (e.g., Cousin's 1820-27 edition)
+2. Ficino's 1492 Latin translation
+3. Or Greek/Latin critical edition
+
+**Note:** Taylor translations ARE period scholarly works (early 19th c.) and have historical value for studying the English Neoplatonist revival. Consider keeping with appropriate categorization.
+
+---
+
+## Session Summary
+
+**Books Audited:** 3
+
+| Book | Pages | Translated | Quality | Original Status |
+|------|-------|------------|---------|-----------------|
+| De gli eroici furori | 294 | 268 (91%) | Excellent | Original Italian |
+| Conclusiones | 35 | 34 (97%) | Good | Original Latin |
+| Six Books of Proclus | 517 | N/A | N/A | Modern Trans. |
+
+**Metadata Issues Found:**
+
+| Issue Type | Count |
+|------------|-------|
+| Missing Place | 3 |
+| Missing Publisher | 3 |
+
+**Flags Raised:**
+1. **Six Books of Proclus** - FLAG:MODERN-TRANS - Consider acquiring Greek/Latin original
+
+**Original Language Verdicts:**
+- 2 books verified as ORIGINAL (Bruno, Pico) - KEEP
+- 1 book flagged as MODERN TRANSLATION (Taylor's Proclus) - REVIEW
+
+**Recommendations:**
+1. Complete translation of Bruno's De gli eroici furori (26 pages remaining)
+2. Add publisher metadata for Pico's Conclusiones (Eucharius Silber, Rome)
+3. Consider acquiring Proclus in Greek (Cousin edition or similar)
+4. Taylor translations may be kept with category "modern-scholarly-edition"
+
+---
+
+### 4. Corpus Hermeticum (Greek manuscript)
+
+**Book ID:** 695230c6ab34727b1f044784
+**Source:** Gallica (BnF)
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | Corpus Hermeticum (Greek manuscript) | Correct |
+| Author | Hermes Trismegistus / Hero of Alexandria | Partially correct |
+| Year | 1530-1539 | Correct (manuscript date) |
+| Place | [missing] | Unknown (manuscript) |
+| Language | Greek | Correct |
+
+**Original Language Status:** FLAG:ORIGINAL
+- Manuscript date: 1530-1539 (Renaissance copy)
+- Source: Gallica (BnF ark:/12148/btv1b10509612q)
+- Original Greek text of the Corpus Hermeticum
+- Contains works of Hero of Alexandria in addition to Hermetic texts
+- **Verdict:** KEEP - Exceptional primary source (Greek manuscript)
+
+**OCR Status:** 284/284 pages (100%)
+**Translation Status:** 0/284 pages (0%) - Needs translation
+
+**Metadata Issues:**
+1. Author should clarify: "Hermes Trismegistus (attrib.) / Hero of Alexandria"
+2. Consider noting manuscript provenance if available
+
+**Priority:** HIGH for translation - Greek manuscript of Corpus Hermeticum
+
+---
+
+### 5. Corpus Hermeticum and Definitions (2020 Translation)
+
+**Book ID:** 6953a41f77f38f6761bce7df
+**Source:** Internet Archive
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | Corpus Hermeticum and Definitions of Hermes Trismegistus to Asclepius | Correct |
+| Author | Hermes Trismegistus | Missing translator |
+| Year | 2020 | Correct |
+| Language | English | Correct |
+
+**Original Language Status:** FLAG:MODERN-TRANS
+- Print date: 2020
+- Modern English translation
+- **No Greek/Latin original text included**
+- **Verdict:** FLAG FOR REVIEW/REMOVAL
+
+**OCR Status:** 70/105 pages (67%)
+**Translation Status:** 0/105 pages (N/A - already English)
+
+**Recommendation:**
+This is a modern English-only translation with no scholarly apparatus. The library already has:
+- Greek manuscript (695230c6ab34727b1f044784)
+- Ficino's Latin translation (694f3d6cbe37f451a5324e10)
+- Pymander 1532 Latin (68fb0dc412055a03a58d3281)
+
+Consider removing in favor of original language editions.
+
+---
+
+### 6. Origins of the Kabbalah (Scholem)
+
+**Book ID:** 695361cb9c494f9f9f042d16
+**Source:** [Archive]
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | Origins of the Kabbalah | Correct |
+| Author | Gershom Scholem | Correct |
+| Year | 1987 | Correct |
+| Language | English | Correct |
+
+**Original Language Status:** FLAG:MODERN-TRANS
+- Print date: 1987
+- Modern scholarly work (secondary source)
+- Not a primary source translation
+- **Verdict:** FLAG FOR REVIEW
+
+**Note:** This is Gershom Scholem's scholarly analysis, not a translation of primary Kabbalistic texts. While valuable as secondary scholarship, it doesn't fit the library's focus on primary sources.
+
+**Recommendation:** Consider keeping in a separate "Modern Scholarship" category, or remove in favor of acquiring original Hebrew Kabbalistic texts (Zohar, Sefer Yetzirah, etc.).
+
+---
+
+### 7. Kabbalah Unveiled (Mathers)
+
+**Book ID:** 6955d9588407b7c9ae212a37
+**Source:** [Archive]
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | Kabbalah Unveiled | Correct |
+| Author | S. L. MacGregor Mathers | Correct |
+| Year | Unknown | Should be ~1887 |
+| Language | English | Correct |
+
+**Original Language Status:** FLAG:MODERN-TRANS
+- Print date: c. 1887
+- 19th century English translation/adaptation
+- Mathers translated from Knorr von Rosenroth's Latin Kabbala Denudata (1677-1684)
+- **No original Hebrew/Aramaic text included**
+- **Verdict:** FLAG FOR REVIEW
+
+**Note:** While historically significant for the Western esoteric revival (Golden Dawn context), this is a translation of a translation. The library should prioritize:
+1. Kabbala Denudata (1677-1684) - Latin
+2. Original Hebrew/Aramaic texts (Zohar manuscripts, Sefer Yetzirah)
+
+---
+
+## Session Summary (Batch 2 Continued)
+
+**Additional Books Audited:** 4
+
+| Book | Pages | Status | Original Status |
+|------|-------|--------|-----------------|
+| Corpus Hermeticum (Greek MS) | 284 | 100% OCR, 0% trans | ORIGINAL Greek |
+| Corpus Hermeticum (2020) | 105 | 67% OCR | Modern Trans. |
+| Origins of Kabbalah | 514 | 0% | Modern Scholarship |
+| Kabbalah Unveiled | 768 | 0% | Modern Trans. |
+
+**Flags Raised:**
+1. **Corpus Hermeticum 2020** - FLAG:MODERN-TRANS - Remove, have Greek original
+2. **Origins of Kabbalah** - FLAG:MODERN-TRANS - Secondary scholarship
+3. **Kabbalah Unveiled** - FLAG:MODERN-TRANS - Translation of translation
+
+**Original Language Verdicts:**
+- 1 book verified as ORIGINAL (Greek manuscript) - KEEP, PRIORITY TRANSLATION
+- 3 books flagged as MODERN TRANSLATIONS - REVIEW
+
+**Priority Acquisition Recommendations:**
+1. **Kabbala Denudata** (Knorr von Rosenroth, 1677-1684) - Latin Kabbalah compendium
+2. **Sefer Yetzirah** - Hebrew original editions
+3. **Zohar manuscripts or early printed editions** - Mantua 1558-1560 or Cremona 1558
+
+---
+
+### 8. Monas Hieroglyphica
+
+**Book ID:** 69520571ab34727b1f042c78
+**Source:** Gallica (BnF)
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | Monas hieroglyphica | Correct |
+| Author | John Dee | Correct |
+| Year | 1564 | Correct |
+| Place | [missing] | **Missing** - Antwerp |
+| Publisher | [missing] | **Missing** - Willem Silvius |
+| Language | Latin | Correct |
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1564 (first edition)
+- Source: Gallica (BnF ark:/12148/bpt6k5401042m)
+- Original Latin text
+- Dee's famous treatise on the "hieroglyphic monad" symbol
+- Dedicated to Emperor Maximilian II
+- **Verdict:** KEEP - Important primary source
+
+**OCR Status:** 61/61 pages (100%)
+**Translation Status:** 0/61 pages (0%) - Needs translation
+
+**Metadata Issues:**
+1. Place missing: should be "Antwerp"
+2. Publisher missing: should be "Willem Silvius"
+
+**Categories:** hermeticism, jewish-kabbalah, natural-magic - Appropriate
+
+**Priority:** HIGH for translation - Major work of Elizabethan esotericism
+
+---
+
+### 9. A True and Faithful Relation (Dee's Spirit Diaries)
+
+**Book ID:** 6952d08877f38f6761bc5560
+**Source:** Internet Archive
+
+| Field | Catalog | Status |
+|-------|---------|--------|
+| Title | A True and Faithful Relation of what passed between Dr. John Dee and Some Spirits | Correct |
+| Author | Dee, John \| Kelley, Edward | Partially correct |
+| Year | 1659 | Correct |
+| Place | [missing] | **Missing** - London |
+| Publisher | [missing] | **Missing** - D. Maxwell for T. Garthwait |
+| Language | English | Correct |
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1659 (first published edition)
+- Edited by Meric Casaubon from Dee's manuscripts
+- Original English publication of Dee-Kelley angelic conversations
+- **Verdict:** KEEP - Essential primary source for Enochian magic
+
+**OCR Status:** 624/765 pages (82%)
+**Translation Status:** 0/765 pages (N/A - already English)
+
+**Metadata Issues:**
+1. Author should include: "ed. Meric Casaubon"
+2. Place missing: should be "London"
+3. Publisher missing: should be "D. Maxwell for T. Garthwait"
+
+**Categories:** angel-magic, enochian, hermeticism, scrying - Appropriate
+
+**Note:** OCR incomplete - 141 pages remaining. Priority for OCR completion.
+
+---
+
+## Final Session Summary: 2026-01-04
+
+**Total Books Audited This Session:** 9
+
+| Book | Pages | OCR | Trans | Original Status |
+|------|-------|-----|-------|-----------------|
+| De gli eroici furori | 294 | 100% | 91% | ORIGINAL Italian |
+| Conclusiones (Pico) | 35 | 100% | 97% | ORIGINAL Latin |
+| Six Books of Proclus | 517 | 100% | N/A | Modern Trans. |
+| Corpus Hermeticum (Greek MS) | 284 | 100% | 0% | ORIGINAL Greek |
+| Corpus Hermeticum (2020) | 105 | 67% | N/A | Modern Trans. |
+| Origins of Kabbalah | 514 | 0% | N/A | Modern Scholarship |
+| Kabbalah Unveiled | 768 | 0% | N/A | Modern Trans. |
+| Monas Hieroglyphica | 61 | 100% | 0% | ORIGINAL Latin |
+| True & Faithful Relation | 765 | 82% | N/A | ORIGINAL English |
+
+**Original Language Verdicts:**
+- **5 ORIGINAL** (Bruno, Pico, Greek MS, Monas, True Relation) - KEEP
+- **4 MODERN TRANSLATIONS** (Taylor Proclus, 2020 Hermetica, Scholem, Mathers) - REVIEW
+
+**Priority Actions:**
+1. **Translation Priority:** Monas Hieroglyphica (61 pages Latin)
+2. **Translation Priority:** Corpus Hermeticum Greek MS (284 pages Greek)
+3. **OCR Completion:** True & Faithful Relation (141 pages remaining)
+4. **Translation Completion:** Bruno Eroici Furori (26 pages remaining)
+
+**Metadata Corrections Needed:**
+- Missing place/publisher for 5 books
+- Author corrections for 2 books
+
+**Books to Review for Removal:**
+- Corpus Hermeticum 2020 (duplicate content, modern only)
+- Origins of Kabbalah (secondary scholarship)
+- Kabbalah Unveiled (translation of translation)
+
+---
+
+## Audit Session: 2026-01-04 (Continued - Trithemius Works)
+
+### 10. Steganographia (Trithemius 1621)
+
+**Book ID:** 69520773ab34727b1f043c4d
+**Source:** Gallica (BnF ark:/12148/bpt6k5832538j)
+**USTC:** Not applicable (post-1600)
+
+| Field | Catalog (Before) | Title Page | Status |
+|-------|------------------|------------|--------|
+| Title | Steganographia | STEGANOGRAPHIA: Hoc est: ARS PER OCCVLTAM SCRIPTURAM... | Match |
+| Author | Johannes Trithemius | IOANNE TRITHEMIO, Abbate Spanheimenfi | Match |
+| Year | 1621 | M, DC. X X I (1621) | Match |
+| Place | Frankfurt | DARMBSTADII (Darmstadt) | **Fixed** |
+| Publisher | (missing) | Johann Berner (Frankfurt) / Balthasar Auszander | **Fixed** |
+
+**Original Language Verification:**
+- Print date: 1621
+- Typography: Period (long-s, ligatures, woodcut decorations)
+- Language: Latin (original)
+- Text type: Original publication
+- Printer's device visible
+- "Cum Priuilegio & confenfu Superiorum"
+- **Verdict:** FLAG:ORIGINAL
+
+**OCR Status:** 168/168 pages (100%)
+**Translation Status:** 0/168 pages - Needs translation
+
+**Notes:**
+- First printed edition of Trithemius's famous cryptographic treatise
+- Written c. 1499-1500 but suppressed due to accusations of demonic magic
+- Contains "conjurations of spirits" which are actually elaborate cipher systems
+- Important work on steganography (hidden writing) and cryptology
+- Seal stamp visible: "SIGILLVM SEMIDES TRAIANI GER"
+
+---
+
+### 11. Polygraphie (Trithemius/Collange 1561)
+
+**Book ID:** 31f820f4-d3d8-4a68-a025-40b69230d35f
+**Source:** Internet Archive (Boston Public Library)
+**USTC:** Not found (should be searchable - 16th c. French)
+
+| Field | Catalog (Before) | Title Page | Status |
+|-------|------------------|------------|--------|
+| Title | Polygraphia | POLYGRAPHIE, ET Vniuerfelle efcriture Cabalistique | Match |
+| Author | Johannes Trithemius | M. I. Tritheme Abbé / Gabriel de Collange (translator) | **Fixed** |
+| Year | (missing) | 1561 | **Fixed** |
+| Place | (missing) | A PARIS | **Fixed** |
+| Publisher | (missing) | Jacques Kerver (à l'enseigne de la Licorne) | **Fixed** |
+
+**Original Language Verification:**
+- Print date: 1561
+- Typography: Period French (ornate woodcut border with royal arms/fleurs-de-lis)
+- Language: French (translation from Latin original)
+- Translator: Gabriel de Collange, natif de Tours en Auuergne
+- Text type: Contemporary translation (1561)
+- "AVEC PRIVILEGE DV ROY" (royal privilege)
+- **Verdict:** FLAG:CONTEMP-TRANS (Acceptable - 16th century translation)
+
+**OCR Status:** 652/652 pages (100%)
+**Translation Status:** N/A (already in French vernacular)
+
+**Notes:**
+- First French translation of Trithemius's Polygraphia (Latin original 1518)
+- Publisher Jacques Kerver known for quality illustrated books
+- Published at rue sainct Iacques, à l'enseigne de la Licorne (sign of the Unicorn)
+- Gabriel de Collange was mathematician and translator active mid-16th century
+- Elaborate woodcut border features armillary sphere, compass, griffin, unicorn
+
+---
+
+## Session Summary: Trithemius Works
+
+**Additional Books Audited:** 2
+
+| Book | Pages | OCR | Trans | Original Status | Action |
+|------|-------|-----|-------|-----------------|--------|
+| Steganographia (1621) | 168 | 100% | 0% | ORIGINAL Latin | Metadata fixed |
+| Polygraphie (1561) | 652 | 100% | N/A | CONTEMP-TRANS French | Metadata fixed |
+
+**Metadata Corrections Applied:**
+- Steganographia: Place corrected Frankfurt→Darmstadt, publisher added (Johann Berner / Balthasar Auszander)
+- Polygraphie: Year (1561), place (Paris), publisher (Jacques Kerver), translator credit (Gabriel de Collange) added
+
+**Priority Actions:**
+- **Translation Priority:** Steganographia (168 pages Latin) - cryptographic treatise
+
+---
+
+## Batch Metadata Fixes: 2026-01-04 (Programmatic & Bibliographic)
+
+Applied metadata corrections using BPH/EFM catalog matching and bibliographic reference sources.
+
+### Books Fixed (13 additional)
+
+| Book | ID | Year | Place | Publisher |
+|------|-----|------|-------|-----------|
+| Astrologia aphoristica | 6867a4fefc518f6dbf334f36 | 1641 | Ulm | Ludwig Lanov |
+| De praesagiis (Paracelsus) | 785e0f79-eb56-49f6-9c47-b75c8e859159 | 1569 | Basel | Peter Perna |
+| Curiosa physica | dbdc472a-b39f-4005-abb4-654428f7bf61 | — | Frankfurt & Leipzig | Kayser / Brueckner |
+| Geometrie practique | c1eb9995-02e3-45b3-afa1-c0a52fd5b646 | — | Paris | Regnaud & Claude Chaudière |
+| De verbo mirifico (Reuchlin) | 69482afb914d007380634d28 | 1494 | Basel | Johann Amerbach |
+| De Arte Cabalistica (Reuchlin) | f176cb65-a60e-4f8a-9514-39796f092cde | 1517 | Hagenau | Thomas Anshelm |
+| De rudimentis hebraicis (Reuchlin) | 6952062dab34727b1f0432ef | 1506 | Pforzheim | Thomas Anshelm |
+| De vita libri tres (Ficino) | 694f396c23a1d0c2ad1d8698 | 1489 | Florence | Antonio Miscomini |
+| Platonica theologia (Ficino) | 694f395923a1d0c2ad1d8633 | 1482 | Florence | Antonio Miscomini |
+| De Mysteriis 1570 (Iamblichus) | 695593437bd6d2cd1d61bda2 | 1570 | Venice | Aldus heirs |
+| De Vera Sapientia (Cusanus) | 2948183e-2c47-43dc-b7b9-a466f93a869c | 1488 | Strasbourg | Martin Flach |
+| Musaeum hermeticum reformatum | 695203a5ab34727b1f041c53 | 1678 | Frankfurt | Hermann à Sande |
+| Musaeum hermeticum | c87fadfa-1543-44b9-a138-573c144246e6 | 1678 | Frankfurt | Hermann à Sande |
+
+### Method
+- Programmatic matching via `scripts/fix-metadata-from-catalog.mjs` against Supabase BPH catalog
+- Manual bibliographic reference for foundational Renaissance texts (Ficino, Reuchlin, Cusanus)
+- USTC cross-referencing where applicable
+
+### Summary
+- **Total books with metadata fixed this session:** 15 (2 Trithemius + 13 batch)
+- **Key authors covered:** Trithemius, Reuchlin, Ficino, Cusanus, Paracelsus, Iamblichus
+- **Publications spanning:** 1482–1678
+
