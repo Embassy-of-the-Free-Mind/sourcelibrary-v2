@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import BookCard from '@/components/BookCard';
@@ -35,6 +35,9 @@ interface CatalogResult {
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
+const INITIAL_DISPLAY_LIMIT = 50;
+const LOAD_MORE_INCREMENT = 50;
+
 export default function BookLibrary({ books, languages, featuredTopics = [] }: BookLibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,6 +45,7 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
+  const [displayLimit, setDisplayLimit] = useState(INITIAL_DISPLAY_LIMIT);
 
   // Catalog search state
   const [catalogResults, setCatalogResults] = useState<CatalogResult[]>([]);
@@ -108,6 +112,23 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
 
     return result;
   }, [books, searchQuery, selectedLanguage, selectedCategory, sortBy]);
+
+  // Books to display (limited)
+  const displayedBooks = useMemo(() => {
+    return filteredAndSortedBooks.slice(0, displayLimit);
+  }, [filteredAndSortedBooks, displayLimit]);
+
+  const hasMoreBooks = filteredAndSortedBooks.length > displayLimit;
+  const remainingBooks = filteredAndSortedBooks.length - displayLimit;
+
+  // Reset display limit when filters change
+  useEffect(() => {
+    setDisplayLimit(INITIAL_DISPLAY_LIMIT);
+  }, [searchQuery, selectedLanguage, selectedCategory, sortBy]);
+
+  const loadMore = () => {
+    setDisplayLimit(prev => prev + LOAD_MORE_INCREMENT);
+  };
 
   // Search external catalogs
   const searchCatalogs = useCallback(async () => {
@@ -376,13 +397,13 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
         </div>
       ) : viewMode === 'cards' ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
-          {filteredAndSortedBooks.map((book, index) => (
+          {displayedBooks.map((book, index) => (
             <BookCard key={book.id} book={book} priority={index < 5} />
           ))}
         </div>
       ) : (
         <div className="space-y-4">
-          {filteredAndSortedBooks.map((book) => (
+          {displayedBooks.map((book) => (
             <Link
               key={book.id}
               href={`/book/${book.id}`}
@@ -435,6 +456,21 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
               </svg>
             </Link>
           ))}
+        </div>
+      )}
+
+      {/* Load More Button */}
+      {hasMoreBooks && (
+        <div className="mt-10 text-center">
+          <button
+            onClick={loadMore}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors shadow-sm"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+            Load more ({remainingBooks} remaining)
+          </button>
         </div>
       )}
 
