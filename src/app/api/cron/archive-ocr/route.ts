@@ -22,10 +22,10 @@ export async function POST(request: NextRequest) {
 
     // Find pages with OCR data that need archiving
     const query = {
-      // Has OCR data
-      'ocr.data': { $exists: true, $ne: null, $ne: '' },
-      // Has an image source
-      photo: { $exists: true, $ne: null, $ne: '' },
+      // Has OCR data (exists, not null, not empty string)
+      'ocr.data': { $exists: true, $nin: [null, ''] },
+      // Has an image source (exists, not null, not empty string)
+      photo: { $exists: true, $nin: [null, ''] },
       // Not already archived
       $or: [
         { archived_photo: { $exists: false } },
