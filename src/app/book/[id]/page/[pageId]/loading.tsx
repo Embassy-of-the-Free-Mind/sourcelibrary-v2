@@ -33,7 +33,7 @@ export default function PageEditorLoading() {
 
         {/* Content area with book loader */}
         <div className="flex-1 flex items-center justify-center">
-          <BookLoader label="Opening page..." />
+          <BookLoader />
         </div>
 
         {/* Bottom nav */}

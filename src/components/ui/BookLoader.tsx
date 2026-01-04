@@ -1,28 +1,59 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
 
 interface BookLoaderProps {
-  label?: string;
   className?: string;
+  size?: 'sm' | 'md' | 'lg';
+  label?: string;
 }
 
-export function BookLoader({ label = 'Loading...', className }: BookLoaderProps) {
+const VERBS = ['Opening', 'Gathering', 'Seeking', 'Consulting', 'Retrieving'];
+
+export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
+  const [verbIndex, setVerbIndex] = useState(0); // Always starts with "Opening"
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        // Pick a random verb (excluding current one)
+        setVerbIndex((prev) => {
+          const availableIndices = VERBS.map((_, i) => i).filter(i => i !== prev);
+          return availableIndices[Math.floor(Math.random() * availableIndices.length)];
+        });
+        setIsAnimating(false);
+      }, 300);
+    }, 2500);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const sizeClasses = {
+    sm: { container: 'w-10 h-10', logo: 'w-10 h-10', text: 'text-sm', gap: 'gap-4' },
+    md: { container: 'w-16 h-16', logo: 'w-16 h-16', text: 'text-lg', gap: 'gap-8' },
+    lg: { container: 'w-24 h-24', logo: 'w-24 h-24', text: 'text-xl', gap: 'gap-10' },
+  };
+
+  const s = sizeClasses[size];
+
   return (
-    <div className={cn('flex flex-col items-center justify-center gap-8', className)}>
+    <div className={cn('flex flex-col items-center justify-center', s.gap, className)}>
       {/* Animated Source Library logo with emanating rings */}
-      <div className="relative w-16 h-16">
-        {/* Emanating rings that expand outward - matching logo circle proportions */}
+      <div className={cn('relative', s.container)}>
+        {/* Emanating rings that expand outward */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '0ms' }} />
           <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '700ms' }} />
           <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '1400ms' }} />
         </div>
 
-        {/* Core logo - concentric circles matching logo.svg exactly */}
+        {/* Core logo - concentric circles */}
         <svg
           viewBox="0 0 24 24"
-          className="w-16 h-16 relative z-10 text-stone-700"
+          className={cn('relative z-10 text-stone-700', s.logo)}
         >
           <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1" />
           <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" strokeWidth="1" />
@@ -30,15 +61,21 @@ export function BookLoader({ label = 'Loading...', className }: BookLoaderProps)
         </svg>
       </div>
 
-      {/* Label */}
-      <div className="text-center">
-        <p
-          className="text-stone-500 text-lg tracking-wide"
-          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+      {/* Label with cycling verb */}
+      <p
+        className={cn('text-stone-500 tracking-wide', s.text)}
+        style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+      >
+        <span
+          className={cn(
+            'inline-block transition-all duration-300 ease-out',
+            isAnimating ? 'opacity-0 translate-y-2 blur-sm' : 'opacity-100 translate-y-0 blur-0'
+          )}
         >
-          Opening the source...
-        </p>
-      </div>
+          {VERBS[verbIndex]}
+        </span>
+        {' the source...'}
+      </p>
     </div>
   );
 }

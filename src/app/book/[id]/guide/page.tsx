@@ -160,7 +160,7 @@ export default function GuidePage({ params }: GuidePageProps) {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
-        <BookLoader label="Loading reading guide..." />
+        <BookLoader />
       </div>
     );
   }

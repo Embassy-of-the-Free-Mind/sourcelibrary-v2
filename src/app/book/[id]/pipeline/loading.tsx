@@ -22,7 +22,7 @@ export default function PipelineLoading() {
       <main className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         <div className="bg-white rounded-xl border border-stone-200 p-6">
           <div className="flex items-center justify-center py-12">
-            <BookLoader label="Loading pipeline..." />
+            <BookLoader />
           </div>
         </div>
       </main>

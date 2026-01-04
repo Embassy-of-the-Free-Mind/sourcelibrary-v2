@@ -100,7 +100,7 @@ export default function PageEditorPage({ params }: PageProps) {
   if (loading) {
     return (
       <div className="h-screen flex items-center justify-center bg-stone-50">
-        <BookLoader label="Opening page..." />
+        <BookLoader />
       </div>
     );
   }
