@@ -184,19 +184,19 @@ export default function AboutPage() {
           <div className="flex flex-wrap gap-4 pt-8 border-t border-stone-200">
             <Link
               href="/"
-              className="px-4 py-2 bg-stone-900 text-white rounded-lg hover:bg-stone-800 transition-colors"
+              className="px-5 py-2.5 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-colors"
             >
               Browse the Library
             </Link>
             <Link
               href="/developers"
-              className="px-4 py-2 border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition-colors"
+              className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
             >
               API & MCP Server
             </Link>
             <Link
               href="/support"
-              className="px-4 py-2 border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 transition-colors"
+              className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
             >
               Support the Project
             </Link>
