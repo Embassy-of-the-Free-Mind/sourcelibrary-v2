@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>Source Library</ShortName>
+  <Description>Search rare Hermetic and Renaissance texts translated into English</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/svg+xml">https://sourcelibrary.org/icon.svg</Image>
+  <Url type="text/html" template="https://sourcelibrary.org/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://sourcelibrary.org/opensearch.xml"/>
+  <Query role="example" searchTerms="quinta essentia"/>
+  <Developer>Source Library</Developer>
+  <Attribution>Search results from Source Library (sourcelibrary.org)</Attribution>
+  <SyndicationRight>open</SyndicationRight>
+  <Language>en-us</Language>
+</OpenSearchDescription>

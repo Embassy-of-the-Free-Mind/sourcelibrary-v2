@@ -32,6 +32,9 @@ export const metadata: Metadata = {
       { url: '/apple-icon', sizes: '180x180', type: 'image/png' },
     ],
   },
+  other: {
+    'msapplication-TileColor': '#1c1917',
+  },
   openGraph: {
     title: "Source Library",
     description: "Rare Hermetic & Renaissance texts digitized and translated with AI",
@@ -55,6 +58,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="search"
+          type="application/opensearchdescription+xml"
+          title="Source Library"
+          href="/opensearch.xml"
+        />
+      </head>
       <body className="antialiased min-h-screen flex flex-col">
         <Providers>
           <div className="flex-1">

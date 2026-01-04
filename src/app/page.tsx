@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import HeroSection from '@/components/HeroSection';
 import BookLibrary from '@/components/BookLibrary';
+import HomePageSchema from '@/components/HomePageSchema';
 import { Book } from '@/lib/types';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
@@ -118,10 +119,17 @@ export default async function HomePage() {
   // Get unique languages for filter
   const languages = [...new Set(books.map(b => b.language))].filter(Boolean) as string[];
 
+  // Count translated books
+  const translatedCount = books.filter(b => (b.translation_percent || 0) > 0).length;
+
   return (
-    <div className="min-h-screen">
-      {/* Hero Section with Video Background */}
-      <HeroSection />
+    <>
+      {/* Schema.org JSON-LD for search engines */}
+      <HomePageSchema books={books} bookCount={books.length} translatedCount={translatedCount} />
+
+      <div className="min-h-screen">
+        {/* Hero Section with Video Background */}
+        <HeroSection />
 
       {/* Library Section */}
       <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
@@ -233,6 +241,7 @@ export default async function HomePage() {
           </div>
         </div>
       </footer>
-    </div>
+      </div>
+    </>
   );
 }
