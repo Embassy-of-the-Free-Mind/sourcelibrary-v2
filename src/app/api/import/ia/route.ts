@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { notifyBookImport } from '@/lib/indexnow';
 
 /**
  * Import a book from Internet Archive
@@ -213,6 +214,9 @@ export async function POST(request: NextRequest) {
       // Ignore errors - split check is optional
       console.log(`[Import] Split check queued for ${bookIdStr}`);
     });
+
+    // Notify search engines of new book via IndexNow (non-blocking)
+    notifyBookImport(bookIdStr).catch(console.error);
 
     return NextResponse.json({
       success: true,

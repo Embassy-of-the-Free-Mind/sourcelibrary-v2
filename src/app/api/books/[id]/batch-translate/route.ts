@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { notifyBatchTranslation } from '@/lib/indexnow';
 
 // Increase timeout for batch translation
 export const maxDuration = 300;
@@ -225,6 +226,10 @@ Return each translation clearly separated with the exact format:
         { id: bookId },
         { $set: { pages_translated: translatedCount, last_translation_at: now, updated_at: now } }
       );
+
+      // Notify search engines of new translations via IndexNow (non-blocking)
+      const translatedPageNumbers = results.filter(r => r.success).map(r => r.pageNumber);
+      notifyBatchTranslation(bookId, translatedPageNumbers).catch(console.error);
     }
 
     // Track total cost (legacy)
