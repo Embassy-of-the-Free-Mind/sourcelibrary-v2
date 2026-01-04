@@ -96,6 +96,8 @@ export default function ImageDetailPage({
   const [bboxValues, setBboxValues] = useState({ x: 0, y: 0, width: 0, height: 0 });
   const [isDragging, setIsDragging] = useState<'move' | 'resize' | null>(null);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [titleValue, setTitleValue] = useState('');
 
   useEffect(() => {
     params.then(p => setImageId(p.id));
@@ -125,6 +127,9 @@ export default function ImageDetailPage({
 
   // Initialize values when data loads
   useEffect(() => {
+    if (data?.description) {
+      setTitleValue(data.description);
+    }
     if (data?.galleryQuality != null) {
       setQualityValue(data.galleryQuality);
     }
@@ -137,7 +142,27 @@ export default function ImageDetailPage({
     if (data?.bbox) {
       setBboxValues(data.bbox);
     }
-  }, [data?.galleryQuality, data?.museumDescription, data?.metadata, data?.bbox]);
+  }, [data?.description, data?.galleryQuality, data?.museumDescription, data?.metadata, data?.bbox]);
+
+  const saveTitle = async () => {
+    if (!data) return;
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/gallery/image/${data.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description: titleValue })
+      });
+      if (res.ok) {
+        setData({ ...data, description: titleValue });
+        setEditingTitle(false);
+      }
+    } catch (e) {
+      console.error('Failed to save title:', e);
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const saveQuality = async (newQuality: number) => {
     if (!data) return;
@@ -377,9 +402,47 @@ export default function ImageDetailPage({
             {/* Description */}
             <div className="md:col-span-2 space-y-6">
               <div>
-                <h1 className="text-2xl font-serif text-stone-100 leading-relaxed">
-                  {data.description}
-                </h1>
+                {editingTitle ? (
+                  <div className="space-y-3">
+                    <textarea
+                      value={titleValue}
+                      onChange={(e) => setTitleValue(e.target.value)}
+                      className="w-full p-3 bg-stone-800 text-stone-100 text-2xl font-serif rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed"
+                      rows={3}
+                      autoFocus
+                    />
+                    <div className="flex gap-2">
+                      <button
+                        onClick={saveTitle}
+                        disabled={saving}
+                        className="px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50"
+                      >
+                        {saving ? 'Saving...' : 'Save'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setTitleValue(data.description);
+                          setEditingTitle(false);
+                        }}
+                        className="px-4 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-sm transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="group relative">
+                    <h1 className="text-2xl font-serif text-stone-100 leading-relaxed pr-16">
+                      {data.description}
+                    </h1>
+                    <button
+                      onClick={() => setEditingTitle(true)}
+                      className="absolute top-0 right-0 text-xs text-amber-500 hover:text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      Edit
+                    </button>
+                  </div>
+                )}
 
                 {data.model && (
                   <p className="text-sm text-stone-500 mt-2 flex items-center gap-1">
