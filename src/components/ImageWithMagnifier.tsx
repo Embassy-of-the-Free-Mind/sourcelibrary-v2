@@ -132,8 +132,8 @@ export default function ImageWithMagnifier({
       setFullImageLoaded(true);
       setFullImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
     };
-    img.src = src;
-  }, [src, hasHovered]);
+    img.src = magnifierSrc;
+  }, [magnifierSrc, hasHovered]);
 
   // Desktop: mouse move for magnifier
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -227,7 +227,7 @@ export default function ImageWithMagnifier({
               boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
               backgroundImage: `url(${magnifierSrc})`,
               backgroundSize: `${imageDimensions.width * zoomLevel}px ${imageDimensions.height * zoomLevel}px`,
-              backgroundPosition: `${-magnifierPosition.x * imageDimensions.width * zoomLevel / 100 + magnifierSize / 2}px ${-magnifierPosition.y * imageDimensions.height * zoomLevel / 100 + magnifierSize / 2}px`,
+              backgroundPosition: `calc(${magnifierPosition.x}% - ${magnifierSize / 2}px) calc(${magnifierPosition.y}% - ${magnifierSize / 2}px)`,
               backgroundRepeat: 'no-repeat',
               backgroundColor: 'white',
               zIndex: 100,
