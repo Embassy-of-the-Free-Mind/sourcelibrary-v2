@@ -9,12 +9,12 @@
   },
   "crons": [
     {
-      "path": "/api/cron/process-batches",
-      "schedule": "0 * * * *"
-    },
-    {
       "path": "/api/cron/submit-ocr",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/archive-ocr",
+      "schedule": "0 */4 * * *"
     },
     {
       "path": "/api/cron/batch-processor",

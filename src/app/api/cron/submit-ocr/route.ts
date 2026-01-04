@@ -134,6 +134,41 @@ async function deleteFile(fileName: string): Promise<void> {
 }
 
 /**
+ * Diversify books by language and provider
+ * Interleaves books across different language traditions
+ * Ensures variety in OCR processing (Latin, Greek, Sanskrit, etc.)
+ */
+function diversifyBooks(books: any[]): any[] {
+  const byLanguage: { [key: string]: any[] } = {};
+
+  for (const book of books) {
+    const lang = book.language || 'Unknown';
+    if (!byLanguage[lang]) {
+      byLanguage[lang] = [];
+    }
+    byLanguage[lang].push(book);
+  }
+
+  const languages = Object.keys(byLanguage).sort(
+    (a, b) => byLanguage[b].length - byLanguage[a].length
+  );
+
+  const result: any[] = [];
+  const maxLen = Math.max(...Object.values(byLanguage).map(arr => arr.length));
+
+  // Cycle through languages, picking one book from each in turn
+  for (let i = 0; i < maxLen; i++) {
+    for (const lang of languages) {
+      if (i < byLanguage[lang].length) {
+        result.push(byLanguage[lang][i]);
+      }
+    }
+  }
+
+  return result;
+}
+
+/**
  * POST /api/cron/submit-ocr
  *
  * Submit batch OCR jobs for all books that need OCR.
@@ -194,13 +229,22 @@ export async function POST(request: NextRequest) {
       pagesByBook.get(bookId)!.push(page);
     }
 
-    // Create batch jobs
+    // Get books that need OCR in diverse order
+    const booksNeedingOcr = Array.from(pagesByBook.keys())
+      .map(bookId => ({ ...bookMap.get(bookId), _id: bookId }))
+      .filter(b => b.id); // Only include books with valid IDs
+
+    const diverseBooks = diversifyBooks(booksNeedingOcr);
+
+    // Create batch jobs in diverse order
     const batchJobs = [];
     let batchCount = 0;
     let currentBatchContent = '';
     let currentBatchPages = 0;
 
-    for (const [bookId, pages] of pagesByBook) {
+    for (const book of diverseBooks) {
+      const bookId = book._id;
+      const pages = pagesByBook.get(bookId) || [];
       const bookInfo = bookMap.get(bookId);
       const language = bookInfo?.language || 'Latin';
 

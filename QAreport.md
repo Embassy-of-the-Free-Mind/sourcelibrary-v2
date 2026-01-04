@@ -4007,3 +4007,238 @@ These are original Sanskrit texts in scholarly editions - acceptable for primary
 | Enneads (MacKenna) | Plotinus, Enneades (Greek, Teubner/Loeb) |
 | Chaldaean Oracles (Lewy) | Oracula Chaldaica (Greek ed.) |
 
+---
+
+## Audit Session: 2026-01-04 (Batch)
+
+### Focus: Unaudited Books with Translations
+
+---
+
+### 1. Musaeum hermeticum reformatum et amplificatum
+
+**Book ID:** 695203a5ab34727b1f041c53
+**Source:** Gallica (BnF)
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Musaeum hermeticum reformatum et amplificatum | MUSÆUM HERMETICUM REFORMATUM ET AMPLIFICATUM | Match |
+| Author | Various (Sendivogius, Philalethes, etc.) | [Anthology - 21 treatises] | Accurate |
+| Year | 1678 | M DC LXXVIII (1678) | Match |
+| Place | [missing] | FRANCOFURTI (Frankfurt) | **Missing** |
+| Publisher | [missing] | Hermannum à Sande | **Missing** |
+| Language | [missing] | Latin | **Missing** |
+
+**Contents (21 Treatises):**
+- Tractatus Aureus (Anonymous)
+- Aureum Seculum Redivivum (Henricus Madathanus)
+- Hydrolithus Sophicus
+- Demonstratio Naturae (Jean de Meung)
+- Summarium Philosophicum (Nicolas Flamel)
+- Via Veritatis Unica
+- Gloria Mundi
+- Basil Valentine's Twelve Keys (via Michael Maier's Tripus Aureus)
+- Thomas Norton's Ordinall
+- Cremer's Testament
+- Michael Sendivogius's Novum Lumen Chemicum
+- Eirenaeus Philalethes's Introitus Apertus
+- And more...
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1678
+- Typography: Period (17th century)
+- Original Latin anthology
+- Engraved frontispiece by M. Merian (1677)
+- **Verdict:** KEEP - Important alchemical anthology
+
+**Translation Quality:** 100% (882 pages)
+- Sampled pages 100, 300, 500, 700
+- Excellent Latin translation quality
+- Alchemical terminology accurate
+- Hermes/Emerald Tablet references correct
+
+**Metadata Issues:**
+1. Place missing: should be "Frankfurt"
+2. Publisher missing: should be "Hermann à Sande"
+3. original_language missing: should be "Latin"
+
+---
+
+### 2. Sylva Sylvarum, Sive Historia Naturalis
+
+**Book ID:** 69529544b184004c526a2c3c
+**Source:** MDZ (Bavarian State Library)
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Sylva Sylvarum, Sive Historia Naturalis | Fr. Baconis de Verulamio SYLVA SYLVARVM, Sive HIST. NATVRALIS | Match |
+| Author | Bacon, Francis | Francis Bacon | Match |
+| Year | 1648 | A.º 1648 | Match |
+| Place | [missing] | AMSTELODAM (Amsterdam) | **Missing** |
+| Publisher | William Lee | Ludovicum Elzevirium (Elzevir) | **INCORRECT** |
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1648
+- Typography: Period (17th century Elzevir)
+- Latin translation of Bacon's work
+- **Verdict:** KEEP - Original period edition
+
+**Translation Quality:** 100% (792 pages)
+- Sampled pages 100, 300
+- Natural philosophy content accurate
+- Scientific Latin rendered well
+
+**Metadata Issues:**
+1. Publisher INCORRECT: Catalog says "William Lee" but this is an Elzevir edition from Amsterdam
+2. Place missing: should be "Amsterdam"
+3. Note: This volume may contain bound-with works (Historia Naturalis Brasiliae glimpsed)
+
+---
+
+### 3. Artis auriferae quam chemiam vocant (Vol. 2)
+
+**Book ID:** 695207e4ab34727b1f043cf6
+**Source:** [Archive]
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Artis auriferae quam chemiam vocant | ARTIS AVRIFERAE QVAM CHEMIAM VOCANT, Volumen Secundum | Match (incomplete) |
+| Author | Various (Turba Philosophorum, Pseudo-Lull, Albertus Magnus, etc.) | [Anthology] | Match |
+| Year | 1610 | cIɔ Iɔ c x (1609) | **Mismatch** |
+| Place | [missing] | BASILEAE (Basel) | **Missing** |
+| Publisher | Conradus Waldkirch | CONRADI WALDKIRCHII | Match |
+| Language | [missing] | Latin | **Missing** |
+
+**Note:** This is Volumen Secundum (Volume 2) - catalog should note this.
+
+**Contents include:**
+- Morienus Romanus (De Compositione Alchemiae)
+- Bernard of Treviso
+- Roger Bacon (De mirabili Potestate artis & naturae)
+- Arnaldus de Villanova (Flos Florum)
+- Rosarium, Scala Philosophorum, Ludus puerorum
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1609
+- Typography: Period (early 17th century)
+- Major alchemical anthology
+- **Verdict:** KEEP - Important primary source
+
+**Translation Quality:** 11% (39/361 pages)
+- Translated pages show good quality
+- **Needs prioritization for full translation**
+
+**Metadata Issues:**
+1. Year discrepancy: Catalog says 1610, title page shows 1609
+2. Place missing: should be "Basel"
+3. Language missing: should be "Latin"
+4. Title should note "Volumen Secundum" (Vol. 2)
+
+---
+
+### 4. De hermetica Aegyptiorum vetere et Paracelsicorum nova medicina
+
+**Book ID:** 6909a2e7cf28baa1b4caec93
+**Author:** Hermann Conring
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | De hermetica Aegyptiorum vetere et Paracelsicorum nova medicina | HERMANNI CONRINGII De HERMETICA ÆGYPTIORVM VETERE ET PARACELSICORVM NOVA MEDICINA | Match |
+| Author | Conring, Hermann | Hermann Conring | Match |
+| Year | 1648 | CIↃ IↃ C XLIX (1649) | **Mismatch** |
+| Place | [missing] | HELMESTADII (Helmstedt) | **Missing** |
+| Publisher | Henning Müller / Martin Richter | Typis HENNINGI MVLLERI, Sumptibus MARTINI RICHTERI | Match |
+| Language | [missing] | Latin | **Missing** |
+
+**Original Language Status:** FLAG:ORIGINAL
+- Print date: 1649 (not 1648)
+- Typography: Period
+- Scholarly critique of Hermetic and Paracelsian medicine
+- Contains Greek passages
+- **Verdict:** KEEP - Important primary source on history of Hermetic medicine
+
+**Translation Quality:** 21% (93/433 pages)
+- Good translation quality on sampled pages
+- Handles Latin/Greek bilingual content
+- **Needs prioritization for full translation**
+
+**Metadata Issues:**
+1. Year discrepancy: Catalog says 1648, title page shows 1649
+2. Place missing: should be "Helmstedt"
+3. Language missing: should be "Latin"
+
+---
+
+### 5. Tractatus duo. De natura elementorum. De quinta essentia
+
+**Book ID:** 6836f8ee811c8ab472a49e36
+**Author:** Cornelius Drebbel
+
+| Field | Catalog | Title Page | Status |
+|-------|---------|------------|--------|
+| Title | Tractatus duo. De natura elementorum. De quinta essentia | CORNELII DREBELII BELGÆ TRACTATVS DVO. I. DE NATVRA ELEMENTORVM. II. DE QVINTA ESSENTIA | Match |
+| Author | Drebbel, Cornelius | Cornelius Drebelius Belgæ | Match |
+| Year | 1628 | M. DC. XXVIII (1628) | Match |
+| Place | [missing] | GENEVÆ (Geneva) | **Missing** |
+| Publisher | William Fitzer / Kaspar Rötel | IOAN. DE TOVRNES (Jean de Tournes) | **INCORRECT** |
+| Language | [missing] | Latin (trans. from Dutch) | **Missing** |
+
+**Note:** Latin translation by Petrus Laurembergivs (Professor at Hamburg) from the Dutch original.
+
+**Original Language Status:** FLAG:CONTEMP-TRANS
+- Print date: 1628
+- Typography: Period (17th century)
+- Contemporary Latin translation of Dutch original
+- Includes letter on perpetual motion
+- **Verdict:** KEEP - Period translation acceptable
+
+**Translation Quality:** 100% (69/69 pages)
+- All pages translated
+- Good quality Latin rendering
+- Natural philosophy content accurate
+
+**Metadata Issues:**
+1. Publisher INCORRECT: Catalog says "William Fitzer / Kaspar Rötel" but this is Geneva edition by Jean de Tournes
+2. Place missing: should be "Geneva"
+3. Language missing: should be "Latin"
+4. Should note translator: Petrus Laurembergivs
+
+---
+
+## Session Summary
+
+**Books Audited:** 5
+
+| Book | Pages | Translated | Quality | Original Status |
+|------|-------|------------|---------|-----------------|
+| Musaeum hermeticum | 882 | 882 (100%) | Excellent | Original Latin |
+| Sylva Sylvarum | 792 | 792 (100%) | Excellent | Original Latin |
+| Artis auriferae | 361 | 39 (11%) | Good | Original Latin |
+| De hermetica | 433 | 93 (21%) | Good | Original Latin |
+| Drebbel Tractatus | 69 | 69 (100%) | Good | Period Trans. |
+
+**Metadata Issues Found:**
+
+| Issue Type | Count |
+|------------|-------|
+| Missing Place | 5 |
+| Missing Language | 5 |
+| Incorrect Publisher | 2 |
+| Year Discrepancy | 2 |
+
+**Publisher Corrections Needed:**
+1. **Sylva Sylvarum**: "William Lee" → "Ludovicus Elzevirius (Elzevir)"
+2. **Drebbel Tractatus**: "William Fitzer / Kaspar Rötel" → "Jean de Tournes"
+
+**Year Corrections Needed:**
+1. **Artis auriferae**: 1610 → 1609
+2. **De hermetica**: 1648 → 1649
+
+**All 5 books verified as ORIGINAL or CONTEMPORARY TRANSLATIONS - KEEP**
+
+**Recommendations:**
+1. Priority translation: Artis auriferae (322 pages remaining) - major alchemical anthology
+2. Priority translation: De hermetica Aegyptiorum (340 pages remaining) - unique Hermetic history
+3. Update metadata for all 5 books with missing place/language
+4. Correct publisher errors for Sylva Sylvarum and Drebbel
+
