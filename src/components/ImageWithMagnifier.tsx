@@ -227,7 +227,7 @@ export default function ImageWithMagnifier({
               boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
               backgroundImage: `url(${magnifierSrc})`,
               backgroundSize: `${imageDimensions.width * zoomLevel}px ${imageDimensions.height * zoomLevel}px`,
-              backgroundPosition: `calc(${magnifierPosition.x}% - ${magnifierSize / 2}px) calc(${magnifierPosition.y}% - ${magnifierSize / 2}px)`,
+              backgroundPosition: `${-(magnifierPosition.x / 100) * imageDimensions.width * zoomLevel + magnifierSize / 2}px ${-(magnifierPosition.y / 100) * imageDimensions.height * zoomLevel + magnifierSize / 2}px`,
               backgroundRepeat: 'no-repeat',
               backgroundColor: 'white',
               zIndex: 100,

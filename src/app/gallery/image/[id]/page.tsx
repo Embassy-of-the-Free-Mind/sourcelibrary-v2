@@ -348,7 +348,7 @@ export default function ImageDetailPage({
         <div className="max-w-6xl mx-auto px-4">
           {/* Image container with magnifier */}
           <div className="relative bg-stone-800 rounded-xl overflow-hidden my-8">
-            <div className="aspect-[4/3] md:aspect-[16/10] relative">
+            <div className="aspect-[4/3] h-96 relative">
               <ImageWithMagnifier
                 src={data.imageUrl}
                 alt={data.description}
