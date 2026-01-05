@@ -6,6 +6,42 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
+ * Normalize text for search matching.
+ * - Removes diacritics (ü→u, é→e, ñ→n)
+ * - Converts to lowercase
+ * - Trims whitespace
+ *
+ * This allows "durer" to match "Dürer", "cafe" to match "café", etc.
+ */
+export function normalizeText(text: string): string {
+  return text
+    .normalize('NFD')                    // Decompose: ü → u + combining umlaut
+    .replace(/[\u0300-\u036f]/g, '')     // Remove combining diacritical marks
+    .toLowerCase()
+    .trim();
+}
+
+/**
+ * Check if a text field matches a search query (diacritic-insensitive).
+ */
+export function textMatches(text: string | null | undefined, query: string): boolean {
+  if (!text) return false;
+  return normalizeText(text).includes(normalizeText(query));
+}
+
+/**
+ * Create a regex for diacritic-insensitive search.
+ * Use this for MongoDB $regex queries.
+ */
+export function createSearchRegex(query: string): RegExp {
+  // Escape regex special characters
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Normalize the query
+  const normalized = normalizeText(escaped);
+  return new RegExp(normalized, 'i');
+}
+
+/**
  * Get the best available image URL for a page.
  * Priority: cropped_photo > archived_photo > photo_original > photo
  */

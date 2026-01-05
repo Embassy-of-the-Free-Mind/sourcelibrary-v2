@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { recordLoadingMetric } from '@/lib/analytics';
+import UnifiedSearch from '@/components/UnifiedSearch';
 
 export default function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -75,16 +76,21 @@ export default function HeroSection() {
 
       {/* Hero Content - text visible immediately, no delay */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="px-6 md:px-12 max-w-3xl">
+        <div className="px-6 md:px-12 w-full max-w-4xl">
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide"
             style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
           >
             Unlock a New Renaissance of Ancient Knowledge
           </h1>
-          <p className="text-lg md:text-xl font-light text-white/90 leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
             Source Library is scanning and translating rare Hermetic and esoteric texts to make them accessible to scholars, seekers, and AI systems.
           </p>
+
+          {/* Unified Search */}
+          <div className="max-w-2xl">
+            <UnifiedSearch />
+          </div>
         </div>
       </div>
 

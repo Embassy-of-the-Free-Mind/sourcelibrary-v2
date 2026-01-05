@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { normalizeText } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,9 +37,12 @@ export async function GET(request: NextRequest) {
     const db = await getDb();
 
     // Split query into words and search for all of them
-    const words = query.split(/\s+/).filter(w => w.length >= 2);
+    // Normalize to strip diacritics for better matching
+    const words = normalizeText(query).split(/\s+/).filter(w => w.length >= 2);
 
     // Build query - each word must match in title, author, year, or description
+    // Note: MongoDB regex doesn't support diacritic-insensitive search natively.
+    // For full diacritic support, we'd need to store normalized fields or use text indexes.
     const wordConditions = words.map(word => ({
       $or: [
         { title: { $regex: word, $options: 'i' } },

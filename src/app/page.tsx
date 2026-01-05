@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import HeroSection from '@/components/HeroSection';
 import BookLibrary from '@/components/BookLibrary';
+import FeaturedGallery from '@/components/FeaturedGallery';
 import HomePageSchema from '@/components/HomePageSchema';
 import { Book } from '@/lib/types';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
@@ -110,10 +111,114 @@ async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
   }
 }
 
+interface FeaturedImage {
+  id: string;
+  pageId: string;
+  detectionIndex: number;
+  imageUrl: string;
+  description: string;
+  type?: string;
+  bookTitle: string;
+  bookId: string;
+  author?: string;
+  year?: number;
+  bbox?: { x: number; y: number; width: number; height: number };
+}
+
+async function getFeaturedImages(): Promise<FeaturedImage[]> {
+  try {
+    const db = await getDb();
+
+    const pipeline = [
+      {
+        $match: {
+          'detected_images': { $exists: true, $ne: [] },
+          $or: [
+            { cropped_photo: { $exists: true, $ne: '' } },
+            { photo_original: { $exists: true, $ne: '' } }
+          ]
+        }
+      },
+      { $unwind: { path: '$detected_images', includeArrayIndex: 'detectionIndex' } },
+      {
+        $match: {
+          'detected_images.gallery_quality': { $gte: 0.85 },
+          'detected_images.bbox': { $exists: true }
+        }
+      },
+      {
+        $lookup: {
+          from: 'books',
+          localField: 'book_id',
+          foreignField: 'id',
+          as: 'book'
+        }
+      },
+      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          qualityTier: { $cond: [{ $gte: ['$detected_images.gallery_quality', 0.95] }, 3, { $cond: [{ $gte: ['$detected_images.gallery_quality', 0.9] }, 2, 1] }] },
+          randomSort: { $rand: {} }
+        }
+      },
+      { $sort: { qualityTier: -1, randomSort: 1 } },
+      { $group: { _id: '$book_id', images: { $push: '$$ROOT' } } },
+      { $project: { images: { $slice: ['$images', 2] } } },
+      { $unwind: '$images' },
+      { $sort: { 'images.qualityTier': -1, 'images.randomSort': 1 } },
+      { $limit: 12 },
+      {
+        $project: {
+          id: { $concat: ['$images.id', ':', { $toString: '$images.detectionIndex' }] },
+          pageId: '$images.id',
+          detectionIndex: '$images.detectionIndex',
+          imageUrl: { $ifNull: ['$images.cropped_photo', { $ifNull: ['$images.photo_original', '$images.photo'] }] },
+          description: '$images.detected_images.description',
+          type: '$images.detected_images.type',
+          bbox: '$images.detected_images.bbox',
+          bookId: '$images.book_id',
+          bookTitle: { $ifNull: ['$images.book.display_title', { $ifNull: ['$images.book.title', 'Unknown'] }] },
+          author: '$images.book.author',
+          year: '$images.book.year'
+        }
+      }
+    ];
+
+    const images = await db.collection('pages').aggregate(pipeline).toArray();
+    return JSON.parse(JSON.stringify(images)) as FeaturedImage[];
+  } catch (error) {
+    console.error('Error fetching featured images:', error);
+    return [];
+  }
+}
+
+async function getLibraryStats() {
+  try {
+    const db = await getDb();
+
+    const [bookCount, translatedPages, languages] = await Promise.all([
+      db.collection('books').countDocuments(),
+      db.collection('pages').countDocuments({ 'translation.data': { $exists: true, $ne: '' } }),
+      db.collection('books').distinct('language')
+    ]);
+
+    return {
+      bookCount,
+      translatedPages,
+      languageCount: languages.filter(Boolean).length
+    };
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    return { bookCount: 0, translatedPages: 0, languageCount: 0 };
+  }
+}
+
 export default async function HomePage() {
-  const [books, featuredTopics] = await Promise.all([
+  const [books, featuredTopics, featuredImages, stats] = await Promise.all([
     getBooks(),
     getFeaturedTopics(),
+    getFeaturedImages(),
+    getLibraryStats(),
   ]);
 
   // Get unique languages for filter
@@ -130,6 +235,45 @@ export default async function HomePage() {
       <div className="min-h-screen">
         {/* Hero Section with Video Background */}
         <HeroSection />
+
+      {/* Stats Section */}
+      <section className="bg-stone-900 text-white py-10">
+        <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="grid grid-cols-3 gap-8 text-center">
+            <div>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-amber-400" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                {stats.bookCount.toLocaleString()}
+              </div>
+              <div className="text-stone-400 mt-2 text-sm md:text-base uppercase tracking-wide">
+                Books in Library
+              </div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-amber-400" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                {stats.translatedPages.toLocaleString()}
+              </div>
+              <div className="text-stone-400 mt-2 text-sm md:text-base uppercase tracking-wide">
+                Pages Translated
+              </div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-amber-400" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                {stats.languageCount}
+              </div>
+              <div className="text-stone-400 mt-2 text-sm md:text-base uppercase tracking-wide">
+                Languages
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Gallery */}
+      {featuredImages.length > 0 && (
+        <section className="bg-[#f6f3ee]">
+          <FeaturedGallery images={featuredImages} />
+        </section>
+      )}
 
       {/* Library Section */}
       <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
