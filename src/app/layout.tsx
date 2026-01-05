@@ -4,6 +4,8 @@ import GlobalFooter from "@/components/GlobalFooter";
 import Providers from "@/components/Providers";
 import { Analytics } from "@vercel/analytics/react";
 import PageTracker from "@/components/PageTracker";
+import { getSiteMode } from "@/lib/site-mode.server";
+import SiteModeIndicator from "@/components/SiteModeIndicator";
 
 export const metadata: Metadata = {
   title: "Source Library",
@@ -51,11 +53,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteMode = await getSiteMode();
+
   return (
     <html lang="en">
       <head>
@@ -67,11 +71,12 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col">
-        <Providers>
+        <Providers siteMode={siteMode}>
           <div className="flex-1">
             {children}
           </div>
           <GlobalFooter />
+          <SiteModeIndicator />
         </Providers>
         <Analytics />
         <PageTracker />

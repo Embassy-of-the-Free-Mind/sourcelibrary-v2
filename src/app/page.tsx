@@ -2,8 +2,10 @@ import { getDb } from '@/lib/mongodb';
 import HeroSection from '@/components/HeroSection';
 import BookLibrary from '@/components/BookLibrary';
 import HomePageSchema from '@/components/HomePageSchema';
+import SocietyLandingPage from '@/components/SocietyLandingPage';
 import { Book } from '@/lib/types';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
+import { getSiteMode } from '@/lib/site-mode.server';
 
 // Force dynamic rendering (no static generation)
 export const dynamic = 'force-dynamic';
@@ -111,6 +113,15 @@ async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
 }
 
 export default async function HomePage() {
+  // Check site mode first
+  const siteMode = await getSiteMode();
+
+  // If we're on the Ficino Society domain, show the Society landing page
+  if (siteMode.isSociety) {
+    return <SocietyLandingPage />;
+  }
+
+  // Otherwise, show the Source Library homepage
   const [books, featuredTopics] = await Promise.all([
     getBooks(),
     getFeaturedTopics(),
