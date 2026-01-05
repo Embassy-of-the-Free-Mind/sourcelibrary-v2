@@ -19,6 +19,14 @@
     {
       "path": "/api/cron/batch-processor",
       "schedule": "0 */6 * * *"
+    },
+    {
+      "path": "/api/cron/social-post",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/social-reset",
+      "schedule": "0 0 * * *"
     }
   ]
 }

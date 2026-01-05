@@ -8,6 +8,7 @@ import { Book, Page } from '@/lib/types';
 import { QuoteShare } from '@/components/ShareButton';
 import SectionsNav from '@/components/SectionsNav';
 import { BookLoader } from '@/components/ui/BookLoader';
+import LikeButton from '@/components/LikeButton';
 
 interface SectionSummary {
   title: string;
@@ -207,12 +208,24 @@ export default function GuidePage({ params }: GuidePageProps) {
                 Source Library
               </span>
             </Link>
-            <span
-              className="text-xs uppercase tracking-wider px-2 py-1 rounded"
-              style={{ background: 'var(--bg-warm)', color: 'var(--accent-rust)' }}
-            >
-              Reading Guide
-            </span>
+            <div className="flex items-center gap-3">
+              {bookId && (
+                <div className="p-1.5 rounded-lg hover:bg-stone-100 transition-all">
+                  <LikeButton
+                    targetType="book"
+                    targetId={bookId}
+                    size="sm"
+                    showCount={true}
+                  />
+                </div>
+              )}
+              <span
+                className="text-xs uppercase tracking-wider px-2 py-1 rounded"
+                style={{ background: 'var(--bg-warm)', color: 'var(--accent-rust)' }}
+              >
+                Reading Guide
+              </span>
+            </div>
           </div>
         </div>
       </header>

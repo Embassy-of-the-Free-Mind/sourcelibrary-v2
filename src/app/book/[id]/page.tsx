@@ -18,6 +18,7 @@ import EditionsPanel from '@/components/EditionsPanel';
 import SchemaOrgMetadata from '@/components/SchemaOrgMetadata';
 import CategoryPicker from '@/components/CategoryPicker';
 import { BookShare } from '@/components/ShareButton';
+import LikeButton from '@/components/LikeButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -290,6 +291,14 @@ async function BookInfo({ id }: { id: string }) {
 
                 {/* Utilities - always available */}
                 <span className="hidden sm:inline text-stone-600">|</span>
+                <div className="px-2 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                  <LikeButton
+                    targetType="book"
+                    targetId={book.id}
+                    size="sm"
+                    showCount={true}
+                  />
+                </div>
                 <BookShare
                   title={book.display_title || book.title}
                   author={book.author}

@@ -8,6 +8,7 @@ import {
   Search, Image as ImageIcon, BookOpen, X, ChevronLeft, ChevronRight,
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
+import LikeButton from '@/components/LikeButton';
 
 interface BBox {
   x: number;
@@ -508,52 +509,65 @@ function GalleryCard({ item }: { item: GalleryItem }) {
     ? getCroppedImageUrl(item.imageUrl, item.bbox)
     : item.imageUrl;
 
+  const galleryImageId = `${item.pageId}:${item.detectionIndex}`;
+
   return (
-    <Link
-      href={`/gallery/image/${item.pageId}:${item.detectionIndex}`}
-      className="group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5"
-    >
-      <div className="relative aspect-square bg-stone-100">
-        {!imageError ? (
-          <Image
-            src={displayUrl}
-            alt={item.description}
-            fill
-            className="object-contain group-hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-            onError={() => setImageError(true)}
-            unoptimized={!!item.bbox}
+    <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
+      <Link href={`/gallery/image/${galleryImageId}`}>
+        <div className="relative aspect-square bg-stone-100">
+          {!imageError ? (
+            <Image
+              src={displayUrl}
+              alt={item.description}
+              fill
+              className="object-contain group-hover:scale-105 transition-transform duration-300"
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
+              onError={() => setImageError(true)}
+              unoptimized={!!item.bbox}
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-stone-300">
+              <ImageIcon className="w-8 h-8" />
+            </div>
+          )}
+
+          {/* Type badge */}
+          {item.type && (
+            <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
+              {item.type}
+            </span>
+          )}
+
+          {/* Quality indicator */}
+          {item.galleryQuality && item.galleryQuality >= 0.9 && (
+            <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-amber-500 text-white">
+              ★
+            </span>
+          )}
+        </div>
+
+        <div className="p-2">
+          <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
+            {item.description}
+          </p>
+          <p className="text-[10px] text-stone-400 line-clamp-1">
+            {item.bookTitle}
+          </p>
+        </div>
+      </Link>
+
+      {/* Like button overlay */}
+      <div className="absolute top-1 left-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+        <div className="bg-white/90 backdrop-blur-sm rounded-full shadow-sm">
+          <LikeButton
+            targetType="image"
+            targetId={galleryImageId}
+            size="sm"
+            showCount={false}
           />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-stone-300">
-            <ImageIcon className="w-8 h-8" />
-          </div>
-        )}
-
-        {/* Type badge */}
-        {item.type && (
-          <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
-            {item.type}
-          </span>
-        )}
-
-        {/* Quality indicator */}
-        {item.galleryQuality && item.galleryQuality >= 0.9 && (
-          <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-amber-500 text-white">
-            ★
-          </span>
-        )}
+        </div>
       </div>
-
-      <div className="p-2">
-        <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
-          {item.description}
-        </p>
-        <p className="text-[10px] text-stone-400 line-clamp-1">
-          {item.bookTitle}
-        </p>
-      </div>
-    </Link>
+    </div>
   );
 }
 

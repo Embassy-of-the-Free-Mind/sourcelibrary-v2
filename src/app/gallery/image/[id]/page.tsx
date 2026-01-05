@@ -35,6 +35,7 @@ import {
   Save
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ImageWithMagnifier';
+import LikeButton from '@/components/LikeButton';
 
 interface ImageMetadata {
   subjects?: string[];
@@ -346,6 +347,16 @@ export default function ImageDetailPage({
           </Link>
 
           <div className="flex items-center gap-2">
+            {imageId && (
+              <div className="p-2 rounded-lg hover:bg-stone-800 transition-colors">
+                <LikeButton
+                  targetType="image"
+                  targetId={imageId}
+                  size="md"
+                  showCount={true}
+                />
+              </div>
+            )}
             <button
               onClick={copyLink}
               className="p-2 rounded-lg hover:bg-stone-800 transition-colors"
