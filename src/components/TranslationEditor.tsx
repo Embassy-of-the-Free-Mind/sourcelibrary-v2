@@ -38,6 +38,7 @@ import AnnotationPanel from './AnnotationPanel';
 import HighlightSelection from './HighlightSelection';
 import { BookShare } from './ShareButton';
 import { GoogleTranslate } from './GoogleTranslate';
+import LikeButton from './LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
@@ -760,8 +761,16 @@ export default function TranslationEditor({
               </button>
             )}
 
-            {/* Share, Highlights, Annotations */}
+            {/* Like, Share, Highlights, Annotations */}
             <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+              <div className="p-1.5 rounded-md hover:bg-stone-100 transition-all">
+                <LikeButton
+                  targetType="page"
+                  targetId={page.id}
+                  size="sm"
+                  showCount={true}
+                />
+              </div>
               <BookShare
                 title={book.display_title || book.title}
                 author={book.author}
@@ -1213,9 +1222,52 @@ export default function TranslationEditor({
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Panel visibility toggles - icon-only on mobile */}
+            <div className="flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+              <button
+                onClick={() => setShowImagePanel(!showImagePanel)}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showImagePanel ? '' : 'opacity-50'}`}
+                style={{
+                  background: showImagePanel ? 'var(--bg-white)' : 'transparent',
+                  color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  boxShadow: showImagePanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                }}
+                title="Toggle source image"
+              >
+                <ImageIcon className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <span className="hidden sm:inline">Image</span>
+              </button>
+              <button
+                onClick={() => setShowOcrPanel(!showOcrPanel)}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showOcrPanel ? '' : 'opacity-50'}`}
+                style={{
+                  background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
+                  color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  boxShadow: showOcrPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                }}
+                title="Toggle OCR panel"
+              >
+                <FileText className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <span className="hidden sm:inline">OCR</span>
+              </button>
+              <button
+                onClick={() => setShowTranslationPanel(!showTranslationPanel)}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showTranslationPanel ? '' : 'opacity-50'}`}
+                style={{
+                  background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
+                  color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  boxShadow: showTranslationPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+                }}
+                title="Toggle translation panel"
+              >
+                <Languages className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <span className="hidden sm:inline">English</span>
+              </button>
+            </div>
+
             {/* Mode Toggle */}
-            <div className="flex items-center rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
+            <div className="hidden sm:flex items-center rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
               <button
                 onClick={() => setMode('read')}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
@@ -1262,6 +1314,16 @@ export default function TranslationEditor({
               </button>
             </div>
 
+            {/* Like Button */}
+            <div className="p-1.5 rounded-lg hover:bg-stone-100 transition-all">
+              <LikeButton
+                targetType="page"
+                targetId={page.id}
+                size="sm"
+                showCount={true}
+              />
+            </div>
+
             {/* Info Button */}
             <button
               onClick={() => setShowPageMetadata(true)}
@@ -1276,100 +1338,109 @@ export default function TranslationEditor({
         </div>
       </header>
 
-      {/* Main Content - Three Columns (stacked on tablets/mobile, columns on desktop) */}
+      {/* Main Content - Panels toggle visibility, stacked on mobile, columns on desktop */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Source Image Panel */}
-        <div className="w-full lg:w-1/3 flex flex-col" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
-          <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
-            <span className="label">Source</span>
-            <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
-              {book.language || 'Latin'}
-            </span>
-          </div>
-          <div className="flex-1 overflow-auto p-4">
-            <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
-              {pageDisplayUrl ? (
-                <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
-              ) : (
-                <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-                  No image available
-                </div>
-              )}
+        {showImagePanel && (
+          <div className="w-full lg:flex-1 flex flex-col" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+            <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <span className="label">Source</span>
+              <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
+                {book.language || 'Latin'}
+              </span>
+            </div>
+            <div className="flex-1 overflow-auto p-4">
+              <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                {pageDisplayUrl ? (
+                  <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
+                ) : (
+                  <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
+                    No image available
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* OCR Panel */}
-        <div className="w-full lg:w-1/3 flex flex-col" style={{ background: 'var(--bg-white)', borderRight: '1px solid var(--border-light)' }}>
-          <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setShowOcrSettings(true)}
-                className="btn-secondary"
-                style={{ padding: '6px 12px' }}
-              >
-                <Pencil className="w-4 h-4" />
-                Edit OCR Prompt
-              </button>
-              <button
-                onClick={() => handleProcess('ocr')}
-                disabled={processing !== null}
-                className="btn-primary"
-                style={{ padding: '6px 16px' }}
-              >
-                {processing === 'ocr' ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : null}
-                Run OCR
-              </button>
+        {showOcrPanel && (
+          <div className="w-full lg:flex-1 flex flex-col" style={{ background: 'var(--bg-white)', borderRight: '1px solid var(--border-light)' }}>
+            <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <button
+                  onClick={() => setShowOcrSettings(true)}
+                  className="btn-secondary flex items-center justify-center gap-1.5 min-w-[40px] sm:min-w-0"
+                  style={{ padding: '6px 10px' }}
+                  title="Edit OCR Prompt"
+                >
+                  <Pencil className="w-4 h-4" />
+                  <span className="hidden sm:inline">Edit Prompt</span>
+                </button>
+                <button
+                  onClick={() => handleProcess('ocr')}
+                  disabled={processing !== null}
+                  className="btn-primary flex items-center justify-center gap-1.5 min-w-[40px] sm:min-w-0"
+                  style={{ padding: '6px 12px' }}
+                  title="Run OCR"
+                >
+                  {processing === 'ocr' ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : null}
+                  <span className="hidden sm:inline">Run</span> OCR
+                </button>
+              </div>
+            </div>
+
+            <div className="px-3 sm:px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>OCR Text</span>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{ocrText.length} chars</span>
+            </div>
+
+            <div className="flex-1 overflow-auto p-3 sm:p-4">
+              <textarea
+                value={ocrText}
+                onChange={(e) => setOcrText(e.target.value)}
+                onBlur={handleSave}
+                className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
+                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
+                placeholder="OCR text will appear here..."
+              />
             </div>
           </div>
-
-          <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-            <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>OCR Text</span>
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{ocrText.length} chars</span>
-          </div>
-
-          <div className="flex-1 overflow-auto p-4">
-            <textarea
-              value={ocrText}
-              onChange={(e) => setOcrText(e.target.value)}
-              onBlur={handleSave}
-              className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-              style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
-              placeholder="OCR text will appear here..."
-            />
-          </div>
-        </div>
+        )}
 
         {/* Translation Panel */}
-        <div className="w-full lg:w-1/3 flex flex-col" style={{ background: 'var(--bg-white)' }}>
-          <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setShowTranslationSettings(true)}
-                className="btn-secondary"
-                style={{ padding: '6px 12px' }}
-              >
-                <Pencil className="w-4 h-4" />
-                Edit Translation Prompt
-              </button>
-              <button
-                onClick={() => handleProcess('translation')}
-                disabled={processing !== null || !ocrText}
-                className="btn-primary"
-                style={{ padding: '6px 16px' }}
-              >
-                {processing === 'translation' ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : null}
-                Translate
-              </button>
+        {showTranslationPanel && (
+          <div className="w-full lg:flex-1 flex flex-col" style={{ background: 'var(--bg-white)' }}>
+            <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2 sm:gap-3">
+                <button
+                  onClick={() => setShowTranslationSettings(true)}
+                  className="btn-secondary flex items-center justify-center gap-1.5 min-w-[40px] sm:min-w-0"
+                  style={{ padding: '6px 10px' }}
+                  title="Edit Translation Prompt"
+                >
+                  <Pencil className="w-4 h-4" />
+                  <span className="hidden sm:inline">Edit Prompt</span>
+                </button>
+                <button
+                  onClick={() => handleProcess('translation')}
+                  disabled={processing !== null || !ocrText}
+                  className="btn-primary flex items-center justify-center gap-1.5 min-w-[40px] sm:min-w-0"
+                  style={{ padding: '6px 12px' }}
+                  title="Translate"
+                >
+                  {processing === 'translation' ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : null}
+                  Translate
+                </button>
+              </div>
             </div>
-          </div>
 
-          <div className="px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-            <div className="flex items-center gap-2">
+            <div className="px-3 sm:px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2">
               <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Translation</span>
               <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}>
                 English
@@ -1378,7 +1449,7 @@ export default function TranslationEditor({
             <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
           </div>
 
-          <div className="flex-1 overflow-auto p-4">
+          <div className="flex-1 overflow-auto p-3 sm:p-4">
             <textarea
               value={translationText}
               onChange={(e) => setTranslationText(e.target.value)}
@@ -1389,6 +1460,7 @@ export default function TranslationEditor({
             />
           </div>
         </div>
+        )}
       </div>
 
       {/* CC0 Footer */}
