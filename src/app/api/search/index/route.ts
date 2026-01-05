@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { normalizeText } from '@/lib/utils';
 
 interface IndexSearchResult {
   type: 'keyword' | 'concept' | 'person' | 'place' | 'vocabulary' | 'quote';
@@ -34,7 +33,8 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
     const results: IndexSearchResult[] = [];
-    const queryNormalized = normalizeText(query);
+    const queryLower = query.toLowerCase();
+    const queryRegex = new RegExp(query, 'i');
 
     // Get all books with indexes
     const books = await db.collection('books')
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
       // Search vocabulary (original language terms)
       if (!type || type === 'vocabulary') {
         for (const entry of (index.vocabulary || [])) {
-          if (entry.term && normalizeText(entry.term).includes(queryNormalized)) {
+          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
             results.push({
               type: 'vocabulary',
               term: entry.term,
@@ -77,7 +77,7 @@ export async function GET(request: NextRequest) {
       // Search keywords
       if (!type || type === 'keyword') {
         for (const entry of (index.keywords || [])) {
-          if (entry.term && normalizeText(entry.term).includes(queryNormalized)) {
+          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
             results.push({
               type: 'keyword',
               term: entry.term,
@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
       // Search people
       if (!type || type === 'person') {
         for (const entry of (index.people || [])) {
-          if (entry.term && normalizeText(entry.term).includes(queryNormalized)) {
+          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
             results.push({
               type: 'person',
               term: entry.term,
@@ -109,7 +109,7 @@ export async function GET(request: NextRequest) {
       // Search places
       if (!type || type === 'place') {
         for (const entry of (index.places || [])) {
-          if (entry.term && normalizeText(entry.term).includes(queryNormalized)) {
+          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
             results.push({
               type: 'place',
               term: entry.term,
@@ -125,7 +125,7 @@ export async function GET(request: NextRequest) {
       // Search concepts
       if (!type || type === 'concept') {
         for (const entry of (index.concepts || [])) {
-          if (entry.term && normalizeText(entry.term).includes(queryNormalized)) {
+          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
             results.push({
               type: 'concept',
               term: entry.term,
@@ -142,7 +142,7 @@ export async function GET(request: NextRequest) {
       if (!type || type === 'quote') {
         for (const section of (index.sectionSummaries || [])) {
           for (const quote of (section.quotes || [])) {
-            if (quote.text && normalizeText(quote.text).includes(queryNormalized)) {
+            if (quote.text && queryRegex.test(quote.text)) {
               results.push({
                 type: 'quote',
                 term: quote.text.substring(0, 100) + (quote.text.length > 100 ? '...' : ''),
@@ -162,8 +162,8 @@ export async function GET(request: NextRequest) {
 
     // Sort by relevance (exact matches first, then by frequency of pages)
     results.sort((a, b) => {
-      const aExact = normalizeText(a.term) === queryNormalized;
-      const bExact = normalizeText(b.term) === queryNormalized;
+      const aExact = a.term.toLowerCase() === queryLower;
+      const bExact = b.term.toLowerCase() === queryLower;
       if (aExact !== bExact) return aExact ? -1 : 1;
 
       // Then by number of page references (more = more important)

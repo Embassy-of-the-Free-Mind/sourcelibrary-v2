@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
-import { normalizeText } from '@/lib/utils';
 
 interface SearchResult {
   id: string;
@@ -29,17 +28,15 @@ function escapeRegex(str: string): string {
 }
 
 function extractSnippet(text: string, query: string, contextChars = 150): string {
-  // Use normalized text for finding the match position (handles diacritics)
-  const normalizedText = normalizeText(text);
-  const normalizedQuery = normalizeText(query);
-  const index = normalizedText.indexOf(normalizedQuery);
+  const lowerText = text.toLowerCase();
+  const lowerQuery = query.toLowerCase();
+  const index = lowerText.indexOf(lowerQuery);
 
   if (index === -1) {
     // If exact match not found, return start of text
     return text.slice(0, contextChars * 2) + (text.length > contextChars * 2 ? '...' : '');
   }
 
-  // Use original text for the snippet (preserves diacritics in output)
   const start = Math.max(0, index - contextChars);
   const end = Math.min(text.length, index + query.length + contextChars);
 
@@ -79,9 +76,6 @@ export async function GET(request: NextRequest) {
     const seenBooks = new Set<string>();
 
     // Build regex for text search
-    // Note: MongoDB regex doesn't support diacritic-insensitive search natively.
-    // Client-side filtering (BookLibrary) and snippet extraction handle diacritics.
-    // For full DB-level diacritic support, consider text indexes with collation.
     const queryRegex = new RegExp(escapeRegex(query), 'i');
 
     // When searching within a specific book, skip book-level search

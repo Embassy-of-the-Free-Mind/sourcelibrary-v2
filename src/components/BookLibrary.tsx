@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import BookCard from '@/components/BookCard';
 import { Book } from '@/lib/types';
-import { normalizeText } from '@/lib/utils';
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check } from 'lucide-react';
 
 interface FeaturedTopic {
@@ -61,14 +60,14 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
   const filteredAndSortedBooks = useMemo(() => {
     let result = [...books];
 
-    // Filter by search query (diacritic-insensitive)
+    // Filter by search query
     if (searchQuery.trim()) {
-      const query = normalizeText(searchQuery);
+      const query = searchQuery.toLowerCase().trim();
       result = result.filter(book => {
-        const title = normalizeText(book.display_title || book.title || '');
-        const author = normalizeText(book.author || '');
-        const language = normalizeText(book.language || '');
-        const categories = normalizeText((book.categories || []).join(' '));
+        const title = (book.display_title || book.title || '').toLowerCase();
+        const author = (book.author || '').toLowerCase();
+        const language = (book.language || '').toLowerCase();
+        const categories = (book.categories || []).join(' ').toLowerCase();
         return (
           title.includes(query) ||
           author.includes(query) ||
