@@ -385,27 +385,37 @@ export async function POST(request: NextRequest) {
 
     const db = await getDb();
 
-    // Find pages with detected images (from OCR tags) that have image URLs
-    const query: Record<string, unknown> = {
-      $and: [
-        {
-          $or: [
-            { 'detected_images.0': { $exists: true } },
-            { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } }
-          ]
-        },
-        {
-          $or: [
-            { cropped_photo: { $exists: true, $ne: '' } },
-            { photo_original: { $exists: true, $ne: '' } },
-            { photo: { $exists: true, $ne: '' } }
-          ]
-        }
+    // Find pages with image URLs
+    // If bookId specified, process ALL pages with photos (for full extraction)
+    // Otherwise, only process pages with image indicators in OCR
+    const hasImageUrl = {
+      $or: [
+        { cropped_photo: { $exists: true, $ne: '' } },
+        { photo_original: { $exists: true, $ne: '' } },
+        { photo: { $exists: true, $ne: '' } }
       ]
     };
 
+    let query: Record<string, unknown>;
+
     if (bookId) {
-      query.book_id = bookId;
+      // For specific book: process all pages with photos
+      query = { book_id: bookId, ...hasImageUrl };
+    } else {
+      // For general extraction: only pages with image indicators
+      query = {
+        $and: [
+          {
+            $or: [
+              { 'detected_images.0': { $exists: true } },
+              { 'ocr.data': { $regex: '\\[\\[image:', $options: 'i' } },
+              { 'ocr.data': { $regex: '<image-desc>', $options: 'i' } },
+              { 'ocr.data': { $regex: '<detected-images>', $options: 'i' } }
+            ]
+          },
+          hasImageUrl
+        ]
+      };
     }
 
     const pages = await db.collection('pages').aggregate([
