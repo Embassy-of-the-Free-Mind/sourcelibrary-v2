@@ -865,7 +865,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
                       <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
-                        <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} />
+                        <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} />
                       </div>
                     ) : (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">

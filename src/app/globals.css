@@ -1,5 +1,5 @@
 /* Typography imports - must be first */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@300;400;500;600&family=Noto+Sans+Arabic:wght@400;500;600&family=Noto+Sans+Hebrew:wght@400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";
 
@@ -331,4 +331,136 @@ mark {
 
 .animate-emanate {
   animation: emanate 2.1s ease-out infinite;
+}
+
+/* ================================================
+   RTL (Right-to-Left) Language Support
+   For Arabic, Hebrew, Aramaic, Syriac, Persian, Urdu
+   ================================================ */
+
+/* RTL text direction */
+.rtl,
+[dir="rtl"],
+[lang="ar"],
+[lang="he"],
+[lang="fa"],
+[lang="ur"],
+[lang="arc"],
+[lang="syr"] {
+  direction: rtl;
+  text-align: right;
+}
+
+/* RTL-specific fonts */
+.font-arabic,
+[lang="ar"] {
+  font-family: 'Noto Naskh Arabic', 'Noto Sans Arabic', 'Traditional Arabic', 'Arabic Typesetting', serif;
+}
+
+.font-hebrew,
+[lang="he"],
+[lang="arc"] {
+  font-family: 'Noto Sans Hebrew', 'David', 'Times New Roman', serif;
+}
+
+/* RTL prose styling for manuscripts */
+.prose-manuscript.rtl,
+.prose-manuscript[dir="rtl"] {
+  font-family: 'Noto Naskh Arabic', 'Noto Sans Hebrew', 'Newsreader', Georgia, serif;
+  text-align: right;
+}
+
+/* Mixed LTR/RTL content - use Unicode bidi algorithm */
+.bidi-auto {
+  unicode-bidi: plaintext;
+}
+
+/* Embedded LTR content in RTL context */
+.rtl .ltr-embed,
+[dir="rtl"] .ltr-embed {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Embedded RTL content in LTR context */
+.ltr .rtl-embed,
+[dir="ltr"] .rtl-embed {
+  direction: rtl;
+  unicode-bidi: embed;
+}
+
+/* RTL-aware margins and padding */
+.rtl .ml-auto,
+[dir="rtl"] .ml-auto {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.rtl .mr-auto,
+[dir="rtl"] .mr-auto {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+/* RTL-aware text alignment */
+.rtl .text-left,
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+.rtl .text-right,
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+/* RTL tables */
+.rtl table,
+[dir="rtl"] table {
+  direction: rtl;
+}
+
+.rtl th,
+.rtl td,
+[dir="rtl"] th,
+[dir="rtl"] td {
+  text-align: right;
+}
+
+/* RTL blockquotes */
+.rtl blockquote,
+[dir="rtl"] blockquote {
+  border-left: none;
+  border-right: 3px solid var(--border-medium);
+  padding-left: 0;
+  padding-right: 1em;
+}
+
+/* Arabic/Hebrew specific typography improvements */
+[lang="ar"],
+[lang="he"] {
+  /* Slightly larger line height for diacritics */
+  line-height: 1.9;
+  /* Letter spacing for better readability */
+  letter-spacing: 0.01em;
+}
+
+/* Arabic vocalization marks need extra line height */
+.arabic-vocalized,
+[lang="ar"].vocalized {
+  line-height: 2.2;
+}
+
+/* Hebrew with nikud needs extra line height */
+.hebrew-vocalized,
+[lang="he"].vocalized {
+  line-height: 2.0;
+}
+
+/* Improve rendering of RTL scripts */
+[lang="ar"],
+[lang="he"],
+[lang="fa"] {
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }

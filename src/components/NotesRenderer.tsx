@@ -6,12 +6,29 @@ import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import rehypeRaw from 'rehype-raw';
 import { ChevronDown, ChevronRight, Info } from 'lucide-react';
+import { isRTLLanguage } from '@/lib/types';
 
 interface NotesRendererProps {
   text: string;
   className?: string;
   showMetadata?: boolean; // Default true - show metadata section
   showNotes?: boolean; // Default true - show inline notes (margin, gloss, etc.)
+  language?: string; // Optional language for RTL detection
+}
+
+/**
+ * Get ISO 639-1 language code for lang attribute
+ */
+function getLanguageCode(language: string | undefined): string | undefined {
+  if (!language) return undefined;
+  const lower = language.toLowerCase();
+  if (lower.includes('arabic')) return 'ar';
+  if (lower.includes('hebrew')) return 'he';
+  if (lower.includes('aramaic')) return 'arc';
+  if (lower.includes('syriac')) return 'syr';
+  if (lower.includes('persian') || lower.includes('farsi')) return 'fa';
+  if (lower.includes('urdu')) return 'ur';
+  return undefined;
 }
 
 interface ExtractedMetadata {
@@ -480,10 +497,15 @@ function NoteProcessor({ children, showNotes }: { children: ReactNode; showNotes
   return <>{processChildren(children, showNotes)}</>;
 }
 
-export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true }: NotesRendererProps) {
+export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
   const processedText = useMemo(() => preprocessCentering(withBracketTags), [withBracketTags]);
+
+  // Determine text direction from language prop or extracted metadata
+  const effectiveLanguage = language || metadata.language;
+  const isRTL = isRTLLanguage(effectiveLanguage);
+  const langCode = getLanguageCode(effectiveLanguage);
 
   if (!text) {
     return (
@@ -504,8 +526,16 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
     };
   };
 
+  // RTL-specific classes
+  const rtlClasses = isRTL ? 'rtl' : '';
+  const fontClass = langCode === 'ar' ? 'font-arabic' : langCode === 'he' || langCode === 'arc' ? 'font-hebrew' : '';
+
   return (
-    <div className={`prose-manuscript ${className}`}>
+    <div
+      className={`prose-manuscript ${rtlClasses} ${fontClass} ${className}`}
+      dir={isRTL ? 'rtl' : 'ltr'}
+      lang={langCode}
+    >
       {/* Collapsible metadata panel - hidden when showMetadata is false */}
       {showMetadata ? <MetadataPanel metadata={metadata} /> : null}
 
