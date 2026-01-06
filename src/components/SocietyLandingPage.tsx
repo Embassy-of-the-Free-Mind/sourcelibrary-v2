@@ -3,54 +3,54 @@
 import Link from 'next/link';
 import SocietyHeroSection from './SocietyHeroSection';
 
-// Featured texts to show as glimpses
+// Featured images from the gallery
 const FEATURED_GLIMPSES = [
   {
-    title: 'Corpus Hermeticum',
-    author: 'Hermes Trismegistus',
-    year: '2nd-3rd c.',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Hermes_mercurius_trismegistus_siena_cathedral.jpg/440px-Hermes_mercurius_trismegistus_siena_cathedral.jpg',
-    status: 'Available',
-  },
-  {
-    title: 'Arbatel de Magia Veterum',
-    author: 'Anonymous',
-    year: '1575',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Arbatel_De_magia_veterum_%281575%29.jpg/440px-Arbatel_De_magia_veterum_%281575%29.jpg',
-    status: 'Newly Translated',
-  },
-  {
-    title: 'De Occulta Philosophia',
-    author: 'Heinrich Cornelius Agrippa',
-    year: '1533',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/De_Occulta_Philosophia_libri_III.jpg/440px-De_Occulta_Philosophia_libri_III.jpg',
-    status: 'In Progress',
-  },
-  {
-    title: 'Atalanta Fugiens',
+    title: 'Ouroboros Dragon',
     author: 'Michael Maier',
     year: '1617',
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Michael_Maier_Atalanta_Fugiens.jpeg/500px-Michael_Maier_Atalanta_Fugiens.jpeg',
-    status: 'Available',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F69520c46ab34727b1f044141%2F71.jpg&x=0.15&y=0.24&w=0.7&h=0.46',
+    book: 'Atalanta Fugiens',
+  },
+  {
+    title: 'Perspective Drawing',
+    author: 'Albrecht Dürer',
+    year: '1525',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2Fe532b010-6d2e-40ca-9f95-c67e74c5ee61%2F183.jpg&x=0.06329588014981263&y=0.11862255513940914&w=0.8975558329865454&h=0.49130669995838544',
+    book: 'Unterweysung der Messung',
+  },
+  {
+    title: 'Alchemical Geometry',
+    author: 'Michael Maier',
+    year: '1617',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F69520c46ab34727b1f044141%2F99.jpg&x=0.145&y=0.216&w=0.713&h=0.472',
+    book: 'Atalanta Fugiens',
+  },
+  {
+    title: 'Hermetic Emblems',
+    author: 'Michael Maier',
+    year: '1617',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F69520c46ab34727b1f044141%2F43.jpg&x=0.15&y=0.22&w=0.7&h=0.5',
+    book: 'Atalanta Fugiens',
   },
 ];
 
 const MEMBERSHIP_TIERS = [
   {
-    name: 'Seeker',
-    tagline: 'Begin the journey',
+    name: 'Free',
+    tagline: 'Begin exploring',
     price: 'Free',
-    description: 'Explore the catalog and read foundational texts',
+    description: 'Browse the catalog and read foundational texts',
     features: [
       'Browse the full catalog',
-      'Read 15 gateway texts (Corpus Hermeticum, Emerald Tablet, etc.)',
+      'Read gateway texts',
       'Join public discussions',
     ],
     cta: 'Start Exploring',
     highlight: false,
   },
   {
-    name: 'Student',
+    name: 'Member',
     tagline: 'Full access',
     price: '$15/month',
     description: 'Unlock the entire library and join the community',
@@ -61,23 +61,8 @@ const MEMBERSHIP_TIERS = [
       'One membership pass to gift',
       'Vote on translation priorities',
     ],
-    cta: 'Become a Student',
+    cta: 'Become a Member',
     highlight: true,
-  },
-  {
-    name: 'Adept',
-    tagline: 'Earned through contribution',
-    price: 'Earned',
-    description: 'Recognition for those who contribute meaningfully',
-    features: [
-      'Everything in Student',
-      'Early access to new translations',
-      'Access to original scans',
-      '3 membership passes to gift',
-      'Name in translation credits',
-    ],
-    cta: 'Learn How to Earn',
-    highlight: false,
   },
   {
     name: 'Fellow',
@@ -85,10 +70,9 @@ const MEMBERSHIP_TIERS = [
     price: 'Invited',
     description: 'For scholars and major contributors',
     features: [
-      'Everything in Adept',
+      'Everything in Member tier',
       'Direct input on acquisitions',
       'Unlimited membership passes',
-      'Private channel with the team',
       'Lifetime free access',
     ],
     cta: 'Nominate a Scholar',
@@ -96,12 +80,6 @@ const MEMBERSHIP_TIERS = [
   },
 ];
 
-const RECENT_TRANSLATIONS = [
-  { title: 'Splendor Solis', pages: 42, date: 'Dec 2025' },
-  { title: 'Theatrum Chemicum', pages: 156, date: 'Nov 2025' },
-  { title: 'Aurora Consurgens', pages: 88, date: 'Nov 2025' },
-  { title: 'Rosarium Philosophorum', pages: 64, date: 'Oct 2025' },
-];
 
 export default function SocietyLandingPage() {
   return (
@@ -134,42 +112,30 @@ export default function SocietyLandingPage() {
             </p>
           </div>
 
-          {/* Featured texts grid */}
+          {/* Featured images grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {FEATURED_GLIMPSES.map((text) => (
+            {FEATURED_GLIMPSES.map((item) => (
               <div
-                key={text.title}
+                key={item.title}
                 className="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow"
               >
-                <div className="aspect-[3/4] overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src={text.image}
-                    alt={text.title}
+                    src={item.image}
+                    alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <span
-                    className={`inline-block px-2 py-1 text-[10px] uppercase tracking-wider rounded mb-2 ${
-                      text.status === 'Newly Translated'
-                        ? 'bg-amber-500 text-white'
-                        : text.status === 'In Progress'
-                        ? 'bg-stone-600 text-white'
-                        : 'bg-white/20 text-white backdrop-blur-sm'
-                    }`}
-                    style={{ fontFamily: 'Inter, sans-serif' }}
-                  >
-                    {text.status}
-                  </span>
+                <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3
-                    className="text-white text-lg mb-1"
+                    className="text-white text-base mb-1"
                     style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
                   >
-                    {text.title}
+                    {item.title}
                   </h3>
-                  <p className="text-white/70 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    {text.author}, {text.year}
+                  <p className="text-white/60 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+                    {item.book} ({item.year})
                   </p>
                 </div>
               </div>
@@ -312,114 +278,6 @@ export default function SocietyLandingPage() {
         </div>
       </section>
 
-      {/* The Collective Section */}
-      <section id="collective" className="py-20 md:py-28 bg-stone-900 text-white">
-        <div className="px-6 md:px-12 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p
-                className="text-amber-400 text-sm tracking-widest uppercase mb-4"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-              >
-                The Collective Fund
-              </p>
-              <h2
-                className="text-3xl md:text-4xl text-white mb-6"
-                style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
-              >
-                Your membership directly commissions new translations
-              </h2>
-              <p
-                className="text-lg text-white/70 mb-8"
-                style={{ fontFamily: 'Newsreader, Georgia, serif' }}
-              >
-                Every dollar goes into the collective fund. Members vote on priorities.
-                Translators are paid for their work. New texts are published freely
-                at Source Library for everyone.
-              </p>
-
-              <div className="space-y-4 mb-8">
-                <div className="flex justify-between items-center py-3 border-b border-white/10">
-                  <span style={{ fontFamily: 'Inter, sans-serif' }}>Translation work</span>
-                  <span className="text-amber-400" style={{ fontFamily: 'Cormorant Garamond, serif' }}>65%</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-white/10">
-                  <span style={{ fontFamily: 'Inter, sans-serif' }}>Digitization & OCR</span>
-                  <span className="text-amber-400" style={{ fontFamily: 'Cormorant Garamond, serif' }}>20%</span>
-                </div>
-                <div className="flex justify-between items-center py-3 border-b border-white/10">
-                  <span style={{ fontFamily: 'Inter, sans-serif' }}>Platform & community</span>
-                  <span className="text-amber-400" style={{ fontFamily: 'Cormorant Garamond, serif' }}>15%</span>
-                </div>
-              </div>
-
-              <Link
-                href="/transparency"
-                className="inline-flex items-center gap-2 text-amber-400 hover:text-amber-300"
-                style={{ fontFamily: 'Inter, sans-serif' }}
-              >
-                See full transparency report
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-            </div>
-
-            <div className="bg-stone-800 rounded-2xl p-8">
-              <h3
-                className="text-xl text-white mb-6"
-                style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
-              >
-                Recently Funded Translations
-              </h3>
-              <div className="space-y-4">
-                {RECENT_TRANSLATIONS.map((translation) => (
-                  <div
-                    key={translation.title}
-                    className="flex justify-between items-center py-3 border-b border-white/10 last:border-0"
-                  >
-                    <div>
-                      <p className="text-white" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
-                        {translation.title}
-                      </p>
-                      <p className="text-white/50 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
-                        {translation.pages} pages
-                      </p>
-                    </div>
-                    <span
-                      className="text-white/50 text-sm"
-                      style={{ fontFamily: 'Inter, sans-serif' }}
-                    >
-                      {translation.date}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 pt-6 border-t border-white/10">
-                <div className="flex justify-between items-baseline mb-2">
-                  <span className="text-white/60 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
-                    This month&apos;s fund
-                  </span>
-                  <span
-                    className="text-2xl text-amber-400"
-                    style={{ fontFamily: 'Cormorant Garamond, serif' }}
-                  >
-                    $2,847
-                  </span>
-                </div>
-                <div className="h-2 bg-stone-700 rounded-full overflow-hidden">
-                  <div className="h-full bg-amber-500 rounded-full" style={{ width: '71%' }} />
-                </div>
-                <p className="text-white/50 text-xs mt-2" style={{ fontFamily: 'Inter, sans-serif' }}>
-                  71% of monthly goal
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* The Pass System */}
       <section className="py-20 md:py-28 bg-gradient-to-b from-stone-50 to-white">
         <div className="px-6 md:px-12 max-w-4xl mx-auto text-center">
@@ -439,7 +297,7 @@ export default function SocietyLandingPage() {
             className="text-lg text-stone-600 mb-12 max-w-2xl mx-auto"
             style={{ fontFamily: 'Newsreader, Georgia, serif' }}
           >
-            When you join as a Student, you receive a pass—a key to give to someone you
+            When you join as a Member, you receive a pass—a key to give to someone you
             believe should be here. Knowledge spreads through relationship, not broadcast.
             This is how these traditions have always moved.
           </p>
@@ -456,7 +314,7 @@ export default function SocietyLandingPage() {
                 You join
               </h3>
               <p className="text-stone-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
-                Become a Student member and receive one pass
+                Become a Member and receive one pass
               </p>
             </div>
             <div className="text-center">

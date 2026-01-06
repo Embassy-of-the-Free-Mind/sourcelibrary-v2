@@ -1,12 +1,19 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { recordLoadingMetric } from '@/lib/analytics';
 
 export default function SocietyHeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const hasRecorded = useRef(false);
+
+  // Show content after a brief delay even if video isn't loaded
+  useEffect(() => {
+    const timer = setTimeout(() => setShowContent(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleVideoLoad = () => {
     if (!hasRecorded.current && typeof window !== 'undefined') {
@@ -16,16 +23,28 @@ export default function SocietyHeroSection() {
       hasRecorded.current = true;
     }
     setVideoLoaded(true);
+    setShowContent(true);
   };
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-stone-950">
+      {/* Loading state */}
+      {!showContent && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-stone-950">
+          <div className="text-center">
+            <div className="w-12 h-12 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-white/60 text-sm">Loading...</p>
+          </div>
+        </div>
+      )}
+
       {/* Poster image - loads immediately */}
       <img
         src="/hero-poster.jpg"
         alt=""
         className="absolute inset-0 w-full h-full object-cover z-0"
         fetchPriority="high"
+        onLoad={() => setShowContent(true)}
       />
 
       {/* Video background - same as Source Library */}
@@ -36,7 +55,7 @@ export default function SocietyHeroSection() {
         playsInline
         preload="auto"
         onCanPlay={handleVideoLoad}
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
       >
         <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm" type="video/webm" />
         <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
