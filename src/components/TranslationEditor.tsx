@@ -1339,10 +1339,11 @@ export default function TranslationEditor({
       </header>
 
       {/* Main Content - Panels toggle visibility, stacked on mobile, columns on desktop */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      {/* On mobile: panels have min-height and container scrolls. On desktop: panels share space */}
+      <div className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden">
         {/* Source Image Panel */}
         {showImagePanel && (
-          <div className="w-full lg:flex-1 flex flex-col" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
             <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <span className="label">Source</span>
               <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
@@ -1365,7 +1366,7 @@ export default function TranslationEditor({
 
         {/* OCR Panel */}
         {showOcrPanel && (
-          <div className="w-full lg:flex-1 flex flex-col" style={{ background: 'var(--bg-white)', borderRight: '1px solid var(--border-light)' }}>
+          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)', borderRight: '1px solid var(--border-light)' }}>
             <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <div className="flex items-center gap-2 sm:gap-3">
                 <button
@@ -1412,7 +1413,7 @@ export default function TranslationEditor({
 
         {/* Translation Panel */}
         {showTranslationPanel && (
-          <div className="w-full lg:flex-1 flex flex-col" style={{ background: 'var(--bg-white)' }}>
+          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)' }}>
             <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <div className="flex items-center gap-2 sm:gap-3">
                 <button
