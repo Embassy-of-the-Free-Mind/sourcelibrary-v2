@@ -7,14 +7,16 @@ export const revalidate = 3600;
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+
   try {
     const collectionPath = path.join(
       process.cwd(),
       'curator-data',
       'collections',
-      `${params.id}.json`
+      `${id}.json`
     );
 
     const collectionData = await fs.readFile(collectionPath, 'utf-8');
@@ -22,7 +24,7 @@ export async function GET(
 
     return NextResponse.json(collection);
   } catch (error) {
-    console.error(`Error loading collection ${params.id}:`, error);
+    console.error(`Error loading collection ${id}:`, error);
     return NextResponse.json(
       { error: 'Collection not found' },
       { status: 404 }
