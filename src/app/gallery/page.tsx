@@ -556,14 +556,14 @@ function GalleryCard({ item }: { item: GalleryItem }) {
         </div>
       </Link>
 
-      {/* Like button overlay */}
-      <div className="absolute top-1 left-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-        <div className="bg-white/90 backdrop-blur-sm rounded-full shadow-sm">
+      {/* Like button overlay - always visible for discoverability */}
+      <div className="absolute top-1 left-1 z-10">
+        <div className="bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white/95 transition-colors">
           <LikeButton
             targetType="image"
             targetId={galleryImageId}
             size="sm"
-            showCount={false}
+            showCount={true}
           />
         </div>
       </div>
