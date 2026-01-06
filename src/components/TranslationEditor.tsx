@@ -665,53 +665,52 @@ export default function TranslationEditor({
 
     return (
       <div className="h-screen flex flex-col" style={{ background: 'var(--bg-cream)' }}>
-        {/* Compact Header */}
-        <header className="px-4 py-2 flex items-center justify-between" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-          {/* Left: Back + Title */}
-          <div className="flex items-center gap-3 min-w-0">
-            <a href={`/book/${book.id}`} className="p-1.5 rounded-md hover:bg-stone-100 transition-colors flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
-              <BookOpen className="w-5 h-5" />
-            </a>
-            <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
-              <h1 className="text-base font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
-                {book.display_title || book.title}
-              </h1>
-            </a>
-          </div>
-
-          {/* Center: Page Navigation */}
-          <div className="flex items-center gap-0.5 sm:gap-1">
-            <button
-              onClick={() => previousPage && onNavigate(previousPage.id)}
-              disabled={!previousPage}
-              className="p-2.5 sm:p-2 rounded-lg hover:bg-stone-100 transition-all disabled:opacity-30 disabled:hover:bg-transparent min-w-[44px] min-h-[44px] flex items-center justify-center"
-              style={{ color: 'var(--text-secondary)' }}
-              title="Previous page (←)"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <div className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3">
-              <span className="text-base sm:text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>{currentIndex + 1}</span>
-              <span className="text-xs sm:text-sm" style={{ color: 'var(--text-muted)' }}>of {pages.length}</span>
+        {/* Header - Two rows on mobile, one row on desktop */}
+        <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
+          {/* Row 1: Back + Title ... Page Navigator */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+              <a href={`/book/${book.id}`} className="p-1 rounded-md hover:bg-stone-100 transition-colors shrink-0" style={{ color: 'var(--text-muted)' }}>
+                <BookOpen className="w-5 h-5" />
+              </a>
+              <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+                <h1 className="text-base sm:text-lg font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                  {book.display_title || book.title}
+                </h1>
+              </a>
             </div>
-            <button
-              onClick={() => nextPage && onNavigate(nextPage.id)}
-              disabled={!nextPage}
-              className="p-2.5 sm:p-2 rounded-lg hover:bg-stone-100 transition-all disabled:opacity-30 disabled:hover:bg-transparent min-w-[44px] min-h-[44px] flex items-center justify-center"
-              style={{ color: 'var(--text-secondary)' }}
-              title="Next page (→)"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+
+            {/* Page Navigation */}
+            <div className="flex items-center gap-1 rounded-lg p-1 shrink-0" style={{ background: 'var(--bg-warm)' }}>
+              <button
+                onClick={() => previousPage && onNavigate(previousPage.id)}
+                disabled={!previousPage}
+                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
+                style={{ color: 'var(--text-secondary)' }}
+                title="Previous page (←)"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1}/{pages.length}</span>
+              <button
+                onClick={() => nextPage && onNavigate(nextPage.id)}
+                disabled={!nextPage}
+                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
+                style={{ color: 'var(--text-secondary)' }}
+                title="Next page (→)"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          {/* Right: Panel Toggles + Edit Button */}
-          <div className="flex items-center gap-1 sm:gap-2">
-            {/* Panel visibility toggles - icon-only on mobile, with labels on larger screens */}
+          {/* Row 2: Panel toggles ... Mode toggle + Like */}
+          <div className="flex items-center justify-between mt-2 sm:mt-3">
+            {/* Panel visibility toggles */}
             <div className="flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showImagePanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showImagePanel ? 'var(--bg-white)' : 'transparent',
                   color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -719,12 +718,12 @@ export default function TranslationEditor({
                 }}
                 title="Toggle source image"
               >
-                <ImageIcon className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <ImageIcon className="w-4 h-4" />
                 <span className="hidden sm:inline">Image</span>
               </button>
               <button
                 onClick={() => setShowOcrPanel(!showOcrPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showOcrPanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showOcrPanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
                   color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -732,12 +731,12 @@ export default function TranslationEditor({
                 }}
                 title="Toggle original text"
               >
-                <FileText className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <FileText className="w-4 h-4" />
                 <span className="hidden sm:inline">OCR</span>
               </button>
               <button
                 onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showTranslationPanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
                   color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -745,72 +744,91 @@ export default function TranslationEditor({
                 }}
                 title="Toggle translation"
               >
-                <Languages className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
+                <Languages className="w-4 h-4" />
                 <span className="hidden sm:inline">English</span>
               </button>
             </div>
 
-            {isSplitPage && (
-              <button
-                onClick={() => setShowResetSplitConfirm(true)}
-                className="flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium hover:bg-red-50 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0"
-                style={{ color: 'var(--text-muted)' }}
-                title="Reset this split back to original two-page spread"
-              >
-                <RotateCcw className="w-4 h-4" />
-                <span className="hidden sm:inline">Reset Split</span>
-              </button>
-            )}
+            {/* Right side: Mode toggle + Like + extras on desktop */}
+            <div className="flex items-center gap-1 sm:gap-2">
+              {isSplitPage && (
+                <button
+                  onClick={() => setShowResetSplitConfirm(true)}
+                  className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium hover:bg-red-50 transition-all"
+                  style={{ color: 'var(--text-muted)' }}
+                  title="Reset this split back to original two-page spread"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  Reset Split
+                </button>
+              )}
 
-            {/* Like, Share, Highlights, Annotations */}
-            <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
-              <div className="p-1.5 rounded-md hover:bg-stone-100 transition-all">
+              {/* Desktop extras: Share, Highlights, Annotations, Google Translate */}
+              <div className="hidden sm:flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                <BookShare
+                  title={book.display_title || book.title}
+                  author={book.author}
+                  year={book.published}
+                  bookId={book.id}
+                  doi={book.doi}
+                  className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100"
+                />
+                <button
+                  onClick={() => setShowHighlights(true)}
+                  className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
+                  style={{ color: 'var(--text-muted)' }}
+                  title="View highlights"
+                >
+                  <Highlighter className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => setShowAnnotations(true)}
+                  className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
+                  style={{ color: 'var(--text-muted)' }}
+                  title="View annotations"
+                >
+                  <StickyNote className="w-4 h-4" />
+                </button>
+                <GoogleTranslate />
+              </div>
+
+              {/* Mode Toggle - always visible */}
+              <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
+                <button
+                  onClick={() => setMode('read')}
+                  className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
+                  style={{
+                    background: 'var(--bg-white)',
+                    color: 'var(--text-primary)',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                  }}
+                >
+                  <Eye className="w-4 h-4" />
+                  <span className="hidden sm:inline">Read</span>
+                </button>
+                <button
+                  onClick={() => setMode('edit')}
+                  className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
+                  style={{
+                    background: 'transparent',
+                    color: 'var(--text-muted)',
+                  }}
+                >
+                  <Pencil className="w-4 h-4" />
+                  <span className="hidden sm:inline">Edit</span>
+                </button>
+              </div>
+
+              {/* Like Button */}
+              <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">
                 <LikeButton
                   targetType="page"
                   targetId={page.id}
                   size="sm"
-                  showCount={true}
+                  showCount={false}
                 />
               </div>
-              <BookShare
-                title={book.display_title || book.title}
-                author={book.author}
-                year={book.published}
-                bookId={book.id}
-                doi={book.doi}
-                className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100"
-              />
-              <button
-                onClick={() => setShowHighlights(true)}
-                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
-                style={{ color: 'var(--text-muted)' }}
-                title="View highlights"
-              >
-                <Highlighter className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setShowAnnotations(true)}
-                className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
-                style={{ color: 'var(--text-muted)' }}
-                title="View annotations"
-              >
-                <StickyNote className="w-4 h-4" />
-              </button>
             </div>
-
-            {/* Google Translate */}
-            <div className="hidden sm:block">
-              <GoogleTranslate />
-            </div>
-
-            <button
-              onClick={() => setMode('edit')}
-              className="flex items-center justify-center gap-1.5 px-2.5 sm:px-3 py-2 sm:py-1.5 rounded-md text-sm font-medium hover:bg-stone-100 transition-all min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0"
-              style={{ color: 'var(--text-muted)' }}
-            >
-              <Pencil className="w-4 h-4" />
-              <span className="hidden sm:inline">Edit</span>
-            </button>
           </div>
         </header>
 
