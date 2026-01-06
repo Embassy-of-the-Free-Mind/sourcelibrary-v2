@@ -24,6 +24,7 @@ import {
   Star,
   AtSign,
   Users,
+  Search,
 } from 'lucide-react';
 import { SocialPost, SocialPostStatus } from '@/lib/types';
 
@@ -158,6 +159,11 @@ export default function SocialAdminPage() {
   const [selectedPopularImage, setSelectedPopularImage] = useState<PopularImage | null>(null);
   const [generatedTweet, setGeneratedTweet] = useState<GeneratedTweet | null>(null);
   const [generating, setGenerating] = useState(false);
+
+  // Search state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<ImageCandidate[]>([]);
+  const [searching, setSearching] = useState(false);
 
   // Audience/Voice targeting state
   const [availableAudiences, setAvailableAudiences] = useState<AudienceOption[]>([]);
@@ -301,6 +307,52 @@ export default function SocialAdminPage() {
     fetchAudiencesAndVoices();
     fetchTags();
   }, [fetchConfig, fetchCandidates, fetchPopularImages, fetchPosts, fetchAudiencesAndVoices, fetchTags]);
+
+  // Search gallery images
+  const searchGallery = async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    setSearching(true);
+    try {
+      const res = await fetch(`/api/gallery?q=${encodeURIComponent(query)}&limit=20`);
+      if (res.ok) {
+        const data = await res.json();
+        // Transform gallery results to ImageCandidate format
+        const results: ImageCandidate[] = (data.images || []).map((img: {
+          pageId: string;
+          detectionIndex: number;
+          galleryImageId: string;
+          galleryQuality: number;
+          description: string;
+          type: string;
+          bookTitle: string;
+          bookAuthor?: string;
+          bookYear?: number;
+          croppedUrl: string;
+        }) => ({
+          pageId: img.pageId,
+          detectionIndex: img.detectionIndex,
+          galleryImageId: img.galleryImageId,
+          galleryQuality: img.galleryQuality || 0.8,
+          shareabilityScore: 50,
+          description: img.description,
+          type: img.type,
+          bookTitle: img.bookTitle,
+          bookAuthor: img.bookAuthor,
+          bookYear: img.bookYear,
+          croppedUrl: img.croppedUrl,
+          galleryUrl: `/gallery/image/${img.galleryImageId}`,
+        }));
+        setSearchResults(results);
+      }
+    } catch (error) {
+      console.error('Search error:', error);
+    } finally {
+      setSearching(false);
+    }
+  };
 
   // Generate tweet for selected image
   const generateTweet = async (imageId: string) => {
@@ -597,49 +649,140 @@ export default function SocialAdminPage() {
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Browse Tab */}
         {activeTab === 'browse' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Image Grid */}
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                {/* View Toggle */}
-                <div className="flex items-center rounded-lg p-1 bg-stone-800">
-                  <button
-                    onClick={() => setBrowseView('quality')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-                      browseView === 'quality'
-                        ? 'bg-stone-700 text-white'
-                        : 'text-stone-400 hover:text-white'
-                    }`}
-                  >
-                    <Star className="w-4 h-4" />
-                    Top Quality
-                  </button>
-                  <button
-                    onClick={() => setBrowseView('liked')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-                      browseView === 'liked'
-                        ? 'bg-stone-700 text-white'
-                        : 'text-stone-400 hover:text-white'
-                    }`}
-                  >
-                    <Heart className="w-4 h-4" />
-                    Most Liked
-                    {popularImages.length > 0 && (
-                      <span className="ml-1 px-1.5 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">
-                        {popularImages.length}
-                      </span>
-                    )}
-                  </button>
+          <div className="space-y-6">
+            {/* Search Bar */}
+            <div className="bg-stone-900 rounded-lg p-6 border border-stone-800">
+              <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
+                <Search className="w-5 h-5 text-sky-400" />
+                Search Source Library
+              </h2>
+              <div className="flex gap-3">
+                <div className="flex-1 relative">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && searchGallery(searchQuery)}
+                    placeholder="Search gallery images... (e.g., 'alchemical emblems', 'mercury', 'tree of life')"
+                    className="w-full bg-stone-800 text-white rounded-lg px-4 py-3 border border-stone-700 focus:border-sky-500 outline-none"
+                  />
+                  {searching && (
+                    <RefreshCw className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 animate-spin" />
+                  )}
                 </div>
                 <button
-                  onClick={browseView === 'quality' ? fetchCandidates : fetchPopularImages}
-                  disabled={browseView === 'quality' ? loadingCandidates : loadingPopular}
-                  className="text-sm text-stone-400 hover:text-white flex items-center gap-1"
+                  onClick={() => searchGallery(searchQuery)}
+                  disabled={searching || !searchQuery.trim()}
+                  className="px-6 py-3 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 rounded-lg font-medium flex items-center gap-2"
                 >
-                  <RefreshCw className={`w-3 h-3 ${(browseView === 'quality' ? loadingCandidates : loadingPopular) ? 'animate-spin' : ''}`} />
-                  Refresh
+                  <Search className="w-4 h-4" />
+                  Search
                 </button>
               </div>
+
+              {/* Quick filters */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                <span className="text-xs text-stone-500">Quick:</span>
+                {['emblem', 'alchemy', 'hermetic', 'kabbalah', 'astrology', 'portrait'].map((term) => (
+                  <button
+                    key={term}
+                    onClick={() => { setSearchQuery(term); searchGallery(term); }}
+                    className="text-xs px-2 py-1 bg-stone-800 text-stone-400 hover:bg-stone-700 hover:text-white rounded"
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Results / Browse Grid */}
+            <div>
+              {/* Show search results if searching, otherwise show browse options */}
+              {searchResults.length > 0 ? (
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-sm text-stone-400">
+                      {searchResults.length} results for "{searchQuery}"
+                    </p>
+                    <button
+                      onClick={() => { setSearchResults([]); setSearchQuery(''); }}
+                      className="text-xs text-stone-500 hover:text-white"
+                    >
+                      Clear
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {searchResults.map((result) => (
+                      <button
+                        key={result.galleryImageId}
+                        onClick={() => {
+                          setSelectedImage(result);
+                          setSelectedPopularImage(null);
+                          setGeneratedTweet(null);
+                        }}
+                        className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
+                          selectedImage?.galleryImageId === result.galleryImageId
+                            ? 'border-sky-500 ring-2 ring-sky-500/50'
+                            : 'border-stone-700 hover:border-stone-500'
+                        }`}
+                      >
+                        <img
+                          src={result.croppedUrl}
+                          alt={result.description}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                          <span className="text-xs text-white/80 line-clamp-2">
+                            {result.description}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    {/* View Toggle */}
+                    <div className="flex items-center rounded-lg p-1 bg-stone-800">
+                      <button
+                        onClick={() => setBrowseView('quality')}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                          browseView === 'quality'
+                            ? 'bg-stone-700 text-white'
+                            : 'text-stone-400 hover:text-white'
+                        }`}
+                      >
+                        <Star className="w-4 h-4" />
+                        Top Quality
+                      </button>
+                      <button
+                        onClick={() => setBrowseView('liked')}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                          browseView === 'liked'
+                            ? 'bg-stone-700 text-white'
+                            : 'text-stone-400 hover:text-white'
+                        }`}
+                      >
+                        <Heart className="w-4 h-4" />
+                        Most Liked
+                        {popularImages.length > 0 && (
+                          <span className="ml-1 px-1.5 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">
+                            {popularImages.length}
+                          </span>
+                        )}
+                      </button>
+                    </div>
+                    <button
+                      onClick={browseView === 'quality' ? fetchCandidates : fetchPopularImages}
+                      disabled={browseView === 'quality' ? loadingCandidates : loadingPopular}
+                      className="text-sm text-stone-400 hover:text-white flex items-center gap-1"
+                    >
+                      <RefreshCw className={`w-3 h-3 ${(browseView === 'quality' ? loadingCandidates : loadingPopular) ? 'animate-spin' : ''}`} />
+                      Refresh
+                    </button>
+                  </div>
 
               {/* Quality View */}
               {browseView === 'quality' && (
@@ -719,6 +862,8 @@ export default function SocialAdminPage() {
                       </button>
                     ))
                   )}
+                </div>
+              )}
                 </div>
               )}
             </div>
@@ -1018,6 +1163,7 @@ export default function SocialAdminPage() {
                 </div>
               )}
             </div>
+          </div>
           </div>
         )}
 

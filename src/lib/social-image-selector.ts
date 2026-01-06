@@ -219,7 +219,16 @@ export async function selectImagesForPosts(
           $cond: [
             { $isNumber: '$book.published' },
             '$book.published',
-            { $toInt: { $ifNull: ['$book.published', '0'] } }
+            {
+              $cond: [
+                { $and: [
+                  { $ne: ['$book.published', ''] },
+                  { $ne: ['$book.published', null] }
+                ]},
+                { $toInt: '$book.published' },
+                null
+              ]
+            }
           ]
         },
         pageNumber: '$page_number',
@@ -296,7 +305,16 @@ export async function getImageCandidate(
           $cond: [
             { $isNumber: '$book.published' },
             '$book.published',
-            { $toInt: { $ifNull: ['$book.published', '0'] } }
+            {
+              $cond: [
+                { $and: [
+                  { $ne: ['$book.published', ''] },
+                  { $ne: ['$book.published', null] }
+                ]},
+                { $toInt: '$book.published' },
+                null
+              ]
+            }
           ]
         },
         pageNumber: '$page_number',
