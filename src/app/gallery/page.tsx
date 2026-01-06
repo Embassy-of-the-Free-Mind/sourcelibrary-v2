@@ -557,8 +557,8 @@ function GalleryCard({ item }: { item: GalleryItem }) {
       </Link>
 
       {/* Like button overlay - always visible for discoverability */}
-      <div className="absolute top-1 left-1 z-10">
-        <div className="bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white/95 transition-colors">
+      <div className="absolute top-1.5 left-1.5 z-10">
+        <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors px-1.5 py-0.5">
           <LikeButton
             targetType="image"
             targetId={galleryImageId}
