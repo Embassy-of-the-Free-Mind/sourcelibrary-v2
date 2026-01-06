@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Sparkles, MessageCircle, X, Loader2, Send, ArrowLeft, Settings, Info, RotateCcw, ChevronRight, BookOpen } from 'lucide-react';
+import { Sparkles, MessageCircle, X, Loader2, Send, ArrowLeft, Settings, Info, RotateCcw, ChevronRight, BookOpen, MessageSquarePlus } from 'lucide-react';
 import type { Page, Book } from '@/lib/types';
 
 interface Message {
@@ -21,6 +21,7 @@ interface PageAssistantProps {
   initialMode: 'explain' | 'ask';
   page: Page;
   book: Book;
+  onOpenAnnotations?: () => void;
 }
 
 // Default prompts
@@ -133,6 +134,7 @@ export default function PageAssistant({
   initialMode,
   page,
   book,
+  onOpenAnnotations,
 }: PageAssistantProps) {
   const [mode, setMode] = useState<'explain' | 'ask'>(initialMode);
   const [showSettings, setShowSettings] = useState(false);
@@ -294,6 +296,9 @@ export default function PageAssistant({
         ? text.slice(0, 3000) + '...'
         : text;
 
+      // Use book_context mode for "Context from the book" option
+      const isBookContext = term === 'book context';
+
       const res = await fetch('/api/explain', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -302,8 +307,9 @@ export default function PageAssistant({
           book_title: book.display_title || book.title,
           book_author: book.author,
           page_number: page.page_number,
-          mode: 'explain_term',
-          term,
+          book_id: isBookContext ? book.id : undefined,
+          mode: isBookContext ? 'book_context' : 'explain_term',
+          term: isBookContext ? undefined : term,
           customPrompt: explainPrompt !== DEFAULT_EXPLAIN_PROMPT ? explainPrompt : undefined,
         }),
       });
@@ -857,9 +863,9 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
                   {/* Quick explain options */}
                   {[
                     { label: 'Summarize this page', icon: '📝', query: 'full page' },
-                    { label: 'Explain difficult terms', icon: 'Aa', query: 'difficult terms and archaic language' },
                     { label: 'Historical context', icon: '📜', query: 'the historical context and background' },
-                    { label: 'Key concepts', icon: '💡', query: 'the key concepts and ideas' },
+                    { label: 'Context from the book', icon: '📖', query: 'book context' },
+                    { label: 'Explain difficult terms', icon: 'Aa', query: 'difficult terms and archaic language' },
                   ].map((option) => (
                     <button
                       key={option.query}
@@ -878,6 +884,28 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
                       </span>
                     </button>
                   ))}
+
+                  {/* Comment on this page - opens annotation editor */}
+                  {onOpenAnnotations && (
+                    <button
+                      onClick={() => {
+                        onClose();
+                        onOpenAnnotations();
+                      }}
+                      className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all hover:bg-amber-50"
+                      style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
+                    >
+                      <span
+                        className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: 'rgba(180, 83, 9, 0.1)', color: 'var(--accent-rust)' }}
+                      >
+                        <MessageSquarePlus className="w-4 h-4" />
+                      </span>
+                      <span className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>
+                        Comment on this page
+                      </span>
+                    </button>
+                  )}
 
                   {/* Custom input */}
                   <div className="pt-3 mt-3" style={{ borderTop: '1px solid var(--border-light)' }}>

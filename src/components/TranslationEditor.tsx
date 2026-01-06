@@ -1101,6 +1101,7 @@ export default function TranslationEditor({
           initialMode={assistantMode}
           page={page}
           book={book}
+          onOpenAnnotations={() => setShowAnnotations(true)}
         />
 
         {/* Page Metadata Panel */}
