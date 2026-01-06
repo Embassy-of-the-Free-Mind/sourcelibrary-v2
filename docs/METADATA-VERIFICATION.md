@@ -90,6 +90,21 @@ GET /api/search?q=alchemy&year=1533           # Exact year
 GET /api/search?q=alchemy&year_from=1500&year_to=1600  # Range
 ```
 
+### Nearby Books
+
+When using exact year search (`year=`), the response includes nearby books:
+
+```json
+{
+  "results": [...],
+  "nearby": [...],
+  "nearby_range": "1528-1538"
+}
+```
+
+- `nearby`: Books within 5 years of target (sorted by distance)
+- `nearby_range`: The year window searched (e.g., "1528-1538" for year=1533)
+
 ## Verification Results (2025-01-06)
 
 - **668 books** checked (all with Unknown year/language)
