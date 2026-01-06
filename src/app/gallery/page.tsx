@@ -8,7 +8,7 @@ import {
   Search, Image as ImageIcon, BookOpen, X, ChevronLeft, ChevronRight,
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
-import LikeButton from '@/components/LikeButton';
+import LikeButton from '@/components/ui/LikeButton';
 
 interface BBox {
   x: number;

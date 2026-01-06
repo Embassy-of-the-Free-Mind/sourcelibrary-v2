@@ -25,7 +25,7 @@ import {
   RefreshCw,
   Info
 } from 'lucide-react';
-import DownloadButton from './DownloadButton';
+import DownloadButton from '@/components/ui/DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import type { Page, Prompt } from '@/lib/types';

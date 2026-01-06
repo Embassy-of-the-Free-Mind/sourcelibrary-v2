@@ -1,8 +1,8 @@
 import { getDb } from '@/lib/mongodb';
-import HeroSection from '@/components/HeroSection';
-import BookLibrary from '@/components/BookLibrary';
-import HomePageSchema from '@/components/HomePageSchema';
-import SocietyLandingPage from '@/components/SocietyLandingPage';
+import HeroSection from '@/components/layout/HeroSection';
+import BookLibrary from '@/components/book/BookLibrary';
+import HomePageSchema from '@/components/seo/HomePageSchema';
+import SocietyLandingPage from '@/components/layout/SocietyLandingPage';
 import { Book } from '@/lib/types';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 import { getSiteMode } from '@/lib/site-mode.server';

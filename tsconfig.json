@@ -30,5 +30,5 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
-  "exclude": ["node_modules", "tools", "tests", "mcp-server", "scripts"]
+  "exclude": ["node_modules", "tools-standlone-gemini-page-split", "tests", "mcp-server", "scripts"]
 }

@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import BookCard from '@/components/BookCard';
+import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
 import { normalizeText } from '@/lib/utils';
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check } from 'lucide-react';

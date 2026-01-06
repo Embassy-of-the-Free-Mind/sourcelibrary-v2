@@ -5,10 +5,10 @@ import Link from 'next/link';
 import { Loader2, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { Book, Page } from '@/lib/types';
-import { QuoteShare } from '@/components/ShareButton';
-import SectionsNav from '@/components/SectionsNav';
+import { QuoteShare } from '@/components/ui/ShareButton';
+import SectionsNav from '@/components/layout/SectionsNav';
 import { BookLoader } from '@/components/ui/BookLoader';
-import LikeButton from '@/components/LikeButton';
+import LikeButton from '@/components/ui/LikeButton';
 
 interface SectionSummary {
   title: string;

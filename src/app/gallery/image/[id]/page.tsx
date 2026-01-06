@@ -34,8 +34,8 @@ import {
   Crop,
   Save
 } from 'lucide-react';
-import ImageWithMagnifier from '@/components/ImageWithMagnifier';
-import LikeButton from '@/components/LikeButton';
+import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
+import LikeButton from '@/components/ui/LikeButton';
 
 interface ImageMetadata {
   subjects?: string[];

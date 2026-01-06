@@ -28,17 +28,17 @@ import {
   Highlighter,
   StickyNote
 } from 'lucide-react';
-import NotesRenderer from './NotesRenderer';
-import FullscreenImageViewer from './FullscreenImageViewer';
-import ImageWithMagnifier from './ImageWithMagnifier';
-import PageMetadataPanel from './PageMetadataPanel';
-import PageAssistant from './PageAssistant';
-import HighlightsPanel from './HighlightsPanel';
-import AnnotationPanel from './AnnotationPanel';
-import HighlightSelection from './HighlightSelection';
-import { BookShare } from './ShareButton';
-import { GoogleTranslate } from './GoogleTranslate';
-import LikeButton from './LikeButton';
+import NotesRenderer from '@/components/reader/NotesRenderer';
+import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
+import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
+import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
+import PageAssistant from '@/components/reader/PageAssistant';
+import HighlightsPanel from '@/components/annotations/HighlightsPanel';
+import AnnotationPanel from '@/components/annotations/AnnotationPanel';
+import HighlightSelection from '@/components/annotations/HighlightSelection';
+import { BookShare } from '@/components/ui/ShareButton';
+import { GoogleTranslate } from '@/components/search/GoogleTranslate';
+import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';

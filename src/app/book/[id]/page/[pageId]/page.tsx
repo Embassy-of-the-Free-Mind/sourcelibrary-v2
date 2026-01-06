@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
-import TranslationEditor from '@/components/TranslationEditor';
+import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';

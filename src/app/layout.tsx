@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import GlobalFooter from "@/components/GlobalFooter";
-import Providers from "@/components/Providers";
+import GlobalFooter from "@/components/layout/GlobalFooter";
+import Providers from "@/components/providers/Providers";
 import { Analytics } from "@vercel/analytics/react";
-import PageTracker from "@/components/PageTracker";
+import PageTracker from "@/components/reader/PageTracker";
 import { getSiteMode } from "@/lib/site-mode.server";
-import SiteModeIndicator from "@/components/SiteModeIndicator";
+import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 
 export const metadata: Metadata = {
   title: "Source Library",

@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { recordLoadingMetric } from '@/lib/analytics';
-import UnifiedSearch from '@/components/UnifiedSearch';
+import UnifiedSearch from '@/components/search/UnifiedSearch';
 
 export default function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);

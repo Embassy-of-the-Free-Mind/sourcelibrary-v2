@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import FullscreenImageViewer from './FullscreenImageViewer';
+import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 
 interface ImageWithMagnifierProps {
   src: string;

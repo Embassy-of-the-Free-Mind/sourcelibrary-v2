@@ -12,7 +12,7 @@ import {
   X
 } from 'lucide-react';
 import type { Book, Page } from '@/lib/types';
-import SplitModeOverlay from '@/components/SplitModeOverlay';
+import SplitModeOverlay from '@/components/pipeline/SplitModeOverlay';
 
 interface PageProps {
   params: Promise<{ id: string }>;
