@@ -56,6 +56,9 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category'); // Category filter
     const dateFrom = searchParams.get('date_from');
     const dateTo = searchParams.get('date_to');
+    const year = searchParams.get('year'); // Exact year filter
+    const yearFrom = searchParams.get('year_from'); // Year range start
+    const yearTo = searchParams.get('year_to'); // Year range end
     const hasDoi = searchParams.get('has_doi');
     const hasTranslation = searchParams.get('has_translation');
     const bookId = searchParams.get('book_id'); // Filter to specific book
@@ -105,6 +108,41 @@ export async function GET(request: NextRequest) {
         bookFilter.published = {};
         if (dateFrom) (bookFilter.published as Record<string, string>).$gte = dateFrom;
         if (dateTo) (bookFilter.published as Record<string, string>).$lte = dateTo;
+      }
+
+      // Year filtering - uses numeric extraction from published field
+      if (year || yearFrom || yearTo) {
+        const yearConditions = [];
+        if (year) {
+          // Exact year match (e.g., "1533" or "c. 1533" or "1533-1534")
+          yearConditions.push({ published: { $regex: year, $options: 'i' } });
+        } else {
+          // Year range - match any 4-digit year within range
+          if (yearFrom) {
+            const yearNum = parseInt(yearFrom);
+            if (!isNaN(yearNum)) {
+              // Match years >= yearFrom
+              const yearPattern = new RegExp(`\\b(${Array.from({length: 2100 - yearNum}, (_, i) => yearNum + i).slice(0, 100).join('|')})\\b`);
+              yearConditions.push({ published: { $regex: yearPattern } });
+            }
+          }
+          if (yearTo) {
+            const yearNum = parseInt(yearTo);
+            if (!isNaN(yearNum)) {
+              // Match years <= yearTo
+              const startYear = yearFrom ? parseInt(yearFrom) : 1400;
+              const yearPattern = new RegExp(`\\b(${Array.from({length: yearNum - startYear + 1}, (_, i) => startYear + i).join('|')})\\b`);
+              yearConditions.push({ published: { $regex: yearPattern } });
+            }
+          }
+        }
+        if (yearConditions.length > 0) {
+          if (yearConditions.length === 1) {
+            bookFilter.$and = [...(bookFilter.$and || []), yearConditions[0]];
+          } else {
+            bookFilter.$and = [...(bookFilter.$and || []), { $and: yearConditions }];
+          }
+        }
       }
 
       if (hasDoi === 'true') {
@@ -262,6 +300,9 @@ export async function GET(request: NextRequest) {
         category,
         date_from: dateFrom,
         date_to: dateTo,
+        year,
+        year_from: yearFrom,
+        year_to: yearTo,
         has_doi: hasDoi,
         has_translation: hasTranslation,
         book_id: bookId,

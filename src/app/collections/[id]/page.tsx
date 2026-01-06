@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { ArrowLeft, Loader2, BookOpen, Calendar, FileText, Star, Network, CheckCircle2, Globe, Award } from 'lucide-react';
+import { ArrowLeft, Loader2, BookOpen, Star, Network, CheckCircle2, Globe, Award } from 'lucide-react';
 import { useParams } from 'next/navigation';
+import CollectionBookCard from '@/components/CollectionBookCard';
 
 interface Book {
   bookId: string;
@@ -16,10 +16,11 @@ interface Book {
   pages_count?: number;
   pages_translated?: number;
   pages_ocr?: number;
-  poster_url?: string;
+  thumbnail?: string;
   language?: string;
   has_doi?: boolean;
   published?: string;
+  translation_percent?: number;
 }
 
 interface Collection {
@@ -157,8 +158,8 @@ export default function CollectionPage() {
               <div className="text-sm text-amber-100 mt-1">Pages</div>
             </div>
             <div className="bg-amber-900/30 rounded-lg p-4 border border-amber-700/50">
-              <div className="text-3xl font-bold text-amber-300">{collection.stats?.translationsComplete || 0}</div>
-              <div className="text-sm text-amber-100 mt-1">Translated</div>
+              <div className="text-3xl font-bold text-amber-300">{languages.length}</div>
+              <div className="text-sm text-amber-100 mt-1">Languages</div>
             </div>
             <div className="bg-amber-900/30 rounded-lg p-4 border border-amber-700/50">
               <div className="text-3xl font-bold text-amber-300">{centuriesSpan}</div>
@@ -221,13 +222,13 @@ export default function CollectionPage() {
               <div className="bg-white rounded-lg p-5 border border-amber-200">
                 <h3 className="font-bold text-stone-800 mb-3 flex items-center gap-2">
                   <CheckCircle2 className="w-5 h-5 text-green-600" />
-                  Digitization Status
+                  Digital Preservation
                 </h3>
                 <ul className="space-y-2 text-sm text-stone-700">
-                  <li>• {collection.stats?.ocrComplete || 0} books with OCR complete</li>
-                  <li>• {collection.stats?.translationsComplete || 0} books with translations</li>
-                  <li>• {collection.stats?.withDOI || 0} books with DOI citations</li>
-                  <li>• All available as CC0 Public Domain</li>
+                  <li>• High-resolution scans from leading archives</li>
+                  <li>• {collection.stats?.withDOI || 0} books with permanent DOI citations</li>
+                  <li>• Full text searchable and analyzable</li>
+                  <li>• Available as CC0 Public Domain</li>
                 </ul>
               </div>
             </div>
@@ -358,115 +359,15 @@ export default function CollectionPage() {
                 <div className="relative h-2 bg-gradient-to-r from-amber-300 via-orange-400 to-amber-300 rounded-full" />
               </div>
 
-              {/* Books grid with posters */}
+              {/* Books grid */}
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {sortedBooks.map((book, index) => (
-                  <Link
+                  <CollectionBookCard
                     key={book.id || book.bookId}
-                    href={`/book/${book.id || book.bookId}`}
-                    className="group block"
-                  >
-                    <div className="h-full rounded-xl border-2 border-stone-200 hover:border-amber-400 hover:shadow-xl transition-all overflow-hidden bg-white">
-                      {/* Book Poster */}
-                      <div className="relative aspect-[3/4] bg-gradient-to-br from-stone-100 to-stone-200 overflow-hidden">
-                        {book.poster_url ? (
-                          <Image
-                            src={book.poster_url}
-                            alt={book.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                          />
-                        ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <BookOpen className="w-16 h-16 text-stone-300" />
-                          </div>
-                        )}
-
-                        {/* Number badge */}
-                        <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-amber-500 text-white font-bold text-sm flex items-center justify-center shadow-lg">
-                          {index + 1}
-                        </div>
-
-                        {/* Status badges */}
-                        <div className="absolute top-3 right-3 flex flex-col gap-2">
-                          {book.pages_translated && book.pages_translated > 0 && (
-                            <div className="bg-green-500 text-white text-xs px-2 py-1 rounded-full shadow-lg">
-                              Translated
-                            </div>
-                          )}
-                          {book.has_doi && (
-                            <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full shadow-lg">
-                              DOI
-                            </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Book Info */}
-                      <div className="p-4">
-                        <h3
-                          className="text-base font-bold text-stone-900 group-hover:text-amber-700 transition-colors mb-2 leading-tight line-clamp-2"
-                          style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
-                        >
-                          {book.title}
-                        </h3>
-                        <p className="text-sm text-stone-600 mb-3 line-clamp-1">{book.author}</p>
-
-                        <div className="flex flex-wrap gap-2 text-xs text-stone-500 mb-3">
-                          <span className="flex items-center gap-1">
-                            <Calendar className="w-3 h-3" />
-                            {book.year}
-                          </span>
-                          <span>•</span>
-                          <span className="flex items-center gap-1">
-                            <FileText className="w-3 h-3" />
-                            {book.pages_count || book.pages} pages
-                          </span>
-                          {book.language && (
-                            <>
-                              <span>•</span>
-                              <span>{book.language}</span>
-                            </>
-                          )}
-                        </div>
-
-                        {/* Progress bar if OCR/translation exists */}
-                        {book.pages_count && book.pages_count > 0 && (
-                          <div className="space-y-1">
-                            {book.pages_ocr && book.pages_ocr > 0 && (
-                              <div>
-                                <div className="flex justify-between text-xs text-stone-500 mb-1">
-                                  <span>OCR</span>
-                                  <span>{Math.round((book.pages_ocr / book.pages_count) * 100)}%</span>
-                                </div>
-                                <div className="h-1.5 bg-stone-200 rounded-full overflow-hidden">
-                                  <div
-                                    className="h-full bg-amber-500 rounded-full"
-                                    style={{ width: `${(book.pages_ocr / book.pages_count) * 100}%` }}
-                                  />
-                                </div>
-                              </div>
-                            )}
-                            {book.pages_translated && book.pages_translated > 0 && (
-                              <div>
-                                <div className="flex justify-between text-xs text-stone-500 mb-1">
-                                  <span>Translation</span>
-                                  <span>{Math.round((book.pages_translated / book.pages_count) * 100)}%</span>
-                                </div>
-                                <div className="h-1.5 bg-stone-200 rounded-full overflow-hidden">
-                                  <div
-                                    className="h-full bg-green-500 rounded-full"
-                                    style={{ width: `${(book.pages_translated / book.pages_count) * 100}%` }}
-                                  />
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
+                    book={book}
+                    index={index}
+                    priority={index < 6}
+                  />
                 ))}
               </div>
             </div>

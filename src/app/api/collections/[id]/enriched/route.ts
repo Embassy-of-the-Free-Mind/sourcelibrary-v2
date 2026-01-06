@@ -52,8 +52,9 @@ export async function GET(
         pages_translated: book.pages_translated || 0,
         pages_ocr: book.pages_ocr || 0,
         has_doi: book.has_doi || false,
-        poster_url: book.poster_url || null,
+        thumbnail: book.thumbnail || null,
         categories: book.categories || [],
+        translation_percent: book.translation_percent || 0,
       });
     });
 
