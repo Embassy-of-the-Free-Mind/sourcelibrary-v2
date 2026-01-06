@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 
 // Validation: Reject modern editions
@@ -1012,11 +1013,13 @@ export async function POST() {
       }
 
       try {
-        const bookId = crypto.randomUUID();
+        const bookId = new ObjectId();
+        const bookIdStr = bookId.toHexString();
         const now = new Date();
 
         const bookDoc = {
-          id: bookId,
+          _id: bookId,
+          id: bookIdStr,
           tenant_id: 'default',
           title: book.title,
           display_title: book.display_title,
@@ -1043,7 +1046,7 @@ export async function POST() {
         };
 
         await db.collection('books').insertOne(bookDoc);
-        results.push({ title: book.title, status: 'added', id: bookId });
+        results.push({ title: book.title, status: 'added', id: bookIdStr });
       } catch (err) {
         console.error(`Error adding ${book.title}:`, err);
         results.push({ title: book.title, status: 'error' });
