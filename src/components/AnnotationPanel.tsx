@@ -88,7 +88,7 @@ export default function AnnotationPanel({
 
   // Share functions
   const getAnnotationShareUrl = (annotation: Annotation) => {
-    return getShortUrl(bookId, annotation.page_number);
+    return getShortUrl(bookId, annotation.page_number, annotation.page_id);
   };
 
   const shareToTwitter = (annotation: Annotation) => {

@@ -126,7 +126,7 @@ export default function HighlightSelection({
     `p. ${pageNumber}`,
   ].filter(Boolean).join(', ');
 
-  const shareUrl = getShortUrl(bookId, pageNumber);
+  const shareUrl = getShortUrl(bookId, pageNumber, pageId);
 
   const buildTweetText = () => {
     const maxQuoteLength = 200;

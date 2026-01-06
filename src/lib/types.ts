@@ -1476,8 +1476,9 @@ export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript pag
 **If quality issues:** Add <warning>reason</warning> at start.`;
 
 // Default prompts with XML annotation support
+// OCR Prompt v2025-01-06
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
-  ocr: `Transcribe this {language} manuscript page to Markdown.
+  ocr: `Transcribe this {language} page to Markdown.
 
 **Format:**
 - # ## ### for headings (bigger text = bigger heading) — NEVER combine with centering syntax
@@ -1496,12 +1497,27 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - Charts or graphs
 - Any visual layout that isn't truly tabular
 
+**Page Layout Detection (add at START):**
+- <layout>single-column</layout> — standard single-column page
+- <layout>multi-column:N</layout> — N columns (dictionaries, commentaries, glosses)
+- <layout>split-spread:N%</layout> — page split from two-page spread at N% from left edge
+
+For multi-column layouts, transcribe left-to-right, top-to-bottom. Use --- between columns if text doesn't flow continuously.
+
+**Blank/Empty Pages:**
+If page is blank or contains only non-text elements:
+- <meta>blank</meta> — truly empty page
+- <meta>blank: marbled endpaper</meta> — decorative endpaper
+- <meta>blank: library stamp only</meta> — institutional marks only
+For blank pages, output ONLY the meta tag. No transcription needed.
+
 **Metadata tags (hidden from readers):**
-- <lang>detected</lang> — confirm the language
-- <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
+- <lang>detected</lang> — actual language if different from expected
+- <page-num>1r</page-num> — original numbering (folio/page as printed)
 - <header>X</header> — running headers (NOT in body text)
-- <sig>X</sig> — printer's marks like A2, B1 (NOT in body text)
-- <meta>X</meta> — hidden metadata (image quality, catchwords)
+- <sig>X</sig> — printer's signatures like A2, B1v (NOT in body text)
+- <catchword>X</catchword> — word at page bottom linking to next page
+- <meta>X</meta> — hidden metadata (image quality, binding notes)
 - <warning>X</warning> — quality issues (faded, damaged, blurry)
 - <vocab>X</vocab> — key terms for indexing
 
@@ -1513,9 +1529,14 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - <note>X</note> — interpretive notes for readers
 - <term>X</term> — technical vocabulary
 
+**Normalization:**
+- Long s (ſ) → normalize to 's'
+- Preserve ligatures (æ, œ, �765)
+- Preserve original abbreviations; use <note>i.e., X</note> if expansion helpful
+
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
-2. Page numbers/headers/signatures go in metadata tags only, never in body
+2. Page numbers/headers/signatures/catchwords go in metadata tags only, never in body
 3. IGNORE partial text at left/right edges (from facing page in spread)
 4. Capture ALL text including margins and annotations
 5. End with <vocab>key terms, names, concepts</vocab>
@@ -1525,16 +1546,18 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 **IMAGE DETECTION:** If the page contains ANY illustrations, diagrams, emblems, woodcuts, engravings, or decorative elements, add at the END:
 
 <detected-images>
-[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
+[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|musical_score|symbol|decorative|map", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
 </detected-images>
 
 **Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY to tightly enclose each illustration.
 
-**Gallery quality:**
-- 0.9-1.0: Museum-worthy — striking emblems, allegorical scenes, beautiful engravings
-- 0.7-0.9: High — well-executed illustrations, interesting diagrams
-- 0.4-0.7: Moderate — standard frontispieces, simple diagrams
-- 0.0-0.4: Low — page ornaments, generic borders, printer's marks
+**Gallery quality scoring:**
+- 0.9-1.0: Museum-worthy — striking emblems, allegorical scenes with figures, beautiful engravings
+- 0.8-0.9: High — images with people/figures (humans interest humans), well-executed illustrations
+- 0.6-0.8: Good — interesting diagrams, scientific illustrations, emblems without figures
+- 0.4-0.6: Moderate — musical scores, simple diagrams, standard frontispieces
+- 0.2-0.4: Low — page ornaments, generic borders
+- 0.0-0.2: Minimal — marbled papers, blank frames, printer's marks
 
 If text-only page, omit the <detected-images> block.`,
 

@@ -91,7 +91,7 @@ export default function HighlightsPanel({
       ? highlight.text.substring(0, maxQuoteLength - 3) + '...'
       : highlight.text;
     const tweetText = `"${quote}"\n\n— ${citation}`;
-    const shareUrl = getShortUrl(highlight.book_id, highlight.page_number);
+    const shareUrl = getShortUrl(highlight.book_id, highlight.page_number, highlight.page_id);
 
     const twitterUrl = new URL('https://twitter.com/intent/tweet');
     twitterUrl.searchParams.set('text', tweetText);
@@ -102,7 +102,7 @@ export default function HighlightsPanel({
 
   const shareToBluesky = (highlight: Highlight) => {
     const citation = `${highlight.book_title}, p. ${highlight.page_number}`;
-    const shareUrl = getShortUrl(highlight.book_id, highlight.page_number);
+    const shareUrl = getShortUrl(highlight.book_id, highlight.page_number, highlight.page_id);
     const fullText = `"${highlight.text.substring(0, 250)}"\n\n— ${citation}\n\n${shareUrl}`;
 
     const bskyUrl = new URL('https://bsky.app/intent/compose');
@@ -113,7 +113,7 @@ export default function HighlightsPanel({
 
   const copyQuote = async (highlight: Highlight) => {
     const citation = `${highlight.book_title}, p. ${highlight.page_number}`;
-    const shareUrl = getShortUrl(highlight.book_id, highlight.page_number);
+    const shareUrl = getShortUrl(highlight.book_id, highlight.page_number, highlight.page_id);
     const quoteToCopy = `"${highlight.text}"\n\n— ${citation}\n${shareUrl}`;
 
     await navigator.clipboard.writeText(quoteToCopy);
