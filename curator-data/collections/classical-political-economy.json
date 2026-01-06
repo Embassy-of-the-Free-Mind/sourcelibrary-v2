@@ -1,0 +1,27 @@
+{
+  "id": "classical-political-economy",
+  "title": "Classical Political Economy: Ricardo to Bastiat",
+  "shortTitle": "Classical Economics",
+  "description": "The classical economics tradition from Smith's successors: Ricardo's comparative advantage and labor theory, Say's Law, Mill's synthesis, and Bastiat's harmony of interests. Foundation for both free market economics and later critiques.",
+  "dateRange": "1803 - 1850",
+  "totalBooks": 6,
+  "totalPages": 2109,
+  "themes": ["Free Trade", "Comparative Advantage", "Say's Law", "Labor Theory of Value", "Harmony"],
+  "books": [
+    {"bookId": "69568ed2499312f0ff8816b9", "title": "Principles of Political Economy", "author": "David Ricardo", "year": 1817, "pages": 530},
+    {"bookId": "69568ed4499312f0ff8818cc", "title": "Treatise on Political Economy", "author": "Jean-Baptiste Say", "year": 1803, "pages": 460},
+    {"bookId": "69568ed7499312f0ff881a99", "title": "Principles of Political Economy", "author": "John Stuart Mill", "year": 1848, "pages": 589},
+    {"bookId": "69568c7bbe7c607c5f03d9df", "title": "The Law", "author": "Frédéric Bastiat", "year": 1850, "pages": 70},
+    {"bookId": "69568c7dbe7c607c5f03da26", "title": "Economic Sophisms", "author": "Frédéric Bastiat", "year": 1845, "pages": 255}
+  ],
+  "keyTheories": [
+    "Ricardo: Comparative advantage, labor theory of value, Ricardian rent",
+    "Say: Say's Law (supply creates demand)",
+    "Mill: Synthesis of classical economics, last great classical work",
+    "Bastiat: Harmony of interests, brilliant free trade advocacy"
+  ],
+  "researchValue": "Documents the mature classical economics tradition before the marginalist revolution. Essential for understanding 19th century political economy and debates over free trade vs protectionism.",
+  "connections": ["adam-smith-foundations", "austrian-school"],
+  "featured": true,
+  "displayOrder": 5
+}

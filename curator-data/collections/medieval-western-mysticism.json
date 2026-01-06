@@ -1,0 +1,40 @@
+{
+  "id": "medieval-western-mysticism",
+  "title": "Medieval Western Mysticism: Eckhart, Ruysbroeck & Cloud of Unknowing",
+  "shortTitle": "Medieval Mysticism",
+  "description": "The great mystics of medieval Western Christianity: Meister Eckhart's German mysticism, Jan van Ruysbroeck's Flemish spirituality, and the anonymous English Cloud of Unknowing representing the apophatic tradition.",
+  "dateRange": "14th century CE",
+  "totalBooks": 19,
+  "totalPages": 5543,
+  "themes": ["Apophatic Theology", "Rhineland Mysticism", "Flemish Mysticism", "English Mysticism", "Gelassenheit"],
+  "books": [
+    {"bookId": "6953dd5b77f38f6761be743b", "title": "Meister Eckhart - Complete Works", "author": "Meister Eckhart", "year": 1857, "pages": 514},
+    {"bookId": "6953dd6077f38f6761be763e", "title": "Meister Eckhart - Sermons", "author": "Meister Eckhart", "year": 1909, "pages": 366},
+    {"bookId": "6953dd6477f38f6761be77ad", "title": "Meister Eckhart der Mystiker", "author": "Adolf Lasson", "year": 1868, "pages": 388},
+    {"bookId": "6953dd6777f38f6761be7932", "title": "Eckhart und seine Jünger", "author": "Meister Eckhart", "year": 1895, "pages": 204},
+    {"bookId": "6953dd6c77f38f6761be79ff", "title": "Essential Sermons, Commentaries, Treatises", "author": "Meister Eckhart", "year": 1981, "pages": 100},
+    {"bookId": "6953dd6f77f38f6761be7a64", "title": "Teacher and Preacher", "author": "Meister Eckhart", "year": 1987, "pages": 454},
+    {"bookId": "6953dd7177f38f6761be7c2b", "title": "Mystics of the Renaissance", "author": "Rudolf Steiner", "year": 1911, "pages": 306},
+    {"bookId": "6953dd8b77f38f6761be7d5e", "title": "Ruysbroeck - Study by Underhill", "author": "Evelyn Underhill", "year": 1915, "pages": 224},
+    {"bookId": "6953dd8f77f38f6761be7e3f", "title": "Spiritual Espousals and Other Works", "author": "Jan van Ruusbroec", "year": 1985, "pages": 310},
+    {"bookId": "6953dd9477f38f6761be7f76", "title": "Ruysbroeck the Admirable", "author": "Alfred Wautier", "year": 1916, "pages": 382},
+    {"bookId": "6953dd9a77f38f6761be80f5", "title": "Ruysbroeck and the Mystics", "author": "Maurice Maeterlinck", "year": 1894, "pages": 169},
+    {"bookId": "6953dd9d77f38f6761be819f", "title": "Die Zierde der geistlichen Hochzeit", "author": "Jan van Ruusbroec", "year": 1501, "pages": 220},
+    {"bookId": "6953dda277f38f6761be827c", "title": "A Mediaeval Mystic - Life of Ruysbroeck", "author": "Vincent Scully", "year": 1910, "pages": 158},
+    {"bookId": "6953ddbb77f38f6761be831b", "title": "Cloud of Unknowing and Other Treatises", "author": "Anonymous", "year": 1400, "pages": 474},
+    {"bookId": "6953ddbf77f38f6761be84f6", "title": "Cloud of Unknowing - Underhill Edition", "author": "Evelyn Underhill (ed.)", "year": 1912, "pages": 330},
+    {"bookId": "6953ddc377f38f6761be8641", "title": "Cloud of Unknowing - Walsh Translation", "author": "James Walsh (trans.)", "year": 1981, "pages": 326},
+    {"bookId": "6953ddc877f38f6761be8788", "title": "Cloud of Unknowing - Progoff Commentary", "author": "Ira Progoff (ed.)", "year": 1957, "pages": 262},
+    {"bookId": "6953ddcc77f38f6761be888f", "title": "Cloud of Unknowing & Book of Privy Counseling", "author": "Anonymous", "year": 1400, "pages": 206},
+    {"bookId": "6953ddd077f38f6761be895e", "title": "Way of Paradox - Eckhart Spirituality", "author": "Cyprian Smith", "year": 1987, "pages": 150}
+  ],
+  "keyFigures": [
+    "Meister Eckhart (c.1260-1328): German Dominican mystic, teachings on detachment and the ground of the soul",
+    "Jan van Ruusbroec (1293-1381): Flemish mystic, 'The Admirable', author of Spiritual Espousals",
+    "Anonymous English author: Cloud of Unknowing, apophatic theology and contemplative prayer"
+  ],
+  "researchValue": "Essential for understanding medieval Christian mysticism in its Western manifestations. Eckhart influenced German idealism and phenomenology. Cloud of Unknowing represents the English apophatic tradition. Ruysbroeck influenced Devotio Moderna.",
+  "connections": ["byzantine-mystical-theology", "cappadocian-fathers", "ficino-neoplatonic-sources"],
+  "featured": true,
+  "displayOrder": 26
+}

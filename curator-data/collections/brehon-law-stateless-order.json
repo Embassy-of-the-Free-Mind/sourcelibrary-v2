@@ -1,0 +1,81 @@
+{
+  "id": "brehon-law-stateless-order",
+  "title": "Brehon Law: Celtic Legal Tradition & Stateless Order",
+  "shortTitle": "Brehon Law",
+  "description": "Ancient Irish legal system demonstrating how customary law, kin-based insurance, and arbitration maintained social order without centralized state, legislature, police, or prisons. A historical example of spontaneous legal order that influenced 19th-20th century libertarian thought.",
+  "curatedBy": "Embassy of the Free Mind Collection",
+  "dateCreated": "2026-01-01",
+  "dateRange": {
+    "start": 650,
+    "end": 1923,
+    "description": "c. 7th-8th century (codification) - 1923 (scholarly analysis)"
+  },
+  "themes": [
+    "Celtic Law",
+    "Customary Law",
+    "Stateless Order",
+    "Anarcho-Capitalism",
+    "Legal Anthropology",
+    "Comparative Jurisprudence",
+    "Spontaneous Order",
+    "Libertarian Theory"
+  ],
+  "geographicCoverage": [
+    "Ireland",
+    "Celtic World"
+  ],
+  "keyFeatures": [
+    "Non-statist legal order: no legislature, no police, no prisons",
+    "Customary arbitration system",
+    "Honor-price (eric) for offenses",
+    "Collective kin liability",
+    "Sept-land tenure (communal kinship property)",
+    "Professional arbitrators (brehons)",
+    "Voluntary enforcement through social ostracism"
+  ],
+  "intellectualInfluence": [
+    "Lysander Spooner (No Treason, 1867)",
+    "Gustave de Molinari (Production of Security, 1849)",
+    "Henry Sumner Maine (Ancient Law, 1861)",
+    "Murray Rothbard (For a New Liberty, 1973)",
+    "David Friedman (Machinery of Freedom, 1973)",
+    "Modern anarcho-capitalist theory"
+  ],
+  "books": [
+    {
+      "bookId": "695694f1570b333d14864248",
+      "title": "Ancient Laws of Ireland - Volume 1: Senchus Mor",
+      "author": "Ancient Laws Commission (ed.)",
+      "year": 1865,
+      "pages": 621,
+      "significance": "Scholarly edition of the Senchus Mor ('Great Old Law'), the most important Brehon law tract. Irish Gaelic/English parallel text. Primary source for understanding ancient Irish legal system."
+    },
+    {
+      "bookId": "695694f3570b333d148644b6",
+      "title": "Liberty, Order and Law Under Native Irish Rule",
+      "author": "Eoin MacNeill",
+      "year": 1923,
+      "pages": 440,
+      "significance": "Scholarly analysis of how Brehon law maintained order without centralized state. Three-part framework: Liberty + Order + Law. Comparative to Roman law, feudalism, common law."
+    },
+    {
+      "bookId": "695694f5570b333d1486466f",
+      "title": "Early History of Institutions",
+      "author": "Henry Sumner Maine",
+      "year": 1914,
+      "pages": 296,
+      "significance": "Comparative jurisprudence classic. Analyzes Brehon law alongside Roman law and other early systems. 'Status to contract' thesis. Influenced historical school of jurisprudence. Read by Hayek."
+    }
+  ],
+  "totalBooks": 3,
+  "totalPages": 1357,
+  "researchValue": "This collection provides primary sources and scholarly analysis of Brehon law as a functioning stateless legal system. Essential for researchers studying alternatives to state-based legal systems, historical examples of spontaneous order, comparative jurisprudence, and the intellectual foundations of libertarian legal theory. The Brehon system demonstrates how customary law, reputation mechanisms, and voluntary arbitration can provide justice and social order.",
+  "connections": [
+    {
+      "collectionId": "natural-law-genealogy",
+      "relationship": "Parallel tradition to Greco-Roman natural law; both influence modern spontaneous order theory"
+    }
+  ],
+  "featuredOn": "homepage",
+  "displayOrder": 2
+}

@@ -1,0 +1,23 @@
+{
+  "id": "natural-magic-early-modern",
+  "title": "Natural Magic & Early Modern Science: Della Porta to Wilkins",
+  "shortTitle": "Natural Magic",
+  "description": "The bridge between Renaissance magic and early modern science: Della Porta's encyclopedic Magia Naturalis and John Wilkins's mathematical explanations of mechanical wonders.",
+  "dateRange": "1589 - 1680",
+  "totalBooks": 3,
+  "totalPages": 2392,
+  "themes": ["Natural Magic", "Experimental Science", "Optics", "Mechanical Philosophy", "Scientific Instruments"],
+  "books": [
+    {"bookId": "6953ea371479a63c11086267", "title": "Natural Magick (1658 English)", "author": "Giambattista della Porta", "year": 1658, "pages": 438},
+    {"bookId": "6953ea3e1479a63c1108641e", "title": "Magia Naturalis (1619 Latin)", "author": "Giambattista della Porta", "year": 1619, "pages": 1356},
+    {"bookId": "6953ea4a1479a63c1108696b", "title": "Mathematical and Philosophical Works", "author": "John Wilkins", "year": 1680, "pages": 598}
+  ],
+  "keyWorks": [
+    "Della Porta Magia Naturalis: 20-book encyclopedia of 'natural magic' - experiments in optics, magnetism, alchemy, cryptography, distillation. Major influence on early modern science despite magical framing.",
+    "Wilkins Mathematical Magick: Explains mechanical wonders (automata, perpetual motion attempts) through mathematics and mechanics, demystifying 'magic'"
+  ],
+  "researchValue": "Della Porta's work bridges magic and science - his experiments were genuine natural philosophy despite esoteric packaging. Influenced Bacon, Boyle, and the Royal Society. Wilkins (founder of Royal Society) reinterprets magical wonders as mechanical phenomena.",
+  "connections": ["scientific-revolution-core", "rosicrucian-circle", "paracelsian-medicine"],
+  "featured": true,
+  "displayOrder": 35
+}

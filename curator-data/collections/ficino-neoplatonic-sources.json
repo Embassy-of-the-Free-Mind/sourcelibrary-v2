@@ -1,0 +1,28 @@
+{
+  "id": "ficino-neoplatonic-sources",
+  "title": "Ficino's Neoplatonic Sources: Plotinus to Proclus",
+  "shortTitle": "Neoplatonic Sources",
+  "description": "The ancient Neoplatonic texts that Marsilio Ficino translated and that shaped Renaissance philosophy: Plotinus's Enneads, Proclus's Platonic Theology, Iamblichus's theurgy, and Pseudo-Dionysius's mystical theology.",
+  "dateRange": "250 - 1821 CE",
+  "totalBooks": 6,
+  "totalPages": 4322,
+  "themes": ["Neoplatonism", "Plotinus", "Proclus", "Theurgy", "Negative Theology"],
+  "books": [
+    {"bookId": "6952c9ca77f38f6761bc3062", "title": "Plotini Enneades", "author": "Plotinus (trans. Ficino)", "year": 1580, "pages": 860},
+    {"bookId": "6952ca2a77f38f6761bc33bf", "title": "De mysteriis Aegyptiorum", "author": "Iamblichus", "year": 1516, "pages": 281},
+    {"bookId": "6952ca2e77f38f6761bc34d9", "title": "Six Books on Theology of Plato", "author": "Proclus (trans. Taylor)", "year": 1816, "pages": 1764},
+    {"bookId": "6952ca3177f38f6761bc3bbe", "title": "Sancti Dionysii Areopagitae opera", "author": "Pseudo-Dionysius", "year": 1634, "pages": 543},
+    {"bookId": "6952ca6a77f38f6761bc3f19", "title": "Elementa theologica et physica", "author": "Proclus", "year": 1618, "pages": 152},
+    {"bookId": "6952caa577f38f6761bc4c0f", "title": "Iamblichus on the Mysteries", "author": "Iamblichus (trans. Taylor)", "year": 1821, "pages": 722}
+  ],
+  "keyTexts": [
+    "Plotinus Enneads: The One, emanation, return to source - foundation of Neoplatonism",
+    "Iamblichus De Mysteriis: Theurgic philosophy, ritual as path to the divine",
+    "Proclus Platonic Theology: Systematic Neoplatonic metaphysics",
+    "Pseudo-Dionysius: Celestial hierarchies, negative theology, Christian Neoplatonism"
+  ],
+  "researchValue": "Ficino's translations of these texts sparked the Neoplatonic revival in Renaissance Florence. Essential for understanding the philosophical foundations of Renaissance magic, Kabbalah, and Hermetic philosophy.",
+  "connections": ["florentine-humanists", "pico-della-mirandola", "byzantine-mystical-theology"],
+  "featured": true,
+  "displayOrder": 13
+}

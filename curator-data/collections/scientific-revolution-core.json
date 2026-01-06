@@ -1,0 +1,41 @@
+{
+  "id": "scientific-revolution-core",
+  "title": "Scientific Revolution Core: Copernicus to Newton",
+  "shortTitle": "Scientific Revolution",
+  "description": "The foundational texts of the Scientific Revolution: Copernicus's heliocentric theory, Galileo's telescopic discoveries, Kepler's planetary laws, Newton's Principia and Opticks, Bacon's new method, and Descartes' mechanical philosophy.",
+  "dateRange": "1543 - 1704",
+  "totalBooks": 17,
+  "totalPages": 7938,
+  "themes": ["Heliocentrism", "Mathematical Physics", "Experimental Method", "Mechanical Philosophy", "Scientific Method"],
+  "books": [
+    {"bookId": "6953e42e77f38f6761beed60", "title": "De Revolutionibus (German Translation)", "author": "Nicolaus Copernicus", "year": 1879, "pages": 466},
+    {"bookId": "6953e45877f38f6761bee67c", "title": "Sidereus Nuncius (1610 First Edition)", "author": "Galileo Galilei", "year": 1610, "pages": 68},
+    {"bookId": "6953e45c77f38f6761bee6dd", "title": "Sidereal Messenger (English Translation)", "author": "Galileo Galilei", "year": 1880, "pages": 150},
+    {"bookId": "6953e46277f38f6761bee798", "title": "Dialogo sopra i due massimi sistemi (1632)", "author": "Galileo Galilei", "year": 1632, "pages": 520},
+    {"bookId": "6953e46677f38f6761beeafb", "title": "Dialogue Concerning Two World Systems", "author": "Galileo Galilei", "year": 1891, "pages": 686},
+    {"bookId": "6953e48077f38f6761beeda0", "title": "Discorsi e Dimostrazioni (Two New Sciences)", "author": "Galileo Galilei", "year": 1638, "pages": 346},
+    {"bookId": "6953e49377f38f6761beee27", "title": "Tabulae Rudolphinae (1627)", "author": "Johannes Kepler", "year": 1627, "pages": 276},
+    {"bookId": "6953e4a277f38f6761beed5d", "title": "Kepler Opera Omnia Vol. I", "author": "Johannes Kepler", "year": 1858, "pages": 1150},
+    {"bookId": "6953e4fa77f38f6761bef1dc", "title": "Principia Mathematica (1687 First Edition)", "author": "Isaac Newton", "year": 1687, "pages": 526},
+    {"bookId": "6953e4ff77f38f6761bef3eb", "title": "Mathematical Principles (Motte 1729)", "author": "Isaac Newton", "year": 1729, "pages": 417},
+    {"bookId": "6953e50277f38f6761bef58d", "title": "Opticks (1704 First Edition)", "author": "Isaac Newton", "year": 1704, "pages": 458},
+    {"bookId": "6953e50577f38f6761bef758", "title": "Novum Organum Scientiarum (1762)", "author": "Francis Bacon", "year": 1762, "pages": 408},
+    {"bookId": "6953e50877f38f6761bef8f1", "title": "Novum Organum (English Translation)", "author": "Francis Bacon", "year": 1863, "pages": 300},
+    {"bookId": "6953e50b77f38f6761befa1e", "title": "Of the Advancement and Proficience of Learning", "author": "Francis Bacon", "year": 1640, "pages": 628},
+    {"bookId": "6953e51c77f38f6761befc93", "title": "Discours de la Méthode suivi des Méditations", "author": "René Descartes", "year": 1637, "pages": 485},
+    {"bookId": "6953e51e77f38f6761befe79", "title": "Discourse on Method, Meditations, Principles", "author": "René Descartes", "year": 1901, "pages": 296},
+    {"bookId": "6953e52177f38f6761beffa2", "title": "Oeuvres de Descartes Vol. VI (La Géométrie)", "author": "René Descartes", "year": 1637, "pages": 758}
+  ],
+  "keyWorks": [
+    "Copernicus De Revolutionibus (1543): Heliocentric theory, launched the Scientific Revolution",
+    "Galileo Sidereus Nuncius (1610): First telescopic observations, moons of Jupiter",
+    "Kepler Tabulae Rudolphinae (1627): Planetary tables using elliptical orbits",
+    "Newton Principia (1687): Foundation of classical mechanics, universal gravitation",
+    "Bacon Novum Organum (1620): New scientific method based on induction",
+    "Descartes Discourse (1637): Methodical doubt, cogito, mechanical philosophy"
+  ],
+  "researchValue": "The core primary sources of the Scientific Revolution. These works overthrew Aristotelian-Ptolemaic cosmology, established mathematical physics, and created the experimental method that defines modern science.",
+  "connections": ["robert-hooke-experimental", "royal-society-music-acoustics"],
+  "featured": true,
+  "displayOrder": 29
+}

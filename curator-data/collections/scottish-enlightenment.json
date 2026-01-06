@@ -1,0 +1,29 @@
+{
+  "id": "scottish-enlightenment",
+  "title": "Scottish Enlightenment: Moral Sense to Political Economy",
+  "shortTitle": "Scottish Enlightenment",
+  "description": "The Scottish moral philosophy tradition from Shaftesbury's moral sense through Hutcheson (Smith's teacher), Mandeville's provocations, to Hume's radical empiricism. Foundation for Adam Smith's synthesis of moral sentiments and economic theory.",
+  "dateRange": "1711 - 1740",
+  "totalBooks": 7,
+  "totalPages": 2484,
+  "themes": ["Moral Sense", "Sympathy", "Sentiment", "Skepticism", "Harmony", "Self-Interest"],
+  "books": [
+    {"bookId": "6956908faeb4b980d9ebd74d", "title": "Characteristicks Vol 1", "author": "Shaftesbury", "year": 1727, "pages": 372},
+    {"bookId": "6956907caeb4b980d9ebd4b8", "title": "Beauty and Virtue", "author": "Francis Hutcheson", "year": 1725, "pages": 290},
+    {"bookId": "69569080aeb4b980d9ebd5db", "title": "Fable of the Bees", "author": "Bernard Mandeville", "year": 1729, "pages": 369},
+    {"bookId": "695690a6aeb4b980d9ebd8c2", "title": "Treatise Vol 1: Understanding", "author": "David Hume", "year": 1739, "pages": 489},
+    {"bookId": "695690a8aeb4b980d9ebdaac", "title": "Treatise Vol 2: Passions", "author": "David Hume", "year": 1739, "pages": 333},
+    {"bookId": "695690aaaeb4b980d9ebdbfa", "title": "Treatise Vol 3: Morals", "author": "David Hume", "year": 1740, "pages": 319}
+  ],
+  "keyFigures": [
+    {"name": "Shaftesbury", "contribution": "Moral sense - virtue appreciated like beauty"},
+    {"name": "Hutcheson", "contribution": "Beauty/order/harmony → moral good [Smith's teacher]"},
+    {"name": "Mandeville", "contribution": "Private vices → public benefits (paradox)"},
+    {"name": "Hume", "contribution": "Passions over reason, sentiment-based morality, skepticism"}
+  ],
+  "intellectualInfluence": "Direct lineage to Adam Smith: Hutcheson (teacher) + Hume (friend) → Theory of Moral Sentiments (1759) → Wealth of Nations (1776)",
+  "researchValue": "Essential for understanding the philosophical foundations of classical economics. Shows how moral philosophy becomes political economy through the Scottish tradition.",
+  "connections": ["early-modern-natural-law", "adam-smith-foundations"],
+  "featured": true,
+  "displayOrder": 3
+}

@@ -1,0 +1,153 @@
+{
+  "id": "florentine-neoplatonism",
+  "title": "Florentine Renaissance: Ficino's Circle & the Platonic Academy",
+  "shortTitle": "Florentine Neoplatonism",
+  "description": "Complete collection of the Florentine Platonic Academy under Marsilio Ficino's leadership, including Pico della Mirandola, Poliziano, Landino, and Lorenzo de' Medici. Documents the Renaissance revival of Platonism, Hermeticism, and the synthesis of pagan philosophy with Christian theology.",
+  "curatedBy": "Embassy of the Free Mind Collection",
+  "dateCreated": "2026-01-01",
+  "dateRange": {
+    "start": 1450,
+    "end": 1550,
+    "description": "c. 1450-1550"
+  },
+  "themes": [
+    "Renaissance Humanism",
+    "Neoplatonism",
+    "Platonic Academy",
+    "Christian Kabbalah",
+    "Hermeticism",
+    "Syncretism",
+    "Florentine Culture",
+    "Platonic Love Philosophy"
+  ],
+  "geographicCoverage": [
+    "Florence",
+    "Italy"
+  ],
+  "keyFigures": [
+    {
+      "name": "Marsilio Ficino",
+      "dates": "1433-1499",
+      "role": "Founder and leader of Platonic Academy, translator of Plato and Plotinus",
+      "keyWorks": "Plotini Enneades, Theologia Platonica"
+    },
+    {
+      "name": "Giovanni Pico della Mirandola",
+      "dates": "1463-1494",
+      "role": "Syncretic philosopher, Christian Kabbalist",
+      "keyWorks": "De hominis dignitate (Oration on Dignity of Man), 900 Theses, Heptaplus"
+    },
+    {
+      "name": "Angelo Poliziano",
+      "dates": "1454-1494",
+      "role": "Humanist poet and philologist",
+      "keyWorks": "Miscellanea, Stanze per la giostra"
+    },
+    {
+      "name": "Cristoforo Landino",
+      "dates": "1424-1498",
+      "role": "Neoplatonic Dante commentator",
+      "keyWorks": "Comento sopra la Comedia, Disputationes Camaldulenses"
+    },
+    {
+      "name": "Lorenzo de' Medici",
+      "dates": "1449-1492",
+      "role": "Patron, poet ('Il Magnifico')",
+      "keyWorks": "Poetry with philosophical commentary"
+    },
+    {
+      "name": "Girolamo Benivieni",
+      "dates": "1453-1542",
+      "role": "Poet, Pico's friend",
+      "keyWorks": "Canzone d'amore (commented by Pico)"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Plotinus & Neoplatonic Sources",
+      "period": "Ancient foundations, Renaissance editions",
+      "keyWorks": [
+        "Plotini Enneades (Ficino's 1580 Greek-Latin edition)",
+        "Proclus: Platonic Theology (Taylor translation)",
+        "Proclus: Elements of Theology",
+        "Iamblichus: De Mysteriis",
+        "Pseudo-Dionysius: Opera"
+      ],
+      "significance": "Ancient Neoplatonic texts that Ficino's circle revived and translated"
+    },
+    {
+      "title": "Pico della Mirandola",
+      "period": "1486-1520",
+      "keyWorks": [
+        "Opuscula (1496 Bologna incunabulum)",
+        "Opuscula cum Vita (1498 Venice)",
+        "Opera omnia (1557 Basel)",
+        "De hominis dignitate (1942 critical edition)",
+        "Heptaplus (on Genesis)",
+        "Commentary on Benivieni's Canzone d'amore"
+      ],
+      "significance": "Manifesto of Renaissance humanism, Christian Kabbalah, syncretic philosophy"
+    },
+    {
+      "title": "Poliziano's Humanist Philology",
+      "period": "1480s-1490s",
+      "keyWorks": [
+        "Miscellanea centuria una (1489)",
+        "Omnium operum tomus prior (1519)",
+        "Le stanze, Le Orfeo e Le rime (1863)"
+      ],
+      "significance": "Pioneering textual criticism and humanist methodology"
+    },
+    {
+      "title": "Landino's Neoplatonic Dante",
+      "period": "1480s-1507",
+      "keyWorks": [
+        "Comento sopra la Comedia di Dante (1481)",
+        "Disputationes Camaldulenses (1507)"
+      ],
+      "significance": "First major Neoplatonic reading of Dante, dialogue on active vs contemplative life"
+    },
+    {
+      "title": "Lorenzo de' Medici's Philosophical Poetry",
+      "period": "1470s-1490s",
+      "keyWorks": [
+        "Opere vol. 2 (poetry, 1914)",
+        "Comento de' miei sonetti (1991)"
+      ],
+      "significance": "The patron's own philosophical sonnets with self-commentary"
+    },
+    {
+      "title": "Related Neoplatonists",
+      "period": "1520s-1540s",
+      "keyWorks": [
+        "Gianfrancesco Pico: Examen vanitatis doctrinae gentium (1520)",
+        "Leone Ebreo: Dialoghi d'amore (1535)"
+      ],
+      "significance": "Later developments - skeptical critique and Jewish Neoplatonic love philosophy"
+    }
+  ],
+  "intellectualSignificance": [
+    "Revival of Platonism and Neoplatonism in Latin West",
+    "Synthesis of ancient philosophy with Christianity",
+    "Development of Christian Kabbalah",
+    "Humanist philology and textual criticism",
+    "Platonic love philosophy",
+    "Influence on Renaissance art, literature, and music",
+    "Foundation for later Cambridge Platonists and English Romanticism"
+  ],
+  "totalBooks": 26,
+  "totalPages": 12796,
+  "researchValue": "This collection provides complete documentation of the Florentine Platonic Academy, the single most influential intellectual circle of the Italian Renaissance. Essential for understanding the revival of ancient philosophy, the development of Renaissance humanism, the synthesis of pagan and Christian thought, and the intellectual foundations of early modern European culture.",
+  "connections": [
+    {
+      "collectionId": "alchemy-hermetica",
+      "relationship": "Shared Hermetic philosophy; Ficino translated Corpus Hermeticum"
+    },
+    {
+      "collectionId": "natural-law-genealogy",
+      "relationship": "Neoplatonic natural law theory influences early modern natural rights tradition"
+    }
+  ],
+  "featuredOn": "homepage",
+  "displayOrder": 5
+}

@@ -1,0 +1,26 @@
+{
+  "id": "kabbalah-jewish-mysticism",
+  "title": "Kabbalah, Jewish Mysticism & Mandaean Gnosticism",
+  "shortTitle": "Kabbalah & Gnosticism",
+  "description": "The Jewish mystical tradition from the Zohar through Gershom Scholem's scholarship, plus the Mandaean Gnostic scriptures (Ginza Rabba) as a parallel esoteric tradition.",
+  "dateRange": "c. 1000 CE - 1979",
+  "totalBooks": 4,
+  "totalPages": 1838,
+  "themes": ["Kabbalah", "Zohar", "Jewish Mysticism", "Mandaean Gnosticism", "Sefer HaBahir"],
+  "books": [
+    {"bookId": "695361b59c494f9f9f0428cf", "title": "Sefer HaBahir (Book of Illumination)", "author": "Aryeh Kaplan (trans.)", "year": 1979, "pages": 278},
+    {"bookId": "69520c0fab34727b1f043e63", "title": "Zohar (Genesis)", "author": "Moses de León (attrib.)", "year": 1526, "pages": 732},
+    {"bookId": "695362099c494f9f9f043206", "title": "Ginza Rabba (Mandaean Holy Book)", "author": "Lidzbarski / Ram Al-Sabiry", "year": 2012, "pages": 393},
+    {"bookId": "6953621ee5b8ba20744132a1", "title": "Canonical Prayer Book of the Mandaeans", "author": "E.S. Drower", "year": 1959, "pages": 435}
+  ],
+  "keyTexts": [
+    "Sefer HaBahir: Early Kabbalistic text, foundational for Zoharic Kabbalah",
+    "Zohar: The central text of Jewish mysticism, attributed to Moses de León",
+    "Ginza Rabba: 'Great Treasure' - central scripture of Mandaean Gnosticism",
+    "Mandaean Prayer Book: Liturgical texts of the last surviving Gnostic religion"
+  ],
+  "researchValue": "Essential for understanding Jewish mysticism and its influence on Christian Kabbalah (Pico, Reuchlin, Agrippa). The Mandaean texts document a parallel Gnostic tradition that survived into modernity.",
+  "connections": ["pico-della-mirandola", "rosicrucian-circle", "non-canonical-ancient-texts"],
+  "featured": true,
+  "displayOrder": 23
+}

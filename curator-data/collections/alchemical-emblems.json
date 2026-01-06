@@ -1,0 +1,29 @@
+{
+  "id": "alchemical-emblems",
+  "title": "Alchemical Emblems: Visual Knowledge Transmission",
+  "shortTitle": "Alchemical Emblems",
+  "description": "The great emblem books of alchemy where visual imagery conveys esoteric knowledge: Splendor Solis's illuminated plates, the Rosarium's archetypal images analyzed by Jung, Mylius's comprehensive medical-alchemical synthesis, and the 'silent book' Mutus Liber.",
+  "dateRange": "1550 - 1620",
+  "totalBooks": 6,
+  "totalPages": 2377,
+  "themes": ["Alchemical Emblems", "Visual Symbolism", "Jungian Alchemy", "Emblematic Tradition", "Illuminated Manuscripts"],
+  "books": [
+    {"bookId": "6952dbf977f38f6761bc7720", "title": "Splendor Solis", "author": "Solomon Trismosin", "year": 1582, "pages": 113},
+    {"bookId": "695677c8be7c607c5f03ac5e", "title": "Splendor Solis (1582 MS)", "author": "Solomon Trismosin", "year": 1582, "pages": 100},
+    {"bookId": "695677b9be7c607c5f03abf9", "title": "Rosarium Philosophorum", "author": "Anonymous", "year": 1550, "pages": 100},
+    {"bookId": "695677cbbe7c607c5f03acc3", "title": "Basilica Philosophica", "author": "Johann Daniel Mylius", "year": 1620, "pages": 1557},
+    {"bookId": "6952d0c377f38f6761bc585e", "title": "Atalanta Fugiens", "author": "Michael Maier", "year": 1618, "pages": 407},
+    {"bookId": "69526359ab34727b1f046d5a", "title": "Mutus Liber", "author": "Altus", "year": 1677, "pages": 100}
+  ],
+  "keyWorks": [
+    "Splendor Solis: Pinnacle of alchemical illumination art with 22 allegorical plates",
+    "Rosarium Philosophorum: Images extensively analyzed by Jung in Psychology and Alchemy",
+    "Mylius Basilica: Comprehensive medical-chemical synthesis with emblematic illustrations",
+    "Atalanta Fugiens: 50 alchemical emblems each with musical fugue",
+    "Mutus Liber: 'Silent Book' conveying the Work entirely through images"
+  ],
+  "researchValue": "Essential for understanding visual communication of alchemical knowledge. Jung's interpretation of Rosarium images makes this collection foundational for psychological approaches to alchemy.",
+  "connections": ["rosicrucian-circle", "paracelsian-medicine"],
+  "featured": true,
+  "displayOrder": 12
+}

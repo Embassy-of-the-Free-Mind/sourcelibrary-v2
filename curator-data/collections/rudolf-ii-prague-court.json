@@ -1,0 +1,31 @@
+{
+  "id": "rudolf-ii-prague-court",
+  "title": "Rudolf II's Prague Court: Alchemy & Astronomy",
+  "shortTitle": "Rudolf II Court",
+  "description": "The brilliant circle of alchemists, astronomers, and occult philosophers at Emperor Rudolf II's Prague court (1583-1612): John Dee's Enochian revelations, Michael Maier's alchemical emblems, Kepler's cosmic harmonies, Tycho's observations, and Sendivogius's 'New Light of Alchemy'.",
+  "dateRange": "1564 - 1659",
+  "totalBooks": 8,
+  "totalPages": 2698,
+  "themes": ["Rudolf II", "Prague Court", "Enochian Magic", "Astronomical Revolution", "Court Alchemy"],
+  "books": [
+    {"bookId": "6952d04f77f38f6761bc4ee2", "title": "Monas Hieroglyphica", "author": "John Dee", "year": 1564, "pages": 31},
+    {"bookId": "6952d08877f38f6761bc5560", "title": "True & Faithful Relation", "author": "Dee/Kelley", "year": 1659, "pages": 765},
+    {"bookId": "6952d0c377f38f6761bc585e", "title": "Atalanta Fugiens", "author": "Michael Maier", "year": 1618, "pages": 407},
+    {"bookId": "6952d0c777f38f6761bc59f6", "title": "Arcana Arcanissima", "author": "Michael Maier", "year": 1614, "pages": 248},
+    {"bookId": "6952d0fa77f38f6761bc5aef", "title": "Astronomiae Instauratae Mechanica", "author": "Tycho Brahe", "year": 1598, "pages": 252},
+    {"bookId": "6952d12e77f38f6761bc5bec", "title": "Harmonices Mundi", "author": "Johannes Kepler", "year": 1619, "pages": 572},
+    {"bookId": "6952d13377f38f6761bc5e29", "title": "Alchemical Writings", "author": "Edward Kelly", "year": 1893, "pages": 135},
+    {"bookId": "6952d19977f38f6761bc5eb1", "title": "A New Light of Alchymie", "author": "Michael Sendivogius", "year": 1650, "pages": 288}
+  ],
+  "keyFigures": [
+    "John Dee (1527-1608): English polymath, Enochian spirit communications with Edward Kelley",
+    "Michael Maier (1568-1622): Physician to Rudolf II, alchemical philosopher",
+    "Tycho Brahe (1546-1601): Imperial astronomer, observational astronomy",
+    "Johannes Kepler (1571-1630): Imperial Mathematician, planetary laws, cosmic harmonies",
+    "Michael Sendivogius (1566-1636): Polish alchemist, influenced Newton"
+  ],
+  "researchValue": "Documents the remarkable convergence of alchemy, astronomy, and occult philosophy at Rudolf II's Prague court - a pivotal moment in the history of science and esotericism.",
+  "connections": ["rosicrucian-circle", "alchemical-emblems", "royal-society-music-acoustics"],
+  "featured": true,
+  "displayOrder": 25
+}

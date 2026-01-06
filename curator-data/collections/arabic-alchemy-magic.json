@@ -1,0 +1,27 @@
+{
+  "id": "arabic-alchemy-magic",
+  "title": "Arabic Alchemy & Astral Magic",
+  "shortTitle": "Arabic Alchemy",
+  "description": "The foundational Arabic alchemical corpus including Jabir ibn Hayyan, the Picatrix grimoire of astral magic, and the Herat alchemical compendium. These texts transmitted ancient Near Eastern and Hellenistic knowledge to medieval Europe.",
+  "dateRange": "c. 800 - 1678",
+  "totalBooks": 6,
+  "totalPages": 2430,
+  "themes": ["Arabic Alchemy", "Jabir Corpus", "Astral Magic", "Picatrix", "Islamic Esotericism"],
+  "books": [
+    {"bookId": "6953619d9c494f9f9f042608", "title": "Majmu nafis fi al-kimiya", "author": "Jabir ibn Hayyan", "year": 1000, "pages": 390},
+    {"bookId": "695361a09c494f9f9f04278f", "title": "The Works of Geber", "author": "Jabir ibn Hayyan", "year": 1678, "pages": 319},
+    {"bookId": "695361ba9c494f9f9f042a69", "title": "Alchemical Compendium (Herat)", "author": "Ibrahim al-Husayni", "year": 1499, "pages": 353},
+    {"bookId": "695361879c494f9f9f0424f4", "title": "Picatrix (Ghāyat al-Ḥakīm)", "author": "al-Majriti (attrib.)", "year": 1000, "pages": 275},
+    {"bookId": "695361cd9c494f9f9f042f19", "title": "Ghayat al-Hakim (Arabic MS)", "author": "Maslama al-Majriti", "year": 1000, "pages": 748},
+    {"bookId": "69526191ab34727b1f046982", "title": "Alchemiae Gebri Arabis", "author": "Geber", "year": 1545, "pages": 345}
+  ],
+  "keyWorks": [
+    "Jabir Corpus: Foundational Arabic alchemy, transmitted to Latin West as 'Geber'",
+    "Picatrix: The most influential grimoire of astral magic in Western tradition",
+    "Herat Compendium: 15th century synthesis of Islamic alchemical knowledge"
+  ],
+  "researchValue": "Essential for understanding the transmission of alchemical knowledge from the Islamic world to medieval and Renaissance Europe. Picatrix was foundational for Renaissance magic (Ficino, Agrippa).",
+  "connections": ["paracelsian-medicine", "rosicrucian-circle"],
+  "featured": true,
+  "displayOrder": 9
+}

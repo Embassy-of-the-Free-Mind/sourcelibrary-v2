@@ -1,0 +1,37 @@
+{
+  "id": "euler-18th-century-mathematics",
+  "title": "Euler & 18th Century Mathematics: The Age of Calculation",
+  "shortTitle": "Euler & Mathematics",
+  "description": "Leonhard Euler's monumental contributions to mathematics and mechanics, alongside Leibniz's philosophy and Pascal's probability theory - the mathematical foundations of the Enlightenment.",
+  "dateRange": "1654 - 1771",
+  "totalBooks": 13,
+  "totalPages": 8239,
+  "themes": ["Analytical Mechanics", "Calculus", "Algebra", "Number Theory", "Mathematical Physics"],
+  "books": [
+    {"bookId": "6953e9e71479a63c1108551c", "title": "Elements of Algebra", "author": "Leonhard Euler", "year": 1770, "pages": 642},
+    {"bookId": "6953e9f41479a63c1108579f", "title": "Mechanica Vol. I (1736)", "author": "Leonhard Euler", "year": 1736, "pages": 544},
+    {"bookId": "6953e9ff1479a63c110859c0", "title": "Mechanica Vol. II (1736)", "author": "Leonhard Euler", "year": 1736, "pages": 556},
+    {"bookId": "6953ea0a1479a63c11085bed", "title": "Einleitung in die Analysis des Unendlichen", "author": "Leonhard Euler", "year": 1748, "pages": 632},
+    {"bookId": "6953ea151479a63c11085e66", "title": "Methodus Inveniendi (Calculus of Variations)", "author": "Leonhard Euler", "year": 1744, "pages": 354},
+    {"bookId": "6953ea1d1479a63c11085fc9", "title": "Vollständige Anleitung zur Algebra (1771)", "author": "Leonhard Euler", "year": 1771, "pages": 669},
+    {"bookId": "6953e5ef1479a63c1108408e", "title": "Mathematische Schriften Vol. IV", "author": "Gottfried Wilhelm Leibniz", "year": 1859, "pages": 556},
+    {"bookId": "6953ea641479a63c11086bc2", "title": "Philosophical Works (Monadology, Theodicy)", "author": "Leibniz", "year": 1890, "pages": 418},
+    {"bookId": "6953ea711479a63c11086d65", "title": "Die philosophischen Schriften Vol. IV", "author": "Leibniz", "year": 1880, "pages": 648},
+    {"bookId": "6953ea7c1479a63c11086fee", "title": "Die philosophischen Schriften Vol. I", "author": "Leibniz", "year": 1875, "pages": 633},
+    {"bookId": "6953ea881479a63c11087268", "title": "The Monadology and Other Writings", "author": "Leibniz", "year": 1898, "pages": 472},
+    {"bookId": "6953e5f21479a63c110842bb", "title": "Oeuvres de Blaise Pascal Vol. I", "author": "Blaise Pascal", "year": 1871, "pages": 476},
+    {"bookId": "6953e5f41479a63c11084498", "title": "Arcana Naturae Detecta (1695)", "author": "Antony van Leeuwenhoek", "year": 1695, "pages": 659}
+  ],
+  "keyContributions": [
+    "Euler Mechanica (1736): First systematic treatise on analytical mechanics",
+    "Euler Analysis (1748): Introduction to infinitesimal calculus, foundational",
+    "Euler Calculus of Variations (1744): Optimization and variational principles",
+    "Leibniz: Co-inventor of calculus (independently of Newton), monadology",
+    "Pascal: Probability theory, hydraulics, calculating machines",
+    "Leeuwenhoek: First observations of bacteria and protozoa"
+  ],
+  "researchValue": "Euler was the most prolific mathematician in history. His works laid foundations for modern mathematics and physics. Leibniz's calculus and philosophy shaped the Enlightenment. Pascal pioneered probability theory.",
+  "connections": ["scientific-revolution-core", "robert-hooke-experimental"],
+  "featured": true,
+  "displayOrder": 34
+}

@@ -1,0 +1,30 @@
+{
+  "id": "byzantine-mystical-theology",
+  "title": "Byzantine Mystical Theology: Hesychasm & Apophatic Tradition",
+  "shortTitle": "Byzantine Mysticism",
+  "description": "The Byzantine mystical tradition from Pseudo-Dionysius's negative theology through the hesychast prayer tradition: the Philokalia, Maximus the Confessor's cosmic theology, Symeon the New Theologian's experiential mysticism, and Gregory Palamas's defense of hesychasm.",
+  "dateRange": "6th - 14th century CE",
+  "totalBooks": 8,
+  "totalPages": 4697,
+  "themes": ["Hesychasm", "Negative Theology", "Jesus Prayer", "Theosis", "Divine Energies"],
+  "books": [
+    {"bookId": "69520de1ab34727b1f044227", "title": "Opera Omnia", "author": "Pseudo-Dionysius", "year": 1501, "pages": 92},
+    {"bookId": "6953a54c77f38f6761bcf531", "title": "Philokalia (Greek Text)", "author": "Various", "year": 1893, "pages": 884},
+    {"bookId": "6953a5dd77f38f6761bd022a", "title": "Patrologia Graeca Vol. 90 - Maximus Confessor", "author": "Maximus the Confessor", "year": 1860, "pages": 100},
+    {"bookId": "6953a63d77f38f6761bd061c", "title": "Scala Paradisi (Ladder of Divine Ascent)", "author": "John Climacus", "year": 600, "pages": 100},
+    {"bookId": "6953a8e577f38f6761bd4914", "title": "Traités Théologiques", "author": "Symeon the New Theologian", "year": 1000, "pages": 542},
+    {"bookId": "6953a8f977f38f6761bd4b33", "title": "Defense des Saints Hesychastes", "author": "Gregory Palamas", "year": 1340, "pages": 1925},
+    {"bookId": "6953a8d277f38f6761bd38d1", "title": "Anonymous Sayings of Desert Fathers", "author": "Desert Fathers (trans. Wortley)", "year": 2013, "pages": 496},
+    {"bookId": "6953a8fc77f38f6761bd4c4b", "title": "Way of a Pilgrim", "author": "Anonymous", "year": 1884, "pages": 558}
+  ],
+  "keyWorks": [
+    "Pseudo-Dionysius: Negative theology, celestial hierarchies - foundational for Western & Eastern mysticism",
+    "Philokalia: Collection of hesychast spiritual texts on prayer of the heart",
+    "Maximus Confessor: Cosmic Christology, logoi theory, mystical theology",
+    "Gregory Palamas: Defense of hesychasm, distinction between divine essence and energies"
+  ],
+  "researchValue": "Essential for understanding Byzantine spirituality and its influence on Western mysticism. The hesychast prayer tradition (Jesus Prayer) and Palamas's theology of divine energies represent the pinnacle of Orthodox mystical theology.",
+  "connections": ["cappadocian-fathers", "ficino-neoplatonic-sources", "desert-fathers-monasticism"],
+  "featured": true,
+  "displayOrder": 17
+}

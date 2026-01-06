@@ -1,0 +1,27 @@
+{
+  "id": "islamic-philosophy-sufism",
+  "title": "Islamic Philosophy & Sufism: Al-Ghazali, Ibn Arabi & Averroes",
+  "shortTitle": "Islamic Philosophy",
+  "description": "The philosophical and mystical traditions of Islam: Al-Ghazali's integration of philosophy and Sufism, Ibn Arabi's visionary metaphysics, and Averroes' Aristotelian commentaries that influenced medieval Europe.",
+  "dateRange": "10th - 13th century CE",
+  "totalBooks": 6,
+  "totalPages": 1019,
+  "themes": ["Islamic Philosophy", "Sufism", "Falsafa", "Ibn Arabi", "Al-Ghazali"],
+  "books": [
+    {"bookId": "6953dd3077f38f6761be703a", "title": "Alchemy of Happiness", "author": "Al-Ghazali", "year": 1100, "pages": 141},
+    {"bookId": "6953dd3677f38f6761be70c8", "title": "Confessions (Deliverance from Error)", "author": "Al-Ghazali", "year": 1100, "pages": 76},
+    {"bookId": "6953dd3977f38f6761be7115", "title": "Der Erretter aus dem Irrtum (German)", "author": "Al-Ghazali", "year": 1200, "pages": 101},
+    {"bookId": "6953dd3c77f38f6761be717b", "title": "Tarjuman al-Ashwaq (Interpreter of Desires)", "author": "Ibn Arabi", "year": 1215, "pages": 176},
+    {"bookId": "6953dd3e77f38f6761be722c", "title": "Awrad Ibn Arabi (Daily Prayers)", "author": "Ibn Arabi", "year": 1240, "pages": 365},
+    {"bookId": "6953dd4277f38f6761be739a", "title": "Kitab Falsafat - Philosophy", "author": "Averroes", "year": 1180, "pages": 160}
+  ],
+  "keyFigures": [
+    "Al-Ghazali (1058-1111): Most influential Islamic theologian, integrated Sufism with orthodox theology",
+    "Ibn Arabi (1165-1240): 'Greatest Master' of Sufi metaphysics, doctrine of Unity of Being",
+    "Averroes (1126-1198): Leading Aristotelian commentator, major influence on medieval Christian Scholasticism"
+  ],
+  "researchValue": "Al-Ghazali's 'Deliverance from Error' describes his spiritual crisis and turn to Sufism. Ibn Arabi's mystical poetry with esoteric commentary. Averroes' Aristotelianism sparked debates in medieval Europe about faith and reason.",
+  "connections": ["comparative-philosophy-mind", "medieval-western-mysticism", "arabic-alchemy-magic"],
+  "featured": true,
+  "displayOrder": 30
+}

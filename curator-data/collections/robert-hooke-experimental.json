@@ -1,0 +1,29 @@
+{
+  "id": "robert-hooke-experimental",
+  "title": "Robert Hooke: Experimental Philosophy & Natural Science",
+  "shortTitle": "Robert Hooke",
+  "description": "Robert Hooke's experimental natural philosophy at the early Royal Society, including his work on acoustics, vibrating plates, and the foundations of experimental science.",
+  "dateRange": "1660 - 1705",
+  "totalBooks": 7,
+  "totalPages": 2565,
+  "themes": ["Experimental Philosophy", "Acoustics", "Microscopy", "Royal Society", "Natural Science"],
+  "books": [
+    {"bookId": "6953e56577f38f6761bf0b7b", "title": "Micrographia (1665 First Edition)", "author": "Robert Hooke", "year": 1665, "pages": 384},
+    {"bookId": "695595e17bd6d2cd1d61f4fb", "title": "Posthumous Works (1705)", "author": "Robert Hooke", "year": 1705, "pages": 594},
+    {"bookId": "695595e47bd6d2cd1d61f74e", "title": "Lectiones Cutlerianae (1679)", "author": "Robert Hooke", "year": 1679, "pages": 442},
+    {"bookId": "695595e67bd6d2cd1d620227", "title": "Philosophical Experiments (1726)", "author": "Robert Hooke", "year": 1726, "pages": 446},
+    {"bookId": "695595e97bd6d2cd1d6203e6", "title": "Diary 1672-1680 (1968)", "author": "Robert Hooke", "year": 1968, "pages": 582},
+    {"bookId": "695595ec7bd6d2cd1d620aba", "title": "De Potentia Restitutiva (1678)", "author": "Robert Hooke", "year": 1678, "pages": 59},
+    {"bookId": "695595ee7bd6d2cd1d620af6", "title": "Lampas (1677)", "author": "Robert Hooke", "year": 1677, "pages": 58}
+  ],
+  "keyWorks": [
+    "Micrographia: Pioneering work of microscopy",
+    "Lectiones Cutlerianae: Experimental lectures on various topics",
+    "Posthumous Works: Additional scientific papers"
+  ],
+  "researchValue": "Hooke's experimental work was foundational for the Royal Society and modern experimental science. His acoustics research (vibrating plates, brass cog experiments) appears in Philosophical Transactions.",
+  "connections": ["royal-society-music-acoustics", "rudolf-ii-prague-court"],
+  "featured": true,
+  "displayOrder": 20,
+  "note": "Books to be added from curator acquisitions or future sessions"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "insular-gospel-manuscripts",
+  "title": "Insular Gospel Manuscripts: Book of Kells & Lindisfarne Gospels",
+  "shortTitle": "Insular Gospels",
+  "description": "The pinnacle of early medieval manuscript art from Celtic Britain and Ireland: the Book of Kells's intricate illuminations and the Lindisfarne Gospels with its Anglo-Saxon interlinear gloss.",
+  "dateRange": "8th - 9th century CE",
+  "totalBooks": 6,
+  "totalPages": 1680,
+  "themes": ["Insular Art", "Illuminated Manuscripts", "Celtic Christianity", "Gospel Books", "Anglo-Saxon"],
+  "books": [
+    {"bookId": "6953cc0c77f38f6761be0ed8", "title": "Book of Kells Facsimile", "author": "Edward Sullivan", "year": 1914, "pages": 192},
+    {"bookId": "6953cc1077f38f6761be0f99", "title": "Book of Kells Latin Text (Codex Kenanensis)", "author": "Thomas Kingsmill Abbott", "year": 1901, "pages": 502},
+    {"bookId": "6953cc1377f38f6761be1190", "title": "Lindisfarne Gospels Vol. 4", "author": "Stevenson, Waring", "year": 1856, "pages": 313},
+    {"bookId": "6953cc1777f38f6761be12ca", "title": "Lindisfarne Gospels Vol. 2", "author": "Stevenson, Waring", "year": 1854, "pages": 259},
+    {"bookId": "6953cc1b77f38f6761be13ce", "title": "Lindisfarne Gospels Vol. 3", "author": "Stevenson, Waring", "year": 1855, "pages": 308},
+    {"bookId": "6953cc1e77f38f6761be1503", "title": "Lindisfarne Gospels Illustrated Study", "author": "Janet Backhouse", "year": 1981, "pages": 106}
+  ],
+  "keyManuscripts": [
+    "Book of Kells (c. 800 CE): Masterpiece of Celtic illumination from monastery of Kells, Ireland",
+    "Lindisfarne Gospels (c. 700 CE): Anglo-Saxon manuscript with 10th-century Old English gloss",
+    "Both represent the pinnacle of Insular art combining Celtic, Anglo-Saxon, and Mediterranean influences"
+  ],
+  "researchValue": "Essential for understanding early medieval manuscript culture, Celtic Christianity, and the transmission of classical learning through Irish and Northumbrian monasticism. The intricate knotwork and zoomorphic designs influenced European art for centuries.",
+  "connections": ["desert-fathers-monasticism", "byzantine-mystical-theology"],
+  "featured": true,
+  "displayOrder": 33
+}

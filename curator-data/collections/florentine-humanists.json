@@ -1,0 +1,30 @@
+{
+  "id": "florentine-humanists",
+  "title": "Florentine Humanists: Poliziano, Landino & Lorenzo",
+  "shortTitle": "Florentine Humanists",
+  "description": "The brilliant circle around Lorenzo de' Medici: Angelo Poliziano's humanist philology and poetry, Cristoforo Landino's Neoplatonic Dante commentary, Lorenzo's own philosophical verses, and Leone Ebreo's influential dialogue on love.",
+  "dateRange": "1481 - 1535",
+  "totalBooks": 8,
+  "totalPages": 2258,
+  "themes": ["Florentine Humanism", "Philology", "Neoplatonic Love", "Dante Commentary", "Medici Circle"],
+  "books": [
+    {"bookId": "6952b06677f38f6761bc2725", "title": "Le stanze, Le Orfeo e Le rime", "author": "Angelo Poliziano", "year": 1863, "pages": 100},
+    {"bookId": "6952b0fb77f38f6761bc28b7", "title": "Omnium operum tomus prior", "author": "Angelo Poliziano", "year": 1519, "pages": 548},
+    {"bookId": "6952b0fd77f38f6761bc2adc", "title": "Miscellanea centuria una", "author": "Angelo Poliziano", "year": 1489, "pages": 318},
+    {"bookId": "6952b10077f38f6761bc2c1b", "title": "Comento sopra la Comedia di Dante", "author": "Cristoforo Landino", "year": 1481, "pages": 653},
+    {"bookId": "6952b05277f38f6761bc265c", "title": "Disputationes Camaldulenses", "author": "Cristoforo Landino", "year": 1507, "pages": 99},
+    {"bookId": "6952b0a077f38f6761bc27e9", "title": "Opere vol. 2 (poetry)", "author": "Lorenzo de' Medici", "year": 1914, "pages": 119},
+    {"bookId": "6952b0a277f38f6761bc2861", "title": "Comento de' miei sonetti", "author": "Lorenzo de' Medici", "year": 1991, "pages": 84},
+    {"bookId": "6952c9c477f38f6761bc2eab", "title": "Dialoghi d'amore", "author": "Leone Ebreo", "year": 1535, "pages": 337}
+  ],
+  "keyFigures": [
+    "Angelo Poliziano (1454-1494): Greatest humanist philologist, poet, translator",
+    "Cristoforo Landino (1424-1498): Neoplatonic philosopher, Dante commentator",
+    "Lorenzo de' Medici (1449-1492): 'Il Magnifico' - patron, poet, statesman",
+    "Leone Ebreo (c.1460-1521): Jewish physician-philosopher, Neoplatonic love theory"
+  ],
+  "researchValue": "Documents the intellectual brilliance of Laurentian Florence. Poliziano's Miscellanea pioneered humanist textual criticism. Landino's Dante commentary spread Neoplatonism. Leone Ebreo's Dialoghi influenced European love poetry and philosophy.",
+  "connections": ["ficino-neoplatonic-sources", "pico-della-mirandola"],
+  "featured": true,
+  "displayOrder": 15
+}

@@ -1,0 +1,146 @@
+{
+  "id": "alchemy-hermetica",
+  "title": "Alchemy & Hermetica: From Jabir to Newton",
+  "shortTitle": "Alchemy & Hermetica",
+  "description": "Complete collection of alchemical and Hermetic texts spanning Arabic origins through Renaissance European alchemy. Includes Arabic Jabir, Latin Geber, Paracelsian iatrochemistry, Rosicrucian alchemy, and sources for Newton's alchemical studies.",
+  "curatedBy": "Embassy of the Free Mind Collection",
+  "dateCreated": "2026-01-01",
+  "dateRange": {
+    "start": 800,
+    "end": 1678,
+    "description": "c. 9th century - 1678"
+  },
+  "themes": [
+    "Alchemy",
+    "Hermetica",
+    "Iatrochemistry",
+    "Paracelsian Medicine",
+    "Rosicrucian",
+    "Arabic Science",
+    "Natural Philosophy",
+    "Emblematic Knowledge"
+  ],
+  "geographicCoverage": [
+    "Baghdad (Arabic origins)",
+    "Medieval Latin Europe",
+    "Renaissance Italy",
+    "Prague (Rudolf II court)",
+    "England"
+  ],
+  "keyFigures": [
+    {
+      "name": "Jabir ibn Hayyan (Geber)",
+      "period": "c. 8th-9th century",
+      "contribution": "Founder of Arabic alchemy, corpus of alchemical texts"
+    },
+    {
+      "name": "Pseudo-Geber",
+      "period": "c. 13th century",
+      "contribution": "Latin alchemical corpus, mineral acids, practical chemistry"
+    },
+    {
+      "name": "Paracelsus",
+      "period": "1493-1541",
+      "contribution": "Iatrochemistry, spagyric medicine, chemical philosophy"
+    },
+    {
+      "name": "Robert Fludd",
+      "period": "1574-1637",
+      "contribution": "Macrocosm-microcosm synthesis, Hermetic-Rosicrucian philosophy"
+    },
+    {
+      "name": "Michael Maier",
+      "period": "1568-1622",
+      "contribution": "Alchemical emblems, musical fugues, physician to Rudolf II"
+    },
+    {
+      "name": "Heinrich Khunrath",
+      "period": "c. 1560-1605",
+      "contribution": "Alchemical-Kabbalistic synthesis, Amphitheatrum sapientiae"
+    },
+    {
+      "name": "Sendivogius",
+      "period": "1566-1636",
+      "contribution": "New Light of Alchemy, influenced Newton"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Arabic Origins",
+      "period": "8th-11th century",
+      "description": "Jabir ibn Hayyan corpus and Arabic alchemical manuscripts",
+      "keyWorks": [
+        "Majmu nafis fi al-kimiya (Jabir MS)",
+        "Ghayat al-Hakim (Picatrix)",
+        "Herat Alchemical Compendium (1499)"
+      ]
+    },
+    {
+      "title": "Latin Alchemy & Pseudo-Geber",
+      "period": "13th-15th century",
+      "description": "Medieval Latin alchemical corpus",
+      "keyWorks": [
+        "Geber: Summa perfectionis",
+        "Works of Geber (1678 English translation)"
+      ]
+    },
+    {
+      "title": "Paracelsian Iatrochemistry",
+      "period": "16th-17th century",
+      "description": "Chemical medicine and spagyric philosophy",
+      "keyWorks": [
+        "Paracelsus: Aurora thesaurusque philosophorum (1577)",
+        "Paracelsus: De Restituta medicinae (1578)",
+        "Oswald Croll: Basilica chymica (1609)",
+        "Basil Valentine corpus"
+      ]
+    },
+    {
+      "title": "Rosicrucian & Hermetic Philosophy",
+      "period": "1600-1640",
+      "description": "Synthesis of alchemy, Kabbalah, and Hermetic philosophy",
+      "keyWorks": [
+        "Robert Fludd: Utriusque cosmi historia (1617-1618)",
+        "Heinrich Khunrath: Amphitheatrum sapientiae aeternae (1609)",
+        "Michael Maier: Atalanta fugiens (1618)",
+        "John Dee: Monas Hieroglyphica (1564)"
+      ]
+    },
+    {
+      "title": "Alchemical Emblems",
+      "period": "16th-17th century",
+      "description": "Visual alchemical knowledge transmission",
+      "keyWorks": [
+        "Splendor Solis (1582)",
+        "Rosarium Philosophorum",
+        "Mylius: Basilica Philosophica (1620)",
+        "Maier: Atalanta fugiens (1618) - with musical fugues"
+      ]
+    },
+    {
+      "title": "English Alchemy",
+      "period": "17th century",
+      "description": "Sources for Newton's alchemical studies",
+      "keyWorks": [
+        "Sendivogius: New Light of Alchemy (1650)",
+        "Edward Kelley: Alchemical writings",
+        "John Dee: True & Faithful Relation (1659)"
+      ]
+    }
+  ],
+  "totalBooks": 31,
+  "estimatedPages": 12000,
+  "researchValue": "This collection documents the complete transmission of alchemical knowledge from Arabic origins through Latin medieval corpus to Renaissance Hermetic synthesis. Essential for understanding early modern chemistry, medical history, Hermetic philosophy, and the intellectual context of the Scientific Revolution. Includes sources that influenced Isaac Newton's alchemical studies.",
+  "connections": [
+    {
+      "collectionId": "royal-society-music-acoustics",
+      "relationship": "Robert Hooke's scientific work contrasts with and builds upon alchemical traditions"
+    },
+    {
+      "collectionId": "florentine-neoplatonism",
+      "relationship": "Shared Hermetic and Neoplatonic philosophical foundations"
+    }
+  ],
+  "featuredOn": "homepage",
+  "displayOrder": 4
+}
