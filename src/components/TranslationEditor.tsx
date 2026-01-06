@@ -26,7 +26,8 @@ import {
   MessageCircle,
   Share2,
   Highlighter,
-  StickyNote
+  StickyNote,
+  Info
 } from 'lucide-react';
 import NotesRenderer from './NotesRenderer';
 import FullscreenImageViewer from './FullscreenImageViewer';
@@ -1205,84 +1206,104 @@ export default function TranslationEditor({
   // EDIT MODE - Full editing interface
   return (
     <div className="h-screen flex flex-col" style={{ background: 'var(--bg-warm)' }}>
-      {/* Header */}
-      <header className="px-6 py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <a href={`/book/${book.id}`} className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
+      {/* Header - Two rows on mobile, one row on desktop */}
+      <header className="px-3 sm:px-6 py-2 sm:py-4" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
+        {/* Row 1: Back, Title, Navigation */}
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+            <a href={`/book/${book.id}`} className="hover:opacity-70 transition-opacity shrink-0" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
             </a>
-            <div>
-              <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
-                {book.display_title || book.title}
-              </h1>
-              <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                Page {currentIndex + 1} of {pages.length}
-                {page.read_count ? <span className="ml-2 text-xs opacity-60">({page.read_count} views)</span> : null}
-              </p>
-            </div>
+            <h1 className="text-base sm:text-xl font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+              {book.display_title || book.title}
+            </h1>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Panel visibility toggles - icon-only on mobile */}
-            <div className="flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
-              <button
-                onClick={() => setShowImagePanel(!showImagePanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showImagePanel ? '' : 'opacity-50'}`}
-                style={{
-                  background: showImagePanel ? 'var(--bg-white)' : 'transparent',
-                  color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
-                  boxShadow: showImagePanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
-                }}
-                title="Toggle source image"
-              >
-                <ImageIcon className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
-                <span className="hidden sm:inline">Image</span>
-              </button>
-              <button
-                onClick={() => setShowOcrPanel(!showOcrPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showOcrPanel ? '' : 'opacity-50'}`}
-                style={{
-                  background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
-                  color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
-                  boxShadow: showOcrPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
-                }}
-                title="Toggle OCR panel"
-              >
-                <FileText className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
-                <span className="hidden sm:inline">OCR</span>
-              </button>
-              <button
-                onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-2 sm:py-1.5 rounded-md text-xs font-medium transition-all min-w-[40px] sm:min-w-0 ${showTranslationPanel ? '' : 'opacity-50'}`}
-                style={{
-                  background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
-                  color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
-                  boxShadow: showTranslationPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
-                }}
-                title="Toggle translation panel"
-              >
-                <Languages className="w-4 h-4 sm:w-3.5 sm:h-3.5" />
-                <span className="hidden sm:inline">English</span>
-              </button>
-            </div>
+          {/* Navigation */}
+          <div className="flex items-center gap-1 rounded-lg p-1 shrink-0" style={{ background: 'var(--bg-warm)' }}>
+            <button
+              onClick={() => previousPage && onNavigate(previousPage.id)}
+              disabled={!previousPage}
+              className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1}/{pages.length}</span>
+            <button
+              onClick={() => nextPage && onNavigate(nextPage.id)}
+              disabled={!nextPage}
+              className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
 
-            {/* Mode Toggle */}
-            <div className="hidden sm:flex items-center rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
+        {/* Row 2: Panel toggles, Mode toggle, Like */}
+        <div className="flex items-center justify-between mt-2 sm:mt-3">
+          {/* Panel visibility toggles */}
+          <div className="flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+            <button
+              onClick={() => setShowImagePanel(!showImagePanel)}
+              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? '' : 'opacity-50'}`}
+              style={{
+                background: showImagePanel ? 'var(--bg-white)' : 'transparent',
+                color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                boxShadow: showImagePanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+              }}
+              title="Toggle source image"
+            >
+              <ImageIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">Image</span>
+            </button>
+            <button
+              onClick={() => setShowOcrPanel(!showOcrPanel)}
+              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showOcrPanel ? '' : 'opacity-50'}`}
+              style={{
+                background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
+                color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                boxShadow: showOcrPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+              }}
+              title="Toggle OCR panel"
+            >
+              <FileText className="w-4 h-4" />
+              <span className="hidden sm:inline">OCR</span>
+            </button>
+            <button
+              onClick={() => setShowTranslationPanel(!showTranslationPanel)}
+              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? '' : 'opacity-50'}`}
+              style={{
+                background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
+                color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                boxShadow: showTranslationPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
+              }}
+              title="Toggle translation panel"
+            >
+              <Languages className="w-4 h-4" />
+              <span className="hidden sm:inline">English</span>
+            </button>
+          </div>
+
+          {/* Right side: Mode toggle + Like */}
+          <div className="flex items-center gap-1 sm:gap-2">
+            {/* Mode Toggle - always visible */}
+            <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
               <button
                 onClick={() => setMode('read')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
+                className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
                 style={{
                   background: 'transparent',
                   color: 'var(--text-muted)',
                 }}
               >
                 <Eye className="w-4 h-4" />
-                Read
+                <span className="hidden sm:inline">Read</span>
               </button>
               <button
                 onClick={() => setMode('edit')}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all"
+                className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
                 style={{
                   background: 'var(--bg-white)',
                   color: 'var(--text-primary)',
@@ -1290,51 +1311,19 @@ export default function TranslationEditor({
                 }}
               >
                 <Pencil className="w-4 h-4" />
-                Edit
-              </button>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex items-center gap-1 rounded-lg p-1" style={{ background: 'var(--bg-warm)' }}>
-              <button
-                onClick={() => previousPage && onNavigate(previousPage.id)}
-                disabled={!previousPage}
-                className="p-2 rounded-md transition-all disabled:opacity-30"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <span className="px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1} / {pages.length}</span>
-              <button
-                onClick={() => nextPage && onNavigate(nextPage.id)}
-                disabled={!nextPage}
-                className="p-2 rounded-md transition-all disabled:opacity-30"
-                style={{ color: 'var(--text-secondary)' }}
-              >
-                <ChevronRight className="w-4 h-4" />
+                <span className="hidden sm:inline">Edit</span>
               </button>
             </div>
 
             {/* Like Button */}
-            <div className="p-1.5 rounded-lg hover:bg-stone-100 transition-all">
+            <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">
               <LikeButton
                 targetType="page"
                 targetId={page.id}
                 size="sm"
-                showCount={true}
+                showCount={false}
               />
             </div>
-
-            {/* Info Button */}
-            <button
-              onClick={() => setShowPageMetadata(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors hover:bg-stone-100"
-              style={{ color: 'var(--text-muted)' }}
-              title="View page metadata"
-            >
-              <FileText className="w-4 h-4" />
-              Info
-            </button>
           </div>
         </div>
       </header>
@@ -1345,11 +1334,22 @@ export default function TranslationEditor({
         {/* Source Image Panel */}
         {showImagePanel && (
           <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
-            <div className="px-4 py-3 flex items-center gap-2" style={{ borderBottom: '1px solid var(--border-light)' }}>
-              <span className="label">Source</span>
-              <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
-                {book.language || 'Latin'}
-              </span>
+            <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <div className="flex items-center gap-2">
+                <span className="label">Source</span>
+                <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(124, 93, 181, 0.1)', color: 'var(--accent-violet)' }}>
+                  {book.language || 'Latin'}
+                </span>
+              </div>
+              <button
+                onClick={() => setShowPageMetadata(true)}
+                className="flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium transition-colors hover:bg-stone-200"
+                style={{ color: 'var(--text-muted)' }}
+                title="View page metadata"
+              >
+                <Info className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Info</span>
+              </button>
             </div>
             <div className="flex-1 overflow-auto p-4">
               <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
