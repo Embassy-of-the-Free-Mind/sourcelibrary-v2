@@ -23,6 +23,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/translation/:bookId/:pageId',
+        destination: '/book/:bookId',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
