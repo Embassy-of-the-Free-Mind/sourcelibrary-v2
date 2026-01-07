@@ -1,4 +1,7 @@
 import { DublinCoreMetadata } from "./dublin-core";
+import { ImageSource } from "./image-source";
+import { TranslationEdition } from "./edition";
+import { PipelineState } from "./pipeline";
 
 export interface Book {
   id: string;

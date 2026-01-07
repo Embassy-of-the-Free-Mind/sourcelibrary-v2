@@ -4,16 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, CheckCircle, XCircle, Clock, Loader2, Cloud, Zap, BookOpen, FileText, Plus, StopCircle } from 'lucide-react';
 import type { Job, JobStatus } from '@/lib/types';
-
-interface PendingStats {
-  total_books: number;
-  books_needing_ocr: number;
-  books_needing_translation: number;
-  total_pages_needing_ocr: number;
-  total_pages_needing_translation: number;
-  active_jobs: number;
-  pending_batch_jobs: number;
-}
+import { jobs as jobsApi, batchJobs, type PendingStats } from '@/lib/api-client';
 
 const STATUS_COLORS: Record<JobStatus, string> = {
   pending: 'var(--text-muted)',
@@ -50,11 +41,8 @@ export default function JobsPage() {
   const fetchJobs = useCallback(async () => {
     try {
       // Fetch jobs first - this is fast
-      const jobsRes = await fetch('/api/jobs?limit=100');
-      if (jobsRes.ok) {
-        const data = await jobsRes.json();
-        setJobs(data.jobs);
-      }
+      const data = await jobsApi.list({ limit: 100 });
+      setJobs(data.jobs);
     } catch (e) {
       console.error('Failed to fetch jobs:', e);
     } finally {
@@ -63,14 +51,8 @@ export default function JobsPage() {
 
     // Fetch stats separately - this can be slow, don't block on it
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-      const statsRes = await fetch('/api/batch-jobs/process-all', { signal: controller.signal });
-      clearTimeout(timeoutId);
-      if (statsRes.ok) {
-        const data = await statsRes.json();
-        setPendingStats(data.stats || null);
-      }
+      const data = await batchJobs.stats();
+      setPendingStats(data.stats || null);
     } catch (e) {
       // Stats fetch failed or timed out - that's ok
       console.warn('Stats fetch failed:', e);
@@ -92,18 +74,11 @@ export default function JobsPage() {
     setCreatingJobs(true);
     setCreateResult(null);
     try {
-      const res = await fetch(`/api/batch-jobs/process-all?type=${type}&limit=${limit}`, {
-        method: 'POST',
-      });
-      const data = await res.json();
-      if (res.ok) {
-        const ocrCount = data.ocr_jobs?.length || 0;
-        const transCount = data.translate_jobs?.length || 0;
-        setCreateResult(`Created ${ocrCount} OCR + ${transCount} translation jobs`);
-        await fetchJobs();
-      } else {
-        setCreateResult(`Error: ${data.error || 'Failed to create jobs'}`);
-      }
+      const data = await batchJobs.processAll({ type, limit });
+      const ocrCount = data.ocr_jobs?.length || 0;
+      const transCount = data.translate_jobs?.length || 0;
+      setCreateResult(`Created ${ocrCount} OCR + ${transCount} translation jobs`);
+      await fetchJobs();
     } catch (e) {
       setCreateResult(`Error: ${e instanceof Error ? e.message : 'Unknown error'}`);
     } finally {
@@ -120,10 +95,7 @@ export default function JobsPage() {
       // Keep calling process-pending until no more jobs need preparation
       let keepGoing = true;
       while (keepGoing) {
-        const res = await fetch('/api/batch-jobs/process-pending?limit=5', {
-          method: 'POST',
-        });
-        const data = await res.json();
+        const data = await batchJobs.processPending({ limit: 5 });
         await fetchJobs();
 
         // Stop if no jobs needing preparation remain
@@ -154,12 +126,8 @@ export default function JobsPage() {
       let paused = false;
 
       while (!done && !paused) {
-        const res = await fetch(`/api/jobs/${jobId}/process`, { method: 'POST' });
-        if (!res.ok) break;
-
-        const data = await res.json();
-        done = data.done;
-        paused = data.paused;
+        const data = await jobsApi.process(jobId);
+        done = data.processed > 0 && data.success;
 
         // Refresh jobs list
         await fetchJobs();
@@ -206,20 +174,18 @@ export default function JobsPage() {
 
         // Process this job until done or paused
         let done = false;
-        let paused = false;
 
-        while (!done && !paused && resumingStaleRef.current) {
-          const res = await fetch(`/api/jobs/${job.id}/process`, { method: 'POST' });
-          if (!res.ok) break;
+        while (!done && resumingStaleRef.current) {
+          try {
+            const data = await jobsApi.process(job.id);
+            done = data.processed > 0 && data.success;
+            await fetchJobs();
 
-          const data = await res.json();
-          done = data.done;
-          paused = data.paused;
-
-          await fetchJobs();
-
-          if (!done && !paused) {
-            await new Promise(r => setTimeout(r, 500));
+            if (!done) {
+              await new Promise(r => setTimeout(r, 500));
+            }
+          } catch (e) {
+            break;
           }
         }
       }
@@ -233,19 +199,21 @@ export default function JobsPage() {
 
   const handleAction = async (jobId: string, action: 'pause' | 'resume' | 'cancel' | 'retry') => {
     try {
-      const res = await fetch(`/api/jobs/${jobId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action }),
-      });
+      if (action === 'pause') {
+        await jobsApi.pause(jobId);
+      } else if (action === 'resume') {
+        await jobsApi.resume(jobId);
+      } else if (action === 'cancel') {
+        await jobsApi.cancel(jobId);
+      } else if (action === 'retry') {
+        await jobsApi.retry(jobId);
+      }
 
-      if (res.ok) {
-        await fetchJobs();
+      await fetchJobs();
 
-        // If resuming or retrying, start processing
-        if (action === 'resume' || action === 'retry') {
-          processJob(jobId);
-        }
+      // If resuming or retrying, start processing
+      if (action === 'resume' || action === 'retry') {
+        processJob(jobId);
       }
     } catch (e) {
       console.error(`Failed to ${action} job:`, e);
@@ -254,10 +222,8 @@ export default function JobsPage() {
 
   const handleDelete = async (jobId: string) => {
     try {
-      const res = await fetch(`/api/jobs/${jobId}`, { method: 'DELETE' });
-      if (res.ok) {
-        await fetchJobs();
-      }
+      await jobsApi.delete(jobId);
+      await fetchJobs();
     } catch (e) {
       console.error('Failed to delete job:', e);
     }
@@ -308,9 +274,8 @@ export default function JobsPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setAutoRefresh(!autoRefresh)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                autoRefresh ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-600'
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${autoRefresh ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-600'
+                }`}
             >
               <RefreshCw className={`w-3.5 h-3.5 ${autoRefresh ? 'animate-spin' : ''}`} />
               {autoRefresh ? 'Live' : 'Paused'}

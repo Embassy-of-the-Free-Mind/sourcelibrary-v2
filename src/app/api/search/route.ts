@@ -1,27 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
-
-interface SearchResult {
-  id: string;
-  type: 'book' | 'page';
-  book_id: string;
-  title: string;
-  display_title?: string;
-  author: string;
-  language: string;
-  published: string;
-  page_count?: number;
-  translated_count?: number;
-  has_doi: boolean;
-  doi?: string;
-  summary?: string;
-  categories?: string[];
-  // For page results
-  page_number?: number;
-  snippet?: string;
-  snippet_type?: 'translation' | 'ocr' | 'summary';
-}
+import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 
 function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');

@@ -9,67 +9,16 @@ import {
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
-
-interface BBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-interface ImageMetadata {
-  subjects?: string[];
-  figures?: string[];
-  symbols?: string[];
-  style?: string;
-  technique?: string;
-}
-
-interface GalleryItem {
-  pageId: string;
-  bookId: string;
-  pageNumber: number;
-  detectionIndex: number;
-  imageUrl: string;
-  bookTitle: string;
-  author?: string;
-  year?: number;
-  description: string;
-  type?: string;
-  bbox?: BBox;
-  galleryQuality?: number;
-  museumDescription?: string;
-  metadata?: ImageMetadata;
-}
-
-interface BookInfo {
-  id: string;
-  title: string;
-  author?: string;
-  year?: number;
-  pagesCount?: number;
-  hasOcr: boolean;
-  ocrPageCount: number;
-  hasImages: boolean;
-  imagesPageCount: number;
-}
-
-interface GalleryFilters {
-  types: string[];
-  subjects: string[];
-  figures: string[];
-  symbols: string[];
-  yearRange: { minYear: number | null; maxYear: number | null };
-}
-
-interface GalleryResponse {
-  items: GalleryItem[];
-  total: number;
-  limit: number;
-  offset: number;
-  bookInfo: BookInfo | null;
-  filters: GalleryFilters;
-}
+import {
+  gallery,
+  books,
+  type GalleryResponse,
+  type GalleryItem,
+  type BookInfo,
+  type GalleryFilters,
+  type BBox,
+  type ImageMetadata
+} from '@/lib/api-client';
 
 interface BookSearchResult {
   id: string;
@@ -140,20 +89,16 @@ export default function GalleryPage() {
       setLoading(true);
       setError(null);
       try {
-        const params = new URLSearchParams({
-          limit: limit.toString(),
-          offset: (page * limit).toString()
+        const json = await gallery.list({
+          limit,
+          offset: page * limit,
+          bookId: bookId || undefined,
+          query: imageSearchQuery || undefined,
+          type: typeFilter || undefined,
+          subject: subjectFilter || undefined,
+          yearFrom: yearStart ? parseInt(yearStart) : undefined,
+          yearTo: yearEnd ? parseInt(yearEnd) : undefined
         });
-        if (bookId) params.set('bookId', bookId);
-        if (imageSearchQuery) params.set('q', imageSearchQuery);
-        if (typeFilter) params.set('type', typeFilter);
-        if (subjectFilter) params.set('subject', subjectFilter);
-        if (yearStart) params.set('yearStart', yearStart);
-        if (yearEnd) params.set('yearEnd', yearEnd);
-
-        const res = await fetch(`/api/gallery?${params}`);
-        if (!res.ok) throw new Error('Failed to fetch gallery');
-        const json = await res.json();
         setData(json);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
@@ -175,11 +120,13 @@ export default function GalleryPage() {
     const timer = setTimeout(async () => {
       setBookSearchLoading(true);
       try {
-        const res = await fetch(`/api/books/search?q=${encodeURIComponent(bookSearchQuery)}&limit=10`);
-        if (res.ok) {
-          const json = await res.json();
-          setBookSearchResults(json.results || []);
-        }
+        const data = await books.search(bookSearchQuery, { limit: '10' });
+        setBookSearchResults(data.books.map(book => ({
+          id: book.id,
+          title: book.title,
+          display_title: book.display_title,
+          author: book.author
+        })));
       } catch {
         // Ignore search errors
       } finally {

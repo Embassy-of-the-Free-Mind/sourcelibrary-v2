@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Heart } from 'lucide-react';
 import { LikeTargetType } from '@/lib/types';
+import { likes } from '@/lib/api-client';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
 const LIKES_CACHE_KEY = 'sl_likes_cache';
@@ -97,29 +98,12 @@ export default function LikeButton({
     setLikeInCache(cacheKey, newLiked);
 
     try {
-      const response = await fetch('/api/likes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          target_type: targetType,
-          target_id: targetId,
-          visitor_id: visitorId,
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setLiked(data.liked);
-        setCount(data.count);
-        setLikeInCache(cacheKey, data.liked);
-      } else {
-        // Revert optimistic update
-        setLiked(!newLiked);
-        setCount(prev => newLiked ? prev - 1 : prev + 1);
-        setLikeInCache(cacheKey, !newLiked);
-      }
+      const data = await likes.toggle(targetType, targetId, visitorId);
+      setLiked(data.liked);
+      setCount(data.count);
+      setLikeInCache(cacheKey, data.liked);
     } catch {
-      // Revert optimistic update
+      // Revert optimistic update on error
       setLiked(!newLiked);
       setCount(prev => newLiked ? prev - 1 : prev + 1);
       setLikeInCache(cacheKey, !newLiked);

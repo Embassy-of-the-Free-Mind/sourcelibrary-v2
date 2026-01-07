@@ -7,6 +7,7 @@ import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
 import { normalizeText } from '@/lib/utils';
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check } from 'lucide-react';
+import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
 
 interface FeaturedTopic {
   id: string;
@@ -19,19 +20,6 @@ interface BookLibraryProps {
   books: Book[];
   languages: string[];
   featuredTopics?: FeaturedTopic[];
-}
-
-interface CatalogResult {
-  id: string;
-  title: string;
-  author: string;
-  year: string;
-  language: string;
-  description: string;
-  publisher?: string;
-  source: 'ia' | 'bph';
-  iaIdentifier?: string;
-  imageUrl?: string;
 }
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
@@ -140,11 +128,8 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
     setShowCatalogResults(true);
 
     try {
-      const response = await fetch(`/api/catalog/search?q=${encodeURIComponent(searchQuery)}&limit=10`);
-      if (response.ok) {
-        const data = await response.json();
-        setCatalogResults(data.results || []);
-      }
+      const data = await catalog.search(searchQuery, { limit: 10 });
+      setCatalogResults(data.results || []);
     } catch (error) {
       console.error('Catalog search failed:', error);
       setCatalogResults([]);
@@ -177,8 +162,15 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
   };
 
   // Get source label
-  const getSourceLabel = (source: 'ia' | 'bph') => {
-    return source === 'ia' ? 'Internet Archive' : 'Embassy of the Free Mind';
+  const getSourceLabel = (source: CatalogResult['source']) => {
+    switch (source) {
+      case 'ia': return 'Internet Archive';
+      case 'gallica': return 'Gallica (BnF)';
+      case 'mdz': return 'MDZ München';
+      case 'bph': return 'Embassy of the Free Mind';
+      case 'ustc': return 'USTC';
+      default: return source;
+    }
   };
 
   // Import book from IA
@@ -188,34 +180,28 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
     setImportingIds(prev => new Set(prev).add(item.id));
 
     try {
-      const response = await fetch('/api/import/ia', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ia_identifier: item.iaIdentifier,
-          title: item.title,
-          author: item.author || 'Unknown',
-          language: item.language || 'Unknown',
-          published: item.year || 'Unknown',
-        }),
+      const data = await importBooks.fromIA({
+        ia_identifier: item.iaIdentifier,
+        title: item.title,
+        author: item.author || 'Unknown',
+        original_language: item.language || 'Unknown',
+        year: item.year ? parseInt(item.year) : undefined,
       });
 
-      const data = await response.json();
-
-      if (response.ok && data.bookId) {
-        setImportedBooks(prev => ({ ...prev, [item.id]: data.bookId }));
-        // Refresh the page to show the new book
-        router.refresh();
-      } else if (response.status === 409 && data.existingId) {
-        // Book already exists - show the Open button
-        setImportedBooks(prev => ({ ...prev, [item.id]: data.existingId }));
-      } else {
-        console.error('Import failed:', data.error);
-        alert(`Import failed: ${data.error || 'Unknown error'}`);
-      }
-    } catch (error) {
+      setImportedBooks(prev => ({ ...prev, [item.id]: data.book_id }));
+      // Refresh the page to show the new book
+      router.refresh();
+    } catch (error: any) {
       console.error('Import error:', error);
-      alert('Import failed. Please try again.');
+      const errorMessage = error.message || 'Import failed. Please try again.';
+
+      // Check if book already exists (409 conflict)
+      if (errorMessage.includes('already exists')) {
+        // Try to extract book ID from error message if available
+        alert('This book already exists in the library.');
+      } else {
+        alert(`Import failed: ${errorMessage}`);
+      }
     } finally {
       setImportingIds(prev => {
         const next = new Set(prev);
