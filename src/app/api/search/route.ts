@@ -138,9 +138,9 @@ export async function GET(request: NextRequest) {
         }
         if (yearConditions.length > 0) {
           if (yearConditions.length === 1) {
-            bookFilter.$and = [...(bookFilter.$and || []), yearConditions[0]];
+            bookFilter.$and = [...((bookFilter.$and as any[]) || []), yearConditions[0]];
           } else {
-            bookFilter.$and = [...(bookFilter.$and || []), { $and: yearConditions }];
+            bookFilter.$and = [...((bookFilter.$and as any[]) || []), { $and: yearConditions }];
           }
         }
       }
