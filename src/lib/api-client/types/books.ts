@@ -88,25 +88,30 @@ export interface BookQARequest {
 }
 
 export interface BookQAResponse {
-  book: Book;
-  sample_pages: Array<{
-    id: string;
-    page_number: number;
-    ocr?: string;
-    translation?: string;
-    issues?: string[];
+  bookId: string;
+  bookTitle: string;
+  totalPages: number;
+  translatedPages: number;
+  pagesWithIssues: number;
+  totalIssues: number;
+  issues: Array<{
+    pageId: string;
+    pageNumber: number;
+    field: 'translation' | 'ocr';
+    issues: Array<{
+      type: 'unclosed_open' | 'unclosed_close' | 'unknown_tag' | 'empty_tag' | 'nested_bracket' | 'unbalanced_center' | 'unclosed_xml' | 'unknown_xml_tag' | 'empty_xml_tag';
+      message: string;
+      position: number;
+      length: number;
+      context: string;
+      suggestedFix?: {
+        type: 'insert' | 'delete' | 'replace';
+        position: number;
+        text?: string;
+        length?: number;
+      };
+    }>;
   }>;
-  translation_quality: {
-    sample_size: number;
-    quality_score: number;
-    issues: string[];
-  };
-  metadata_accuracy: {
-    title_match: boolean;
-    author_match: boolean;
-    year_match: boolean;
-    issues: string[];
-  };
 }
 
 export interface BookIdentifyRequest {
@@ -138,3 +143,33 @@ export interface BookArchiveImagesResponse {
   already_archived: number;
   total_bytes: number;
 }
+
+export interface RoadmapResponse {
+  total: number;
+  in_database: number;
+  pending: number;
+  books: Array<{
+    title: string;
+    display_title: string;
+    author: string;
+    language: string;
+    ia_identifier: string;
+    source_url: string;
+    categories: string[];
+    priority: number;
+    notes: string;
+    in_database: boolean;
+  }>;
+}
+
+export type BookDownloadFormats =
+  'translation' |
+  'ocr' |
+  'both' |
+  'epub-translation' |
+  'epub-ocr' |
+  'epub-both' |
+  'epub-parallel' |
+  'epub-facsimile' |
+  'epub-images' |
+  'images-zip'

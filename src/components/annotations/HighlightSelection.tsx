@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, ReactNode } from 'react';
 import { Highlighter, X, Check, Loader2, Share2, Twitter, Link2, MessageCircle, MessageSquarePlus, Sparkles } from 'lucide-react';
 import AnnotationEditor from './AnnotationEditor';
 import { getShortUrl } from '@/lib/shortlinks';
+import { highlights, utils } from '@/lib/api-client';
 
 interface HighlightSelectionProps {
   bookId: string;
@@ -80,31 +81,25 @@ export default function HighlightSelection({
       // Get user name from localStorage (shared with annotations)
       const userName = localStorage.getItem('annotation_username') || undefined;
 
-      const response = await fetch('/api/highlights', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          book_id: bookId,
-          page_id: pageId,
-          page_number: pageNumber,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          text: selectedText,
-          user_name: userName,
-        }),
+      await highlights.create({
+        book_id: bookId,
+        page_id: pageId,
+        page_number: pageNumber,
+        book_title: bookTitle,
+        book_author: bookAuthor,
+        text: selectedText,
+        user_name: userName,
       });
 
-      if (response.ok) {
-        setSaved(true);
-        onHighlightSaved?.();
+      setSaved(true);
+      onHighlightSaved?.();
 
-        // Clear selection after a moment
-        setTimeout(() => {
-          window.getSelection()?.removeAllRanges();
-          setShowPopup(false);
-          setSaved(false);
-        }, 1000);
-      }
+      // Clear selection after a moment
+      setTimeout(() => {
+        window.getSelection()?.removeAllRanges();
+        setShowPopup(false);
+        setSaved(false);
+      }, 1000);
     } catch (error) {
       console.error('Failed to save highlight:', error);
     } finally {
@@ -170,23 +165,14 @@ export default function HighlightSelection({
     setExplanation(null);
 
     try {
-      const res = await fetch('/api/explain', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: selectedText,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          page_number: pageNumber,
-        }),
+      const data = await utils.explain({
+        text: selectedText,
+        book_title: bookTitle,
+        book_author: bookAuthor,
+        page_number: pageNumber,
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        setExplanation(data.explanation);
-      } else {
-        setExplanation('Sorry, I couldn\'t explain this text. Please try again.');
-      }
+      setExplanation(data.explanation || 'Sorry, I couldn\'t explain this text. Please try again.');
     } catch (err) {
       console.error('Explain error:', err);
       setExplanation('Sorry, something went wrong. Please try again.');

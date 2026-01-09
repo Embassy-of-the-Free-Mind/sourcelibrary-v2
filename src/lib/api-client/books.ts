@@ -1,4 +1,4 @@
-import { apiClient } from './client';
+import { apiClient, streamRequest } from './client';
 import type { Book } from '@/lib/types';
 import type {
   BooksListResponse,
@@ -18,13 +18,10 @@ import type {
   BookIdentifyRequest,
   BookIdentifyResponse,
   BookArchiveImagesRequest,
-  BookArchiveImagesResponse
+  BookArchiveImagesResponse,
+  BookDownloadFormats,
+  RoadmapResponse,
 } from './types/books';
-
-/**
- * Books API client
- * Handles all book-related operations
- */
 
 /**
  * Books API client
@@ -40,9 +37,13 @@ export const books = {
 
   /**
    * Get a single book by ID
+   * @param id - Book ID
+   * @param options - Optional query parameters
+   * @param options.full - Include full OCR/translation data (default: false)
    */
-  get: async (id: string): Promise<Book> => {
-    return await apiClient.get(`/api/books/${id}`);
+  get: async (id: string, options?: { full?: boolean }): Promise<Book> => {
+    const query = options?.full ? '?full=true' : '';
+    return await apiClient.get(`/api/books/${id}${query}`);
   },
 
   /**
@@ -64,6 +65,13 @@ export const books = {
    */
   delete: async (id: string): Promise<{ success: boolean }> => {
     return await apiClient.delete(`/api/books/${id}`);
+  },
+
+  /**
+   * Get roadmap (books pending processing)
+   */
+  getRoadmap: async (): Promise<RoadmapResponse> => {
+    return await apiClient.get('/api/roadmap');
   },
 
   /**
@@ -173,10 +181,10 @@ export const books = {
   },
 
   /**
-   * QA audit a book
+   * QA audit a book (checks for translation/OCR formatting issues)
    */
-  qa: async (id: string, request: BookQARequest): Promise<BookQAResponse> => {
-    return await apiClient.get(`/api/books/${id}/qa?page_limit=${request.page_limit || 30}&translation_sample_size=${request.translation_sample_size || 20}`);
+  qa: async (id: string): Promise<BookQAResponse> => {
+    return await apiClient.get(`/api/books/${id}/qa`);
   },
 
   /**
@@ -224,19 +232,35 @@ export const books = {
   /**
    * Download book as file
    */
-  download: async (id: string, format: 'txt' | 'md' | 'json' = 'txt'): Promise<Blob> => {
-    const response = await fetch(`/api/books/${id}/download?format=${format}`);
-    if (!response.ok) {
-      throw new Error('Download failed');
+  download: async (id: string, format: BookDownloadFormats, edition_id?: string): Promise<Response> => {
+    const params = new URLSearchParams({format});
+    if (edition_id) {
+      params.append('edition_id', edition_id);
     }
-    return await response.blob();
+    
+    return await streamRequest(`/api/books/${id}/download?${params.toString()}`,
+      { method: 'GET' }
+    );
   },
 
   /**
-   * Cleanup book data
+   * Cleanup empty tags from book translations/OCR
    */
-  cleanup: async (id: string): Promise<{ success: boolean; message: string }> => {
-    return await apiClient.post(`/api/books/${id}/cleanup`);
+  cleanup: async (id: string, options?: {
+    field?: 'translation' | 'ocr' | 'both';
+    dryRun?: boolean;
+  }): Promise<{
+    success: boolean;
+    totalTagsRemoved: number;
+    pagesModified: number;
+    results: Array<{
+      pageId: string;
+      pageNumber: number;
+      field: 'translation' | 'ocr';
+      removedCount: number;
+    }>;
+  }> => {
+    return await apiClient.post(`/api/books/${id}/cleanup`, options || {});
   },
 
   /**
@@ -273,6 +297,10 @@ export const books = {
     generate: async (id: string): Promise<{ success: boolean }> => {
       return await apiClient.post(`/api/books/${id}/index`);
     },
+
+    get: async (id: string): Promise<any> => {
+      return await apiClient.get(`/api/books/${id}/index`);
+    },
   },
 
   /**
@@ -295,6 +323,14 @@ export const books = {
       return await apiClient.patch(`/api/books/${id}/editions/${editionId}`, updates);
     },
 
+    /**
+     * Update edition fields (DOI, etc.) via PATCH /api/books/[id]/editions
+     * This is different from the update method above which uses the editionId in the path
+     */
+    updateFields: async (id: string, editionId: string, fields: { doi?: string; doi_url?: string }): Promise<any> => {
+      return await apiClient.patch(`/api/books/${id}/editions`, { edition_id: editionId, ...fields });
+    },
+
     delete: async (id: string, editionId: string): Promise<{ success: boolean }> => {
       return await apiClient.delete(`/api/books/${id}/editions/${editionId}`);
     },
@@ -303,7 +339,7 @@ export const books = {
       return await apiClient.post(`/api/books/${id}/editions/front-matter`);
     },
 
-    mintDoi: async (id: string, editionId: string): Promise<{ doi: string }> => {
+    mintDoi: async (id: string, editionId: string): Promise<{ doi: string; doi_url?: string; zenodo_id?: string; zenodo_url?: string }> => {
       return await apiClient.post(`/api/books/${id}/editions/mint-doi`, { edition_id: editionId });
     },
   },
@@ -311,8 +347,14 @@ export const books = {
   /**
    * Book chat/question answering
    */
-  chat: async (id: string, question: string, context?: string): Promise<{ answer: string }> => {
-    return await apiClient.post(`/api/books/${id}/chat`, { question, context });
+  chat: {
+    history: async (id: string): Promise<any> => {
+      return await apiClient.get(`/api/books/${id}/chat`);
+    },
+
+    send: async (id: string, messages: Array<{ role: 'user' | 'assistant'; content: string }>): Promise<{ message: { role: 'assistant'; content: string } }> => {
+      return await apiClient.post(`/api/books/${id}/chat`, { messages });
+    },
   },
 
   /**
@@ -337,6 +379,18 @@ export const books = {
   },
 
   /**
+   * Upload multiple image files to a book
+   */
+  uploadPages: async (bookId: string, files: File[]): Promise<{ pages: Array<{ id: string; page_number: number; photo: string }> }> => {
+    const formData = new FormData();
+    formData.append('bookId', bookId);
+    files.forEach(file => formData.append('files', file));
+    return await apiClient.post('/api/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+
+  /**
    * Pipeline operations (automated processing)
    */
   pipeline: {
@@ -354,6 +408,51 @@ export const books = {
 
     process: async (id: string): Promise<any> => {
       return await apiClient.post(`/api/books/${id}/pipeline-stream/process`);
+    },
+  },
+
+  /**
+   * Streaming pipeline operations (Server-Sent Events)
+   */
+  pipelineStream: {
+    /**
+     * Get pipeline status
+     */
+    get: async (id: string): Promise<Response> => {
+      return await streamRequest(`/api/books/${id}/pipeline-stream`, {
+        method: 'GET',
+      });
+    },
+
+    /**
+     * Start pipeline with streaming progress updates
+     */
+    start: async (id: string, config: any): Promise<Response> => {
+      return await streamRequest(`/api/books/${id}/pipeline-stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(config),
+      });
+    },
+
+    /**
+     * Process pipeline with streaming updates
+     */
+    process: async (id: string, config?: any): Promise<Response> => {
+      return await streamRequest(`/api/books/${id}/pipeline-stream/process`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(config || {}),
+      });
+    },
+
+    /**
+     * Cancel pipeline
+     */
+    cancel: async (id: string): Promise<Response> => {
+      return await streamRequest(`/api/books/${id}/pipeline-stream`, {
+        method: 'DELETE',
+      });
     },
   },
 };

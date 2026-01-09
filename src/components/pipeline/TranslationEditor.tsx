@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { processing, prompts as promptsApi, pages } from '@/lib/api-client';
 import {
   Loader2,
   ChevronLeft,
@@ -38,6 +39,7 @@ import AnnotationPanel from '@/components/annotations/AnnotationPanel';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import { BookShare } from '@/components/ui/ShareButton';
 import { GoogleTranslate } from '@/components/search/GoogleTranslate';
+import { prompts as promptsApi, analytics } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
@@ -143,11 +145,8 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
   const fetchPrompts = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/prompts?type=${promptType}`);
-      if (response.ok) {
-        const data = await response.json();
-        setPrompts(data);
-      }
+      const data = await promptsApi.list({ type: promptType });
+      setPrompts(data);
     } catch (error) {
       console.error('Failed to fetch prompts:', error);
     } finally {
@@ -174,20 +173,15 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
     if (!selectedPrompt || !hasChanges) return;
     setSaving(true);
     try {
-      const response = await fetch(`/api/prompts/${selectedPrompt.id || selectedPrompt._id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: editedContent }),
+      const updated = await promptsApi.update(selectedPrompt.id || selectedPrompt._id, {
+        content: editedContent
       });
-      if (response.ok) {
-        const updated = await response.json();
-        setPrompts(prompts.map(p =>
-          (p.id === updated.id || p._id?.toString() === updated.id) ? updated : p
-        ));
-        setSelectedPrompt(updated);
-        setHasChanges(false);
-        onSelectPrompt(updated);
-      }
+      setPrompts(prompts.map(p =>
+        (p.id === updated.id || p._id?.toString() === updated.id) ? updated : p
+      ));
+      setSelectedPrompt(updated);
+      setHasChanges(false);
+      onSelectPrompt(updated);
     } catch (error) {
       console.error('Failed to save prompt:', error);
     } finally {
@@ -199,23 +193,16 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
     if (!newPromptName.trim() || !editedContent.trim()) return;
     setCreating(true);
     try {
-      const response = await fetch('/api/prompts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: newPromptName.trim(),
-          type: promptType,
-          content: editedContent,
-        }),
+      const newPrompt = await promptsApi.create({
+        name: newPromptName.trim(),
+        type: promptType,
+        content: editedContent,
       });
-      if (response.ok) {
-        const newPrompt = await response.json();
-        setPrompts([...prompts, newPrompt]);
-        setSelectedPrompt(newPrompt);
-        setNewPromptName('');
-        setHasChanges(false);
-        onSelectPrompt(newPrompt);
-      }
+      setPrompts([...prompts, newPrompt]);
+      setSelectedPrompt(newPrompt);
+      setNewPromptName('');
+      setHasChanges(false);
+      onSelectPrompt(newPrompt);
     } catch (error) {
       console.error('Failed to create prompt:', error);
     } finally {
@@ -381,12 +368,7 @@ export default function TranslationEditor({
   const handleResetSplit = async () => {
     setResettingSplit(true);
     try {
-      const res = await fetch(`/api/pages/${originalPageId}/reset`, { method: 'POST' });
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Reset failed');
-      }
+      await pages.resetSplit(originalPageId);
 
       // Refresh the book data
       if (onRefresh) {
@@ -495,14 +477,9 @@ export default function TranslationEditor({
 
   // Track page view
   useEffect(() => {
-    fetch('/api/analytics/track', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event: 'page_read',
-        book_id: book.id,
-        page_id: page.id
-      }),
+    analytics.track('page_read', {
+      book_id: book.id,
+      page_id: page.id
     }).catch(() => {}); // Fire and forget
   }, [book.id, page.id]);
 
@@ -594,33 +571,23 @@ export default function TranslationEditor({
         customPrompts.translation = selectedTranslationPrompt.content;
       }
 
-      const response = await fetch('/api/process', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pageId: page.id,
-          action,
-          imageUrl: page.photo,
-          language: book.language || 'Latin',
-          targetLanguage: 'English',
-          ocrText: action === 'translation' ? ocrText : undefined,
-          translatedText: action === 'summary' ? translationText : undefined,
-          previousPageId: previousPage?.id,
-          customPrompts: Object.keys(customPrompts).length > 0 ? customPrompts : undefined,
-          autoSave: true,
-          model: selectedModel,
-          promptInfo: {
-            ocr: selectedOcrPrompt?.name,
-            translation: selectedTranslationPrompt?.name
-          }
-        })
+      const result = await processing.process({
+        pageId: page.id,
+        action,
+        imageUrl: page.photo,
+        language: book.language || 'Latin',
+        targetLanguage: 'English',
+        ocrText: action === 'translation' ? ocrText : undefined,
+        translatedText: action === 'summary' ? translationText : undefined,
+        previousPageId: previousPage?.id,
+        customPrompts: Object.keys(customPrompts).length > 0 ? customPrompts : undefined,
+        autoSave: true,
+        model: selectedModel,
+        promptInfo: {
+          ocr: selectedOcrPrompt?.name,
+          translation: selectedTranslationPrompt?.name
+        }
       });
-
-      if (!response.ok) {
-        throw new Error('Processing failed');
-      }
-
-      const result = await response.json();
 
       if (result.ocr) setOcrText(result.ocr);
       if (result.translation) setTranslationText(result.translation);

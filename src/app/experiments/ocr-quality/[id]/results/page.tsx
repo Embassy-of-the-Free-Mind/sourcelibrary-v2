@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   AlertCircle,
 } from 'lucide-react';
+import { ocrQualityExperiments } from '@/lib/api-client';
 
 interface ComparisonResult {
   comparison_type: string;
@@ -103,11 +104,8 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const res = await fetch(`/api/experiments/ocr-quality/${id}/results`);
-        if (res.ok) {
-          const data = await res.json();
-          setResults(data);
-        }
+        const data = await ocrQualityExperiments.results(id);
+        setResults(data as any);
       } catch (error) {
         console.error('Error fetching results:', error);
       } finally {

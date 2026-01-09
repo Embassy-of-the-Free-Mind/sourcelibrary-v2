@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import type { Page, Book, Prompt } from '@/lib/types';
+import { processing } from '@/lib/api-client';
 
 export interface ProcessingState {
   active: boolean;
@@ -65,14 +66,10 @@ export function usePageProcessing({
         };
       }).filter(p => p.imageUrl);
 
-      const response = await fetch('/api/process/batch', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pages: batchPages, autoSave: true })
+      const { results } = await processing.batchOcr({
+        pages: batchPages,
+        autoSave: true
       });
-
-      if (response.ok) {
-        const { results } = await response.json();
         const completed: string[] = [];
         const failed: string[] = [];
 
@@ -164,49 +161,40 @@ export function usePageProcessing({
         const pageIndex = pages.findIndex(p => p.id === pageId);
         const previousPage = pageIndex > 0 ? pages[pageIndex - 1] : null;
 
-        const response = await fetch('/api/process', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            pageId,
-            action: type,
-            imageUrl: page.photo,
-            language: book?.language || 'Latin',
-            targetLanguage: 'English',
-            ocrText: type === 'translation' ? page.ocr?.data : undefined,
-            translatedText: type === 'summary' ? page.translation?.data : undefined,
-            previousPageId: previousPage?.id,
-            customPrompts: {
-              ocr: prompts.ocr?.content,
-              translation: prompts.translation?.content,
-              summary: prompts.summary?.content
-            },
-            autoSave: true
-          })
+        const result = await processing.process({
+          pageId,
+          action: type,
+          imageUrl: page.photo,
+          language: book?.language || 'Latin',
+          targetLanguage: 'English',
+          ocrText: type === 'translation' ? page.ocr?.data : undefined,
+          translatedText: type === 'summary' ? page.translation?.data : undefined,
+          previousPageId: previousPage?.id,
+          customPrompts: {
+            ocr: prompts.ocr?.content,
+            translation: prompts.translation?.content,
+            summary: prompts.summary?.content
+          },
+          autoSave: true
         });
 
-        if (response.ok) {
-          const result = await response.json();
-          // Update local page data
-          const updates: Partial<Page> = {};
-          if (result.translation) {
-            updates.translation = {
-              data: result.translation,
-              language: page.translation?.language || 'English',
-              model: page.translation?.model || 'gemini-2.0-flash'
-            };
-          }
-          if (result.summary) {
-            updates.summary = {
-              data: result.summary,
-              model: page.summary?.model || 'gemini-2.0-flash'
-            };
-          }
-          onPageUpdate(pageId, updates);
-          completed.push(pageId);
-        } else {
-          failed.push(pageId);
+        // Update local page data
+        const updates: Partial<Page> = {};
+        if (result.translation) {
+          updates.translation = {
+            data: result.translation,
+            language: page.translation?.language || 'English',
+            model: page.translation?.model || 'gemini-2.0-flash'
+          };
         }
+        if (result.summary) {
+          updates.summary = {
+            data: result.summary,
+            model: page.summary?.model || 'gemini-2.0-flash'
+          };
+        }
+        onPageUpdate(pageId, updates);
+        completed.push(pageId);
       } catch (error) {
         console.error(`Processing error for page ${pageId}:`, error);
         failed.push(pageId);

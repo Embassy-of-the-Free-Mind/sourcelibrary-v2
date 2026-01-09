@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, RefreshCw, Loader2, CheckCircle, AlertTriangle, Wrench, RotateCcw, Trash2 } from 'lucide-react';
 import { ValidationIssue } from '@/lib/validateTranslation';
+import { books, pages as pagesApi, processing } from '@/lib/api-client';
 
 interface PageIssue {
   pageId: string;
@@ -41,9 +42,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/books/${bookId}/qa`);
-      if (!res.ok) throw new Error('Failed to fetch QA data');
-      const qaData = await res.json();
+      const qaData = await books.qa(bookId);
       setData(qaData);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load');
@@ -60,12 +59,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
     if (!fix) return;
     setApplying(`${pageId}-${field}`);
     try {
-      const res = await fetch(`/api/pages/${pageId}/quick-fix`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ field, fix }),
-      });
-      if (!res.ok) throw new Error('Failed to apply fix');
+      await pagesApi.quickFix(pageId, field, fix);
       // Refresh the data
       await fetchQA();
     } catch (err) {
@@ -78,22 +72,16 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
   const retranslate = async (pageId: string) => {
     setRetranslating(pageId);
     try {
-      // Get page info first
-      const pageRes = await fetch(`/api/pages/${pageId}`);
-      if (!pageRes.ok) throw new Error('Failed to fetch page');
-      const page = await pageRes.json();
+      // Get page info first (kept for potential future use)
+      const page = await pagesApi.get(pageId);
 
       // Trigger re-translation
-      const res = await fetch('/api/process', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          pageId,
-          type: 'translation',
-          autoSave: true,
-        }),
+      await processing.process({
+        pageId,
+        action: 'translation',
+        autoSave: true,
       });
-      if (!res.ok) throw new Error('Failed to re-translate');
+
       // Refresh the data
       await fetchQA();
     } catch (err) {
@@ -108,13 +96,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
     setCleaning(true);
     setCleanupResult(null);
     try {
-      const res = await fetch(`/api/books/${bookId}/cleanup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ field: 'both' }),
-      });
-      if (!res.ok) throw new Error('Cleanup failed');
-      const result = await res.json();
+      const result = await books.cleanup(bookId, { field: 'both' });
       setCleanupResult({ removed: result.totalTagsRemoved, pages: result.pagesModified });
       // Refresh QA data
       await fetchQA();

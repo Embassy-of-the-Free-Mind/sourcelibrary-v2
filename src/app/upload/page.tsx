@@ -18,26 +18,13 @@ import {
   Camera,
 } from 'lucide-react';
 import { IMAGE_LICENSES, type ImageSourceProvider } from '@/lib/types';
+import { books, catalog } from '@/lib/api-client';
+import type { CatalogResult } from '@/lib/api-client';
 
 interface UploadedPage {
   id: string;
   page_number: number;
   photo: string;
-}
-
-interface CatalogResult {
-  id: string;
-  title: string;
-  author: string;
-  year: string;
-  language: string;
-  description: string;
-  publisher?: string;
-  placeOfPublication?: string;
-  printer?: string;
-  source: 'ia' | 'bph';
-  iaIdentifier?: string;
-  imageUrl?: string;
 }
 
 type UploadStep = 'metadata' | 'upload' | 'complete';
@@ -86,45 +73,34 @@ export default function UploadPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/books', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          display_title: displayTitle || undefined,
-          author,
-          language,
-          published,
-          publisher: publisher || undefined,
-          place_of_publication: placeOfPublication || undefined,
-          printer: printer || undefined,
-          ia_identifier: iaIdentifier || undefined,
-          image_source: {
-            provider: imageSourceProvider,
-            provider_name: imageSourceProvider === 'efm' ? 'Embassy of the Free Mind' :
-                          imageSourceProvider === 'internet_archive' ? 'Internet Archive' :
-                          imageSourceProvider === 'google_books' ? 'Google Books' :
-                          imageSourceProvider === 'hathi_trust' ? 'HathiTrust' :
-                          imageSourceProvider === 'biodiversity_heritage_library' ? 'Biodiversity Heritage Library' :
-                          imageSourceProvider === 'gallica' ? 'Bibliothèque nationale de France' :
-                          imageSourceProvider === 'e_rara' ? 'e-rara.ch' :
-                          imageSourceProvider === 'mdz' ? 'Münchener DigitalisierungsZentrum' :
-                          imageSourceProvider === 'user_upload' ? 'User Upload' : undefined,
-            source_url: imageSourceUrl || undefined,
-            identifier: iaIdentifier || undefined,
-            license: imageLicense,
-            attribution: imageAttribution || undefined,
-            access_date: new Date(),
-          },
-        }),
+      const book = await books.create({
+        title,
+        display_title: displayTitle || undefined,
+        author,
+        language,
+        published,
+        publisher: publisher || printer || undefined,
+        place_published: placeOfPublication || undefined,
+        ia_identifier: iaIdentifier || undefined,
+        image_source: {
+          provider: imageSourceProvider,
+          provider_name: imageSourceProvider === 'efm' ? 'Embassy of the Free Mind' :
+                        imageSourceProvider === 'internet_archive' ? 'Internet Archive' :
+                        imageSourceProvider === 'google_books' ? 'Google Books' :
+                        imageSourceProvider === 'hathi_trust' ? 'HathiTrust' :
+                        imageSourceProvider === 'biodiversity_heritage_library' ? 'Biodiversity Heritage Library' :
+                        imageSourceProvider === 'gallica' ? 'Bibliothèque nationale de France' :
+                        imageSourceProvider === 'e_rara' ? 'e-rara.ch' :
+                        imageSourceProvider === 'mdz' ? 'Münchener DigitalisierungsZentrum' :
+                        imageSourceProvider === 'user_upload' ? 'User Upload' : undefined,
+          source_url: imageSourceUrl || undefined,
+          identifier: iaIdentifier || undefined,
+          license: imageLicense,
+          attribution: imageAttribution || undefined,
+          access_date: new Date(),
+        },
       });
 
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to create book');
-      }
-
-      const book = await response.json();
       setBookId(book.id);
       setStep('upload');
     } catch (err) {
@@ -140,11 +116,11 @@ export default function UploadPage() {
 
     setSearching(true);
     try {
-      const res = await fetch(`/api/catalog/search?q=${encodeURIComponent(searchQuery)}&source=${searchSource}&limit=20`);
-      if (res.ok) {
-        const data = await res.json();
-        setSearchResults(data.results);
-      }
+      const data = await catalog.search(searchQuery, {
+        source: searchSource,
+        limit: 20
+      });
+      setSearchResults(data.results);
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -160,8 +136,8 @@ export default function UploadPage() {
     setPublished(item.year);
     setLanguage(item.language || 'Latin');
     setPublisher(item.publisher || '');
-    setPlaceOfPublication(item.placeOfPublication || '');
-    setPrinter(item.printer || '');
+    setPlaceOfPublication('');
+    setPrinter('');
     if (item.iaIdentifier) {
       setIaIdentifier(item.iaIdentifier);
       setImageSourceUrl(`https://archive.org/details/${item.iaIdentifier}`);
@@ -212,21 +188,8 @@ export default function UploadPage() {
     setUploadProgress(0);
 
     try {
-      const formData = new FormData();
-      formData.append('bookId', bookId);
-      files.forEach(file => formData.append('files', file));
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Upload failed');
-      }
-
-      const result = await response.json();
+      // Use API client with FormData support (includes auth, visitor tracking, error handling)
+      const result = await books.uploadPages(bookId, files);
       setUploadedPages(result.pages);
       setUploadProgress(100);
       setStep('complete');

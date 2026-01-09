@@ -3,19 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, User, MapPin, Lightbulb, BookOpen, ArrowRight, Loader2 } from 'lucide-react';
-
-interface Entity {
-  _id: string;
-  name: string;
-  type: 'person' | 'place' | 'concept';
-  book_count: number;
-  total_mentions: number;
-  books: Array<{
-    book_id: string;
-    book_title: string;
-    book_author: string;
-  }>;
-}
+import { entities as entitiesApi } from '@/lib/api-client';
+import type { Entity } from '@/lib/api-client';
 
 const TYPE_ICONS = {
   person: User,
@@ -43,16 +32,12 @@ export default function EncyclopediaPage() {
   const fetchEntities = async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams();
-      if (activeType !== 'all') params.set('type', activeType);
-      if (minBooks > 1) params.set('min_books', minBooks.toString());
-      params.set('limit', '100');
-
-      const res = await fetch(`/api/entities?${params}`);
-      if (res.ok) {
-        const data = await res.json();
-        setEntities(data.entities);
-      }
+      const data = await entitiesApi.list({
+        type: activeType !== 'all' ? activeType : undefined,
+        min_books: minBooks > 1 ? minBooks : undefined,
+        limit: 100,
+      });
+      setEntities(data.entities);
     } catch (error) {
       console.error('Failed to fetch entities:', error);
     } finally {

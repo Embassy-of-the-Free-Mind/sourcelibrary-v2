@@ -4,17 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Highlighter, Trash2, ExternalLink, Loader2, X, Share2, Twitter, MessageCircle, Link2, Check } from 'lucide-react';
 import { getShortUrl } from '@/lib/shortlinks';
-
-interface Highlight {
-  id: string;
-  book_id: string;
-  page_id: string;
-  page_number: number;
-  book_title: string;
-  text: string;
-  note?: string;
-  created_at: string;
-}
+import { highlights } from '@/lib/api-client';
+import type { Highlight } from '@/lib/api-client';
 
 interface HighlightsPanelProps {
   bookId?: string;  // If provided, filter to this book
@@ -38,14 +29,10 @@ export default function HighlightsPanel({
   const fetchHighlights = async () => {
     setLoading(true);
     try {
-      const url = bookId
-        ? `/api/highlights?book_id=${bookId}`
-        : '/api/highlights?limit=100';
-      const response = await fetch(url);
-      if (response.ok) {
-        const data = await response.json();
-        setHighlights(data.highlights || data);
-      }
+      const data = await highlights.list(
+        bookId ? { book_id: bookId, limit: 100 } : { limit: 100 }
+      );
+      setHighlights(data.highlights || []);
     } catch (error) {
       console.error('Failed to fetch highlights:', error);
     } finally {
@@ -62,13 +49,9 @@ export default function HighlightsPanel({
   const handleDelete = async (id: string) => {
     setDeletingId(id);
     try {
-      const response = await fetch(`/api/highlights/${id}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        setHighlights(prev => prev.filter(h => h.id !== id));
-        onHighlightDeleted?.();
-      }
+      await highlights.delete(id);
+      setHighlights(prev => prev.filter(h => h.id !== id));
+      onHighlightDeleted?.();
     } catch (error) {
       console.error('Failed to delete highlight:', error);
     } finally {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
 import { getDb } from '@/lib/mongodb';
+import { images } from '@/lib/api-client/images';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
@@ -107,25 +108,15 @@ export async function POST(
           const sourceUrl = page.photo_original || page.photo;
 
           try {
-            // Download from source (IA, Gallica, or MDZ)
-            const response = await fetch(sourceUrl);
-            if (!response.ok) {
-              return {
-                pageId: page.id,
-                pageNumber: page.page_number,
-                success: false,
-                error: `Failed to fetch: ${response.status}`
-              };
-            }
-
-            const buffer = await response.arrayBuffer();
+            // Download from source (IA, Gallica, or MDZ) with mime type detection
+            const { buffer, mimeType } = await images.fetchBufferWithMimeType(sourceUrl);
             const bytes = buffer.byteLength;
 
             // Upload to Vercel Blob
             const filename = `archived/${bookId}/${page.page_number}.jpg`;
-            const blob = await put(filename, Buffer.from(buffer), {
+            const blob = await put(filename, buffer, {
               access: 'public',
-              contentType: 'image/jpeg',
+              contentType: mimeType,
               addRandomSuffix: false,
             });
 

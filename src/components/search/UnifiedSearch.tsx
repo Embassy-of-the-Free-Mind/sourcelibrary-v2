@@ -4,30 +4,8 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, Book, Lightbulb, User, MapPin, BookOpen, Loader2, X, ChevronRight } from 'lucide-react';
 import { useDebouncedCallback } from 'use-debounce';
-
-interface BookResult {
-  id: string;
-  title: string;
-  display_title?: string;
-  author: string;
-  language: string;
-  published: string;
-  translation_percent?: number;
-}
-
-interface IndexResult {
-  type: 'concept' | 'person' | 'place' | 'keyword';
-  term: string;
-  book_id: string;
-  book_title: string;
-  pages?: number[];
-}
-
-interface SearchResults {
-  query: string;
-  books: { results: BookResult[]; total: number };
-  index: { results: IndexResult[]; total: number };
-}
+import { search as searchApi } from '@/lib/api-client';
+import type { UnifiedSearchResponse } from '@/lib/api-client';
 
 const TYPE_ICONS: Record<string, typeof Lightbulb> = {
   concept: Lightbulb,
@@ -38,7 +16,7 @@ const TYPE_ICONS: Record<string, typeof Lightbulb> = {
 
 export default function UnifiedSearch() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResults | null>(null);
+  const [results, setResults] = useState<UnifiedSearchResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,11 +33,8 @@ export default function UnifiedSearch() {
     setIsOpen(true);
 
     try {
-      const response = await fetch(`/api/search/unified?q=${encodeURIComponent(searchQuery)}&limit=5`);
-      if (response.ok) {
-        const data = await response.json();
-        setResults(data);
-      }
+      const data = await searchApi.unified(searchQuery, { limit: 5 });
+      setResults(data);
     } catch (error) {
       console.error('Search error:', error);
     } finally {

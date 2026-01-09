@@ -1,5 +1,6 @@
 import { DEFAULT_PROMPTS, DEFAULT_MODEL } from './types';
 import { getGeminiClient } from './gemini';
+import { images } from './api-client/images';
 
 // Model pricing per 1M tokens (USD)
 export const MODEL_PRICING: Record<string, { input: number; output: number }> = {
@@ -99,31 +100,19 @@ export async function performOCR(
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
   }
 
-  // Fetch the image
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status} ${imageResponse.statusText}`);
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
-  const base64Image = Buffer.from(imageBuffer).toString('base64');
-  let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+  // Fetch the image using centralized utility (handles mime type detection)
+  const { base64: base64Image, mimeType: detectedMimeType } = await images.fetchBase64(imageUrl, {
+    includeMimeType: true
+  }) as { base64: string; mimeType: string };
 
   // Gemini only supports these image types
   const supportedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
 
-  // Clean up mimeType (remove charset, etc.)
-  mimeType = mimeType.split(';')[0].trim();
-
-  // If mimeType is not supported, try to infer from URL or default to jpeg
+  // Validate and fallback if needed
+  let mimeType = detectedMimeType;
   if (!supportedMimeTypes.includes(mimeType)) {
-    if (imageUrl.toLowerCase().includes('.png')) {
-      mimeType = 'image/png';
-    } else if (imageUrl.toLowerCase().includes('.webp')) {
-      mimeType = 'image/webp';
-    } else {
-      mimeType = 'image/jpeg'; // Default to jpeg
-    }
+    // Fallback to jpeg if unsupported type detected
+    mimeType = 'image/jpeg';
   }
 
   try {

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { X, Save, Loader2, Search, ExternalLink, Languages, Sparkles } from 'lucide-react';
+import { utils, books, catalog } from '@/lib/api-client';
 
 interface BookEditModalProps {
   book: {
@@ -84,25 +85,16 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     setError(null);
 
     try {
-      const res = await fetch(`/api/books/${book.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title,
-          display_title: displayTitle || undefined,
-          author: author || undefined,
-          language: language || undefined,
-          published: published || undefined,
-          place_published: placePublished || undefined,
-          publisher: publisher || undefined,
-          ustc_id: ustcId || undefined,
-        }),
+      await books.update(book.id, {
+        title,
+        display_title: displayTitle || undefined,
+        author: author || undefined,
+        language: language || undefined,
+        published: published || undefined,
+        place_published: placePublished || undefined,
+        publisher: publisher || undefined,
+        ustc_id: ustcId || undefined,
       });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Failed to save');
-      }
 
       onSave();
       onClose();
@@ -120,11 +112,8 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     setSearchDone(false);
 
     try {
-      const res = await fetch(`/api/ustc/search?q=${encodeURIComponent(searchQuery)}`);
-      if (res.ok) {
-        const data = await res.json();
-        setSearchResults(data.results || []);
-      }
+      const data = await catalog.ustcSearch(searchQuery);
+      setSearchResults(data.results || []);
     } catch {
       // Silently fail - search is optional
     } finally {
@@ -155,37 +144,28 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
     setIdentifyResult(null);
 
     try {
-      const res = await fetch(`/api/books/${book.id}/identify`, {
-        method: 'POST',
-      });
+      const data = await books.identify(book.id, {});
+      setIdentifyResult(data);
 
-      if (res.ok) {
-        const data = await res.json();
-        setIdentifyResult(data);
-
-        // Auto-fill fields from AI identification
-        if (data.identified) {
-          const id = data.identified;
-          if (id.title && !title) setTitle(id.title);
-          if (id.title_english && !displayTitle) setDisplayTitle(id.title_english);
-          if (id.author && !author) setAuthor(id.author);
-          if (id.language && !language) setLanguage(id.language);
-          if (id.year && !published) setPublished(id.year);
-          if (id.place && !placePublished) setPlacePublished(id.place);
-          if (id.publisher && !publisher) setPublisher(id.publisher);
-        }
-
-        // If catalog matches found, show them
-        if (data.catalog_matches?.length > 0) {
-          setSearchResults(data.catalog_matches);
-          setSearchDone(true);
-        }
-      } else {
-        const data = await res.json();
-        setError(data.error || 'Identification failed');
+      // Auto-fill fields from AI identification
+      if (data.identified) {
+        const id = data.identified;
+        if (id.title && !title) setTitle(id.title);
+        if (id.title_english && !displayTitle) setDisplayTitle(id.title_english);
+        if (id.author && !author) setAuthor(id.author);
+        if (id.language && !language) setLanguage(id.language);
+        if (id.year && !published) setPublished(id.year);
+        if (id.place && !placePublished) setPlacePublished(id.place);
+        if (id.publisher && !publisher) setPublisher(id.publisher);
       }
-    } catch {
-      setError('Failed to identify book');
+
+      // If catalog matches found, show them
+      if (data.catalog_matches?.length > 0) {
+        setSearchResults(data.catalog_matches);
+        setSearchDone(true);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to identify book');
     } finally {
       setIdentifying(false);
     }
@@ -204,27 +184,12 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
         : language?.toLowerCase().includes('italian') ? 'Italian'
         : language || 'Latin';
 
-      const res = await fetch('/api/translate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: title,
-          sourceLanguage,
-          targetLanguage: 'English',
-        }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        if (data.translation) {
-          setDisplayTitle(data.translation);
-        }
-      } else {
-        const data = await res.json();
-        setError(data.error || 'Translation failed');
+      const data = await utils.translate(title, sourceLanguage, 'English');
+      if (data.translation) {
+        setDisplayTitle(data.translation);
       }
-    } catch {
-      setError('Translation failed');
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'Translation failed');
     } finally {
       setTranslating(false);
     }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { History, ChevronDown, ChevronUp, FileText, Languages, BookOpen, Scissors, Loader2, CheckCircle2, XCircle, Clock, RefreshCw, AlertTriangle } from 'lucide-react';
+import { jobs } from '@/lib/api-client';
 
 interface JobResult {
   pageId: string;
@@ -81,7 +82,7 @@ function formatDuration(start: string, end?: string): string {
 
 export default function BookHistory({ bookId }: BookHistoryProps) {
   const [expanded, setExpanded] = useState(false);
-  const [jobs, setJobs] = useState<Job[]>([]);
+  const [jobsList, setJobsList] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
   const [expandedErrors, setExpandedErrors] = useState<Set<string>>(new Set());
   const [retrying, setRetrying] = useState<string | null>(null);
@@ -89,9 +90,8 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
   const fetchJobs = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/jobs?book_id=${bookId}&limit=20`);
-      const data = await res.json();
-      setJobs(data.jobs || []);
+      const data = await jobs.list({ book_id: bookId, limit: 20 });
+      setJobsList(data.jobs || []);
     } catch (error) {
       console.error(error);
     } finally {
@@ -100,10 +100,10 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
   };
 
   useEffect(() => {
-    if (expanded && jobs.length === 0) {
+    if (expanded && jobsList.length === 0) {
       fetchJobs();
     }
-  }, [expanded, bookId, jobs.length]);
+  }, [expanded, bookId, jobsList.length]);
 
   const toggleErrorExpand = (jobId: string) => {
     setExpandedErrors(prev => {
@@ -120,18 +120,9 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
   const handleRetry = async (jobId: string) => {
     setRetrying(jobId);
     try {
-      const res = await fetch(`/api/jobs/${jobId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'retry' }),
-      });
-      if (res.ok) {
-        // Refresh the jobs list
-        await fetchJobs();
-      } else {
-        const data = await res.json();
-        console.error('Retry failed:', data.error);
-      }
+      await jobs.retry(jobId);
+      // Refresh the jobs list
+      await fetchJobs();
     } catch (error) {
       console.error('Retry error:', error);
     } finally {
@@ -166,8 +157,8 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
         <div className="flex items-center gap-2 text-stone-700">
           <History className="w-5 h-5" />
           <span className="font-medium">Processing History</span>
-          {jobs.length > 0 && (
-            <span className="text-xs text-stone-400">({jobs.length} jobs)</span>
+          {jobsList.length > 0 && (
+            <span className="text-xs text-stone-400">({jobsList.length} jobs)</span>
           )}
         </div>
         {expanded ? (
@@ -184,13 +175,13 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
               <Loader2 className="w-5 h-5 animate-spin mr-2" />
               Loading history...
             </div>
-          ) : jobs.length === 0 ? (
+          ) : jobsList.length === 0 ? (
             <div className="text-center py-8 text-stone-400">
               No processing history yet
             </div>
           ) : (
             <div className="divide-y divide-stone-100">
-              {jobs.map(job => {
+              {jobsList.map(job => {
                 const typeInfo = jobTypeConfig[job.type] || { label: job.type, icon: FileText, color: '#6b7280' };
                 const statusInfo = statusConfig[job.status] || statusConfig.pending;
                 const TypeIcon = typeInfo.icon;

@@ -4,6 +4,7 @@ import type { Book, Page, TranslationEdition } from '@/lib/types';
 import epub from 'epub-gen-memory';
 import archiver from 'archiver';
 import sharp from 'sharp';
+import { images } from '@/lib/api-client';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -767,13 +768,7 @@ const IMAGE_HEIGHT = 900;
 // Uses minimal processing: grayscale + normalize (auto contrast)
 async function fetchAndCompressImage(url: string): Promise<Buffer | null> {
   try {
-    const response = await fetch(url, {
-      signal: AbortSignal.timeout(60000) // 60 second timeout
-    });
-    if (!response.ok) return null;
-
-    const arrayBuffer = await response.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
+    const buffer = await images.fetchBuffer(url, { timeout: 60000 });
 
     // Process with sharp: resize, grayscale, normalize, compress
     const processed = await sharp(buffer)

@@ -24,6 +24,7 @@ import {
 import { Annotation, AnnotationType } from '@/lib/types';
 import AnnotationEditor from './AnnotationEditor';
 import { getShortUrl } from '@/lib/shortlinks';
+import { annotations } from '@/lib/api-client';
 
 interface AnnotationPanelProps {
   bookId: string;
@@ -143,12 +144,9 @@ export default function AnnotationPanel({
   const fetchAnnotations = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/annotations?page_id=${pageId}&limit=100`);
-      if (res.ok) {
-        const data = await res.json();
-        // Filter to only top-level annotations (no parent_id)
-        setAnnotations(data.annotations?.filter((a: Annotation) => !a.parent_id) || []);
-      }
+      const data = await annotations.list({ page_id: pageId, limit: 100 });
+      // Filter to only top-level annotations (no parent_id)
+      setAnnotations(data.annotations?.filter((a: Annotation) => !a.parent_id) || []);
     } catch (error) {
       console.error('Failed to fetch annotations:', error);
     } finally {
@@ -167,14 +165,11 @@ export default function AnnotationPanel({
 
     setLoadingReplies((prev) => new Set(prev).add(annotationId));
     try {
-      const res = await fetch(`/api/annotations?parent_id=${annotationId}&limit=50`);
-      if (res.ok) {
-        const data = await res.json();
-        setReplies((prev) => ({
-          ...prev,
-          [annotationId]: data.annotations || [],
-        }));
-      }
+      const data = await annotations.list({ parent_id: annotationId, limit: 50 });
+      setReplies((prev) => ({
+        ...prev,
+        [annotationId]: data.annotations || [],
+      }));
     } catch (error) {
       console.error('Failed to fetch replies:', error);
     } finally {
@@ -202,30 +197,23 @@ export default function AnnotationPanel({
   const handleUpvote = async (annotationId: string) => {
     setUpvoting((prev) => new Set(prev).add(annotationId));
     try {
-      const res = await fetch(`/api/annotations/${annotationId}/upvote`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        // Update annotation in state
-        setAnnotations((prev) =>
-          prev.map((a) =>
+      const data = await annotations.upvote(annotationId);
+      // Update annotation in state
+      setAnnotations((prev) =>
+        prev.map((a) =>
+          a.id === annotationId ? { ...a, upvotes: data.upvotes } : a
+        )
+      );
+      // Also update in replies if applicable
+      setReplies((prev) => {
+        const updated = { ...prev };
+        for (const parentId of Object.keys(updated)) {
+          updated[parentId] = updated[parentId].map((a) =>
             a.id === annotationId ? { ...a, upvotes: data.upvotes } : a
-          )
-        );
-        // Also update in replies if applicable
-        setReplies((prev) => {
-          const updated = { ...prev };
-          for (const parentId of Object.keys(updated)) {
-            updated[parentId] = updated[parentId].map((a) =>
-              a.id === annotationId ? { ...a, upvotes: data.upvotes } : a
-            );
-          }
-          return updated;
-        });
-      }
+          );
+        }
+        return updated;
+      });
     } catch (error) {
       console.error('Failed to upvote:', error);
     } finally {
@@ -242,22 +230,18 @@ export default function AnnotationPanel({
 
     setDeleting((prev) => new Set(prev).add(annotationId));
     try {
-      const res = await fetch(`/api/annotations/${annotationId}`, {
-        method: 'DELETE',
+      await annotations.delete(annotationId);
+      // Remove from state
+      setAnnotations((prev) => prev.filter((a) => a.id !== annotationId));
+      // Also remove from replies
+      setReplies((prev) => {
+        const updated = { ...prev };
+        for (const parentId of Object.keys(updated)) {
+          updated[parentId] = updated[parentId].filter((a) => a.id !== annotationId);
+        }
+        return updated;
       });
-      if (res.ok) {
-        // Remove from state
-        setAnnotations((prev) => prev.filter((a) => a.id !== annotationId));
-        // Also remove from replies
-        setReplies((prev) => {
-          const updated = { ...prev };
-          for (const parentId of Object.keys(updated)) {
-            updated[parentId] = updated[parentId].filter((a) => a.id !== annotationId);
-          }
-          return updated;
-        });
-        onAnnotationChange?.();
-      }
+      onAnnotationChange?.();
     } catch (error) {
       console.error('Failed to delete:', error);
     } finally {

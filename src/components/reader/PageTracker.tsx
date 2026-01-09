@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { utils } from '@/lib/api-client';
 
 export default function PageTracker() {
   const pathname = usePathname();
@@ -14,14 +15,10 @@ export default function PageTracker() {
 
     const trackPageview = async () => {
       try {
-        await fetch('/api/track', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            path: pathname,
-            referrer: document.referrer,
-            userAgent: navigator.userAgent,
-          }),
+        await utils.track('pageview', {
+          path: pathname,
+          referrer: document.referrer,
+          userAgent: navigator.userAgent,
         });
       } catch (error) {
         console.error('Tracking failed:', error);

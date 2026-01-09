@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
+import { images } from '@/lib/api-client';
 
 /**
  * GET /api/crop-image
@@ -25,15 +26,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch the source image
-    const response = await fetch(imageUrl);
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch image: ${response.status}` },
-        { status: 502 }
-      );
-    }
-
-    const imageBuffer = Buffer.from(await response.arrayBuffer());
+    const imageBuffer = await images.fetchBuffer(imageUrl);
 
     // Get image dimensions
     const metadata = await sharp(imageBuffer).metadata();

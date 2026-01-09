@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, Eye, Edit3, BarChart3 } from 'lucide-react';
+import { analytics } from '@/lib/api-client';
 
 interface GlobalStats {
   totalReads: number;
@@ -16,11 +17,10 @@ export default function GlobalFooter() {
   const [stats, setStats] = useState<GlobalStats | null>(null);
 
   useEffect(() => {
-    fetch('/api/analytics/stats')
-      .then(res => res.json())
+    analytics.usage()
       .then(data => {
         if (data.global) {
-          setStats(data);
+          setStats(data as any);
         }
       })
       .catch(console.error);

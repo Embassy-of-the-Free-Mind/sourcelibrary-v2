@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { PipelineState, PipelineStep, PipelineConfig } from '@/lib/types';
+import { books, jobs } from '@/lib/api-client';
 
 interface PipelineData {
   bookId: string;
@@ -35,11 +36,7 @@ export function usePipeline(bookId: string): UsePipelineResult {
   // Fetch pipeline state
   const fetchPipeline = useCallback(async () => {
     try {
-      const res = await fetch(`/api/books/${bookId}/pipeline`);
-      if (!res.ok) {
-        throw new Error('Failed to fetch pipeline');
-      }
-      const pipelineData = await res.json();
+      const pipelineData = await books.pipeline.get(bookId);
       setData(pipelineData);
       setError(null);
       return pipelineData;
@@ -81,52 +78,31 @@ export function usePipeline(bookId: string): UsePipelineResult {
   const pollJob = useCallback(async (jobId: string, step: PipelineStep): Promise<boolean> => {
     while (!shouldStopRef.current) {
       // Process next chunk
-      const processRes = await fetch(`/api/jobs/${jobId}/process`, {
-        method: 'POST',
-      });
+      try {
+        const processData = await jobs.process(jobId);
 
-      if (!processRes.ok) {
-        console.error('Job processing failed');
+        // Update pipeline with job progress
+        await books.pipeline.get(bookId); // Trigger pipeline refresh
+
+        // Refresh UI
+        await fetchPipeline();
+
+        // Check if done
+        if (processData.done) {
+          // Pipeline will auto-update status via API
+          return true;
+        }
+
+        if (processData.paused) {
+          return false;
+        }
+
+        // Small delay between chunks
+        await new Promise(resolve => setTimeout(resolve, 500));
+      } catch (err) {
+        console.error('Job processing failed:', err);
         return false;
       }
-
-      const processData = await processRes.json();
-
-      // Update pipeline with job progress
-      await fetch(`/api/books/${bookId}/pipeline`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          step,
-          progress: processData.job?.progress,
-        }),
-      });
-
-      // Refresh UI
-      await fetchPipeline();
-
-      // Check if done
-      if (processData.done) {
-        // Mark step as completed
-        await fetch(`/api/books/${bookId}/pipeline`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            step,
-            status: processData.job?.progress?.failed > 0 && processData.job?.progress?.completed === 0
-              ? 'failed'
-              : 'completed',
-          }),
-        });
-        return true;
-      }
-
-      if (processData.paused) {
-        return false;
-      }
-
-      // Small delay between chunks
-      await new Promise(resolve => setTimeout(resolve, 500));
     }
 
     return false;
@@ -158,19 +134,8 @@ export function usePipeline(bookId: string): UsePipelineResult {
         }
 
         // Execute step
-        const res = await fetch(`/api/books/${bookId}/pipeline/step`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ step: nextStep }),
-        });
-
-        if (!res.ok) {
-          const errorData = await res.json().catch(() => ({}));
-          console.error('Step execution failed:', errorData);
-          break;
-        }
-
-        const result = await res.json();
+        try {
+          const result = await books.pipeline.step(bookId, nextStep);
 
         // If a job was created, poll it until complete
         if (result.status === 'job_created' && result.jobId) {
@@ -182,8 +147,12 @@ export function usePipeline(bookId: string): UsePipelineResult {
           continue;
         }
 
-        // If step failed or no next step, stop
-        if (result.status === 'failed' || !result.nextStep) {
+          // If step failed or no next step, stop
+          if (result.status === 'failed' || !result.nextStep) {
+            break;
+          }
+        } catch (err) {
+          console.error('Step execution failed:', err);
           break;
         }
       }
@@ -197,80 +166,50 @@ export function usePipeline(bookId: string): UsePipelineResult {
   const start = useCallback(async (config: Partial<PipelineConfig>) => {
     setError(null);
 
-    const res = await fetch(`/api/books/${bookId}/pipeline`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'start', config }),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      setError(errorData.error || 'Failed to start pipeline');
-      return;
+    try {
+      await books.pipeline.start(bookId, { action: 'start', config });
+      await fetchPipeline();
+      // Start executing steps
+      runSteps();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to start pipeline');
     }
-
-    await fetchPipeline();
-
-    // Start executing steps
-    runSteps();
   }, [bookId, fetchPipeline, runSteps]);
 
   // Pause pipeline
   const pause = useCallback(async () => {
     shouldStopRef.current = true;
 
-    const res = await fetch(`/api/books/${bookId}/pipeline`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'pause' }),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      setError(errorData.error || 'Failed to pause pipeline');
-      return;
+    try {
+      await books.pipeline.start(bookId, { action: 'pause' });
+      await fetchPipeline();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to pause pipeline');
     }
-
-    await fetchPipeline();
   }, [bookId, fetchPipeline]);
 
   // Resume pipeline
   const resume = useCallback(async () => {
-    const res = await fetch(`/api/books/${bookId}/pipeline`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'resume' }),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      setError(errorData.error || 'Failed to resume pipeline');
-      return;
+    try {
+      await books.pipeline.start(bookId, { action: 'resume' });
+      await fetchPipeline();
+      // Continue executing steps
+      runSteps();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to resume pipeline');
     }
-
-    await fetchPipeline();
-
-    // Continue executing steps
-    runSteps();
   }, [bookId, fetchPipeline, runSteps]);
 
   // Reset pipeline
   const reset = useCallback(async () => {
     shouldStopRef.current = true;
 
-    const res = await fetch(`/api/books/${bookId}/pipeline`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'reset' }),
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      setError(errorData.error || 'Failed to reset pipeline');
-      return;
+    try {
+      await books.pipeline.start(bookId, { action: 'reset' });
+      await fetchPipeline();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to reset pipeline');
     }
-
-    await fetchPipeline();
   }, [bookId, fetchPipeline]);
 
   const isRunning = data?.pipeline?.status === 'running';

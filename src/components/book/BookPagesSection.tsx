@@ -29,6 +29,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import type { Page, Prompt } from '@/lib/types';
+import { prompts as promptsApi, jobs, books, processing } from '@/lib/api-client';
 
 interface BookPagesSectionProps {
   bookId: string;
@@ -49,19 +50,6 @@ const actionToJobType: Record<ActionType, JobType> = {
 // Retry settings
 const MAX_RETRIES = 3;
 const INITIAL_RETRY_DELAY = 1000; // 1 second
-const FETCH_TIMEOUT = 120000; // 2 minutes per page
-
-// Fetch with timeout helper
-async function fetchWithTimeout(url: string, options: RequestInit, timeout: number): Promise<Response> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeout);
-  try {
-    const response = await fetch(url, { ...options, signal: controller.signal });
-    return response;
-  } finally {
-    clearTimeout(timeoutId);
-  }
-}
 
 // Sleep helper
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -212,30 +200,26 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     const fetchPrompts = async () => {
       setPromptsLoading(true);
       try {
-        const [ocrRes, transRes, sumRes] = await Promise.all([
-          fetch('/api/prompts?type=ocr'),
-          fetch('/api/prompts?type=translation'),
-          fetch('/api/prompts?type=summary')
+        const [ocrData, transData, sumData] = await Promise.all([
+          promptsApi.list({ type: 'ocr' }),
+          promptsApi.list({ type: 'translation' }),
+          promptsApi.list({ type: 'summary' })
         ]);
 
-        const loadPrompts = async (res: Response, type: ActionType) => {
-          if (res.ok) {
-            const data = await res.json();
-            const defaultPrompt = data.find((p: Prompt) => p.is_default) || data[0];
-            setPrompts(prev => ({ ...prev, [type]: data }));
-            if (defaultPrompt) {
-              setSelectedPromptIds(prev => ({ ...prev, [type]: defaultPrompt.id || defaultPrompt._id?.toString() || '' }));
-              setEditedPrompts(prev => ({ ...prev, [type]: defaultPrompt.content }));
-            }
+        const loadPrompts = (data: { prompts: Prompt[] }, type: ActionType) => {
+          const promptsList = data.prompts;
+          const defaultPrompt = promptsList.find((p: Prompt) => p.is_default) || promptsList[0];
+          setPrompts(prev => ({ ...prev, [type]: promptsList }));
+          if (defaultPrompt) {
+            setSelectedPromptIds(prev => ({ ...prev, [type]: defaultPrompt.id || defaultPrompt._id?.toString() || '' }));
+            setEditedPrompts(prev => ({ ...prev, [type]: defaultPrompt.content }));
           }
         };
 
         // Note: image_extraction doesn't have custom prompts (uses built-in), but initialize to empty
-        await Promise.all([
-          loadPrompts(ocrRes, 'ocr'),
-          loadPrompts(transRes, 'translation'),
-          loadPrompts(sumRes, 'summary')
-        ]);
+        loadPrompts(ocrData, 'ocr');
+        loadPrompts(transData, 'translation');
+        loadPrompts(sumData, 'summary');
       } catch (error) {
         console.error('Error fetching prompts:', error);
       } finally {
@@ -348,22 +332,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const savePageOrder = async () => {
     setSavingOrder(true);
     try {
-      const pageOrder = pages.map((p, idx) => ({
-        id: p.id,
-        page_number: idx + 1
-      }));
-
-      const res = await fetch(`/api/books/${bookId}/reorder`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pages: pageOrder })
-      });
-
-      if (res.ok) {
-        setOrderChanged(false);
-        setReorderMode(false);
-        router.refresh();
-      }
+      const pageIds = pages.map(p => p.id);
+      await books.reorder(bookId, pageIds);
+      setOrderChanged(false);
+      setReorderMode(false);
+      router.refresh();
     } catch (error) {
       console.error('Failed to save order:', error);
     } finally {
@@ -384,28 +357,20 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     // If using Batch API, create job and redirect to jobs page
     if (useBatchApi) {
       try {
-        const jobRes = await fetch('/api/jobs', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: actionToJobType[action],
-            book_id: bookId,
-            book_title: bookTitle,
+        await jobs.create({
+          type: actionToJobType[action],
+          book_id: bookId,
+          book_title: bookTitle,
+          config: {
             page_ids: pageIds,
             model: selectedModel,
             prompt_name: currentPrompt?.name,
             use_batch_api: true,
-          }),
+          },
         });
-        if (jobRes.ok) {
-          const jobData = await jobRes.json();
-          // Redirect to jobs page
-          router.push('/jobs');
-          return;
-        } else {
-          alert('Failed to create batch job');
-          return;
-        }
+        // Redirect to jobs page
+        router.push('/jobs');
+        return;
       } catch (error) {
         console.error('Failed to create batch job:', error);
         alert('Failed to create batch job');
@@ -435,29 +400,20 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     // Create job record for tracking
     let jobId: string | null = null;
     try {
-      const jobRes = await fetch('/api/jobs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: actionToJobType[action],
-          book_id: bookId,
-          book_title: bookTitle,
+      const jobData = await jobs.create({
+        type: actionToJobType[action],
+        book_id: bookId,
+        book_title: bookTitle,
+        config: {
           page_ids: pageIds,
           model: selectedModel,
           prompt_name: currentPrompt?.name,
-        }),
+        },
       });
-      if (jobRes.ok) {
-        const jobData = await jobRes.json();
-        jobId = jobData.job?.id;
-        // Mark as processing
-        if (jobId) {
-          await fetch(`/api/jobs/${jobId}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status: 'processing' }),
-          });
-        }
+      jobId = jobData.id;
+      // Mark as processing
+      if (jobId) {
+        await jobs.updateStatus(jobId, 'processing');
       }
     } catch (error) {
       console.error('Failed to create job record:', error);
@@ -473,12 +429,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       lastJobUpdate = now;
 
       try {
-        await fetch(`/api/jobs/${jobId}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            progress: { completed: completed.length, failed: failed.length },
-          }),
+        await jobs.update(jobId, {
+          progress: { completed: completed.length, failed: failed.length },
         });
       } catch {
         // Ignore progress update errors
@@ -501,44 +453,30 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         if (stopRequestedRef.current) return;
 
         try {
-          const response = await fetchWithTimeout('/api/process', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              pageId,
-              action,
-              imageUrl: page.photo,
-              language: 'Latin',
-              targetLanguage: 'English',
-              ocrText: action === 'translation' ? page.ocr?.data : undefined,
-              translatedText: action === 'summary' ? page.translation?.data : undefined,
-              customPrompts: {
-                ocr: editedPrompts.ocr,
-                translation: editedPrompts.translation,
-                summary: editedPrompts.summary
-              },
-              autoSave: true,
-              model: selectedModel
-            })
-          }, FETCH_TIMEOUT);
+          const data = await processing.process({
+            pageId,
+            action,
+            imageUrl: page.photo,
+            language: 'Latin',
+            targetLanguage: 'English',
+            ocrText: action === 'translation' ? page.ocr?.data : undefined,
+            translatedText: action === 'summary' ? page.translation?.data : undefined,
+            customPrompts: {
+              ocr: editedPrompts.ocr,
+              translation: editedPrompts.translation,
+              summary: editedPrompts.summary
+            },
+            autoSave: true,
+            model: selectedModel
+          });
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data.usage) {
-              runningCost += data.usage.costUsd || 0;
-              runningTokens += data.usage.totalTokens || 0;
-            }
-            completed.push(pageId);
-            lastError = null;
-            break; // Success, exit retry loop
-          } else {
-            const errorText = await response.text().catch(() => 'Unknown error');
-            lastError = new Error(`HTTP ${response.status}: ${errorText}`);
-            // Don't retry on 4xx errors (client errors)
-            if (response.status >= 400 && response.status < 500) {
-              break;
-            }
+          if (data.usage) {
+            runningCost += data.usage.costUsd || 0;
+            runningTokens += data.usage.totalTokens || 0;
           }
+          completed.push(pageId);
+          lastError = null;
+          break; // Success, exit retry loop
         } catch (error) {
           lastError = error instanceof Error ? error : new Error('Unknown error');
           console.warn(`Attempt ${attempt + 1}/${MAX_RETRIES} failed for page ${pageId}:`, lastError.message);
@@ -605,54 +543,40 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         }
 
         try {
-          const response = await fetchWithTimeout('/api/process/batch-translate', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              pages: batchPages.map(p => ({
-                pageId: p.id,
-                ocrText: p.ocr?.data || '',
-                pageNumber: p.page_number,
-              })),
-              sourceLanguage: 'Latin',
-              targetLanguage: 'English',
-              customPrompt: editedPrompts.translation,
-              model: selectedModel,
-              previousContext,
-              overwrite: overwriteMode,
-            }),
-          }, FETCH_TIMEOUT * 3); // Longer timeout for batch
+          const data = await processing.batchTranslate({
+            pages: batchPages.map(p => ({
+              pageId: p.id,
+              ocrText: p.ocr?.data || '',
+              pageNumber: p.page_number,
+            })),
+            sourceLanguage: 'Latin',
+            targetLanguage: 'English',
+            customPrompt: editedPrompts.translation,
+            model: selectedModel,
+            previousContext,
+            overwrite: overwriteMode,
+          });
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data.usage) {
-              runningCost += data.usage.costUsd || 0;
-              runningTokens += data.usage.totalTokens || 0;
+          if (data.usage) {
+            runningCost += data.usage.costUsd || 0;
+            runningTokens += data.usage.totalTokens || 0;
+          }
+
+          // Track which pages were translated
+          const translatedIds = Object.keys(data.translations || {});
+          translatedIds.forEach(id => completed.push(id));
+
+          // Mark untranslated pages as failed
+          batchIds.forEach(id => {
+            if (!translatedIds.includes(id)) {
+              failed.push(id);
             }
+          });
 
-            // Track which pages were translated
-            const translatedIds = Object.keys(data.translations || {});
-            translatedIds.forEach(id => completed.push(id));
-
-            // Mark untranslated pages as failed
-            batchIds.forEach(id => {
-              if (!translatedIds.includes(id)) {
-                failed.push(id);
-              }
-            });
-
-            // Use last translation as context for next batch
-            if (translatedIds.length > 0) {
-              const lastId = batchPages[batchPages.length - 1].id;
-              previousContext = data.translations[lastId] || '';
-            }
-          } else {
-            // Parse error from response
-            const errorData = await response.json().catch(() => ({}));
-            const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
-            console.error('Batch translation error:', errorMsg);
-            batchIds.forEach(id => failed.push(id));
-            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+          // Use last translation as context for next batch
+          if (translatedIds.length > 0) {
+            const lastId = batchPages[batchPages.length - 1].id;
+            previousContext = data.translations[lastId] || '';
           }
         } catch (error) {
           const errorMsg = error instanceof Error ? error.message : 'Network error';
@@ -715,68 +639,55 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           }
 
           try {
-            const response = await fetchWithTimeout('/api/process/batch-ocr', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                pages: batchPages.map(p => ({
-                  pageId: p.id,
-                  imageUrl: p.photo,
-                  pageNumber: p.page_number,
-                })),
-                language: 'Latin',
-                customPrompt: editedPrompts.ocr,
-                model: selectedModel,
-                overwrite: overwriteMode,
-              }),
-            }, FETCH_TIMEOUT * 5);
+            const data = await processing.batchOcrProcess({
+              pages: batchPages.map(p => ({
+                pageId: p.id,
+                imageUrl: p.photo,
+                pageNumber: p.page_number,
+              })),
+              language: 'Latin',
+              customPrompt: editedPrompts.ocr,
+              model: selectedModel,
+              overwrite: overwriteMode,
+            });
 
-            if (response.ok) {
-              const data = await response.json();
-              if (data.usage) {
-                runningCost += data.usage.costUsd || 0;
-                runningTokens += data.usage.totalTokens || 0;
-              }
+            if (data.usage) {
+              runningCost += data.usage.costUsd || 0;
+              runningTokens += data.usage.totalTokens || 0;
+            }
 
-              // Track which pages were OCR'd (newly processed)
-              const ocrIds = Object.keys(data.ocrResults || {});
-              ocrIds.forEach(id => completed.push(id));
+            // Track which pages were OCR'd (newly processed)
+            const ocrIds = Object.keys(data.ocrResults || {});
+            ocrIds.forEach(id => completed.push(id));
 
-              // Skipped pages (already have OCR) count as completed
-              (data.skippedPageIds || []).forEach((id: string) => {
-                if (!completed.includes(id)) completed.push(id);
+            // Skipped pages (already have OCR) count as completed
+            (data.skippedPageIds || []).forEach((id: string) => {
+              if (!completed.includes(id)) completed.push(id);
+            });
+
+            // Add failed pages
+            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+
+            // Log detailed results if available
+            if (data.pageResults) {
+              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
+                if (pr.status === 'skipped_has_ocr') {
+                  console.log(`[OCR] ${pr.message}`);
+                } else if (pr.status === 'skipped_needs_crop') {
+                  console.warn(`[OCR] ${pr.message}`);
+                } else if (pr.status.startsWith('failed')) {
+                  console.error(`[OCR] ${pr.message}`);
+                } else {
+                  console.log(`[OCR] ${pr.message}`);
+                }
               });
+            }
 
-              // Add failed pages
-              (data.failedPageIds || []).forEach((id: string) => failed.push(id));
-
-              // Log detailed results if available
-              if (data.pageResults) {
-                data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
-                  if (pr.status === 'skipped_has_ocr') {
-                    console.log(`[OCR] ${pr.message}`);
-                  } else if (pr.status === 'skipped_needs_crop') {
-                    console.warn(`[OCR] ${pr.message}`);
-                  } else if (pr.status.startsWith('failed')) {
-                    console.error(`[OCR] ${pr.message}`);
-                  } else {
-                    console.log(`[OCR] ${pr.message}`);
-                  }
-                });
-              }
-
-              // Show warning if pages need cropped images
-              if (data.needsCropCount > 0) {
-                const cropMsg = `${data.needsCropCount} pages need cropped images. Use the Pipeline to generate them first.`;
-                console.warn(`[OCR] ${cropMsg}`);
-                setProcessing(prev => ({ ...prev, lastError: cropMsg }));
-              }
-            } else {
-              const errorData = await response.json().catch(() => ({}));
-              const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
-              console.error('Batch OCR error:', errorMsg);
-              batchIds.forEach(id => failed.push(id));
-              setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+            // Show warning if pages need cropped images
+            if (data.needsCropCount && data.needsCropCount > 0) {
+              const cropMsg = `${data.needsCropCount} pages need cropped images. Use the Pipeline to generate them first.`;
+              console.warn(`[OCR] ${cropMsg}`);
+              setProcessing(prev => ({ ...prev, lastError: cropMsg }));
             }
           } catch (error) {
             const errorMsg = error instanceof Error ? error.message : 'Network error';
@@ -848,57 +759,44 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           }
 
           try {
-            const response = await fetchWithTimeout('/api/process/batch-image-extraction', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                pages: batchPages.map(p => ({
-                  pageId: p.id,
-                  imageUrl: p.photo,
-                  pageNumber: p.page_number,
-                })),
-                model: selectedModel,
-                overwrite: overwriteMode,
-              }),
-            }, FETCH_TIMEOUT * 5);
+            const data = await processing.batchImageExtraction({
+              pages: batchPages.map(p => ({
+                pageId: p.id,
+                imageUrl: p.photo,
+                pageNumber: p.page_number,
+              })),
+              model: selectedModel,
+              overwrite: overwriteMode,
+            });
 
-            if (response.ok) {
-              const data = await response.json();
-              if (data.usage) {
-                runningCost += data.usage.costUsd || 0;
-                runningTokens += data.usage.totalTokens || 0;
-              }
+            if (data.usage) {
+              runningCost += data.usage.costUsd || 0;
+              runningTokens += data.usage.totalTokens || 0;
+            }
 
-              // Track which pages were processed (with or without detections)
-              const processedIds = Object.keys(data.detectionResults || {});
-              processedIds.forEach(id => completed.push(id));
+            // Track which pages were processed (with or without detections)
+            const processedIds = Object.keys(data.detectionResults || {});
+            processedIds.forEach(id => completed.push(id));
 
-              // Skipped pages (already have detections) count as completed
-              (data.skippedPageIds || []).forEach((id: string) => {
-                if (!completed.includes(id)) completed.push(id);
+            // Skipped pages (already have detections) count as completed
+            (data.skippedPageIds || []).forEach((id: string) => {
+              if (!completed.includes(id)) completed.push(id);
+            });
+
+            // Add failed pages
+            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+
+            // Log detailed results if available
+            if (data.pageResults) {
+              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
+                if (pr.status === 'skipped_has_detections') {
+                  console.log(`[ImageExtraction] ${pr.message}`);
+                } else if (pr.status.startsWith('failed')) {
+                  console.error(`[ImageExtraction] ${pr.message}`);
+                } else {
+                  console.log(`[ImageExtraction] ${pr.message}`);
+                }
               });
-
-              // Add failed pages
-              (data.failedPageIds || []).forEach((id: string) => failed.push(id));
-
-              // Log detailed results if available
-              if (data.pageResults) {
-                data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
-                  if (pr.status === 'skipped_has_detections') {
-                    console.log(`[ImageExtraction] ${pr.message}`);
-                  } else if (pr.status.startsWith('failed')) {
-                    console.error(`[ImageExtraction] ${pr.message}`);
-                  } else {
-                    console.log(`[ImageExtraction] ${pr.message}`);
-                  }
-                });
-              }
-            } else {
-              const errorData = await response.json().catch(() => ({}));
-              const errorMsg = errorData.details || errorData.error || `HTTP ${response.status}`;
-              console.error('Batch image extraction error:', errorMsg);
-              batchIds.forEach(id => failed.push(id));
-              setProcessing(prev => ({ ...prev, lastError: errorMsg }));
             }
           } catch (error) {
             const errorMsg = error instanceof Error ? error.message : 'Network error';
@@ -956,13 +854,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           ? 'failed'
           : 'completed';
 
-        await fetch(`/api/jobs/${jobId}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            status: finalStatus,
-            progress: { completed: completed.length, failed: failed.length },
-          }),
+        await jobs.update(jobId, {
+          status: finalStatus,
+          progress: { completed: completed.length, failed: failed.length },
         });
       } catch (error) {
         console.error('Failed to update job status:', error);
@@ -1013,15 +907,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         thumbnailUrl = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80`;
       }
 
-      const res = await fetch(`/api/books/${bookId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ thumbnail: thumbnailUrl })
-      });
-
-      if (res.ok) {
-        router.refresh();
-      }
+      await books.update(bookId, { thumbnail: thumbnailUrl });
+      router.refresh();
     } catch (error) {
       console.error('Error setting cover:', error);
     } finally {

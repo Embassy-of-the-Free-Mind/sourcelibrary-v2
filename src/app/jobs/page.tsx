@@ -42,7 +42,7 @@ export default function JobsPage() {
     try {
       // Fetch jobs first - this is fast
       const data = await jobsApi.list({ limit: 100 });
-      setJobs(data.jobs);
+      setJobs(data.jobs as any);
     } catch (e) {
       console.error('Failed to fetch jobs:', e);
     } finally {
@@ -246,9 +246,9 @@ export default function JobsPage() {
 
   // Calculate batch API stats
   const activeJobs = jobs.filter(j => ['pending', 'processing'].includes(j.status));
-  const batchApiJobs = activeJobs.filter(j => (j as Job & { config?: { use_batch_api?: boolean } }).config?.use_batch_api);
-  const preparingJobs = batchApiJobs.filter(j => !(j as Job & { gemini_batch_job?: string }).gemini_batch_job);
-  const submittedJobs = batchApiJobs.filter(j => (j as Job & { gemini_batch_job?: string }).gemini_batch_job);
+  const batchApiJobs = activeJobs.filter(j => j.config?.use_batch_api);
+  const preparingJobs = batchApiJobs.filter(j => !j.gemini_batch_job);
+  const submittedJobs = batchApiJobs.filter(j => j.gemini_batch_job);
   const staleJobs = getStaleJobs();
 
   return (

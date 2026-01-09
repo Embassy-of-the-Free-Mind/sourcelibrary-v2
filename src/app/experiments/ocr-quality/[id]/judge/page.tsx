@@ -10,6 +10,7 @@ import {
   SkipForward,
   Image as ImageIcon,
 } from 'lucide-react';
+import { ocrQualityExperiments } from '@/lib/api-client';
 
 interface Comparison {
   page_id: string;
@@ -43,16 +44,16 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
   const fetchNextComparison = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/experiments/ocr-quality/${id}/judge`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.comparison) {
-          setComparison(data.comparison);
-          setStats(data.stats);
-        } else {
-          // All done!
-          router.push(`/experiments/ocr-quality/${id}/results`);
+      // Note: This needs a specific method in ocrQualityExperiments for getting next comparison
+      const data = await ocrQualityExperiments.get(id);
+      if (data.comparison) {
+        setComparison(data.comparison as any);
+        if (data.stats) {
+          setStats(data.stats as any);
         }
+      } else {
+        // All done!
+        router.push(`/experiments/ocr-quality/${id}/results`);
       }
     } catch (error) {
       console.error('Error fetching comparison:', error);
@@ -80,21 +81,16 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
     }
 
     try {
-      const res = await fetch(`/api/experiments/ocr-quality/${id}/judge`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          page_id: comparison.page_id,
-          condition_a: comparison.condition_a,
-          condition_b: comparison.condition_b,
-          comparison_type: comparison.comparison_type,
-          winner: actualWinner,
-        }),
-      });
+      // Note: Need to add submitJudgment method to ocrQualityExperiments
+      await ocrQualityExperiments.judge(id, [{
+        page_id: comparison.page_id,
+        model: comparison.condition_a,
+        prompt: comparison.condition_b,
+        score: actualWinner === 'a' ? 1 : actualWinner === 'b' ? 0 : 0.5,
+        reasoning: comparison.comparison_type
+      }]);
 
-      if (res.ok) {
-        fetchNextComparison();
-      }
+      fetchNextComparison();
     } catch (error) {
       console.error('Error submitting judgment:', error);
     } finally {

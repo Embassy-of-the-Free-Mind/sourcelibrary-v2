@@ -23,6 +23,25 @@ export const catalog = {
   },
 
   /**
+   * Search USTC catalog (includes EFM, IA, and USTC enrichments)
+   */
+  ustcSearch: async (query: string): Promise<{ results: Array<{
+    id: string;
+    title: string;
+    englishTitle?: string;
+    author?: string;
+    language?: string;
+    year?: string;
+    place?: string;
+    source?: string;
+    workType?: string;
+    subjectTags?: string[];
+  }> }> => {
+    const params = new URLSearchParams({ q: query });
+    return await apiClient.get(`/api/ustc/search?${params}`);
+  },
+
+  /**
    * Get catalog entry by ID
    */
   get: async (id: string): Promise<CatalogResult> => {

@@ -8,6 +8,7 @@ import {
   listBatchJobs,
   type BatchRequest,
 } from '@/lib/gemini-batch';
+import { images } from '@/lib/api-client';
 import sharp from 'sharp';
 
 export const maxDuration = 300;
@@ -19,8 +20,9 @@ const MAX_INLINE_REQUESTS = 1000;
 // Image optimization: 800px width provides identical OCR quality with 78% smaller files
 const MAX_IMAGE_WIDTH = 800;
 
-async function resizeImage(buffer: ArrayBuffer): Promise<Buffer> {
-  return sharp(Buffer.from(buffer))
+async function resizeImage(buffer: Buffer | ArrayBuffer): Promise<Buffer> {
+  const inputBuffer = Buffer.isBuffer(buffer) ? buffer : Buffer.from(buffer);
+  return sharp(inputBuffer)
     .resize({ width: MAX_IMAGE_WIDTH, withoutEnlargement: true })
     .jpeg({ quality: 85 })
     .toBuffer();
@@ -152,13 +154,7 @@ export async function POST(request: NextRequest) {
       if (type === 'ocr') {
         // For OCR, we need to fetch, resize, and embed images
         try {
-          const imageResponse = await fetch(imageUrl);
-          if (!imageResponse.ok) {
-            failedImages.push(page.id);
-            continue;
-          }
-
-          const imageBuffer = await imageResponse.arrayBuffer();
+          const imageBuffer = await images.fetchBuffer(imageUrl, { timeout: 30000 });
           // Resize to 800px width - identical OCR quality, 78% smaller files
           const resizedBuffer = await resizeImage(imageBuffer);
           const base64 = resizedBuffer.toString('base64');

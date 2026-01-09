@@ -35,14 +35,15 @@ export const search = {
   /**
    * Unified search (books + pages + indexes in one request)
    */
-  unified: async (query: string, filters?: SearchFilters): Promise<UnifiedSearchResponse> => {
+  unified: async (query: string, options?: { limit?: number; filters?: SearchFilters }): Promise<UnifiedSearchResponse> => {
     const params = new URLSearchParams({ q: query });
-    if (filters?.language) params.append('language', filters.language);
-    if (filters?.date_from) params.append('date_from', filters.date_from);
-    if (filters?.date_to) params.append('date_to', filters.date_to);
-    if (filters?.has_doi) params.append('has_doi', filters.has_doi);
-    if (filters?.has_translation) params.append('has_translation', filters.has_translation);
-    if (filters?.category) params.append('category', filters.category);
+    if (options?.limit) params.append('limit', options.limit.toString());
+    if (options?.filters?.language) params.append('language', options.filters.language);
+    if (options?.filters?.date_from) params.append('date_from', options.filters.date_from);
+    if (options?.filters?.date_to) params.append('date_to', options.filters.date_to);
+    if (options?.filters?.has_doi) params.append('has_doi', options.filters.has_doi);
+    if (options?.filters?.has_translation) params.append('has_translation', options.filters.has_translation);
+    if (options?.filters?.category) params.append('category', options.filters.category);
 
     return await apiClient.get(`/api/search/unified?${params}`);
   },

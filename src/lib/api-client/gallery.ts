@@ -8,7 +8,8 @@ import type {
   GalleryResponse,
   GallerySearchParams,
   GalleryImageUpdateRequest,
-  GalleryImageUpdateResponse
+  GalleryImageUpdateResponse,
+  GalleryImageDetail
 } from './types/gallery';
 
 /**
@@ -40,7 +41,7 @@ export const gallery = {
   /**
    * Get a single gallery image by ID
    */
-  get: async (id: string): Promise<GalleryItem> => {
+  get: async (id: string): Promise<GalleryImageDetail> => {
     return await apiClient.get(`/api/gallery/image/${id}`);
   },
 

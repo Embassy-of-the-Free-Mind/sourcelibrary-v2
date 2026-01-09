@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { ia } from '@/lib/api-client/images';
 
 /**
  * Re-import a book from its original source
@@ -73,17 +74,16 @@ export async function POST(
         }, { status: 400 });
       }
 
-      // Fetch fresh metadata from IA
-      const metadataUrl = `https://archive.org/metadata/${identifier}`;
-      const metadataRes = await fetch(metadataUrl);
-
-      if (!metadataRes.ok) {
+      // Fetch fresh metadata from IA using centralized utility
+      let metadata;
+      try {
+        metadata = await ia.fetchMetadata(identifier);
+      } catch (error) {
         return NextResponse.json({
-          error: `Failed to fetch IA metadata: ${metadataRes.status}`
+          error: `Failed to fetch IA metadata: ${error instanceof Error ? error.message : 'Unknown error'}`
         }, { status: 400 });
       }
 
-      const metadata = await metadataRes.json();
       const files = metadata.files || [];
       const meta = metadata.metadata || {};
 
@@ -105,18 +105,14 @@ export async function POST(
         }
       }
 
-      // Method 3: Parse scandata XML (look for *_scandata.xml pattern)
+      // Method 3: Parse scandata XML using centralized utility
       if (pageCount === 0) {
-        const scandata = files.find((f: { name: string }) =>
-          f.name.endsWith('_scandata.xml') || f.name === 'scandata.xml'
-        );
-        if (scandata) {
-          const scandataRes = await fetch(`https://archive.org/download/${identifier}/${scandata.name}`);
-          if (scandataRes.ok) {
-            const scandataText = await scandataRes.text();
-            const leafMatches = scandataText.match(/<page /g);
-            pageCount = leafMatches ? leafMatches.length : 0;
-          }
+        try {
+          const scandataText = await ia.fetchScandata(identifier);
+          const leafMatches = scandataText.match(/<page /g);
+          pageCount = leafMatches ? leafMatches.length : 0;
+        } catch {
+          // No scandata available, continue to next method
         }
       }
 

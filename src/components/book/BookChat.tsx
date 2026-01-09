@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { books } from '@/lib/api-client';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -38,11 +39,8 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
   const loadInitialGreeting = async () => {
     setInitializing(true);
     try {
-      const res = await fetch(`/api/books/${bookId}/chat`);
-      if (res.ok) {
-        const data = await res.json();
-        setMessages([data.message]);
-      }
+      const data = await books.chat.history(bookId);
+      setMessages([data.message]);
     } catch (e) {
       console.error('Failed to load greeting:', e);
       setMessages([{
@@ -64,21 +62,8 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/books/${bookId}/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setMessages([...newMessages, data.message]);
-      } else {
-        setMessages([...newMessages, {
-          role: 'assistant',
-          content: 'Sorry, I encountered an error. Please try again.',
-        }]);
-      }
+      const data = await books.chat.send(bookId, newMessages);
+      setMessages([...newMessages, data.message]);
     } catch (e) {
       console.error('Chat error:', e);
       setMessages([...newMessages, {

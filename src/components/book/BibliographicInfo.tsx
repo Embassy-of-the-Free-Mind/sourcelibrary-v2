@@ -6,6 +6,7 @@ import type { Book, ImageSource } from '@/lib/types';
 import { IMAGE_LICENSES } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import { useRouter } from 'next/navigation';
+import { books } from '@/lib/api-client';
 
 interface BibliographicInfoProps {
   book: Book;
@@ -29,23 +30,15 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
     setResetting(true);
     setResetResult(null);
     try {
-      const res = await fetch(`/api/books/${book.id}/reimport`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode: resetMode })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setResetResult({ success: true, message: data.message });
-        // Reload after short delay to show success message
-        setTimeout(() => {
-          window.location.reload();
-        }, 1500);
-      } else {
-        setResetResult({ success: false, message: data.error || 'Reset failed' });
-      }
+      const data = await books.reimport(book.id, { mode: resetMode });
+      setResetResult({ success: true, message: data.message });
+      // Reload after short delay to show success message
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
     } catch (err) {
-      setResetResult({ success: false, message: 'Network error' });
+      const error = err as Error;
+      setResetResult({ success: false, message: error.message || 'Reset failed' });
     } finally {
       setResetting(false);
     }

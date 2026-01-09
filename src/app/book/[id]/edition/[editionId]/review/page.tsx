@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { TranslationEdition, Book } from '@/lib/types';
 import ReactMarkdown from 'react-markdown';
+import { books } from '@/lib/api-client';
 
 interface PageProps {
   params: Promise<{ id: string; editionId: string }>;
@@ -61,17 +62,14 @@ export default function EditionReviewPage({ params }: PageProps) {
 
     try {
       // Fetch book with editions
-      const bookRes = await fetch(`/api/books/${bookId}`);
-      if (!bookRes.ok) throw new Error('Failed to fetch book');
-      const book = await bookRes.json();
+      const book = await books.get(bookId);
 
       // Find the edition
       const edition = book.editions?.find((e: TranslationEdition) => e.id === editionId);
       if (!edition) throw new Error('Edition not found');
 
       // Get page counts
-      const pagesRes = await fetch(`/api/books/${bookId}/pages?limit=1`);
-      const pagesData = await pagesRes.json();
+      const pagesData = await books.pages(bookId);
 
       setData({
         book,
@@ -95,22 +93,13 @@ export default function EditionReviewPage({ params }: PageProps) {
     setIsSaving(true);
 
     try {
-      const response = await fetch(`/api/books/${bookId}/editions/${editionId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          front_matter: {
-            ...data.edition.front_matter,
-            introduction: editedIntro,
-            methodology: editedMethodology,
-          },
-        }),
+      await books.editions.update(bookId, editionId, {
+        front_matter: {
+          ...data.edition.front_matter,
+          introduction: editedIntro,
+          methodology: editedMethodology,
+        },
       });
-
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || 'Failed to save');
-      }
 
       // Refresh data
       await fetchEditionData();
@@ -128,17 +117,7 @@ export default function EditionReviewPage({ params }: PageProps) {
     setMintError(null);
 
     try {
-      const response = await fetch(`/api/books/${bookId}/editions/mint-doi`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ edition_id: editionId }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to mint DOI');
-      }
+      await books.editions.mintDoi(bookId, editionId);
 
       // Refresh to show DOI
       await fetchEditionData();
@@ -430,8 +409,12 @@ export default function EditionReviewPage({ params }: PageProps) {
                     <p className="text-stone-600 mb-4">No introduction generated yet.</p>
                     <button
                       onClick={async () => {
-                        const res = await fetch(`/api/books/${bookId}/front-matter`, { method: 'POST' });
-                        if (res.ok) fetchEditionData();
+                        try {
+                          await books.editions.generateFrontMatter(bookId);
+                          await fetchEditionData();
+                        } catch (err) {
+                          console.error('Failed to generate front matter:', err);
+                        }
                       }}
                       className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
                     >

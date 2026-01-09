@@ -6,6 +6,7 @@ import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemi
 import { getOcrPrompt, type PromptLookupResult } from '@/lib/prompts';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
+import { images } from '@/lib/api-client';
 
 // Increase timeout for batch OCR (5 images)
 export const maxDuration = 300;
@@ -34,23 +35,11 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
 
 async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
   try {
-    const response = await fetch(url);
-    if (!response.ok) return null;
-
-    const buffer = await response.arrayBuffer();
-    const base64 = Buffer.from(buffer).toString('base64');
-    let mimeType = response.headers.get('content-type') || 'image/jpeg';
-    mimeType = mimeType.split(';')[0].trim();
-
-    // Ensure supported mime type
-    const supportedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
-    if (!supportedTypes.includes(mimeType)) {
-      if (url.toLowerCase().includes('.png')) mimeType = 'image/png';
-      else if (url.toLowerCase().includes('.webp')) mimeType = 'image/webp';
-      else mimeType = 'image/jpeg';
+    const result = await images.fetchBase64(url, { includeMimeType: true });
+    if (typeof result === 'string') {
+      return { data: result, mimeType: 'image/jpeg' };
     }
-
-    return { data: base64, mimeType };
+    return { data: result.base64, mimeType: result.mimeType };
   } catch (error) {
     console.error('Failed to fetch image:', url, error);
     return null;

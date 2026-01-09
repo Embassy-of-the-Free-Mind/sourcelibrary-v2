@@ -84,9 +84,41 @@ export interface GalleryImageUpdateRequest {
   metadata?: ImageMetadata;
   galleryQuality?: number;
   type?: string;
+  bbox?: BBox;
 }
 
 export interface GalleryImageUpdateResponse {
   success: boolean;
   item: GalleryItem;
+}
+
+export interface GalleryImageDetail {
+  id: string;
+  pageId: string;
+  detectionIndex: number;
+  imageUrl: string;
+  fullPageUrl: string;
+  highResUrl?: string;
+  description: string;
+  type?: string;
+  confidence?: number;
+  model?: string;
+  detectionSource?: string;
+  galleryQuality?: number | null;
+  galleryRationale?: string | null;
+  featured?: boolean;
+  metadata?: ImageMetadata | null;
+  museumDescription?: string | null;
+  bbox?: BBox;
+  book: {
+    id: string;
+    title: string;
+    author?: string;
+    year?: number;
+    doi?: string;
+  };
+  pageNumber: number;
+  readUrl: string;
+  galleryUrl: string;
+  citation: string;
 }

@@ -3,58 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { RefreshCw, Loader2, ExternalLink, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
-
-interface SampleResult {
-  pageId: string;
-  bookId: string;
-  bookTitle: string;
-  pageNumber: number;
-  ocrModel: string | null;
-  translationModel: string | null;
-  ocrPrompt: string | null;
-  translationPrompt: string | null;
-  hasOcr: boolean;
-  hasTranslation: boolean;
-  ocrLength: number;
-  translationLength: number;
-  ocrIssues: number;
-  translationIssues: number;
-  ocrPreview: string;
-  translationPreview: string;
-  photo: string;
-}
-
-interface ModelStats {
-  model: string;
-  count: number;
-  withIssues: number;
-  issueRate: number;
-  avgLength: number;
-  totalIssues: number;
-}
-
-interface SampleData {
-  population: {
-    totalPages: number;
-    translatedPages: number;
-    sampleSize: number;
-    samplingRate: number;
-  };
-  estimate: {
-    issueRate: number;
-    confidenceInterval: { lower: number; upper: number };
-    confidenceLevel: number;
-    estimatedPagesWithIssues: { lower: number; upper: number; point: number };
-  };
-  modelStats: {
-    ocr: ModelStats[];
-    translation: ModelStats[];
-  };
-  samples: SampleResult[];
-}
+import { qa } from '@/lib/api-client';
+import type { QASampleResponse } from '@/lib/api-client';
 
 export default function QASamplingPage() {
-  const [data, setData] = useState<SampleData | null>(null);
+  const [data, setData] = useState<QASampleResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [sampleSize, setSampleSize] = useState(50);
   const [modelFilter, setModelFilter] = useState<string>('');
@@ -62,12 +15,9 @@ export default function QASamplingPage() {
   const fetchSample = async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({ n: sampleSize.toString() });
-      if (modelFilter) params.set('model', modelFilter);
-
-      const res = await fetch(`/api/qa/sample?${params}`);
-      if (!res.ok) throw new Error('Failed to fetch');
-      const result = await res.json();
+      const result = await qa.sample(sampleSize, {
+        model: modelFilter || undefined,
+      });
       setData(result);
     } catch (err) {
       console.error(err);

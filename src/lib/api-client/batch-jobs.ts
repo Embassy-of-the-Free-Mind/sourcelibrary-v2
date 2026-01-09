@@ -11,11 +11,6 @@ import type {
  * Batch Jobs API client
  * Handles batch processing of OCR and translation jobs
  */
-
-/**
- * Batch Jobs API client
- * Handles batch processing of OCR and translation jobs
- */
 export const batchJobs = {
   /**
    * Get stats about pending work (GET /api/batch-jobs/process-all)

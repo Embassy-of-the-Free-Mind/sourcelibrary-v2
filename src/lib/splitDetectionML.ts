@@ -5,6 +5,7 @@
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { analyzeColumns, type ColumnStats } from './splitDetection';
+import { images } from '@/lib/api-client';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -118,15 +119,10 @@ Return your answer in this EXACT JSON format:
 }`;
 
   // Fetch and encode the image
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
-  const base64Image = Buffer.from(imageBuffer).toString('base64');
-  let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
-  mimeType = mimeType.split(';')[0].trim();
+  const imageData = await images.fetchBase64(imageUrl, { includeMimeType: true });
+  const { base64: base64Image, mimeType } = typeof imageData === 'string'
+    ? { base64: imageData, mimeType: 'image/jpeg' }
+    : { base64: imageData.base64, mimeType: imageData.mimeType };
 
   const result = await model.generateContent([
     prompt,

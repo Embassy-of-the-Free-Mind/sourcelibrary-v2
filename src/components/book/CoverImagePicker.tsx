@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { BookOpen, X, Check, Loader2 } from 'lucide-react';
+import { books } from '@/lib/api-client';
 import type { Page } from '@/lib/types';
 
 interface CoverImagePickerProps {
@@ -45,16 +46,9 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
     try {
       const thumbnailUrl = getPageImageUrl(page, 400);
 
-      const res = await fetch(`/api/books/${bookId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ thumbnail: thumbnailUrl })
-      });
-
-      if (res.ok) {
-        setIsOpen(false);
-        router.refresh();
-      }
+      await books.update(bookId, { thumbnail: thumbnailUrl });
+      setIsOpen(false);
+      router.refresh();
     } catch (error) {
       console.error('Error setting cover:', error);
     } finally {

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image } from 'lucide-react';
+import { BookDownloadFormats, books } from '@/lib/api-client';
 
 interface DownloadButtonProps {
   bookId: string;
@@ -28,11 +29,10 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleDownload = async (format: 'translation' | 'ocr' | 'both' | 'epub-translation' | 'epub-ocr' | 'epub-both' | 'epub-parallel' | 'epub-facsimile' | 'epub-images' | 'images-zip') => {
+  const handleDownload = async (format: BookDownloadFormats) => {
     setDownloading(format);
     try {
-      const response = await fetch(`/api/books/${bookId}/download?format=${format}`);
-      if (!response.ok) throw new Error('Download failed');
+      const response = await books.download(bookId, format);
 
       const blob = await response.blob();
       const contentDisposition = response.headers.get('Content-Disposition');

@@ -7,15 +7,24 @@
 export * from './common';
 
 // Module types
-export * from './books';
-export * from './pages';
-export * from './jobs';
-export * from './batch-jobs';
-export * from './search';
-export * from './gallery';
-export * from './catalog';
-export * from './experiments';
-export * from './highlights';
+export * from './analytics';
 export * from './annotations';
-export * from './prompts';
+export * from './batch-jobs';
+export * from './books';
+export * from './catalog';
+export * from './categories';
+export * from './contribute';
+export * from './detections';
+export * from './entities';
+export * from './experiments';
+export * from './gallery';
+export * from './highlights';
 export * from './import';
+export * from './jobs'; // Exports JobLog (primary definition)
+export * from './pages';
+export * from './processing';
+export * from './prompts';
+export * from './qa';
+export * from './search';
+export * from './social';
+export * from './split-detection';

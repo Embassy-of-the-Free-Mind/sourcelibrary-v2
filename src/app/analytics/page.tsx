@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins, ListChecks, CheckCircle, XCircle, Pause, Loader2, Database, HardDrive, Archive, BarChart3 } from 'lucide-react';
+import { analytics, jobs } from '@/lib/api-client';
+import { JobLog } from '@/lib/api-client';
 
 interface MetricStat {
   name: string;
@@ -99,31 +101,6 @@ interface UsageData {
   };
 }
 
-interface JobLog {
-  id: string;
-  type: 'batch_ocr' | 'batch_translate' | 'batch_split' | 'book_import';
-  status: 'pending' | 'processing' | 'paused' | 'completed' | 'failed' | 'cancelled';
-  progress: {
-    total: number;
-    completed: number;
-    failed: number;
-  };
-  book_id?: string;
-  book_title?: string;
-  initiated_by?: string;
-  created_at: string;
-  updated_at: string;
-  started_at?: string;
-  completed_at?: string;
-  error?: string;
-  config: {
-    model?: string;
-    prompt_name?: string;
-    language?: string;
-    page_ids?: string[];
-  };
-}
-
 interface VercelAnalytics {
   topPages?: Array<{ path: string; count: number }>;
   topReferrers?: Array<{ referrer: string; count: number }>;
@@ -151,20 +128,13 @@ export default function AnalyticsPage() {
     setLoading(true);
     setError(null);
     try {
-      const [perfRes, usageRes] = await Promise.all([
-        fetch(`/api/analytics/loading?hours=${hours}`),
-        fetch(`/api/analytics/usage?days=${days}`),
+      const [perfData, usageDataResult] = await Promise.all([
+        analytics.loading(hours),
+        analytics.usage(days),
       ]);
 
-      if (!perfRes.ok || !usageRes.ok) throw new Error('Failed to fetch analytics');
-
-      const [perfJson, usageJson] = await Promise.all([
-        perfRes.json(),
-        usageRes.json(),
-      ]);
-
-      setPerfData(perfJson);
-      setUsageData(usageJson);
+      setPerfData(perfData);
+      setUsageData(usageDataResult);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
@@ -176,10 +146,8 @@ export default function AnalyticsPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/analytics');
-      if (!res.ok) throw new Error('Failed to fetch Vercel analytics');
-      const data = await res.json();
-      setVercelData(data);
+      const data = await analytics.stats();
+      setVercelData(data as any);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
@@ -191,14 +159,12 @@ export default function AnalyticsPage() {
     setLoading(true);
     setError(null);
     try {
-      const params = new URLSearchParams({ limit: jobLimit.toString() });
-      if (jobTypeFilter) params.set('type', jobTypeFilter);
-      if (jobStatusFilter) params.set('status', jobStatusFilter);
+      const data = await jobs.list({
+        limit: jobLimit,
+        type: jobTypeFilter || undefined,
+        status: jobStatusFilter as any || undefined,
+      });
 
-      const res = await fetch(`/api/jobs?${params}`);
-      if (!res.ok) throw new Error('Failed to fetch job logs');
-
-      const data = await res.json();
       setJobLogs(data.jobs || []);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');

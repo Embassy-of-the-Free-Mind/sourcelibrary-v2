@@ -525,18 +525,9 @@ function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
     setExtracting(true);
     try {
       // Call the extraction API
-      const res = await fetch('/api/extract-images', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          bookId: bookInfo.id,
-          limit: 20
-        })
-      });
-      if (res.ok) {
-        // Refresh the page to show new images
-        window.location.reload();
-      }
+      await gallery.extractImages(bookInfo.id);
+      // Refresh the page to show new images
+      window.location.reload();
     } catch {
       // Ignore errors
     } finally {

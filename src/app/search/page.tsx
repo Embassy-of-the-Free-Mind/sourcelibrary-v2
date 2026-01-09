@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Search, Book, FileText, ExternalLink, Filter, X, Loader2, Quote, User, MapPin, Lightbulb, BookOpen, Languages } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-import { search as searchApi, type SearchResult, type IndexSearchResult, type IndexSearchResponse } from '@/lib/api-client';
+import { search as searchApi, categories as categoriesApi, utils, type SearchResult, type IndexSearchResult, type IndexSearchResponse } from '@/lib/api-client';
 
 const INDEX_TYPES = [
   { value: '', label: 'All Types', icon: Search },
@@ -63,8 +63,7 @@ export default function SearchPage() {
     const fetchFilterOptions = async () => {
       try {
         // Fetch languages
-        const langResponse = await fetch('/api/languages');
-        const langData = await langResponse.json();
+        const langData = await utils.languages();
         if (langData.languages) {
           setLanguages([
             { value: '', label: 'All Languages' },
@@ -77,8 +76,7 @@ export default function SearchPage() {
         }
 
         // Fetch categories
-        const catResponse = await fetch('/api/categories');
-        const catData = await catResponse.json();
+        const catData = await categoriesApi.list();
         if (catData.categories) {
           setCategories([
             { value: '', label: 'All Categories' },

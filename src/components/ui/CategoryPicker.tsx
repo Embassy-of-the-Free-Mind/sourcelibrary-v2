@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Tag, X, Plus, Loader2, Check } from 'lucide-react';
+import { categories as categoriesApi, books } from '@/lib/api-client';
 
 interface Category {
   id: string;
@@ -46,11 +47,8 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/categories');
-      if (res.ok) {
-        const data = await res.json();
-        setCategories(data.categories);
-      }
+      const data = await categoriesApi.list();
+      setCategories(data.categories);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
     } finally {
@@ -69,16 +67,9 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
   const saveCategories = async () => {
     setSaving(true);
     try {
-      const res = await fetch(`/api/books/${bookId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ categories: selected }),
-      });
-
-      if (res.ok) {
-        onUpdate?.(selected);
-        setIsOpen(false);
-      }
+      await books.update(bookId, { categories: selected });
+      onUpdate?.(selected);
+      setIsOpen(false);
     } catch (error) {
       console.error('Failed to save categories:', error);
     } finally {

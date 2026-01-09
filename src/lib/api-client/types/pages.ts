@@ -64,3 +64,19 @@ export interface PageDetectSplitResponse {
     windowAvgTransitions: number;
   };
 }
+
+export interface PageAskRequest {
+  question: string;
+  history?: Array<{ role: 'user' | 'assistant'; content: string }>;
+  pageText?: string;
+  bookTitle?: string;
+  bookAuthor?: string;
+  pageNumber?: number;
+  customPrompt?: string;
+  authorSearchTerms?: string[];
+  personaName?: string;
+}
+
+export interface PageAskResponse {
+  answer: string;
+}

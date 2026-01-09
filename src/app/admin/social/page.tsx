@@ -26,38 +26,16 @@ import {
   Users,
   Search,
 } from 'lucide-react';
+
+import { social, gallery, likes } from '@/lib/api-client';
+import type { SocialConfig, SocialCandidate } from '@/lib/api-client/types/social';
 import { SocialPost, SocialPostStatus } from '@/lib/types';
 
 type TabId = 'browse' | 'queue' | 'history' | 'tags' | 'settings';
 
-interface Config {
-  settings: {
-    posts_per_day: number;
-    posting_hours: number[];
-    auto_post_enabled: boolean;
-    min_gallery_quality: number;
-  };
-  usage: {
-    tweets_today: number;
-    tweets_this_month: number;
-    last_tweet_at?: string;
-  };
-}
-
-interface ImageCandidate {
-  pageId: string;
-  detectionIndex: number;
-  galleryImageId: string;
-  galleryQuality: number;
-  shareabilityScore: number;
-  description: string;
-  type: string;
-  bookTitle: string;
-  bookAuthor?: string;
-  bookYear?: number;
-  croppedUrl: string;
-  galleryUrl: string;
-}
+// Use API client types
+type Config = SocialConfig;
+type ImageCandidate = SocialCandidate;
 
 interface PopularImage {
   galleryImageId: string;
@@ -171,7 +149,7 @@ export default function SocialAdminPage() {
   const [availableModels, setAvailableModels] = useState<ModelOption[]>([]);
   const [selectedAudiences, setSelectedAudiences] = useState<string[]>(['esoteric', 'jungian', 'consciousness', 'aesthetic']);
   const [selectedVoices, setSelectedVoices] = useState<string[]>(['scholarly', 'provocative', 'aesthetic', 'mysterious']);
-  const [selectedModel, setSelectedModel] = useState<string>('gemini');
+  const [selectedModel, setSelectedModel] = useState<'gemini' | 'claude'>('gemini');
   const [customPrompt, setCustomPrompt] = useState<string>('');
 
   // Variation editing state
@@ -201,13 +179,10 @@ export default function SocialAdminPage() {
   // Fetch config
   const fetchConfig = useCallback(async () => {
     try {
-      const res = await fetch('/api/social/config');
-      if (res.ok) {
-        const data = await res.json();
-        setConfig(data.config);
-        setTwitterConnected(data.twitter?.connected || false);
-        setTwitterUsername(data.twitter?.username || null);
-      }
+      const data = await social.config();
+      setConfig(data.config);
+      setTwitterConnected(data.twitter?.connected || false);
+      setTwitterUsername(data.twitter?.username || null);
     } catch (error) {
       console.error('Failed to fetch config:', error);
     }
@@ -216,13 +191,10 @@ export default function SocialAdminPage() {
   // Fetch available audiences, voices, and models
   const fetchAudiencesAndVoices = useCallback(async () => {
     try {
-      const res = await fetch('/api/social/generate');
-      if (res.ok) {
-        const data = await res.json();
-        setAvailableAudiences(data.audiences || []);
-        setAvailableVoices(data.voices || []);
-        setAvailableModels(data.models || []);
-      }
+      const data = await social.getGenerationOptions();
+      setAvailableAudiences(data.audiences || []);
+      setAvailableVoices(data.voices || []);
+      setAvailableModels(data.models || []);
     } catch (error) {
       console.error('Failed to fetch audiences/voices:', error);
     }
@@ -232,11 +204,8 @@ export default function SocialAdminPage() {
   const fetchCandidates = useCallback(async () => {
     setLoadingCandidates(true);
     try {
-      const res = await fetch('/api/social/candidates?count=20');
-      if (res.ok) {
-        const data = await res.json();
-        setCandidates(data.candidates || []);
-      }
+      const data = await social.candidates();
+      setCandidates(data.candidates || []);
     } catch (error) {
       console.error('Failed to fetch candidates:', error);
     } finally {
@@ -248,11 +217,8 @@ export default function SocialAdminPage() {
   const fetchPopularImages = useCallback(async () => {
     setLoadingPopular(true);
     try {
-      const res = await fetch('/api/likes/popular?type=image&limit=20&min_likes=1');
-      if (res.ok) {
-        const data = await res.json();
-        setPopularImages(data.items || []);
-      }
+      const data = await likes.getPopular<PopularImage>({ type: 'image', limit: 20, min_likes: 1 });
+      setPopularImages(data.items || []);
     } catch (error) {
       console.error('Failed to fetch popular images:', error);
     } finally {
@@ -264,11 +230,8 @@ export default function SocialAdminPage() {
   const fetchTags = useCallback(async () => {
     setLoadingTags(true);
     try {
-      const res = await fetch('/api/social/tags');
-      if (res.ok) {
-        const data = await res.json();
-        setSocialTags(data.byAudience || {});
-      }
+      const data = await social.tags();
+      setSocialTags(data.byAudience || {});
     } catch (error) {
       console.error('Failed to fetch tags:', error);
     } finally {
@@ -280,17 +243,17 @@ export default function SocialAdminPage() {
   const fetchPosts = useCallback(async () => {
     setLoadingPosts(true);
     try {
-      const [queueRes, draftRes, postedRes, failedRes] = await Promise.all([
-        fetch('/api/social/posts?status=queued&limit=50'),
-        fetch('/api/social/posts?status=draft&limit=50'),
-        fetch('/api/social/posts?status=posted&limit=50&sort=posted&order=desc'),
-        fetch('/api/social/posts?status=failed&limit=20'),
+      const [queueData, draftData, postedData, failedData] = await Promise.all([
+        social.posts(),
+        social.posts(),
+        social.posts(),
+        social.posts(),
       ]);
 
-      if (queueRes.ok) setQueuedPosts((await queueRes.json()).posts || []);
-      if (draftRes.ok) setDraftPosts((await draftRes.json()).posts || []);
-      if (postedRes.ok) setPostedPosts((await postedRes.json()).posts || []);
-      if (failedRes.ok) setFailedPosts((await failedRes.json()).posts || []);
+      setQueuedPosts(queueData.posts || []);
+      setDraftPosts(draftData.posts || []);
+      setPostedPosts(postedData.posts || []);
+      setFailedPosts(failedData.posts || []);
     } catch (error) {
       console.error('Failed to fetch posts:', error);
     } finally {
@@ -316,37 +279,23 @@ export default function SocialAdminPage() {
     }
     setSearching(true);
     try {
-      const res = await fetch(`/api/gallery?q=${encodeURIComponent(query)}&limit=20`);
-      if (res.ok) {
-        const data = await res.json();
-        // Transform gallery results to ImageCandidate format
-        const results: ImageCandidate[] = (data.images || []).map((img: {
-          pageId: string;
-          detectionIndex: number;
-          galleryImageId: string;
-          galleryQuality: number;
-          description: string;
-          type: string;
-          bookTitle: string;
-          bookAuthor?: string;
-          bookYear?: number;
-          croppedUrl: string;
-        }) => ({
-          pageId: img.pageId,
-          detectionIndex: img.detectionIndex,
-          galleryImageId: img.galleryImageId,
-          galleryQuality: img.galleryQuality || 0.8,
-          shareabilityScore: 50,
-          description: img.description,
-          type: img.type,
-          bookTitle: img.bookTitle,
-          bookAuthor: img.bookAuthor,
-          bookYear: img.bookYear,
-          croppedUrl: img.croppedUrl,
-          galleryUrl: `/gallery/image/${img.galleryImageId}`,
-        }));
-        setSearchResults(results);
-      }
+      const data = await gallery.list({ query, limit: 20 });
+      // Transform gallery results to ImageCandidate format
+      const results: ImageCandidate[] = (data.items || []).map((img) => ({
+        pageId: img.pageId,
+        detectionIndex: img.detectionIndex,
+        galleryImageId: `${img.pageId}-${img.detectionIndex}`,
+        galleryQuality: img.galleryQuality || 0.8,
+        shareabilityScore: 50,
+        description: img.description,
+        type: img.type || 'unknown',
+        bookTitle: img.bookTitle,
+        bookAuthor: img.author,
+        bookYear: img.year,
+        croppedUrl: img.imageUrl,
+        galleryUrl: `/gallery/image/${img.pageId}-${img.detectionIndex}`,
+      }));
+      setSearchResults(results);
     } catch (error) {
       console.error('Search error:', error);
     } finally {
@@ -360,30 +309,19 @@ export default function SocialAdminPage() {
     setGeneratedTweet(null);
     setEditingVariation(null);
     try {
-      const res = await fetch('/api/social/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          imageId,
-          audiences: selectedAudiences,
-          voices: selectedVoices,
-          variationCount: 6,
-          saveDraft: false,
-          model: selectedModel,
-          customPrompt: customPrompt.trim() || undefined,
-        }),
+      const data = await social.generate({
+        imageId,
+        audiences: selectedAudiences,
+        voices: selectedVoices,
+        variationCount: 6,
+        saveDraft: false,
+        model: selectedModel,
+        customPrompt: customPrompt.trim() || undefined,
       });
-
-      if (res.ok) {
-        const data = await res.json();
-        setGeneratedTweet(data);
-      } else {
-        const error = await res.json();
-        alert(`Generation failed: ${error.error}`);
-      }
+      setGeneratedTweet(data);
     } catch (error) {
       console.error('Generation error:', error);
-      alert('Failed to generate tweet');
+      alert(`Generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setGenerating(false);
     }
@@ -392,23 +330,16 @@ export default function SocialAdminPage() {
   // Save draft
   const saveDraft = async (tweet: GeneratedTweet) => {
     try {
-      const res = await fetch('/api/social/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          imageId: tweet.image.galleryImageId,
-          tweet_text: tweet.tweet,
-          hashtags: tweet.hashtags,
-          status: 'draft',
-        }),
+      await social.createPost({
+        imageId: tweet.image.galleryImageId,
+        tweet_text: tweet.tweet,
+        hashtags: tweet.hashtags,
+        status: 'draft',
       });
-
-      if (res.ok) {
-        setGeneratedTweet(null);
-        setSelectedImage(null);
-        setSelectedPopularImage(null);
-        fetchPosts();
-      }
+      setGeneratedTweet(null);
+      setSelectedImage(null);
+      setSelectedPopularImage(null);
+      fetchPosts();
     } catch (error) {
       console.error('Save error:', error);
     }
@@ -417,21 +348,14 @@ export default function SocialAdminPage() {
   // Save a specific variation as draft
   const saveVariationAsDraft = async (variation: TweetVariation, imageId: string) => {
     try {
-      const res = await fetch('/api/social/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          imageId,
-          tweet_text: variation.tweet,
-          hashtags: variation.hashtags,
-          status: 'draft',
-        }),
+      await social.createPost({
+        imageId,
+        tweet_text: variation.tweet,
+        hashtags: variation.hashtags,
+        status: 'draft',
       });
-
-      if (res.ok) {
-        alert('Saved to drafts!');
-        fetchPosts();
-      }
+      alert('Saved to drafts!');
+      fetchPosts();
     } catch (error) {
       console.error('Save error:', error);
     }
@@ -458,15 +382,8 @@ export default function SocialAdminPage() {
   // Add to queue
   const addToQueue = async (postId: string) => {
     try {
-      const res = await fetch(`/api/social/posts/${postId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'queued' }),
-      });
-
-      if (res.ok) {
-        fetchPosts();
-      }
+      await social.updatePost(postId, { status: 'queued' });
+      fetchPosts();
     } catch (error) {
       console.error('Queue error:', error);
     }
@@ -476,22 +393,13 @@ export default function SocialAdminPage() {
   const publishNow = async (postId: string) => {
     setPublishing(postId);
     try {
-      const res = await fetch(`/api/social/posts/${postId}/publish`, {
-        method: 'POST',
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        alert(`Posted! ${data.tweetUrl}`);
-        fetchPosts();
-        fetchConfig();
-      } else {
-        alert(`Failed: ${data.error}`);
-      }
+      const data = await social.publishPost(postId) as { tweetUrl?: string };
+      alert(`Posted! ${data.tweetUrl || ''}`);
+      fetchPosts();
+      fetchConfig();
     } catch (error) {
       console.error('Publish error:', error);
-      alert('Failed to publish');
+      alert(`Failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setPublishing(null);
     }
@@ -502,13 +410,8 @@ export default function SocialAdminPage() {
     if (!confirm('Delete this post?')) return;
 
     try {
-      const res = await fetch(`/api/social/posts/${postId}`, {
-        method: 'DELETE',
-      });
-
-      if (res.ok) {
-        fetchPosts();
-      }
+      await social.deletePost(postId);
+      fetchPosts();
     } catch (error) {
       console.error('Delete error:', error);
     }
@@ -518,15 +421,8 @@ export default function SocialAdminPage() {
   const updateSettings = async (updates: Partial<Config['settings']>) => {
     setSavingSettings(true);
     try {
-      const res = await fetch('/api/social/config', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ settings: updates }),
-      });
-
-      if (res.ok) {
-        fetchConfig();
-      }
+      await social.updateConfig({ settings: updates });
+      fetchConfig();
     } catch (error) {
       console.error('Settings error:', error);
     } finally {
@@ -537,14 +433,8 @@ export default function SocialAdminPage() {
   // Toggle tag active status
   const toggleTagActive = async (handle: string, currentActive: boolean) => {
     try {
-      const res = await fetch(`/api/social/tags/${handle}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ active: !currentActive }),
-      });
-      if (res.ok) {
-        fetchTags();
-      }
+      await social.updateTag(handle, { active: !currentActive });
+      fetchTags();
     } catch (error) {
       console.error('Error toggling tag:', error);
     }
@@ -554,12 +444,8 @@ export default function SocialAdminPage() {
   const deleteTag = async (handle: string) => {
     if (!confirm(`Delete @${handle}?`)) return;
     try {
-      const res = await fetch(`/api/social/tags/${handle}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        fetchTags();
-      }
+      await social.deleteTag(handle);
+      fetchTags();
     } catch (error) {
       console.error('Error deleting tag:', error);
     }
@@ -631,11 +517,10 @@ export default function SocialAdminPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-t flex items-center gap-2 transition-colors ${
-                  activeTab === tab.id
-                    ? 'bg-stone-800 text-white'
-                    : 'text-stone-400 hover:text-white hover:bg-stone-800/50'
-                }`}
+                className={`px-4 py-2 rounded-t flex items-center gap-2 transition-colors ${activeTab === tab.id
+                  ? 'bg-stone-800 text-white'
+                  : 'text-stone-400 hover:text-white hover:bg-stone-800/50'
+                  }`}
               >
                 <tab.icon className="w-4 h-4" />
                 {tab.label}
@@ -696,474 +581,470 @@ export default function SocialAdminPage() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Results / Browse Grid */}
-            <div>
-              {/* Show search results if searching, otherwise show browse options */}
-              {searchResults.length > 0 ? (
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <p className="text-sm text-stone-400">
-                      {searchResults.length} results for "{searchQuery}"
-                    </p>
-                    <button
-                      onClick={() => { setSearchResults([]); setSearchQuery(''); }}
-                      className="text-xs text-stone-500 hover:text-white"
-                    >
-                      Clear
-                    </button>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {searchResults.map((result) => (
+              {/* Results / Browse Grid */}
+              <div>
+                {/* Show search results if searching, otherwise show browse options */}
+                {searchResults.length > 0 ? (
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <p className="text-sm text-stone-400">
+                        {searchResults.length} results for "{searchQuery}"
+                      </p>
                       <button
-                        key={result.galleryImageId}
-                        onClick={() => {
-                          setSelectedImage(result);
-                          setSelectedPopularImage(null);
-                          setGeneratedTweet(null);
-                        }}
-                        className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                          selectedImage?.galleryImageId === result.galleryImageId
+                        onClick={() => { setSearchResults([]); setSearchQuery(''); }}
+                        className="text-xs text-stone-500 hover:text-white"
+                      >
+                        Clear
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {searchResults.map((result) => (
+                        <button
+                          key={result.galleryImageId}
+                          onClick={() => {
+                            setSelectedImage(result);
+                            setSelectedPopularImage(null);
+                            setGeneratedTweet(null);
+                          }}
+                          className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${selectedImage?.galleryImageId === result.galleryImageId
                             ? 'border-sky-500 ring-2 ring-sky-500/50'
                             : 'border-stone-700 hover:border-stone-500'
-                        }`}
-                      >
-                        <img
-                          src={result.croppedUrl}
-                          alt={result.description}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
-                          <span className="text-xs text-white/80 line-clamp-2">
-                            {result.description}
-                          </span>
-                        </div>
-                      </button>
-                    ))}
+                            }`}
+                        >
+                          <img
+                            src={result.croppedUrl}
+                            alt={result.description}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                            <span className="text-xs text-white/80 line-clamp-2">
+                              {result.description}
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    {/* View Toggle */}
-                    <div className="flex items-center rounded-lg p-1 bg-stone-800">
-                      <button
-                        onClick={() => setBrowseView('quality')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-                          browseView === 'quality'
+                ) : (
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      {/* View Toggle */}
+                      <div className="flex items-center rounded-lg p-1 bg-stone-800">
+                        <button
+                          onClick={() => setBrowseView('quality')}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${browseView === 'quality'
                             ? 'bg-stone-700 text-white'
                             : 'text-stone-400 hover:text-white'
-                        }`}
-                      >
-                        <Star className="w-4 h-4" />
-                        Top Quality
-                      </button>
-                      <button
-                        onClick={() => setBrowseView('liked')}
-                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-                          browseView === 'liked'
+                            }`}
+                        >
+                          <Star className="w-4 h-4" />
+                          Top Quality
+                        </button>
+                        <button
+                          onClick={() => setBrowseView('liked')}
+                          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${browseView === 'liked'
                             ? 'bg-stone-700 text-white'
                             : 'text-stone-400 hover:text-white'
-                        }`}
-                      >
-                        <Heart className="w-4 h-4" />
-                        Most Liked
-                        {popularImages.length > 0 && (
-                          <span className="ml-1 px-1.5 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">
-                            {popularImages.length}
-                          </span>
-                        )}
-                      </button>
-                    </div>
-                    <button
-                      onClick={browseView === 'quality' ? fetchCandidates : fetchPopularImages}
-                      disabled={browseView === 'quality' ? loadingCandidates : loadingPopular}
-                      className="text-sm text-stone-400 hover:text-white flex items-center gap-1"
-                    >
-                      <RefreshCw className={`w-3 h-3 ${(browseView === 'quality' ? loadingCandidates : loadingPopular) ? 'animate-spin' : ''}`} />
-                      Refresh
-                    </button>
-                  </div>
-
-              {/* Quality View */}
-              {browseView === 'quality' && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {candidates.map((candidate) => (
-                    <button
-                      key={candidate.galleryImageId}
-                      onClick={() => {
-                        setSelectedImage(candidate);
-                        setSelectedPopularImage(null);
-                        setGeneratedTweet(null);
-                      }}
-                      className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                        selectedImage?.galleryImageId === candidate.galleryImageId
-                          ? 'border-sky-500 ring-2 ring-sky-500/50'
-                          : 'border-stone-700 hover:border-stone-500'
-                      }`}
-                    >
-                      <img
-                        src={candidate.croppedUrl}
-                        alt={candidate.description}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
-                        <span className="text-xs text-white/80 line-clamp-2">
-                          {candidate.description}
-                        </span>
+                            }`}
+                        >
+                          <Heart className="w-4 h-4" />
+                          Most Liked
+                          {popularImages.length > 0 && (
+                            <span className="ml-1 px-1.5 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">
+                              {popularImages.length}
+                            </span>
+                          )}
+                        </button>
                       </div>
-                      <div className="absolute top-2 right-2 bg-black/60 px-1.5 py-0.5 rounded text-xs">
-                        {Math.round(candidate.galleryQuality * 100)}%
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {/* Liked View */}
-              {browseView === 'liked' && (
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  {popularImages.length === 0 ? (
-                    <div className="col-span-3 text-center py-12 text-stone-500">
-                      <Heart className="w-12 h-12 mx-auto mb-3 opacity-30" />
-                      <p>No liked images yet</p>
-                      <p className="text-sm mt-1">
-                        Images that visitors like will appear here
-                      </p>
-                    </div>
-                  ) : (
-                    popularImages.map((image) => (
                       <button
-                        key={image.galleryImageId}
-                        onClick={() => {
-                          setSelectedPopularImage(image);
-                          setSelectedImage(null);
-                          setGeneratedTweet(null);
-                        }}
-                        className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                          selectedPopularImage?.galleryImageId === image.galleryImageId
-                            ? 'border-red-500 ring-2 ring-red-500/50'
-                            : 'border-stone-700 hover:border-stone-500'
-                        }`}
+                        onClick={browseView === 'quality' ? fetchCandidates : fetchPopularImages}
+                        disabled={browseView === 'quality' ? loadingCandidates : loadingPopular}
+                        className="text-sm text-stone-400 hover:text-white flex items-center gap-1"
                       >
-                        <img
-                          src={image.croppedUrl}
-                          alt={image.description}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
-                          <span className="text-xs text-white/80 line-clamp-2">
-                            {image.description}
-                          </span>
-                        </div>
-                        <div className="absolute top-2 right-2 bg-red-500/80 px-1.5 py-0.5 rounded text-xs flex items-center gap-1">
-                          <Heart className="w-3 h-3" />
-                          {image.likeCount}
-                        </div>
+                        <RefreshCw className={`w-3 h-3 ${(browseView === 'quality' ? loadingCandidates : loadingPopular) ? 'animate-spin' : ''}`} />
+                        Refresh
                       </button>
-                    ))
-                  )}
-                </div>
-              )}
-                </div>
-              )}
-            </div>
-
-            {/* Generate Panel */}
-            <div className="bg-stone-900 rounded-lg p-4 border border-stone-800 max-h-[calc(100vh-200px)] overflow-y-auto">
-              {(selectedImage || selectedPopularImage) ? (
-                <div>
-                  {/* Image Preview */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <img
-                      src={selectedImage?.croppedUrl || selectedPopularImage?.croppedUrl}
-                      alt=""
-                      className="w-20 h-20 rounded object-cover flex-shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-medium truncate">
-                          {selectedImage?.bookTitle || selectedPopularImage?.bookTitle}
-                        </h3>
-                        {selectedPopularImage && (
-                          <span className="flex items-center gap-1 text-xs text-red-400 bg-red-500/20 px-1.5 py-0.5 rounded flex-shrink-0">
-                            <Heart className="w-3 h-3" />
-                            {selectedPopularImage.likeCount}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xs text-stone-400 line-clamp-2">
-                        {selectedImage?.description || selectedPopularImage?.description}
-                      </p>
                     </div>
-                  </div>
 
-                  {!generatedTweet ? (
-                    <div className="space-y-4">
-                      {/* Audience Selection */}
-                      <div>
-                        <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">Target Audiences</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {availableAudiences.map((audience) => (
+                    {/* Quality View */}
+                    {browseView === 'quality' && (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {candidates.map((candidate) => (
+                          <button
+                            key={candidate.galleryImageId}
+                            onClick={() => {
+                              setSelectedImage(candidate);
+                              setSelectedPopularImage(null);
+                              setGeneratedTweet(null);
+                            }}
+                            className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${selectedImage?.galleryImageId === candidate.galleryImageId
+                              ? 'border-sky-500 ring-2 ring-sky-500/50'
+                              : 'border-stone-700 hover:border-stone-500'
+                              }`}
+                          >
+                            <img
+                              src={candidate.croppedUrl}
+                              alt={candidate.description}
+                              className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                              <span className="text-xs text-white/80 line-clamp-2">
+                                {candidate.description}
+                              </span>
+                            </div>
+                            <div className="absolute top-2 right-2 bg-black/60 px-1.5 py-0.5 rounded text-xs">
+                              {Math.round(candidate.galleryQuality * 100)}%
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Liked View */}
+                    {browseView === 'liked' && (
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        {popularImages.length === 0 ? (
+                          <div className="col-span-3 text-center py-12 text-stone-500">
+                            <Heart className="w-12 h-12 mx-auto mb-3 opacity-30" />
+                            <p>No liked images yet</p>
+                            <p className="text-sm mt-1">
+                              Images that visitors like will appear here
+                            </p>
+                          </div>
+                        ) : (
+                          popularImages.map((image) => (
                             <button
-                              key={audience.id}
-                              onClick={() => toggleAudience(audience.id)}
-                              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all ${
-                                selectedAudiences.includes(audience.id)
+                              key={image.galleryImageId}
+                              onClick={() => {
+                                setSelectedPopularImage(image);
+                                setSelectedImage(null);
+                                setGeneratedTweet(null);
+                              }}
+                              className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${selectedPopularImage?.galleryImageId === image.galleryImageId
+                                ? 'border-red-500 ring-2 ring-red-500/50'
+                                : 'border-stone-700 hover:border-stone-500'
+                                }`}
+                            >
+                              <img
+                                src={image.croppedUrl}
+                                alt={image.description}
+                                className="w-full h-full object-cover"
+                              />
+                              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                                <span className="text-xs text-white/80 line-clamp-2">
+                                  {image.description}
+                                </span>
+                              </div>
+                              <div className="absolute top-2 right-2 bg-red-500/80 px-1.5 py-0.5 rounded text-xs flex items-center gap-1">
+                                <Heart className="w-3 h-3" />
+                                {image.likeCount}
+                              </div>
+                            </button>
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Generate Panel */}
+              <div className="bg-stone-900 rounded-lg p-4 border border-stone-800 max-h-[calc(100vh-200px)] overflow-y-auto">
+                {(selectedImage || selectedPopularImage) ? (
+                  <div>
+                    {/* Image Preview */}
+                    <div className="flex items-start gap-4 mb-4">
+                      <img
+                        src={selectedImage?.croppedUrl || selectedPopularImage?.croppedUrl}
+                        alt=""
+                        className="w-20 h-20 rounded object-cover flex-shrink-0"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-medium truncate">
+                            {selectedImage?.bookTitle || selectedPopularImage?.bookTitle}
+                          </h3>
+                          {selectedPopularImage && (
+                            <span className="flex items-center gap-1 text-xs text-red-400 bg-red-500/20 px-1.5 py-0.5 rounded flex-shrink-0">
+                              <Heart className="w-3 h-3" />
+                              {selectedPopularImage.likeCount}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-stone-400 line-clamp-2">
+                          {selectedImage?.description || selectedPopularImage?.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {!generatedTweet ? (
+                      <div className="space-y-4">
+                        {/* Audience Selection */}
+                        <div>
+                          <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">Target Audiences</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {availableAudiences.map((audience) => (
+                              <button
+                                key={audience.id}
+                                onClick={() => toggleAudience(audience.id)}
+                                className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all ${selectedAudiences.includes(audience.id)
                                   ? 'bg-violet-600 text-white'
                                   : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
-                              }`}
-                              title={audience.description}
-                            >
-                              {audience.name}
-                            </button>
-                          ))}
+                                  }`}
+                                title={audience.description}
+                              >
+                                {audience.name}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Voice Selection */}
-                      <div>
-                        <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">Voice Styles</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {availableVoices.map((voice) => (
-                            <button
-                              key={voice.id}
-                              onClick={() => toggleVoice(voice.id)}
-                              className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all ${
-                                selectedVoices.includes(voice.id)
+                        {/* Voice Selection */}
+                        <div>
+                          <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">Voice Styles</p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {availableVoices.map((voice) => (
+                              <button
+                                key={voice.id}
+                                onClick={() => toggleVoice(voice.id)}
+                                className={`px-2.5 py-1 rounded-full text-xs font-medium transition-all ${selectedVoices.includes(voice.id)
                                   ? 'bg-emerald-600 text-white'
                                   : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
-                              }`}
-                              title={voice.description}
-                            >
-                              {voice.name}
-                            </button>
-                          ))}
+                                  }`}
+                                title={voice.description}
+                              >
+                                {voice.name}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Model Selection */}
-                      <div>
-                        <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">AI Model</p>
-                        <div className="flex gap-2">
-                          {availableModels.map((model) => (
-                            <button
-                              key={model.id}
-                              onClick={() => setSelectedModel(model.id)}
-                              className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-all border ${
-                                selectedModel === model.id
+                        {/* Model Selection */}
+                        <div>
+                          <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">AI Model</p>
+                          <div className="flex gap-2">
+                            {availableModels.map((model) => (
+                              <button
+                                key={model.id}
+                                onClick={() => {
+                                  if (model.id === 'gemini' || model.id === 'claude') {
+                                    setSelectedModel(model.id);
+                                  }
+                                }}
+                                className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-all border ${selectedModel === model.id
                                   ? 'bg-sky-600 border-sky-500 text-white'
                                   : 'bg-stone-800 border-stone-700 text-stone-400 hover:bg-stone-700'
-                              }`}
-                              title={model.description}
-                            >
-                              {model.name}
-                            </button>
-                          ))}
+                                  }`}
+                                title={model.description}
+                              >
+                                {model.name}
+                              </button>
+                            ))}
+                          </div>
                         </div>
-                      </div>
 
-                      {/* Custom Prompt */}
-                      <div>
-                        <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">
-                          Custom Guidance <span className="text-stone-500">(optional)</span>
-                        </p>
-                        <textarea
-                          value={customPrompt}
-                          onChange={(e) => setCustomPrompt(e.target.value)}
-                          placeholder="Add specific direction: tone, themes to emphasize, style notes..."
-                          className="w-full bg-stone-800 text-white text-sm rounded-lg p-3 border border-stone-700 focus:border-sky-500 outline-none resize-none placeholder:text-stone-500"
-                          rows={3}
-                        />
-                      </div>
+                        {/* Custom Prompt */}
+                        <div>
+                          <p className="text-xs text-stone-400 mb-2 uppercase tracking-wide">
+                            Custom Guidance <span className="text-stone-500">(optional)</span>
+                          </p>
+                          <textarea
+                            value={customPrompt}
+                            onChange={(e) => setCustomPrompt(e.target.value)}
+                            placeholder="Add specific direction: tone, themes to emphasize, style notes..."
+                            className="w-full bg-stone-800 text-white text-sm rounded-lg p-3 border border-stone-700 focus:border-sky-500 outline-none resize-none placeholder:text-stone-500"
+                            rows={3}
+                          />
+                        </div>
 
-                      {/* Generate Button */}
-                      <button
-                        onClick={() => generateTweet(
-                          selectedImage?.galleryImageId || selectedPopularImage?.galleryImageId || ''
-                        )}
-                        disabled={generating || selectedAudiences.length === 0 || selectedVoices.length === 0}
-                        className="w-full py-3 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 rounded-lg flex items-center justify-center gap-2"
-                      >
-                        {generating ? (
-                          <>
-                            <Sparkles className="w-4 h-4 animate-pulse" />
-                            Generating {selectedAudiences.length * selectedVoices.length > 6 ? 6 : Math.min(6, selectedAudiences.length + selectedVoices.length)} variations...
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles className="w-4 h-4" />
-                            Generate Variations
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {/* Header with regenerate */}
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm text-stone-400">
-                          {generatedTweet.variations?.length || 1} variations generated
-                        </p>
+                        {/* Generate Button */}
                         <button
                           onClick={() => generateTweet(
                             selectedImage?.galleryImageId || selectedPopularImage?.galleryImageId || ''
                           )}
-                          className="text-xs text-stone-400 hover:text-white flex items-center gap-1"
+                          disabled={generating || selectedAudiences.length === 0 || selectedVoices.length === 0}
+                          className="w-full py-3 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 rounded-lg flex items-center justify-center gap-2"
                         >
-                          <RefreshCw className="w-3 h-3" />
-                          Regenerate
+                          {generating ? (
+                            <>
+                              <Sparkles className="w-4 h-4 animate-pulse" />
+                              Generating {selectedAudiences.length * selectedVoices.length > 6 ? 6 : Math.min(6, selectedAudiences.length + selectedVoices.length)} variations...
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-4 h-4" />
+                              Generate Variations
+                            </>
+                          )}
                         </button>
                       </div>
-
-                      {/* Variation Cards */}
-                      {generatedTweet.variations && generatedTweet.variations.length > 0 ? (
-                        <div className="space-y-3">
-                          {generatedTweet.variations.map((variation, i) => (
-                            <div
-                              key={i}
-                              className="bg-stone-800 rounded-lg p-3 border border-stone-700 hover:border-stone-600 transition-colors"
-                            >
-                              {/* Audience/Voice tags */}
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-violet-600/30 text-violet-300 uppercase">
-                                  {variation.audience}
-                                </span>
-                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-600/30 text-emerald-300 uppercase">
-                                  {variation.voice}
-                                </span>
-                                <span className="text-[10px] text-stone-500 ml-auto">
-                                  {variation.charCount || variation.tweet.length}/200
-                                </span>
-                              </div>
-
-                              {/* Tweet text (editable) */}
-                              {editingVariation === i ? (
-                                <div className="space-y-2">
-                                  <textarea
-                                    value={editedTweet}
-                                    onChange={(e) => setEditedTweet(e.target.value)}
-                                    className="w-full bg-stone-900 text-white text-sm rounded p-2 border border-stone-600 focus:border-sky-500 outline-none resize-none"
-                                    rows={3}
-                                    maxLength={200}
-                                  />
-                                  <div className="flex gap-2">
-                                    <button
-                                      onClick={() => {
-                                        variation.tweet = editedTweet;
-                                        setEditingVariation(null);
-                                      }}
-                                      className="flex-1 py-1.5 bg-sky-600 hover:bg-sky-700 rounded text-xs"
-                                    >
-                                      Save Edit
-                                    </button>
-                                    <button
-                                      onClick={() => setEditingVariation(null)}
-                                      className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-xs"
-                                    >
-                                      Cancel
-                                    </button>
-                                  </div>
-                                </div>
-                              ) : (
-                                <p
-                                  className="text-sm text-white cursor-pointer hover:bg-stone-700/50 rounded p-1 -m-1"
-                                  onClick={() => {
-                                    setEditingVariation(i);
-                                    setEditedTweet(variation.tweet);
-                                  }}
-                                  title="Click to edit"
-                                >
-                                  {variation.tweet}
-                                </p>
-                              )}
-
-                              {/* Hashtags */}
-                              <div className="flex flex-wrap gap-1 mt-2">
-                                {variation.hashtags.map((tag) => (
-                                  <span key={tag} className="text-sky-400 text-xs">
-                                    #{tag}
-                                  </span>
-                                ))}
-                              </div>
-
-                              {/* Reasoning (if available) */}
-                              {variation.reasoning && (
-                                <p className="text-[10px] text-stone-500 mt-2 italic">
-                                  {variation.reasoning}
-                                </p>
-                              )}
-
-                              {/* Actions */}
-                              <div className="flex gap-2 mt-3 pt-2 border-t border-stone-700">
-                                <button
-                                  onClick={() => saveVariationAsDraft(
-                                    variation,
-                                    selectedImage?.galleryImageId || selectedPopularImage?.galleryImageId || ''
-                                  )}
-                                  className="flex-1 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-xs flex items-center justify-center gap-1"
-                                >
-                                  <Plus className="w-3 h-3" />
-                                  Save Draft
-                                </button>
-                                <button
-                                  onClick={() => {
-                                    setEditingVariation(i);
-                                    setEditedTweet(variation.tweet);
-                                  }}
-                                  className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-xs"
-                                >
-                                  <Edit2 className="w-3 h-3" />
-                                </button>
-                              </div>
-                            </div>
-                          ))}
+                    ) : (
+                      <div className="space-y-3">
+                        {/* Header with regenerate */}
+                        <div className="flex items-center justify-between">
+                          <p className="text-sm text-stone-400">
+                            {generatedTweet.variations?.length || 1} variations generated
+                          </p>
+                          <button
+                            onClick={() => generateTweet(
+                              selectedImage?.galleryImageId || selectedPopularImage?.galleryImageId || ''
+                            )}
+                            className="text-xs text-stone-400 hover:text-white flex items-center gap-1"
+                          >
+                            <RefreshCw className="w-3 h-3" />
+                            Regenerate
+                          </button>
                         </div>
-                      ) : (
-                        /* Fallback to old format */
-                        <div className="bg-stone-800 rounded-lg p-3">
-                          <p className="text-white">{generatedTweet.tweet}</p>
-                          <div className="flex flex-wrap gap-1 mt-2">
-                            {generatedTweet.hashtags.map((tag) => (
-                              <span key={tag} className="text-sky-400 text-sm">
-                                #{tag}
-                              </span>
+
+                        {/* Variation Cards */}
+                        {generatedTweet.variations && generatedTweet.variations.length > 0 ? (
+                          <div className="space-y-3">
+                            {generatedTweet.variations.map((variation, i) => (
+                              <div
+                                key={i}
+                                className="bg-stone-800 rounded-lg p-3 border border-stone-700 hover:border-stone-600 transition-colors"
+                              >
+                                {/* Audience/Voice tags */}
+                                <div className="flex items-center gap-2 mb-2">
+                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-violet-600/30 text-violet-300 uppercase">
+                                    {variation.audience}
+                                  </span>
+                                  <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-600/30 text-emerald-300 uppercase">
+                                    {variation.voice}
+                                  </span>
+                                  <span className="text-[10px] text-stone-500 ml-auto">
+                                    {variation.charCount || variation.tweet.length}/200
+                                  </span>
+                                </div>
+
+                                {/* Tweet text (editable) */}
+                                {editingVariation === i ? (
+                                  <div className="space-y-2">
+                                    <textarea
+                                      value={editedTweet}
+                                      onChange={(e) => setEditedTweet(e.target.value)}
+                                      className="w-full bg-stone-900 text-white text-sm rounded p-2 border border-stone-600 focus:border-sky-500 outline-none resize-none"
+                                      rows={3}
+                                      maxLength={200}
+                                    />
+                                    <div className="flex gap-2">
+                                      <button
+                                        onClick={() => {
+                                          variation.tweet = editedTweet;
+                                          setEditingVariation(null);
+                                        }}
+                                        className="flex-1 py-1.5 bg-sky-600 hover:bg-sky-700 rounded text-xs"
+                                      >
+                                        Save Edit
+                                      </button>
+                                      <button
+                                        onClick={() => setEditingVariation(null)}
+                                        className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-xs"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <p
+                                    className="text-sm text-white cursor-pointer hover:bg-stone-700/50 rounded p-1 -m-1"
+                                    onClick={() => {
+                                      setEditingVariation(i);
+                                      setEditedTweet(variation.tweet);
+                                    }}
+                                    title="Click to edit"
+                                  >
+                                    {variation.tweet}
+                                  </p>
+                                )}
+
+                                {/* Hashtags */}
+                                <div className="flex flex-wrap gap-1 mt-2">
+                                  {variation.hashtags.map((tag) => (
+                                    <span key={tag} className="text-sky-400 text-xs">
+                                      #{tag}
+                                    </span>
+                                  ))}
+                                </div>
+
+                                {/* Reasoning (if available) */}
+                                {variation.reasoning && (
+                                  <p className="text-[10px] text-stone-500 mt-2 italic">
+                                    {variation.reasoning}
+                                  </p>
+                                )}
+
+                                {/* Actions */}
+                                <div className="flex gap-2 mt-3 pt-2 border-t border-stone-700">
+                                  <button
+                                    onClick={() => saveVariationAsDraft(
+                                      variation,
+                                      selectedImage?.galleryImageId || selectedPopularImage?.galleryImageId || ''
+                                    )}
+                                    className="flex-1 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-xs flex items-center justify-center gap-1"
+                                  >
+                                    <Plus className="w-3 h-3" />
+                                    Save Draft
+                                  </button>
+                                  <button
+                                    onClick={() => {
+                                      setEditingVariation(i);
+                                      setEditedTweet(variation.tweet);
+                                    }}
+                                    className="px-3 py-1.5 bg-stone-700 hover:bg-stone-600 rounded text-xs"
+                                  >
+                                    <Edit2 className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </div>
                             ))}
                           </div>
-                          <div className="flex gap-2 mt-3">
-                            <button
-                              onClick={() => saveDraft(generatedTweet)}
-                              className="flex-1 py-2 bg-stone-700 hover:bg-stone-600 rounded flex items-center justify-center gap-2"
-                            >
-                              <Plus className="w-4 h-4" />
-                              Save Draft
-                            </button>
+                        ) : (
+                          /* Fallback to old format */
+                          <div className="bg-stone-800 rounded-lg p-3">
+                            <p className="text-white">{generatedTweet.tweet}</p>
+                            <div className="flex flex-wrap gap-1 mt-2">
+                              {generatedTweet.hashtags.map((tag) => (
+                                <span key={tag} className="text-sky-400 text-sm">
+                                  #{tag}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="flex gap-2 mt-3">
+                              <button
+                                onClick={() => saveDraft(generatedTweet)}
+                                className="flex-1 py-2 bg-stone-700 hover:bg-stone-600 rounded flex items-center justify-center gap-2"
+                              >
+                                <Plus className="w-4 h-4" />
+                                Save Draft
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
-                      {/* Clear button */}
-                      <button
-                        onClick={() => {
-                          setGeneratedTweet(null);
-                          setSelectedImage(null);
-                          setSelectedPopularImage(null);
-                        }}
-                        className="w-full py-2 text-stone-400 hover:text-white text-sm"
-                      >
-                        Select Different Image
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="text-center py-12 text-stone-500">
-                  <ImageIcon className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                  <p>Select an image to generate tweets</p>
-                  <p className="text-xs mt-2">Choose audiences and voices, then generate multiple variations</p>
-                </div>
-              )}
+                        {/* Clear button */}
+                        <button
+                          onClick={() => {
+                            setGeneratedTweet(null);
+                            setSelectedImage(null);
+                            setSelectedPopularImage(null);
+                          }}
+                          className="w-full py-2 text-stone-400 hover:text-white text-sm"
+                        >
+                          Select Different Image
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center py-12 text-stone-500">
+                    <ImageIcon className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                    <p>Select an image to generate tweets</p>
+                    <p className="text-xs mt-2">Choose audiences and voices, then generate multiple variations</p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
           </div>
         )}
 
@@ -1292,11 +1173,10 @@ export default function SocialAdminPage() {
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setSelectedTagAudience(null)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  selectedTagAudience === null
-                    ? 'bg-sky-600 text-white'
-                    : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
-                }`}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${selectedTagAudience === null
+                  ? 'bg-sky-600 text-white'
+                  : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+                  }`}
               >
                 All ({Object.values(socialTags).flat().length})
               </button>
@@ -1304,11 +1184,10 @@ export default function SocialAdminPage() {
                 <button
                   key={audience}
                   onClick={() => setSelectedTagAudience(audience)}
-                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all capitalize ${
-                    selectedTagAudience === audience
-                      ? 'bg-sky-600 text-white'
-                      : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
-                  }`}
+                  className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all capitalize ${selectedTagAudience === audience
+                    ? 'bg-sky-600 text-white'
+                    : 'bg-stone-800 text-stone-400 hover:bg-stone-700'
+                    }`}
                 >
                   {audience} ({socialTags[audience]?.length || 0})
                 </button>
@@ -1323,9 +1202,8 @@ export default function SocialAdminPage() {
               ).map((tag) => (
                 <div
                   key={tag.handle}
-                  className={`bg-stone-900 rounded-lg p-4 border transition-all ${
-                    tag.active ? 'border-stone-700' : 'border-stone-800 opacity-50'
-                  }`}
+                  className={`bg-stone-900 rounded-lg p-4 border transition-all ${tag.active ? 'border-stone-700' : 'border-stone-800 opacity-50'
+                    }`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
@@ -1360,11 +1238,10 @@ export default function SocialAdminPage() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => toggleTagActive(tag.handle, tag.active)}
-                        className={`px-3 py-1 rounded text-xs ${
-                          tag.active
-                            ? 'bg-green-600/20 text-green-400 hover:bg-green-600/30'
-                            : 'bg-stone-700 text-stone-400 hover:bg-stone-600'
-                        }`}
+                        className={`px-3 py-1 rounded text-xs ${tag.active
+                          ? 'bg-green-600/20 text-green-400 hover:bg-green-600/30'
+                          : 'bg-stone-700 text-stone-400 hover:bg-stone-600'
+                          }`}
                       >
                         {tag.active ? 'Active' : 'Inactive'}
                       </button>
@@ -1411,11 +1288,10 @@ export default function SocialAdminPage() {
                     updateSettings({ auto_post_enabled: !config.settings.auto_post_enabled })
                   }
                   disabled={savingSettings}
-                  className={`px-4 py-2 rounded ${
-                    config.settings.auto_post_enabled
-                      ? 'bg-green-600 hover:bg-green-700'
-                      : 'bg-stone-700 hover:bg-stone-600'
-                  }`}
+                  className={`px-4 py-2 rounded ${config.settings.auto_post_enabled
+                    ? 'bg-green-600 hover:bg-green-700'
+                    : 'bg-stone-700 hover:bg-stone-600'
+                    }`}
                 >
                   {config.settings.auto_post_enabled ? 'Enabled' : 'Disabled'}
                 </button>
@@ -1457,11 +1333,10 @@ export default function SocialAdminPage() {
                           : [...current, hour].sort((a, b) => a - b);
                         updateSettings({ posting_hours: updated });
                       }}
-                      className={`w-10 h-10 rounded text-sm ${
-                        config.settings.posting_hours.includes(hour)
-                          ? 'bg-sky-600'
-                          : 'bg-stone-800 hover:bg-stone-700'
-                      }`}
+                      className={`w-10 h-10 rounded text-sm ${config.settings.posting_hours.includes(hour)
+                        ? 'bg-sky-600'
+                        : 'bg-stone-800 hover:bg-stone-700'
+                        }`}
                     >
                       {hour}
                     </button>

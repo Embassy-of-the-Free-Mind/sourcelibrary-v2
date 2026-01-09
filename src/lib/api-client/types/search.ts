@@ -68,8 +68,12 @@ export interface IndexSearchResponse {
 
 export interface UnifiedSearchResponse {
   query: string;
-  books: SearchResult[];
-  pages: SearchResult[];
-  index: IndexSearchResult[];
-  total: number;
+  books: {
+    results: SearchResult[];
+    total: number;
+  };
+  index: {
+    results: IndexSearchResult[];
+    total: number;
+  };
 }

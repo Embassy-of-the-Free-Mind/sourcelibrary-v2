@@ -20,11 +20,12 @@ export const jobs = {
   /**
    * Get all jobs with optional filters
    */
-  list: async (params?: { limit?: number; status?: JobStatus; type?: string }): Promise<JobsListResponse> => {
+  list: async (params?: { limit?: number; status?: JobStatus; type?: string; book_id?: string }): Promise<JobsListResponse> => {
     const queryParams = new URLSearchParams();
     if (params?.limit) queryParams.append('limit', params.limit.toString());
     if (params?.status) queryParams.append('status', params.status);
     if (params?.type) queryParams.append('type', params.type);
+    if (params?.book_id) queryParams.append('book_id', params.book_id);
 
     const query = queryParams.toString();
     return await apiClient.get(`/api/jobs${query ? `?${query}` : ''}`);

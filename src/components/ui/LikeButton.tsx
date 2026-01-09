@@ -224,15 +224,8 @@ export function useLikeStatus(
     // Fetch from API
     const fetchStatus = async () => {
       try {
-        const params = new URLSearchParams();
-        params.set('targets', targetsKey);
-        if (visitorId) {
-          params.set('visitor_id', visitorId);
-        }
-
-        const response = await fetch(`/api/likes?${params}`);
-        if (response.ok && !cancelled) {
-          const data = await response.json();
+        const data = await likes.getStatus(targetsKey, visitorId);
+        if (!cancelled) {
           setStatus(data.results);
 
           // Update cache

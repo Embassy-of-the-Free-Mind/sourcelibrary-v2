@@ -3,6 +3,8 @@
  * Centralizes image detection logic for use across multiple endpoints
  */
 
+import { images } from '@/lib/api-client';
+
 export const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Create rich metadata for each illustration.
 
 BOUNDING BOX (0.0-1.0 normalized coordinates):
@@ -105,15 +107,10 @@ export async function extractWithGemini(
   }
 
   // Fetch and encode image
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
-  const base64Image = Buffer.from(imageBuffer).toString('base64');
-  const headerType = imageResponse.headers.get('content-type')?.split(';')[0];
-  const mimeType = getMimeType(imageUrl, headerType);
+  const imageData = await images.fetchBase64(imageUrl, { includeMimeType: true });
+  const { base64: base64Image, mimeType } = typeof imageData === 'string'
+    ? { base64: imageData, mimeType: getMimeType(imageUrl, null) }
+    : { base64: imageData.base64, mimeType: imageData.mimeType };
 
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,

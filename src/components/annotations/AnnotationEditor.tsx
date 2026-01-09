@@ -15,6 +15,7 @@ import {
   ChevronUp,
 } from 'lucide-react';
 import { AnnotationType } from '@/lib/types';
+import { annotations } from '@/lib/api-client';
 
 interface AnnotationEditorProps {
   isOpen: boolean;
@@ -104,29 +105,20 @@ export default function AnnotationEditor({
       // Save username for future annotations
       localStorage.setItem('annotation_username', userName.trim());
 
-      const res = await fetch('/api/annotations', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          book_id: bookId,
-          page_id: pageId,
-          page_number: pageNumber,
-          anchor: {
-            text: selectedText,
-            start_offset: startOffset,
-            end_offset: endOffset,
-          },
-          content: content.trim(),
-          type,
-          user_name: userName.trim(),
-          parent_id: parentId,
-        }),
+      await annotations.create({
+        book_id: bookId,
+        page_id: pageId,
+        page_number: pageNumber,
+        anchor: {
+          text: selectedText,
+          start_offset: startOffset,
+          end_offset: endOffset,
+        },
+        content: content.trim(),
+        type,
+        user_name: userName.trim(),
+        parent_id: parentId,
       });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Failed to save');
-      }
 
       onSave();
       onClose();

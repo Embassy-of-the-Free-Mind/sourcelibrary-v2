@@ -1,11 +1,12 @@
 import { apiClient } from './client';
+import { Prompt } from '@/lib/types';
 import type {
-  Prompt,
   PromptCreateRequest,
   PromptUpdateRequest,
   PromptListParams,
   PromptListResponse
 } from './types/prompts';
+
 
 /**
  * Prompts API client

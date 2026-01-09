@@ -6,6 +6,7 @@ import CaptureOverlay from './CaptureOverlay';
 import ShutterButton from './ShutterButton';
 import CapturedPageReview from './CapturedPageReview';
 import CaptureProgress from './CaptureProgress';
+import { upload } from '@/lib/api-client';
 
 interface CameraCaptureProps {
   bookId: string;
@@ -172,22 +173,8 @@ export default function CameraCapture({ bookId, onComplete }: CameraCaptureProps
   // Upload image
   const uploadImage = useCallback(async (blob: Blob): Promise<boolean> => {
     try {
-      const formData = new FormData();
-      formData.append('bookId', bookId);
-
       const file = new File([blob], `page_${Date.now()}.jpg`, { type: 'image/jpeg' });
-      formData.append('files', file);
-
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Upload failed');
-      }
-
+      await upload.images(bookId, [file]);
       return true;
     } catch (err) {
       console.error('Upload error:', err);

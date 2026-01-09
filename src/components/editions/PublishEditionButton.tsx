@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { BookMarked, X, Plus, Trash2, ExternalLink } from 'lucide-react';
 import { TranslationEdition, Contributor } from '@/lib/types';
+import { books } from '@/lib/api-client';
 
 interface PublishEditionButtonProps {
   bookId: string;
@@ -79,22 +80,12 @@ export default function PublishEditionButton({
     setError(null);
 
     try {
-      const response = await fetch(`/api/books/${bookId}/editions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          version_label: versionLabel.trim() || undefined,
-          license,
-          contributors,
-          changelog: changelog.trim() || undefined,
-        }),
+      const data = await books.editions.create(bookId, {
+        version_label: versionLabel.trim() || undefined,
+        license,
+        contributors,
+        changelog: changelog.trim() || undefined,
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to publish edition');
-      }
 
       onPublished?.(data.edition);
       setIsOpen(false);

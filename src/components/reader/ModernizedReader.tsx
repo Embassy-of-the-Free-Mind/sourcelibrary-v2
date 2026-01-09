@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Page } from '@/lib/types';
 import { Loader2, Sparkles, AlertCircle } from 'lucide-react';
+import { pages } from '@/lib/api-client';
 
 interface ModernizedReaderProps {
   pages: Page[];
@@ -91,18 +92,7 @@ export default function ModernizedReader({
       setCurrentlyProcessing(page.page_number);
 
       try {
-        const response = await fetch(`/api/pages/${page.id}/modernize`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({}),
-        });
-
-        if (!response.ok) {
-          const data = await response.json();
-          throw new Error(data.error || 'Failed to modernize');
-        }
-
-        const data = await response.json();
+        const data = await pages.modernize(page.id);
         setModernizedTexts(prev => ({ ...prev, [page.id]: data.modernized }));
       } catch (err) {
         setError(`Failed on page ${page.page_number}: ${err instanceof Error ? err.message : 'Unknown error'}`);

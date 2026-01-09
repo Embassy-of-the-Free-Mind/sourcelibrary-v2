@@ -3,14 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Loader2, BookOpen, ChevronRight } from 'lucide-react';
-
-interface Category {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  book_count: number;
-}
+import { categories as categoriesApi } from '@/lib/api-client';
+import { Category } from '@/lib/api-client/types';
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -19,11 +13,8 @@ export default function CategoriesPage() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch('/api/categories');
-        if (res.ok) {
-          const data = await res.json();
-          setCategories(data.categories);
-        }
+        const data = await categoriesApi.list();
+        setCategories(data.categories);
       } catch (error) {
         console.error('Failed to fetch categories:', error);
       } finally {

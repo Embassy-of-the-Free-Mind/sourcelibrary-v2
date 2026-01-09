@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { TranslationEdition } from '@/lib/types';
 import { BookMarked, ChevronDown, ChevronUp, ExternalLink, Copy, Check, Calendar, FileText, Users, Hash, Sparkles, Loader2, Eye } from 'lucide-react';
 import Link from 'next/link';
+import { books } from '@/lib/api-client';
 
 interface EditionsPanelProps {
   bookId: string;
@@ -61,17 +62,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
     setMintError(null);
 
     try {
-      const response = await fetch(`/api/books/${bookId}/editions/mint-doi`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ edition_id: editionId }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to mint DOI');
-      }
+      const data = await books.editions.mintDoi(bookId, editionId);
 
       // Update local state
       setEditions(prev => prev.map(e =>
@@ -93,24 +84,17 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
     setIsSavingDoi(true);
     try {
       const doi = doiInput.trim().replace(/^https?:\/\/doi\.org\//, '');
-      const response = await fetch(`/api/books/${bookId}/editions`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          edition_id: editionId,
-          doi,
-          doi_url: `https://doi.org/${doi}`,
-        }),
+      const data = await books.editions.updateFields(bookId, editionId, {
+        doi,
+        doi_url: `https://doi.org/${doi}`,
       });
 
-      if (response.ok) {
-        setEditions(prev => prev.map(e =>
-          e.id === editionId ? { ...e, doi, doi_url: `https://doi.org/${doi}` } : e
-        ));
-        onDoiAdded?.(editionId, doi);
-        setAddingDoiFor(null);
-        setDoiInput('');
-      }
+      setEditions(prev => prev.map(e =>
+        e.id === editionId ? { ...e, doi, doi_url: `https://doi.org/${doi}` } : e
+      ));
+      onDoiAdded?.(editionId, doi);
+      setAddingDoiFor(null);
+      setDoiInput('');
     } catch (error) {
       console.error('Error saving DOI:', error);
     } finally {

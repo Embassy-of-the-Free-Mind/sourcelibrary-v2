@@ -8,10 +8,23 @@ export interface Experiment {
   _id?: string;
   name: string;
   description?: string;
-  type: 'ocr' | 'translation' | 'comparison';
-  status: 'draft' | 'running' | 'completed' | 'failed';
+  type: 'ocr' | 'translation' | 'comparison' | 'ocr_quality' | 'translation_comparison';
+  status: 'draft' | 'running' | 'completed' | 'failed' | 'pending';
   config: Record<string, any>;
   results?: Record<string, any>;
+
+  // Nested objects for OCR quality experiments
+  experiment?: {
+    book_id: string;
+    model_a: string;
+    model_b: string;
+  };
+
+  book?: {
+    title: string;
+    author: string;
+  };
+
   created_at: Date;
   updated_at?: Date;
   completed_at?: Date;
@@ -39,8 +52,11 @@ export interface ExperimentListResponse {
 
 export interface ExperimentRunResponse {
   success: boolean;
-  message: string;
+  message?: string;
   job_id?: string;
+  pages_processed?: number;
+  results_count?: number;
+  total_cost?: number;
 }
 
 export interface OcrQualityExperiment {
@@ -65,6 +81,34 @@ export interface OcrQualityExperiment {
       judge_model: string;
     };
   }>;
+
+  // Additional nested fields for experiment pages
+  comparison?: {
+    page_number: number;
+    model_a_text: string;
+    model_b_text: string;
+  };
+
+  stats?: {
+    total: number;
+    judged: number;
+    pending: number;
+  };
+
+  progress?: {
+    current: number;
+    total: number;
+  };
+
+  judging_progress?: {
+    judged: number;
+    total: number;
+    percentage: number;
+  };
+
+  experiment_id?: string;
+  is_complete?: boolean;
+
   created_at: Date;
   updated_at?: Date;
 }
@@ -73,7 +117,24 @@ export interface OcrQualityCreateRequest {
   name: string;
   description?: string;
   book_id: string;
-  page_sample_ids: string[];
+  page_sample_ids?: string[];
   models: string[];
-  prompts: string[];
+  prompts?: string[];
+  model_a?: string;
+  model_b?: string;
+  start_page?: number;
+  page_count?: number;
+}
+
+export interface ExperimentJudgeResponse {
+  success: boolean;
+  judged: number;
+  is_complete: boolean;
+}
+
+export interface ExperimentStatsResponse {
+  stats: {
+    total: number;
+    by_type: Record<string, number>;
+  };
 }

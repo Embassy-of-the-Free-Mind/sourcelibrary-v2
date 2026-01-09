@@ -5,7 +5,6 @@ import { PipelineState } from "./pipeline";
 
 export interface Book {
   id: string;
-  _id?: string;
   tenant_id: string;
 
   // Title fields

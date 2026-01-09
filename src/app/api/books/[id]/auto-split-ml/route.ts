@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/splitDetectionML';
+import { images } from '@/lib/api-client';
 
 /**
  * POST /api/books/[id]/auto-split-ml
@@ -67,13 +68,7 @@ export async function POST(
           imageUrl = imageUrl.replace('pct:50', 'pct:25');
         }
 
-        const imageResponse = await fetch(imageUrl);
-        if (!imageResponse.ok) {
-          errors.push(`Failed to fetch image for page ${page.page_number}`);
-          continue;
-        }
-
-        const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+        const imageBuffer = await images.fetchBuffer(imageUrl, { timeout: 30000 });
         const features = await extractFeatures(imageBuffer);
 
         // Predict split position using ML

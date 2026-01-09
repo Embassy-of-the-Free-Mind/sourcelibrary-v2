@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Loader2, BookOpen, Book as BookIcon } from 'lucide-react';
+import { categories } from '@/lib/api-client';
 
 interface Book {
   id: string;
@@ -45,12 +46,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
     async function fetchCategory() {
       try {
-        const res = await fetch(`/api/categories/${categoryId}`);
-        if (res.ok) {
-          const data = await res.json();
-          setCategory(data.category);
-          setBooks(data.books);
-        }
+        const data = await categories.get(categoryId);
+        setCategory(data.category);
+        setBooks(data.books);
       } catch (error) {
         console.error('Failed to fetch category:', error);
       } finally {

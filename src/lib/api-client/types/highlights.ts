@@ -5,29 +5,28 @@
 
 export interface Highlight {
   id: string;
-  _id?: string;
-  user_id: string;
   book_id: string;
+  book_title: string;
+  book_author?: string;
   page_id: string;
   page_number: number;
   text: string;
+  context?: string;
   note?: string;
   color?: string;
-  start_offset: number;
-  end_offset: number;
+  user_name?: string;
   created_at: Date;
   updated_at?: Date;
 }
 
 export interface HighlightCreateRequest {
   book_id: string;
+  book_title: string;
+  book_author?: string;
   page_id: string;
   page_number: number;
   text: string;
-  note?: string;
-  color?: string;
-  start_offset: number;
-  end_offset: number;
+  user_name?: string;
 }
 
 export interface HighlightUpdateRequest {

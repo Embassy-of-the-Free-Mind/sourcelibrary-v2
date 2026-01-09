@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import CameraCapture from '@/components/camera/CameraCapture';
+import { books } from '@/lib/api-client';
 
 interface Book {
   id: string;
@@ -25,9 +26,7 @@ export default function CapturePage() {
   useEffect(() => {
     async function fetchBook() {
       try {
-        const res = await fetch(`/api/books/${bookId}`);
-        if (!res.ok) throw new Error('Book not found');
-        const data = await res.json();
+        const data = await books.get(bookId);
         setBook(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load book');

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import sharp from 'sharp';
+import { images } from '@/lib/api-client';
 
 /**
  * GET /api/books/[id]/check-needs-split
@@ -38,15 +39,7 @@ interface DetectionResult {
 async function getImageAspectRatio(imageUrl: string): Promise<{ aspectRatio: number; error?: string }> {
   try {
     // Fetch a small version for speed
-    const response = await fetch(imageUrl, {
-      signal: AbortSignal.timeout(15000)
-    });
-
-    if (!response.ok) {
-      return { aspectRatio: 0, error: `HTTP ${response.status}` };
-    }
-
-    const buffer = Buffer.from(await response.arrayBuffer());
+    const buffer = await images.fetchBuffer(imageUrl, { timeout: 15000 });
     const metadata = await sharp(buffer).metadata();
 
     if (!metadata.width || !metadata.height) {

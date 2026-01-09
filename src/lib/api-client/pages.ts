@@ -9,7 +9,9 @@ import type {
   PageUpdateResponse,
   PageSplitRequest,
   PageSplitResponse,
-  PageDetectSplitResponse
+  PageDetectSplitResponse,
+  PageAskRequest,
+  PageAskResponse
 } from './types/pages';
 
 /**
@@ -95,9 +97,61 @@ export const pages = {
   },
 
   /**
+   * Ask a question about page content
+   */
+  ask: async (id: string, request: PageAskRequest): Promise<PageAskResponse> => {
+    return await apiClient.post(`/api/pages/${id}/ask`, request);
+  },
+
+  /**
    * Modernize page text
    */
   modernize: async (id: string): Promise<{ modernized: string }> => {
     return await apiClient.post(`/api/pages/${id}/modernize`);
+  },
+
+  /**
+   * Batch split two-page spreads into separate pages
+   */
+  batchSplit: async (splits: Array<{
+    pageId: string;
+    splitPosition: number;
+    detectedPosition?: number;
+    wasAdjusted?: boolean;
+  }>): Promise<{
+    success: boolean;
+    splitCount: number;
+    totalPages: number;
+    adjustmentsLogged: number;
+    cropJobId?: string;
+    cropJobPagesCount?: number;
+    message: string;
+  }> => {
+    return await apiClient.post('/api/pages/batch-split', { splits });
+  },
+
+  /**
+   * Batch reset split pages back to original state
+   */
+  batchReset: async (pageIds: string[]): Promise<{
+    success: boolean;
+    resetCount: number;
+    totalPages: number;
+  }> => {
+    return await apiClient.post('/api/pages/batch-reset', { pageIds });
+  },
+
+  /**
+   * Reset split status for a page
+   */
+  resetSplit: async (id: string): Promise<{ success: boolean }> => {
+    return await apiClient.post(`/api/pages/${id}/reset`);
+  },
+
+  /**
+   * Apply a quick fix to a page field
+   */
+  quickFix: async (id: string, field: string, fix: any): Promise<{ success: boolean; page: Page }> => {
+    return await apiClient.patch(`/api/pages/${id}/quick-fix`, { field, fix });
   },
 };

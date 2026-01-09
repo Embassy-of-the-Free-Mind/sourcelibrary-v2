@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Zap, Loader2, Play, Square, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { books, streamRequest } from '@/lib/api-client';
 
 interface StreamingPipelineProps {
   bookId: string;
@@ -45,21 +46,19 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
 
   const fetchStatus = useCallback(async (): Promise<boolean> => {
     try {
-      const res = await fetch(`/api/books/${bookId}/pipeline-stream`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.active && data.job) {
-          setJob(data.job);
-          setStats(null);
-        } else {
-          setJob(null);
-          setStats(data.stats);
-        }
-        setPollErrors(0);
-        setLastError(null);
-        return true;
+      // Use API client with auth and tracking
+      const res = await streamRequest(`/api/books/${bookId}/pipeline-stream`);
+      const data = await res.json();
+      if (data.active && data.job) {
+        setJob(data.job);
+        setStats(null);
+      } else {
+        setJob(null);
+        setStats(data.stats);
       }
-      return false;
+      setPollErrors(0);
+      setLastError(null);
+      return true;
     } catch (error) {
       console.error('Error fetching pipeline status:', error);
       return false;
@@ -85,17 +84,8 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
 
     const interval = setInterval(async () => {
       try {
-        // Trigger processing
-        const processRes = await fetch(`/api/books/${bookId}/pipeline-stream/process`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ jobId: job.id }),
-        });
-
-        if (!processRes.ok) {
-          const errorData = await processRes.json().catch(() => ({}));
-          throw new Error(errorData.error || `Processing failed: ${processRes.status}`);
-        }
+        // Trigger processing using API client
+        await books.pipelineStream.process(bookId, { jobId: job.id });
 
         // Then fetch status
         const success = await fetchStatus();
@@ -117,18 +107,9 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
     setStarting(true);
     setLastError(null);
     try {
-      const res = await fetch(`/api/books/${bookId}/pipeline-stream`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model, language, parallelPages, overwrite }),
-      });
-
-      if (res.ok) {
-        await fetchStatus();
-      } else {
-        const data = await res.json().catch(() => ({}));
-        setLastError(data.error || 'Failed to start pipeline');
-      }
+      // Use API client to start pipeline with streaming
+      await books.pipelineStream.start(bookId, { model, language, parallelPages, overwrite });
+      await fetchStatus();
     } catch (error) {
       const msg = error instanceof Error ? error.message : 'Unknown error';
       console.error('Error starting pipeline:', msg);
@@ -140,7 +121,8 @@ export default function StreamingPipeline({ bookId, bookTitle, language }: Strea
 
   const cancelPipeline = async () => {
     try {
-      await fetch(`/api/books/${bookId}/pipeline-stream`, { method: 'DELETE' });
+      // Use API client to cancel pipeline
+      await books.pipelineStream.cancel(bookId);
       await fetchStatus();
     } catch (error) {
       console.error('Error cancelling pipeline:', error);

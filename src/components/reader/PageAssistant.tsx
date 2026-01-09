@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Sparkles, MessageCircle, X, Loader2, Send, ArrowLeft, Settings, Info, RotateCcw, ChevronRight, BookOpen } from 'lucide-react';
 import type { Page, Book } from '@/lib/types';
+import { utils, pages } from '@/lib/api-client';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -249,23 +250,13 @@ export default function PageAssistant({
         ? text.slice(0, 3000) + '...'
         : text;
 
-      const res = await fetch('/api/explain', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: truncatedText,
-          book_title: book.display_title || book.title,
-          book_author: book.author,
-          page_number: page.page_number,
-          mode: 'analyze',
-        }),
+      const data = await utils.explain({
+        text: truncatedText,
+        book_title: book.display_title || book.title,
+        book_author: book.author,
+        page_number: page.page_number,
+        mode: 'analyze',
       });
-
-      if (!res.ok) {
-        throw new Error('Failed to analyze page');
-      }
-
-      const data = await res.json();
 
       if (data.items && Array.isArray(data.items)) {
         setExplainItems(data.items);
@@ -294,25 +285,16 @@ export default function PageAssistant({
         ? text.slice(0, 3000) + '...'
         : text;
 
-      const res = await fetch('/api/explain', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: truncatedText,
-          book_title: book.display_title || book.title,
-          book_author: book.author,
-          page_number: page.page_number,
-          mode: 'explain_term',
-          term,
-          customPrompt: explainPrompt !== DEFAULT_EXPLAIN_PROMPT ? explainPrompt : undefined,
-        }),
+      const data = await utils.explain({
+        text: truncatedText,
+        book_title: book.display_title || book.title,
+        book_author: book.author,
+        page_number: page.page_number,
+        mode: 'explain_term',
+        term,
+        customPrompt: explainPrompt !== DEFAULT_EXPLAIN_PROMPT ? explainPrompt : undefined,
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to explain term');
-      }
-
-      const data = await res.json();
       setExplanation(data.explanation);
     } catch (err) {
       console.error('Explain error:', err);
@@ -335,24 +317,15 @@ export default function PageAssistant({
         ? text.slice(0, 3000) + '...'
         : text;
 
-      const res = await fetch('/api/explain', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text: truncatedText,
-          book_title: book.display_title || book.title,
-          book_author: book.author,
-          page_number: page.page_number,
-          mode: 'full',
-          customPrompt: explainPrompt !== DEFAULT_EXPLAIN_PROMPT ? explainPrompt : undefined,
-        }),
+      const data = await utils.explain({
+        text: truncatedText,
+        book_title: book.display_title || book.title,
+        book_author: book.author,
+        page_number: page.page_number,
+        mode: 'full' as any,
+        customPrompt: explainPrompt !== DEFAULT_EXPLAIN_PROMPT ? explainPrompt : undefined,
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to explain');
-      }
-
-      const data = await res.json();
       setExplanation(data.explanation);
     } catch (err) {
       console.error('Explain error:', err);
@@ -390,27 +363,18 @@ Here is the text from this page:
 
 Respond in character, keeping your answers focused and conversational (2-3 paragraphs max unless more detail is needed). If you cite your own works, include the citation in parentheses.`;
 
-      const res = await fetch(`/api/pages/${page.id}/ask`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question,
-          history: messages,
-          pageText: getPageText(),
-          bookTitle: book.display_title || book.title,
-          bookAuthor: book.author,
-          pageNumber: page.page_number,
-          customPrompt: askPrompt !== DEFAULT_ASK_PROMPT ? askPrompt : personaPrompt,
-          authorSearchTerms: selectedPersona.authorSearchTerms,
-          personaName: selectedPersona.name,
-        }),
+      const data = await pages.ask(page.id, {
+        question,
+        history: messages,
+        pageText: getPageText(),
+        bookTitle: book.display_title || book.title,
+        bookAuthor: book.author,
+        pageNumber: page.page_number,
+        customPrompt: askPrompt !== DEFAULT_ASK_PROMPT ? askPrompt : personaPrompt,
+        authorSearchTerms: selectedPersona.authorSearchTerms,
+        personaName: selectedPersona.name,
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to get answer');
-      }
-
-      const data = await res.json();
       setMessages([...newMessages, { role: 'assistant', content: data.answer }]);
     } catch (err) {
       console.error('Ask error:', err);
