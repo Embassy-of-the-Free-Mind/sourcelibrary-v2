@@ -11,6 +11,8 @@ import { config } from 'dotenv';
 config({ path: '.env.local' });
 
 const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB = process.env.MONGODB_DB || 'bookstore';
+
 if (!MONGODB_URI) {
   console.error('MONGODB_URI not set');
   process.exit(1);
@@ -356,7 +358,8 @@ async function seedSocialTags() {
 
   try {
     await client.connect();
-    const db = client.db();
+    const db = client.db(MONGODB_DB);
+    console.log(`Using database: ${MONGODB_DB}`);
     const collection = db.collection('social_tags');
 
     // Check existing count
