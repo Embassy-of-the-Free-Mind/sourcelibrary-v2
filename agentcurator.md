@@ -375,3 +375,101 @@ Basil Valentine is a cornerstone of practical alchemy, bridging medieval and ear
 - Cudworth ✗
 
 ---
+
+# Acquisition Batch: 2026-01-11 — Genesis/Cosmogony Texts
+
+## Summary
+- **Theme**: Creation narratives and cosmogonies across traditions
+- **Books identified**: 9
+- **Languages**: Greek, Slavonic, Akkadian, Hebrew
+- **Date range**: c. 700 BCE - 2013 CE (editions)
+
+## Thematic Rationale
+Expanding the library's coverage of genesis/cosmogony material to complement existing holdings (Ginza Rabba, Zohar Genesis, 1 Enoch, Corpus Hermeticum, Book of the Dead). These texts represent foundational creation narratives from Greek, Jewish, and Mesopotamian traditions that influenced Western esoteric thought.
+
+## Books to Import
+
+### High Priority
+
+#### 1. Philo of Alexandria - De Opificio Mundi (Cohn, 1889)
+**IA ID**: `philonisalexandr0000phil`
+**Language**: Greek | **Year**: 1889
+**Theme**: Jewish-Hellenistic philosophy, Genesis commentary
+**Score**: 9/10
+**Notes**: Leopold Cohn's critical edition of Greek text. Essential for understanding Renaissance Christian Kabbalah and allegorical Genesis interpretation. Bridges Hebrew Bible and Greek philosophy.
+
+#### 2. Philo - De Opificio Mundi (Loeb, 1929)
+**IA ID**: `philo0001unse`
+**Language**: Greek/English | **Year**: 1929
+**Theme**: Jewish-Hellenistic philosophy
+**Score**: 8/10
+**Notes**: Loeb Classical Library edition with facing translation. F.H. Colson translation.
+
+#### 3. 2 Enoch - The Book of the Secrets of Enoch (Morfill/Charles, 1896)
+**IA ID**: `booksecretsenoc00morfgoog`
+**Language**: Slavonic/English | **Year**: 1896
+**Theme**: Jewish pseudepigrapha, cosmogony
+**Score**: 9/10
+**Notes**: First English translation from Slavonic. Seven heavens cosmology, creation of Adam from 7 substances. Complements 1 Enoch already in collection. R.H. Charles scholarly apparatus.
+
+#### 4. Hesiod - Theogony (M.L. West, 1966)
+**IA ID**: `hesiodtheogony0000mlwe`
+**Language**: Greek | **Year**: 1966
+**Theme**: Greek cosmogony
+**Score**: 10/10
+**Notes**: THE authoritative critical edition with prolegomena and commentary. M.L. West's magisterial work. Foundational Greek creation narrative - Chaos, Gaia, Ouranos, Titans.
+
+#### 5. Hesiod - Theogony (Loeb, Most, 2006)
+**IA ID**: `lcl-57-hesiod`
+**Language**: Greek/English | **Year**: 2006
+**Theme**: Greek cosmogony
+**Score**: 8/10
+**Notes**: New Loeb edition with improved text and translation by Glenn Most.
+
+#### 6. Enuma Elish - Seven Tablets of Creation (King, 1902)
+**IA ID**: `enumaelishvol1se0000leon`
+**Language**: Akkadian/English | **Year**: 1902
+**Theme**: Babylonian cosmogony
+**Score**: 10/10
+**Notes**: British Museum edition by L.W. King with cuneiform transliteration, translation, and commentary. Marduk and Tiamat creation epic. Background for Genesis 1.
+
+#### 7. Enuma Elish - The Babylonian Genesis (Heidel, 1951)
+**IA ID**: `the-enuma-elish-the-babylon-genesis-the-story-of-creation.-by-alexander-heidel`
+**Language**: Akkadian/English | **Year**: 1951
+**Theme**: Babylonian cosmogony
+**Score**: 9/10
+**Notes**: Alexander Heidel's standard scholarly translation. Compares Babylonian and Hebrew creation accounts.
+
+#### 8. Babylonian Creation Myths (Lambert, 2013)
+**IA ID**: `babyloniancreati0000unse`
+**Language**: Akkadian/English | **Year**: 2013
+**Theme**: Mesopotamian cosmogony
+**Score**: 9/10
+**Notes**: W.G. Lambert's comprehensive work. Includes Enuma Elish plus other creation texts.
+
+### Bonus
+
+#### 9. 3 Enoch - Hebrew Book of Enoch (Odeberg, 1928)
+**IA ID**: `hebrewbookofenoc0000unse`
+**Language**: Hebrew/English | **Year**: 1928
+**Theme**: Merkavah mysticism, cosmology
+**Score**: 8/10
+**Notes**: Sefer Hekhalot with Metatron traditions. Completes Enoch trilogy (1, 2, 3).
+
+## Import Script
+Created: `scripts/import-cosmogony-texts.ts`
+Run: `npx tsx scripts/import-cosmogony-texts.ts`
+
+## Post-Import Tasks
+1. Run import script from production environment
+2. Queue all imported books for batch OCR
+3. Prioritize Philo and Hesiod for translation (Greek → well-supported)
+4. Consider 2 Enoch for translation (scholarly English already included)
+
+## Future Gaps to Fill
+- **Orphic texts**: Orphic Hymns, Orphic Argonautica
+- **Egyptian**: Coffin Texts, Pyramid Texts (if scholarly editions available)
+- **Manichaean**: Kephalaia (if available)
+- **Nag Hammadi cosmogonies**: On the Origin of the World, Hypostasis of the Archons (critical editions)
+
+---
