@@ -351,6 +351,266 @@ const SOCIAL_TAGS: SocialTagSeed[] = [
     relevance: 'Shares historical texts, manuscripts, prints - direct alignment',
     priority: 9,
   },
+
+  // =============================================================================
+  // ADDITIONAL ACCOUNTS - Added 2026-01-11
+  // =============================================================================
+
+  // JUNGIAN - Additional
+  {
+    handle: 'junginstitute',
+    name: 'C.G. Jung Institute Zürich',
+    audience: 'jungian',
+    description: 'Official Jungian training institute in Zürich, Switzerland',
+    relevance: 'Authoritative source for Jungian psychology education and practice',
+    priority: 8,
+  },
+  {
+    handle: 'DrJungSays',
+    name: 'Jungian Psychology',
+    audience: 'jungian',
+    description: 'Quotes and insights from Carl Jung\'s writings',
+    followers: 28000,
+    relevance: 'Engaged audience interested in Jung\'s ideas on alchemy and archetypes',
+    priority: 7,
+  },
+  {
+    handle: 'JungAtHeart',
+    name: 'Jung at Heart',
+    audience: 'jungian',
+    description: 'Jungian blog and community discussion',
+    relevance: 'Active community discussing Jungian concepts including alchemical symbolism',
+    priority: 6,
+  },
+
+  // ESOTERIC - Additional
+  {
+    handle: 'EsotericaChannel',
+    name: 'Esoterica',
+    audience: 'esoteric',
+    description: 'YouTube channel on Western esotericism by Justin Sledge PhD',
+    followers: 15000,
+    relevance: 'Excellent scholarly coverage of Hermeticism, Kabbalah, alchemy',
+    priority: 9,
+  },
+  {
+    handle: 'DanAttrell',
+    name: 'Dan Attrell',
+    audience: 'esoteric',
+    description: 'Renaissance scholar, translator of Heinrich Cornelius Agrippa',
+    relevance: 'Translator of key Renaissance magical texts, direct relevance',
+    priority: 9,
+  },
+  {
+    handle: 'HermeticStudent',
+    name: 'The Hermetic Student',
+    audience: 'esoteric',
+    description: 'Educational content on Hermeticism and Western mystery traditions',
+    relevance: 'Growing audience interested in primary sources on Hermeticism',
+    priority: 7,
+  },
+  {
+    handle: 'occultofperson',
+    name: 'Occult of Personality',
+    audience: 'esoteric',
+    description: 'Podcast interviewing scholars and practitioners of Western esotericism',
+    followers: 8000,
+    relevance: 'Interviews with leading scholars in the field',
+    priority: 7,
+  },
+  {
+    handle: 'wouter_hanegraaff',
+    name: 'Wouter Hanegraaff',
+    audience: 'esoteric',
+    description: 'Professor of History of Hermetic Philosophy, Amsterdam',
+    relevance: 'Founder of ESSWE, leading academic authority on Western esotericism',
+    priority: 10,
+  },
+
+  // ART HISTORY - Additional
+  {
+    handle: 'FolgerLibrary',
+    name: 'Folger Shakespeare Library',
+    audience: 'arthistory',
+    description: 'World\'s largest Shakespeare collection, rich in early modern prints',
+    followers: 95000,
+    relevance: 'Early modern manuscripts, emblems, and printed books',
+    priority: 9,
+  },
+  {
+    handle: 'BodleianLibs',
+    name: 'Bodleian Libraries',
+    audience: 'arthistory',
+    description: 'University of Oxford\'s research library system',
+    followers: 152000,
+    relevance: 'Major manuscript and early printed book collections',
+    priority: 9,
+  },
+  {
+    handle: 'bnabordelmann',
+    name: 'Brigitte Borel',
+    audience: 'arthistory',
+    description: 'Curator specializing in medieval and Renaissance manuscripts',
+    relevance: 'Expert in book history and illuminated manuscripts',
+    priority: 7,
+  },
+  {
+    handle: 'print_collector',
+    name: 'The Print Collector',
+    audience: 'arthistory',
+    description: 'Account dedicated to old master prints and engravings',
+    relevance: 'Focus on historical engravings, directly relevant to Source Library imagery',
+    priority: 8,
+  },
+
+  // PHILOSOPHY - Additional
+  {
+    handle: 'RenPhilosophy',
+    name: 'Renaissance Philosophy',
+    audience: 'philosophy',
+    description: 'Academic coverage of Renaissance thought',
+    relevance: 'Neoplatonism, Ficino, Pico della Mirandola - core Source Library topics',
+    priority: 8,
+  },
+  {
+    handle: 'ISIHPhilosophy',
+    name: 'ISIH Philosophy',
+    audience: 'philosophy',
+    description: 'International Society for Intellectual History',
+    relevance: 'Scholarly community interested in history of ideas',
+    priority: 8,
+  },
+  {
+    handle: 'CarolineBowman',
+    name: 'Caroline Bowman',
+    audience: 'philosophy',
+    description: 'Scholar of early modern philosophy and science',
+    relevance: 'Research on natural philosophy and its connections to alchemy',
+    priority: 7,
+  },
+
+  // CONSCIOUSNESS - Additional
+  {
+    handle: 'EssentiaTweets',
+    name: 'Essentia Foundation',
+    audience: 'consciousness',
+    description: 'Foundation exploring consciousness and metaphysics',
+    followers: 12000,
+    relevance: 'Bridges modern philosophy of mind with perennial traditions',
+    priority: 8,
+  },
+  {
+    handle: 'JeffreyJKripal',
+    name: 'Jeffrey J. Kripal',
+    audience: 'consciousness',
+    description: 'Professor of Religion, author of Secret Body',
+    relevance: 'Bridges academic study of religion with consciousness studies',
+    priority: 8,
+  },
+  {
+    handle: 'NewThinkingAlwd',
+    name: 'New Thinking Allowed',
+    audience: 'consciousness',
+    description: 'Interviews on consciousness, philosophy, and esoteric traditions',
+    followers: 45000,
+    relevance: 'Bridges scholarly and popular audiences on perennial philosophy',
+    priority: 7,
+  },
+
+  // AESTHETIC - Additional
+  {
+    handle: 'rijksmuseum',
+    name: 'Rijksmuseum',
+    audience: 'aesthetic',
+    description: 'Dutch national museum of art and history',
+    followers: 820000,
+    relevance: 'Dutch Golden Age art, engravings, emblems directly relevant',
+    priority: 9,
+  },
+  {
+    handle: 'britishmuseum',
+    name: 'British Museum',
+    audience: 'aesthetic',
+    description: 'Major museum with world-class print collection',
+    followers: 2400000,
+    relevance: 'Shares historical prints and manuscripts regularly',
+    priority: 8,
+  },
+  {
+    handle: 'SmithsonianMag',
+    name: 'Smithsonian Magazine',
+    audience: 'aesthetic',
+    description: 'Popular magazine covering history, science, art',
+    followers: 3200000,
+    relevance: 'Massive reach for historical content',
+    priority: 7,
+  },
+  {
+    handle: 'artaborescens',
+    name: 'Arbor Scientiae',
+    audience: 'aesthetic',
+    description: 'Account sharing tree-of-knowledge diagrams and visual knowledge',
+    relevance: 'Focus on historical visual knowledge systems, directly relevant',
+    priority: 8,
+  },
+
+  // =============================================================================
+  // SPECIALIZED NICHES
+  // =============================================================================
+
+  // ALCHEMY SPECIFIC
+  {
+    handle: 'AlchemyChannel',
+    name: 'The Alchemy Channel',
+    audience: 'esoteric',
+    description: 'Dedicated to alchemical texts, images, and symbolism',
+    relevance: 'Direct alignment with alchemical content in Source Library',
+    priority: 9,
+  },
+  {
+    handle: 'SplendorSolis_',
+    name: 'Splendor Solis',
+    audience: 'esoteric',
+    description: 'Account focused on alchemical art and symbolism',
+    relevance: 'Sharing alchemical imagery with engaged audience',
+    priority: 8,
+  },
+
+  // RENAISSANCE/EARLY MODERN
+  {
+    handle: 'EarlyModernMag',
+    name: 'Early Modern Magazine',
+    audience: 'philosophy',
+    description: 'Publication covering early modern history and culture',
+    relevance: 'Focus on 1500-1800 period, our core collection range',
+    priority: 8,
+  },
+  {
+    handle: 'SixteenthCentury',
+    name: 'Sixteenth Century Society',
+    audience: 'philosophy',
+    description: 'Academic society for 16th century studies',
+    relevance: 'Scholarly community studying our primary period',
+    priority: 8,
+  },
+
+  // BOOK HISTORY
+  {
+    handle: 'HistorieofBooks',
+    name: 'History of the Book',
+    audience: 'arthistory',
+    description: 'Academic community for book history studies',
+    relevance: 'Direct interest in our primary sources as material objects',
+    priority: 8,
+  },
+  {
+    handle: 'TypographyBooks',
+    name: 'Typography & Books',
+    audience: 'arthistory',
+    description: 'Account focused on printing history and book design',
+    relevance: 'Interest in early printed books and typography',
+    priority: 7,
+  },
 ];
 
 async function seedSocialTags() {

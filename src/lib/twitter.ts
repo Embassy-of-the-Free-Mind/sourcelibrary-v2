@@ -176,3 +176,127 @@ export async function verifyCredentials(): Promise<{
     };
   }
 }
+
+/**
+ * Tweet performance metrics from Twitter API
+ */
+export interface TweetMetrics {
+  impressions: number;
+  likes: number;
+  retweets: number;
+  replies: number;
+  quotes: number;
+  bookmarks: number;
+  url_clicks: number;
+  profile_visits: number;
+  fetched_at: Date;
+}
+
+/**
+ * Fetch tweet metrics from Twitter API.
+ *
+ * Note: Requires at least Basic tier access for organic metrics.
+ * Free tier only gets public metrics (likes, retweets, replies).
+ *
+ * @param tweetId - The ID of the tweet
+ * @returns Tweet metrics or null if not available
+ */
+interface TwitterMetricsResponse {
+  impression_count?: number;
+  like_count?: number;
+  retweet_count?: number;
+  reply_count?: number;
+  quote_count?: number;
+  bookmark_count?: number;
+  url_link_clicks?: number;
+  user_profile_clicks?: number;
+}
+
+export async function getTweetMetrics(tweetId: string): Promise<TweetMetrics | null> {
+  try {
+    const client = getTwitterClient();
+
+    const tweet = await client.v2.singleTweet(tweetId, {
+      'tweet.fields': ['public_metrics', 'organic_metrics', 'non_public_metrics'],
+    });
+
+    if (!tweet.data) {
+      return null;
+    }
+
+    const publicMetrics = (tweet.data.public_metrics || {}) as TwitterMetricsResponse;
+    // organic_metrics and non_public_metrics may not be in the type but can be returned
+    const tweetData = tweet.data as unknown as Record<string, unknown>;
+    const organicMetrics = (tweetData.organic_metrics || {}) as TwitterMetricsResponse;
+    const nonPublicMetrics = (tweetData.non_public_metrics || {}) as TwitterMetricsResponse;
+
+    return {
+      impressions: organicMetrics.impression_count || nonPublicMetrics.impression_count || 0,
+      likes: publicMetrics.like_count || 0,
+      retweets: publicMetrics.retweet_count || 0,
+      replies: publicMetrics.reply_count || 0,
+      quotes: publicMetrics.quote_count || 0,
+      bookmarks: publicMetrics.bookmark_count || 0,
+      url_clicks: nonPublicMetrics.url_link_clicks || 0,
+      profile_visits: organicMetrics.user_profile_clicks || 0,
+      fetched_at: new Date(),
+    };
+  } catch (error) {
+    console.error('Failed to fetch tweet metrics:', error);
+    return null;
+  }
+}
+
+/**
+ * Fetch metrics for multiple tweets at once.
+ * More efficient than calling getTweetMetrics for each tweet.
+ *
+ * @param tweetIds - Array of tweet IDs (max 100)
+ * @returns Map of tweetId -> metrics
+ */
+export async function getTweetMetricsBatch(
+  tweetIds: string[]
+): Promise<Map<string, TweetMetrics>> {
+  const results = new Map<string, TweetMetrics>();
+
+  if (tweetIds.length === 0) return results;
+
+  try {
+    const client = getTwitterClient();
+
+    // Twitter API allows up to 100 tweets per request
+    const chunks: string[][] = [];
+    for (let i = 0; i < tweetIds.length; i += 100) {
+      chunks.push(tweetIds.slice(i, i + 100));
+    }
+
+    for (const chunk of chunks) {
+      const tweets = await client.v2.tweets(chunk, {
+        'tweet.fields': ['public_metrics', 'organic_metrics', 'non_public_metrics'],
+      });
+
+      for (const tweet of tweets.data || []) {
+        const publicMetrics = (tweet.public_metrics || {}) as TwitterMetricsResponse;
+        const tweetData = tweet as unknown as Record<string, unknown>;
+        const organicMetrics = (tweetData.organic_metrics || {}) as TwitterMetricsResponse;
+        const nonPublicMetrics = (tweetData.non_public_metrics || {}) as TwitterMetricsResponse;
+
+        results.set(tweet.id, {
+          impressions: organicMetrics.impression_count || nonPublicMetrics.impression_count || 0,
+          likes: publicMetrics.like_count || 0,
+          retweets: publicMetrics.retweet_count || 0,
+          replies: publicMetrics.reply_count || 0,
+          quotes: publicMetrics.quote_count || 0,
+          bookmarks: publicMetrics.bookmark_count || 0,
+          url_clicks: nonPublicMetrics.url_link_clicks || 0,
+          profile_visits: organicMetrics.user_profile_clicks || 0,
+          fetched_at: new Date(),
+        });
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch tweet metrics batch:', error);
+  }
+
+  return results;
+}

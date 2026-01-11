@@ -25,6 +25,10 @@ import {
   AtSign,
   Users,
   Search,
+  Eye,
+  MessageCircle,
+  Repeat,
+  BarChart2,
 } from 'lucide-react';
 import { SocialPost, SocialPostStatus } from '@/lib/types';
 
@@ -197,6 +201,9 @@ export default function SocialAdminPage() {
 
   // Publishing state
   const [publishing, setPublishing] = useState<string | null>(null);
+
+  // Metrics refresh state
+  const [refreshingMetrics, setRefreshingMetrics] = useState(false);
 
   // Fetch config
   const fetchConfig = useCallback(async () => {
@@ -531,6 +538,28 @@ export default function SocialAdminPage() {
       }
     } catch (error) {
       console.error('Delete error:', error);
+    }
+  };
+
+  // Refresh metrics for posted tweets
+  const refreshMetrics = async () => {
+    setRefreshingMetrics(true);
+    try {
+      const res = await fetch('/api/social/posts/refresh-metrics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log('Metrics refreshed:', data);
+        fetchPosts();
+      }
+    } catch (error) {
+      console.error('Failed to refresh metrics:', error);
+    } finally {
+      setRefreshingMetrics(false);
     }
   };
 
@@ -1248,16 +1277,28 @@ export default function SocialAdminPage() {
           <div className="space-y-6">
             {/* Posted */}
             <div>
-              <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
-                <CheckCircle className="w-5 h-5 text-green-500" />
-                Posted ({postedPosts.length})
-              </h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-medium flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  Posted ({postedPosts.length})
+                </h2>
+                {postedPosts.length > 0 && twitterConnected && (
+                  <button
+                    onClick={refreshMetrics}
+                    disabled={refreshingMetrics}
+                    className="text-sm text-stone-400 hover:text-white flex items-center gap-1 px-3 py-1.5 bg-stone-800 hover:bg-stone-700 rounded"
+                  >
+                    <BarChart2 className={`w-4 h-4 ${refreshingMetrics ? 'animate-pulse' : ''}`} />
+                    {refreshingMetrics ? 'Refreshing...' : 'Refresh Metrics'}
+                  </button>
+                )}
+              </div>
               {postedPosts.length === 0 ? (
                 <p className="text-stone-500">No posts yet.</p>
               ) : (
                 <div className="grid gap-3">
                   {postedPosts.map((post) => (
-                    <PostCard key={post.id} post={post} onDelete={() => deletePost(post.id)} />
+                    <PostCard key={post.id} post={post} onDelete={() => deletePost(post.id)} showMetrics />
                   ))}
                 </div>
               )}
@@ -1563,6 +1604,13 @@ export default function SocialAdminPage() {
   );
 }
 
+// Calculate full tweet character count
+function calculateTweetLength(text: string, hashtags: string[], includeLink: boolean = true): number {
+  const hashtagStr = hashtags.length > 0 ? '\n\n' + hashtags.map(t => `#${t}`).join(' ') : '';
+  const linkLength = includeLink ? 24 : 0; // Twitter shortens all links to 23 chars + newline
+  return text.length + hashtagStr.length + linkLength;
+}
+
 // Post Card Component with inline editing
 function PostCard({
   post,
@@ -1572,6 +1620,7 @@ function PostCard({
   onUpdate,
   publishing,
   twitterConnected,
+  showMetrics,
 }: {
   post: SocialPost;
   onQueue?: () => void;
@@ -1580,20 +1629,31 @@ function PostCard({
   onUpdate?: (updates: { tweet_text?: string; hashtags?: string[] }) => Promise<void>;
   publishing?: boolean;
   twitterConnected?: boolean;
+  showMetrics?: boolean;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(post.tweet_text || '');
   const [editHashtags, setEditHashtags] = useState(post.hashtags?.join(', ') || '');
   const [saving, setSaving] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const StatusIcon = STATUS_ICONS[post.status];
+
+  // Parse hashtags for character count
+  const parsedHashtags = editHashtags.split(',').map(t => t.trim().replace(/^#/, '')).filter(Boolean);
+  const charCount = calculateTweetLength(editText, parsedHashtags);
+  const isOverLimit = charCount > 280;
 
   const handleSave = async () => {
     if (!onUpdate) return;
+    if (isOverLimit) {
+      alert('Tweet exceeds 280 characters. Please shorten it.');
+      return;
+    }
     setSaving(true);
     try {
       await onUpdate({
         tweet_text: editText,
-        hashtags: editHashtags.split(',').map(t => t.trim().replace(/^#/, '')).filter(Boolean),
+        hashtags: parsedHashtags,
       });
       setIsEditing(false);
     } finally {
@@ -1616,13 +1676,22 @@ function PostCard({
           <div className="flex-1">
             {isEditing ? (
               <div className="space-y-2">
-                <textarea
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                  className="w-full bg-stone-800 border border-stone-700 rounded px-2 py-1 text-sm resize-none"
-                  rows={3}
-                  placeholder="Tweet text..."
-                />
+                <div className="relative">
+                  <textarea
+                    value={editText}
+                    onChange={(e) => setEditText(e.target.value)}
+                    className={`w-full bg-stone-800 border rounded px-2 py-1 text-sm resize-none ${
+                      isOverLimit ? 'border-red-500' : 'border-stone-700'
+                    }`}
+                    rows={3}
+                    placeholder="Tweet text..."
+                  />
+                  <div className={`absolute bottom-1 right-2 text-xs ${
+                    isOverLimit ? 'text-red-400' : charCount > 260 ? 'text-amber-400' : 'text-stone-500'
+                  }`}>
+                    {charCount}/280
+                  </div>
+                </div>
                 <input
                   type="text"
                   value={editHashtags}
@@ -1630,10 +1699,10 @@ function PostCard({
                   className="w-full bg-stone-800 border border-stone-700 rounded px-2 py-1 text-xs"
                   placeholder="hashtags (comma separated)"
                 />
-                <div className="flex gap-2">
+                <div className="flex gap-2 items-center">
                   <button
                     onClick={handleSave}
-                    disabled={saving}
+                    disabled={saving || isOverLimit}
                     className="text-xs px-2 py-1 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded"
                   >
                     {saving ? 'Saving...' : 'Save'}
@@ -1648,7 +1717,42 @@ function PostCard({
                   >
                     Cancel
                   </button>
+                  <button
+                    onClick={() => setShowPreview(!showPreview)}
+                    className="text-xs px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded ml-auto"
+                  >
+                    {showPreview ? 'Hide Preview' : 'Preview'}
+                  </button>
                 </div>
+                {showPreview && (
+                  <div className="mt-3 bg-white text-black rounded-xl p-3 text-sm">
+                    <div className="flex gap-2 mb-2">
+                      <div className="w-10 h-10 bg-stone-300 rounded-full flex-shrink-0" />
+                      <div>
+                        <div className="font-bold">Ancient Wisdom Trust</div>
+                        <div className="text-stone-500 text-xs">@AncientWisdomTr</div>
+                      </div>
+                    </div>
+                    <p className="whitespace-pre-wrap mb-2">{editText}</p>
+                    {parsedHashtags.length > 0 && (
+                      <p className="text-sky-600 mb-2">
+                        {parsedHashtags.map(t => `#${t}`).join(' ')}
+                      </p>
+                    )}
+                    <div className="border border-stone-200 rounded-xl overflow-hidden">
+                      <img
+                        src={post.image_data.cropped_url}
+                        alt=""
+                        className="w-full h-40 object-cover"
+                      />
+                      <div className="p-2 bg-stone-50">
+                        <div className="text-xs text-stone-500">sourcelibrary.org</div>
+                        <div className="font-medium text-sm truncate">{post.image_data.book_title}</div>
+                        <div className="text-xs text-stone-600 truncate">{post.image_data.description}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ) : (
               <div
@@ -1691,6 +1795,45 @@ function PostCard({
           >
             View on Twitter <ExternalLink className="w-3 h-3" />
           </a>
+        )}
+
+        {/* Metrics display for posted tweets */}
+        {showMetrics && post.metrics && (
+          <div className="mt-3 flex flex-wrap gap-3 py-2 px-3 bg-stone-800/50 rounded-lg">
+            <div className="flex items-center gap-1 text-xs">
+              <Eye className="w-3.5 h-3.5 text-stone-400" />
+              <span className="text-stone-300">{post.metrics.impressions.toLocaleString()}</span>
+              <span className="text-stone-500">views</span>
+            </div>
+            <div className="flex items-center gap-1 text-xs">
+              <Heart className="w-3.5 h-3.5 text-red-400" />
+              <span className="text-stone-300">{post.metrics.likes.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center gap-1 text-xs">
+              <Repeat className="w-3.5 h-3.5 text-green-400" />
+              <span className="text-stone-300">{post.metrics.retweets.toLocaleString()}</span>
+            </div>
+            <div className="flex items-center gap-1 text-xs">
+              <MessageCircle className="w-3.5 h-3.5 text-sky-400" />
+              <span className="text-stone-300">{post.metrics.replies.toLocaleString()}</span>
+            </div>
+            {post.metrics.url_clicks > 0 && (
+              <div className="flex items-center gap-1 text-xs">
+                <ExternalLink className="w-3.5 h-3.5 text-violet-400" />
+                <span className="text-stone-300">{post.metrics.url_clicks.toLocaleString()}</span>
+                <span className="text-stone-500">clicks</span>
+              </div>
+            )}
+            <div className="ml-auto text-[10px] text-stone-500">
+              Updated {new Date(post.metrics.fetched_at).toLocaleDateString()}
+            </div>
+          </div>
+        )}
+
+        {showMetrics && !post.metrics && post.status === 'posted' && (
+          <div className="mt-3 py-2 px-3 bg-stone-800/30 rounded-lg text-xs text-stone-500 italic">
+            No metrics yet. Click "Refresh Metrics" to fetch.
+          </div>
         )}
 
         {!isEditing && (

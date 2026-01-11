@@ -1706,6 +1706,19 @@ export interface SocialPost {
   twitter_url?: string;
   error?: string;                // If failed
 
+  // Performance metrics (fetched from Twitter)
+  metrics?: {
+    impressions: number;
+    likes: number;
+    retweets: number;
+    replies: number;
+    quotes: number;
+    bookmarks: number;
+    url_clicks: number;
+    profile_visits: number;
+    fetched_at: Date;
+  };
+
   created_at: Date;
   updated_at: Date;
 }
