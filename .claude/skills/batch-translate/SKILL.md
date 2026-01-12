@@ -79,8 +79,10 @@ All batch jobs use **Gemini Batch API** for 50% cost savings.
 | Job Type | API | Model | Cost |
 |----------|-----|-------|------|
 | Single page | Realtime | gemini-3-flash-preview | Full price |
-| batch_ocr | Batch API | gemini-2.5-flash | **50% off** |
-| batch_translate | Batch API | gemini-2.5-flash | **50% off** |
+| batch_ocr | Batch API | gemini-3-flash-preview | **50% off** |
+| batch_translate | Batch API | gemini-3-flash-preview | **50% off** |
+
+**IMPORTANT: Always use `gemini-3-flash-preview` for all OCR and translation tasks. Do NOT use `gemini-2.5-flash`.**
 
 See `docs/BATCH-PROCESSING.md` for full documentation.
 
@@ -390,7 +392,8 @@ This script processes all books with proper rate limiting:
 # Optimized for Tier 1 (300 RPM) - adjust SLEEP_TIME for other tiers
 
 BASE_URL="https://sourcelibrary.org"
-MODEL="gemini-2.5-flash"
+# IMPORTANT: Always use gemini-3-flash-preview, NOT gemini-2.5-flash
+MODEL="gemini-3-flash-preview"
 BATCH_SIZE=5
 SLEEP_TIME=0.4  # Tier 1: 0.4s, Tier 2: 0.12s, Tier 3: 0.06s
 
