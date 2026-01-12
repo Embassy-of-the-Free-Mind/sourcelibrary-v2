@@ -79,7 +79,7 @@ export async function POST(
     const context = contextParts.join('\n\n');
 
     // Ask AI to identify
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
     const prompt = `${IDENTIFY_PROMPT}\n\n**Pages:**\n\n${context}`;
 
     const result = await model.generateContent(prompt);

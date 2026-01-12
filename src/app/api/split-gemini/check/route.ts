@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       mimeType = 'image/jpeg';
     }
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const prompt = `Analyze this scanned book image and determine:
 
