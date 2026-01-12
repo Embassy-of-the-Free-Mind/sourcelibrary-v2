@@ -150,7 +150,7 @@ export async function POST(request: Request) {
                   ocr: {
                     data: text,
                     updated_at: now,
-                    model: 'gemini-2.5-flash',
+                    model: 'gemini-3-flash-preview',
                     source: 'batch_api_reconcile',
                     input_tokens: usage?.promptTokenCount || 0,
                     output_tokens: usage?.candidatesTokenCount || 0,
@@ -168,7 +168,7 @@ export async function POST(request: Request) {
                   translation: {
                     data: text,
                     updated_at: now,
-                    model: 'gemini-2.5-flash',
+                    model: 'gemini-3-flash-preview',
                     target_language: 'English',
                     source: 'batch_api_reconcile',
                     input_tokens: usage?.promptTokenCount || 0,
