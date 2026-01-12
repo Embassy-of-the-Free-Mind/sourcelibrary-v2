@@ -104,7 +104,10 @@ async function importBook(client: MongoClient, book: typeof COSMOGONY_TEXTS[0]) 
   // Create page documents
   const pages = [];
   for (let i = 0; i < book.page_count; i++) {
+    const pageId = new ObjectId();
     pages.push({
+      _id: pageId,
+      id: pageId.toString(),
       book_id: bookId.toString(),
       page_number: i,
       image_url: `https://archive.org/download/${book.ia_identifier}/page/n${i}/full/pct:100/0/default.jpg`,
