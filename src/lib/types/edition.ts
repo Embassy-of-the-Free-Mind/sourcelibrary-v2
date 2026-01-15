@@ -30,7 +30,7 @@ export interface TranslationEdition {
   // Identifiers
   doi?: string;                // "10.5281/zenodo.12345678"
   doi_url?: string;            // "https://doi.org/10.5281/zenodo.12345678"
-  zenodo_id?: number;          // Zenodo deposit ID
+  zenodo_id?: number | string; // Zenodo deposit ID (API may return string or number)
   zenodo_url?: string;         // "https://zenodo.org/record/12345678"
 
   // Dates

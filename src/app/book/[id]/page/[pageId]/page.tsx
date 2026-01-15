@@ -47,7 +47,7 @@ export default function PageEditorPage({ params }: PageProps) {
       setLoading(true);
       const startTime = performance.now();
       try {
-        const bookData = await books.get(bookId, { full: true });
+        const bookData = await books.get(bookId, { full: true }) as import('@/lib/api-client').BookWithPages;
 
         setBook(bookData);
         setPages(bookData.pages || []);
@@ -145,7 +145,7 @@ export default function PageEditorPage({ params }: PageProps) {
         onSave={handleSave}
         onRefresh={async () => {
           try {
-            const data = await books.get(bookId, { full: true });
+            const data = await books.get(bookId, { full: true }) as import('@/lib/api-client').BookWithPages;
             setBook(data);
             setPages(data.pages || []);
           } catch (error) {

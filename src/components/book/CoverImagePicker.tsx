@@ -46,7 +46,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
     try {
       const thumbnailUrl = getPageImageUrl(page, 400);
 
-      await books.update(bookId, { thumbnail: thumbnailUrl });
+      await books.update(bookId, { thumbnail: thumbnailUrl || undefined });
       setIsOpen(false);
       router.refresh();
     } catch (error) {

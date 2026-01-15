@@ -25,9 +25,9 @@ export function usePrompts() {
           promptsApi.list({ type: 'summary' })
         ]);
 
-        const ocrPrompts = ocrData.prompts || [];
-        const transPrompts = transData.prompts || [];
-        const sumPrompts = sumData.prompts || [];
+        const ocrPrompts = ocrData || [];
+        const transPrompts = transData || [];
+        const sumPrompts = sumData || [];
 
         setPrompts({
           ocr: ocrPrompts.find((p: Prompt) => p.is_default) || ocrPrompts[0] || null,

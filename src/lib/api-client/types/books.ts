@@ -2,11 +2,15 @@
  * Book API Types
  * Shared between API client and route handlers
  */
-import type { Book } from '@/lib/types';
+import type { Book, Page } from '@/lib/types';
 
 export interface BooksListResponse {
   books: Book[];
   total?: number;
+}
+
+export interface BookWithPages extends Book {
+  pages: Page[];
 }
 
 export interface BookSearchResponse {
@@ -62,7 +66,7 @@ export interface BatchOcrResponse {
 }
 
 export interface BookReimportRequest {
-  mode?: 'full' | 'metadata_only';
+  mode?: 'full' | 'soft' | 'metadata_only';
 }
 
 export interface BookReimportResponse {
@@ -80,6 +84,7 @@ export interface BookPagesResponse {
     photo?: string;
     photo_original?: string;
   }>;
+  total?: number;
 }
 
 export interface BookQARequest {
@@ -120,6 +125,15 @@ export interface BookIdentifyRequest {
   year?: string;
 }
 
+export interface CatalogMatch {
+  id: string;
+  title: string;
+  author?: string;
+  year?: string;
+  place?: string;
+  source: string;
+}
+
 export interface BookIdentifyResponse {
   ustc_matches: Array<{
     ustc_id: string;
@@ -131,6 +145,16 @@ export interface BookIdentifyResponse {
     confidence: number;
   }>;
   suggested_update?: Partial<Book>;
+  identified?: {
+    title?: string;
+    title_english?: string;
+    author?: string;
+    year?: string;
+    place?: string;
+    publisher?: string;
+    language?: string;
+  };
+  catalog_matches?: CatalogMatch[];
 }
 
 export interface BookArchiveImagesRequest {

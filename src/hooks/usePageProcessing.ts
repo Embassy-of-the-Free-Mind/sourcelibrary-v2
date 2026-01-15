@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import type { Page, Book, Prompt } from '@/lib/types';
-import { processing } from '@/lib/api-client';
+import { processing as processingApi } from '@/lib/api-client';
 
 export interface ProcessingState {
   active: boolean;
@@ -66,43 +66,36 @@ export function usePageProcessing({
         };
       }).filter(p => p.imageUrl);
 
-      const { results } = await processing.batchOcr({
+      const { results } = await processingApi.batchOcr({
         pages: batchPages,
         autoSave: true
       });
-        const completed: string[] = [];
-        const failed: string[] = [];
 
-        for (const result of results) {
-          if (result.success) {
-            const page = pages.find(p => p.id === result.pageId);
-            onPageUpdate(result.pageId, {
-              ocr: {
-                data: result.ocr,
-                language: book?.language || 'unknown',
-                model: 'gemini-3-flash-preview'
-              }
-            });
-            completed.push(result.pageId);
-          } else {
-            failed.push(result.pageId);
-          }
+      const completed: string[] = [];
+      const failed: string[] = [];
+
+      for (const result of results) {
+        if (result.success && result.ocr) {
+          onPageUpdate(result.pageId, {
+            ocr: {
+              data: result.ocr,
+              language: book?.language || 'unknown',
+              model: 'gemini-3-flash-preview'
+            }
+          });
+          completed.push(result.pageId);
+        } else {
+          failed.push(result.pageId);
         }
-
-        setProcessing(prev => ({
-          ...prev,
-          active: false,
-          completed,
-          failed,
-          currentIndex: pageIds.length
-        }));
-      } else {
-        setProcessing(prev => ({
-          ...prev,
-          active: false,
-          failed: pageIds
-        }));
       }
+
+      setProcessing(prev => ({
+        ...prev,
+        active: false,
+        completed,
+        failed,
+        currentIndex: pageIds.length
+      }));
     } catch (error) {
       console.error('Batch OCR error:', error);
       setProcessing(prev => ({
@@ -161,7 +154,7 @@ export function usePageProcessing({
         const pageIndex = pages.findIndex(p => p.id === pageId);
         const previousPage = pageIndex > 0 ? pages[pageIndex - 1] : null;
 
-        const result = await processing.process({
+        const result = await processingApi.process({
           pageId,
           action: type,
           imageUrl: page.photo,

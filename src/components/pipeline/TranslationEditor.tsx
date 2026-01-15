@@ -1,37 +1,28 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import { processing, prompts as promptsApi, pages } from '@/lib/api-client';
 import {
   Loader2,
   ChevronLeft,
   ChevronRight,
-  Settings,
   X,
   Eye,
   Pencil,
   Copy,
   Check,
-  ZoomIn,
-  Columns,
   BookOpen,
-  Maximize2,
   Image as ImageIcon,
   FileText,
   Languages,
   MessageSquare,
   RotateCcw,
-  Scissors,
   Sparkles,
   MessageCircle,
-  Share2,
   Highlighter,
   StickyNote,
   Info
 } from 'lucide-react';
 import NotesRenderer from '@/components/reader/NotesRenderer';
-import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import PageAssistant from '@/components/reader/PageAssistant';
@@ -40,7 +31,7 @@ import AnnotationPanel from '@/components/annotations/AnnotationPanel';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import { BookShare } from '@/components/ui/ShareButton';
 import { GoogleTranslate } from '@/components/search/GoogleTranslate';
-import { prompts as promptsApi, analytics } from '@/lib/api-client';
+import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
@@ -171,10 +162,12 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
   };
 
   const handleSaveChanges = async () => {
-    if (!selectedPrompt || !hasChanges) return;
+    if (!selectedPrompt || (!selectedPrompt.id && !selectedPrompt._id) || !hasChanges) return;
     setSaving(true);
     try {
-      const updated = await promptsApi.update(selectedPrompt.id || selectedPrompt._id, {
+      const promptId = selectedPrompt.id || selectedPrompt._id?.toString();
+      if (!promptId) return;
+      const updated = await promptsApi.update(promptId, {
         content: editedContent
       });
       setPrompts(prompts.map(p =>
@@ -369,7 +362,7 @@ export default function TranslationEditor({
   const handleResetSplit = async () => {
     setResettingSplit(true);
     try {
-      await pages.resetSplit(originalPageId);
+      await pagesApi.resetSplit(originalPageId);
 
       // Refresh the book data
       if (onRefresh) {
@@ -478,10 +471,13 @@ export default function TranslationEditor({
 
   // Track page view
   useEffect(() => {
-    analytics.track('page_read', {
-      book_id: book.id,
-      page_id: page.id
-    }).catch(() => {}); // Fire and forget
+    analytics.track(
+      {
+        event: 'page_read',
+        book_id: book.id,
+        page_id: page.id
+      }
+    ).catch(() => { }); // Fire and forget
   }, [book.id, page.id]);
 
   // Prefetch adjacent page images for faster navigation
@@ -572,7 +568,7 @@ export default function TranslationEditor({
         customPrompts.translation = selectedTranslationPrompt.content;
       }
 
-      const result = await processing.process({
+      const result = await processingApi.process({
         pageId: page.id,
         action,
         imageUrl: page.photo,
@@ -926,11 +922,10 @@ export default function TranslationEditor({
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => setShowNotes(prev => !prev)}
-                          className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${
-                            showNotes
-                              ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
-                              : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
-                          }`}
+                          className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${showNotes
+                            ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                            : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
+                            }`}
                           title={showNotes ? "Hide notes and metadata" : "Show notes and metadata"}
                         >
                           <MessageSquare className="w-3 h-3" />
@@ -1428,25 +1423,25 @@ export default function TranslationEditor({
 
             <div className="px-3 sm:px-4 py-2 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <div className="flex items-center gap-2">
-              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Translation</span>
-              <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}>
-                English
-              </span>
+                <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Translation</span>
+                <span className="px-2 py-0.5 rounded text-xs font-medium" style={{ background: 'rgba(139, 154, 125, 0.15)', color: 'var(--accent-sage)' }}>
+                  English
+                </span>
+              </div>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
             </div>
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
-          </div>
 
-          <div className="flex-1 overflow-auto p-3 sm:p-4">
-            <textarea
-              value={translationText}
-              onChange={(e) => setTranslationText(e.target.value)}
-              onBlur={handleSave}
-              className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-              style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
-              placeholder="Translation will appear here..."
-            />
+            <div className="flex-1 overflow-auto p-3 sm:p-4">
+              <textarea
+                value={translationText}
+                onChange={(e) => setTranslationText(e.target.value)}
+                onBlur={handleSave}
+                className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
+                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
+                placeholder="Translation will appear here..."
+              />
+            </div>
           </div>
-        </div>
         )}
       </div>
 

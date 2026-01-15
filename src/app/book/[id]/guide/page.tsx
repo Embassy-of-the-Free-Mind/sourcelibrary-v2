@@ -69,7 +69,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         setLoading(true);
 
         // Fetch book with pages (include full text for reader)
-        const bookData = await books.get(bookId, { full: true });
+        const bookData = await books.get(bookId!, { full: true }) as import('@/lib/api-client').BookWithPages;
         setBook(bookData);
         setPages(bookData.pages || []);
 
@@ -94,7 +94,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         // Fetch high-quality illustrations for this book (minQuality=0.75 filters out decorative elements)
         try {
           const galleryData = await gallery.list({
-            bookId,
+            bookId: bookId!,
             limit: 50,
             minQuality: 0.75
           });

@@ -14,6 +14,7 @@ export interface SearchResult {
   published: string;
   page_count?: number;
   translated_count?: number;
+  translation_percent?: number;
   has_doi: boolean;
   doi?: string;
   summary?: string;

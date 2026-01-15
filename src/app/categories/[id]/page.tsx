@@ -46,7 +46,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
     async function fetchCategory() {
       try {
-        const data = await categories.get(categoryId);
+        const data = await categories.get(categoryId!);
         setCategory(data.category);
         setBooks(data.books);
       } catch (error) {

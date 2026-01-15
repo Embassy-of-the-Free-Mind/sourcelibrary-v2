@@ -27,9 +27,20 @@ export interface PageTranslateResponse {
 }
 
 export interface PageUpdateRequest {
-  ocr?: string;
-  translation?: string;
-  summary?: string;
+  ocr?: {
+    data: string;
+    language: string;
+    model?: string;
+  };
+  translation?: {
+    data: string;
+    language: string;
+    model?: string;
+  };
+  summary?: {
+    data: string;
+    model?: string;
+  };
   edited_by?: string;
 }
 

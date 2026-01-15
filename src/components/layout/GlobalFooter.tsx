@@ -15,13 +15,20 @@ interface GlobalStats {
 
 export default function GlobalFooter() {
   const [stats, setStats] = useState<GlobalStats | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     analytics.usage()
       .then(data => {
-        if (data.global) {
-          setStats(data as any);
-        }
+        // Map the new API response to the GlobalStats format
+        setStats({
+          totalReads: data.summary.totalHits,
+          totalEdits: 0, // Not tracked in new API
+          totalBooks: data.summary.totalBooks,
+          totalPages: data.summary.totalPages,
+          pagesTranslated: data.summary.pagesWithTranslation,
+        });
       })
       .catch(console.error);
   }, []);
@@ -31,6 +38,55 @@ export default function GlobalFooter() {
     if (n >= 1000) return `${(n / 1000).toFixed(1)}K`;
     return n.toString();
   };
+
+  // Prevent hydration mismatch by showing consistent content during SSR
+  if (!mounted) {
+    return (
+      <footer className="bg-stone-900 text-stone-400 py-8 mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link
+            href="/analytics"
+            className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm hover:text-stone-300 transition-colors group"
+          >
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-amber-600" />
+              <span className="text-stone-300 font-medium">—</span>
+              <span>books</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4 text-amber-600" />
+              <span className="text-stone-300 font-medium">—</span>
+              <span>reads</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Edit3 className="w-4 h-4 text-amber-600" />
+              <span className="text-stone-300 font-medium">—</span>
+              <span>pages translated</span>
+            </div>
+            <div className="flex items-center gap-1.5 text-amber-600 group-hover:text-amber-500">
+              <BarChart3 className="w-4 h-4" />
+              <span className="text-xs">View Analytics</span>
+            </div>
+          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
+            <span>CC0 Public Domain</span>
+            <span className="hidden sm:inline">•</span>
+            <Link href="/about/research" className="text-amber-600 hover:text-amber-500 transition-colors">
+              Research
+            </Link>
+            <span className="hidden sm:inline">•</span>
+            <Link href="/support" className="text-amber-600 hover:text-amber-500 transition-colors">
+              Support
+            </Link>
+            <span className="hidden sm:inline">•</span>
+            <a href="mailto:derek@ancientwisdomtrust.org" className="text-amber-600 hover:text-amber-500 transition-colors">
+              derek@ancientwisdomtrust.org
+            </a>
+          </div>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="bg-stone-900 text-stone-400 py-8 mt-auto">

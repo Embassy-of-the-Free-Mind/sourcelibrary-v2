@@ -72,7 +72,7 @@ export default function ImageDetailPage({
 
     async function fetchImage() {
       try {
-        const json = await gallery.get(imageId);
+        const json = await gallery.get(imageId!);
         setData(json);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');

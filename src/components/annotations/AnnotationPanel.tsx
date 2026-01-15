@@ -24,7 +24,7 @@ import {
 import { Annotation, AnnotationType } from '@/lib/types';
 import AnnotationEditor from './AnnotationEditor';
 import { getShortUrl } from '@/lib/shortlinks';
-import { annotations } from '@/lib/api-client';
+import { annotations as annotationsApi } from '@/lib/api-client';
 
 interface AnnotationPanelProps {
   bookId: string;
@@ -144,7 +144,7 @@ export default function AnnotationPanel({
   const fetchAnnotations = useCallback(async () => {
     setLoading(true);
     try {
-      const data = await annotations.list({ page_id: pageId, limit: 100 });
+      const data = await annotationsApi.list({ page_id: pageId, limit: 100 });
       // Filter to only top-level annotations (no parent_id)
       setAnnotations(data.annotations?.filter((a: Annotation) => !a.parent_id) || []);
     } catch (error) {
@@ -165,7 +165,7 @@ export default function AnnotationPanel({
 
     setLoadingReplies((prev) => new Set(prev).add(annotationId));
     try {
-      const data = await annotations.list({ parent_id: annotationId, limit: 50 });
+      const data = await annotationsApi.list({ parent_id: annotationId, limit: 50 });
       setReplies((prev) => ({
         ...prev,
         [annotationId]: data.annotations || [],
@@ -197,7 +197,7 @@ export default function AnnotationPanel({
   const handleUpvote = async (annotationId: string) => {
     setUpvoting((prev) => new Set(prev).add(annotationId));
     try {
-      const data = await annotations.upvote(annotationId);
+      const data = await annotationsApi.upvote(annotationId);
       // Update annotation in state
       setAnnotations((prev) =>
         prev.map((a) =>
@@ -230,7 +230,7 @@ export default function AnnotationPanel({
 
     setDeleting((prev) => new Set(prev).add(annotationId));
     try {
-      await annotations.delete(annotationId);
+      await annotationsApi.delete(annotationId);
       // Remove from state
       setAnnotations((prev) => prev.filter((a) => a.id !== annotationId));
       // Also remove from replies

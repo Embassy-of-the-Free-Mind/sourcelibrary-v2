@@ -9,8 +9,8 @@ interface BookAnalyticsProps {
 }
 
 interface BookStats {
-  reads: number;
-  edits: number;
+  reads?: number;
+  edits?: number;
 }
 
 export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
@@ -26,6 +26,7 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
         if (data.book_id) {
           setStats({ reads: data.reads, edits: data.edits });
         }
+        console.log('Book analytics data:', data);
       })
       .catch(console.error);
   }, [bookId]);
@@ -48,7 +49,7 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
         <Eye className="w-4 h-4" />
         <span>{stats.reads}</span>
       </div>
-      {stats.edits > 0 && (
+      {(stats.edits ?? 0) > 0 && (
         <div className="flex items-center gap-1.5" title="Edits made">
           <Edit3 className="w-4 h-4" />
           <span>{stats.edits}</span>

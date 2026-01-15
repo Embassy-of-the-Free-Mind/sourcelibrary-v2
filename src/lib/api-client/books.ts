@@ -2,6 +2,7 @@ import { apiClient, streamRequest } from './client';
 import type { Book } from '@/lib/types';
 import type {
   BooksListResponse,
+  BookWithPages,
   BookSearchResponse,
   BookStatusResponse,
   BookCategorizeRequest,
@@ -39,9 +40,9 @@ export const books = {
    * Get a single book by ID
    * @param id - Book ID
    * @param options - Optional query parameters
-   * @param options.full - Include full OCR/translation data (default: false)
+   * @param options.full - Include full OCR/translation data and pages array (default: false)
    */
-  get: async (id: string, options?: { full?: boolean }): Promise<Book> => {
+  get: async (id: string, options?: { full?: boolean }): Promise<Book | BookWithPages> => {
     const query = options?.full ? '?full=true' : '';
     return await apiClient.get(`/api/books/${id}${query}`);
   },

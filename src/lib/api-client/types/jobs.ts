@@ -37,6 +37,8 @@ export interface JobProcessResponse {
   success: boolean;
   processed: number;
   message: string;
+  done?: boolean;
+  paused?: boolean;
 }
 
 export interface JobStatusUpdateRequest {

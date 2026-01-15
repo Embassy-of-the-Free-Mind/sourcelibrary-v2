@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Highlighter, Trash2, ExternalLink, Loader2, X, Share2, Twitter, MessageCircle, Link2, Check } from 'lucide-react';
 import { getShortUrl } from '@/lib/shortlinks';
-import { highlights } from '@/lib/api-client';
+import { highlights as highlightsApi } from '@/lib/api-client';
 import type { Highlight } from '@/lib/api-client';
 
 interface HighlightsPanelProps {
@@ -29,7 +29,7 @@ export default function HighlightsPanel({
   const fetchHighlights = async () => {
     setLoading(true);
     try {
-      const data = await highlights.list(
+      const data = await highlightsApi.list(
         bookId ? { book_id: bookId, limit: 100 } : { limit: 100 }
       );
       setHighlights(data.highlights || []);
@@ -49,7 +49,7 @@ export default function HighlightsPanel({
   const handleDelete = async (id: string) => {
     setDeletingId(id);
     try {
-      await highlights.delete(id);
+      await highlightsApi.delete(id);
       setHighlights(prev => prev.filter(h => h.id !== id));
       onHighlightDeleted?.();
     } catch (error) {
@@ -59,7 +59,7 @@ export default function HighlightsPanel({
     }
   };
 
-  const formatDate = (dateStr: string) => {
+  const formatDate = (dateStr: string | Date) => {
     return new Date(dateStr).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',

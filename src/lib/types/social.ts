@@ -45,6 +45,16 @@ export interface SocialPost {
   twitter_url?: string;
   error?: string;                // If failed
 
+  // Twitter metrics (fetched after posting)
+  metrics?: {
+    impressions: number;
+    likes: number;
+    retweets: number;
+    replies: number;
+    url_clicks: number;
+    fetched_at: Date;
+  };
+
   created_at: Date;
   updated_at: Date;
 }

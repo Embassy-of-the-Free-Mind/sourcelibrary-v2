@@ -78,7 +78,9 @@ export async function POST(request: NextRequest, context: RouteContext) {
     let previousZenodoId: number | undefined;
     if (edition.previous_version_id) {
       const previousEdition = editions.find(e => e.id === edition.previous_version_id);
-      previousZenodoId = previousEdition?.zenodo_id;
+      previousZenodoId = typeof previousEdition?.zenodo_id === 'number'
+        ? previousEdition.zenodo_id
+        : previousEdition?.zenodo_id ? parseInt(previousEdition.zenodo_id) : undefined;
     }
 
     // Mint DOI via Zenodo

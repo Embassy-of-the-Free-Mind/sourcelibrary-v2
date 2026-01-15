@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { X, Save, Loader2, Search, ExternalLink, Languages, Sparkles } from 'lucide-react';
 import { utils, books, catalog } from '@/lib/api-client';
+import type { CatalogMatch } from '@/lib/api-client/types/books';
 
 interface BookEditModalProps {
   book: {
@@ -20,7 +21,8 @@ interface BookEditModalProps {
   onSave: () => void;
 }
 
-interface SearchResult {
+// Extended result type for USTC searches (has additional fields)
+interface UstcSearchResult {
   id: string;
   title: string;
   englishTitle?: string;
@@ -32,6 +34,9 @@ interface SearchResult {
   workType?: string;
   subjectTags?: string[];
 }
+
+// Union type for all search result types
+type SearchResult = CatalogMatch | UstcSearchResult;
 
 export default function BookEditModal({ book, onClose, onSave }: BookEditModalProps) {
   const [saving, setSaving] = useState(false);
@@ -77,7 +82,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
       publisher?: string;
       language?: string;
     };
-    catalog_matches?: SearchResult[];
+    catalog_matches?: CatalogMatch[];
   } | null>(null);
 
   const handleSave = async () => {
@@ -128,10 +133,10 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
       setUstcId(result.id.replace('USTC-', ''));
     }
     if (result.title) setTitle(result.title);
-    // Use pre-translated English title if available
-    if (result.englishTitle) setDisplayTitle(result.englishTitle);
+    // Use pre-translated English title if available (USTC results only)
+    if ('englishTitle' in result && result.englishTitle) setDisplayTitle(result.englishTitle);
     if (result.author) setAuthor(result.author);
-    if (result.language) setLanguage(result.language);
+    if ('language' in result && result.language) setLanguage(result.language);
     if (result.year) setPublished(result.year);
     if (result.place) setPlacePublished(result.place);
     setSearchResults([]);
@@ -160,7 +165,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
       }
 
       // If catalog matches found, show them
-      if (data.catalog_matches?.length > 0) {
+      if (data.catalog_matches && data.catalog_matches.length > 0) {
         setSearchResults(data.catalog_matches);
         setSearchDone(true);
       }
@@ -276,41 +281,44 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} - click to apply
               </div>
               <div className="space-y-2 max-h-64 overflow-y-auto">
-                {searchResults.map((result, idx) => (
-                  <button
-                    key={`${result.id}-${idx}`}
-                    onClick={() => applySearchResult(result)}
-                    className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
-                  >
-                    <div className="font-medium text-stone-900 text-sm">{result.title}</div>
-                    {result.englishTitle && (
-                      <div className="text-sm text-blue-700 mt-0.5 italic">{result.englishTitle}</div>
-                    )}
-                    <div className="text-xs text-stone-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
-                      {result.author && <span>{result.author}</span>}
-                      {result.place && <span>{result.place}</span>}
-                      {result.year && <span>{result.year}</span>}
-                      {result.language && <span className="text-stone-400">({result.language})</span>}
-                      {result.workType && <span className="bg-stone-100 px-1 rounded">{result.workType}</span>}
-                      {result.source && (
-                        <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
-                          result.source === 'EFM' ? 'bg-purple-100 text-purple-700' :
-                          result.source === 'IA' ? 'bg-blue-100 text-blue-700' :
-                          'bg-amber-100 text-amber-700'
-                        }`}>
-                          {result.source}
-                        </span>
+                {searchResults.map((result, idx) => {
+                  const isUstcResult = 'englishTitle' in result;
+                  return (
+                    <button
+                      key={`${result.id}-${idx}`}
+                      onClick={() => applySearchResult(result)}
+                      className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
+                    >
+                      <div className="font-medium text-stone-900 text-sm">{result.title}</div>
+                      {isUstcResult && result.englishTitle && (
+                        <div className="text-sm text-blue-700 mt-0.5 italic">{result.englishTitle}</div>
                       )}
-                    </div>
-                    {result.subjectTags && result.subjectTags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1.5">
-                        {result.subjectTags.slice(0, 4).map((tag, i) => (
-                          <span key={i} className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">{tag}</span>
-                        ))}
+                      <div className="text-xs text-stone-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
+                        {result.author && <span>{result.author}</span>}
+                        {result.place && <span>{result.place}</span>}
+                        {result.year && <span>{result.year}</span>}
+                        {isUstcResult && result.language && <span className="text-stone-400">({result.language})</span>}
+                        {isUstcResult && result.workType && <span className="bg-stone-100 px-1 rounded">{result.workType}</span>}
+                        {result.source && (
+                          <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                            result.source === 'EFM' ? 'bg-purple-100 text-purple-700' :
+                            result.source === 'IA' ? 'bg-blue-100 text-blue-700' :
+                            'bg-amber-100 text-amber-700'
+                          }`}>
+                            {result.source}
+                          </span>
+                        )}
                       </div>
-                    )}
-                  </button>
-                ))}
+                      {isUstcResult && result.subjectTags && result.subjectTags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 mt-1.5">
+                          {result.subjectTags.slice(0, 4).map((tag: string, i: number) => (
+                            <span key={i} className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">{tag}</span>
+                          ))}
+                        </div>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           )}
