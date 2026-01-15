@@ -160,10 +160,32 @@
 |--------|--------|-------|
 | **HathiTrust** | Requires login | Academic access, high quality scans |
 | **Google Books** | Limited API | Some full-view public domain |
-| **Gallica (BnF)** | Accessible | French materials, IIIF support |
+| **Gallica (BnF)** | ✓ Integrated | French materials, IIIF support |
 | **e-rara** | Accessible | Swiss rare books |
 | **BSB (Munich)** | Accessible | German materials, IIIF support |
-| **MDZ** | Accessible | Munich Digitization Center |
+| **MDZ** | ✓ Integrated | Munich Digitization Center |
+
+### Sources Roadmap
+
+| Source | Status | API | Notes |
+|--------|--------|-----|-------|
+| **Europeana** | 🟡 Ready to integrate | Free API key + IIIF (no key) | 500k+ manuscripts, aggregates from many institutions |
+| **British Library** | 🔴 API down (cyber attack recovery) | IIIF when restored | 3k+ manuscripts viewable, API expected early 2026 |
+| **e-rara** | 🟡 Evaluate | IIIF | Swiss rare books, ETH Zürich |
+| **Wellcome Collection** | 🟡 Evaluate | IIIF | Medical/alchemical texts |
+
+#### Europeana Integration Notes
+- **IIIF Manifest**: `https://iiif.europeana.eu/presentation/{dataset}/{localId}/manifest`
+- **Search API**: Requires free API key from apis.europeana.eu
+- **Python client**: github.com/europeana/rd-europeana-python-api
+- **Relevant queries**: `alchemy manuscript`, `hermeticum`, `rosicrucian`, `kabbalah`
+- **Docs**: pro.europeana.eu/page/iiif
+
+#### British Library Integration Notes (for when API restored)
+- **IIIF Manifest**: `https://api.bl.uk/metadata/iiif/ark:/81055/{identifier}/manifest.json`
+- **Discovery**: Manual via searcharchives.bl.uk (filter: Digitised content = Yes)
+- **Status**: api.bl.uk DNS not resolving as of Jan 2026
+- **Expected**: New catalogue Dec 2025, full API early 2026
 
 *Note: Many require manual download + local import pipeline*
 
