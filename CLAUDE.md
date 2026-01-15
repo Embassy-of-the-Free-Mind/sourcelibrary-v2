@@ -87,7 +87,7 @@ When acting as Quality Management Assistant:
 
 ## Import APIs
 
-Source Library supports importing from four digital library sources:
+Source Library supports importing from five digital library sources:
 
 ### Gallica (Bibliothèque nationale de France)
 ```
@@ -140,6 +140,23 @@ POST /api/import/wellcome
 Find work IDs:
 - Search: `https://api.wellcomecollection.org/catalogue/v2/works?query=alchemy&availabilities=online`
 - From URL: `wellcomecollection.org/works/{work_id}`
+
+### e-rara (Swiss rare books)
+```
+POST /api/import/e-rara
+{
+  "erara_id": "8962689",          // e-rara numeric ID
+  "title": "Book Title",          // Optional override
+  "author": "Author Name",        // Optional override
+  "language": "German",           // Optional
+  "published": "1650"             // Optional
+}
+```
+
+Find IDs:
+- Browse: `https://www.e-rara.ch/`
+- OAI-PMH: `https://www.e-rara.ch/oai?verb=ListRecords&metadataPrefix=oai_dc`
+- From URL: `e-rara.ch/zut/content/titleinfo/{id}` or DOI `e-rara.ch/doi/10.3931/e-rara-{number}`
 
 All import routes:
 - Fetch IIIF manifests to get page counts and image URLs
