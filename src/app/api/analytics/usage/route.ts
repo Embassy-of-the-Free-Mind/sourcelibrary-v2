@@ -4,8 +4,8 @@ import { getDb } from '@/lib/mongodb';
 // Simple in-memory cache for IP geolocation (persists for serverless function lifetime)
 const geoCache: Record<string, { country: string; countryCode: string; city: string; lat: number; lon: number }> = {};
 
-async function getGeoLocation(ip: string) {
-  if (ip === 'unknown' || ip === '::1' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.')) {
+async function getGeoLocation(ip: string | null) {
+  if (!ip || ip === 'unknown' || ip === '::1' || ip.startsWith('127.') || ip.startsWith('192.168.') || ip.startsWith('10.')) {
     return { country: 'Local', countryCode: 'XX', city: 'Local', lat: 0, lon: 0 };
   }
 

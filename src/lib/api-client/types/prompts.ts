@@ -31,7 +31,5 @@ export interface PromptListParams {
   is_default?: boolean;
 }
 
-export interface PromptListResponse {
-  prompts: Prompt[];
-  total: number;
-}
+// Note: The API actually returns an array directly, not an object with prompts property
+export type PromptListResponse = Prompt[];

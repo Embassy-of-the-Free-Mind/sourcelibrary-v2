@@ -53,6 +53,13 @@ export const jobs = {
   },
 
   /**
+   * Update job (status, progress, results, etc.)
+   */
+  update: async (id: string, updates: Partial<Job>): Promise<Job> => {
+    return await apiClient.patch(`/api/jobs/${id}`, updates);
+  },
+
+  /**
    * Cancel a job
    */
   cancel: async (id: string): Promise<{ success: boolean }> => {

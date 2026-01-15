@@ -29,7 +29,7 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import type { Page, Prompt } from '@/lib/types';
-import { prompts as promptsApi, jobs, books, processing } from '@/lib/api-client';
+import { prompts as promptsApi, jobs, books, processing as processingApi } from '@/lib/api-client';
 
 interface BookPagesSectionProps {
   bookId: string;
@@ -206,8 +206,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           promptsApi.list({ type: 'summary' })
         ]);
 
-        const loadPrompts = (data: { prompts: Prompt[] }, type: ActionType) => {
-          const promptsList = data.prompts;
+        const loadPrompts = (promptsList: Prompt[], type: ActionType) => {
           const defaultPrompt = promptsList.find((p: Prompt) => p.is_default) || promptsList[0];
           setPrompts(prev => ({ ...prev, [type]: promptsList }));
           if (defaultPrompt) {
@@ -430,7 +429,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
       try {
         await jobs.update(jobId, {
-          progress: { completed: completed.length, failed: failed.length },
+          progress: {
+            total: pageIds.length,
+            completed: completed.length,
+            failed: failed.length
+          },
         });
       } catch {
         // Ignore progress update errors
@@ -453,9 +456,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         if (stopRequestedRef.current) return;
 
         try {
-          const data = await processing.process({
+          // Note: processPage is only called for ocr/translation/summary, never for image_extraction
+          // image_extraction has its own separate batch processing logic
+          const data = await processingApi.process({
             pageId,
-            action,
+            action: action as 'ocr' | 'translation' | 'summary',
             imageUrl: page.photo,
             language: 'Latin',
             targetLanguage: 'English',
@@ -543,7 +548,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         }
 
         try {
-          const data = await processing.batchTranslate({
+          const data = await processingApi.batchTranslate({
             pages: batchPages.map(p => ({
               pageId: p.id,
               ocrText: p.ocr?.data || '',
@@ -639,7 +644,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           }
 
           try {
-            const data = await processing.batchOcrProcess({
+            const data = await processingApi.batchOcrProcess({
               pages: batchPages.map(p => ({
                 pageId: p.id,
                 imageUrl: p.photo,
@@ -759,7 +764,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           }
 
           try {
-            const data = await processing.batchImageExtraction({
+            const data = await processingApi.batchImageExtraction({
               pages: batchPages.map(p => ({
                 pageId: p.id,
                 imageUrl: p.photo,
@@ -851,12 +856,16 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         const finalStatus = stopRequestedRef.current
           ? 'cancelled'
           : failed.length === pageIds.length
-          ? 'failed'
-          : 'completed';
+            ? 'failed'
+            : 'completed';
 
         await jobs.update(jobId, {
           status: finalStatus,
-          progress: { completed: completed.length, failed: failed.length },
+          progress: {
+            total: pageIds.length,
+            completed: completed.length,
+            failed: failed.length
+          },
         });
       } catch (error) {
         console.error('Failed to update job status:', error);
@@ -1160,9 +1169,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                           setUseBatchApi(false);
                         }
                       }}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${
-                        isSelected ? 'text-white' : 'text-stone-600 hover:bg-stone-50'
-                      }`}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${isSelected ? 'text-white' : 'text-stone-600 hover:bg-stone-50'
+                        }`}
                       style={isSelected ? { backgroundColor: color } : {}}
                     >
                       <Icon className="w-3.5 h-3.5" />
@@ -1262,21 +1270,19 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setUseBatchApi(false)}
-                  className={`px-2 py-1.5 text-sm rounded-l-lg border transition-colors ${
-                    !useBatchApi
-                      ? 'bg-amber-600 text-white border-amber-600'
-                      : 'bg-white text-stone-600 border-amber-300 hover:bg-amber-50'
-                  }`}
+                  className={`px-2 py-1.5 text-sm rounded-l-lg border transition-colors ${!useBatchApi
+                    ? 'bg-amber-600 text-white border-amber-600'
+                    : 'bg-white text-stone-600 border-amber-300 hover:bg-amber-50'
+                    }`}
                 >
                   Realtime
                 </button>
                 <button
                   onClick={() => setUseBatchApi(true)}
-                  className={`px-2 py-1.5 text-sm rounded-r-lg border-y border-r transition-colors ${
-                    useBatchApi
-                      ? 'bg-green-600 text-white border-green-600'
-                      : 'bg-white text-stone-600 border-amber-300 hover:bg-green-50'
-                  }`}
+                  className={`px-2 py-1.5 text-sm rounded-r-lg border-y border-r transition-colors ${useBatchApi
+                    ? 'bg-green-600 text-white border-green-600'
+                    : 'bg-white text-stone-600 border-amber-300 hover:bg-green-50'
+                    }`}
                   title="50% cheaper, results in 2-24 hours"
                 >
                   Batch 50%↓
@@ -1309,9 +1315,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             {/* Prompt settings toggle */}
             <button
               onClick={() => setShowPromptSettings(!showPromptSettings)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
-                showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
-              }`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
+                }`}
             >
               <Settings className="w-4 h-4" />
               Prompt Settings
@@ -1435,9 +1440,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                     onDragEnd={handleDragEnd}
                     className={`group relative cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-50' : ''}`}
                   >
-                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${
-                      isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
-                    }`}>
+                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
+                      }`}>
                       {imageUrl && (
                         <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover pointer-events-none" />
                       )}
@@ -1463,9 +1467,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                     onClick={(e) => togglePage(page.id, index, e)}
                     className="group relative text-left"
                   >
-                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${
-                      isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
-                    }`}>
+                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
+                      }`}>
                       {imageUrl && (
                         <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover" />
                       )}

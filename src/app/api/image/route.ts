@@ -2,9 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
+import axios from 'axios';
 
 // Cache resized images for 1 week
 const CACHE_DURATION = 60 * 60 * 24 * 7;
+
+// Timeout for fetching images from external sources (150 seconds)
+// Internet Archive and other IIIF servers can be slow
+const FETCH_TIMEOUT_IN_MS = 150000;
 
 export async function GET(request: NextRequest) {
   try {
@@ -21,7 +26,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Missing url parameter' }, { status: 400 });
     }
 
-    let buffer: Buffer;
+    let buffer: Buffer | undefined;
 
     // Handle relative local paths (starting with /) - must be in public directory
     if (url.startsWith('/')) {
@@ -62,14 +67,65 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'URL not allowed' }, { status: 403 });
       }
 
-      // Fetch the original image
-      const response = await fetch(url);
-      if (!response.ok) {
-        return NextResponse.json({ error: 'Failed to fetch image' }, { status: 502 });
+      // Fetch the original image with axios for better timeout control
+      // Retry logic for transient network errors
+      const maxRetries = 2;
+      let fetchSucceeded = false;
+
+      for (let attempt = 0; attempt <= maxRetries; attempt++) {
+        try {
+          const response = await axios.get(url, {
+            responseType: 'arraybuffer',
+            timeout: FETCH_TIMEOUT_IN_MS,
+            // Axios timeout includes both connection and response timeouts
+            maxContentLength: Infinity,
+            maxBodyLength: Infinity,
+          });
+
+          buffer = Buffer.from(response.data);
+          fetchSucceeded = true;
+          break; // Success, exit retry loop
+        } catch (fetchError: any) {
+          // Only retry on network errors (ETIMEDOUT, ECONNREFUSED, etc), not on 4xx/5xx responses
+          const isRetryable =
+            fetchError.code === 'ETIMEDOUT' ||
+            fetchError.code === 'ECONNREFUSED' ||
+            fetchError.code === 'ENOTFOUND' ||
+            fetchError.code === 'ECONNRESET';
+
+          if (!isRetryable || attempt === maxRetries) {
+            // No more retries or non-retryable error
+            if (fetchError.code === 'ECONNABORTED' || fetchError.message?.includes('timeout')) {
+              return NextResponse.json({ error: 'Image fetch timeout' }, { status: 504 });
+            }
+            if (fetchError.code === 'ETIMEDOUT') {
+              return NextResponse.json({
+                error: 'Connection timeout - source server not responding',
+                details: `Failed to connect to ${urlObj.hostname}`
+              }, { status: 504 });
+            }
+            if (fetchError.response?.status) {
+              return NextResponse.json({ error: 'Failed to fetch image' }, { status: 502 });
+            }
+            throw fetchError;
+          }
+
+          // Wait before retry (exponential backoff)
+          if (attempt < maxRetries) {
+            await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt)));
+          }
+        }
       }
 
-      const arrayBuffer = await response.arrayBuffer();
-      buffer = Buffer.from(arrayBuffer);
+      // This should never happen due to throw/return in catch, but TypeScript needs it
+      if (!fetchSucceeded) {
+        return NextResponse.json({ error: 'Failed to fetch image after retries' }, { status: 502 });
+      }
+    }
+
+    // Ensure buffer was assigned (should always be true at this point)
+    if (!buffer) {
+      return NextResponse.json({ error: 'Failed to load image buffer' }, { status: 500 });
     }
 
     let sharpInstance = sharp(buffer);

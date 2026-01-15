@@ -135,7 +135,11 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
     .sort({ page_number: 1 })
     .toArray();
 
-  return { book: book as unknown as Book, pages: pages as unknown as Page[] };
+  // Serialize MongoDB objects to plain JavaScript objects
+  const serializedBook = JSON.parse(JSON.stringify(book));
+  const serializedPages = JSON.parse(JSON.stringify(pages));
+
+  return { book: serializedBook as Book, pages: serializedPages as Page[] };
 }
 
 // Skeleton for book info while loading
