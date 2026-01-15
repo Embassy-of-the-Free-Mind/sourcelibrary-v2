@@ -94,7 +94,7 @@ function generateCitations(
   const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;
 
   // Short URL for sharing
-  const short_url = getShortUrl(bookId, pageNumber);
+  const short_url = getShortUrl(bookId, pageNumber, pageId);
 
   return {
     inline,

@@ -55,10 +55,11 @@ export const utils = {
     text?: string;
     question?: string;
     context?: string;
+    book_id?: string;
     book_title?: string;
     book_author?: string;
     page_number?: number;
-    mode?: 'analyze' | 'explain_term' | 'ask' | 'general';
+    mode?: 'analyze' | 'explain_term' | 'ask' | 'general' | 'book_context';
     term?: string;
     customPrompt?: string;
     conversationHistory?: Array<{ role: string; content: string }>;

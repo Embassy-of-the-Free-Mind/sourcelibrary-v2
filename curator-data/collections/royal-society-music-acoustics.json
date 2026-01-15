@@ -1,0 +1,108 @@
+{
+  "id": "royal-society-music-acoustics",
+  "title": "Royal Society Music & Acoustics: Scientific Revolution in Sound",
+  "shortTitle": "Music & Acoustics",
+  "description": "Complete collection of musical and acoustical contributions to the Royal Society (1665-1700), documenting the founding era of scientific study of sound, music theory, and vibration. Includes the coining of 'microphone' and groundbreaking experiments in acoustics.",
+  "curatedBy": "Embassy of the Free Mind Collection",
+  "dateCreated": "2026-01-01",
+  "dateRange": {
+    "start": 1665,
+    "end": 1701,
+    "description": "1665-1701"
+  },
+  "themes": [
+    "Scientific Revolution",
+    "Acoustics",
+    "Music Theory",
+    "Natural Philosophy",
+    "Experimental Science",
+    "Pythagorean Harmony",
+    "Mechanical Philosophy"
+  ],
+  "geographicCoverage": [
+    "England",
+    "Royal Society of London"
+  ],
+  "keyContributors": [
+    {
+      "name": "Francis North (1637-1685)",
+      "contribution": "Philosophical Essay of Musick (1677) - Mechanistic theory of harmony, Coincidence Theory of consonance"
+    },
+    {
+      "name": "Narcissus Marsh (1638-1713)",
+      "contribution": "Coined 'microphone', 'diacoustics', 'catacoustics' in Philosophical Transactions (1684)"
+    },
+    {
+      "name": "Robert Hooke (1635-1703)",
+      "contribution": "Experiments with vibrating plates (1680), musical tones from brass cogs (1681)"
+    },
+    {
+      "name": "John Wallis (1616-1703)",
+      "contribution": "Edited Ptolemy's Harmonics (1682), mathematical music theory, comparative ancient/modern tuning"
+    },
+    {
+      "name": "William Noble & Thomas Pigot",
+      "contribution": "Vibrating strings experiments (1674) - stationary nodes, sympathetic resonance, harmonic series"
+    }
+  ],
+  "books": [
+    {
+      "bookId": "695676aa789694766ab1bac9",
+      "title": "Philosophical Transactions of the Royal Society Vols 1-2 (1665-1668)",
+      "pages": 716,
+      "contents": "Founding volumes of scientific journal"
+    },
+    {
+      "bookId": "695677fdbe7c607c5f03b2d9",
+      "title": "Philosophical Transactions Vol 3 (1683-1694)",
+      "pages": 744,
+      "contents": "Includes Narcissus Marsh on microphone"
+    },
+    {
+      "bookId": "69567835be7c607c5f03b7e5",
+      "title": "Philosophical Transactions Vol 16 (1686-1687)",
+      "pages": 510
+    },
+    {
+      "bookId": "69567800be7c607c5f03b5c2",
+      "title": "Philosophical Transactions (1701+)",
+      "pages": 546,
+      "contents": "Includes Wallis 'A question in musick' (1698)"
+    },
+    {
+      "bookId": "69568595be7c607c5f03b9e4",
+      "title": "A Philosophical Essay of Musick",
+      "author": "Francis North",
+      "year": 1677,
+      "pages": 37,
+      "significance": "Foundational work applying mechanical philosophy to music. Influenced Newton and later theorists."
+    },
+    {
+      "bookId": "695685cbbe7c607c5f03ba0a",
+      "title": "Opera Mathematica",
+      "author": "John Wallis",
+      "year": 1695,
+      "pages": 1091,
+      "contents": "Includes Ptolemy's Harmonics with Wallis's appendix (1682)"
+    },
+    {
+      "bookId": "695685cebe7c607c5f03be4e",
+      "title": "De Algebra Tractatus",
+      "author": "John Wallis",
+      "year": 1693,
+      "pages": 907,
+      "contents": "Contains Noble & Pigot vibrating string experiments"
+    }
+  ],
+  "totalBooks": 7,
+  "totalPages": 4551,
+  "researchValue": "Complete documentation of Royal Society's pioneering acoustics research during the Scientific Revolution. Shows the transition from ancient Pythagorean music theory (Ptolemy) to modern experimental and mathematical approaches. Essential for history of science, music theory, and acoustics.",
+  "connections": [
+    {
+      "collectionId": "vibration-theory-mind",
+      "relationship": "Robert Hooke's vibration experiments (1680s) → David Hartley's vibration theory of association (1749)"
+    }
+  ],
+  "featuredOn": "homepage",
+  "displayOrder": 3
+}

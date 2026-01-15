@@ -1,0 +1,136 @@
+{
+  "id": "natural-law-genealogy",
+  "title": "Natural Law to Natural Liberty: 2,300 Years of Classical Liberal Thought",
+  "shortTitle": "Natural Law Genealogy",
+  "description": "The complete intellectual genealogy of classical liberal economics and political philosophy, from ancient Greek virtue ethics through medieval natural law, Scottish Enlightenment moral philosophy, to Austrian economics.",
+  "curatedBy": "Embassy of the Free Mind Collection",
+  "dateCreated": "2026-01-01",
+  "dateRange": {
+    "start": -350,
+    "end": 1962,
+    "description": "c. 350 BCE - 1962 CE"
+  },
+  "themes": [
+    "Natural Law",
+    "Natural Rights",
+    "Virtue Ethics",
+    "Moral Philosophy",
+    "Political Economy",
+    "Spontaneous Order",
+    "Classical Liberalism",
+    "Austrian Economics"
+  ],
+  "geographicCoverage": [
+    "Ancient Greece",
+    "Ancient Rome",
+    "Ireland",
+    "England",
+    "Scotland",
+    "France",
+    "Germany",
+    "Austria",
+    "America"
+  ],
+  "conceptualThreads": [
+    {
+      "name": "Natural Order/Harmony",
+      "evolution": "Plato (Forms) → Aristotle (teleology) → Stoics (logos) → Aquinas (natural law) → Grotius (sociability) → Hutcheson (beauty/harmony/order) → Smith (invisible hand) → Hayek (spontaneous order)"
+    },
+    {
+      "name": "Virtue & Flourishing",
+      "evolution": "Aristotle (eudaimonia) → Cicero (Stoic virtue) → Aquinas (cardinal virtues) → Hutcheson (moral sense) → Smith (moral sentiments)"
+    },
+    {
+      "name": "Law Without Legislation",
+      "evolution": "Brehon Law (customary order) → Aristotle (natural vs conventional law) → Hume (justice as artificial virtue) → Smith (order without design) → Hayek (spontaneous order, law without legislation)"
+    },
+    {
+      "name": "Property & Exchange",
+      "evolution": "Aristotle (defense of private property) → Aquinas (natural law basis) → Locke (labor theory) → Smith → Ricardo → Austrian school"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Ancient Foundations (350 BCE - 180 CE)",
+      "period": "Ancient",
+      "bookIds": [
+        "6956956c8c9559f6c2db0f42",
+        "6956953e8c9559f6c2db0b6d",
+        "6956954d8c9559f6c2db0d05",
+        "695695288c9559f6c2db04eb",
+        "6956952b8c9559f6c2db06a3"
+      ],
+      "keyAuthors": ["Plato", "Aristotle", "Cicero", "Marcus Aurelius"],
+      "keyConcepts": ["Forms", "Virtue ethics", "Natural teleology", "Stoic natural law", "Logos"]
+    },
+    {
+      "title": "Medieval Synthesis (1270)",
+      "period": "Medieval",
+      "bookIds": [
+        "6956952e8c9559f6c2db0992"
+      ],
+      "keyAuthors": ["Thomas Aquinas"],
+      "keyConcepts": ["Natural law as participation in eternal law", "Aristotelian-Christian synthesis", "Four types of law"]
+    },
+    {
+      "title": "Early Modern Natural Law (1625-1772)",
+      "period": "Early Modern",
+      "bookIds": [
+        "695690527df2d231f8f9a858",
+        "6956905950d4fc9bdc434e3a",
+        "695690547df2d231f8f9aa55"
+      ],
+      "keyAuthors": ["Hugo Grotius", "Samuel Pufendorf", "John Locke"],
+      "keyConcepts": ["Secularized natural law", "Sociability", "Natural rights", "Labor theory of property", "Social contract"]
+    },
+    {
+      "title": "Scottish Enlightenment (1711-1776)",
+      "period": "18th Century",
+      "bookIds": [
+        "6956908faeb4b980d9ebd74d",
+        "6956907caeb4b980d9ebd4b8",
+        "69569080aeb4b980d9ebd5db",
+        "695690a6aeb4b980d9ebd8c2",
+        "695690a8aeb4b980d9ebdaac",
+        "695690aaaeb4b980d9ebdbfa",
+        "69568c79be7c607c5f03d7bb",
+        "69568c77be7c607c5f03d5a2"
+      ],
+      "keyAuthors": ["Shaftesbury", "Hutcheson", "Mandeville", "Hume", "Smith"],
+      "keyConcepts": ["Moral sense", "Sympathy", "Harmony", "Passions over reason", "Invisible hand", "Division of labor"]
+    },
+    {
+      "title": "Classical Economics (1776-1872)",
+      "period": "18th-19th Century",
+      "bookIds": [
+        "69568ed2499312f0ff8816b9",
+        "69568ed4499312f0ff8818cc",
+        "69568ed7499312f0ff881a99",
+        "69568c7bbe7c607c5f03d9df",
+        "69568c7dbe7c607c5f03da26",
+        "69568c7fbe7c607c5f03db26",
+        "69568ebc499312f0ff8814dd"
+      ],
+      "keyAuthors": ["Ricardo", "Say", "Mill", "Bastiat", "Carey"],
+      "keyConcepts": ["Comparative advantage", "Say's Law", "Free trade", "Harmony of interests", "Unity of law"]
+    },
+    {
+      "title": "Austrian School (1944-1962)",
+      "period": "20th Century",
+      "bookIds": [
+        "69568eed499312f0ff881ce7",
+        "69568ef0499312f0ff882787",
+        "69568ef3499312f0ff882972",
+        "69568f85499312f0ff882b95",
+        "69568f8d499312f0ff882cae"
+      ],
+      "keyAuthors": ["Mises", "Rothbard", "Hayek"],
+      "keyConcepts": ["Praxeology", "Human action", "Spontaneous order", "Road to serfdom", "Rule of law"]
+    }
+  ],
+  "totalBooks": 34,
+  "totalPages": 18615,
+  "researchValue": "This collection enables tracing the complete intellectual genealogy of classical liberal economic and political philosophy. Researchers can follow specific conceptual threads (natural law, virtue ethics, spontaneous order, property rights) across 2,300 years, observing how ancient ideas evolved through medieval synthesis, early modern secularization, Scottish moral philosophy, into modern economic theory.",
+  "featuredOn": "homepage",
+  "displayOrder": 1
+}

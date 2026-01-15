@@ -1,0 +1,154 @@
+{
+  "version": "3.0.0",
+  "lastUpdated": "2026-01-06",
+  "description": "Complete collection index for Source Library - 36 curated collections spanning 470+ books from all curator sessions",
+
+  "collections": [
+    {"id": "ancient-virtue-ethics", "title": "Ancient Virtue Ethics: Plato, Aristotle & the Stoics", "category": "Political Philosophy", "books": 5, "pages": 3240, "file": "collections/ancient-virtue-ethics.json", "displayOrder": 1},
+    {"id": "early-modern-natural-law", "title": "Early Modern Natural Law: Grotius to Locke", "category": "Political Philosophy", "books": 4, "pages": 2330, "file": "collections/early-modern-natural-law.json", "displayOrder": 2},
+    {"id": "scottish-enlightenment", "title": "Scottish Enlightenment: Moral Sense to Political Economy", "category": "Political Philosophy", "books": 7, "pages": 2484, "file": "collections/scottish-enlightenment.json", "displayOrder": 3},
+    {"id": "adam-smith-foundations", "title": "Adam Smith & Foundations of Political Economy", "category": "Economics", "books": 4, "pages": 1898, "file": "collections/adam-smith-foundations.json", "displayOrder": 4},
+    {"id": "classical-political-economy", "title": "Classical Political Economy: Ricardo to Bastiat", "category": "Economics", "books": 6, "pages": 2109, "file": "collections/classical-political-economy.json", "displayOrder": 5},
+    {"id": "american-system-economics", "title": "American System: Carey's Protectionist Economics", "category": "Economics", "books": 2, "pages": 750, "file": "collections/american-system-economics.json", "displayOrder": 6},
+    {"id": "austrian-school", "title": "Austrian School: Mises, Rothbard & Hayek", "category": "Economics", "books": 5, "pages": 4166, "file": "collections/austrian-school.json", "displayOrder": 7},
+    {"id": "brehon-law-stateless-order", "title": "Brehon Law: Celtic Legal Tradition & Stateless Order", "category": "Political Philosophy", "books": 3, "pages": 1357, "file": "collections/brehon-law-stateless-order.json", "displayOrder": 8},
+    {"id": "arabic-alchemy-magic", "title": "Arabic Alchemy & Astral Magic", "category": "Alchemy", "books": 6, "pages": 2430, "file": "collections/arabic-alchemy-magic.json", "displayOrder": 9},
+    {"id": "paracelsian-medicine", "title": "Paracelsian Medicine & Chemical Philosophy", "category": "Alchemy", "books": 7, "pages": 2484, "file": "collections/paracelsian-medicine.json", "displayOrder": 10},
+    {"id": "rosicrucian-circle", "title": "Rosicrucian Circle: Fludd, Maier, Dee & Khunrath", "category": "Alchemy", "books": 7, "pages": 3339, "file": "collections/rosicrucian-circle.json", "displayOrder": 11},
+    {"id": "alchemical-emblems", "title": "Alchemical Emblems: Visual Knowledge Transmission", "category": "Alchemy", "books": 6, "pages": 2377, "file": "collections/alchemical-emblems.json", "displayOrder": 12},
+    {"id": "ficino-neoplatonic-sources", "title": "Ficino's Neoplatonic Sources: Plotinus to Proclus", "category": "Renaissance", "books": 6, "pages": 4322, "file": "collections/ficino-neoplatonic-sources.json", "displayOrder": 13},
+    {"id": "pico-della-mirandola", "title": "Pico della Mirandola: Syncretism & Christian Kabbalah", "category": "Renaissance", "books": 6, "pages": 2666, "file": "collections/pico-della-mirandola.json", "displayOrder": 14},
+    {"id": "florentine-humanists", "title": "Florentine Humanists: Poliziano, Landino & Lorenzo", "category": "Renaissance", "books": 8, "pages": 2258, "file": "collections/florentine-humanists.json", "displayOrder": 15},
+    {"id": "cappadocian-fathers", "title": "Cappadocian Fathers: Basil, Gregory & Athanasius", "category": "Byzantine", "books": 5, "pages": 500, "file": "collections/cappadocian-fathers.json", "displayOrder": 16},
+    {"id": "byzantine-mystical-theology", "title": "Byzantine Mystical Theology: Hesychasm & Apophatic Tradition", "category": "Byzantine", "books": 8, "pages": 4697, "file": "collections/byzantine-mystical-theology.json", "displayOrder": 17},
+    {"id": "desert-fathers-monasticism", "title": "Desert Fathers & Early Christian Monasticism", "category": "Byzantine", "books": 4, "pages": 1280, "file": "collections/desert-fathers-monasticism.json", "displayOrder": 18},
+    {"id": "royal-society-music-acoustics", "title": "Royal Society Music & Acoustics: Scientific Revolution in Sound", "category": "Scientific Revolution", "books": 7, "pages": 4551, "file": "collections/royal-society-music-acoustics.json", "displayOrder": 19},
+    {"id": "robert-hooke-experimental", "title": "Robert Hooke: Experimental Philosophy & Natural Science", "category": "Scientific Revolution", "books": 7, "pages": 2565, "file": "collections/robert-hooke-experimental.json", "displayOrder": 20},
+    {"id": "taoist-inner-alchemy", "title": "Taoist Inner Alchemy: Neidan & Immortality Practices", "category": "Comparative Esoteric", "books": 8, "pages": 2137, "file": "collections/taoist-inner-alchemy.json", "displayOrder": 21},
+    {"id": "sanskrit-tantra-yoga", "title": "Sanskrit Tantra & Yoga Philosophy", "category": "Comparative Esoteric", "books": 7, "pages": 7196, "file": "collections/sanskrit-tantra-yoga.json", "displayOrder": 22},
+    {"id": "kabbalah-jewish-mysticism", "title": "Kabbalah, Jewish Mysticism & Mandaean Gnosticism", "category": "Comparative Esoteric", "books": 4, "pages": 1838, "file": "collections/kabbalah-jewish-mysticism.json", "displayOrder": 23},
+    {"id": "non-canonical-ancient-texts", "title": "Non-Canonical Ancient Texts: Pseudepigrapha & Gnostic Scriptures", "category": "Ancient Texts", "books": 14, "pages": 6370, "file": "collections/non-canonical-ancient-texts.json", "displayOrder": 24},
+    {"id": "rudolf-ii-prague-court", "title": "Rudolf II's Prague Court: Alchemy & Astronomy", "category": "Court Culture", "books": 8, "pages": 2698, "file": "collections/rudolf-ii-prague-court.json", "displayOrder": 25},
+    {"id": "medieval-western-mysticism", "title": "Medieval Western Mysticism: Eckhart, Ruysbroeck & Cloud of Unknowing", "category": "Medieval Mysticism", "books": 19, "pages": 5543, "file": "collections/medieval-western-mysticism.json", "displayOrder": 26},
+    {"id": "theosophy-modern-occultism", "title": "Theosophy & Modern Occultism: Blavatsky to the Golden Dawn", "category": "Modern Occultism", "books": 25, "pages": 10721, "file": "collections/theosophy-modern-occultism.json", "displayOrder": 27},
+    {"id": "chinese-classics-philosophy", "title": "Chinese Classics & Philosophy: Confucius, I Ching & Zen", "category": "Comparative Esoteric", "books": 12, "pages": 6550, "file": "collections/chinese-classics-philosophy.json", "displayOrder": 28},
+    {"id": "scientific-revolution-core", "title": "Scientific Revolution Core: Copernicus to Newton", "category": "Scientific Revolution", "books": 17, "pages": 7938, "file": "collections/scientific-revolution-core.json", "displayOrder": 29},
+    {"id": "islamic-philosophy-sufism", "title": "Islamic Philosophy & Sufism: Al-Ghazali, Ibn Arabi & Averroes", "category": "Islamic Tradition", "books": 6, "pages": 1019, "file": "collections/islamic-philosophy-sufism.json", "displayOrder": 30},
+    {"id": "comparative-philosophy-mind", "title": "Comparative Philosophy of Mind: From Avicenna to Vasubandhu", "category": "Philosophy", "books": 9, "pages": 5783, "file": "collections/comparative-philosophy-mind.json", "displayOrder": 31},
+    {"id": "ancient-medieval-medicine", "title": "Ancient & Medieval Medicine: From Galen to Harvey", "category": "Medicine & Science", "books": 8, "pages": 5117, "file": "collections/ancient-medieval-medicine.json", "displayOrder": 32},
+    {"id": "insular-gospel-manuscripts", "title": "Insular Gospel Manuscripts: Book of Kells & Lindisfarne Gospels", "category": "Medieval Art", "books": 6, "pages": 1680, "file": "collections/insular-gospel-manuscripts.json", "displayOrder": 33},
+    {"id": "euler-18th-century-mathematics", "title": "Euler & 18th Century Mathematics: The Age of Calculation", "category": "Mathematics", "books": 13, "pages": 8239, "file": "collections/euler-18th-century-mathematics.json", "displayOrder": 34},
+    {"id": "natural-magic-early-modern", "title": "Natural Magic & Early Modern Science: Della Porta to Wilkins", "category": "Scientific Revolution", "books": 3, "pages": 2392, "file": "collections/natural-magic-early-modern.json", "displayOrder": 35},
+    {"id": "cambridge-platonism", "title": "Cambridge Platonism: Cudworth, More & Smith", "category": "Philosophy", "books": 6, "pages": 2122, "file": "collections/cambridge-platonism.json", "displayOrder": 36}
+  ],
+
+  "categories": {
+    "Political Philosophy": {
+      "description": "Natural law, virtue ethics, and classical liberal thought from ancient Greece to modern libertarianism",
+      "collections": ["ancient-virtue-ethics", "early-modern-natural-law", "scottish-enlightenment", "brehon-law-stateless-order"]
+    },
+    "Economics": {
+      "description": "The evolution of economic thought from Adam Smith through classical and Austrian schools",
+      "collections": ["adam-smith-foundations", "classical-political-economy", "american-system-economics", "austrian-school"]
+    },
+    "Alchemy": {
+      "description": "The alchemical tradition from Arabic sources through Paracelsian medicine to Rosicrucian philosophy",
+      "collections": ["arabic-alchemy-magic", "paracelsian-medicine", "rosicrucian-circle", "alchemical-emblems"]
+    },
+    "Renaissance": {
+      "description": "The Florentine Renaissance: Neoplatonism, Christian Kabbalah, and humanist scholarship",
+      "collections": ["ficino-neoplatonic-sources", "pico-della-mirandola", "florentine-humanists"]
+    },
+    "Byzantine": {
+      "description": "Greek patristics, Byzantine mysticism, and Eastern Christian spirituality",
+      "collections": ["cappadocian-fathers", "byzantine-mystical-theology", "desert-fathers-monasticism"]
+    },
+    "Scientific Revolution": {
+      "description": "From Copernicus to Newton: the birth of modern science through experiment and mathematics",
+      "collections": ["royal-society-music-acoustics", "robert-hooke-experimental", "scientific-revolution-core", "natural-magic-early-modern"]
+    },
+    "Comparative Esoteric": {
+      "description": "Parallel esoteric traditions: Taoist alchemy, Sanskrit Tantra, Kabbalah, and Chinese philosophy",
+      "collections": ["taoist-inner-alchemy", "sanskrit-tantra-yoga", "kabbalah-jewish-mysticism", "chinese-classics-philosophy"]
+    },
+    "Ancient Texts": {
+      "description": "Non-canonical ancient texts: pseudepigrapha, Gnostic scriptures, and Dead Sea Scrolls",
+      "collections": ["non-canonical-ancient-texts"]
+    },
+    "Court Culture": {
+      "description": "The brilliant confluence of alchemy and astronomy at Rudolf II's Prague court",
+      "collections": ["rudolf-ii-prague-court"]
+    },
+    "Medieval Mysticism": {
+      "description": "Western medieval mysticism from Rhineland Germany to Flemish and English contemplative traditions",
+      "collections": ["medieval-western-mysticism"]
+    },
+    "Modern Occultism": {
+      "description": "Late 19th-early 20th century occult revival: Theosophy, Anthroposophy, Golden Dawn, Thelema",
+      "collections": ["theosophy-modern-occultism"]
+    },
+    "Islamic Tradition": {
+      "description": "Islamic philosophy and Sufism from al-Ghazali to Ibn Arabi",
+      "collections": ["islamic-philosophy-sufism"]
+    },
+    "Philosophy": {
+      "description": "Comparative philosophy of mind and Cambridge Platonism",
+      "collections": ["comparative-philosophy-mind", "cambridge-platonism"]
+    },
+    "Medicine & Science": {
+      "description": "Ancient and medieval medicine from Galen to the medical revolution",
+      "collections": ["ancient-medieval-medicine"]
+    },
+    "Medieval Art": {
+      "description": "Insular manuscript illumination from Celtic Britain and Ireland",
+      "collections": ["insular-gospel-manuscripts"]
+    },
+    "Mathematics": {
+      "description": "Euler and the mathematical foundations of the Enlightenment",
+      "collections": ["euler-18th-century-mathematics"]
+    }
+  },
+
+  "summary": {
+    "totalCollections": 36,
+    "totalBooks": 267,
+    "totalPages": 110000,
+    "categoryCounts": {
+      "Political Philosophy": 4,
+      "Economics": 4,
+      "Alchemy": 4,
+      "Renaissance": 3,
+      "Byzantine": 3,
+      "Scientific Revolution": 4,
+      "Comparative Esoteric": 4,
+      "Ancient Texts": 1,
+      "Court Culture": 1,
+      "Medieval Mysticism": 1,
+      "Modern Occultism": 1,
+      "Islamic Tradition": 1,
+      "Philosophy": 2,
+      "Medicine & Science": 1,
+      "Medieval Art": 1,
+      "Mathematics": 1
+    },
+    "oldestWork": "c. 380 BCE (Plato's Dialogues)",
+    "newestWork": "2017 (Golden Dawn Initiate)",
+    "chronologicalSpan": "~2,400 years"
+  },
+
+  "usage": {
+    "forLLMs": "Load this index to browse all collections, then fetch specific collection JSON files. Collections now comprehensive with 5-25 books each from all curator sessions.",
+    "forFrontend": "Build collection browse/search UI with category filters. Collections ordered by displayOrder for optimal presentation.",
+    "forResearchers": "36 thematically coherent collections spanning Western esotericism, philosophy, science, and comparative traditions."
+  },
+
+  "migrationNotes": {
+    "from": "Version 2.0.0 with 25 focused collections (139 books)",
+    "to": "Version 3.0.0 with 36 expanded collections (267+ books)",
+    "changes": [
+      "Expanded existing collections with books from sessions 017-026",
+      "Added 11 new collections: Medieval Mysticism, Modern Occultism, Chinese Classics, Scientific Revolution Core, Islamic Philosophy, Comparative Philosophy of Mind, Ancient Medicine, Insular Gospels, Euler Mathematics, Natural Magic, Cambridge Platonism",
+      "Nearly doubled total book count while maintaining thematic coherence"
+    ]
+  }
+}

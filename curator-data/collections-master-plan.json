@@ -1,0 +1,315 @@
+{
+  "version": "2.0.0",
+  "lastUpdated": "2026-01-06",
+  "description": "Complete 25-collection plan for Source Library featured collections",
+  "status": "✅ COMPLETE - All 25 collections created",
+
+  "collections": [
+    {
+      "id": "ancient-virtue-ethics",
+      "title": "Ancient Virtue Ethics: Plato, Aristotle & the Stoics",
+      "shortTitle": "Ancient Virtue Ethics",
+      "totalBooks": 5,
+      "totalPages": 3240,
+      "status": "✅ Created",
+      "file": "collections/ancient-virtue-ethics.json",
+      "category": "Political Philosophy",
+      "displayOrder": 1
+    },
+    {
+      "id": "early-modern-natural-law",
+      "title": "Early Modern Natural Law: Grotius to Locke",
+      "shortTitle": "Natural Law",
+      "totalBooks": 4,
+      "totalPages": 2330,
+      "status": "✅ Created",
+      "file": "collections/early-modern-natural-law.json",
+      "category": "Political Philosophy",
+      "displayOrder": 2
+    },
+    {
+      "id": "scottish-enlightenment",
+      "title": "Scottish Enlightenment: Moral Sense to Political Economy",
+      "shortTitle": "Scottish Enlightenment",
+      "totalBooks": 7,
+      "totalPages": 2484,
+      "status": "✅ Created",
+      "file": "collections/scottish-enlightenment.json",
+      "category": "Political Philosophy",
+      "displayOrder": 3
+    },
+    {
+      "id": "adam-smith-foundations",
+      "title": "Adam Smith & Foundations of Political Economy",
+      "shortTitle": "Adam Smith",
+      "totalBooks": 4,
+      "totalPages": 1898,
+      "status": "✅ Created",
+      "file": "collections/adam-smith-foundations.json",
+      "category": "Economics",
+      "displayOrder": 4
+    },
+    {
+      "id": "classical-political-economy",
+      "title": "Classical Political Economy: Ricardo to Bastiat",
+      "shortTitle": "Classical Economics",
+      "totalBooks": 6,
+      "totalPages": 2109,
+      "status": "✅ Created",
+      "file": "collections/classical-political-economy.json",
+      "category": "Economics",
+      "displayOrder": 5
+    },
+    {
+      "id": "american-system-economics",
+      "title": "American System: Carey's Protectionist Economics",
+      "shortTitle": "American System",
+      "totalBooks": 2,
+      "totalPages": 750,
+      "status": "✅ Created",
+      "category": "Economics",
+      "displayOrder": 6,
+      "books": ["Carey: Harmony of Interests", "Carey: Unity of Law"]
+    },
+    {
+      "id": "austrian-school",
+      "title": "Austrian School: Mises, Rothbard & Hayek",
+      "shortTitle": "Austrian Economics",
+      "totalBooks": 5,
+      "totalPages": 4166,
+      "status": "✅ Created",
+      "file": "collections/austrian-school.json",
+      "category": "Economics",
+      "displayOrder": 7
+    },
+    {
+      "id": "brehon-law-stateless-order",
+      "title": "Brehon Law: Celtic Legal Tradition & Stateless Order",
+      "shortTitle": "Brehon Law",
+      "totalBooks": 3,
+      "totalPages": 1357,
+      "status": "✅ Created",
+      "file": "collections/brehon-law-stateless-order.json",
+      "category": "Political Philosophy",
+      "displayOrder": 8
+    },
+    {
+      "id": "arabic-alchemy-magic",
+      "title": "Arabic Alchemy & Astral Magic",
+      "shortTitle": "Arabic Alchemy",
+      "totalBooks": 6,
+      "totalPages": 2415,
+      "status": "✅ Created",
+      "category": "Alchemy",
+      "displayOrder": 9,
+      "books": ["Jabir corpus", "Picatrix", "Herat Compendium"]
+    },
+    {
+      "id": "paracelsian-medicine",
+      "title": "Paracelsian Medicine & Chemical Philosophy",
+      "shortTitle": "Paracelsian",
+      "totalBooks": 5,
+      "totalPages": 1800,
+      "status": "✅ Created",
+      "category": "Alchemy",
+      "displayOrder": 10,
+      "books": ["Paracelsus works", "Croll", "Basil Valentine"]
+    },
+    {
+      "id": "rosicrucian-circle",
+      "title": "Rosicrucian Circle: Fludd, Maier, Dee & Khunrath",
+      "shortTitle": "Rosicrucian",
+      "totalBooks": 7,
+      "totalPages": 3200,
+      "status": "✅ Created",
+      "category": "Alchemy",
+      "displayOrder": 11,
+      "books": ["Fludd: Utriusque cosmi", "Maier", "Dee", "Khunrath"]
+    },
+    {
+      "id": "alchemical-emblems",
+      "title": "Alchemical Emblems: Visual Knowledge Transmission",
+      "shortTitle": "Alchemical Emblems",
+      "totalBooks": 4,
+      "totalPages": 2214,
+      "status": "✅ Created",
+      "category": "Alchemy",
+      "displayOrder": 12,
+      "books": ["Splendor Solis", "Rosarium", "Mylius", "Atalanta Fugiens"]
+    },
+    {
+      "id": "ficino-neoplatonic-sources",
+      "title": "Ficino's Neoplatonic Sources: Plotinus to Proclus",
+      "shortTitle": "Neoplatonic Sources",
+      "totalBooks": 7,
+      "totalPages": 5000,
+      "status": "✅ Created",
+      "category": "Renaissance",
+      "displayOrder": 13,
+      "books": ["Plotinus Enneades", "Proclus", "Iamblichus", "Pseudo-Dionysius"]
+    },
+    {
+      "id": "pico-della-mirandola",
+      "title": "Pico della Mirandola: Syncretism & Christian Kabbalah",
+      "shortTitle": "Pico",
+      "totalBooks": 6,
+      "totalPages": 2500,
+      "status": "✅ Created",
+      "category": "Renaissance",
+      "displayOrder": 14,
+      "books": ["Multiple Pico editions", "900 Theses", "Heptaplus", "Commentary"]
+    },
+    {
+      "id": "florentine-humanists",
+      "title": "Florentine Humanists: Poliziano, Landino & Lorenzo",
+      "shortTitle": "Florentine Humanists",
+      "totalBooks": 8,
+      "totalPages": 3500,
+      "status": "✅ Created",
+      "category": "Renaissance",
+      "displayOrder": 15,
+      "books": ["Poliziano", "Landino Dante", "Lorenzo poetry", "Leone Ebreo"]
+    },
+    {
+      "id": "cappadocian-fathers",
+      "title": "Cappadocian Fathers: Basil, Gregory & Athanasius",
+      "shortTitle": "Cappadocians",
+      "totalBooks": 5,
+      "totalPages": 500,
+      "status": "✅ Created",
+      "category": "Byzantine",
+      "displayOrder": 16,
+      "books": ["Basil", "Gregory of Nazianzus", "Gregory of Nyssa", "Athanasius"]
+    },
+    {
+      "id": "byzantine-mystical-theology",
+      "title": "Byzantine Mystical Theology: Hesychasm & Apophatic Tradition",
+      "shortTitle": "Byzantine Mysticism",
+      "totalBooks": 8,
+      "totalPages": 1800,
+      "status": "✅ Created",
+      "category": "Byzantine",
+      "displayOrder": 17,
+      "books": ["Pseudo-Dionysius", "Maximus", "Philokalia", "John Climacus"]
+    },
+    {
+      "id": "desert-fathers-monasticism",
+      "title": "Desert Fathers & Early Christian Monasticism",
+      "shortTitle": "Desert Fathers",
+      "totalBooks": 6,
+      "totalPages": 1200,
+      "status": "✅ Created",
+      "category": "Byzantine",
+      "displayOrder": 18,
+      "books": ["Apophthegmata Patrum", "Cassian", "Evagrius"]
+    },
+    {
+      "id": "royal-society-music-acoustics",
+      "title": "Royal Society Music & Acoustics: Scientific Revolution in Sound",
+      "shortTitle": "Music & Acoustics",
+      "totalBooks": 7,
+      "totalPages": 4551,
+      "status": "✅ Created",
+      "file": "collections/royal-society-music-acoustics.json",
+      "category": "Scientific Revolution",
+      "displayOrder": 19
+    },
+    {
+      "id": "robert-hooke-experimental",
+      "title": "Robert Hooke: Experimental Philosophy & Natural Science",
+      "shortTitle": "Robert Hooke",
+      "totalBooks": 5,
+      "totalPages": 2000,
+      "status": "✅ Created",
+      "category": "Scientific Revolution",
+      "displayOrder": 20,
+      "books": ["Lectiones", "Micrographia", "Posthumous Works"]
+    },
+    {
+      "id": "taoist-inner-alchemy",
+      "title": "Taoist Inner Alchemy: Neidan & Immortality Practices",
+      "shortTitle": "Taoist Alchemy",
+      "totalBooks": 8,
+      "totalPages": 2506,
+      "status": "✅ Created",
+      "category": "Comparative Esoteric",
+      "displayOrder": 21,
+      "books": ["Secret of Golden Flower", "Baopuzi", "Wuzhen pian", "Needham"]
+    },
+    {
+      "id": "sanskrit-tantra-yoga",
+      "title": "Sanskrit Tantra & Yoga Philosophy",
+      "shortTitle": "Tantra & Yoga",
+      "totalBooks": 5,
+      "totalPages": 1581,
+      "status": "✅ Created",
+      "category": "Comparative Esoteric",
+      "displayOrder": 22,
+      "books": ["Avalon/Woodroffe", "Shastri manuscripts"]
+    },
+    {
+      "id": "kabbalah-jewish-mysticism",
+      "title": "Kabbalah, Jewish Mysticism & Mandaean Gnosticism",
+      "shortTitle": "Kabbalah & Gnosticism",
+      "totalBooks": 4,
+      "totalPages": 1620,
+      "status": "✅ Created",
+      "category": "Comparative Esoteric",
+      "displayOrder": 23,
+      "books": ["Sefer HaBahir", "Scholem", "Ginza Rabba"]
+    },
+    {
+      "id": "non-canonical-ancient-texts",
+      "title": "Non-Canonical Ancient Texts: Pseudepigrapha & Gnostic Scriptures",
+      "shortTitle": "Non-Canonical Texts",
+      "totalBooks": 8,
+      "totalPages": 3500,
+      "status": "✅ Created",
+      "category": "Ancient Texts",
+      "displayOrder": 24,
+      "books": ["Enoch", "Jubilees", "Dead Sea Scrolls", "Nag Hammadi"]
+    },
+    {
+      "id": "rudolf-ii-prague-court",
+      "title": "Rudolf II's Prague Court: Alchemy & Astronomy",
+      "shortTitle": "Rudolf II Court",
+      "totalBooks": 8,
+      "totalPages": 3500,
+      "status": "✅ Created",
+      "category": "Court Culture",
+      "displayOrder": 25,
+      "books": ["Dee", "Maier", "Kepler", "Tycho", "Sendivogius", "Kelly"]
+    }
+  ],
+
+  "summary": {
+    "totalCollections": 25,
+    "completed": 25,
+    "toCreate": 0,
+    "estimatedTotalBooks": 145,
+    "estimatedTotalPages": 60000,
+    "categories": {
+      "Political Philosophy": 4,
+      "Economics": 4,
+      "Alchemy": 4,
+      "Renaissance": 3,
+      "Byzantine": 3,
+      "Scientific Revolution": 2,
+      "Comparative Esoteric": 3,
+      "Ancient Texts": 1,
+      "Court Culture": 1
+    }
+  },
+
+  "completedSteps": [
+    "✅ All 25 collection JSON files created",
+    "✅ Each populated with book IDs from curator reports",
+    "✅ Master index.json created with all collections",
+    "✅ All collections organized into 9 thematic categories"
+  ],
+  "nextSteps": [
+    "Frontend integration: Display collections on homepage",
+    "Add collection navigation and filtering by category",
+    "Potential enhancements: Collection cards with images, cross-collection search"
+  ]
+}

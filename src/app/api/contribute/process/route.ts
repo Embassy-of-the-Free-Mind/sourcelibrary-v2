@@ -83,13 +83,20 @@ export async function POST(request: NextRequest) {
       };
 
       try {
-        const { apiKey, bookId, processType, contributorName } = await request.json();
+        const { apiKey, bookId, processType, contributorName, costLimit = 1.0 } = await request.json();
 
         if (!apiKey || !bookId) {
           send({ error: 'Missing API key or book ID' });
           controller.close();
           return;
         }
+
+        // Cost per token (rough estimate based on Gemini 2.0 Flash pricing)
+        const COST_PER_1M_INPUT = 0.10;
+        const COST_PER_1M_OUTPUT = 0.40;
+        const estimateCost = (tokens: number) => (tokens / 1_000_000) * ((COST_PER_1M_INPUT + COST_PER_1M_OUTPUT) / 2);
+
+        let totalCostSpent = 0;
 
         const db = await getDb();
 
@@ -136,13 +143,20 @@ export async function POST(request: NextRequest) {
           return;
         }
 
-        send({ totalPages: pages.length, pagesCompleted: 0, currentPage: 1 });
+        send({ totalPages: pages.length, pagesCompleted: 0, currentPage: 1, costSpent: 0 });
 
         let pagesCompleted = 0;
         let totalTokens = 0;
         let previousText = '';
+        let limitReached = false;
 
         for (const page of pages as Array<{ _id: ObjectId; page_number: number; archived_photo?: string; cropped_photo?: string; photo?: string; photo_original?: string; ocr?: { data?: string }; translation?: { data?: string } }>) {
+          // Check cost limit before processing
+          if (totalCostSpent >= costLimit) {
+            limitReached = true;
+            break;
+          }
+
           try {
             if (processType === 'ocr') {
               const imageUrl = getImageUrl(page);
@@ -173,6 +187,7 @@ export async function POST(request: NextRequest) {
 
               previousText = result.text;
               totalTokens += result.tokens;
+              totalCostSpent += estimateCost(result.tokens);
             } else {
               // Translation
               const ocrText = page.ocr?.data;
@@ -202,10 +217,11 @@ export async function POST(request: NextRequest) {
 
               previousText = result.text;
               totalTokens += result.tokens;
+              totalCostSpent += estimateCost(result.tokens);
             }
 
             pagesCompleted++;
-            send({ currentPage: pagesCompleted, pagesCompleted, totalPages: pages.length });
+            send({ currentPage: pagesCompleted, pagesCompleted, totalPages: pages.length, costSpent: totalCostSpent });
 
             // Small delay to avoid rate limits
             await new Promise(resolve => setTimeout(resolve, 100));
@@ -251,10 +267,18 @@ export async function POST(request: NextRequest) {
           process_type: processType,
           pages_processed: pagesCompleted,
           total_tokens: totalTokens,
+          cost_spent: totalCostSpent,
+          cost_limit: costLimit,
+          limit_reached: limitReached,
           created_at: new Date(),
         });
 
-        send({ pagesCompleted, complete: true, totalTokens });
+        // Send final response
+        if (limitReached) {
+          send({ pagesCompleted, limitReached: true, costSpent: totalCostSpent, totalTokens });
+        } else {
+          send({ pagesCompleted, complete: true, costSpent: totalCostSpent, totalTokens });
+        }
         controller.close();
       } catch (error) {
         console.error('Contribution processing error:', error);

@@ -220,14 +220,12 @@ export async function selectImagesForPosts(
             { $isNumber: '$book.published' },
             '$book.published',
             {
-              $cond: [
-                { $and: [
-                  { $ne: ['$book.published', ''] },
-                  { $ne: ['$book.published', null] }
-                ]},
-                { $toInt: '$book.published' },
-                null
-              ]
+              $convert: {
+                input: '$book.published',
+                to: 'int',
+                onError: null,
+                onNull: null
+              }
             }
           ]
         },
@@ -306,14 +304,12 @@ export async function getImageCandidate(
             { $isNumber: '$book.published' },
             '$book.published',
             {
-              $cond: [
-                { $and: [
-                  { $ne: ['$book.published', ''] },
-                  { $ne: ['$book.published', null] }
-                ]},
-                { $toInt: '$book.published' },
-                null
-              ]
+              $convert: {
+                input: '$book.published',
+                to: 'int',
+                onError: null,
+                onNull: null
+              }
             }
           ]
         },

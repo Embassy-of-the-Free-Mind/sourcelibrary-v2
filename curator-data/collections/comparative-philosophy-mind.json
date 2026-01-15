@@ -1,0 +1,35 @@
+{
+  "id": "comparative-philosophy-mind",
+  "title": "Comparative Philosophy of Mind: From Avicenna to Vasubandhu",
+  "shortTitle": "Philosophy of Mind",
+  "description": "Cross-cultural philosophy of mind, consciousness, and intellect: Islamic Peripatetic psychology (Avicenna, Averroes), Scholastic synthesis (Aquinas), Cambridge Platonism (More, Smith), Jewish Neoplatonism (Ibn Gabirol), Neo-Confucianism (Zhu Xi), and Buddhist Abhidharma (Nagarjuna, Vasubandhu).",
+  "dateRange": "c. 150 CE - 1874",
+  "totalBooks": 9,
+  "totalPages": 5783,
+  "themes": ["Philosophy of Mind", "Comparative Philosophy", "Intellect Theory", "Consciousness", "Soul"],
+  "books": [
+    {"bookId": "6955808657e3b773024f5899", "title": "Compendium de anima (1546)", "author": "Avicenna (Ibn Sina)", "year": 1546, "pages": 290},
+    {"bookId": "695582f657e3b773024f6ec5", "title": "Long Commentary on the De Anima", "author": "Averroes (Ibn Rushd)", "year": 1953, "pages": 618},
+    {"bookId": "695582f957e3b773024f7130", "title": "Commentary on Treatise on the Soul", "author": "Thomas Aquinas", "year": 1946, "pages": 100},
+    {"bookId": "695580a857e3b773024f59bc", "title": "The Immortality of the Soul (1659)", "author": "Henry More", "year": 1659, "pages": 634},
+    {"bookId": "6955831157e3b773024f7195", "title": "Select Discourses (1660)", "author": "John Smith", "year": 1660, "pages": 596},
+    {"bookId": "6955831457e3b773024f74ca", "title": "Fons Vitae (1895)", "author": "Ibn Gabirol (Avicebron)", "year": 1895, "pages": 483},
+    {"bookId": "695580ac57e3b773024f5c37", "title": "Confucian Cosmogony (1874)", "author": "Zhu Xi", "year": 1874, "pages": 192},
+    {"bookId": "695580ca57e3b773024f64ec", "title": "Madhyamaka Shastra", "author": "Nagarjuna", "year": 1960, "pages": 662},
+    {"bookId": "6955831757e3b773024f76ae", "title": "Abhidharmakosa with Bhashya", "author": "Vasubandhu", "year": 1970, "pages": 2208}
+  ],
+  "keyTheories": [
+    "Avicenna: Active Intellect, flying man thought experiment, soul's immortality",
+    "Averroes: Universal Intellect shared by all humanity, sparked medieval controversies",
+    "Aquinas: Soul as substantial form of body, subsists after death",
+    "Cambridge Platonists: Immaterial spiritual substance, deiformity of soul",
+    "Ibn Gabirol: Universal hylomorphism - matter and form in all creatures including angels",
+    "Zhu Xi: Principle (li) and material force (qi), mind of the Way vs human mind",
+    "Nagarjuna: Emptiness of consciousness, no inherent existence",
+    "Vasubandhu: Abhidharma psychology, analysis of mental factors and consciousness"
+  ],
+  "researchValue": "Enables unprecedented comparative study of theories of mind across Islamic, Christian, Jewish, Chinese, and Buddhist traditions. Documents transmission of Greek philosophy through Arabic to Latin Europe. Essential for understanding pre-modern philosophy of consciousness.",
+  "connections": ["islamic-philosophy-sufism", "byzantine-mystical-theology", "chinese-classics-philosophy"],
+  "featured": true,
+  "displayOrder": 31
+}

@@ -1,0 +1,254 @@
+{
+  "id": "comparative-esoteric-traditions",
+  "title": "Comparative Esoteric Traditions: Cross-Cultural Mysticism & Alchemy",
+  "shortTitle": "Comparative Esoteric",
+  "description": "Parallel esoteric traditions from across world cultures: Arabic alchemy and magic (Jabir, Picatrix), Hebrew Kabbalah, Gnostic Mandaean scriptures, Sanskrit Tantra, and Taoist inner alchemy (neidan). Documents universal patterns in mystical and alchemical thought.",
+  "curatedBy": "Embassy of the Free Mind Collection",
+  "dateCreated": "2026-01-01",
+  "dateRange": {
+    "start": 300,
+    "end": 2000,
+    "description": "c. 4th century - 20th century (modern editions)"
+  },
+  "themes": [
+    "Comparative Religion",
+    "Esotericism",
+    "Mysticism",
+    "Alchemy",
+    "Kabbalah",
+    "Tantra",
+    "Taoism",
+    "Gnosticism",
+    "Cross-Cultural Studies"
+  ],
+  "geographicCoverage": [
+    "Arabic World (Baghdad, Damascus, Cairo)",
+    "Hebrew/Jewish tradition",
+    "India (Sanskrit Tantra)",
+    "China (Taoist alchemy)",
+    "Mesopotamia (Mandaean Gnosticism)",
+    "Ethiopia"
+  ],
+  "sections": [
+    {
+      "title": "Arabic Alchemy & Magic",
+      "tradition": "Islamic esotericism",
+      "totalBooks": 6,
+      "totalPages": 2415,
+      "keyWorks": [
+        {
+          "title": "Majmu nafis fi al-kimiya",
+          "author": "Jabir ibn Hayyan",
+          "date": "MS",
+          "significance": "Original Arabic alchemical manuscript, foundational corpus"
+        },
+        {
+          "title": "Ghayat al-Hakim (Picatrix)",
+          "author": "al-Majriti (attrib.)",
+          "date": "c. 1000",
+          "significance": "Most influential Arabic grimoire, foundational for Renaissance magic"
+        },
+        {
+          "title": "Alchemical Compendium",
+          "author": "Ibrahim al-Husayni",
+          "date": "1499 (Herat)",
+          "significance": "15th century Persian alchemical compilation"
+        }
+      ],
+      "keyThemes": [
+        "Transmutation and elixirs",
+        "Astrological magic",
+        "Talismanic theory",
+        "Influence on Latin alchemy"
+      ]
+    },
+    {
+      "title": "Hebrew Kabbalah",
+      "tradition": "Jewish mysticism",
+      "totalBooks": 2,
+      "totalPages": 792,
+      "keyWorks": [
+        {
+          "title": "Sefer HaBahir",
+          "author": "Anonymous (Aryeh Kaplan translation)",
+          "date": "12th century text, 1979 translation",
+          "significance": "First text of medieval Kabbalah, sefirot symbolism"
+        },
+        {
+          "title": "Origins of the Kabbalah",
+          "author": "Gershom Scholem",
+          "date": "1987",
+          "significance": "Definitive scholarly study of early Kabbalah"
+        }
+      ],
+      "keyThemes": [
+        "Sefirot (divine emanations)",
+        "Ein Sof (infinite)",
+        "Theosophical symbolism",
+        "Influence on Christian Kabbalah (Pico, Reuchlin)"
+      ]
+    },
+    {
+      "title": "Mandaean Gnosticism",
+      "tradition": "Mesopotamian Gnostic religion",
+      "totalBooks": 2,
+      "totalPages": 828,
+      "keyWorks": [
+        {
+          "title": "Ginza Rabba",
+          "author": "Mandaean tradition",
+          "date": "Ancient, 2012 edition",
+          "significance": "The 'Great Treasure' - central Mandaean scripture"
+        },
+        {
+          "title": "Canonical Prayer Book of the Mandaeans",
+          "author": "E.S. Drower (ed.)",
+          "date": "1959",
+          "significance": "Liturgical texts of living Gnostic tradition"
+        }
+      ],
+      "keyThemes": [
+        "Dualism (light vs darkness)",
+        "Baptismal rituals",
+        "Gnostic cosmology",
+        "Last surviving Gnostic religion"
+      ]
+    },
+    {
+      "title": "Sanskrit Tantra",
+      "tradition": "Hindu/Buddhist esotericism",
+      "totalBooks": 3,
+      "totalPages": 1581,
+      "keyWorks": [
+        {
+          "title": "Tantric Texts Series",
+          "author": "Arthur Avalon / John Woodroffe",
+          "date": "1913-1940",
+          "significance": "Foundational English translations of Tantric texts"
+        },
+        {
+          "title": "Tantra Manuscripts",
+          "author": "Haraprasada Shastri",
+          "date": "1939",
+          "significance": "Critical editions of Bengali Tantric manuscripts"
+        }
+      ],
+      "keyThemes": [
+        "Kundalini yoga",
+        "Shakti and Shiva",
+        "Chakra system",
+        "Mantra and yantra",
+        "Non-dual consciousness"
+      ]
+    },
+    {
+      "title": "Taoist Inner Alchemy (Neidan)",
+      "tradition": "Chinese Taoism",
+      "totalBooks": 12,
+      "totalPages": 2506,
+      "keyWorks": [
+        {
+          "title": "The Secret of the Golden Flower",
+          "author": "Lu Dongbin (Wilhelm & Cleary translations)",
+          "date": "Tang dynasty text, modern translations",
+          "significance": "Foundational neidan text on inner light meditation"
+        },
+        {
+          "title": "Baopuzi (Nei Pien)",
+          "author": "Ge Hong",
+          "date": "4th century, 1967 translation",
+          "significance": "Classic on external and internal alchemy"
+        },
+        {
+          "title": "Understanding Reality (Wuzhen pian)",
+          "author": "Zhang Boduan",
+          "date": "11th century",
+          "significance": "Masterpiece of internal alchemy"
+        },
+        {
+          "title": "Science and Civilisation in China Vol. 5",
+          "author": "Joseph Needham",
+          "date": "1974",
+          "significance": "Definitive scholarly treatment of Chinese alchemy"
+        }
+      ],
+      "keyThemes": [
+        "Qi cultivation",
+        "Inner elixir (neidan)",
+        "Immortality techniques",
+        "Microcosmic orbit",
+        "Union of yin and yang"
+      ]
+    },
+    {
+      "title": "Ethiopian Magic",
+      "tradition": "East African Christian esotericism",
+      "totalBooks": 1,
+      "totalPages": 130,
+      "keyWorks": [
+        {
+          "title": "Ethiopian Magic Scrolls",
+          "author": "Jacques Mercier",
+          "date": "1979",
+          "significance": "Talismanic scrolls with angelic names and protective magic"
+        }
+      ]
+    }
+  ],
+  "comparativeThemes": [
+    {
+      "theme": "Inner Transformation",
+      "manifestations": [
+        "Arabic: Elixir of immortality",
+        "Kabbalah: Ascent through sefirot",
+        "Tantra: Kundalini awakening",
+        "Taoism: Inner alchemy (neidan)",
+        "Mandaean: Baptismal purification"
+      ]
+    },
+    {
+      "theme": "Microcosm-Macrocosm",
+      "manifestations": [
+        "Arabic: 'As above, so below' (Picatrix)",
+        "Kabbalah: Adam Kadmon (primordial man)",
+        "Tantra: Body as map of cosmos (chakras)",
+        "Taoism: Human as miniature universe",
+        "Alchemy: Laboratory as microcosm"
+      ]
+    },
+    {
+      "theme": "Subtle Body & Energy Channels",
+      "manifestations": [
+        "Kabbalah: Sefirot as divine anatomy",
+        "Tantra: Chakras and nadis",
+        "Taoism: Meridians and dantian",
+        "Alchemy: Circulation of quintessence"
+      ]
+    },
+    {
+      "theme": "Sacred Language & Symbols",
+      "manifestations": [
+        "Kabbalah: Hebrew letters as creative forces",
+        "Tantra: Sanskrit mantras and yantras",
+        "Arabic: Talismanic magic squares",
+        "Alchemy: Emblematic visual language",
+        "Taoism: Ritual diagrams (fu)"
+      ]
+    }
+  ],
+  "totalBooks": 26,
+  "totalPages": 8252,
+  "researchValue": "This collection enables comparative study of esoteric and mystical traditions across major world cultures. Researchers can trace universal patterns in alchemical thought, inner transformation practices, subtle body theories, and sacred symbolism. Essential for comparative religion, history of science, and understanding the global context of Western esotericism.",
+  "connections": [
+    {
+      "collectionId": "alchemy-hermetica",
+      "relationship": "Arabic alchemy sources for Latin medieval alchemy; comparative alchemical traditions"
+    },
+    {
+      "collectionId": "florentine-neoplatonism",
+      "relationship": "Pico's Christian Kabbalah draws on Hebrew mystical sources"
+    }
+  ],
+  "featuredOn": "homepage",
+  "displayOrder": 6
+}

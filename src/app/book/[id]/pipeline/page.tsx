@@ -6,7 +6,6 @@ import { ArrowLeft, Play, Pause, RotateCcw, Loader2, CheckCircle, AlertCircle } 
 import { usePipeline } from '@/hooks/usePipeline';
 import PipelineProgress from '@/components/pipeline/PipelineProgress';
 import PipelineConfigForm, { PipelineConfigDisplay } from '@/components/pipeline/PipelineConfig';
-import StreamingPipeline from '@/components/pipeline/StreamingPipeline';
 
 interface PipelinePageProps {
   params: Promise<{ id: string }>;
@@ -123,12 +122,11 @@ function PipelineContent({ bookId }: { bookId: string }) {
             {pipeline && (
               <>
                 <span>•</span>
-                <span className={`capitalize ${
-                  isCompleted ? 'text-green-400' :
+                <span className={`capitalize ${isCompleted ? 'text-green-400' :
                   isFailed ? 'text-red-400' :
-                  isRunning ? 'text-amber-400' :
-                  'text-stone-400'
-                }`}>
+                    isRunning ? 'text-amber-400' :
+                      'text-stone-400'
+                  }`}>
                   {pipeline.status}
                 </span>
               </>
@@ -213,30 +211,11 @@ function PipelineContent({ bookId }: { bookId: string }) {
           </div>
         )}
 
-        {/* Streaming Pipeline - alternative approach */}
-        {!hasStarted && (
-          <div className="mt-8">
-            <div className="relative mb-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-stone-300" />
-              </div>
-              <div className="relative flex justify-center">
-                <span className="bg-stone-50 px-4 text-sm text-stone-500">or try the experimental option</span>
-              </div>
-            </div>
-            <StreamingPipeline
-              bookId={bookId}
-              bookTitle={bookTitle}
-              language={language}
-            />
-          </div>
-        )}
-
         {/* Info box */}
         <div className="mt-8 p-4 bg-stone-100 rounded-lg">
           <h3 className="font-medium text-stone-900 mb-2">What happens next?</h3>
           <ul className="text-sm text-stone-600 space-y-1">
-            <li>1. <strong>Split Check</strong> — Detects and splits two-page spreads if present</li>
+            <li>1. <strong>Crop</strong> — Generates cropped images for split pages</li>
             <li>2. <strong>OCR</strong> — Extracts text from all page images</li>
             <li>3. <strong>Translation</strong> — Translates the extracted text to English</li>
             <li>4. <strong>Summarize</strong> — Generates a book overview with key quotes</li>

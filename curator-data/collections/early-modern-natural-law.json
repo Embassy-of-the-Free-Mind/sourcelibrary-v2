@@ -1,0 +1,26 @@
+{
+  "id": "early-modern-natural-law",
+  "title": "Early Modern Natural Law: Grotius to Locke",
+  "shortTitle": "Early Modern Natural Law",
+  "description": "The secularization of natural law theory from medieval Scholasticism to Enlightenment natural rights. Grotius establishes international law, Pufendorf develops duties from sociability, Aquinas bridges ancient and modern, and Locke grounds property in labor.",
+  "dateRange": "1270 - 1772",
+  "totalBooks": 4,
+  "totalPages": 2330,
+  "themes": ["Natural Law", "Natural Rights", "Social Contract", "Property Rights", "International Law"],
+  "books": [
+    {"bookId": "6956952e8c9559f6c2db0992", "title": "Aquinas Ethicus", "author": "Thomas Aquinas", "year": 1896, "pages": 474},
+    {"bookId": "695690527df2d231f8f9a858", "title": "Rights of War and Peace", "author": "Hugo Grotius", "year": 1682, "pages": 508},
+    {"bookId": "6956905950d4fc9bdc434e3a", "title": "Law of Nature and Nations", "author": "Samuel Pufendorf", "year": 1729, "pages": 1013},
+    {"bookId": "695690547df2d231f8f9aa55", "title": "Two Treatises of Government", "author": "John Locke", "year": 1772, "pages": 404}
+  ],
+  "intellectualProgression": [
+    "Aquinas: Natural law as participation in eternal law (medieval synthesis)",
+    "Grotius: Secularizes natural law, founds international law",
+    "Pufendorf: Entia moralia, duties from sociability",
+    "Locke: Natural rights (life, liberty, property), labor theory, limited government"
+  ],
+  "researchValue": "Documents the crucial transition from medieval natural law to Enlightenment natural rights theory. Foundation for classical liberal political philosophy and modern human rights discourse.",
+  "connections": ["ancient-virtue-ethics", "scottish-enlightenment"],
+  "featured": true,
+  "displayOrder": 2
+}

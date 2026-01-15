@@ -7,12 +7,14 @@ import { contribute } from '@/lib/api-client';
 import type { ContributeBook, ContributorStats } from '@/lib/api-client/types';
 
 interface ProcessingStatus {
-  status: 'idle' | 'validating' | 'processing' | 'complete' | 'error';
+  status: 'idle' | 'validating' | 'processing' | 'complete' | 'error' | 'limit_reached';
   currentPage: number;
   totalPages: number;
   pagesCompleted: number;
   error?: string;
   bookTitle?: string;
+  costSpent?: number;
+  costLimit?: number;
 }
 
 export default function ContributePage() {
@@ -22,6 +24,7 @@ export default function ContributePage() {
   const [selectedBook, setSelectedBook] = useState<ContributeBook | null>(null);
   const [contributorName, setContributorName] = useState('');
   const [processType, setProcessType] = useState<'ocr' | 'translate'>('ocr');
+  const [costLimit, setCostLimit] = useState<string>('1.00');
   const [processing, setProcessing] = useState<ProcessingStatus>({
     status: 'idle',
     currentPage: 0,
@@ -66,6 +69,8 @@ export default function ContributePage() {
   const startProcessing = async () => {
     if (!selectedBook || !keyValid) return;
 
+    const limit = parseFloat(costLimit) || 1.0;
+
     setProcessing({
       status: 'processing',
       currentPage: 0,
@@ -74,6 +79,8 @@ export default function ContributePage() {
         : selectedBook.pages_ocr - selectedBook.pages_translated,
       pagesCompleted: 0,
       bookTitle: selectedBook.title,
+      costSpent: 0,
+      costLimit: limit,
     });
 
     try {
@@ -83,6 +90,7 @@ export default function ContributePage() {
         bookId: selectedBook._id,
         processType,
         contributorName: contributorName || 'Anonymous',
+        costLimit: limit,
       });
 
       // Stream response for real-time updates
@@ -104,7 +112,8 @@ export default function ContributePage() {
                 ...p,
                 currentPage: data.currentPage || p.currentPage,
                 pagesCompleted: data.pagesCompleted || p.pagesCompleted,
-                status: data.complete ? 'complete' : 'processing',
+                costSpent: data.costSpent || p.costSpent,
+                status: data.limitReached ? 'limit_reached' : data.complete ? 'complete' : 'processing',
                 error: data.error,
               }));
             } catch {
@@ -163,17 +172,19 @@ export default function ContributePage() {
           </p>
         </div>
 
-        {processing.status === 'processing' || processing.status === 'complete' ? (
+        {processing.status === 'processing' || processing.status === 'complete' || processing.status === 'limit_reached' ? (
           /* Processing View */
           <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
             <div className="text-center mb-6">
               {processing.status === 'processing' ? (
                 <Loader2 className="w-12 h-12 mx-auto mb-4 animate-spin" style={{ color: 'var(--accent-sage)' }} />
+              ) : processing.status === 'limit_reached' ? (
+                <AlertCircle className="w-12 h-12 mx-auto mb-4" style={{ color: '#f59e0b' }} />
               ) : (
                 <CheckCircle className="w-12 h-12 mx-auto mb-4" style={{ color: '#22c55e' }} />
               )}
               <h3 className="text-xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
-                {processing.status === 'processing' ? 'Processing...' : 'Complete!'}
+                {processing.status === 'processing' ? 'Processing...' : processing.status === 'limit_reached' ? 'Limit Reached' : 'Complete!'}
               </h3>
               <p style={{ color: 'var(--text-muted)' }}>{processing.bookTitle}</p>
             </div>
@@ -190,16 +201,47 @@ export default function ContributePage() {
                   className="h-full rounded-full transition-all duration-300"
                   style={{
                     width: `${processing.totalPages > 0 ? (processing.pagesCompleted / processing.totalPages) * 100 : 0}%`,
-                    background: processing.status === 'complete' ? '#22c55e' : 'var(--accent-sage)',
+                    background: processing.status === 'complete' ? '#22c55e' : processing.status === 'limit_reached' ? '#f59e0b' : 'var(--accent-sage)',
                   }}
                 />
               </div>
+              {/* Cost tracker */}
+              {processing.costSpent !== undefined && (
+                <div className="flex justify-between text-sm mt-3">
+                  <span style={{ color: 'var(--text-primary)' }}>Cost spent</span>
+                  <span style={{ color: processing.costSpent >= (processing.costLimit || 1) ? '#f59e0b' : 'var(--text-muted)' }}>
+                    ${processing.costSpent.toFixed(4)} / ${(processing.costLimit || 1).toFixed(2)} limit
+                  </span>
+                </div>
+              )}
             </div>
+
+            {processing.status === 'limit_reached' && (
+              <div className="text-center">
+                <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
+                  Spending limit reached. You processed {processing.pagesCompleted} pages for ${processing.costSpent?.toFixed(4)}.
+                  Your API key has been discarded.
+                </p>
+                <button
+                  onClick={() => {
+                    setProcessing({ status: 'idle', currentPage: 0, totalPages: 0, pagesCompleted: 0 });
+                    setSelectedBook(null);
+                    setApiKey('');
+                    setKeyValid(null);
+                  }}
+                  className="px-4 py-2 rounded-lg font-medium"
+                  style={{ background: 'var(--accent-sage)', color: 'white' }}
+                >
+                  Start Over
+                </button>
+              </div>
+            )}
 
             {processing.status === 'complete' && (
               <div className="text-center">
                 <p className="mb-4" style={{ color: 'var(--text-secondary)' }}>
-                  Thank you for your contribution! You processed {processing.pagesCompleted} pages.
+                  Thank you for your contribution! You processed {processing.pagesCompleted} pages
+                  {processing.costSpent ? ` for $${processing.costSpent.toFixed(4)}` : ''}.
                 </p>
                 <button
                   onClick={() => {
@@ -307,6 +349,34 @@ export default function ContributePage() {
               />
               <p className="mt-2 text-xs" style={{ color: 'var(--text-faint)' }}>
                 Shown on the contributors list. Leave blank to remain anonymous.
+              </p>
+            </div>
+
+            {/* Spending Limit */}
+            <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+              <h3 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
+                Spending Limit
+              </h3>
+              <div className="flex items-center gap-3">
+                <span className="text-lg" style={{ color: 'var(--text-primary)' }}>$</span>
+                <input
+                  type="number"
+                  value={costLimit}
+                  onChange={(e) => setCostLimit(e.target.value)}
+                  min="0.10"
+                  max="100"
+                  step="0.10"
+                  className="w-32 px-4 py-2 rounded-lg text-sm"
+                  style={{
+                    border: '1px solid var(--border-medium)',
+                    background: 'var(--bg-white)',
+                    color: 'var(--text-primary)',
+                  }}
+                />
+                <span className="text-sm" style={{ color: 'var(--text-muted)' }}>USD max</span>
+              </div>
+              <p className="mt-2 text-xs" style={{ color: 'var(--text-faint)' }}>
+                Processing stops when this limit is reached. Your API key is discarded immediately after.
               </p>
             </div>
 

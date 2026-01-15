@@ -46,7 +46,8 @@ export const contribute = {
     apiKey: string;
     bookId: string;
     processType: 'ocr' | 'translate' | 'both';
-    contributorName?: string;
+    contributorName: string;
+    costLimit: number;
   }): Promise<Response> => {
     return await streamRequest('/api/contribute/process', {
       method: 'POST',

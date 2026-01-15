@@ -1,0 +1,29 @@
+{
+  "id": "rosicrucian-circle",
+  "title": "Rosicrucian Circle: Fludd, Maier, Dee & Khunrath",
+  "shortTitle": "Rosicrucian",
+  "description": "The core figures of the Rosicrucian enlightenment: Robert Fludd's massive cosmological encyclopedia, Michael Maier's alchemical emblems, John Dee's hieroglyphic monad, and Heinrich Khunrath's alchemical-Kabbalistic synthesis.",
+  "dateRange": "1564 - 1629",
+  "totalBooks": 7,
+  "totalPages": 3339,
+  "themes": ["Rosicrucianism", "Hermetic Philosophy", "Alchemical Kabbalah", "Macrocosm-Microcosm", "Emblematic Alchemy"],
+  "books": [
+    {"bookId": "6952dac677f38f6761bc683a", "title": "Utriusque Cosmi Historia Vol. 1", "author": "Robert Fludd", "year": 1617, "pages": 1141},
+    {"bookId": "6952dac977f38f6761bc6cb0", "title": "Utriusque Cosmi Historia Vol. 2", "author": "Robert Fludd", "year": 1617, "pages": 869},
+    {"bookId": "6952dacd77f38f6761bc7016", "title": "Summum Bonum", "author": "Robert Fludd", "year": 1629, "pages": 169},
+    {"bookId": "6952d04f77f38f6761bc4ee2", "title": "Monas Hieroglyphica", "author": "John Dee", "year": 1564, "pages": 31},
+    {"bookId": "6952d08677f38f6761bc5477", "title": "Amphitheatrum sapientiae aeternae", "author": "Heinrich Khunrath", "year": 1609, "pages": 232},
+    {"bookId": "6952d0c377f38f6761bc585e", "title": "Atalanta fugiens", "author": "Michael Maier", "year": 1618, "pages": 407},
+    {"bookId": "6952587bab34727b1f045546", "title": "Symbola aureae mensae", "author": "Michael Maier", "year": 1617, "pages": 490}
+  ],
+  "keyWorks": [
+    "Fludd Utriusque Cosmi: Massive illustrated encyclopedia of macrocosm and microcosm",
+    "Dee Monas: Esoteric symbol unifying all knowledge",
+    "Khunrath Amphitheatrum: Alchemical-Kabbalistic masterpiece with famous laboratory engraving",
+    "Maier Atalanta Fugiens: Alchemical emblems with 50 musical fugues"
+  ],
+  "researchValue": "Core texts of the 'Rosicrucian Enlightenment' (Frances Yates). Represents the high point of Renaissance Hermetic philosophy before its decline in the face of mechanical philosophy.",
+  "connections": ["paracelsian-medicine", "alchemical-emblems", "rudolf-ii-prague-court"],
+  "featured": true,
+  "displayOrder": 11
+}

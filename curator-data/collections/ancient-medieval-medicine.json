@@ -1,0 +1,29 @@
+{
+  "id": "ancient-medieval-medicine",
+  "title": "Ancient & Medieval Medicine: From Galen to Harvey",
+  "shortTitle": "Ancient Medicine",
+  "description": "The foundations of Western medicine from Galen's ancient synthesis through Harvey's discovery of blood circulation and Vesalius's anatomical revolution.",
+  "dateRange": "2nd - 17th century CE",
+  "totalBooks": 8,
+  "totalPages": 5117,
+  "themes": ["Galenic Medicine", "Anatomy", "Physiology", "Blood Circulation", "Medical Revolution"],
+  "books": [
+    {"bookId": "6953e60b1479a63c1108472c", "title": "Opera Omnia Vol. I", "author": "Galen", "year": 1525, "pages": 967},
+    {"bookId": "6953e60e1479a63c11084af4", "title": "On the Natural Faculties (Loeb)", "author": "Galen", "year": 1916, "pages": 420},
+    {"bookId": "6953e6111479a63c11084c99", "title": "De Simplicium Medicamentorum (1561)", "author": "Galen", "year": 1561, "pages": 764},
+    {"bookId": "6953e6141479a63c11084f96", "title": "Writings of Hippocrates and Galen", "author": "Hippocrates & Galen", "year": 1846, "pages": 436},
+    {"bookId": "6953e6171479a63c1108514b", "title": "Opera Omnia (Kühn Edition) Vol. I", "author": "Galen", "year": 1821, "pages": 976},
+    {"bookId": "6953e55177f38f6761bf0299", "title": "De Motu Cordis (1628 First Edition)", "author": "William Harvey", "year": 1628, "pages": 88},
+    {"bookId": "6953e55477f38f6761bf02f2", "title": "Works of William Harvey", "author": "William Harvey", "year": 1847, "pages": 732},
+    {"bookId": "6953e55777f38f6761bf05cf", "title": "De Humani Corporis Fabrica (1543)", "author": "Andreas Vesalius", "year": 1543, "pages": 734}
+  ],
+  "keyWorks": [
+    "Galen's Corpus: Ancient authority on medicine for 1400 years, four humors, pneuma theory",
+    "Vesalius De Fabrica (1543): Modern scientific anatomy through direct observation",
+    "Harvey De Motu Cordis (1628): Discovery of blood circulation, overthrew Galenic physiology"
+  ],
+  "researchValue": "Documents the ancient medical tradition that dominated for over a millennium and its revolutionary overthrow in the 16th-17th centuries. Galen's works show ancient medical theory. Vesalius and Harvey represent the birth of modern medicine through empirical observation.",
+  "connections": ["scientific-revolution-core", "paracelsian-medicine"],
+  "featured": true,
+  "displayOrder": 32
+}

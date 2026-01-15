@@ -1,0 +1,26 @@
+{
+  "id": "adam-smith-foundations",
+  "title": "Adam Smith & Foundations of Political Economy",
+  "shortTitle": "Adam Smith",
+  "description": "Adam Smith's two great works synthesizing moral philosophy with political economy, plus foundational influences: Hartley's vibration theory of association and Quesnay's Physiocratic natural order.",
+  "dateRange": "1749 - 1776",
+  "totalBooks": 4,
+  "totalPages": 1898,
+  "themes": ["Moral Sentiments", "Invisible Hand", "Division of Labor", "Natural Liberty", "Sympathy"],
+  "books": [
+    {"bookId": "69568c79be7c607c5f03d7bb", "title": "Theory of Moral Sentiments", "author": "Adam Smith", "year": 1759, "pages": 547},
+    {"bookId": "69568c77be7c607c5f03d5a2", "title": "Wealth of Nations", "author": "Adam Smith", "year": 1776, "pages": 536}
+  ],
+  "keyIdeas": [
+    "Sympathy as basis of moral judgment",
+    "Impartial spectator",
+    "Invisible hand - market coordination",
+    "Division of labor",
+    "Natural liberty and limited government"
+  ],
+  "intellectualContext": "Smith synthesizes Hutcheson's moral philosophy with economic analysis, reconciling Mandeville's self-interest paradox with benevolence through sympathy and market mechanisms.",
+  "researchValue": "The hinge between moral philosophy and political economy. Essential for understanding classical economics and the philosophical foundations of free market theory.",
+  "connections": ["scottish-enlightenment", "classical-political-economy"],
+  "featured": true,
+  "displayOrder": 4
+}

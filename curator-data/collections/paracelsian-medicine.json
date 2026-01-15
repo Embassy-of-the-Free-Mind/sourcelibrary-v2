@@ -1,0 +1,27 @@
+{
+  "id": "paracelsian-medicine",
+  "title": "Paracelsian Medicine & Chemical Philosophy",
+  "shortTitle": "Paracelsian",
+  "description": "The revolutionary iatrochemical tradition of Paracelsus and his followers (Van Helmont, Croll), combining alchemy, medicine, and natural philosophy to challenge Galenic medicine.",
+  "dateRange": "1577 - 1657",
+  "totalBooks": 7,
+  "totalPages": 2484,
+  "themes": ["Iatrochemistry", "Chemical Medicine", "Paracelsus", "Van Helmont", "Medical Revolution"],
+  "books": [
+    {"bookId": "69520185ab34727b1f0416bc", "title": "Aurora thesaurusque philosophorum", "author": "Paracelsus", "year": 1577, "pages": 192},
+    {"bookId": "695201c3ab34727b1f041b02", "title": "De Restituta medicinae", "author": "Paracelsus (Dorn)", "year": 1578, "pages": 330},
+    {"bookId": "6952dc0077f38f6761bc7792", "title": "Philosophy Reformed and Improved", "author": "Paracelsus", "year": 1657, "pages": 115},
+    {"bookId": "6952855fab34727b1f04b383", "title": "Ortus Medicinae", "author": "Jan Baptist van Helmont", "year": 1648, "pages": 1130},
+    {"bookId": "69528566ab34727b1f04b7ee", "title": "Opuscula Medica Inaudita", "author": "Jan Baptist van Helmont", "year": 1644, "pages": 178},
+    {"bookId": "6952d05177f38f6761bc4f02", "title": "Basilica chymica", "author": "Oswald Croll", "year": 1609, "pages": 539}
+  ],
+  "keyFigures": [
+    "Paracelsus (1493-1541): Revolutionary physician, rejected Galen, integrated alchemy with medicine",
+    "Jan Baptist van Helmont (1579-1644): Gas theory, chemical physiology, vitalist philosophy",
+    "Oswald Croll (c.1563-1609): Paracelsian physician, systematizer of iatrochemistry"
+  ],
+  "researchValue": "Documents the Paracelsian revolution in medicine and chemistry. Van Helmont's Ortus Medicinae is foundational for modern chemistry (coined 'gas'). Essential for understanding the shift from Galenic to chemical medicine.",
+  "connections": ["arabic-alchemy-magic", "rosicrucian-circle"],
+  "featured": true,
+  "displayOrder": 10
+}

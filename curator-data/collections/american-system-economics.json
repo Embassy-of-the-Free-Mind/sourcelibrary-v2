@@ -1,0 +1,23 @@
+{
+  "id": "american-system-economics",
+  "title": "American System: Carey's Protectionist Economics",
+  "shortTitle": "American System",
+  "description": "Henry Charles Carey's protectionist alternative to British free trade, arguing for harmony between labor and capital through industrial development and tariff protection.",
+  "dateRange": "1851 - 1872",
+  "totalBooks": 2,
+  "totalPages": 750,
+  "themes": ["Protectionism", "Industrial Development", "Harmony of Interests", "Unity of Law", "American Economics"],
+  "books": [
+    {"bookId": "69568c7fbe7c607c5f03db26", "title": "The Harmony of Interests", "author": "Henry Charles Carey", "year": 1851, "pages": 275},
+    {"bookId": "69568ebc499312f0ff8814dd", "title": "The Unity of Law", "author": "Henry Charles Carey", "year": 1872, "pages": 475}
+  ],
+  "keyContributions": [
+    "Carey: Harmony between labor and capital through industrial development",
+    "Unity of Law: Grand synthesis of physical, social, mental, and moral science",
+    "Protectionist alternative to British classical economics"
+  ],
+  "researchValue": "Represents the American protectionist tradition as counterpoint to British free trade economics. Carey's 'Unity of Law' attempts ambitious synthesis across all domains of knowledge.",
+  "connections": ["classical-political-economy", "adam-smith-foundations"],
+  "featured": true,
+  "displayOrder": 6
+}

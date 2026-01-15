@@ -1,0 +1,30 @@
+{
+  "id": "taoist-inner-alchemy",
+  "title": "Taoist Inner Alchemy: Neidan & Immortality Practices",
+  "shortTitle": "Taoist Alchemy",
+  "description": "The tradition of Taoist internal alchemy (neidan): The Secret of the Golden Flower, Ge Hong's Baopuzi, Zhang Boduan's Understanding Reality, and Joseph Needham's definitive scholarly treatment of Chinese alchemy.",
+  "dateRange": "4th - 20th century CE",
+  "totalBooks": 8,
+  "totalPages": 2137,
+  "themes": ["Neidan", "Internal Alchemy", "Qi Cultivation", "Immortality", "Taoism"],
+  "books": [
+    {"bookId": "695363bc77f38f6761bcddfa", "title": "The Secret of the Golden Flower", "author": "Lu Dongbin (trans. Wilhelm)", "year": 1931, "pages": 363},
+    {"bookId": "695363dd77f38f6761bce25f", "title": "The Secret of the Golden Flower", "author": "Lu Dongbin (trans. Cleary)", "year": 1991, "pages": 83},
+    {"bookId": "695363c077f38f6761bcdf66", "title": "Baopuzi (Nei Pien)", "author": "Ge Hong (trans. Ware)", "year": 1967, "pages": 418},
+    {"bookId": "695363c377f38f6761bce109", "title": "Taoist Yoga: Alchemy and Immortality", "author": "Lu Kuan Yu (Charles Luk)", "year": 1970, "pages": 186},
+    {"bookId": "695363c577f38f6761bce1c4", "title": "Understanding Reality (Wuzhen pian)", "author": "Zhang Boduan (trans. Cleary)", "year": 1988, "pages": 62},
+    {"bookId": "695363db77f38f6761bce203", "title": "Vitality, Energy, Spirit: A Taoist Sourcebook", "author": "Thomas Cleary (ed.)", "year": 1991, "pages": 91},
+    {"bookId": "695363df77f38f6761bce2b3", "title": "Science and Civilisation in China Vol. 5", "author": "Joseph Needham", "year": 1974, "pages": 578},
+    {"bookId": "695363e177f38f6761bce4f6", "title": "Alchemy of the Ancient Orient", "author": "Masumi Chikashige", "year": 1936, "pages": 158}
+  ],
+  "keyTexts": [
+    "Secret of the Golden Flower: Foundational neidan text on meditation and circulation of light",
+    "Baopuzi: Ge Hong's 4th century classic on external and internal alchemy",
+    "Wuzhen pian: Zhang Boduan's masterpiece on internal alchemy (11th century)",
+    "Needham Vol. 5: Definitive scholarly treatment of Chinese alchemy"
+  ],
+  "researchValue": "Essential for understanding Chinese internal alchemy and its influence on Jungian psychology (Wilhelm's translation influenced Jung). Documents the parallel alchemical tradition to Western alchemy.",
+  "connections": ["arabic-alchemy-magic", "paracelsian-medicine"],
+  "featured": true,
+  "displayOrder": 21
+}

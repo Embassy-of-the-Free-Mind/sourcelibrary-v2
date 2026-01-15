@@ -1,0 +1,34 @@
+{
+  "id": "chinese-classics-philosophy",
+  "title": "Chinese Classics & Philosophy: Confucius, I Ching & Zen",
+  "shortTitle": "Chinese Classics",
+  "description": "The foundational texts of Chinese philosophy: the I Ching divination classic, Confucian Four Books, and D.T. Suzuki's introduction of Zen Buddhism to the West.",
+  "dateRange": "c. 500 BCE - 1960 CE",
+  "totalBooks": 12,
+  "totalPages": 6550,
+  "themes": ["Confucianism", "I Ching", "Zen Buddhism", "Chinese Philosophy", "Neo-Confucianism"],
+  "books": [
+    {"bookId": "6953e27077f38f6761be89f5", "title": "I Ching - Wilhelm/Baynes Translation", "author": "Richard Wilhelm", "year": 1950, "pages": 818},
+    {"bookId": "6953e27477f38f6761be8d28", "title": "I Ching - Sacred Books of China (Legge)", "author": "James Legge", "year": 1882, "pages": 502},
+    {"bookId": "6953e27877f38f6761be8f1f", "title": "Total I Ching - Myths for Change", "author": "Stephen Karcher", "year": 2003, "pages": 474},
+    {"bookId": "6953e27b77f38f6761be90fa", "title": "Four Books of Confucius", "author": "James Legge", "year": 1893, "pages": 1028},
+    {"bookId": "6953e27f77f38f6761be94ff", "title": "Analects of Confucius - Soothill", "author": "William Soothill", "year": 1910, "pages": 1058},
+    {"bookId": "6953e28477f38f6761be9922", "title": "Confucius Sinarum Philosophus (1687 Latin)", "author": "Jesuit Missionaries", "year": 1687, "pages": 568},
+    {"bookId": "6953e29e77f38f6761be9b5b", "title": "Zen Buddhism - D.T. Suzuki Selected", "author": "D.T. Suzuki", "year": 1956, "pages": 326},
+    {"bookId": "6953e2a277f38f6761be9ca2", "title": "Zen Comes West", "author": "Christmas Humphreys", "year": 1960, "pages": 218},
+    {"bookId": "6953e2a577f38f6761be9d7d", "title": "Maps of Consciousness", "author": "Ralph Metzner", "year": 1971, "pages": 180},
+    {"bookId": "6953e2a877f38f6761be9e32", "title": "Secrets of the I Ching", "author": "Joseph Murphy", "year": 1970, "pages": 232},
+    {"bookId": "6953e2ab77f38f6761be9f1b", "title": "Economic Principles of Confucius", "author": "Chen Huan-Chang", "year": 1911, "pages": 780},
+    {"bookId": "6953e2af77f38f6761bea228", "title": "Ethics of Confucius", "author": "Miles Dawson", "year": 1915, "pages": 366}
+  ],
+  "keyTexts": [
+    "I Ching: Ancient divination text, Book of Changes, cosmology and wisdom",
+    "Four Books: Analects, Great Learning, Doctrine of the Mean, Mencius - Confucian canon",
+    "Confucius Sinarum Philosophus: 1687 Jesuit Latin translation that introduced Confucius to Europe",
+    "D.T. Suzuki: Foundational works introducing Zen Buddhism to Western audiences"
+  ],
+  "researchValue": "Essential for understanding Chinese philosophy and its transmission to the West. The 1687 Latin Confucius influenced European Enlightenment. Wilhelm's I Ching (with Jung's foreword) shaped Western understanding. Suzuki's Zen writings sparked Beat Generation and 1960s interest in Buddhism.",
+  "connections": ["taoist-inner-alchemy", "sanskrit-tantra-yoga", "comparative-philosophy-mind"],
+  "featured": true,
+  "displayOrder": 28
+}

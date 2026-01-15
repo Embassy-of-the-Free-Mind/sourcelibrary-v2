@@ -1,0 +1,37 @@
+{
+  "id": "non-canonical-ancient-texts",
+  "title": "Non-Canonical Ancient Texts: Pseudepigrapha & Gnostic Scriptures",
+  "shortTitle": "Non-Canonical Texts",
+  "description": "Ancient Jewish and Christian texts excluded from the biblical canon: 1 Enoch, Jubilees, Dead Sea Scrolls, Nag Hammadi Codices, Testaments of the Twelve Patriarchs, and other pseudepigrapha in their original languages.",
+  "dateRange": "3rd century BCE - 5th century CE",
+  "totalBooks": 14,
+  "totalPages": 6370,
+  "themes": ["Pseudepigrapha", "Gnosticism", "Dead Sea Scrolls", "Nag Hammadi", "Enoch Literature"],
+  "books": [
+    {"bookId": "6953112e77f38f6761bcbe3b", "title": "The Ethiopic Version of the Book of Enoch", "author": "R.H. Charles (ed.)", "year": 1906, "pages": 294},
+    {"bookId": "6953113277f38f6761bcbf62", "title": "Liber Jubilaeorum", "author": "Dillmann (ed.)", "year": 1859, "pages": 181},
+    {"bookId": "6953113477f38f6761bcc018", "title": "Dead Sea Scrolls: Hebrew, Aramaic, Greek", "author": "Various", "year": 1994, "pages": 192},
+    {"bookId": "6953114f77f38f6761bcc478", "title": "Nag Hammadi Codices (Facsimile)", "author": "UNESCO", "year": 1972, "pages": 162},
+    {"bookId": "6953115277f38f6761bcc51b", "title": "Odes and Psalms of Solomon", "author": "Harris (ed.)", "year": 1911, "pages": 549},
+    {"bookId": "6953117a77f38f6761bcc741", "title": "Testamenta XII Patriarcharum", "author": "de Jonge (ed.)", "year": 1964, "pages": 83},
+    {"bookId": "6953117d77f38f6761bcc795", "title": "Apocryphon Johannis (Coptic Text)", "author": "Krause (ed.)", "year": 1963, "pages": 285},
+    {"bookId": "6952f71777f38f6761bc997a", "title": "Pistis Sophia", "author": "Schwartze (ed.)", "year": 1851, "pages": 100},
+    {"bookId": "6953cbb777f38f6761bdfc4d", "title": "Codex Alexandrinus Facsimile", "author": "Frederic G. Kenyon", "year": 1909, "pages": 346},
+    {"bookId": "6953cbbb77f38f6761bdfda8", "title": "Nag Hammadi Codices - Codex II", "author": "Egyptian Coptic Museum", "year": 1972, "pages": 194},
+    {"bookId": "6953cbbe77f38f6761bdfe6b", "title": "Nag Hammadi Codices - Codex V", "author": "Egyptian Coptic Museum", "year": 1972, "pages": 130},
+    {"bookId": "6953cbc177f38f6761bdfeee", "title": "Nag Hammadi Codices - Codex VII", "author": "Egyptian Coptic Museum", "year": 1972, "pages": 162},
+    {"bookId": "6953cbc477f38f6761bdff91", "title": "Nag Hammadi Codices - Codex III", "author": "Egyptian Coptic Museum", "year": 1972, "pages": 184},
+    {"bookId": "6953cbde77f38f6761be00a9", "title": "Dead Sea Scrolls Translated", "author": "Florentino Garcia Martinez", "year": 1996, "pages": 588}
+  ],
+  "keyTexts": [
+    "1 Enoch (Ethiopic): Apocalyptic visions, fallen angels, Son of Man prophecies",
+    "Jubilees: Retelling of Genesis-Exodus with calendrical innovations",
+    "Dead Sea Scrolls: Qumran library, biblical manuscripts and sectarian texts",
+    "Nag Hammadi: Gnostic library including Gospel of Thomas, Apocryphon of John",
+    "Pistis Sophia: Gnostic revelation dialogue"
+  ],
+  "researchValue": "Essential for understanding Second Temple Judaism, early Christianity, and Gnostic movements. These texts influenced medieval and Renaissance esotericism despite their non-canonical status.",
+  "connections": ["kabbalah-jewish-mysticism", "byzantine-mystical-theology", "cappadocian-fathers"],
+  "featured": true,
+  "displayOrder": 24
+}

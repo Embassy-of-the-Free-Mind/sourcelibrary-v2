@@ -1,0 +1,28 @@
+{
+  "id": "cambridge-platonism",
+  "title": "Cambridge Platonism: Cudworth, More & Smith",
+  "shortTitle": "Cambridge Platonism",
+  "description": "The Cambridge Platonists' integration of Platonic philosophy with Christian theology and early modern natural philosophy, defending spiritual reality against materialism and mechanism.",
+  "dateRange": "1659 - 1678",
+  "totalBooks": 6,
+  "totalPages": 2122,
+  "themes": ["Platonism", "Spiritual Substance", "Reason & Spirit", "Anti-Materialism", "Latitudinarianism"],
+  "books": [
+    {"bookId": "695580a857e3b773024f59bc", "title": "The Immortality of the Soul (1659)", "author": "Henry More", "year": 1659, "pages": 634},
+    {"bookId": "6955831157e3b773024f7195", "title": "Select Discourses (1660)", "author": "John Smith", "year": 1660, "pages": 596},
+    {"bookId": "6953efda1479a63c1108830b", "title": "Inquiry into Beauty and Virtue (1726)", "author": "Francis Hutcheson", "year": 1726, "pages": 344},
+    {"bookId": "6953efdf1479a63c11088464", "title": "Essay on Passions and Moral Sense (1728)", "author": "Francis Hutcheson", "year": 1728, "pages": 380},
+    {"bookId": "6953efe21479a63c110885e1", "title": "Characteristicks (1714 original)", "author": "Earl of Shaftesbury", "year": 1714, "pages": 462},
+    {"bookId": "6953efed1479a63c11088ad6", "title": "Inquiry Concerning Virtue or Merit", "author": "Earl of Shaftesbury", "year": 1699, "pages": 132}
+  ],
+  "keyFigures": [
+    "Henry More (1614-1687): Defense of spiritual substance, 'Spirit of Nature', influenced Newton's absolute space",
+    "John Smith (1618-1652): Mystical-rational theology, 'deiformity' of soul, died young but hugely influential",
+    "Shaftesbury (1671-1713): Moral sense philosophy, natural harmony between virtue and happiness",
+    "Francis Hutcheson (1694-1746): Systematic moral sense theory, influenced Adam Smith (his teacher)"
+  ],
+  "researchValue": "The Cambridge Platonists synthesized Renaissance Neoplatonism with Christian theology and responded to Hobbes's materialism. Their defense of innate ideas and spiritual substance influenced both Enlightenment philosophy and Romantic thought. Essential bridge to Adam Smith's moral philosophy.",
+  "connections": ["ficino-neoplatonic-sources", "scottish-enlightenment", "comparative-philosophy-mind"],
+  "featured": true,
+  "displayOrder": 36
+}

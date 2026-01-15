@@ -76,7 +76,7 @@ export async function POST(
     const {
       limit = 10, // Default to 10 pages per batch (research shows >10 causes quality degradation)
       language = 'Latin',
-      model = 'gemini-2.5-flash',
+      model = 'gemini-3-flash-preview',
     } = body;
 
     const db = await getDb();

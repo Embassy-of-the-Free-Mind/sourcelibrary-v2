@@ -1,0 +1,28 @@
+{
+  "id": "cappadocian-fathers",
+  "title": "Cappadocian Fathers: Basil, Gregory & Athanasius",
+  "shortTitle": "Cappadocians",
+  "description": "The great 4th century Greek Church Fathers who defined Nicene orthodoxy and established Christian theological vocabulary: Athanasius's defense of the Trinity, Basil's monastic rule, and the two Gregories' theological and rhetorical brilliance.",
+  "dateRange": "4th century CE",
+  "totalBooks": 5,
+  "totalPages": 500,
+  "themes": ["Nicene Theology", "Trinitarianism", "Monasticism", "Greek Patristics", "Cappadocian Fathers"],
+  "books": [
+    {"bookId": "6953a5bc77f38f6761bd0096", "title": "Patrologia Graeca Vol. 25 - Athanasius", "author": "Athanasius of Alexandria", "year": 1857, "pages": 100},
+    {"bookId": "6953a5ce77f38f6761bd00fb", "title": "Patrologia Graeca Vol. 31 - Basil of Caesarea", "author": "Basil the Great", "year": 1857, "pages": 100},
+    {"bookId": "6953a5f377f38f6761bd02f4", "title": "Patrologia Graeca Vol. 36 - Gregory of Nazianzus", "author": "Gregory of Nazianzus", "year": 1857, "pages": 100},
+    {"bookId": "6953a5d377f38f6761bd0160", "title": "Patrologia Graeca Vol. 44 - Gregory of Nyssa", "author": "Gregory of Nyssa", "year": 1857, "pages": 100},
+    {"bookId": "6953a5d877f38f6761bd01c5", "title": "Patrologia Graeca Vol. 47 - John Chrysostom", "author": "John Chrysostom", "year": 1862, "pages": 100}
+  ],
+  "keyFigures": [
+    "Athanasius of Alexandria (c.296-373): Defender of Nicene orthodoxy against Arianism",
+    "Basil the Great (c.330-379): Cappadocian Father, monastic legislator, theologian",
+    "Gregory of Nazianzus (329-390): 'The Theologian' - rhetorical brilliance, Trinitarian theology",
+    "Gregory of Nyssa (c.335-395): Philosophical theologian, mystical theology",
+    "John Chrysostom (c.347-407): 'Golden Mouth' - greatest Greek preacher"
+  ],
+  "researchValue": "Foundational for understanding the development of Christian theology, Trinitarian doctrine, and Greek patristic thought. Basil's monastic rule shaped Eastern monasticism. Gregory of Nyssa influenced mystical theology.",
+  "connections": ["byzantine-mystical-theology", "ficino-neoplatonic-sources"],
+  "featured": true,
+  "displayOrder": 16
+}

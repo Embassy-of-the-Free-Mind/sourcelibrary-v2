@@ -1,0 +1,28 @@
+{
+  "id": "pico-della-mirandola",
+  "title": "Pico della Mirandola: Syncretism & Christian Kabbalah",
+  "shortTitle": "Pico",
+  "description": "Complete works of Giovanni Pico della Mirandola, the brilliant Renaissance polymath who attempted to synthesize all philosophical and religious traditions. His 900 Theses, Oration on the Dignity of Man, and pioneering Christian Kabbalah.",
+  "dateRange": "1486 - 1557",
+  "totalBooks": 6,
+  "totalPages": 2666,
+  "themes": ["Syncretism", "Christian Kabbalah", "900 Theses", "Dignity of Man", "Platonic Love"],
+  "books": [
+    {"bookId": "6952b01b77f38f6761bc1cc9", "title": "Opuscula (1496 Bologna)", "author": "Pico della Mirandola", "year": 1496, "pages": 361},
+    {"bookId": "6952b01e77f38f6761bc1e33", "title": "Opuscula cum Vita (1498 Venice)", "author": "Pico della Mirandola", "year": 1498, "pages": 303},
+    {"bookId": "6952b03577f38f6761bc211a", "title": "Opera omnia (1557 Basel)", "author": "Pico della Mirandola", "year": 1557, "pages": 540},
+    {"bookId": "6952b03c77f38f6761bc2337", "title": "De hominis dignitate; Heptaplus; De ente et uno", "author": "Pico della Mirandola", "year": 1942, "pages": 804},
+    {"bookId": "6952861eab34727b1f04c3df", "title": "Omnia Opera (1519)", "author": "Pico della Mirandola", "year": 1519, "pages": 390},
+    {"bookId": "69528622ab34727b1f04c566", "title": "Cabalistarum Selectiora Dogmata", "author": "Pico (ed. Burgonovo)", "year": 1569, "pages": 268}
+  ],
+  "keyWorks": [
+    "Oration on the Dignity of Man: Manifesto of Renaissance humanism",
+    "900 Theses: Attempted synthesis of all philosophical traditions",
+    "Heptaplus: Kabbalistic interpretation of Genesis",
+    "Commentary on Benivieni: Treatise on Platonic love"
+  ],
+  "researchValue": "Pico's ambitious syncretism - attempting to reconcile Plato, Aristotle, Kabbalah, Hermeticism, and Christianity - defined Renaissance philosophy. His Christian Kabbalah influenced Reuchlin, Agrippa, and the entire esoteric tradition.",
+  "connections": ["florentine-humanists", "ficino-neoplatonic-sources", "kabbalah-jewish-mysticism"],
+  "featured": true,
+  "displayOrder": 14
+}

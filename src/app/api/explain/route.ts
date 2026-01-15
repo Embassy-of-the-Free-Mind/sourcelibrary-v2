@@ -57,6 +57,26 @@ Explain this clearly in 2-3 short paragraphs:
 
 Be warm and conversational, like a knowledgeable friend. Don't be condescending.`;
 
+// Prompt for explaining with book context
+const BOOK_CONTEXT_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
+
+A reader is studying page {page_number} {context} and wants to understand it in the context of the broader work.
+
+Here is the current page:
+---
+{text}
+---
+
+Here is context from surrounding pages in the book:
+{book_context}
+
+Please explain this page in the context of the book's broader argument or narrative:
+1. How does this page fit into what came before?
+2. What is the author trying to convey here?
+3. How might this connect to what comes next?
+
+Be warm and conversational, like a knowledgeable friend. Keep it to 2-3 paragraphs.`;
+
 // Original full explanation prompt (fallback)
 const FULL_EXPLAIN_PROMPT = `You are a helpful guide explaining historical texts to modern readers.
 
@@ -75,6 +95,40 @@ Write in a warm, conversational tone - like a knowledgeable friend explaining so
 
 If the text references alchemical, philosophical, religious, or esoteric concepts, briefly explain what they mean in their historical context.`;
 
+// Fetch surrounding pages from the book for context
+async function fetchBookContext(bookId: string, currentPage: number): Promise<string> {
+  const API_BASE = 'https://sourcelibrary.org/api';
+  const contextParts: string[] = [];
+
+  // Fetch 2 pages before and 2 pages after
+  const pagesToFetch = [
+    currentPage - 2,
+    currentPage - 1,
+    currentPage + 1,
+    currentPage + 2,
+  ].filter(p => p > 0);
+
+  for (const pageNum of pagesToFetch) {
+    try {
+      const res = await fetch(`${API_BASE}/books/${bookId}/quote?page=${pageNum}`);
+      if (res.ok) {
+        const data = await res.json();
+        const translation = data.quote?.translation;
+        if (translation && translation.length > 50 && !translation.includes('[[warning:')) {
+          const label = pageNum < currentPage ? 'Previous' : 'Following';
+          contextParts.push(`[${label} page ${pageNum}]:\n${translation.slice(0, 800)}`);
+        }
+      }
+    } catch {
+      // Skip failed fetches
+    }
+  }
+
+  return contextParts.length > 0
+    ? contextParts.join('\n\n---\n\n')
+    : 'No surrounding context available.';
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -83,8 +137,9 @@ export async function POST(request: NextRequest) {
       book_title,
       book_author,
       page_number,
+      book_id,
       customPrompt,
-      mode = 'analyze', // 'analyze' | 'explain_term' | 'full'
+      mode = 'analyze', // 'analyze' | 'explain_term' | 'full' | 'book_context'
       term // for explain_term mode
     } = body;
 
@@ -109,7 +164,6 @@ export async function POST(request: NextRequest) {
     const contextInfo = [
       book_title && `from "${book_title}"`,
       book_author && `by ${book_author}`,
-      page_number && `(page ${page_number})`,
     ].filter(Boolean).join(' ') || 'from a historical text';
 
     let prompt: string;
@@ -119,6 +173,14 @@ export async function POST(request: NextRequest) {
       prompt = ANALYZE_PROMPT
         .replace('{context}', contextInfo)
         .replace('{text}', text);
+    } else if (mode === 'book_context' && book_id && page_number) {
+      // Book context mode: explain with surrounding pages
+      const bookContext = await fetchBookContext(book_id, page_number);
+      prompt = BOOK_CONTEXT_PROMPT
+        .replace('{page_number}', String(page_number))
+        .replace('{context}', contextInfo)
+        .replace('{text}', text)
+        .replace('{book_context}', bookContext);
     } else if (mode === 'explain_term' && term) {
       // Explain a specific term
       prompt = (customPrompt || EXPLAIN_TERM_PROMPT)

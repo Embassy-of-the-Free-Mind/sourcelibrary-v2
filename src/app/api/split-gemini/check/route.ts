@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       ? { base64: imageData, mimeType: 'image/jpeg' }
       : { base64: imageData.base64, mimeType: imageData.mimeType };
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const prompt = `Analyze this scanned book image and determine:
 

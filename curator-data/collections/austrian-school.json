@@ -1,0 +1,26 @@
+{
+  "id": "austrian-school",
+  "title": "Austrian School: Mises, Rothbard & Hayek",
+  "shortTitle": "Austrian Economics",
+  "description": "The Austrian school's systematic exposition of free market economics from praxeological foundations. Mises's human action, Rothbard's reconstruction from axioms, and Hayek's warnings against central planning and defense of spontaneous order.",
+  "dateRange": "1944 - 1962",
+  "totalBooks": 5,
+  "totalPages": 4166,
+  "themes": ["Praxeology", "Human Action", "Spontaneous Order", "Anti-Socialism", "Free Markets"],
+  "books": [
+    {"bookId": "69568eed499312f0ff881ce7", "title": "Human Action", "author": "Ludwig von Mises", "year": 1949, "pages": 2719},
+    {"bookId": "69568ef0499312f0ff882787", "title": "Man, Economy, State Vol I", "author": "Murray Rothbard", "year": 1962, "pages": 487},
+    {"bookId": "69568ef3499312f0ff882972", "title": "Man, Economy, State Vol II", "author": "Murray Rothbard", "year": 1962, "pages": 549},
+    {"bookId": "69568f85499312f0ff882b95", "title": "Road to Serfdom", "author": "F.A. Hayek", "year": 1944, "pages": 280},
+    {"bookId": "69568f8d499312f0ff882cae", "title": "Constitution of Liberty", "author": "F.A. Hayek", "year": 1960, "pages": 582}
+  ],
+  "keyContributions": [
+    "Mises: Praxeology - logic of human action, critique of socialism",
+    "Rothbard: Systematic reconstruction from Austrian axioms, anarcho-capitalism",
+    "Hayek: Spontaneous order, knowledge problem, rule of law"
+  ],
+  "researchValue": "Most comprehensive statement of free market economics from methodological individualist foundations. Essential for understanding modern libertarian economics and critiques of central planning.",
+  "connections": ["classical-political-economy", "brehon-law-stateless-order"],
+  "featured": true,
+  "displayOrder": 6
+}

@@ -113,8 +113,22 @@ export function decodeShortlink(code: string): { bookId: string; pageNumber: num
 
 /**
  * Generate the full short URL for a book page
+ * Falls back to regular URL if book ID isn't a valid ObjectId
+ *
+ * @param bookId - Book ID (24-char ObjectId or UUID)
+ * @param pageNumber - Page number for shortlink encoding
+ * @param pageId - Optional page ID for fallback URL (required for UUID book IDs)
  */
-export function getShortUrl(bookId: string, pageNumber: number): string {
-  const code = encodeShortlink(bookId, pageNumber);
-  return `https://sourcelibrary.org/q/${code}`;
+export function getShortUrl(bookId: string, pageNumber: number, pageId?: string): string {
+  // Only encode shortlinks for 24-char hex ObjectIds
+  if (/^[a-f0-9]{24}$/i.test(bookId)) {
+    const code = encodeShortlink(bookId, pageNumber);
+    return `https://sourcelibrary.org/q/${code}`;
+  }
+  // Fallback to regular URL for UUIDs or other ID formats
+  if (pageId) {
+    return `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;
+  }
+  // Last resort: link to book page (user can navigate to specific page)
+  return `https://sourcelibrary.org/book/${bookId}#page-${pageNumber}`;
 }

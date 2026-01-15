@@ -1,0 +1,183 @@
+{
+  "id": "byzantine-patristics",
+  "title": "Byzantine Greek Patristics & Mystical Theology",
+  "shortTitle": "Byzantine Patristics",
+  "description": "Complete collection of Greek Church Fathers from Patrologia Graeca, Byzantine historians, and hesychast mystical texts. Spans from Apostolic Fathers through Byzantine Empire, documenting the theological and philosophical foundations of Eastern Christianity.",
+  "curatedBy": "Embassy of the Free Mind Collection",
+  "dateCreated": "2026-01-01",
+  "dateRange": {
+    "start": 100,
+    "end": 1400,
+    "description": "c. 1st century - 14th century (patristic period)"
+  },
+  "themes": [
+    "Patristics",
+    "Byzantine Theology",
+    "Greek Christianity",
+    "Mystical Theology",
+    "Hesychasm",
+    "Church History",
+    "Neoplatonic Christianity",
+    "Monasticism"
+  ],
+  "geographicCoverage": [
+    "Constantinople",
+    "Cappadocia",
+    "Alexandria",
+    "Antioch",
+    "Mount Athos",
+    "Desert Fathers (Egypt, Syria)"
+  ],
+  "keyFigures": [
+    {
+      "name": "Pseudo-Dionysius the Areopagite",
+      "period": "c. 5th-6th century",
+      "contribution": "Mystical theology, celestial hierarchies, negative theology (apophatic)",
+      "influence": "Foundational for all later Christian mysticism, East and West"
+    },
+    {
+      "name": "Maximus the Confessor",
+      "period": "580-662",
+      "contribution": "Synthesis of Greek philosophy and theology, cosmic Christology",
+      "influence": "Bridge between patristic and Byzantine periods"
+    },
+    {
+      "name": "John of Damascus",
+      "period": "c. 675-749",
+      "contribution": "Systematic theology, defense of icons, synthesis of Orthodox doctrine",
+      "influence": "Last of the Greek Fathers, summarized Orthodox tradition"
+    },
+    {
+      "name": "Gregory of Nyssa",
+      "period": "c. 335-395",
+      "contribution": "Cappadocian Father, mystical theology, infinite progress of soul",
+      "influence": "Neoplatonic Christian theology"
+    },
+    {
+      "name": "John Chrysostom",
+      "period": "c. 347-407",
+      "contribution": "Greatest Greek preacher, biblical commentaries, social ethics",
+      "influence": "Model of Orthodox preaching and pastoral care"
+    }
+  ],
+  "sections": [
+    {
+      "title": "Apostolic Fathers",
+      "period": "1st-2nd century",
+      "description": "Earliest post-apostolic Christian writings",
+      "keyWorks": [
+        "Clement of Rome (PG Vol. 1)",
+        "Ignatius of Antioch",
+        "Polycarp",
+        "Didache"
+      ],
+      "significance": "Direct link to apostolic age, earliest church order and doctrine"
+    },
+    {
+      "title": "Early Apologists & Anti-Heretical Writers",
+      "period": "2nd-3rd century",
+      "keyWorks": [
+        "Justin Martyr (PG Vol. 5)",
+        "Irenaeus of Lyon (PG Vol. 7) - Against Heresies",
+        "Origen (PG Vol. 11) - Alexandrian biblical interpretation"
+      ],
+      "significance": "Defense against paganism, definition of orthodoxy vs heresy"
+    },
+    {
+      "title": "Cappadocian Fathers",
+      "period": "4th century",
+      "keyWorks": [
+        "Basil the Great (PG Vol. 31) - monastic legislator",
+        "Gregory of Nazianzus (PG Vol. 36) - theological orations",
+        "Gregory of Nyssa (PG Vol. 44) - mystical theology"
+      ],
+      "significance": "Trinitarian theology, integration of Greek philosophy, foundation of Eastern monasticism"
+    },
+    {
+      "title": "Golden Age of Patristics",
+      "period": "4th-5th century",
+      "keyWorks": [
+        "Athanasius (PG Vol. 25) - defender of Nicene orthodoxy",
+        "John Chrysostom (PG Vol. 47+) - homilies and biblical commentaries",
+        "Cyril of Alexandria - Christology"
+      ],
+      "significance": "Post-Nicene theological development, biblical interpretation, liturgy"
+    },
+    {
+      "title": "Mystical & Spiritual Theology",
+      "period": "5th-7th century",
+      "keyWorks": [
+        "Pseudo-Dionysius - Celestial & Ecclesiastical Hierarchies, Mystical Theology",
+        "Maximus Confessor (PG Vol. 90) - cosmic Christology, deification",
+        "John Climacus - Ladder of Divine Ascent",
+        "Desert Fathers (PG Vol. 65) - Apophthegmata Patrum"
+      ],
+      "significance": "Apophatic theology, stages of spiritual ascent, hesychast tradition"
+    },
+    {
+      "title": "Byzantine Systematic Theology",
+      "period": "8th century",
+      "keyWorks": [
+        "John of Damascus (PG Vol. 94) - Fount of Knowledge, defense of icons"
+      ],
+      "significance": "Culmination and systematization of patristic theology"
+    },
+    {
+      "title": "Hesychast Spirituality",
+      "period": "14th century compilation of earlier sources",
+      "keyWorks": [
+        "Philokalia (Athens 1893) - anthology of hesychast spiritual texts",
+        "Gregory Palamas - essence/energies distinction"
+      ],
+      "significance": "Jesus Prayer, stillness (hesychia), divine light, Mount Athos tradition"
+    },
+    {
+      "title": "Byzantine Historians",
+      "period": "6th-12th century",
+      "keyWorks": [
+        "Procopius - Justinian's wars",
+        "Agathias - 6th century continuation",
+        "Theophanes - Chronicle (284-813 CE)",
+        "Anna Comnena - Alexiad (12th century)"
+      ],
+      "significance": "Historical documentation of Byzantine Empire and church"
+    },
+    {
+      "title": "Church Historians",
+      "period": "4th-5th century",
+      "keyWorks": [
+        "Eusebius of Caesarea - Ecclesiastical History",
+        "Socrates Scholasticus",
+        "Theodoret of Cyrus",
+        "Epiphanius of Salamis - Panarion (against heresies)"
+      ],
+      "significance": "Historical foundation for understanding early church development"
+    }
+  ],
+  "theologicalThemes": [
+    "Trinity and Christology",
+    "Deification (theosis)",
+    "Apophatic (negative) theology",
+    "Divine energies vs essence",
+    "Mystical union",
+    "Hesychasm and Jesus Prayer",
+    "Icon veneration",
+    "Cosmic Christology",
+    "Sacramental theology"
+  ],
+  "totalBooks": 54,
+  "estimatedPages": 10000,
+  "researchValue": "This collection provides comprehensive access to Greek patristic theology and Byzantine spirituality. Essential for understanding Eastern Orthodox theology, the development of Christian doctrine, mystical theology, and the philosophical synthesis of Greek thought with Christianity. Includes both systematic theology and spiritual/mystical texts from the hesychast tradition.",
+  "connections": [
+    {
+      "collectionId": "florentine-neoplatonism",
+      "relationship": "Pseudo-Dionysius as bridge between Neoplatonism and Christianity; influence on Ficino"
+    },
+    {
+      "collectionId": "natural-law-genealogy",
+      "relationship": "Patristic natural law theory (Basil, John Chrysostom) influences medieval Scholasticism"
+    }
+  ],
+  "featuredOn": "homepage",
+  "displayOrder": 7
+}

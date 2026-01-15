@@ -80,7 +80,7 @@ export function usePageProcessing({
               ocr: {
                 data: result.ocr,
                 language: book?.language || 'unknown',
-                model: 'gemini-2.0-flash'
+                model: 'gemini-3-flash-preview'
               }
             });
             completed.push(result.pageId);

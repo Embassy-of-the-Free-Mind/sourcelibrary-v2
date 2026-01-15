@@ -198,3 +198,61 @@ Use the latest available Gemini models. As of December 2025:
 - Translation: Check translate route
 
 Reference: https://ai.google.dev/gemini-api/docs/models
+
+## Image Extraction
+
+Extract illustrations from book scans with AI-generated metadata (bounding boxes, quality scores, museum descriptions).
+
+### Extract Images from a Book
+
+```bash
+# Full extraction - processes ALL pages (recommended for important books)
+node scripts/evaluate-extraction.mjs BOOK_ID
+
+# Run in background for large books
+node scripts/evaluate-extraction.mjs BOOK_ID &
+```
+
+**Output per image:**
+- Bounding box coordinates (for cropping)
+- Type: emblem, woodcut, engraving, portrait, diagram, etc.
+- Gallery quality score (0-1, ≥0.75 shows in gallery guide)
+- Museum description (2-3 sentences)
+- Metadata: subjects, figures, symbols, style, technique
+
+### Find Book IDs
+
+```bash
+# Search by author/title
+node -e "
+const { MongoClient } = require('mongodb');
+require('dotenv').config({ path: '.env.local' });
+async function main() {
+  const client = new MongoClient(process.env.MONGODB_URI);
+  await client.connect();
+  const db = client.db('bookstore');
+  const books = await db.collection('books').find({
+    \$or: [
+      { author: { \$regex: 'SEARCH_TERM', \$options: 'i' } },
+      { title: { \$regex: 'SEARCH_TERM', \$options: 'i' } }
+    ]
+  }).project({ id: 1, title: 1, author: 1 }).toArray();
+  books.forEach(b => console.log(b.id, '-', b.title));
+  await client.close();
+}
+main();
+"
+```
+
+### View Results
+
+- Gallery: `https://sourcelibrary.org/gallery?book=BOOK_ID`
+- Single image: `https://sourcelibrary.org/gallery/image/PAGE_ID:INDEX`
+
+### Cost
+
+~$0.0003/page, ~$0.10-0.25 for a 300-800 page book
+
+### Database
+
+**Important:** The production database is `bookstore` (1,200+ books), not `sourcelibrary_research` (old test database).

@@ -1,0 +1,28 @@
+{
+  "id": "ancient-virtue-ethics",
+  "title": "Ancient Virtue Ethics: Plato, Aristotle & the Stoics",
+  "shortTitle": "Ancient Virtue Ethics",
+  "description": "Foundational texts of Western moral philosophy: Platonic justice and Forms, Aristotelian virtue and flourishing (eudaimonia), and Stoic natural law. The intellectual bedrock for all subsequent ethical and political thought.",
+  "dateRange": "c. 380 BCE - 180 CE",
+  "totalBooks": 5,
+  "totalPages": 3240,
+  "themes": ["Virtue Ethics", "Natural Law", "Justice", "Eudaimonia", "Stoicism", "Forms"],
+  "books": [
+    {"bookId": "6956956c8c9559f6c2db0f42", "title": "The Dialogues of Plato", "author": "Plato", "year": 1871, "pages": 673},
+    {"bookId": "6956953e8c9559f6c2db0b6d", "title": "Nicomachean Ethics", "author": "Aristotle", "year": 1818, "pages": 407},
+    {"bookId": "6956954d8c9559f6c2db0d05", "title": "The Politics", "author": "Aristotle", "year": 1855, "pages": 572},
+    {"bookId": "695695288c9559f6c2db04eb", "title": "De Officiis", "author": "Cicero", "year": 1755, "pages": 439},
+    {"bookId": "6956952b8c9559f6c2db06a3", "title": "Meditations", "author": "Marcus Aurelius", "year": 1707, "pages": 750}
+  ],
+  "keyThemes": [
+    "Virtue as excellence (arete)",
+    "Justice as harmony",
+    "Natural law accessible to reason",
+    "Flourishing (eudaimonia) as highest good",
+    "Living according to nature (Stoics)"
+  ],
+  "researchValue": "Foundation of Western ethics and political philosophy. Essential for understanding virtue ethics tradition, natural law theory, and the philosophical roots of classical liberalism.",
+  "connections": ["early-modern-natural-law", "byzantine-mystical-theology"],
+  "featured": true,
+  "displayOrder": 1
+}

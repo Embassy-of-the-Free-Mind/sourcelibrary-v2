@@ -1,0 +1,28 @@
+{
+  "id": "sanskrit-tantra-yoga",
+  "title": "Sanskrit Tantra & Yoga Philosophy",
+  "shortTitle": "Tantra & Yoga",
+  "description": "The English transmission of Sanskrit Tantric texts through Arthur Avalon (John Woodroffe) and Haraprasada Shastri's manuscript editions, documenting the esoteric yoga and tantric traditions of India.",
+  "dateRange": "1913 - 1963",
+  "totalBooks": 7,
+  "totalPages": 7196,
+  "themes": ["Tantra", "Kashmir Shaivism", "Kundalini Yoga", "Shakti", "Sanskrit Texts"],
+  "books": [
+    {"bookId": "6953620c9c494f9f9f043390", "title": "Tantric Texts Series", "author": "Arthur Avalon (John Woodroffe)", "year": 1918, "pages": 452},
+    {"bookId": "695362109c494f9f9f043555", "title": "Tantra Manuscripts", "author": "Haraprasada Shastri", "year": 1939, "pages": 846},
+    {"bookId": "69536223e5b8ba2074413455", "title": "Yoga Tantra Vimarshini", "author": "Gopinath Kaviraj", "year": 1963, "pages": 283},
+    {"bookId": "6953e2f677f38f6761bea397", "title": "Tantraloka of Abhinavagupta (Complete)", "author": "Abhinavagupta", "year": 1000, "pages": 3938},
+    {"bookId": "6953e30277f38f6761beb46f", "title": "Kularnava Tantra (Sanskrit)", "author": "Traditional", "year": 1500, "pages": 303},
+    {"bookId": "6953e30577f38f6761beb59f", "title": "Kularnava Tantra - English (Avalon)", "author": "Arthur Avalon", "year": 1917, "pages": 132},
+    {"bookId": "6953e30b77f38f6761beb6af", "title": "Yantra Mantra Tantra Vidya", "author": "Kunthu Sagar Ji", "year": 1982, "pages": 732}
+  ],
+  "keyFigures": [
+    "Arthur Avalon (John Woodroffe): Pioneering English translator of Tantric texts",
+    "Haraprasada Shastri: Critical editions of Bengali Tantric manuscripts",
+    "Gopinath Kaviraj: Commentary on yoga and tantra synthesis"
+  ],
+  "researchValue": "Foundational English-language sources for understanding Tantra. Woodroffe's translations made Tantric philosophy accessible to Western audiences and influenced the Theosophical Society and Western esotericism.",
+  "connections": ["taoist-inner-alchemy", "byzantine-mystical-theology"],
+  "featured": true,
+  "displayOrder": 22
+}

@@ -405,6 +405,26 @@ export default function SocialAdminPage() {
     }
   };
 
+  // Update post
+  const updatePost = async (postId: string, updates: { tweet_text?: string; hashtags?: string[] }) => {
+    try {
+      const res = await fetch(`/api/social/posts/${postId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      });
+      if (res.ok) {
+        // Refresh posts
+        fetchPosts();
+      } else {
+        alert('Failed to update post');
+      }
+    } catch (error) {
+      console.error('Update error:', error);
+      alert('Failed to update post');
+    }
+  };
+
   // Delete post
   const deletePost = async (postId: string) => {
     if (!confirm('Delete this post?')) return;
@@ -1068,6 +1088,7 @@ export default function SocialAdminPage() {
                       onQueue={() => addToQueue(post.id)}
                       onPublish={() => publishNow(post.id)}
                       onDelete={() => deletePost(post.id)}
+                      onUpdate={(updates) => updatePost(post.id, updates)}
                       publishing={publishing === post.id}
                       twitterConnected={twitterConnected}
                     />
@@ -1092,6 +1113,7 @@ export default function SocialAdminPage() {
                       post={post}
                       onPublish={() => publishNow(post.id)}
                       onDelete={() => deletePost(post.id)}
+                      onUpdate={(updates) => updatePost(post.id, updates)}
                       publishing={publishing === post.id}
                       twitterConnected={twitterConnected}
                     />
@@ -1416,12 +1438,13 @@ export default function SocialAdminPage() {
   );
 }
 
-// Post Card Component
+// Post Card Component with inline editing
 function PostCard({
   post,
   onQueue,
   onPublish,
   onDelete,
+  onUpdate,
   publishing,
   twitterConnected,
 }: {
@@ -1429,10 +1452,31 @@ function PostCard({
   onQueue?: () => void;
   onPublish?: () => void;
   onDelete?: () => void;
+  onUpdate?: (updates: { tweet_text?: string; hashtags?: string[] }) => Promise<void>;
   publishing?: boolean;
   twitterConnected?: boolean;
 }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(post.tweet_text || '');
+  const [editHashtags, setEditHashtags] = useState(post.hashtags?.join(', ') || '');
+  const [saving, setSaving] = useState(false);
   const StatusIcon = STATUS_ICONS[post.status];
+
+  const handleSave = async () => {
+    if (!onUpdate) return;
+    setSaving(true);
+    try {
+      await onUpdate({
+        tweet_text: editText,
+        hashtags: editHashtags.split(',').map(t => t.trim().replace(/^#/, '')).filter(Boolean),
+      });
+      setIsEditing(false);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const canEdit = post.status === 'draft' || post.status === 'queued';
 
   return (
     <div className="bg-stone-900 rounded-lg p-4 border border-stone-800 flex gap-4">
@@ -1444,20 +1488,64 @@ function PostCard({
 
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
-          <div>
-            <p className="font-medium text-sm line-clamp-2">{post.tweet_text || '(No text)'}</p>
-            <p className="text-xs text-stone-500 mt-1">
-              {post.image_data.book_title}
-              {post.image_data.book_year && ` (${post.image_data.book_year})`}
-            </p>
+          <div className="flex-1">
+            {isEditing ? (
+              <div className="space-y-2">
+                <textarea
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  className="w-full bg-stone-800 border border-stone-700 rounded px-2 py-1 text-sm resize-none"
+                  rows={3}
+                  placeholder="Tweet text..."
+                />
+                <input
+                  type="text"
+                  value={editHashtags}
+                  onChange={(e) => setEditHashtags(e.target.value)}
+                  className="w-full bg-stone-800 border border-stone-700 rounded px-2 py-1 text-xs"
+                  placeholder="hashtags (comma separated)"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="text-xs px-2 py-1 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded"
+                  >
+                    {saving ? 'Saving...' : 'Save'}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditText(post.tweet_text || '');
+                      setEditHashtags(post.hashtags?.join(', ') || '');
+                      setIsEditing(false);
+                    }}
+                    className="text-xs px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div
+                onClick={() => canEdit && onUpdate && setIsEditing(true)}
+                className={canEdit && onUpdate ? 'cursor-pointer hover:bg-stone-800/50 rounded p-1 -m-1' : ''}
+                title={canEdit && onUpdate ? 'Click to edit' : undefined}
+              >
+                <p className="font-medium text-sm line-clamp-2">{post.tweet_text || '(No text)'}</p>
+                <p className="text-xs text-stone-500 mt-1">
+                  {post.image_data.book_title}
+                  {post.image_data.book_year && ` (${post.image_data.book_year})`}
+                </p>
+              </div>
+            )}
           </div>
-          <div className={`flex items-center gap-1 ${STATUS_COLORS[post.status]}`}>
+          <div className={`flex items-center gap-1 ${STATUS_COLORS[post.status]} flex-shrink-0`}>
             <StatusIcon className="w-4 h-4" />
             <span className="text-xs capitalize">{post.status}</span>
           </div>
         </div>
 
-        {post.hashtags && post.hashtags.length > 0 && (
+        {!isEditing && post.hashtags && post.hashtags.length > 0 && (
           <div className="flex flex-wrap gap-1 mt-2">
             {post.hashtags.map((tag) => (
               <span key={tag} className="text-sky-400 text-xs">
@@ -1480,43 +1568,54 @@ function PostCard({
           </a>
         )}
 
-        <div className="flex gap-2 mt-3">
-          {onQueue && post.status === 'draft' && (
-            <button
-              onClick={onQueue}
-              className="text-xs px-3 py-1 bg-amber-600 hover:bg-amber-700 rounded"
-            >
-              Add to Queue
-            </button>
-          )}
-          {onPublish && twitterConnected && (
-            <button
-              onClick={onPublish}
-              disabled={publishing}
-              className="text-xs px-3 py-1 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 rounded flex items-center gap-1"
-            >
-              {publishing ? (
-                <>
-                  <RefreshCw className="w-3 h-3 animate-spin" />
-                  Posting...
-                </>
-              ) : (
-                <>
-                  <Send className="w-3 h-3" />
-                  Post Now
-                </>
-              )}
-            </button>
-          )}
-          {onDelete && (
-            <button
-              onClick={onDelete}
-              className="text-xs px-3 py-1 bg-stone-700 hover:bg-stone-600 rounded"
-            >
-              <Trash2 className="w-3 h-3" />
-            </button>
-          )}
-        </div>
+        {!isEditing && (
+          <div className="flex gap-2 mt-3">
+            {canEdit && onUpdate && (
+              <button
+                onClick={() => setIsEditing(true)}
+                className="text-xs px-3 py-1 bg-stone-700 hover:bg-stone-600 rounded flex items-center gap-1"
+              >
+                <Edit2 className="w-3 h-3" />
+                Edit
+              </button>
+            )}
+            {onQueue && post.status === 'draft' && (
+              <button
+                onClick={onQueue}
+                className="text-xs px-3 py-1 bg-amber-600 hover:bg-amber-700 rounded"
+              >
+                Add to Queue
+              </button>
+            )}
+            {onPublish && twitterConnected && (
+              <button
+                onClick={onPublish}
+                disabled={publishing}
+                className="text-xs px-3 py-1 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 rounded flex items-center gap-1"
+              >
+                {publishing ? (
+                  <>
+                    <RefreshCw className="w-3 h-3 animate-spin" />
+                    Posting...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-3 h-3" />
+                    Post Now
+                  </>
+                )}
+              </button>
+            )}
+            {onDelete && (
+              <button
+                onClick={onDelete}
+                className="text-xs px-3 py-1 bg-stone-700 hover:bg-stone-600 rounded"
+              >
+                <Trash2 className="w-3 h-3" />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

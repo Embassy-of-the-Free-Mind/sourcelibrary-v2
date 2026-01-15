@@ -1,0 +1,25 @@
+{
+  "id": "desert-fathers-monasticism",
+  "title": "Desert Fathers & Early Christian Monasticism",
+  "shortTitle": "Desert Fathers",
+  "description": "The sayings and lives of the Egyptian desert fathers who pioneered Christian monasticism in the 3rd-5th centuries, plus John Cassian's systematic presentation of desert spirituality for the West.",
+  "dateRange": "3rd - 5th century CE",
+  "totalBooks": 4,
+  "totalPages": 1280,
+  "themes": ["Desert Monasticism", "Apophthegmata", "Spiritual Direction", "Contemplative Life", "Egyptian Monasticism"],
+  "books": [
+    {"bookId": "6953a5fd77f38f6761bd03be", "title": "Patrologia Graeca Vol. 65 - Apophthegmata Patrum", "author": "Desert Fathers", "year": 1858, "pages": 100},
+    {"bookId": "6953a8d277f38f6761bd38d1", "title": "Anonymous Sayings of Desert Fathers", "author": "Desert Fathers (trans. Wortley)", "year": 2013, "pages": 496},
+    {"bookId": "6953a93177f38f6761bd5789", "title": "Apophthegmata Studien", "author": "W. Bousset", "year": 1923, "pages": 362},
+    {"bookId": "6953a92e77f38f6761bd5646", "title": "Institutions (Institutes of the Coenobia)", "author": "John Cassian", "year": 420, "pages": 322}
+  ],
+  "keyTexts": [
+    "Apophthegmata Patrum: Sayings of the Desert Fathers - wisdom in brief narratives",
+    "Cassian's Institutes: Systematic presentation of Egyptian monasticism for Western audience",
+    "Anonymous Sayings: Additional collection of monastic wisdom"
+  ],
+  "researchValue": "Foundational texts of Christian monasticism. The Apophthegmata influenced all subsequent monastic spirituality, East and West. Cassian transmitted desert spirituality to Benedict and Western monasticism.",
+  "connections": ["byzantine-mystical-theology", "cappadocian-fathers"],
+  "featured": true,
+  "displayOrder": 18
+}
