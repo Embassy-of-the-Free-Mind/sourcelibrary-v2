@@ -13,28 +13,6 @@ export const utils = {
   },
 
   /**
-   * Upload a single file
-   */
-  upload: async (file: File): Promise<{ success: boolean; url: string }> => {
-    const formData = new FormData();
-    formData.append('file', file);
-    return await apiClient.post('/api/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-  },
-
-  /**
-   * Upload multiple files
-   */
-  uploadMultiple: async (files: File[]): Promise<{ success: boolean; urls: string[] }> => {
-    const formData = new FormData();
-    files.forEach(file => formData.append('files', file));
-    return await apiClient.post('/api/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-  },
-
-  /**
    * Process with AI
    */
   process: async (data: any): Promise<any> => {

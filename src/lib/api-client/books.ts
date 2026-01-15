@@ -1,4 +1,6 @@
 import { apiClient, streamRequest } from './client';
+import { upload } from './upload';
+
 import type { Book } from '@/lib/types';
 import type {
   BooksListResponse,
@@ -382,13 +384,9 @@ export const books = {
   /**
    * Upload multiple image files to a book
    */
-  uploadPages: async (bookId: string, files: File[]): Promise<{ pages: Array<{ id: string; page_number: number; photo: string }> }> => {
-    const formData = new FormData();
-    formData.append('bookId', bookId);
-    files.forEach(file => formData.append('files', file));
-    return await apiClient.post('/api/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
+  uploadPages: async (bookId: string, files: File[]): Promise<{ pages: Array<{ id: string; page_number: number; photo: string }> }> => {    
+    const response = await upload.images(bookId=bookId, files=files);
+    return { pages: response.pages };
   },
 
   /**

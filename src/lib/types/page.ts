@@ -2,15 +2,14 @@ import { PromptReference } from "./prompt";
 
 export interface Page {
   id: string;
-  _id?: string;
   tenant_id: string;
   book_id: string;
   page_number: number;
   photo: string;
   thumbnail?: string;
   compressed_photo?: string;
-  ocr: OcrData;
-  translation: TranslationData;
+  ocr?: OcrData;
+  translation?: TranslationData;
   summary?: SummaryData;
   modernized?: ModernizedData;  // Modernized text for reading dashboard
   created_at?: Date;

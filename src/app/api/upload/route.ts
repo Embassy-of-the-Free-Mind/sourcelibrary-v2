@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { existsSync } from 'fs';
 import path from 'path';
 import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
+import { put } from '@vercel/blob';
+
+import type { Page } from '@/lib/types/page';
+import { compress_photo } from '@/lib/image-manipulation';
 
 // Maximum file size: 20MB
-const MAX_FILE_SIZE = 20 * 1024 * 1024;
+const MAX_FILE_SIZE_MEGABYTES = 20 * 1024 * 1024;
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,12 +31,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Create upload directory
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', bookId);
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
     // Get current max page number
     const existingPages = await db.collection('pages')
       .find({ book_id: bookId })
@@ -51,34 +47,54 @@ export async function POST(request: NextRequest) {
         continue; // Skip non-image files
       }
 
-      if (file.size > MAX_FILE_SIZE) {
+      if (file.size > MAX_FILE_SIZE_MEGABYTES) {
         continue; // Skip files that are too large
       }
 
-      // Generate unique filename
-      const ext = path.extname(file.name) || '.jpg';
-      const filename = `${new ObjectId().toHexString()}${ext}`;
-      const filepath = path.join(uploadDir, filename);
-
-      // Write file to disk
+      // Read image file data
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
-      await writeFile(filepath, buffer);
+
+      // Generate & Upload Original Image
+      const ext = path.extname(file.name) || '.jpg';
+      const filename = `${new ObjectId().toHexString()}${ext}`;
+      const blobPath = `uploads/${bookId}/${filename}`;      
+      const origPhotoBlob = await put(
+        blobPath,
+        buffer,
+        {
+          access: 'public',
+          contentType: file.type || 'image/jpeg',
+          addRandomSuffix: false,
+        }
+      );
+
+      // Generate & Upload Thumbnail Image (max 200px)
+      const thumbnailBuffer = await compress_photo(buffer, 150, 60);
+      const thumbnailBlobPath = `uploads/${bookId}/thumbnails/${filename}`;      
+      const thumbnailPhotoBlob = await put(
+        thumbnailBlobPath,
+        thumbnailBuffer,
+        {
+          access: 'public',
+          contentType: file.type || 'image/jpeg',
+          addRandomSuffix: false,
+        }
+      );
 
       // Create page record
       const pageId = new ObjectId().toHexString();
-      const photoUrl = `/uploads/${bookId}/${filename}`;
-
-      const page = {
+      const photoUrl = origPhotoBlob.url;
+      const thumbnailUrl = thumbnailPhotoBlob.url;
+      
+      const page: Page = {
         id: pageId,
         tenant_id: 'default',
         book_id: bookId,
         page_number: nextPageNumber,
         photo: photoUrl,
         photo_original: photoUrl,
-        ocr: null,
-        translation: null,
-        summary: null,
+        thumbnail: thumbnailUrl,        
         created_at: new Date(),
         updated_at: new Date(),
       };

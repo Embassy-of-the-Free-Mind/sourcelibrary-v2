@@ -85,14 +85,14 @@ export default function UploadPage() {
         image_source: {
           provider: imageSourceProvider,
           provider_name: imageSourceProvider === 'efm' ? 'Embassy of the Free Mind' :
-                        imageSourceProvider === 'internet_archive' ? 'Internet Archive' :
-                        imageSourceProvider === 'google_books' ? 'Google Books' :
-                        imageSourceProvider === 'hathi_trust' ? 'HathiTrust' :
-                        imageSourceProvider === 'biodiversity_heritage_library' ? 'Biodiversity Heritage Library' :
-                        imageSourceProvider === 'gallica' ? 'Bibliothèque nationale de France' :
-                        imageSourceProvider === 'e_rara' ? 'e-rara.ch' :
+            imageSourceProvider === 'internet_archive' ? 'Internet Archive' :
+              imageSourceProvider === 'google_books' ? 'Google Books' :
+                imageSourceProvider === 'hathi_trust' ? 'HathiTrust' :
+                  imageSourceProvider === 'biodiversity_heritage_library' ? 'Biodiversity Heritage Library' :
+                    imageSourceProvider === 'gallica' ? 'Bibliothèque nationale de France' :
+                      imageSourceProvider === 'e_rara' ? 'e-rara.ch' :
                         imageSourceProvider === 'mdz' ? 'Münchener DigitalisierungsZentrum' :
-                        imageSourceProvider === 'user_upload' ? 'User Upload' : undefined,
+                          imageSourceProvider === 'user_upload' ? 'User Upload' : undefined,
           source_url: imageSourceUrl || undefined,
           identifier: iaIdentifier || undefined,
           license: imageLicense,
@@ -188,7 +188,6 @@ export default function UploadPage() {
     setUploadProgress(0);
 
     try {
-      // Use API client with FormData support (includes auth, visitor tracking, error handling)
       const result = await books.uploadPages(bookId, files);
       setUploadedPages(result.pages);
       setUploadProgress(100);
@@ -220,28 +219,25 @@ export default function UploadPage() {
         <div className="flex items-center justify-center mb-8">
           <div className="flex items-center gap-3">
             <div className={`flex items-center gap-2 ${step === 'metadata' ? 'text-amber-700' : 'text-green-700'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step === 'metadata' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'
-              }`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'metadata' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'
+                }`}>
                 {step === 'metadata' ? '1' : <CheckCircle className="w-5 h-5" />}
               </div>
               <span className="text-sm font-medium hidden sm:inline">Book Details</span>
             </div>
             <div className="w-12 h-px bg-stone-300" />
             <div className={`flex items-center gap-2 ${step === 'upload' ? 'text-amber-700' : step === 'complete' ? 'text-green-700' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step === 'upload' ? 'bg-amber-100 text-amber-700' :
-                step === 'complete' ? 'bg-green-100 text-green-700' : 'bg-stone-100'
-              }`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'upload' ? 'bg-amber-100 text-amber-700' :
+                  step === 'complete' ? 'bg-green-100 text-green-700' : 'bg-stone-100'
+                }`}>
                 {step === 'complete' ? <CheckCircle className="w-5 h-5" /> : '2'}
               </div>
               <span className="text-sm font-medium hidden sm:inline">Upload Pages</span>
             </div>
             <div className="w-12 h-px bg-stone-300" />
             <div className={`flex items-center gap-2 ${step === 'complete' ? 'text-green-700' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                step === 'complete' ? 'bg-green-100 text-green-700' : 'bg-stone-100'
-              }`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'complete' ? 'bg-green-100 text-green-700' : 'bg-stone-100'
+                }`}>
                 {step === 'complete' ? <CheckCircle className="w-5 h-5" /> : '3'}
               </div>
               <span className="text-sm font-medium hidden sm:inline">Done</span>
@@ -337,9 +333,8 @@ export default function UploadPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <p className="font-medium text-stone-900 truncate">{item.title}</p>
-                          <span className={`text-xs px-1.5 py-0.5 rounded flex-shrink-0 ${
-                            item.source === 'ia' ? 'bg-orange-100 text-orange-700' : 'bg-purple-100 text-purple-700'
-                          }`}>
+                          <span className={`text-xs px-1.5 py-0.5 rounded flex-shrink-0 ${item.source === 'ia' ? 'bg-orange-100 text-orange-700' : 'bg-purple-100 text-purple-700'
+                            }`}>
                             {item.source === 'ia' ? 'IA' : 'BPH'}
                           </span>
                         </div>
@@ -389,214 +384,214 @@ export default function UploadPage() {
               </div>
 
               <form onSubmit={handleCreateBook} className="space-y-5">
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">
-                  Original Title <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                  placeholder="e.g., Fons Sapientiae"
-                  className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                />
-                <p className="text-xs text-stone-500 mt-1">The title in the original language</p>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">
-                  Display Title
-                </label>
-                <input
-                  type="text"
-                  value={displayTitle}
-                  onChange={(e) => setDisplayTitle(e.target.value)}
-                  placeholder="e.g., Fountain of Wisdom"
-                  className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                />
-                <p className="text-xs text-stone-500 mt-1">English title for display (optional)</p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Author
+                    Original Title <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
-                    value={author}
-                    onChange={(e) => setAuthor(e.target.value)}
-                    placeholder="e.g., Anonymous"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    placeholder="e.g., Fons Sapientiae"
                     className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
+                  <p className="text-xs text-stone-500 mt-1">The title in the original language</p>
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Date/Period
+                    Display Title
                   </label>
                   <input
                     type="text"
-                    value={published}
-                    onChange={(e) => setPublished(e.target.value)}
-                    placeholder="e.g., c. 1650"
+                    value={displayTitle}
+                    onChange={(e) => setDisplayTitle(e.target.value)}
+                    placeholder="e.g., Fountain of Wisdom"
                     className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">
-                  Source Language
-                </label>
-                <select
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                >
-                  {languages.map(lang => (
-                    <option key={lang} value={lang}>{lang}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Publication Details */}
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Place of Publication
-                  </label>
-                  <input
-                    type="text"
-                    value={placeOfPublication}
-                    onChange={(e) => setPlaceOfPublication(e.target.value)}
-                    placeholder="e.g., Venice"
-                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Publisher
-                  </label>
-                  <input
-                    type="text"
-                    value={publisher}
-                    onChange={(e) => setPublisher(e.target.value)}
-                    placeholder="e.g., Aldus Manutius"
-                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-stone-700 mb-1">
-                  Printer
-                </label>
-                <input
-                  type="text"
-                  value={printer}
-                  onChange={(e) => setPrinter(e.target.value)}
-                  placeholder="e.g., Johann Froben"
-                  className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                />
-              </div>
-
-              {/* Image Source & License Section */}
-              <div className="border-t border-stone-200 pt-6 mt-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <Info className="w-4 h-4 text-stone-400" />
-                  <h3 className="text-sm font-medium text-stone-700">Image Source & License</h3>
+                  <p className="text-xs text-stone-500 mt-1">English title for display (optional)</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-stone-700 mb-1">
-                      Image Source
+                      Author
                     </label>
-                    <select
-                      value={imageSourceProvider}
-                      onChange={(e) => setImageSourceProvider(e.target.value as ImageSourceProvider)}
+                    <input
+                      type="text"
+                      value={author}
+                      onChange={(e) => setAuthor(e.target.value)}
+                      placeholder="e.g., Anonymous"
                       className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                    >
-                      <option value="efm">Embassy of the Free Mind (BPH)</option>
-                      <option value="internet_archive">Internet Archive</option>
-                      <option value="google_books">Google Books</option>
-                      <option value="hathi_trust">HathiTrust</option>
-                      <option value="biodiversity_heritage_library">Biodiversity Heritage Library</option>
-                      <option value="gallica">Gallica (BnF)</option>
-                      <option value="e_rara">e-rara.ch</option>
-                      <option value="mdz">MDZ (Munich)</option>
-                      <option value="library">Library/Archive</option>
-                      <option value="user_upload">My Own Scans</option>
-                      <option value="other">Other</option>
-                    </select>
+                    />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-stone-700 mb-1">
-                      Image License
+                      Date/Period
                     </label>
-                    <select
-                      value={imageLicense}
-                      onChange={(e) => setImageLicense(e.target.value)}
+                    <input
+                      type="text"
+                      value={published}
+                      onChange={(e) => setPublished(e.target.value)}
+                      placeholder="e.g., c. 1650"
                       className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                    >
-                      {IMAGE_LICENSES.map(lic => (
-                        <option key={lic.id} value={lic.id}>{lic.name} - {lic.description}</option>
-                      ))}
-                    </select>
+                    />
                   </div>
                 </div>
 
-                <div className="mt-4">
+                <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Source URL
+                    Source Language
                   </label>
-                  <input
-                    type="url"
-                    value={imageSourceUrl}
-                    onChange={(e) => setImageSourceUrl(e.target.value)}
-                    placeholder="e.g., https://archive.org/details/..."
+                  <select
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
                     className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
-                  />
-                  <p className="text-xs text-stone-500 mt-1">Link to the original source of the scans</p>
+                  >
+                    {languages.map(lang => (
+                      <option key={lang} value={lang}>{lang}</option>
+                    ))}
+                  </select>
                 </div>
 
-                <div className="mt-4">
+                {/* Publication Details */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                      Place of Publication
+                    </label>
+                    <input
+                      type="text"
+                      value={placeOfPublication}
+                      onChange={(e) => setPlaceOfPublication(e.target.value)}
+                      placeholder="e.g., Venice"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                      Publisher
+                    </label>
+                    <input
+                      type="text"
+                      value={publisher}
+                      onChange={(e) => setPublisher(e.target.value)}
+                      placeholder="e.g., Aldus Manutius"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Attribution Text <span className="text-stone-400">(optional)</span>
+                    Printer
                   </label>
                   <input
                     type="text"
-                    value={imageAttribution}
-                    onChange={(e) => setImageAttribution(e.target.value)}
-                    placeholder="e.g., Scans courtesy of British Library"
+                    value={printer}
+                    onChange={(e) => setPrinter(e.target.value)}
+                    placeholder="e.g., Johann Froben"
                     className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
                   />
-                  <p className="text-xs text-stone-500 mt-1">Required credit text (if any)</p>
                 </div>
-              </div>
 
-              <button
-                type="submit"
-                disabled={creating || !title}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {creating ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Creating...
-                  </>
-                ) : (
-                  <>
-                    Continue to Upload
-                    <ArrowLeft className="w-5 h-5 rotate-180" />
-                  </>
-                )}
-              </button>
-            </form>
+                {/* Image Source & License Section */}
+                <div className="border-t border-stone-200 pt-6 mt-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Info className="w-4 h-4 text-stone-400" />
+                    <h3 className="text-sm font-medium text-stone-700">Image Source & License</h3>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-stone-700 mb-1">
+                        Image Source
+                      </label>
+                      <select
+                        value={imageSourceProvider}
+                        onChange={(e) => setImageSourceProvider(e.target.value as ImageSourceProvider)}
+                        className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      >
+                        <option value="efm">Embassy of the Free Mind (BPH)</option>
+                        <option value="internet_archive">Internet Archive</option>
+                        <option value="google_books">Google Books</option>
+                        <option value="hathi_trust">HathiTrust</option>
+                        <option value="biodiversity_heritage_library">Biodiversity Heritage Library</option>
+                        <option value="gallica">Gallica (BnF)</option>
+                        <option value="e_rara">e-rara.ch</option>
+                        <option value="mdz">MDZ (Munich)</option>
+                        <option value="library">Library/Archive</option>
+                        <option value="user_upload">My Own Scans</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-stone-700 mb-1">
+                        Image License
+                      </label>
+                      <select
+                        value={imageLicense}
+                        onChange={(e) => setImageLicense(e.target.value)}
+                        className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      >
+                        {IMAGE_LICENSES.map(lic => (
+                          <option key={lic.id} value={lic.id}>{lic.name} - {lic.description}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                      Source URL
+                    </label>
+                    <input
+                      type="url"
+                      value={imageSourceUrl}
+                      onChange={(e) => setImageSourceUrl(e.target.value)}
+                      placeholder="e.g., https://archive.org/details/..."
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    />
+                    <p className="text-xs text-stone-500 mt-1">Link to the original source of the scans</p>
+                  </div>
+
+                  <div className="mt-4">
+                    <label className="block text-sm font-medium text-stone-700 mb-1">
+                      Attribution Text <span className="text-stone-400">(optional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={imageAttribution}
+                      onChange={(e) => setImageAttribution(e.target.value)}
+                      placeholder="e.g., Scans courtesy of British Library"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    />
+                    <p className="text-xs text-stone-500 mt-1">Required credit text (if any)</p>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={creating || !title}
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {creating ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Creating...
+                    </>
+                  ) : (
+                    <>
+                      Continue to Upload
+                      <ArrowLeft className="w-5 h-5 rotate-180" />
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
           </div>
         )}
