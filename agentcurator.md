@@ -172,14 +172,22 @@
 | **Europeana** | 🟡 Ready to integrate | Free API key + IIIF (no key) | 500k+ manuscripts, aggregates from many institutions |
 | **British Library** | 🔴 API down (cyber attack recovery) | IIIF when restored | 3k+ manuscripts viewable, API expected early 2026 |
 | **e-rara** | 🟡 Evaluate | IIIF | Swiss rare books, ETH Zürich |
-| **Wellcome Collection** | 🟡 Evaluate | IIIF | Medical/alchemical texts |
+| **Wellcome Collection** | 🟢 Ready to integrate | Catalogue + IIIF (no key) | Medical/alchemical manuscripts |
 
-#### Europeana Integration Notes
-- **IIIF Manifest**: `https://iiif.europeana.eu/presentation/{dataset}/{localId}/manifest`
-- **Search API**: Requires free API key from apis.europeana.eu
-- **Python client**: github.com/europeana/rd-europeana-python-api
-- **Relevant queries**: `alchemy manuscript`, `hermeticum`, `rosicrucian`, `kabbalah`
-- **Docs**: pro.europeana.eu/page/iiif
+#### Europeana Integration Notes (Discovery Layer)
+- **Role**: Aggregator - use for discovery, import from original sources
+- **Search API**: `https://api.europeana.eu/record/v2/search.json?wskey={key}&query={query}`
+- **API Key**: Stored in `.env.local` as `EUROPEANA_API_KEY`
+- **Note**: IIIF manifests are thumbnails only; actual content at source institutions
+- **Best use**: Find items → identify dataProvider → import via Gallica/MDZ/Wellcome/etc.
+
+#### Wellcome Collection Integration Notes
+- **Catalogue API**: `https://api.wellcomecollection.org/catalogue/v2/works?query={query}&availabilities=online`
+- **IIIF Manifest**: `https://iiif.wellcomecollection.org/presentation/v2/{b-number}`
+- **No API key required**
+- **License**: CC-BY or CC-BY-NC
+- **Strengths**: Medical texts, iatrochemistry, alchemical manuscripts, Paracelsus
+- **Docs**: developers.wellcomecollection.org
 
 #### British Library Integration Notes (for when API restored)
 - **IIIF Manifest**: `https://api.bl.uk/metadata/iiif/ark:/81055/{identifier}/manifest.json`
