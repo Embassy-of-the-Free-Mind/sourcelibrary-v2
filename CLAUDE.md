@@ -87,7 +87,7 @@ When acting as Quality Management Assistant:
 
 ## Import APIs
 
-Source Library supports importing from three digital library sources:
+Source Library supports importing from four digital library sources:
 
 ### Gallica (Bibliothèque nationale de France)
 ```
@@ -124,6 +124,22 @@ POST /api/import/mdz
   "original_language": "Latin"    // Optional
 }
 ```
+
+### Wellcome Collection
+```
+POST /api/import/wellcome
+{
+  "work_id": "pqusmy2a",          // Wellcome work ID (from URL or API)
+  "title": "Book Title",          // Optional override
+  "author": "Author Name",        // Optional override
+  "language": "Latin",            // Optional
+  "published": "1650"             // Optional
+}
+```
+
+Find work IDs:
+- Search: `https://api.wellcomecollection.org/catalogue/v2/works?query=alchemy&availabilities=online`
+- From URL: `wellcomecollection.org/works/{work_id}`
 
 All import routes:
 - Fetch IIIF manifests to get page counts and image URLs

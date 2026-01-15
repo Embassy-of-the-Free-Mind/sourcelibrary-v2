@@ -169,10 +169,13 @@
 
 | Source | Status | API | Notes |
 |--------|--------|-----|-------|
-| **Europeana** | 🟡 Ready to integrate | Free API key + IIIF (no key) | 500k+ manuscripts, aggregates from many institutions |
-| **British Library** | 🔴 API down (cyber attack recovery) | IIIF when restored | 3k+ manuscripts viewable, API expected early 2026 |
-| **e-rara** | 🟡 Evaluate | IIIF | Swiss rare books, ETH Zürich |
-| **Wellcome Collection** | 🟢 Ready to integrate | Catalogue + IIIF (no key) | Medical/alchemical manuscripts |
+| **Europeana** | 🟡 Discovery layer | Free API key + IIIF (no key) | 500k+ manuscripts, aggregates from many institutions |
+| **Wellcome Collection** | ✅ Integrated | Catalogue + IIIF (no key) | Medical/alchemical manuscripts |
+| **e-rara** | 🟢 Ready | OAI-PMH + IIIF (no key) | 153k Swiss rare books, ETH Zürich |
+| **HathiTrust** | 🟢 Ready | Data API (key required) | 19M volumes, 6.9M public domain |
+| **BSB/MDZ** | ✅ Already integrated | IIIF (no key) | See existing MDZ import route |
+| **Google Books** | 🟡 Limited | API key required | Full-view public domain only |
+| **British Library** | 🔴 API down | IIIF when restored | Expected early 2026 |
 
 #### Europeana Integration Notes (Discovery Layer)
 - **Role**: Aggregator - use for discovery, import from original sources
@@ -182,6 +185,7 @@
 - **Best use**: Find items → identify dataProvider → import via Gallica/MDZ/Wellcome/etc.
 
 #### Wellcome Collection Integration Notes
+- **Import route**: `/api/import/wellcome` ✅
 - **Catalogue API**: `https://api.wellcomecollection.org/catalogue/v2/works?query={query}&availabilities=online`
 - **IIIF Manifest**: `https://iiif.wellcomecollection.org/presentation/v2/{b-number}`
 - **No API key required**
@@ -189,13 +193,34 @@
 - **Strengths**: Medical texts, iatrochemistry, alchemical manuscripts, Paracelsus
 - **Docs**: developers.wellcomecollection.org
 
+#### e-rara Integration Notes
+- **OAI-PMH**: `https://www.e-rara.ch/oai?verb=ListRecords&metadataPrefix=oai_dc`
+- **IIIF Manifest**: `https://www.e-rara.ch/i3f/v21/{id}/manifest`
+- **PDF Download**: `https://www.e-rara.ch/download/pdf/{id}.pdf`
+- **Full Text**: `https://www.e-rara.ch/{domain}/download/ftpack/plain/{id}`
+- **No API key required**
+- **153,134 titles** - 15th to 20th century
+- **Strengths**: Swiss rare books, scientific texts, early printed books
+
+#### HathiTrust Integration Notes
+- **Data API**: Requires key from babel.hathitrust.org/cgi/kgs/request
+- **Public domain only** via API
+- **19M+ volumes**, 6.9M downloadable
+- **Formats**: Page images, OCR, whole volume packages
+- **Docs**: hathitrust.org/data_api
+- **Note**: Some items may overlap with IA
+
+#### Google Books Integration Notes
+- **API**: Requires API key from Google Cloud Console
+- **Full-view only** for public domain (pre-1928 US)
+- **Limited**: Many books preview-only
+- **Use case**: Last resort when item not available elsewhere
+
 #### British Library Integration Notes (for when API restored)
 - **IIIF Manifest**: `https://api.bl.uk/metadata/iiif/ark:/81055/{identifier}/manifest.json`
 - **Discovery**: Manual via searcharchives.bl.uk (filter: Digitised content = Yes)
 - **Status**: api.bl.uk DNS not resolving as of Jan 2026
 - **Expected**: New catalogue Dec 2025, full API early 2026
-
-*Note: Many require manual download + local import pipeline*
 
 ---
 
