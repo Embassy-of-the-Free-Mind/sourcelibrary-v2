@@ -68,44 +68,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: book.translation_percent > 0 ? 0.9 : 0.6,
     }));
 
-    // Add read pages for books with translations
-    const readPages: MetadataRoute.Sitemap = books
-      .filter((book) => book.translation_percent > 0)
-      .map((book) => ({
-        url: `${baseUrl}/book/${book.id}/read`,
-        lastModified: book.updated_at || new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.8,
-      }));
+    // NOTE: /read and /guide pages removed from sitemap to improve indexing.
+    // For a new domain, focus on book landing pages only.
+    // /read and /guide are alternate views of same content - could be seen as thin/duplicate.
+    // Individual page URLs also removed (was 47k+ URLs overwhelming Google).
+    // All sub-pages can be discovered via internal links once book pages are indexed.
 
-    // Add guide pages for books with translations
-    const guidePages: MetadataRoute.Sitemap = books
-      .filter((book) => book.translation_percent > 0)
-      .map((book) => ({
-        url: `${baseUrl}/book/${book.id}/guide`,
-        lastModified: book.updated_at || new Date(),
-        changeFrequency: 'weekly' as const,
-        priority: 0.7,
-      }));
-
-    // Add individual translated page URLs (limited to first 50 pages per book to avoid huge sitemaps)
-    const translatedBooks = books.filter((book) => book.pages_translated > 0);
-    const pages = await db.collection('pages').find(
-      {
-        book_id: { $in: translatedBooks.map(b => b.id) },
-        translation: { $exists: true, $ne: null }
-      },
-      { projection: { book_id: 1, page_number: 1, updated_at: 1 } }
-    ).toArray();
-
-    const individualPages: MetadataRoute.Sitemap = pages.map((page) => ({
-      url: `${baseUrl}/book/${page.book_id}/page/${page.page_number}`,
-      lastModified: page.updated_at || new Date(),
-      changeFrequency: 'monthly' as const,
-      priority: 0.5,
-    }));
-
-    return [...staticPages, ...bookPages, ...readPages, ...guidePages, ...individualPages];
+    return [...staticPages, ...bookPages];
   } catch (error) {
     console.error('Error generating sitemap:', error);
     return staticPages;

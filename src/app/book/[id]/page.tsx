@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb, Images } from 'lucide-react';
@@ -188,6 +188,12 @@ async function BookInfo({ id }: { id: string }) {
   }
 
   const { book, pages } = data;
+
+  // Redirect to canonical URL if accessed via ObjectId instead of custom id
+  // This prevents duplicate content issues with Google indexing
+  if (book.id && id !== book.id) {
+    redirect(`/book/${book.id}`);
+  }
   // Note: projection excludes .data fields, so check for object existence instead
   const ocrCount = pages.filter(p => p.ocr).length;
   const translatedCount = pages.filter(p => p.translation).length;
