@@ -190,13 +190,14 @@ export async function GET(request: NextRequest) {
 
     const [result] = await db.collection('pages').aggregate(pipeline).toArray();
 
-    const items = result.items || [];
-    const total = result.total[0]?.count || 0;
-    const types = result.types?.map((t: { _id: string }) => t._id).filter(Boolean) || [];
-    const subjects = result.subjects?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
-    const figures = result.figures?.map((f: { _id: string }) => f._id).filter(Boolean) || [];
-    const symbols = result.symbols?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
-    const yearRange = result.yearRange?.[0] || { minYear: null, maxYear: null };
+    // Handle empty aggregation result to prevent TypeError
+    const items = result?.items || [];
+    const total = result?.total?.[0]?.count || 0;
+    const types = result?.types?.map((t: { _id: string }) => t._id).filter(Boolean) || [];
+    const subjects = result?.subjects?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
+    const figures = result?.figures?.map((f: { _id: string }) => f._id).filter(Boolean) || [];
+    const symbols = result?.symbols?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
+    const yearRange = result?.yearRange?.[0] || { minYear: null, maxYear: null };
 
     // Get book info if filtered by bookId
     let bookInfo = null;

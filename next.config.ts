@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  trailingSlash: false, // Normalize URLs to prevent duplicate content (no trailing slash)
   images: {
     unoptimized: true, // Bypass Vercel image optimization (quota exceeded on free tier)
     remotePatterns: [
