@@ -4,33 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, User, MapPin, Lightbulb, BookOpen, ExternalLink, Loader2 } from 'lucide-react';
-
-interface EntityBook {
-  book_id: string;
-  book_title: string;
-  book_author: string;
-  pages: number[];
-}
-
-interface RelatedEntity {
-  _id: string;
-  name: string;
-  type: 'person' | 'place' | 'concept';
-  book_count: number;
-}
-
-interface Entity {
-  _id: string;
-  name: string;
-  type: 'person' | 'place' | 'concept';
-  description?: string;
-  wikipedia_url?: string;
-  aliases?: string[];
-  book_count: number;
-  total_mentions: number;
-  books: EntityBook[];
-  related: RelatedEntity[];
-}
+import { entities as entitiesApi } from '@/lib/api-client';
+import type { EntityResponse } from '@/lib/api-client';
 
 const TYPE_ICONS = {
   person: User,
@@ -54,7 +29,7 @@ export default function EntityDetailPage() {
   const params = useParams();
   const name = decodeURIComponent(params.name as string);
 
-  const [entity, setEntity] = useState<Entity | null>(null);
+  const [entity, setEntity] = useState<EntityResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -66,17 +41,14 @@ export default function EntityDetailPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`/api/entities/${encodeURIComponent(name)}`);
-      if (res.ok) {
-        const data = await res.json();
-        setEntity(data);
-      } else if (res.status === 404) {
+      const data = await entitiesApi.get(name);
+      setEntity(data);
+    } catch (err: any) {
+      if (err.response?.status === 404) {
         setError('Entity not found');
       } else {
         setError('Failed to load entity');
       }
-    } catch (err) {
-      setError('Failed to load entity');
       console.error(err);
     } finally {
       setLoading(false);

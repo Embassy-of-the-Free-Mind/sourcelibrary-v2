@@ -1,16 +1,12 @@
+import { LoadingMetric } from './api-client/types';
+import { analytics } from './api-client';
+
 /**
  * Loading Analytics - Track and record loading performance metrics
  *
  * This module provides utilities to measure and report loading times
  * for pages, components, and async operations.
  */
-
-export interface LoadingMetric {
-  name: string;
-  duration: number;
-  timestamp: number;
-  metadata?: Record<string, unknown>;
-}
 
 export interface PerformanceEntry {
   name: string;
@@ -29,7 +25,7 @@ const config = {
   maxStoredMetrics: 100,
   endpoint: '/api/analytics/loading', // Optional: API endpoint for sending metrics
   batchSize: 10,
-  flushInterval: 30000, // 30 seconds
+  flushIntervalInMilliseconds: 30000, // 30 seconds
 };
 
 /**
@@ -210,11 +206,7 @@ export async function flushMetrics(): Promise<void> {
   const batch = metrics.splice(0, config.batchSize);
 
   try {
-    await fetch(config.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ metrics: batch }),
-    });
+    await analytics.flushLoadingMetrics(config.endpoint, batch);    
   } catch (error) {
     // Re-add metrics on failure
     metrics.unshift(...batch);
@@ -227,13 +219,22 @@ if (typeof window !== 'undefined') {
   // Flush on page unload
   window.addEventListener('beforeunload', () => {
     if (metrics.length > 0 && navigator.sendBeacon) {
+      // TODO: Dynamically get values for visitor ID and tenant slug
+      // Include tenant context in payload since sendBeacon can't send custom headers
+      const visitorId = localStorage.getItem('visitor_id');
+      const tenantSlug = 'collections'; // Or read from config/context
+
       navigator.sendBeacon(
         config.endpoint,
-        JSON.stringify({ metrics })
+        JSON.stringify({
+          metrics,
+          visitor_id: visitorId,
+          tenant_slug: tenantSlug,
+        })
       );
     }
   });
 
   // Periodic flush
-  setInterval(flushMetrics, config.flushInterval);
+  setInterval(flushMetrics, config.flushIntervalInMilliseconds);
 }

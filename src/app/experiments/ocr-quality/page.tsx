@@ -13,6 +13,7 @@ import {
   ChevronRight,
   AlertCircle,
 } from 'lucide-react';
+import { ocrQualityExperiments, books } from '@/lib/api-client';
 
 interface Book {
   id: string;
@@ -71,7 +72,7 @@ const COMPARISONS = [
 ];
 
 export default function OCRQualityExperimentPage() {
-  const [books, setBooks] = useState<Book[]>([]);
+  const [booksList, setBooksList] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [config, setConfig] = useState<ExperimentConfig>({
     bookId: '',
@@ -102,18 +103,15 @@ export default function OCRQualityExperimentPage() {
 
     const pollProgress = async () => {
       try {
-        const res = await fetch(`/api/experiments/ocr-quality/${experimentId}`);
-        if (res.ok) {
-          const data = await res.json();
-          if (data.progress) {
-            setConditionProgress(data.progress);
-          }
-          if (data.judging_progress) {
-            setJudgingProgress({
-              processed: data.judging_progress.processed || 0,
-              total: data.judging_progress.total || 0,
-            });
-          }
+        const data = await ocrQualityExperiments.get(experimentId);
+        if (data.progress) {
+          setConditionProgress(data.progress as any);
+        }
+        if (data.judging_progress) {
+          setJudgingProgress({
+            processed: data.judging_progress.judged || 0,
+            total: data.judging_progress.total || 0,
+          });
         }
       } catch (error) {
         console.error('Error polling progress:', error);
@@ -129,11 +127,8 @@ export default function OCRQualityExperimentPage() {
 
   const fetchBooks = async () => {
     try {
-      const res = await fetch('/api/books');
-      if (res.ok) {
-        const data = await res.json();
-        setBooks(Array.isArray(data) ? data : data.books || []);
-      }
+      const data = await books.list();
+      setBooksList(Array.isArray(data) ? data : data.books || []);
     } catch (error) {
       console.error('Error fetching books:', error);
     } finally {
@@ -141,7 +136,7 @@ export default function OCRQualityExperimentPage() {
     }
   };
 
-  const selectedBook = books.find(b => b.id === config.bookId);
+  const selectedBook = booksList.find(b => b.id === config.bookId);
   const pageCount = config.endPage - config.startPage + 1;
   const totalJudgments = pageCount * COMPARISONS.length;
   const estimatedRunTime = (pageCount * CONDITIONS.length * 3) / 60; // ~3 sec per page per condition
@@ -152,31 +147,20 @@ export default function OCRQualityExperimentPage() {
   const createExperiment = async () => {
     setError(null);
     try {
-      const res = await fetch('/api/experiments/ocr-quality', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          book_id: config.bookId,
-          start_page: config.startPage,
-          end_page: config.endPage,
-          conditions: CONDITIONS,
-          comparisons: COMPARISONS,
-        }),
-      });
+      const data = await ocrQualityExperiments.create({
+        book_id: config.bookId,
+        start_page: config.startPage,
+        page_count: config.endPage - config.startPage + 1,
+        models: CONDITIONS.map(c => `batch_${c.batchSize}`),
+        prompts: CONDITIONS.map(c => c.promptType),
+      } as any);
 
-      const data = await res.json();
+      console.log('Experiment created:', data);
+      setExperimentId(data.experiment_id || (data as any).id);
+      setStatus(prev => ({ ...prev, phase: 'running', totalJudgments }));
 
-      if (res.ok) {
-        console.log('Experiment created:', data);
-        setExperimentId(data.experiment_id);
-        setStatus(prev => ({ ...prev, phase: 'running', totalJudgments }));
-
-        // Auto-run all conditions sequentially
-        runAllConditions(data.experiment_id);
-      } else {
-        setError(`Failed to create experiment: ${data.error}`);
-        console.error('Create experiment failed:', data);
-      }
+      // Auto-run all conditions sequentially
+      runAllConditions(data.experiment_id || (data as any).id);
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error';
       setError(`Error: ${msg}`);
@@ -189,30 +173,16 @@ export default function OCRQualityExperimentPage() {
       setRunningCondition(condition.id);
 
       try {
-        const res = await fetch(`/api/experiments/ocr-quality/${expId}/run`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ condition_id: condition.id }),
-        });
+        const data = await ocrQualityExperiments.run(expId);
 
-        const data = await res.json();
-
-        if (res.ok) {
-          setConditionResults(prev => ({
-            ...prev,
-            [condition.id]: { success: true, pages: data.success_count },
-          }));
-          setStatus(prev => ({
-            ...prev,
-            conditionsRun: [...prev.conditionsRun, condition.id],
-          }));
-        } else {
-          setConditionResults(prev => ({
-            ...prev,
-            [condition.id]: { success: false, error: data.error || 'Unknown error' },
-          }));
-          console.error('Failed to run condition:', condition.id, data.error);
-        }
+        setConditionResults(prev => ({
+          ...prev,
+          [condition.id]: { success: data.success, pages: (data as any).pages_processed || 0 },
+        }));
+        setStatus(prev => ({
+          ...prev,
+          conditionsRun: [...prev.conditionsRun, condition.id],
+        }));
       } catch (error) {
         setConditionResults(prev => ({
           ...prev,
@@ -230,17 +200,11 @@ export default function OCRQualityExperimentPage() {
     setRunningCondition(conditionId);
 
     try {
-      const res = await fetch(`/api/experiments/ocr-quality/${experimentId}/run`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ condition_id: conditionId }),
-      });
-      if (res.ok) {
-        setStatus(prev => ({
-          ...prev,
-          conditionsRun: [...prev.conditionsRun, conditionId],
-        }));
-      }
+      await ocrQualityExperiments.run(experimentId);
+      setStatus(prev => ({
+        ...prev,
+        conditionsRun: [...prev.conditionsRun, conditionId],
+      }));
     } catch (error) {
       console.error('Error running condition:', error);
     } finally {
@@ -256,21 +220,11 @@ export default function OCRQualityExperimentPage() {
     setJudgingProgress({ processed: 0, total: totalJudgments });
 
     try {
-      const res = await fetch(`/api/experiments/ocr-quality/${experimentId}/auto-judge`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const data = await ocrQualityExperiments.autoJudge(experimentId);
 
-      const data = await res.json();
-
-      if (res.ok) {
-        console.log('Auto-judge complete:', data);
-        if (data.is_complete) {
-          setStatus(prev => ({ ...prev, phase: 'results' }));
-        }
-      } else {
-        setError(`Auto-judge failed: ${data.error}`);
-        console.error('Auto-judge failed:', data);
+      console.log('Auto-judge complete:', data);
+      if ((data as any).is_complete || data.success) {
+        setStatus(prev => ({ ...prev, phase: 'results' }));
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Unknown error';
@@ -398,7 +352,7 @@ export default function OCRQualityExperimentPage() {
                   className="w-full px-3 py-2 border border-stone-300 rounded-lg"
                 >
                   <option value="">Select a book...</option>
-                  {books.map(book => (
+                  {booksList.map(book => (
                     <option key={book.id} value={book.id}>
                       {book.title} ({book.pages_count || '?'} pages)
                     </option>

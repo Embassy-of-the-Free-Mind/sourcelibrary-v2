@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { Loader2, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 import { Book, Page } from '@/lib/types';
-import { QuoteShare } from '@/components/ShareButton';
-import SectionsNav from '@/components/SectionsNav';
+import { QuoteShare } from '@/components/ui/ShareButton';
+import SectionsNav from '@/components/layout/SectionsNav';
 import { BookLoader } from '@/components/ui/BookLoader';
-import LikeButton from '@/components/LikeButton';
+import LikeButton from '@/components/ui/LikeButton';
+import { books, gallery } from '@/lib/api-client';
 
 interface SectionSummary {
   title: string;
@@ -68,9 +69,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         setLoading(true);
 
         // Fetch book with pages (include full text for reader)
-        const bookRes = await fetch(`/api/books/${bookId}?full=true`);
-        if (!bookRes.ok) throw new Error('Book not found');
-        const bookData = await bookRes.json();
+        const bookData = await books.get(bookId, { full: true });
         setBook(bookData);
         setPages(bookData.pages || []);
 
@@ -94,11 +93,12 @@ export default function GuidePage({ params }: GuidePageProps) {
 
         // Fetch high-quality illustrations for this book (minQuality=0.75 filters out decorative elements)
         try {
-          const galleryRes = await fetch(`/api/gallery?bookId=${bookId}&verified=true&limit=50&minQuality=0.75`);
-          if (galleryRes.ok) {
-            const galleryData = await galleryRes.json();
-            setIllustrations(galleryData.items || []);
-          }
+          const galleryData = await gallery.list({
+            bookId,
+            limit: 50,
+            minQuality: 0.75
+          });
+          setIllustrations(galleryData.items || []);
         } catch (e) {
           console.error('Failed to fetch illustrations:', e);
         }
@@ -120,20 +120,10 @@ export default function GuidePage({ params }: GuidePageProps) {
 
     try {
       // First clear cached index to force regeneration
-      await fetch(`/api/books/${bookId}/index`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
+      await books.index.generate(bookId!);
 
       // Then fetch fresh index
-      const response = await fetch(`/api/books/${bookId}/index`);
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to generate');
-      }
-
-      const indexData = await response.json();
+      const indexData = await books.index.get(bookId!);
 
       // Convert to BookSummary format
       if (indexData.bookSummary) {

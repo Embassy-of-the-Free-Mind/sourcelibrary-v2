@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       targetLanguage,
       undefined,
       'Translate the following title or short text. Provide only the translation, no explanations.',
-      'gemini-2.0-flash'
+      'gemini-3-flash-preview'
     );
 
     return NextResponse.json({

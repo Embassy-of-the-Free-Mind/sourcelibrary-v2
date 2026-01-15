@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
+import { images } from '@/lib/api-client';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -32,20 +33,16 @@ export async function POST(request: NextRequest) {
       fetchUrl = fetchUrl.replace('pct:50', 'pct:25');
     }
 
-    const imageResponse = await fetch(fetchUrl);
-    if (!imageResponse.ok) {
+    const imageData = await images.fetchBase64(fetchUrl, { includeMimeType: true });
+    if (!imageData) {
       return NextResponse.json({ error: 'Failed to fetch image' }, { status: 500 });
     }
 
-    const imageBuffer = await imageResponse.arrayBuffer();
-    const base64Image = Buffer.from(imageBuffer).toString('base64');
-    let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
-    mimeType = mimeType.split(';')[0].trim();
-    if (mimeType === 'application/octet-stream') {
-      mimeType = 'image/jpeg';
-    }
+    const { base64, mimeType } = typeof imageData === 'string'
+      ? { base64: imageData, mimeType: 'image/jpeg' }
+      : { base64: imageData.base64, mimeType: imageData.mimeType };
 
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const prompt = `Analyze this scanned book image and determine:
 
@@ -66,7 +63,7 @@ Return your answer in this EXACT JSON format:
       {
         inlineData: {
           mimeType,
-          data: base64Image,
+          data: base64,
         },
       },
     ]);

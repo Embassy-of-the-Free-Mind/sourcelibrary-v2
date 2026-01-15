@@ -46,11 +46,11 @@ Books imported from Internet Archive before Dec 30, 2025 may have incorrect page
 
 ### Quick Reference
 
-**Audit:** `npx tsx scripts/audit-ia-page-counts.ts`
+**Audit:** `npx tsx scripts/maintenance/audit-ia-page-counts.ts`
 
 **Fix TOO MANY pages** (safe, preserves OCR):
 ```bash
-npx tsx scripts/fix-ia-page-counts.ts --book-id=XXX --correct-count=YYY
+npx tsx scripts/maintenance/fix-ia-page-counts.ts --book-id=XXX --correct-count=YYY
 ```
 
 **Fix TOO FEW pages** (loses OCR):

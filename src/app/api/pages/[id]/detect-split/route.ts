@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+import { images } from '@/lib/api-client';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -24,10 +25,9 @@ export async function POST(
       return NextResponse.json({ error: 'No valid image URL' }, { status: 400 });
     }
 
-    // Download image
-    const imageResponse = await fetch(imageUrl);
-    const imageBuffer = await imageResponse.arrayBuffer();
-    const base64Image = Buffer.from(imageBuffer).toString('base64');
+    // Download and encode image
+    const imageData = await images.fetchBase64(imageUrl);
+    const base64Image = typeof imageData === 'string' ? imageData : imageData.base64;
 
     // Run Gemini detection (using fastest model)
     const model = genAI.getGenerativeModel({

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { detectSplitFromBuffer } from '@/lib/splitDetection';
+import { images } from '@/lib/api-client';
 
 /**
  * GET /api/pages/[id]/auto-split
@@ -48,19 +49,7 @@ export async function GET(
     const baseUrl = request.nextUrl.origin;
     const smallImageUrl = `${baseUrl}/api/image?url=${encodeURIComponent(imageUrl)}&w=500&q=60`;
 
-    const response = await fetch(smallImageUrl, {
-      signal: AbortSignal.timeout(30000),
-    });
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: `Failed to fetch image: ${response.status}` },
-        { status: 502 }
-      );
-    }
-
-    const arrayBuffer = await response.arrayBuffer();
-    const imageBuffer = Buffer.from(arrayBuffer);
+    const imageBuffer = await images.fetchBuffer(smallImageUrl, { timeout: 30000 });
 
     // Run split detection (analyzes at 500px width - very fast)
     const result = await detectSplitFromBuffer(imageBuffer, 500);

@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { DEFAULT_PROMPTS, DEFAULT_MODEL } from '@/lib/types';
+import { images } from '@/lib/api-client';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -27,20 +28,15 @@ async function performOCRWithKey(
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
   }
 
-  // Fetch the image
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
-  const base64Image = Buffer.from(imageBuffer).toString('base64');
-  let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
-  mimeType = mimeType.split(';')[0].trim();
+  // Fetch the image and convert to base64
+  const imageData = await images.fetchBase64(imageUrl, { includeMimeType: true });
+  const { base64, mimeType } = typeof imageData === 'string'
+    ? { base64: imageData, mimeType: 'image/jpeg' }
+    : imageData;
 
   const result = await model.generateContent([
     prompt,
-    { inlineData: { mimeType, data: base64Image } },
+    { inlineData: { mimeType, data: base64 } },
   ]);
 
   const usageMetadata = result.response.usageMetadata;

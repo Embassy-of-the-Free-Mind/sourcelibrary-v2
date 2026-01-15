@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Prompt } from '@/lib/types';
+import { prompts as promptsApi } from '@/lib/api-client';
 
 interface PromptsState {
   ocr: Prompt | null;
@@ -18,33 +19,21 @@ export function usePrompts() {
   useEffect(() => {
     const fetchPrompts = async () => {
       try {
-        const [ocrRes, transRes, sumRes] = await Promise.all([
-          fetch('/api/prompts?type=ocr'),
-          fetch('/api/prompts?type=translation'),
-          fetch('/api/prompts?type=summary')
+        const [ocrData, transData, sumData] = await Promise.all([
+          promptsApi.list({ type: 'ocr' }),
+          promptsApi.list({ type: 'translation' }),
+          promptsApi.list({ type: 'summary' })
         ]);
 
-        if (ocrRes.ok) {
-          const ocrPrompts = await ocrRes.json();
-          setPrompts(prev => ({
-            ...prev,
-            ocr: ocrPrompts.find((p: Prompt) => p.is_default) || ocrPrompts[0] || null
-          }));
-        }
-        if (transRes.ok) {
-          const transPrompts = await transRes.json();
-          setPrompts(prev => ({
-            ...prev,
-            translation: transPrompts.find((p: Prompt) => p.is_default) || transPrompts[0] || null
-          }));
-        }
-        if (sumRes.ok) {
-          const sumPrompts = await sumRes.json();
-          setPrompts(prev => ({
-            ...prev,
-            summary: sumPrompts.find((p: Prompt) => p.is_default) || sumPrompts[0] || null
-          }));
-        }
+        const ocrPrompts = ocrData.prompts || [];
+        const transPrompts = transData.prompts || [];
+        const sumPrompts = sumData.prompts || [];
+
+        setPrompts({
+          ocr: ocrPrompts.find((p: Prompt) => p.is_default) || ocrPrompts[0] || null,
+          translation: transPrompts.find((p: Prompt) => p.is_default) || transPrompts[0] || null,
+          summary: sumPrompts.find((p: Prompt) => p.is_default) || sumPrompts[0] || null
+        });
       } catch (error) {
         console.error('Error fetching prompts:', error);
       } finally {

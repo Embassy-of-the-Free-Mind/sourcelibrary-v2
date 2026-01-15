@@ -17,43 +17,10 @@ import {
   PenTool,
   Trash2
 } from 'lucide-react';
+import { detections } from '@/lib/api-client';
+import type { Detection, PageWithDetections, ReviewResponse } from '@/lib/api-client/types/detections';
 
-interface BBox {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
-interface Detection {
-  id?: string;
-  description: string;
-  type?: string;
-  bbox?: BBox;
-  confidence?: number;
-  model?: string;
-  status?: 'pending' | 'approved' | 'rejected';
-  detection_source?: 'ocr_tag' | 'vision_model' | 'manual';
-}
-
-interface PageWithDetections {
-  pageId: string;
-  bookId: string;
-  pageNumber: number;
-  imageUrl: string;
-  bookTitle: string;
-  author?: string;
-  detections: Detection[];
-}
-
-interface ReviewResponse {
-  pages: PageWithDetections[];
-  total: number;
-  limit: number;
-  offset: number;
-  books: Array<{ id: string; title: string }>;
-  counts: { pending: number; approved: number; rejected: number };
-}
+type BBox = NonNullable<Detection['bbox']>;
 
 export default function DetectionReviewPage() {
   const [data, setData] = useState<ReviewResponse | null>(null);
@@ -68,16 +35,14 @@ export default function DetectionReviewPage() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({
+      const params: any = {
         status: statusFilter,
-        limit: limit.toString(),
-        offset: (page * limit).toString()
-      });
-      if (selectedBook) params.set('bookId', selectedBook);
+        limit,
+        offset: page * limit
+      };
+      if (selectedBook) params.bookId = selectedBook;
 
-      const res = await fetch(`/api/detections?${params}`);
-      if (!res.ok) throw new Error('Failed to fetch');
-      const json = await res.json();
+      const json = await detections.list(params);
       setData(json);
     } catch (e) {
       console.error('Fetch error:', e);
@@ -93,12 +58,15 @@ export default function DetectionReviewPage() {
   const updateStatus = async (pageId: string, detectionIndex: number, status: 'approved' | 'rejected' | 'pending') => {
     setSaving(`${pageId}-${detectionIndex}`);
     try {
-      const res = await fetch('/api/detections', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pageId, detectionIndex, status })
-      });
-      if (!res.ok) throw new Error('Failed to update');
+      // Find the detection ID
+      const page = data?.pages.find(p => p.pageId === pageId);
+      const detection = page?.detections[detectionIndex];
+      if (!detection?.id) {
+        console.error('Detection ID not found');
+        return;
+      }
+
+      await detections.update(detection.id, { status });
 
       // Update local state
       setData(prev => {
@@ -123,15 +91,9 @@ export default function DetectionReviewPage() {
     }
   };
 
-  const addManualDetection = async (pageId: string, bbox: BBox, description: string) => {
+  const addManualDetection = async (pageId: string, bbox: any, description: string) => {
     try {
-      const res = await fetch('/api/detections', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pageId, bbox, description })
-      });
-      if (!res.ok) throw new Error('Failed to add');
-      const json = await res.json();
+      const json = await detections.create({ pageId, bbox, description });
 
       // Update local state
       setData(prev => {
@@ -142,7 +104,7 @@ export default function DetectionReviewPage() {
             if (p.pageId !== pageId) return p;
             return {
               ...p,
-              detections: [...p.detections, json.detection]
+              detections: [...p.detections, json]
             };
           })
         };
@@ -154,12 +116,15 @@ export default function DetectionReviewPage() {
 
   const deleteDetection = async (pageId: string, detectionIndex: number) => {
     try {
-      const res = await fetch('/api/detections', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pageId, detectionIndex })
-      });
-      if (!res.ok) throw new Error('Failed to delete');
+      // Find the detection ID
+      const page = data?.pages.find(p => p.pageId === pageId);
+      const detection = page?.detections[detectionIndex];
+      if (!detection?.id) {
+        console.error('Detection ID not found');
+        return;
+      }
+
+      await detections.delete(detection.id);
 
       // Update local state
       setData(prev => {
@@ -182,12 +147,16 @@ export default function DetectionReviewPage() {
 
   const markReviewed = async (pageId: string, approved: boolean) => {
     try {
-      const res = await fetch('/api/detections/mark-reviewed', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pageId, skipped: !approved })
-      });
-      if (!res.ok) throw new Error('Failed to mark reviewed');
+      // Collect all detection IDs for this page
+      const page = data?.pages.find(p => p.pageId === pageId);
+      const detectionIds = page?.detections.map(d => d.id).filter((id): id is string => !!id) || [];
+
+      if (detectionIds.length === 0) {
+        console.error('No detection IDs found for page');
+        return;
+      }
+
+      await detections.markReviewed(detectionIds, approved);
 
       // Remove page from local state and update counts
       setData(prev => {
@@ -222,16 +191,14 @@ export default function DetectionReviewPage() {
   const fetchMorePages = async () => {
     if (statusFilter !== 'pending') return; // Only auto-fetch for pending
     try {
-      const params = new URLSearchParams({
+      const params: any = {
         status: 'pending',
-        limit: limit.toString(),
-        offset: '0' // Always get fresh pages from the start
-      });
-      if (selectedBook) params.set('bookId', selectedBook);
+        limit,
+        offset: 0 // Always get fresh pages from the start
+      };
+      if (selectedBook) params.bookId = selectedBook;
 
-      const res = await fetch(`/api/detections?${params}`);
-      if (!res.ok) return;
-      const json = await res.json();
+      const json = await detections.list(params);
 
       // Merge new pages, avoiding duplicates
       setData(prev => {

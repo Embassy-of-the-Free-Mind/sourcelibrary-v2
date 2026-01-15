@@ -5,66 +5,7 @@ import Link from 'next/link';
 import { Search, Book, FileText, ExternalLink, Filter, X, Loader2, Quote, User, MapPin, Lightbulb, BookOpen, Languages } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-
-interface SearchResult {
-  id: string;
-  type: 'book' | 'page';
-  book_id: string;
-  title: string;
-  display_title?: string;
-  author: string;
-  language: string;
-  published: string;
-  page_count?: number;
-  translated_count?: number;
-  has_doi: boolean;
-  doi?: string;
-  summary?: string;
-  categories?: string[];
-  page_number?: number;
-  snippet?: string;
-  snippet_type?: 'translation' | 'ocr' | 'summary';
-}
-
-interface SearchResponse {
-  query: string;
-  total: number;
-  results: SearchResult[];
-  filters: {
-    language?: string;
-    date_from?: string;
-    date_to?: string;
-    has_doi?: string;
-    has_translation?: string;
-  };
-}
-
-interface IndexSearchResult {
-  type: 'keyword' | 'concept' | 'person' | 'place' | 'vocabulary' | 'quote';
-  term: string;
-  book_id: string;
-  book_title: string;
-  book_author: string;
-  pages?: number[];
-  quote_text?: string;
-  quote_page?: number;
-  quote_significance?: string;
-  section_title?: string;
-}
-
-interface IndexSearchResponse {
-  query: string;
-  total: number;
-  byType: {
-    vocabulary: number;
-    keyword: number;
-    concept: number;
-    person: number;
-    place: number;
-    quote: number;
-  };
-  results: IndexSearchResult[];
-}
+import { search as searchApi, categories as categoriesApi, utils, type SearchResult, type IndexSearchResult, type IndexSearchResponse } from '@/lib/api-client';
 
 const INDEX_TYPES = [
   { value: '', label: 'All Types', icon: Search },
@@ -122,8 +63,7 @@ export default function SearchPage() {
     const fetchFilterOptions = async () => {
       try {
         // Fetch languages
-        const langResponse = await fetch('/api/languages');
-        const langData = await langResponse.json();
+        const langData = await utils.languages();
         if (langData.languages) {
           setLanguages([
             { value: '', label: 'All Languages' },
@@ -136,8 +76,7 @@ export default function SearchPage() {
         }
 
         // Fetch categories
-        const catResponse = await fetch('/api/categories');
-        const catData = await catResponse.json();
+        const catData = await categoriesApi.list();
         if (catData.categories) {
           setCategories([
             { value: '', label: 'All Categories' },
@@ -173,11 +112,7 @@ export default function SearchPage() {
     try {
       if (mode === 'index') {
         // Index search
-        const params = new URLSearchParams({ q: searchQuery });
-        if (indexType) params.set('type', indexType);
-
-        const response = await fetch(`/api/search/index?${params}`);
-        const data: IndexSearchResponse = await response.json();
+        const data = await searchApi.index(searchQuery, { type: indexType || undefined });
 
         setIndexResults(data.results || []);
         setTotal(data.total || 0);
@@ -185,16 +120,14 @@ export default function SearchPage() {
         setResults([]);
       } else {
         // Book/page search
-        const params = new URLSearchParams({ q: searchQuery });
-        if (language) params.set('language', language);
-        if (category) params.set('category', category);
-        if (dateFrom) params.set('date_from', dateFrom);
-        if (dateTo) params.set('date_to', dateTo);
-        if (hasDoi) params.set('has_doi', 'true');
-        if (hasTranslation) params.set('has_translation', 'true');
-
-        const response = await fetch(`/api/search?${params}`);
-        const data: SearchResponse = await response.json();
+        const data = await searchApi.search(searchQuery, {
+          language: language || undefined,
+          category: category || undefined,
+          date_from: dateFrom || undefined,
+          date_to: dateTo || undefined,
+          has_doi: hasDoi ? 'true' : undefined,
+          has_translation: hasTranslation ? 'true' : undefined,
+        });
 
         setResults(data.results || []);
         setTotal(data.total || 0);

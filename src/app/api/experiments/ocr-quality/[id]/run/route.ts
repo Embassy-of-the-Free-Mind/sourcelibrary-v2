@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { LATIN_PROMPTS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import crypto from 'crypto';
+import { images } from '@/lib/api-client';
 
 // Allow long-running OCR processing
 export const maxDuration = 300; // 5 minutes
@@ -23,22 +24,11 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
 
 async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
   try {
-    const response = await fetch(url);
-    if (!response.ok) return null;
-
-    const buffer = await response.arrayBuffer();
-    const base64 = Buffer.from(buffer).toString('base64');
-    let mimeType = response.headers.get('content-type') || 'image/jpeg';
-    mimeType = mimeType.split(';')[0].trim();
-
-    const supportedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
-    if (!supportedTypes.includes(mimeType)) {
-      if (url.toLowerCase().includes('.png')) mimeType = 'image/png';
-      else if (url.toLowerCase().includes('.webp')) mimeType = 'image/webp';
-      else mimeType = 'image/jpeg';
+    const result = await images.fetchBase64(url, { includeMimeType: true });
+    if (typeof result === 'string') {
+      return { data: result, mimeType: 'image/jpeg' };
     }
-
-    return { data: base64, mimeType };
+    return { data: result.base64, mimeType: result.mimeType };
   } catch (error) {
     console.error('Failed to fetch image:', url, error);
     return null;

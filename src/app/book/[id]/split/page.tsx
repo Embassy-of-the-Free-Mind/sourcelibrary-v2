@@ -12,7 +12,8 @@ import {
   X
 } from 'lucide-react';
 import type { Book, Page } from '@/lib/types';
-import SplitModeOverlay from '@/components/SplitModeOverlay';
+import SplitModeOverlay from '@/components/pipeline/SplitModeOverlay';
+import { books, pages as pagesApi, splitDetection, jobs } from '@/lib/api-client';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -49,8 +50,7 @@ export default function SplitPage({ params }: PageProps) {
 
   // Check if ML model is available on mount
   useEffect(() => {
-    fetch('/api/split-ml/train')
-      .then(res => res.json())
+    splitDetection.ml.status()
       .then(data => {
         setMlModelAvailable(data.hasActiveModel === true);
       })
@@ -174,25 +174,16 @@ export default function SplitPage({ params }: PageProps) {
     if (detectionAlgo === 'gemini') {
       setGeminiDetecting(prev => new Set(prev).add(pageId));
       try {
-        const res = await fetch('/api/split-gemini', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pageId }),
+        const data = await splitDetection.gemini.detect(pageId);
+        setSplitPositions(prev => ({ ...prev, [pageId]: data.split_position }));
+        setDetectedPositions(prev => ({ ...prev, [pageId]: data.split_position }));
+        setSplitWarnings(prev => {
+          const updated = { ...prev };
+          delete updated[pageId];
+          return updated;
         });
-        if (res.ok) {
-          const data = await res.json();
-          setSplitPositions(prev => ({ ...prev, [pageId]: data.position }));
-          setDetectedPositions(prev => ({ ...prev, [pageId]: data.position }));
-          setSplitWarnings(prev => {
-            const updated = { ...prev };
-            delete updated[pageId];
-            return updated;
-          });
-        } else {
-          // Fallback to center if Gemini fails
-          setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
-        }
       } catch (error) {
+        // Fallback to center if Gemini fails
         console.error('Gemini prediction failed:', error);
         setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
       } finally {
@@ -213,25 +204,16 @@ export default function SplitPage({ params }: PageProps) {
     // If ML model selected, use API
     if (detectionAlgo === 'ml') {
       try {
-        const res = await fetch('/api/split-ml/predict', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pageId }),
+        const data = await splitDetection.ml.predict(pageId);
+        setSplitPositions(prev => ({ ...prev, [pageId]: data.split_position }));
+        setDetectedPositions(prev => ({ ...prev, [pageId]: data.split_position }));
+        setSplitWarnings(prev => {
+          const updated = { ...prev };
+          delete updated[pageId];
+          return updated;
         });
-        if (res.ok) {
-          const data = await res.json();
-          setSplitPositions(prev => ({ ...prev, [pageId]: data.position }));
-          setDetectedPositions(prev => ({ ...prev, [pageId]: data.position }));
-          setSplitWarnings(prev => {
-            const updated = { ...prev };
-            delete updated[pageId];
-            return updated;
-          });
-        } else {
-          // Fallback to center if ML fails
-          setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
-        }
       } catch (error) {
+        // Fallback to center if ML fails
         console.error('ML prediction failed:', error);
         setSplitPositions(prev => ({ ...prev, [pageId]: 500 }));
       } finally {
@@ -300,12 +282,9 @@ export default function SplitPage({ params }: PageProps) {
     if (!bookId) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/books/${bookId}`);
-      if (res.ok) {
-        const data = await res.json();
-        setBook(data);
-        setPages(data.pages || []);
-      }
+      const data = await books.get(bookId);
+      setBook(data);
+      setPages((data as any).pages || []);
     } catch (error) {
       console.error('Error fetching book:', error);
     } finally {
@@ -331,11 +310,7 @@ export default function SplitPage({ params }: PageProps) {
     setShowResetConfirm(false);
 
     try {
-      await fetch('/api/pages/batch-reset', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pageIds: alreadySplitPages.map(p => p.id) })
-      });
+      await pagesApi.batchReset(alreadySplitPages.map(p => p.id));
       await fetchBook();
     } catch (error) {
       console.error('Reset all error:', error);
@@ -487,13 +462,7 @@ export default function SplitPage({ params }: PageProps) {
                      detectedPositions[pageId] !== splitPositions[pageId]
       }));
 
-      const response = await fetch('/api/pages/batch-split', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ splits })
-      });
-
-      const data = await response.json();
+      const data = await pagesApi.batchSplit(splits);
 
       // If a crop job was created, track it
       if (data.cropJobId) {
@@ -517,25 +486,21 @@ export default function SplitPage({ params }: PageProps) {
     const poll = async () => {
       try {
         // Process next chunk
-        await fetch(`/api/jobs/${jobId}/process`, { method: 'POST' });
+        await jobs.process(jobId);
 
         // Get job status
-        const res = await fetch(`/api/jobs/${jobId}`);
-        if (res.ok) {
-          const data = await res.json();
-          const job = data.job;
-          setCropJobProgress(job.progress);
-          setCropJobStatus(job.status);
+        const job = await jobs.get(jobId);
+        setCropJobProgress(job.progress);
+        setCropJobStatus(job.status as any);
 
-          if (job.status === 'completed' || job.status === 'failed') {
-            // Job done, redirect after a short delay
-            setTimeout(() => {
-              window.location.href = `/book/${bookId}`;
-            }, 1500);
-          } else {
-            // Continue polling
-            setTimeout(poll, 1000);
-          }
+        if (job.status === 'completed' || job.status === 'failed') {
+          // Job done, redirect after a short delay
+          setTimeout(() => {
+            window.location.href = `/book/${bookId}`;
+          }, 1500);
+        } else {
+          // Continue polling
+          setTimeout(poll, 1000);
         }
       } catch (error) {
         console.error('Error polling crop job:', error);
@@ -565,7 +530,7 @@ export default function SplitPage({ params }: PageProps) {
       const siblingId = page.split_from ? page.id : pages.find(p => p.split_from === page.id)?.id;
 
       // Call reset endpoint for this page
-      await fetch(`/api/pages/${originalId}/reset`, { method: 'POST' });
+      await pagesApi.resetSplit(originalId);
 
       // Refresh
       await fetchBook();

@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import Replicate from 'replicate';
 import sharp from 'sharp';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { images } from '@/lib/api-client/images';
 
 /**
  * POST /api/extract-images
@@ -84,37 +85,17 @@ interface DetectedImage {
   model: 'gemini' | 'mistral' | 'grounding-dino';
 }
 
-function getMimeType(url: string, headerType: string | null | undefined): string {
-  // S3 often returns application/octet-stream, so detect from URL extension
-  if (headerType && headerType !== 'application/octet-stream') {
-    return headerType;
-  }
-  const ext = url.split('.').pop()?.toLowerCase().split('?')[0];
-  if (ext === 'png') return 'image/png';
-  if (ext === 'gif') return 'image/gif';
-  if (ext === 'webp') return 'image/webp';
-  return 'image/jpeg'; // Default to JPEG
-}
-
 async function extractWithGemini(imageUrl: string): Promise<DetectedImage[]> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY not set');
   }
 
-  // Fetch and encode image
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
-  const base64Image = Buffer.from(imageBuffer).toString('base64');
-  const headerType = imageResponse.headers.get('content-type')?.split(';')[0];
-  const mimeType = getMimeType(imageUrl, headerType);
+  // Fetch and encode image using centralized utility
+  const { base64: base64Image, mimeType } = await images.fetchBase64(imageUrl, { includeMimeType: true }) as { base64: string; mimeType: string };
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -183,14 +164,8 @@ async function extractWithMistral(imageUrl: string): Promise<DetectedImage[]> {
     throw new Error('MISTRAL_API_KEY not set');
   }
 
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
-  const base64Image = Buffer.from(imageBuffer).toString('base64');
-  const mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
+  // Fetch and encode image using centralized utility
+  const { base64: base64Image, mimeType } = await images.fetchBase64(imageUrl, { includeMimeType: true }) as { base64: string; mimeType: string };
   const dataUrl = `data:${mimeType};base64,${base64Image}`;
 
   const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
@@ -254,12 +229,10 @@ async function extractWithGroundingDino(imageUrl: string): Promise<DetectedImage
   // Focused on actual book illustrations, not full-page layouts
   const prompt = "frontispiece . woodcut . engraving . portrait . decorated initial . printer's device . coat of arms . allegorical scene";
 
+  // Fetch image buffer using centralized utility
+  const imageBuffer = await images.fetchBuffer(imageUrl);
+
   // Get image dimensions using sharp
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-  }
-  const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
   const metadata = await sharp(imageBuffer).metadata();
   const imgWidth = metadata.width || 1000;
   const imgHeight = metadata.height || 1500;

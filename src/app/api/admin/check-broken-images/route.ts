@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { images } from '@/lib/api-client/images';
 
 /**
  * Check for books with broken Internet Archive images (403 errors)
@@ -11,30 +12,6 @@ import { getDb } from '@/lib/mongodb';
  *
  * Returns books with broken images that should be reviewed/deleted
  */
-
-async function testImageUrl(url: string): Promise<{ status: number; accessible: boolean }> {
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 10000);
-
-    const response = await fetch(url, {
-      method: 'HEAD',
-      redirect: 'follow',
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeout);
-    return {
-      status: response.status,
-      accessible: response.status === 200,
-    };
-  } catch (error) {
-    return {
-      status: 0,
-      accessible: false,
-    };
-  }
-}
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -92,7 +69,8 @@ export async function GET(request: NextRequest) {
     const accessible: typeof results = [];
 
     for (const book of books) {
-      const testResult = await testImageUrl(book.thumbnail);
+      // Use centralized image utility to test accessibility
+      const isAccessible = await images.testAccessibility(book.thumbnail, 10000);
 
       const entry = {
         id: book.id,
@@ -101,13 +79,13 @@ export async function GET(request: NextRequest) {
         year: book.published,
         ia_identifier: book.ia_identifier,
         thumbnail: book.thumbnail,
-        status: testResult.status,
-        accessible: testResult.accessible,
+        status: isAccessible ? 200 : 0,
+        accessible: isAccessible,
       };
 
       results.push(entry);
 
-      if (testResult.accessible) {
+      if (isAccessible) {
         accessible.push(entry);
       } else {
         broken.push(entry);

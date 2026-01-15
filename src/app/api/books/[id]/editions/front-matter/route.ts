@@ -51,7 +51,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
     const bookContext = buildBookContext(book, pages);
 
     // Generate introduction and methodology in parallel
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
     const [introResult, methodResult] = await Promise.all([
       generateIntroduction(model, book, bookContext),
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
       introduction: introResult,
       methodology: methodResult,
       generated_at: new Date(),
-      generated_by: 'gemini-2.0-flash',
+      generated_by: 'gemini-3-flash-preview',
     };
 
     // Save to edition if one exists

@@ -1,0 +1,1548 @@
+'use client';
+
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import {
+  FileText,
+  Languages,
+  BookOpen,
+  Loader2,
+  CheckCircle2,
+  Square,
+  Play,
+  Scissors,
+  Wand2,
+  X,
+  Download,
+  Settings,
+  DollarSign,
+  ImageIcon,
+  RotateCcw,
+  AlertCircle,
+  GripVertical,
+  ArrowUpDown,
+  RefreshCw,
+  Info
+} from 'lucide-react';
+import DownloadButton from '@/components/ui/DownloadButton';
+import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
+import { MODEL_PRICING } from '@/lib/ai';
+import type { Page, Prompt } from '@/lib/types';
+import { prompts as promptsApi, jobs, books, processing as processingApi } from '@/lib/api-client';
+
+interface BookPagesSectionProps {
+  bookId: string;
+  bookTitle?: string;
+  pages: Page[];
+}
+
+type ActionType = 'ocr' | 'translation' | 'summary' | 'image_extraction';
+type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_extract_images';
+
+const actionToJobType: Record<ActionType, JobType> = {
+  ocr: 'batch_ocr',
+  translation: 'batch_translate',
+  summary: 'batch_summary',
+  image_extraction: 'batch_extract_images',
+};
+
+// Retry settings
+const MAX_RETRIES = 3;
+const INITIAL_RETRY_DELAY = 1000; // 1 second
+
+// Sleep helper
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+interface ProcessingState {
+  active: boolean;
+  type: ActionType | null;
+  currentIndex: number;
+  totalPages: number;
+  completed: string[];
+  failed: string[];
+  totalCost: number;
+  totalTokens: number;
+  lastError?: string;  // Most recent error message for display
+}
+
+// Estimated token usage per action
+const ESTIMATED_TOKENS = {
+  ocr: { input: 1500, output: 800 },        // Image (~1000) + prompt (~500), output ~800
+  translation: { input: 1000, output: 1000 }, // Input text + prompt, similar output
+  summary: { input: 800, output: 200 },      // Shorter input/output
+  image_extraction: { input: 1500, output: 800 }, // Similar to OCR (image + prompt)
+};
+
+// Calculate cost per page based on model
+function getEstimatedCost(action: ActionType, model: string): number {
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
+  const tokens = ESTIMATED_TOKENS[action];
+  const inputCost = (tokens.input / 1_000_000) * pricing.input;
+  const outputCost = (tokens.output / 1_000_000) * pricing.output;
+  return inputCost + outputCost;
+}
+
+// Format relative time
+function formatRelativeTime(date: Date | string | undefined): string {
+  if (!date) return 'Never';
+  const d = new Date(date);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+
+  if (diffMins < 1) return 'Just now';
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
+
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages }: BookPagesSectionProps) {
+  const router = useRouter();
+  const [pages, setPages] = useState(initialPages);
+  const [batchMode, setBatchMode] = useState(false);
+  const [reorderMode, setReorderMode] = useState(false);
+  const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
+  const [action, setAction] = useState<ActionType>('ocr');
+  const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
+  const [concurrency, setConcurrency] = useState(10); // Parallel batches for OCR (experiment-validated)
+  const [showPromptSettings, setShowPromptSettings] = useState(false);
+  const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
+  const [useBatchApi, setUseBatchApi] = useState(false); // Use Gemini Batch API (50% off, 2-24h)
+  const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  // Auto-load more pages when scrolling near the bottom
+  useEffect(() => {
+    if (!loadMoreRef.current || visibleCount >= pages.length) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length));
+        }
+      },
+      { rootMargin: '200px' } // Load 200px before visible
+    );
+
+    observer.observe(loadMoreRef.current);
+    return () => observer.disconnect();
+  }, [visibleCount, pages.length]);
+
+  // Reorder mode state
+  const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
+  const [dragOverPageId, setDragOverPageId] = useState<string | null>(null);
+  const [savingOrder, setSavingOrder] = useState(false);
+  const [orderChanged, setOrderChanged] = useState(false);
+
+  // Update pages when initialPages changes
+  useEffect(() => {
+    setPages(initialPages);
+  }, [initialPages]);
+
+  // Prompt library state
+  const [prompts, setPrompts] = useState<Record<ActionType, Prompt[]>>({
+    ocr: [],
+    translation: [],
+    summary: [],
+    image_extraction: []
+  });
+  const [selectedPromptIds, setSelectedPromptIds] = useState<Record<ActionType, string>>({
+    ocr: '',
+    translation: '',
+    summary: '',
+    image_extraction: ''
+  });
+  const [editedPrompts, setEditedPrompts] = useState<Record<ActionType, string>>({
+    ocr: '',
+    translation: '',
+    summary: '',
+    image_extraction: ''
+  });
+  const [promptsLoading, setPromptsLoading] = useState(true);
+
+  const [processing, setProcessing] = useState<ProcessingState>({
+    active: false,
+    type: null,
+    currentIndex: 0,
+    totalPages: 0,
+    completed: [],
+    failed: [],
+    totalCost: 0,
+    totalTokens: 0,
+  });
+  const stopRequestedRef = useRef(false);
+  const lastSelectedIndexRef = useRef<number | null>(null);
+
+  // Calculate stats (check updated_at since data is excluded from projection)
+  const pagesWithOcr = pages.filter(p => p.ocr?.updated_at).length;
+  const pagesWithTranslation = pages.filter(p => p.translation?.updated_at).length;
+  const totalPages = pages.length;
+
+  // Calculate last activity dates
+  const lastOcrDate = pages
+    .filter(p => p.ocr?.updated_at)
+    .map(p => new Date(p.ocr!.updated_at!))
+    .sort((a, b) => b.getTime() - a.getTime())[0];
+
+  const lastTranslationDate = pages
+    .filter(p => p.translation?.updated_at)
+    .map(p => new Date(p.translation!.updated_at!))
+    .sort((a, b) => b.getTime() - a.getTime())[0];
+
+  // Fetch prompts
+  useEffect(() => {
+    const fetchPrompts = async () => {
+      setPromptsLoading(true);
+      try {
+        const [ocrData, transData, sumData] = await Promise.all([
+          promptsApi.list({ type: 'ocr' }),
+          promptsApi.list({ type: 'translation' }),
+          promptsApi.list({ type: 'summary' })
+        ]);
+
+        const loadPrompts = (promptsList: Prompt[], type: ActionType) => {
+          const defaultPrompt = promptsList.find((p: Prompt) => p.is_default) || promptsList[0];
+          setPrompts(prev => ({ ...prev, [type]: promptsList }));
+          if (defaultPrompt) {
+            setSelectedPromptIds(prev => ({ ...prev, [type]: defaultPrompt.id || defaultPrompt._id?.toString() || '' }));
+            setEditedPrompts(prev => ({ ...prev, [type]: defaultPrompt.content }));
+          }
+        };
+
+        // Note: image_extraction doesn't have custom prompts (uses built-in), but initialize to empty
+        loadPrompts(ocrData, 'ocr');
+        loadPrompts(transData, 'translation');
+        loadPrompts(sumData, 'summary');
+      } catch (error) {
+        console.error('Error fetching prompts:', error);
+      } finally {
+        setPromptsLoading(false);
+      }
+    };
+    fetchPrompts();
+  }, []);
+
+  const handleSelectPrompt = (type: ActionType, promptId: string) => {
+    const prompt = prompts[type].find(p => (p.id || p._id?.toString()) === promptId);
+    if (prompt) {
+      setSelectedPromptIds(prev => ({ ...prev, [type]: promptId }));
+      setEditedPrompts(prev => ({ ...prev, [type]: prompt.content }));
+    }
+  };
+
+  const togglePage = useCallback((pageId: string, index: number, event?: React.MouseEvent) => {
+    const isShiftClick = event?.shiftKey === true;
+    const hasAnchor = lastSelectedIndexRef.current !== null;
+
+    if (isShiftClick && hasAnchor) {
+      // Shift-click: select range
+      const start = Math.min(lastSelectedIndexRef.current!, index);
+      const end = Math.max(lastSelectedIndexRef.current!, index);
+      setSelectedPages(prev => {
+        const next = new Set(prev);
+        for (let i = start; i <= end; i++) {
+          next.add(pages[i].id);
+        }
+        return next;
+      });
+    } else {
+      // Normal click: toggle single page
+      setSelectedPages(prev => {
+        const next = new Set(prev);
+        if (next.has(pageId)) {
+          next.delete(pageId);
+        } else {
+          next.add(pageId);
+        }
+        return next;
+      });
+      // Only update anchor on non-shift clicks
+      lastSelectedIndexRef.current = index;
+    }
+  }, [pages]);
+
+  const selectAll = () => setSelectedPages(new Set(pages.map(p => p.id)));
+  const clearSelection = () => setSelectedPages(new Set());
+
+  const exitBatchMode = () => {
+    setBatchMode(false);
+    setSelectedPages(new Set());
+    setShowPromptSettings(false);
+  };
+
+  // Reorder mode functions
+  const enterReorderMode = () => {
+    setReorderMode(true);
+    setBatchMode(false);
+    setOrderChanged(false);
+  };
+
+  const exitReorderMode = () => {
+    setReorderMode(false);
+    setDraggedPageId(null);
+    setDragOverPageId(null);
+    // Reset to original order if not saved
+    if (orderChanged) {
+      setPages(initialPages);
+      setOrderChanged(false);
+    }
+  };
+
+  const handleDragStart = (pageId: string) => {
+    setDraggedPageId(pageId);
+  };
+
+  const handleDragOver = (e: React.DragEvent, pageId: string) => {
+    e.preventDefault();
+    if (pageId !== draggedPageId) {
+      setDragOverPageId(pageId);
+    }
+  };
+
+  const handleDragEnd = () => {
+    if (draggedPageId && dragOverPageId && draggedPageId !== dragOverPageId) {
+      const newPages = [...pages];
+      const draggedIndex = newPages.findIndex(p => p.id === draggedPageId);
+      const dropIndex = newPages.findIndex(p => p.id === dragOverPageId);
+
+      if (draggedIndex !== -1 && dropIndex !== -1) {
+        const [draggedPage] = newPages.splice(draggedIndex, 1);
+        newPages.splice(dropIndex, 0, draggedPage);
+
+        // Update page numbers
+        newPages.forEach((page, idx) => {
+          page.page_number = idx + 1;
+        });
+
+        setPages(newPages);
+        setOrderChanged(true);
+      }
+    }
+    setDraggedPageId(null);
+    setDragOverPageId(null);
+  };
+
+  const savePageOrder = async () => {
+    setSavingOrder(true);
+    try {
+      const pageIds = pages.map(p => p.id);
+      await books.reorder(bookId, pageIds);
+      setOrderChanged(false);
+      setReorderMode(false);
+      router.refresh();
+    } catch (error) {
+      console.error('Failed to save order:', error);
+    } finally {
+      setSavingOrder(false);
+    }
+  };
+
+  const runBatchProcess = async () => {
+    if (selectedPages.size === 0) return;
+
+    const pageIds = Array.from(selectedPages);
+
+    // Get prompt name for job record
+    const currentPrompt = prompts[action].find(
+      p => (p.id || p._id?.toString()) === selectedPromptIds[action]
+    );
+
+    // If using Batch API, create job and redirect to jobs page
+    if (useBatchApi) {
+      try {
+        await jobs.create({
+          type: actionToJobType[action],
+          book_id: bookId,
+          book_title: bookTitle,
+          config: {
+            page_ids: pageIds,
+            model: selectedModel,
+            prompt_name: currentPrompt?.name,
+            use_batch_api: true,
+          },
+        });
+        // Redirect to jobs page
+        router.push('/jobs');
+        return;
+      } catch (error) {
+        console.error('Failed to create batch job:', error);
+        alert('Failed to create batch job');
+        return;
+      }
+    }
+
+    // Realtime processing
+    stopRequestedRef.current = false;
+    setProcessing({
+      active: true,
+      type: action,
+      currentIndex: 0,
+      totalPages: pageIds.length,
+      completed: [],
+      failed: [],
+      totalCost: 0,
+      totalTokens: 0,
+    });
+
+    const completed: string[] = [];
+    const failed: string[] = [];
+    let runningCost = 0;
+    let runningTokens = 0;
+    let processedCount = 0;
+
+    // Create job record for tracking
+    let jobId: string | null = null;
+    try {
+      const jobData = await jobs.create({
+        type: actionToJobType[action],
+        book_id: bookId,
+        book_title: bookTitle,
+        config: {
+          page_ids: pageIds,
+          model: selectedModel,
+          prompt_name: currentPrompt?.name,
+        },
+      });
+      jobId = jobData.id;
+      // Mark as processing
+      if (jobId) {
+        await jobs.updateStatus(jobId, 'processing');
+      }
+    } catch (error) {
+      console.error('Failed to create job record:', error);
+    }
+
+    // Helper to update job progress (throttled)
+    let lastJobUpdate = 0;
+    const updateJobProgress = async () => {
+      if (!jobId) return;
+      const now = Date.now();
+      // Only update every 2 seconds to avoid too many requests
+      if (now - lastJobUpdate < 2000) return;
+      lastJobUpdate = now;
+
+      try {
+        await jobs.update(jobId, {
+          progress: {
+            total: pageIds.length,
+            completed: completed.length,
+            failed: failed.length
+          },
+        });
+      } catch {
+        // Ignore progress update errors
+      }
+    };
+
+    // Process a single page with retry logic
+    const processPage = async (pageId: string): Promise<void> => {
+      if (stopRequestedRef.current) return;
+
+      const page = pages.find(p => p.id === pageId);
+      if (!page) {
+        failed.push(pageId);
+        return;
+      }
+
+      let lastError: Error | null = null;
+
+      for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+        if (stopRequestedRef.current) return;
+
+        try {
+          // Note: processPage is only called for ocr/translation/summary, never for image_extraction
+          // image_extraction has its own separate batch processing logic
+          const data = await processingApi.process({
+            pageId,
+            action: action as 'ocr' | 'translation' | 'summary',
+            imageUrl: page.photo,
+            language: 'Latin',
+            targetLanguage: 'English',
+            ocrText: action === 'translation' ? page.ocr?.data : undefined,
+            translatedText: action === 'summary' ? page.translation?.data : undefined,
+            customPrompts: {
+              ocr: editedPrompts.ocr,
+              translation: editedPrompts.translation,
+              summary: editedPrompts.summary
+            },
+            autoSave: true,
+            model: selectedModel
+          });
+
+          if (data.usage) {
+            runningCost += data.usage.costUsd || 0;
+            runningTokens += data.usage.totalTokens || 0;
+          }
+          completed.push(pageId);
+          lastError = null;
+          break; // Success, exit retry loop
+        } catch (error) {
+          lastError = error instanceof Error ? error : new Error('Unknown error');
+          console.warn(`Attempt ${attempt + 1}/${MAX_RETRIES} failed for page ${pageId}:`, lastError.message);
+        }
+
+        // Wait before retrying (exponential backoff)
+        if (attempt < MAX_RETRIES - 1 && lastError) {
+          const delay = INITIAL_RETRY_DELAY * Math.pow(2, attempt);
+          await sleep(delay);
+        }
+      }
+
+      if (lastError) {
+        console.error(`All ${MAX_RETRIES} attempts failed for page ${pageId}:`, lastError.message);
+        failed.push(pageId);
+      }
+
+      processedCount++;
+      setProcessing(prev => ({
+        ...prev,
+        currentIndex: processedCount,
+        completed: [...completed],
+        failed: [...failed],
+        totalCost: runningCost,
+        totalTokens: runningTokens,
+      }));
+
+      // Update job progress
+      updateJobProgress();
+    };
+
+    // For translation, use batch API with context (5 pages per request)
+    // For OCR/summary, use parallel per-page processing
+    if (action === 'translation') {
+      const TRANSLATION_BATCH_SIZE = 5;
+      let previousContext = '';
+
+      // Sort pages by page number for proper continuity
+      const sortedPageIds = [...pageIds].sort((a, b) => {
+        const pageA = pages.find(p => p.id === a);
+        const pageB = pages.find(p => p.id === b);
+        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
+      });
+
+      for (let i = 0; i < sortedPageIds.length; i += TRANSLATION_BATCH_SIZE) {
+        if (stopRequestedRef.current) break;
+
+        const batchIds = sortedPageIds.slice(i, Math.min(i + TRANSLATION_BATCH_SIZE, sortedPageIds.length));
+        const batchPages = batchIds
+          .map(id => pages.find(p => p.id === id))
+          .filter((p): p is Page => p !== undefined && !!p.ocr); // Check for OCR presence (data loaded by API)
+
+        if (batchPages.length === 0) {
+          batchIds.forEach(id => failed.push(id));
+          processedCount += batchIds.length;
+          // Update state even when skipping
+          setProcessing(prev => ({
+            ...prev,
+            currentIndex: processedCount,
+            completed: [...completed],
+            failed: [...failed],
+          }));
+          continue;
+        }
+
+        try {
+          const data = await processingApi.batchTranslate({
+            pages: batchPages.map(p => ({
+              pageId: p.id,
+              ocrText: p.ocr?.data || '',
+              pageNumber: p.page_number,
+            })),
+            sourceLanguage: 'Latin',
+            targetLanguage: 'English',
+            customPrompt: editedPrompts.translation,
+            model: selectedModel,
+            previousContext,
+            overwrite: overwriteMode,
+          });
+
+          if (data.usage) {
+            runningCost += data.usage.costUsd || 0;
+            runningTokens += data.usage.totalTokens || 0;
+          }
+
+          // Track which pages were translated
+          const translatedIds = Object.keys(data.translations || {});
+          translatedIds.forEach(id => completed.push(id));
+
+          // Mark untranslated pages as failed
+          batchIds.forEach(id => {
+            if (!translatedIds.includes(id)) {
+              failed.push(id);
+            }
+          });
+
+          // Use last translation as context for next batch
+          if (translatedIds.length > 0) {
+            const lastId = batchPages[batchPages.length - 1].id;
+            previousContext = data.translations[lastId] || '';
+          }
+        } catch (error) {
+          const errorMsg = error instanceof Error ? error.message : 'Network error';
+          console.error('Batch translation error:', errorMsg);
+          batchIds.forEach(id => failed.push(id));
+          setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+        }
+
+        processedCount += batchIds.length;
+        setProcessing(prev => ({
+          ...prev,
+          currentIndex: processedCount,
+          completed: [...completed],
+          failed: [...failed],
+          totalCost: runningCost,
+          totalTokens: runningTokens,
+        }));
+        updateJobProgress();
+
+        // Small delay between batches
+        if (i + TRANSLATION_BATCH_SIZE < sortedPageIds.length && !stopRequestedRef.current) {
+          await sleep(500);
+        }
+      }
+    } else if (action === 'ocr') {
+      // OCR: batches of 5 images, run multiple batches in parallel for speed
+      const OCR_BATCH_SIZE = 5;
+      const PARALLEL_BATCHES = 2; // Run 2 batches in parallel (uses 2 API keys)
+
+      // Sort pages by page number
+      const sortedPageIds = [...pageIds].sort((a, b) => {
+        const pageA = pages.find(p => p.id === a);
+        const pageB = pages.find(p => p.id === b);
+        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
+      });
+
+      // Create all batches upfront
+      const allBatches: { batchIds: string[]; batchPages: Page[] }[] = [];
+      for (let i = 0; i < sortedPageIds.length; i += OCR_BATCH_SIZE) {
+        const batchIds = sortedPageIds.slice(i, Math.min(i + OCR_BATCH_SIZE, sortedPageIds.length));
+        const batchPages = batchIds
+          .map(id => pages.find(p => p.id === id))
+          .filter((p): p is Page => p !== undefined);
+        allBatches.push({ batchIds, batchPages });
+      }
+
+      console.log(`[OCR] Starting parallel processing: ${allBatches.length} batches, ${PARALLEL_BATCHES} at a time`);
+
+      // Process batches in parallel groups
+      for (let i = 0; i < allBatches.length; i += PARALLEL_BATCHES) {
+        if (stopRequestedRef.current) break;
+
+        const parallelBatches = allBatches.slice(i, Math.min(i + PARALLEL_BATCHES, allBatches.length));
+
+        // Process this group of batches in parallel
+        const batchPromises = parallelBatches.map(async ({ batchIds, batchPages }) => {
+          if (batchPages.length === 0) {
+            batchIds.forEach(id => failed.push(id));
+            return { processedCount: batchIds.length };
+          }
+
+          try {
+            const data = await processingApi.batchOcrProcess({
+              pages: batchPages.map(p => ({
+                pageId: p.id,
+                imageUrl: p.photo,
+                pageNumber: p.page_number,
+              })),
+              language: 'Latin',
+              customPrompt: editedPrompts.ocr,
+              model: selectedModel,
+              overwrite: overwriteMode,
+            });
+
+            if (data.usage) {
+              runningCost += data.usage.costUsd || 0;
+              runningTokens += data.usage.totalTokens || 0;
+            }
+
+            // Track which pages were OCR'd (newly processed)
+            const ocrIds = Object.keys(data.ocrResults || {});
+            ocrIds.forEach(id => completed.push(id));
+
+            // Skipped pages (already have OCR) count as completed
+            (data.skippedPageIds || []).forEach((id: string) => {
+              if (!completed.includes(id)) completed.push(id);
+            });
+
+            // Add failed pages
+            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+
+            // Log detailed results if available
+            if (data.pageResults) {
+              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
+                if (pr.status === 'skipped_has_ocr') {
+                  console.log(`[OCR] ${pr.message}`);
+                } else if (pr.status === 'skipped_needs_crop') {
+                  console.warn(`[OCR] ${pr.message}`);
+                } else if (pr.status.startsWith('failed')) {
+                  console.error(`[OCR] ${pr.message}`);
+                } else {
+                  console.log(`[OCR] ${pr.message}`);
+                }
+              });
+            }
+
+            // Show warning if pages need cropped images
+            if (data.needsCropCount && data.needsCropCount > 0) {
+              const cropMsg = `${data.needsCropCount} pages need cropped images. Use the Pipeline to generate them first.`;
+              console.warn(`[OCR] ${cropMsg}`);
+              setProcessing(prev => ({ ...prev, lastError: cropMsg }));
+            }
+          } catch (error) {
+            const errorMsg = error instanceof Error ? error.message : 'Network error';
+            console.error('Batch OCR error:', errorMsg);
+            batchIds.forEach(id => failed.push(id));
+            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+          }
+
+          return { processedCount: batchIds.length };
+        });
+
+        // Wait for all parallel batches to complete
+        const results = await Promise.all(batchPromises);
+        const batchProcessedCount = results.reduce((sum, r) => sum + r.processedCount, 0);
+        processedCount += batchProcessedCount;
+
+        setProcessing(prev => ({
+          ...prev,
+          currentIndex: processedCount,
+          completed: [...completed],
+          failed: [...failed],
+          totalCost: runningCost,
+          totalTokens: runningTokens,
+        }));
+        updateJobProgress();
+
+        // Small delay between parallel groups to avoid overwhelming the API
+        if (i + PARALLEL_BATCHES < allBatches.length && !stopRequestedRef.current) {
+          await sleep(300);
+        }
+      }
+
+      console.log(`[OCR] Complete: ${completed.length} succeeded, ${failed.length} failed`);
+    } else if (action === 'image_extraction') {
+      // Image extraction: parallel batch processing (like OCR)
+      const IMAGE_BATCH_SIZE = 3;
+      const PARALLEL_BATCHES = 5; // Process 15 images simultaneously
+
+      // Sort pages by page number
+      const sortedPageIds = [...pageIds].sort((a, b) => {
+        const pageA = pages.find(p => p.id === a);
+        const pageB = pages.find(p => p.id === b);
+        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
+      });
+
+      // Create all batches upfront
+      const allBatches: { batchIds: string[]; batchPages: Page[] }[] = [];
+      for (let i = 0; i < sortedPageIds.length; i += IMAGE_BATCH_SIZE) {
+        const batchIds = sortedPageIds.slice(i, Math.min(i + IMAGE_BATCH_SIZE, sortedPageIds.length));
+        const batchPages = batchIds
+          .map(id => pages.find(p => p.id === id))
+          .filter((p): p is Page => p !== undefined);
+        allBatches.push({ batchIds, batchPages });
+      }
+
+      console.log(`[ImageExtraction] Starting parallel processing: ${allBatches.length} batches, ${PARALLEL_BATCHES} at a time`);
+
+      // Process batches in parallel groups
+      for (let i = 0; i < allBatches.length; i += PARALLEL_BATCHES) {
+        if (stopRequestedRef.current) break;
+
+        const parallelBatches = allBatches.slice(i, Math.min(i + PARALLEL_BATCHES, allBatches.length));
+
+        // Process this group of batches in parallel
+        const batchPromises = parallelBatches.map(async ({ batchIds, batchPages }) => {
+          if (batchPages.length === 0) {
+            batchIds.forEach(id => failed.push(id));
+            return { processedCount: batchIds.length };
+          }
+
+          try {
+            const data = await processingApi.batchImageExtraction({
+              pages: batchPages.map(p => ({
+                pageId: p.id,
+                imageUrl: p.photo,
+                pageNumber: p.page_number,
+              })),
+              model: selectedModel,
+              overwrite: overwriteMode,
+            });
+
+            if (data.usage) {
+              runningCost += data.usage.costUsd || 0;
+              runningTokens += data.usage.totalTokens || 0;
+            }
+
+            // Track which pages were processed (with or without detections)
+            const processedIds = Object.keys(data.detectionResults || {});
+            processedIds.forEach(id => completed.push(id));
+
+            // Skipped pages (already have detections) count as completed
+            (data.skippedPageIds || []).forEach((id: string) => {
+              if (!completed.includes(id)) completed.push(id);
+            });
+
+            // Add failed pages
+            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
+
+            // Log detailed results if available
+            if (data.pageResults) {
+              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
+                if (pr.status === 'skipped_has_detections') {
+                  console.log(`[ImageExtraction] ${pr.message}`);
+                } else if (pr.status.startsWith('failed')) {
+                  console.error(`[ImageExtraction] ${pr.message}`);
+                } else {
+                  console.log(`[ImageExtraction] ${pr.message}`);
+                }
+              });
+            }
+          } catch (error) {
+            const errorMsg = error instanceof Error ? error.message : 'Network error';
+            console.error('Batch image extraction error:', errorMsg);
+            batchIds.forEach(id => failed.push(id));
+            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+          }
+
+          return { processedCount: batchIds.length };
+        });
+
+        // Wait for all parallel batches to complete
+        const results = await Promise.all(batchPromises);
+        const batchProcessedCount = results.reduce((sum, r) => sum + r.processedCount, 0);
+        processedCount += batchProcessedCount;
+
+        setProcessing(prev => ({
+          ...prev,
+          currentIndex: processedCount,
+          completed: [...completed],
+          failed: [...failed],
+          totalCost: runningCost,
+          totalTokens: runningTokens,
+        }));
+        updateJobProgress();
+
+        // Small delay between parallel groups to avoid overwhelming the API
+        if (i + PARALLEL_BATCHES < allBatches.length && !stopRequestedRef.current) {
+          await sleep(300);
+        }
+      }
+
+      console.log(`[ImageExtraction] Complete: ${completed.length} succeeded, ${failed.length} failed`);
+    } else {
+      // Summary: parallel per-page processing (text only, simpler)
+      for (let i = 0; i < pageIds.length; i += concurrency) {
+        if (stopRequestedRef.current) break;
+
+        const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
+        await Promise.all(batch.map(processPage));
+
+        // Small delay between batches to avoid rate limiting
+        if (i + concurrency < pageIds.length && !stopRequestedRef.current) {
+          await sleep(500);
+        }
+      }
+    }
+
+    // Final job update
+    if (jobId) {
+      try {
+        const finalStatus = stopRequestedRef.current
+          ? 'cancelled'
+          : failed.length === pageIds.length
+            ? 'failed'
+            : 'completed';
+
+        await jobs.update(jobId, {
+          status: finalStatus,
+          progress: {
+            total: pageIds.length,
+            completed: completed.length,
+            failed: failed.length
+          },
+        });
+      } catch (error) {
+        console.error('Failed to update job status:', error);
+      }
+    }
+
+    // Final state update with all completed/failed pages
+    setProcessing(prev => ({
+      ...prev,
+      active: false,
+      completed: [...completed],
+      failed: [...failed],
+      totalCost: runningCost,
+      totalTokens: runningTokens,
+    }));
+    if (completed.length > 0) router.refresh();
+  };
+
+  const actionConfig = {
+    ocr: { label: 'OCR', icon: FileText, color: '#3b82f6' },
+    translation: { label: 'Translation', icon: Languages, color: '#22c55e' },
+    summary: { label: 'Summary', icon: BookOpen, color: '#a855f7' },
+    image_extraction: { label: 'Images', icon: ImageIcon, color: '#f97316' }
+  };
+
+  const selectedCount = selectedPages.size;
+  // ~30 seconds per page, divided by concurrency
+  const estimatedTimeMinutes = Math.ceil((selectedCount * 0.5) / concurrency);
+  const estimatedCost = selectedCount * getEstimatedCost(action, selectedModel);
+
+  const formatCost = (cost: number) => {
+    if (cost < 0.01) return `$${cost.toFixed(4)}`;
+    if (cost < 1) return `$${cost.toFixed(3)}`;
+    return `$${cost.toFixed(2)}`;
+  };
+
+  const [settingCover, setSettingCover] = useState<string | null>(null);
+
+  const setCoverImage = async (page: Page) => {
+    setSettingCover(page.id);
+    try {
+      const baseUrl = page.photo_original || page.photo;
+      // Use a higher quality thumbnail for the cover
+      let thumbnailUrl = baseUrl;
+      if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+        thumbnailUrl = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+      } else {
+        thumbnailUrl = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80`;
+      }
+
+      await books.update(bookId, { thumbnail: thumbnailUrl });
+      router.refresh();
+    } catch (error) {
+      console.error('Error setting cover:', error);
+    } finally {
+      setSettingCover(null);
+    }
+  };
+
+  const getImageUrl = (page: Page) => {
+    const baseUrl = page.photo_original || page.photo;
+    if (!baseUrl) return null;
+    if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+    }
+    return page.thumbnail || `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Stats Bar - Clean horizontal layout */}
+      <div className="bg-white rounded-xl border border-stone-200 p-4">
+        <div className="flex flex-wrap items-center gap-6">
+          {/* OCR stat */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#eff6ff' }}>
+              <FileText className="w-5 h-5" style={{ color: '#3b82f6' }} />
+            </div>
+            <div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-semibold text-stone-900">{pagesWithOcr}</span>
+                <span className="text-sm text-stone-400">/ {totalPages}</span>
+              </div>
+              <div className="text-xs text-stone-500">OCR {lastOcrDate ? `· ${formatRelativeTime(lastOcrDate)}` : ''}</div>
+            </div>
+          </div>
+
+          {/* Translation stat */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f0fdf4' }}>
+              <Languages className="w-5 h-5" style={{ color: '#22c55e' }} />
+            </div>
+            <div>
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xl font-semibold text-stone-900">{pagesWithTranslation}</span>
+                <span className="text-sm text-stone-400">/ {totalPages}</span>
+              </div>
+              <div className="text-xs text-stone-500">Translated {lastTranslationDate ? `· ${formatRelativeTime(lastTranslationDate)}` : ''}</div>
+            </div>
+          </div>
+
+          {/* Spacer */}
+          <div className="flex-1" />
+
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            {!batchMode && !reorderMode ? (
+              <>
+                <button
+                  onClick={() => setBatchMode(true)}
+                  className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors text-sm font-medium border border-amber-200"
+                >
+                  <Wand2 className="w-4 h-4" />
+                  Batch Process
+                </button>
+                <button
+                  onClick={enterReorderMode}
+                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
+                >
+                  <ArrowUpDown className="w-4 h-4" />
+                  Reorder
+                </button>
+                <Link
+                  href={`/book/${bookId}/split`}
+                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
+                >
+                  <Scissors className="w-4 h-4" />
+                  Split Pages
+                </Link>
+                <DownloadButton
+                  bookId={bookId}
+                  hasTranslations={pagesWithTranslation > 0}
+                  hasOcr={pagesWithOcr > 0}
+                />
+              </>
+            ) : batchMode ? (
+              <button
+                onClick={exitBatchMode}
+                className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors text-sm"
+              >
+                <X className="w-4 h-4" />
+                Exit
+              </button>
+            ) : reorderMode ? (
+              <div className="flex items-center gap-2">
+                {orderChanged && (
+                  <button
+                    onClick={savePageOrder}
+                    disabled={savingOrder}
+                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium disabled:opacity-50"
+                  >
+                    {savingOrder ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
+                    Save Order
+                  </button>
+                )}
+                <button
+                  onClick={exitReorderMode}
+                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors text-sm"
+                >
+                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+
+      {/* Batch Mode Controls */}
+      {batchMode && (
+        <div className="bg-amber-50 rounded-xl border border-amber-200 p-4 space-y-4">
+          {/* Processing progress */}
+          {processing.active && (
+            <div className="bg-white rounded-lg p-4 border border-amber-200">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
+                  <span className="text-sm font-medium text-stone-700">
+                    {actionConfig[action].label} · Page {processing.currentIndex} of {processing.totalPages}
+                  </span>
+                </div>
+                <div className="flex items-center gap-4">
+                  {processing.totalCost > 0 && (
+                    <span className="text-xs text-green-600 flex items-center gap-1">
+                      <DollarSign className="w-3 h-3" />
+                      {formatCost(processing.totalCost)}
+                    </span>
+                  )}
+                  <button
+                    onClick={() => { stopRequestedRef.current = true; }}
+                    className="text-xs text-stone-500 hover:text-stone-700 flex items-center gap-1"
+                  >
+                    <Square className="w-3 h-3" /> Stop
+                  </button>
+                </div>
+              </div>
+              <div className="h-1.5 bg-stone-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-amber-500 transition-all duration-300"
+                  style={{ width: `${(processing.currentIndex / processing.totalPages) * 100}%` }}
+                />
+              </div>
+              <div className="flex justify-between mt-1 text-xs text-stone-500">
+                <span>{processing.completed.length} done</span>
+                <div className="flex gap-3">
+                  {processing.totalTokens > 0 && (
+                    <span className="text-stone-400">{(processing.totalTokens / 1000).toFixed(1)}K tokens</span>
+                  )}
+                  {processing.failed.length > 0 && <span className="text-red-500">{processing.failed.length} failed</span>}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Completion message with retry option */}
+          {!processing.active && processing.totalPages > 0 && (
+            <div className={`rounded-lg p-4 border ${processing.failed.length > 0 ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'}`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  {processing.failed.length > 0 ? (
+                    <AlertCircle className="w-5 h-5 text-red-500" />
+                  ) : (
+                    <CheckCircle2 className="w-5 h-5 text-green-500" />
+                  )}
+                  <div className="flex flex-col">
+                    <span className={`text-sm font-medium ${processing.failed.length > 0 ? 'text-red-700' : 'text-green-700'}`}>
+                      {processing.failed.length > 0
+                        ? `Completed with ${processing.failed.length} failed (${processing.completed.length} succeeded)`
+                        : `All ${processing.completed.length} pages processed successfully`}
+                    </span>
+                    {processing.lastError && processing.failed.length > 0 && (
+                      <span className="text-xs text-red-600 mt-1">
+                        Error: {processing.lastError}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  {processing.totalCost > 0 && (
+                    <span className="text-xs text-stone-500">
+                      Cost: {formatCost(processing.totalCost)}
+                    </span>
+                  )}
+                  {processing.failed.length > 0 && (
+                    <button
+                      onClick={() => {
+                        // Select failed pages and start new batch
+                        setSelectedPages(new Set(processing.failed));
+                        setProcessing({
+                          active: false,
+                          type: null,
+                          currentIndex: 0,
+                          totalPages: 0,
+                          completed: [],
+                          failed: [],
+                          totalCost: 0,
+                          totalTokens: 0,
+                        });
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 text-xs font-medium"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      Retry {processing.failed.length} Failed
+                    </button>
+                  )}
+                  <button
+                    onClick={() => setProcessing({
+                      active: false,
+                      type: null,
+                      currentIndex: 0,
+                      totalPages: 0,
+                      completed: [],
+                      failed: [],
+                      totalCost: 0,
+                      totalTokens: 0,
+                    })}
+                    className="text-xs text-stone-500 hover:text-stone-700"
+                  >
+                    Dismiss
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Action selector & Selection controls */}
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Action:</span>
+              <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
+                {(['ocr', 'translation', 'image_extraction'] as ActionType[]).map(type => {
+                  const { label, icon: Icon, color } = actionConfig[type];
+                  const isSelected = action === type;
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => {
+                        setAction(type);
+                        // Translation requires realtime mode for context continuity
+                        if (type === 'translation') {
+                          setUseBatchApi(false);
+                        }
+                      }}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${isSelected ? 'text-white' : 'text-stone-600 hover:bg-stone-50'
+                        }`}
+                      style={isSelected ? { backgroundColor: color } : {}}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+              {/* Info tooltip */}
+              <div className="relative group">
+                <button className="p-1 text-stone-400 hover:text-stone-600 transition-colors">
+                  <Info className="w-4 h-4" />
+                </button>
+                <div className="absolute left-0 top-full mt-2 w-80 p-3 bg-stone-800 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  {action === 'ocr' ? (
+                    <>
+                      <p className="font-medium mb-1">OCR (Optical Character Recognition)</p>
+                      <p className="text-stone-300 mb-2">Extracts text from page images. 5 pages/batch, 10 parallel batches recommended.</p>
+                      <p className="text-amber-400 text-[11px] mb-2">Experiment: Batch sizes 1, 5, 10 showed no quality difference. Only batch 20 degraded (30-1 loss).</p>
+                      <Link href="/about/processing" className="text-amber-400 hover:text-amber-300 text-[11px] underline">
+                        Learn more about our experiments →
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-medium mb-1">Translation</p>
+                      <p className="text-stone-300 mb-2">Translates OCR text to English. Sequential processing for context continuity.</p>
+                      <p className="text-blue-400 text-[11px] mb-2">Each batch passes the last page&apos;s translation as context to the next batch.</p>
+                      <Link href="/about/processing" className="text-amber-400 hover:text-amber-300 text-[11px] underline">
+                        Learn more about processing →
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="h-6 w-px bg-amber-300" />
+
+            {/* Model selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Model:</span>
+              <select
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                {GEMINI_MODELS.map(model => (
+                  <option key={model.id} value={model.id}>
+                    {model.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Concurrency selector - only for OCR realtime */}
+            {!useBatchApi && action === 'ocr' && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-stone-600">Parallel batches:</span>
+                <select
+                  value={concurrency}
+                  onChange={(e) => setConcurrency(Number(e.target.value))}
+                  className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                >
+                  <option value={1}>1 (sequential)</option>
+                  <option value={2}>2</option>
+                  <option value={5}>5</option>
+                  <option value={10}>10 (recommended)</option>
+                </select>
+              </div>
+            )}
+            {/* Translation batch info */}
+            {action === 'translation' && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-stone-600">Batch:</span>
+                <span className="px-2 py-1.5 text-sm bg-stone-100 text-stone-600 rounded-lg">
+                  5 pages, sequential
+                </span>
+              </div>
+            )}
+
+            {/* Mode selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Mode:</span>
+              <select
+                value={overwriteMode ? 'all' : 'missing'}
+                onChange={(e) => setOverwriteMode(e.target.value === 'all')}
+                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option value="missing">only missing</option>
+                <option value="all">all (overwrite)</option>
+              </select>
+            </div>
+
+            {/* Batch API toggle - only for OCR (translation needs context continuity) */}
+            {action === 'ocr' ? (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setUseBatchApi(false)}
+                  className={`px-2 py-1.5 text-sm rounded-l-lg border transition-colors ${!useBatchApi
+                    ? 'bg-amber-600 text-white border-amber-600'
+                    : 'bg-white text-stone-600 border-amber-300 hover:bg-amber-50'
+                    }`}
+                >
+                  Realtime
+                </button>
+                <button
+                  onClick={() => setUseBatchApi(true)}
+                  className={`px-2 py-1.5 text-sm rounded-r-lg border-y border-r transition-colors ${useBatchApi
+                    ? 'bg-green-600 text-white border-green-600'
+                    : 'bg-white text-stone-600 border-amber-300 hover:bg-green-50'
+                    }`}
+                  title="50% cheaper, results in 2-24 hours"
+                >
+                  Batch 50%↓
+                </button>
+              </div>
+            ) : (
+              <span className="text-xs text-stone-500 px-2 py-1.5 bg-stone-100 rounded-lg">
+                Sequential (for continuity)
+              </span>
+            )}
+
+            <div className="h-6 w-px bg-amber-300" />
+
+            <div className="flex items-center gap-3 text-sm">
+              <span className="text-stone-600">
+                <strong>{selectedCount}</strong> selected
+              </span>
+              <button onClick={selectAll} className="text-amber-700 hover:text-amber-800 font-medium">
+                Select all
+              </button>
+              {selectedCount > 0 && (
+                <button onClick={clearSelection} className="text-stone-500 hover:text-stone-700">
+                  Clear
+                </button>
+              )}
+            </div>
+
+            <div className="flex-1" />
+
+            {/* Prompt settings toggle */}
+            <button
+              onClick={() => setShowPromptSettings(!showPromptSettings)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
+                }`}
+            >
+              <Settings className="w-4 h-4" />
+              Prompt Settings
+            </button>
+          </div>
+
+          {/* Prompt Settings Panel */}
+          {showPromptSettings && (
+            <div className="bg-white rounded-lg border border-amber-200 p-4 space-y-3">
+              <div className="flex items-center gap-4">
+                <label className="text-sm text-stone-600">Template:</label>
+                <select
+                  value={selectedPromptIds[action]}
+                  onChange={(e) => handleSelectPrompt(action, e.target.value)}
+                  disabled={promptsLoading}
+                  className="flex-1 max-w-xs px-3 py-1.5 text-sm border border-stone-200 rounded-lg bg-white"
+                >
+                  {promptsLoading ? (
+                    <option>Loading...</option>
+                  ) : (
+                    prompts[action].map(p => (
+                      <option key={p.id || p._id?.toString()} value={p.id || p._id?.toString()}>
+                        {p.name}{p.is_default ? ' (Default)' : ''}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+              <textarea
+                value={editedPrompts[action]}
+                onChange={e => setEditedPrompts(prev => ({ ...prev, [action]: e.target.value }))}
+                className="w-full h-32 p-3 text-sm border border-stone-200 rounded-lg resize-none font-mono text-stone-700"
+                placeholder={`${actionConfig[action].label} prompt...`}
+              />
+              <p className="text-xs text-stone-400">
+                Use {'{language}'} and {'{target_language}'} as placeholders. Changes apply to this batch only.
+              </p>
+            </div>
+          )}
+
+          {/* Run button */}
+          <div className="flex items-center justify-between pt-2">
+            <div className="flex items-center gap-3 text-sm text-stone-500">
+              {selectedCount > 0 ? (
+                <>
+                  <span>~{estimatedTimeMinutes} min for {selectedCount} pages</span>
+                  <span className="text-stone-300">·</span>
+                  <span className="text-green-600 flex items-center gap-1">
+                    <DollarSign className="w-3 h-3" />
+                    ~{formatCost(estimatedCost)} est.
+                  </span>
+                </>
+              ) : (
+                <span>Select pages to process</span>
+              )}
+            </div>
+            <button
+              onClick={runBatchProcess}
+              disabled={selectedCount === 0 || processing.active}
+              className="flex items-center gap-2 px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
+            >
+              <Play className="w-4 h-4" />
+              Run {actionConfig[action].label}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Reorder Mode Info */}
+      {reorderMode && (
+        <div className="bg-blue-50 rounded-xl border border-blue-200 p-4">
+          <div className="flex items-center gap-3">
+            <GripVertical className="w-5 h-5 text-blue-600" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-blue-800">Drag pages to reorder them</p>
+              <p className="text-xs text-blue-600">Click and drag any page to move it to a new position</p>
+            </div>
+            {orderChanged && (
+              <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Unsaved changes</span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Pages Grid */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-stone-900">Pages</h2>
+          <span className="text-sm text-stone-500">
+            Showing {Math.min(visibleCount, pages.length)} of {pages.length}
+          </span>
+        </div>
+
+        {pages.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-xl border border-stone-200">
+            <FileText className="w-12 h-12 text-stone-300 mx-auto mb-3" />
+            <h3 className="text-lg font-medium text-stone-600">No pages yet</h3>
+            <p className="text-stone-400 text-sm mt-1">Upload pages to start processing</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
+            {pages.slice(0, visibleCount).map((page, index) => {
+              const isSelected = selectedPages.has(page.id);
+              const imageUrl = getImageUrl(page);
+              // Check updated_at since data is excluded from projection for performance
+              const hasOcr = !!page.ocr?.updated_at;
+              const hasTranslation = !!page.translation?.updated_at;
+              const hasSummary = !!page.summary?.updated_at;
+
+              // Reorder mode - draggable pages
+              if (reorderMode) {
+                const isDragging = draggedPageId === page.id;
+                const isDragOver = dragOverPageId === page.id;
+
+                return (
+                  <div
+                    key={page.id}
+                    draggable
+                    onDragStart={() => handleDragStart(page.id)}
+                    onDragOver={(e) => handleDragOver(e, page.id)}
+                    onDragEnd={handleDragEnd}
+                    className={`group relative cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-50' : ''}`}
+                  >
+                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
+                      }`}>
+                      {imageUrl && (
+                        <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover pointer-events-none" />
+                      )}
+                      {/* Drag handle indicator */}
+                      <div className="absolute top-1 left-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <GripVertical className="w-3 h-3" />
+                      </div>
+                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
+                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
+                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
+                      </div>
+                    </div>
+                    <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
+                  </div>
+                );
+              }
+
+              if (batchMode) {
+                return (
+                  <button
+                    key={page.id}
+                    onClick={(e) => togglePage(page.id, index, e)}
+                    className="group relative text-left"
+                  >
+                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
+                      }`}>
+                      {imageUrl && (
+                        <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover" />
+                      )}
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-amber-500/20 flex items-center justify-center">
+                          <CheckCircle2 className="w-6 h-6 text-amber-600 drop-shadow" />
+                        </div>
+                      )}
+                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
+                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
+                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
+                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
+                      </div>
+                    </div>
+                    <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
+                  </button>
+                );
+              }
+
+              return (
+                <div key={page.id} className="group relative">
+                  <a href={`/book/${bookId}/page/${page.id}`}>
+                    <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+                      {imageUrl && (
+                        <img
+                          src={imageUrl}
+                          alt={`Page ${page.page_number}`}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                        />
+                      )}
+                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
+                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" title="OCR" />}
+                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" title="Translated" />}
+                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" title="Summarized" />}
+                      </div>
+                    </div>
+                  </a>
+                  {/* Set as Cover button */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setCoverImage(page);
+                    }}
+                    disabled={settingCover === page.id}
+                    className="absolute top-1 right-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 disabled:opacity-50"
+                    title="Set as cover image"
+                  >
+                    {settingCover === page.id ? (
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                    ) : (
+                      <ImageIcon className="w-3 h-3" />
+                    )}
+                  </button>
+                  <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Load More - auto-loads when scrolled into view */}
+        {visibleCount < pages.length && (
+          <div ref={loadMoreRef} className="mt-6 text-center">
+            <button
+              onClick={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
+              className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"
+            >
+              <RefreshCw className="w-4 h-4" />
+              Load more ({pages.length - visibleCount} remaining)
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

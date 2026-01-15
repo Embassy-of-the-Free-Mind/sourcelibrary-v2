@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Play, Pause, RotateCcw, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { usePipeline } from '@/hooks/usePipeline';
-import PipelineProgress from '@/components/PipelineProgress';
-import PipelineConfigForm, { PipelineConfigDisplay } from '@/components/PipelineConfig';
+import PipelineProgress from '@/components/pipeline/PipelineProgress';
+import PipelineConfigForm, { PipelineConfigDisplay } from '@/components/pipeline/PipelineConfig';
 
 interface PipelinePageProps {
   params: Promise<{ id: string }>;
@@ -122,12 +122,11 @@ function PipelineContent({ bookId }: { bookId: string }) {
             {pipeline && (
               <>
                 <span>•</span>
-                <span className={`capitalize ${
-                  isCompleted ? 'text-green-400' :
+                <span className={`capitalize ${isCompleted ? 'text-green-400' :
                   isFailed ? 'text-red-400' :
-                  isRunning ? 'text-amber-400' :
-                  'text-stone-400'
-                }`}>
+                    isRunning ? 'text-amber-400' :
+                      'text-stone-400'
+                  }`}>
                   {pipeline.status}
                 </span>
               </>

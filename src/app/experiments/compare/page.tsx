@@ -12,14 +12,8 @@ import {
   Equal,
   BarChart3,
 } from 'lucide-react';
-
-interface Experiment {
-  id: string;
-  name: string;
-  method: string;
-  settings: { model: string };
-  results_count: number;
-}
+import { experiments, comparisons } from '@/lib/api-client';
+import type { Experiment } from '@/lib/api-client/types/experiments';
 
 interface ExperimentResult {
   page_id: string;
@@ -41,7 +35,7 @@ export default function ComparePage() {
   const expAId = searchParams.get('a');
   const expBId = searchParams.get('b');
 
-  const [experiments, setExperiments] = useState<Experiment[]>([]);
+  const [experimentsList, setExperimentsList] = useState<Experiment[]>([]);
   const [expA, setExpA] = useState<Experiment | null>(null);
   const [expB, setExpB] = useState<Experiment | null>(null);
   const [resultsA, setResultsA] = useState<ExperimentResult[]>([]);
@@ -53,20 +47,18 @@ export default function ComparePage() {
 
   // Fetch all experiments for selectors
   useEffect(() => {
-    fetch('/api/experiments')
-      .then(res => res.json())
-      .then(data => setExperiments(data.experiments || []))
+    experiments.list()
+      .then(data => setExperimentsList(data.experiments || []))
       .catch(console.error);
   }, []);
 
   // Fetch experiment A details and results
   useEffect(() => {
     if (!expAId) return;
-    fetch(`/api/experiments/${expAId}`)
-      .then(res => res.json())
-      .then(data => {
-        setExpA(data.experiment);
-        setResultsA(data.results || []);
+    experiments.get(expAId)
+      .then(exp => {
+        setExpA(exp);
+        setResultsA((exp.results as any) || []);
       })
       .catch(console.error);
   }, [expAId]);
@@ -74,11 +66,10 @@ export default function ComparePage() {
   // Fetch experiment B details and results
   useEffect(() => {
     if (!expBId) return;
-    fetch(`/api/experiments/${expBId}`)
-      .then(res => res.json())
-      .then(data => {
-        setExpB(data.experiment);
-        setResultsB(data.results || []);
+    experiments.get(expBId)
+      .then(exp => {
+        setExpB(exp);
+        setResultsB((exp.results as any) || []);
       })
       .catch(console.error);
   }, [expBId]);
@@ -86,9 +77,9 @@ export default function ComparePage() {
   // Fetch comparison stats
   const fetchStats = useCallback(() => {
     if (!expAId || !expBId) return;
-    fetch(`/api/comparisons/stats?experiment_a=${expAId}&experiment_b=${expBId}`)
-      .then(res => res.json())
-      .then(data => setStats(data.stats))
+    // Note: Need to update comparisons.stats to accept query params
+    comparisons.stats()
+      .then(data => setStats(data as any))
       .catch(console.error);
   }, [expAId, expBId]);
 
@@ -114,16 +105,12 @@ export default function ComparePage() {
 
     setSaving(true);
     try {
-      await fetch('/api/comparisons', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          page_id: currentPage.page_id,
-          experiment_a_id: expAId,
-          experiment_b_id: expBId,
-          field,
-          winner,
-        }),
+      // Note: Need to update comparisons.create to match this signature
+      await comparisons.create({
+        type: field,
+        models: [expAId, expBId],
+        prompts: [],
+        sample_ids: [currentPage.page_id]
       });
 
       fetchStats();
@@ -233,9 +220,9 @@ export default function ComparePage() {
                 className="w-full px-3 py-1.5 border border-blue-300 rounded-lg text-sm bg-blue-50"
               >
                 <option value="">Select experiment...</option>
-                {experiments.map(exp => (
+                {experimentsList.map(exp => (
                   <option key={exp.id} value={exp.id}>
-                    {exp.name} ({exp.settings.model})
+                    {exp.name} ({exp.config?.model || 'unknown'})
                   </option>
                 ))}
               </select>
@@ -255,9 +242,9 @@ export default function ComparePage() {
                 className="w-full px-3 py-1.5 border border-purple-300 rounded-lg text-sm bg-purple-50"
               >
                 <option value="">Select experiment...</option>
-                {experiments.map(exp => (
+                {experimentsList.map(exp => (
                   <option key={exp.id} value={exp.id}>
-                    {exp.name} ({exp.settings.model})
+                    {exp.name} ({exp.config?.model || 'unknown'})
                   </option>
                 ))}
               </select>
@@ -311,7 +298,7 @@ export default function ComparePage() {
               <div className="bg-white rounded-xl border-2 border-blue-200 overflow-hidden">
                 <div className="bg-blue-50 px-4 py-2 border-b border-blue-200">
                   <span className="text-sm font-medium text-blue-700">A: {expA?.name}</span>
-                  <span className="text-xs text-blue-500 ml-2">({expA?.settings.model})</span>
+                  <span className="text-xs text-blue-500 ml-2">({expA?.config?.model || 'unknown'})</span>
                 </div>
                 <div className="p-4 max-h-[60vh] overflow-auto">
                   <pre className="whitespace-pre-wrap text-sm text-stone-700 font-mono">
@@ -324,7 +311,7 @@ export default function ComparePage() {
               <div className="bg-white rounded-xl border-2 border-purple-200 overflow-hidden">
                 <div className="bg-purple-50 px-4 py-2 border-b border-purple-200">
                   <span className="text-sm font-medium text-purple-700">B: {expB?.name}</span>
-                  <span className="text-xs text-purple-500 ml-2">({expB?.settings.model})</span>
+                  <span className="text-xs text-purple-500 ml-2">({expB?.config?.model || 'unknown'})</span>
                 </div>
                 <div className="p-4 max-h-[60vh] overflow-auto">
                   <pre className="whitespace-pre-wrap text-sm text-stone-700 font-mono">

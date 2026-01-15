@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { put } from '@vercel/blob';
+import { images } from '@/lib/api-client';
 
 export const maxDuration = 300; // 5 minute timeout
 
@@ -67,25 +68,15 @@ export async function POST(request: NextRequest) {
           const sourceUrl = page.photo;
 
           try {
-            // Download image with timeout
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), 30000);
-
-            const response = await fetch(sourceUrl, { signal: controller.signal });
-            clearTimeout(timeout);
-
-            if (!response.ok) {
-              return { success: false, pageId: page.id, error: `HTTP ${response.status}` };
-            }
-
-            const buffer = await response.arrayBuffer();
+            // Download image with timeout and mime type detection
+            const { buffer, mimeType } = await images.fetchBufferWithMimeType(sourceUrl, { timeout: 30000 });
             const bytes = buffer.byteLength;
 
             // Upload to Vercel Blob
             const filename = `archived/${page.book_id}/${page.page_number}.jpg`;
-            const blob = await put(filename, Buffer.from(buffer), {
+            const blob = await put(filename, buffer, {
               access: 'public',
-              contentType: response.headers.get('content-type') || 'image/jpeg',
+              contentType: mimeType,
               addRandomSuffix: false,
             });
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ExternalLink, BookOpen, Scroll, Compass, FlaskConical, Calculator, Star, Loader2 } from 'lucide-react';
+import { books } from '@/lib/api-client';
 
 interface RoadmapBook {
   title: string;
@@ -71,9 +72,7 @@ export default function RoadmapPage() {
   useEffect(() => {
     async function fetchRoadmap() {
       try {
-        const res = await fetch('/api/books/roadmap');
-        if (!res.ok) throw new Error('Failed to fetch roadmap');
-        const roadmapData = await res.json();
+        const roadmapData = await books.getRoadmap();
         setData(roadmapData);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load roadmap');

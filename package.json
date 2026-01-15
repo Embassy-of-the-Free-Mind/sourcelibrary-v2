@@ -18,6 +18,7 @@
     "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.0.0",
     "archiver": "^7.0.1",
+    "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "epub-gen-memory": "^1.1.2",
@@ -56,6 +57,7 @@
     "pngjs": "^7.0.0",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "twitter-api-v2": "^1.28.0",
     "typescript": "^5"
   }

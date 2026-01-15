@@ -39,7 +39,7 @@ async function processBatch(
   bookLanguage?: string
 ): Promise<BatchExtraction> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-3-flash-preview',
     generationConfig: { temperature: 0.2, maxOutputTokens: 2000 }
   });
 
@@ -133,7 +133,7 @@ async function synthesizeSummary(
   bookLanguage?: string
 ): Promise<{ brief: string; abstract: string; detailed: string }> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-3-flash-preview',
     generationConfig: { temperature: 0.3, maxOutputTokens: 3000 }
   });
 

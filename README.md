@@ -6,7 +6,7 @@ A Next.js application for digitizing and translating historical texts. Built for
 
 - **Framework**: Next.js 14 (App Router)
 - **Database**: MongoDB Atlas
-- **AI**: Google Gemini for OCR and translation
+- **AI**: Google Gemini for OCR and Translation
 - **Storage**: Vercel Blob for images
 - **Deployment**: Vercel
 
@@ -51,10 +51,11 @@ Cropping happens on-demand via Sharp. OCR automatically crops inline and saves t
 
 ```
 src/
-├── app/
+├── app/              # All routes, pages, and API endpoints
 │   ├── api/          # API routes
 │   ├── book/         # Book pages (detail, read, pipeline)
 │   └── page.tsx      # Homepage
-├── components/       # React components
-└── lib/              # Utilities (mongodb, ai, types)
+├── components/       # Reusable React components
+├── hooks/            # Reusable React hooks for component logic
+└── lib/              # Business Logic, Utilities (mongodb, ai, types), and Services
 ```

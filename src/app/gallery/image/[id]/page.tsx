@@ -34,47 +34,10 @@ import {
   Crop,
   Save
 } from 'lucide-react';
-import ImageWithMagnifier from '@/components/ImageWithMagnifier';
-import LikeButton from '@/components/LikeButton';
-
-interface ImageMetadata {
-  subjects?: string[];
-  figures?: string[];
-  symbols?: string[];
-  style?: string;
-  technique?: string;
-}
-
-interface ImageData {
-  id: string;
-  pageId: string;
-  detectionIndex: number;
-  imageUrl: string;
-  fullPageUrl: string;
-  highResUrl?: string;
-  description: string;
-  type?: string;
-  confidence?: number;
-  model?: string;
-  detectionSource?: string;
-  galleryQuality?: number | null;
-  galleryRationale?: string | null;
-  featured?: boolean;
-  metadata?: ImageMetadata | null;
-  museumDescription?: string | null;
-  bbox?: { x: number; y: number; width: number; height: number };
-  book: {
-    id: string;
-    title: string;
-    author?: string;
-    year?: number;
-    doi?: string;
-  };
-  pageNumber: number;
-  readUrl: string;
-  galleryUrl: string;
-  citation: string;
-}
+import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
+import LikeButton from '@/components/ui/LikeButton';
+import { gallery } from '@/lib/api-client';
+import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
 
 export default function ImageDetailPage({
   params
@@ -82,7 +45,7 @@ export default function ImageDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const [imageId, setImageId] = useState<string | null>(null);
-  const [data, setData] = useState<ImageData | null>(null);
+  const [data, setData] = useState<GalleryImageDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -109,12 +72,7 @@ export default function ImageDetailPage({
 
     async function fetchImage() {
       try {
-        const res = await fetch(`/api/gallery/image/${imageId}`);
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.error || 'Image not found');
-        }
-        const json = await res.json();
+        const json = await gallery.get(imageId);
         setData(json);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
@@ -149,15 +107,9 @@ export default function ImageDetailPage({
     if (!data) return;
     setSaving(true);
     try {
-      const res = await fetch(`/api/gallery/image/${data.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ description: titleValue })
-      });
-      if (res.ok) {
-        setData({ ...data, description: titleValue });
-        setEditingTitle(false);
-      }
+      await gallery.update(data.id, { description: titleValue });
+      setData({ ...data, description: titleValue });
+      setEditingTitle(false);
     } catch (e) {
       console.error('Failed to save title:', e);
     } finally {
@@ -169,15 +121,9 @@ export default function ImageDetailPage({
     if (!data) return;
     setSaving(true);
     try {
-      const res = await fetch(`/api/gallery/image/${data.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ galleryQuality: newQuality })
-      });
-      if (res.ok) {
-        setData({ ...data, galleryQuality: newQuality });
-        setEditingQuality(false);
-      }
+      await gallery.update(data.id, { galleryQuality: newQuality });
+      setData({ ...data, galleryQuality: newQuality });
+      setEditingQuality(false);
     } catch (e) {
       console.error('Failed to save quality:', e);
     } finally {
@@ -189,15 +135,9 @@ export default function ImageDetailPage({
     if (!data) return;
     setSaving(true);
     try {
-      const res = await fetch(`/api/gallery/image/${data.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ museumDescription: museumDescValue })
-      });
-      if (res.ok) {
-        setData({ ...data, museumDescription: museumDescValue });
-        setEditingDescription(false);
-      }
+      await gallery.update(data.id, { museumDescription: museumDescValue });
+      setData({ ...data, museumDescription: museumDescValue });
+      setEditingDescription(false);
     } catch (e) {
       console.error('Failed to save description:', e);
     } finally {
@@ -209,15 +149,9 @@ export default function ImageDetailPage({
     if (!data) return;
     setSaving(true);
     try {
-      const res = await fetch(`/api/gallery/image/${data.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ metadata: metadataValues })
-      });
-      if (res.ok) {
-        setData({ ...data, metadata: metadataValues });
-        setEditingMetadata(false);
-      }
+      await gallery.update(data.id, { metadata: metadataValues });
+      setData({ ...data, metadata: metadataValues });
+      setEditingMetadata(false);
     } catch (e) {
       console.error('Failed to save metadata:', e);
     } finally {
@@ -229,25 +163,19 @@ export default function ImageDetailPage({
     if (!data) return;
     setSaving(true);
     try {
-      const res = await fetch(`/api/gallery/image/${data.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bbox: bboxValues })
+      await gallery.update(data.id, { bbox: bboxValues });
+      // Rebuild the cropped image URL
+      const imageUrl = data.fullPageUrl;
+      const cropParams = new URLSearchParams({
+        url: imageUrl,
+        x: bboxValues.x.toString(),
+        y: bboxValues.y.toString(),
+        w: bboxValues.width.toString(),
+        h: bboxValues.height.toString()
       });
-      if (res.ok) {
-        // Rebuild the cropped image URL
-        const imageUrl = data.fullPageUrl;
-        const cropParams = new URLSearchParams({
-          url: imageUrl,
-          x: bboxValues.x.toString(),
-          y: bboxValues.y.toString(),
-          w: bboxValues.width.toString(),
-          h: bboxValues.height.toString()
-        });
-        const newCroppedUrl = `/api/crop-image?${cropParams}`;
-        setData({ ...data, bbox: bboxValues, imageUrl: newCroppedUrl });
-        setEditingBbox(false);
-      }
+      const newCroppedUrl = `/api/crop-image?${cropParams}`;
+      setData({ ...data, bbox: bboxValues, imageUrl: newCroppedUrl });
+      setEditingBbox(false);
     } catch (e) {
       console.error('Failed to save bbox:', e);
     } finally {

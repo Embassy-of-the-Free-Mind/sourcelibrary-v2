@@ -3,23 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, Key, BookOpen, Zap, CheckCircle, AlertCircle, Loader2, Users } from 'lucide-react';
-
-interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  pages_count: number;
-  pages_ocr: number;
-  pages_translated: number;
-  original_language: string;
-  estimatedCost: number;
-}
-
-interface ContributorStats {
-  totalContributors: number;
-  totalPagesProcessed: number;
-  recentContributors: Array<{ name: string; pages: number; date: string }>;
-}
+import { contribute } from '@/lib/api-client';
+import type { ContributeBook, ContributorStats } from '@/lib/api-client/types';
 
 interface ProcessingStatus {
   status: 'idle' | 'validating' | 'processing' | 'complete' | 'error' | 'limit_reached';
@@ -35,8 +20,8 @@ interface ProcessingStatus {
 export default function ContributePage() {
   const [apiKey, setApiKey] = useState('');
   const [keyValid, setKeyValid] = useState<boolean | null>(null);
-  const [books, setBooks] = useState<Book[]>([]);
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [books, setBooks] = useState<ContributeBook[]>([]);
+  const [selectedBook, setSelectedBook] = useState<ContributeBook | null>(null);
   const [contributorName, setContributorName] = useState('');
   const [processType, setProcessType] = useState<'ocr' | 'translate'>('ocr');
   const [costLimit, setCostLimit] = useState<string>('1.00');
@@ -47,21 +32,18 @@ export default function ContributePage() {
     pagesCompleted: 0,
   });
   const [stats, setStats] = useState<ContributorStats | null>(null);
-  const [loading, setLoading] = useState(false);
 
   // Fetch contributor stats
   useEffect(() => {
-    fetch('/api/contribute/stats')
-      .then(res => res.json())
+    contribute.stats()
       .then(setStats)
       .catch(console.error);
   }, []);
 
   // Fetch books needing work
   useEffect(() => {
-    fetch('/api/contribute/books')
-      .then(res => res.json())
-      .then(data => setBooks(data.books || []))
+    contribute.books()
+      .then(data => setBooks(data || []))
       .catch(console.error);
   }, []);
 
@@ -74,12 +56,7 @@ export default function ContributePage() {
 
     setProcessing(p => ({ ...p, status: 'validating' }));
     try {
-      const res = await fetch('/api/contribute/validate-key', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ apiKey }),
-      });
-      const data = await res.json();
+      const data = await contribute.validateKey(apiKey);
       setKeyValid(data.valid);
       setProcessing(p => ({ ...p, status: 'idle' }));
     } catch {
@@ -107,22 +84,14 @@ export default function ContributePage() {
     });
 
     try {
-      const res = await fetch('/api/contribute/process', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          apiKey,
-          bookId: selectedBook._id,
-          processType,
-          contributorName: contributorName || 'Anonymous',
-          costLimit: limit,
-        }),
+      // Use API client with streaming support (includes auth, visitor tracking, error handling)
+      const res = await contribute.processStream({
+        apiKey,
+        bookId: selectedBook._id,
+        processType,
+        contributorName: contributorName || 'Anonymous',
+        costLimit: limit,
       });
-
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || 'Processing failed');
-      }
 
       // Stream response for real-time updates
       const reader = res.body?.getReader();

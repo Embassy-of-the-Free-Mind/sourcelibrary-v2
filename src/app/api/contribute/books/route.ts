@@ -1,17 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { ContributeBook } from '@/lib/api-client';
 
 export const dynamic = 'force-dynamic';
-
-interface BookRecord {
-  _id: string;
-  title: string;
-  author: string;
-  pages_count: number;
-  pages_ocr?: number;
-  pages_translated?: number;
-  original_language?: string;
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -51,7 +42,7 @@ export async function GET(request: NextRequest) {
       })
       .sort(type === 'ocr' ? { pages_count: 1 } : { pages_ocr: 1 })
       .limit(limit)
-      .toArray() as unknown as BookRecord[];
+      .toArray() as unknown as ContributeBook[];
 
     // Add estimated cost
     const booksWithCost = books.map((book) => {

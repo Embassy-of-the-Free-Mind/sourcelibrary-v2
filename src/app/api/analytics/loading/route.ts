@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-
-interface LoadingMetric {
-  name: string;
-  duration: number;
-  timestamp: number;
-  metadata?: Record<string, unknown>;
-}
+import { LoadingMetric } from '@/lib/api-client';
 
 interface AnalyticsPayload {
   metrics: LoadingMetric[];

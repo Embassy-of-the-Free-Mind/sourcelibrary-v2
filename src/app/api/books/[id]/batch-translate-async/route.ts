@@ -32,7 +32,7 @@ export async function POST(
       limit = 500,
       language = 'Latin',
       targetLanguage = 'English',
-      model = 'gemini-2.5-flash',
+      model = 'gemini-3-flash-preview',
     } = body;
 
     const db = await getDb();

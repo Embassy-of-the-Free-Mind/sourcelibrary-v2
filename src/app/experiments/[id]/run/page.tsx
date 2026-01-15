@@ -11,30 +11,9 @@ import {
   AlertCircle,
   FileText,
 } from 'lucide-react';
-
-interface ExperimentVariant {
-  method: string;
-  model: string;
-  use_context?: boolean;
-}
-
-interface Experiment {
-  id: string;
-  name: string;
-  description: string;
-  book_id: string;
-  variant_a: ExperimentVariant | null;
-  variant_b: ExperimentVariant | null;
-  page_selection: 'first_n' | 'sample' | 'all';
-  page_count: number;
-  status: string;
-}
-
-interface Book {
-  id: string;
-  title: string;
-  pages_count?: number;
-}
+import { experiments, books } from '@/lib/api-client';
+import type { Experiment, ExperimentRunResponse } from '@/lib/api-client/types/experiments';
+import type { Book } from '@/lib/types';
 
 const methodLabels: Record<string, string> = {
   single_ocr: 'Single-page OCR',
@@ -51,30 +30,27 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
   const [running, setRunning] = useState(false);
-  const [result, setResult] = useState<{
-    success: boolean;
-    pages_processed: number;
-    results_count: number;
-    total_cost: number;
-  } | null>(null);
+  const [result, setResult] = useState<ExperimentRunResponse | null>(null);
+
+  // Helper to access experiment config fields
+  const expConfig = experiment?.config as any;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch experiment
-        const expRes = await fetch(`/api/experiments/${id}`);
-        if (!expRes.ok) {
+        const exp = await experiments.get(id);
+        if (!exp) {
           router.push('/experiments');
           return;
         }
-        const expData = await expRes.json();
-        setExperiment(expData.experiment);
+        setExperiment(exp);
 
         // Fetch book
-        const bookRes = await fetch(`/api/books/${expData.experiment.book_id}`);
-        if (bookRes.ok) {
-          const bookData = await bookRes.json();
-          setBook(bookData.book);
+        const bookId = (exp.config as any)?.book_id || (exp.experiment as any)?.book_id;
+        if (bookId) {
+          const bookData = await books.get(bookId);
+          setBook(bookData);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -91,19 +67,8 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
     setResult(null);
 
     try {
-      const res = await fetch(`/api/experiments/${id}/run`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}), // Use experiment's page selection settings
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setResult(data);
-      } else {
-        const error = await res.json();
-        console.error('Experiment run failed:', error);
-      }
+      const data = await experiments.run(id);
+      setResult(data);
     } catch (error) {
       console.error('Error running experiment:', error);
     } finally {
@@ -124,11 +89,11 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
   }
 
   const estimatedPages =
-    experiment.page_selection === 'all'
+    expConfig?.page_selection === 'all'
       ? book?.pages_count || '?'
-      : experiment.page_selection === 'first_n'
-        ? experiment.page_count
-        : `~${Math.ceil((book?.pages_count || 100) * (experiment.page_count / 100))}`;
+      : expConfig?.page_selection === 'first_n'
+        ? expConfig?.page_count
+        : `~${Math.ceil((book?.pages_count || 100) * (expConfig?.page_count / 100))}`;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -154,9 +119,9 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
             <div>
               <p className="font-medium text-stone-900">{book?.title || 'Loading...'}</p>
               <p className="text-sm text-stone-500">
-                {experiment.page_selection === 'first_n' && `First ${experiment.page_count} pages`}
-                {experiment.page_selection === 'sample' && `${experiment.page_count}% sample (~${estimatedPages} pages)`}
-                {experiment.page_selection === 'all' && `All ${book?.pages_count || '?'} pages`}
+                {expConfig?.page_selection === 'first_n' && `First ${expConfig?.page_count} pages`}
+                {expConfig?.page_selection === 'sample' && `${expConfig?.page_count}% sample (~${estimatedPages} pages)`}
+                {expConfig?.page_selection === 'all' && `All ${book?.pages_count || '?'} pages`}
               </p>
             </div>
           </div>
@@ -170,18 +135,18 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
               <span className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold">A</span>
               <span className="font-semibold text-blue-900">Variant A</span>
             </div>
-            {experiment.variant_a ? (
+            {expConfig?.variant_a ? (
               <div className="space-y-1 text-sm">
                 <p className="text-blue-800">
                   <span className="text-blue-600">Method:</span>{' '}
-                  {methodLabels[experiment.variant_a.method] || experiment.variant_a.method}
+                  {methodLabels[expConfig?.variant_a.method] || expConfig?.variant_a.method}
                 </p>
                 <p className="text-blue-800">
-                  <span className="text-blue-600">Model:</span> {experiment.variant_a.model}
+                  <span className="text-blue-600">Model:</span> {expConfig?.variant_a.model}
                 </p>
                 <p className="text-blue-800">
                   <span className="text-blue-600">Context:</span>{' '}
-                  {experiment.variant_a.use_context ? 'Yes' : 'No'}
+                  {expConfig?.variant_a.use_context ? 'Yes' : 'No'}
                 </p>
               </div>
             ) : (
@@ -195,18 +160,18 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
               <span className="w-6 h-6 bg-amber-600 text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
               <span className="font-semibold text-amber-900">Variant B</span>
             </div>
-            {experiment.variant_b ? (
+            {expConfig?.variant_b ? (
               <div className="space-y-1 text-sm">
                 <p className="text-amber-800">
                   <span className="text-amber-600">Method:</span>{' '}
-                  {methodLabels[experiment.variant_b.method] || experiment.variant_b.method}
+                  {methodLabels[expConfig?.variant_b.method] || expConfig?.variant_b.method}
                 </p>
                 <p className="text-amber-800">
-                  <span className="text-amber-600">Model:</span> {experiment.variant_b.model}
+                  <span className="text-amber-600">Model:</span> {expConfig?.variant_b.model}
                 </p>
                 <p className="text-amber-800">
                   <span className="text-amber-600">Context:</span>{' '}
-                  {experiment.variant_b.use_context ? 'Yes' : 'No'}
+                  {expConfig?.variant_b.use_context ? 'Yes' : 'No'}
                 </p>
               </div>
             ) : (
@@ -243,7 +208,7 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
               </div>
               <div>
                 <span className="text-stone-500">Cost:</span>
-                <span className="ml-2 font-medium">${result.total_cost.toFixed(4)}</span>
+                <span className="ml-2 font-medium">${(result.total_cost || 0).toFixed(4)}</span>
               </div>
             </div>
             <div className="mt-4 flex gap-2">

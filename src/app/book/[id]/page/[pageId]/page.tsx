@@ -2,11 +2,12 @@
 
 import { useEffect, useState, useCallback, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
-import TranslationEditor from '@/components/TranslationEditor';
+import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
+import { books, pages as pagesApi } from '@/lib/api-client';
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;
@@ -46,9 +47,7 @@ export default function PageEditorPage({ params }: PageProps) {
       setLoading(true);
       const startTime = performance.now();
       try {
-        const bookRes = await fetch(`/api/books/${bookId}?full=true`);
-        if (!bookRes.ok) throw new Error('Book not found');
-        const bookData = await bookRes.json();
+        const bookData = await books.get(bookId, { full: true });
 
         setBook(bookData);
         setPages(bookData.pages || []);
@@ -82,19 +81,11 @@ export default function PageEditorPage({ params }: PageProps) {
   const handleSave = async (data: { ocr?: string; translation?: string; summary?: string }) => {
     if (!currentPage) return;
 
-    const response = await fetch(`/api/pages/${currentPage.id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ocr: data.ocr ? { data: data.ocr, language: book?.language || 'Latin' } : undefined,
-        translation: data.translation ? { data: data.translation, language: 'English' } : undefined,
-        summary: data.summary ? { data: data.summary } : undefined
-      })
+    await pagesApi.update(currentPage.id, {
+      ocr: data.ocr ? { data: data.ocr, language: book?.language || 'Latin' } : undefined,
+      translation: data.translation ? { data: data.translation, language: 'English' } : undefined,
+      summary: data.summary ? { data: data.summary } : undefined
     });
-
-    if (!response.ok) {
-      throw new Error('Save failed');
-    }
   };
 
   if (loading) {
@@ -153,11 +144,12 @@ export default function PageEditorPage({ params }: PageProps) {
         onNavigate={handleNavigate}
         onSave={handleSave}
         onRefresh={async () => {
-          const res = await fetch(`/api/books/${bookId}?full=true`);
-          if (res.ok) {
-            const data = await res.json();
+          try {
+            const data = await books.get(bookId, { full: true });
             setBook(data);
             setPages(data.pages || []);
+          } catch (error) {
+            console.error('Failed to refresh book data:', error);
           }
         }}
       />

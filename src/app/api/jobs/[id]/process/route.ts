@@ -14,6 +14,7 @@ import {
   getBatchJobResults,
   type BatchRequest,
 } from '@/lib/gemini-batch';
+import { images } from '@/lib/api-client';
 
 // Extend timeout for job processing (Vercel Pro allows up to 300s)
 export const maxDuration = 300;
@@ -41,12 +42,7 @@ async function processCroppedImage(
     }
 
     // Fetch the original image
-    const imageResponse = await fetch(imageUrl);
-    if (!imageResponse.ok) {
-      return { pageId, success: false, error: 'Failed to fetch image' };
-    }
-
-    const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+    const imageBuffer = await images.fetchBuffer(imageUrl);
 
     // Get image dimensions and calculate crop
     const metadata = await sharp(imageBuffer).metadata();
@@ -190,14 +186,10 @@ async function extractImagesWithGemini(imageUrl: string): Promise<ExtractedImage
   }
 
   // Fetch and encode image
-  const imageResponse = await fetch(imageUrl);
-  if (!imageResponse.ok) {
-    throw new Error(`Failed to fetch image: ${imageResponse.status}`);
-  }
-
-  const imageBuffer = await imageResponse.arrayBuffer();
-  const base64Image = Buffer.from(imageBuffer).toString('base64');
-  const mimeType = imageResponse.headers.get('content-type')?.split(';')[0] || 'image/jpeg';
+  const imageData = await images.fetchBase64(imageUrl, { includeMimeType: true });
+  const { base64: base64Image, mimeType } = typeof imageData === 'string'
+    ? { base64: imageData, mimeType: 'image/jpeg' }
+    : imageData;
 
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
@@ -482,22 +474,10 @@ async function handleBatchApiJob(
               return { success: false };
             }
 
-            const imageResponse = await fetch(imageUrl);
-            if (!imageResponse.ok) {
-              await prepCollection.insertOne({
-                job_id: jobId,
-                page_id: page.id,
-                failed: true,
-                error: `Image fetch failed: ${imageResponse.status}`,
-                created_at: new Date(),
-              });
-              return { success: false };
-            }
-
-            const imageBuffer = await imageResponse.arrayBuffer();
-            const base64 = Buffer.from(imageBuffer).toString('base64');
-            let mimeType = imageResponse.headers.get('content-type') || 'image/jpeg';
-            mimeType = mimeType.split(';')[0].trim();
+            const imageData = await images.fetchBase64(imageUrl, { includeMimeType: true });
+            const { base64, mimeType } = typeof imageData === 'string'
+              ? { base64: imageData, mimeType: 'image/jpeg' }
+              : imageData;
 
             requestData = {
               contents: [
@@ -1082,13 +1062,7 @@ export async function POST(
           }
 
           // Fetch image
-          const imageResponse = await fetch(imageUrl);
-          if (!imageResponse.ok) {
-            results.push({ pageId, success: false, error: 'Failed to fetch image' });
-            continue;
-          }
-
-          const imageBuffer = Buffer.from(await imageResponse.arrayBuffer());
+          const imageBuffer = await images.fetchBuffer(imageUrl);
           const splitResult = await detectSplitFromBuffer(imageBuffer);
 
           // Save split detection result to page

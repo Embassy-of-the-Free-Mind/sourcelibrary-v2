@@ -4,19 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Highlighter, Trash2, ExternalLink, Loader2, BookOpen, User, Clock } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-
-interface Highlight {
-  id: string;
-  book_id: string;
-  page_id: string;
-  page_number: number;
-  book_title: string;
-  book_author?: string;
-  text: string;
-  note?: string;
-  user_name?: string;
-  created_at: string;
-}
+import { highlights as highlightsApi } from '@/lib/api-client';
+import type { Highlight } from '@/lib/api-client/types/highlights';
 
 export default function HighlightsPage() {
   const [highlights, setHighlights] = useState<Highlight[]>([]);
@@ -26,11 +15,8 @@ export default function HighlightsPage() {
   const fetchHighlights = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/highlights?limit=100');
-      if (response.ok) {
-        const data = await response.json();
-        setHighlights(data.highlights || data);
-      }
+      const data = await highlightsApi.list({ limit: 100 });
+      setHighlights(data.highlights || data);
     } catch (error) {
       console.error('Failed to fetch highlights:', error);
     } finally {
@@ -45,12 +31,8 @@ export default function HighlightsPage() {
   const handleDelete = async (id: string) => {
     setDeletingId(id);
     try {
-      const response = await fetch(`/api/highlights/${id}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        setHighlights(prev => prev.filter(h => h.id !== id));
-      }
+      await highlightsApi.delete(id);
+      setHighlights(prev => prev.filter(h => h.id !== id));
     } catch (error) {
       console.error('Failed to delete highlight:', error);
     } finally {

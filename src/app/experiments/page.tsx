@@ -13,45 +13,13 @@ import {
   FileText,
   ArrowLeft,
 } from 'lucide-react';
-
-interface ExperimentVariant {
-  method: string;
-  model: string;
-  use_context?: boolean;
-}
-
-interface Experiment {
-  id: string;
-  name: string;
-  description: string;
-  book_id: string;
-  variant_a: ExperimentVariant | null;
-  variant_b: ExperimentVariant | null;
-  page_selection: 'first_n' | 'sample' | 'all';
-  page_count: number;
-  // Legacy
-  method: string;
-  settings: {
-    model: string;
-    batch_size?: number;
-    use_context?: boolean;
-  };
-  status: string;
-  created_at: string;
-  completed_at: string | null;
-  results_count: number;
-  total_cost: number;
-  total_tokens: number;
-}
-
-interface Book {
-  id: string;
-  title: string;
-}
+import { experiments, books } from '@/lib/api-client';
+import type { Experiment } from '@/lib/api-client/types/experiments';
+import type { Book } from '@/lib/types';
 
 export default function ExperimentsPage() {
-  const [experiments, setExperiments] = useState<Experiment[]>([]);
-  const [books, setBooks] = useState<Book[]>([]);
+  const [experimentsList, setExperimentsList] = useState<Experiment[]>([]);
+  const [booksList, setBooksList] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
   const [showNewForm, setShowNewForm] = useState(false);
   const [selectedBook, setSelectedBook] = useState('');
@@ -81,11 +49,8 @@ export default function ExperimentsPage() {
 
   const fetchExperiments = async () => {
     try {
-      const res = await fetch('/api/experiments');
-      if (res.ok) {
-        const data = await res.json();
-        setExperiments(data.experiments);
-      }
+      const data = await experiments.list();
+      setExperimentsList(data.experiments);
     } catch (error) {
       console.error('Error fetching experiments:', error);
     } finally {
@@ -95,12 +60,9 @@ export default function ExperimentsPage() {
 
   const fetchBooks = async () => {
     try {
-      const res = await fetch('/api/books');
-      if (res.ok) {
-        const data = await res.json();
-        // API returns array directly, not { books: [...] }
-        setBooks(Array.isArray(data) ? data : data.books || []);
-      }
+      const data = await books.list();
+      // API returns array directly, not { books: [...] }
+      setBooksList(Array.isArray(data) ? data : data.books || []);
     } catch (error) {
       console.error('Error fetching books:', error);
     }
@@ -110,12 +72,11 @@ export default function ExperimentsPage() {
     if (!newExperiment.name || !newExperiment.book_id) return;
 
     try {
-      const res = await fetch('/api/experiments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: newExperiment.name,
-          description: newExperiment.description,
+      await experiments.create({
+        name: newExperiment.name,
+        description: newExperiment.description,
+        type: 'comparison',
+        config: {
           book_id: newExperiment.book_id,
           variant_a: {
             method: newExperiment.method_a,
@@ -129,26 +90,24 @@ export default function ExperimentsPage() {
           },
           page_selection: newExperiment.page_selection,
           page_count: newExperiment.page_count,
-        }),
+        },
       });
 
-      if (res.ok) {
-        setShowNewForm(false);
-        setNewExperiment({
-          name: '',
-          description: '',
-          book_id: '',
-          method_a: 'batch_ocr',
-          model_a: 'gemini-2.0-flash',
-          context_a: true,
-          method_b: 'single_ocr',
-          model_b: 'gemini-2.0-flash',
-          context_b: false,
-          page_selection: 'first_n',
-          page_count: 10,
-        });
-        fetchExperiments();
-      }
+      setShowNewForm(false);
+      setNewExperiment({
+        name: '',
+        description: '',
+        book_id: '',
+        method_a: 'batch_ocr',
+        model_a: 'gemini-2.0-flash',
+        context_a: true,
+        method_b: 'single_ocr',
+        model_b: 'gemini-2.0-flash',
+        context_b: false,
+        page_selection: 'first_n',
+        page_count: 10,
+      });
+      fetchExperiments();
     } catch (error) {
       console.error('Error creating experiment:', error);
     }
@@ -158,7 +117,7 @@ export default function ExperimentsPage() {
     if (!confirm('Delete this experiment and all its results?')) return;
 
     try {
-      await fetch(`/api/experiments/${id}`, { method: 'DELETE' });
+      await experiments.delete(id);
       fetchExperiments();
     } catch (error) {
       console.error('Error deleting experiment:', error);
@@ -181,8 +140,8 @@ export default function ExperimentsPage() {
   };
 
   const filteredExperiments = selectedBook
-    ? experiments.filter(e => e.book_id === selectedBook)
-    : experiments;
+    ? experimentsList.filter(e => (e.config as any)?.book_id === selectedBook)
+    : experimentsList;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -241,7 +200,7 @@ export default function ExperimentsPage() {
                   className="w-full px-3 py-2 border border-stone-300 rounded-lg"
                 >
                   <option value="">Select a book...</option>
-                  {books.map(book => (
+                  {booksList.map(book => (
                     <option key={book.id} value={book.id}>
                       {book.title}
                     </option>
@@ -409,7 +368,7 @@ export default function ExperimentsPage() {
             className="px-3 py-1.5 border border-stone-300 rounded-lg text-sm"
           >
             <option value="">All books</option>
-            {books.map(book => (
+            {booksList.map(book => (
               <option key={book.id} value={book.id}>
                 {book.title}
               </option>
@@ -440,7 +399,9 @@ export default function ExperimentsPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {filteredExperiments.map(exp => (
+            {filteredExperiments.map(exp => {
+              const cfg = exp.config as any;
+              return (
               <div
                 key={exp.id}
                 className="bg-white rounded-xl border border-stone-200 p-4 hover:shadow-md transition-shadow"
@@ -460,37 +421,37 @@ export default function ExperimentsPage() {
                     )}
                     <div className="flex items-center gap-4 text-xs text-stone-400 flex-wrap">
                       {/* A vs B info */}
-                      {exp.variant_a && exp.variant_b ? (
+                      {cfg?.variant_a && cfg?.variant_b ? (
                         <span className="flex items-center gap-1">
                           <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded text-[10px] font-medium">A</span>
-                          {methodLabels[exp.variant_a.method] || exp.variant_a.method}
+                          {methodLabels[cfg.variant_a.method] || cfg.variant_a.method}
                           <span className="text-stone-300 mx-1">vs</span>
                           <span className="px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded text-[10px] font-medium">B</span>
-                          {methodLabels[exp.variant_b.method] || exp.variant_b.method}
+                          {methodLabels[cfg.variant_b.method] || cfg.variant_b.method}
                         </span>
                       ) : (
                         <span className="flex items-center gap-1">
                           <FileText className="w-3 h-3" />
-                          {methodLabels[exp.method] || exp.method}
+                          {methodLabels[cfg?.method] || cfg?.method || 'N/A'}
                         </span>
                       )}
                       {/* Page count */}
-                      {exp.page_count && (
+                      {cfg?.page_count && (
                         <span className="text-stone-500">
-                          {exp.page_selection === 'first_n' ? `First ${exp.page_count}` :
-                           exp.page_selection === 'sample' ? `${exp.page_count}% sample` : 'All'} pages
+                          {cfg.page_selection === 'first_n' ? `First ${cfg.page_count}` :
+                           cfg.page_selection === 'sample' ? `${cfg.page_count}% sample` : 'All'} pages
                         </span>
                       )}
-                      {exp.results_count > 0 && (
+                      {(exp.results as any)?.length > 0 && (
                         <span className="flex items-center gap-1">
                           <BarChart3 className="w-3 h-3" />
-                          {exp.results_count} processed
+                          {(exp.results as any).length} processed
                         </span>
                       )}
-                      {exp.total_cost > 0 && (
+                      {cfg?.total_cost > 0 && (
                         <span className="flex items-center gap-1">
                           <DollarSign className="w-3 h-3" />$
-                          {exp.total_cost.toFixed(4)}
+                          {cfg.total_cost.toFixed(4)}
                         </span>
                       )}
                       <span className="flex items-center gap-1">
@@ -529,7 +490,8 @@ export default function ExperimentsPage() {
                   </div>
                 </div>
               </div>
-            ))}
+            )}
+            )}
           </div>
         )}
       </div>
