@@ -172,7 +172,7 @@
 | **Europeana** | 🟡 Discovery layer | Free API key + IIIF (no key) | 500k+ manuscripts, aggregates from many institutions |
 | **Wellcome Collection** | ✅ Integrated | Catalogue + IIIF (no key) | Medical/alchemical manuscripts |
 | **e-rara** | 🟢 Ready | OAI-PMH + IIIF (no key) | 153k Swiss rare books, ETH Zürich |
-| **HathiTrust** | 🟢 Ready | Data API (key required) | 19M volumes, 6.9M public domain |
+| **HathiTrust** | 🔴 API retired | None | Data API retired; use Research Center for datasets only |
 | **BSB/MDZ** | ✅ Already integrated | IIIF (no key) | See existing MDZ import route |
 | **Google Books** | 🟡 Limited | API key required | Full-view public domain only |
 | **British Library** | 🔴 API down | IIIF when restored | Expected early 2026 |
@@ -203,12 +203,10 @@
 - **Strengths**: Swiss rare books, scientific texts, early printed books
 
 #### HathiTrust Integration Notes
-- **Data API**: Requires key from babel.hathitrust.org/cgi/kgs/request
-- **Public domain only** via API
-- **19M+ volumes**, 6.9M downloadable
-- **Formats**: Page images, OCR, whole volume packages
-- **Docs**: hathitrust.org/data_api
-- **Note**: Some items may overlap with IA
+- **Status**: ❌ Data API RETIRED (no longer available)
+- **Alternative**: HathiTrust Research Center for academic dataset requests
+- **19M+ volumes** exist but no programmatic access for import
+- **Workaround**: Many HathiTrust items also available via Internet Archive
 
 #### Google Books Integration Notes
 - **API**: Requires API key from Google Cloud Console
