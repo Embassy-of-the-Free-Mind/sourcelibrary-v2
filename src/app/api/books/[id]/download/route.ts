@@ -85,6 +85,8 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
 
   // Page content
   for (const page of pages) {
+    if(!page) continue;
+
     const hasTranslation = page.translation?.data;
     const hasOcr = page.ocr?.data;
 
@@ -102,7 +104,11 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
         lines.push('--- TRANSLATION ---');
         lines.push('');
       }
-      lines.push(page.translation.data);
+      
+      if(page.translation && page.translation.data) {
+        lines.push(page.translation?.data);
+      }
+      
       lines.push('');
     }
 
@@ -111,7 +117,11 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
         lines.push(`--- ORIGINAL (${book.language}) ---`);
         lines.push('');
       }
-      lines.push(page.ocr.data);
+
+      if(page.ocr && page.ocr.data) {
+        lines.push(page.ocr.data);
+      }
+
       lines.push('');
     }
 
@@ -358,6 +368,8 @@ async function generateEpubDownload(
 
   // Add page content
   for (const page of pages) {
+    if(!page) continue;
+    
     const hasTranslation = page.translation?.data;
     const hasOcr = page.ocr?.data;
 
@@ -372,14 +384,18 @@ async function generateEpubDownload(
       if (format === 'epub-both') {
         content += '<h2>Translation</h2>';
       }
-      content += markdownToHtml(page.translation.data);
+      if(page.translation && page.translation.data) {
+        content += markdownToHtml(page.translation.data);
+      }
     }
 
     if ((format === 'epub-ocr' || format === 'epub-both') && hasOcr) {
       if (format === 'epub-both') {
         content += `<h2>Original (${book.language})</h2>`;
       }
+      if(page.ocr && page.ocr.data) {
       content += markdownToHtml(page.ocr.data);
+      }
     }
 
     chapters.push({
@@ -686,12 +702,17 @@ p:first-of-type {
 
     // 8. Content pages
     for (const page of validPages) {
-      const ocrHtml = markdownToHtml(page.ocr.data);
-      const translationHtml = markdownToHtml(page.translation.data);
+      if(!page) continue;
+
+      const ocrText = page.ocr ? page.ocr.data : "";
+      const translationText = page.translation ? page.translation.data : "";
+
+      const ocrHtml = markdownToHtml(ocrText);
+      const translationHtml = markdownToHtml(translationText);
 
       // Determine text size class based on content length
-      const ocrSizeClass = getTextSizeClass(page.ocr.data);
-      const transSizeClass = getTextSizeClass(page.translation.data);
+      const ocrSizeClass = getTextSizeClass(ocrText);
+      const transSizeClass = getTextSizeClass(translationText);
 
       // Original (left page)
       const origPage = createFixedPage(`
@@ -985,8 +1006,11 @@ p:first-of-type { text-indent: 0; }
 
     // Add images and content pages
     for (const { page, imageBuffer } of pageImages) {
-      const translationHtml = markdownToHtml(page.translation.data);
-      const transSizeClass = getTextSizeClass(page.translation.data);
+      if(!page) continue;
+      
+      const translatedText = page.translation ? page.translation.data : "";
+      const translationHtml = markdownToHtml(translatedText);
+      const transSizeClass = getTextSizeClass(translatedText);
 
       // Add compressed image to archive (if successfully fetched)
       if (imageBuffer) {
@@ -1617,6 +1641,8 @@ async function generateScholarlyEpubDownload(
     // Fetch and add images, create content pages
     console.log(`Fetching ${validPages.length} images for scholarly EPUB...`);
     for (const page of validPages) {
+      if(!page) continue;
+
       const imageUrl = page.compressed_photo || page.photo;
       const imageBuffer = await fetchAndCompressImage(imageUrl);
 
@@ -1624,7 +1650,7 @@ async function generateScholarlyEpubDownload(
         archive.append(imageBuffer, { name: `OEBPS/images/img-${page.page_number}.jpg` });
       }
 
-      const translationHtml = markdownToHtml(page.translation.data);
+      const translationHtml = markdownToHtml(page.translation ? page.translation.data : '');
 
       const pageHtml = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>

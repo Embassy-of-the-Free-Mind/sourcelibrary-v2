@@ -64,7 +64,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
     // Build translation text
     const translationText = pages
       .filter(p => p.translation?.data)
-      .map(p => `--- Page ${p.page_number} ---\n\n${p.translation.data}`)
+      .map(p => `--- Page ${p.page_number} ---\n\n${p.translation ? p.translation.data : ''}`)
       .join('\n\n\n');
 
     if (!translationText) {

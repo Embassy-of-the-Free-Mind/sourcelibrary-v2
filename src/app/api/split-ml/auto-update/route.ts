@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { extractFeatures, trainModel, type TrainingExample, type SplitModel } from '@/lib/splitDetectionML';
+import { extractFeatures, trainModel, type TrainingExample, type SplitModel } from '@/lib/page-split/splitDetectionML';
 
 /**
  * POST - Auto-update the ML model after user splits

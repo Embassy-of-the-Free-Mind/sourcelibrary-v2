@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { detectSplitFromBuffer } from '@/lib/splitDetection';
+import { detectSplitFromBuffer } from '@/lib/page-split/splitDetection';
 import { images } from '@/lib/api-client';
 
 /**

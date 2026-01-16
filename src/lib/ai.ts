@@ -1,5 +1,5 @@
 import { DEFAULT_PROMPTS, DEFAULT_MODEL } from './types';
-import { getGeminiClient } from './gemini';
+import { getGeminiClient } from './gemini-client';
 import { images } from './api-client/images';
 
 // Model pricing per 1M tokens (USD)

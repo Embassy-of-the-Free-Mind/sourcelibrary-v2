@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { trainModel, type TrainingExample, type SplitModel } from '@/lib/splitDetectionML';
+import { trainModel, type TrainingExample, type SplitModel } from '@/lib/page-split/splitDetectionML';
 
 /**
  * POST - Train the ML model on collected examples

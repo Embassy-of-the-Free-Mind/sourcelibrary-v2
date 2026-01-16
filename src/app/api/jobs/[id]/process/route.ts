@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performOCRWithBuffer, performTranslation } from '@/lib/ai';
-import { detectSplitFromBuffer } from '@/lib/splitDetection';
+import { detectSplitFromBuffer } from '@/lib/page-split/splitDetection';
 import { getOcrPrompt, getTranslationPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { extractWithGemini, type DetectedImage } from '@/lib/image-extraction';

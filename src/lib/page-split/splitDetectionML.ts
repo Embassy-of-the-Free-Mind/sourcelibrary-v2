@@ -1,15 +1,14 @@
 /**
  * ML-based split detection using Gemini for ground truth generation
- * and a fast trained model for inference
+ * and a fast trained model for inference.
  */
 
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { analyzeColumns, type ColumnStats } from './splitDetection';
+import { analyzeColumns } from './splitDetection';
 import { images } from '@/lib/api-client';
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+import { getGeminiClient, reportRateLimitError } from '../gemini-client';
 
 export interface GeminiSplitResult {
+  isTwoPageSpread: boolean; // Is this actually a two-page spread?
   splitPosition: number; // 0-1000 scale
   confidence: 'high' | 'medium' | 'low';
   reasoning: string;
@@ -83,39 +82,40 @@ export interface SplitFeatures {
  */
 export async function detectSplitWithGemini(
   imageUrl: string,
-  modelId: string = 'gemini-3-flash-preview'
+  modelId: string =  process.env.GEMINI_MODEL || 'gemini-3-flash-preview'
 ): Promise<GeminiSplitResult> {
-  if (!process.env.GEMINI_API_KEY) {
-    throw new Error('GEMINI_API_KEY not set');
-  }
-
+  const genAI = getGeminiClient();
   const model = genAI.getGenerativeModel({ model: modelId });
 
-  const prompt = `You are an expert at analyzing scanned book spreads to find the optimal vertical split line.
+  const prompt = `You are an expert at analyzing scanned book images.
 
-TASK: Find the exact vertical position to split this two-page book scan into left and right pages.
+TASK: Determine if this is a TWO-PAGE SPREAD or a SINGLE PAGE, and if it's a spread, find the optimal split position.
 
-CRITICAL RULES:
-1. NEVER cut through text - the split must fall in a gap between text columns
-2. The book may not be perfectly vertical - follow the natural angle of the binding
-3. Gutter appearance varies widely:
-   - Dark shadow (common in phone/camera scans)
-   - Bright gap (common in flatbed scans)
-   - Curved distortion near binding
-   - No visible gutter at all (just margin between text blocks)
+STEP 1: DETERMINE IMAGE TYPE
+- Is this a two-page spread (left and right pages visible) OR a single page?
+- Clues for TWO-PAGE SPREAD:
+  - Two distinct text columns separated by a gutter (dark or light gap)
+  - Symmetrical layout with text on both sides
+  - Central binding line (vertical line or shadow in middle)
+  - Aspect ratio typically > 1.0 (wider than tall)
+- Clues for SINGLE PAGE:
+  - One continuous text column
+  - Portrait orientation (taller than wide)
+  - No central gutter or binding line
+  - Text flows naturally without a vertical gap
 
-ANALYSIS APPROACH:
-1. First, identify the text blocks on left and right pages
-2. Find the gap/margin between them - this is where to split
-3. If there's a visible gutter line (dark or light), use it as a guide
-4. If the book is tilted, the split line should follow the tilt
-5. Prefer erring slightly toward margins rather than cutting text
+STEP 2: IF TWO-PAGE SPREAD, FIND SPLIT POSITION
+- Find the exact vertical position to split into left and right pages
+- NEVER cut through text - split must fall in gap between text columns
+- Follow natural binding angle if book is tilted
+- Gutter can be dark shadow, bright gap, or just margin between text blocks
 
 Return your answer in this EXACT JSON format:
 {
-  "splitPosition": <integer from 0-1000 where 0=left edge, 500=center, 1000=right edge>,
+  "isTwoPageSpread": <true|false>,
+  "splitPosition": <integer from 0-1000, or 500 if single page>,
   "confidence": "<high|medium|low>",
-  "reasoning": "<brief explanation: what visual cues you used, any challenges>"
+  "reasoning": "<brief explanation of your determination>"
 }`;
 
   // Fetch and encode the image
@@ -124,15 +124,25 @@ Return your answer in this EXACT JSON format:
     ? { base64: imageData, mimeType: 'image/jpeg' }
     : { base64: imageData.base64, mimeType: imageData.mimeType };
 
-  const result = await model.generateContent([
-    prompt,
-    {
-      inlineData: {
-        mimeType,
-        data: base64Image,
+  let result;
+  try {
+    result = await model.generateContent([
+      prompt,
+      {
+        inlineData: {
+          mimeType,
+          data: base64Image,
+        },
       },
-    },
-  ]);
+    ]);
+  } catch (error: any) {
+    // Report rate limit errors for key rotation tracking
+    if (error?.message?.includes('429') || error?.message?.includes('rate limit')) {
+      const apiKey = process.env.GEMINI_API_KEY || '';
+      reportRateLimitError(apiKey);
+    }
+    throw error;
+  }
 
   const responseText = result.response.text();
 
@@ -145,6 +155,7 @@ Return your answer in this EXACT JSON format:
   const parsed = JSON.parse(jsonMatch[0]);
 
   return {
+    isTwoPageSpread: parsed.isTwoPageSpread ?? true, // Default to true for backward compatibility
     splitPosition: Math.round(parsed.splitPosition),
     confidence: parsed.confidence || 'medium',
     reasoning: parsed.reasoning || '',

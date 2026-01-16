@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import { ObjectId } from 'mongodb';
-import { getDb } from '@/lib/mongodb';
 import { put } from '@vercel/blob';
-
-import type { Page } from '@/lib/types/page';
-import { compress_photo } from '@/lib/image-manipulation';
+import { getDb } from '@/lib/mongodb';
+import {
+  detectSplit,
+  processSingleImage,
+  processSplitImage
+} from '@/lib/page-split/split-processing';
 
 // Maximum file size: 20MB
 const MAX_FILE_SIZE_MEGABYTES = 20 * 1024 * 1024;
@@ -28,7 +30,7 @@ export async function POST(request: NextRequest) {
     const db = await getDb();
     const book = await db.collection('books').findOne({ id: bookId });
     if (!book) {
-      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Book not found!' }, { status: 404 });
     }
 
     // Get current max page number
@@ -39,7 +41,7 @@ export async function POST(request: NextRequest) {
       .toArray();
     let nextPageNumber = existingPages.length > 0 ? existingPages[0].page_number + 1 : 1;
 
-    const uploadedPages = [];
+    const uploadedPages = [];    
 
     for (const file of files) {
       // Validate file
@@ -51,57 +53,76 @@ export async function POST(request: NextRequest) {
         continue; // Skip files that are too large
       }
 
-      // Read image file data
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      try {
+        // Read image file data
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
 
-      // Generate & Upload Original Image
-      const ext = path.extname(file.name) || '.jpg';
-      const filename = `${new ObjectId().toHexString()}${ext}`;
-      const blobPath = `uploads/${bookId}/${filename}`;      
-      const origPhotoBlob = await put(
-        blobPath,
-        buffer,
-        {
+        // Generate unique filename
+        const ext = path.extname(file.name) || '.jpg';
+        const filename = `${new ObjectId().toHexString()}${ext}`;
+        const contentType = file.type || 'image/jpeg';
+
+        // STEP 1: Upload original image FIRST (always needed)
+        const originalBlobPath = `uploads/${bookId}/${filename}`;
+        const originalBlob = await put(originalBlobPath, buffer, {
           access: 'public',
-          contentType: file.type || 'image/jpeg',
-          addRandomSuffix: false,
-        }
-      );
+          contentType,
+          addRandomSuffix: false
+        });
 
-      // Generate & Upload Thumbnail Image (max 200px)
-      const thumbnailBuffer = await compress_photo(buffer, 150, 60);
-      const thumbnailBlobPath = `uploads/${bookId}/thumbnails/${filename}`;      
-      const thumbnailPhotoBlob = await put(
-        thumbnailBlobPath,
-        thumbnailBuffer,
-        {
+        // STEP 2: Detect if this is a two-page spread using Gemini (URL now available)
+        const splitResult = await detectSplit(buffer, originalBlob.url, db);
+
+        if (splitResult.isTwoPageSpread) {
+          // STEP 3a: Process as split image (creates 2 pages with separate thumbnails)
+          try {
+            const [leftPage, rightPage] = await processSplitImage(
+              buffer,
+              bookId,
+              nextPageNumber,
+              originalBlob.url,
+              splitResult
+            );
+
+            // Insert both pages
+            await db.collection('pages').insertMany([leftPage, rightPage]);
+            uploadedPages.push(leftPage, rightPage);
+            nextPageNumber += 2;            
+            continue; // Success, move to next file
+          } catch (splitError) {
+            console.error(`Split processing failed for ${file.name}, falling back to single page:`, splitError);
+            // Fall through to single page logic with thumbnail generation
+          }
+        }
+
+        // STEP 3b: Process as single page (either not a spread or split failed)
+        // Generate thumbnail from original buffer
+        const { compress_photo } = await import('@/lib/image-manipulation');
+        const thumbnailBuffer = await compress_photo(buffer, 150, 60);
+        const thumbnailBlobPath = `uploads/${bookId}/thumbnails/${filename}`;
+        const thumbnailBlob = await put(thumbnailBlobPath, thumbnailBuffer, {
           access: 'public',
-          contentType: file.type || 'image/jpeg',
-          addRandomSuffix: false,
-        }
-      );
+          contentType,
+          addRandomSuffix: false
+        });
 
-      // Create page record
-      const pageId = new ObjectId().toHexString();
-      const photoUrl = origPhotoBlob.url;
-      const thumbnailUrl = thumbnailPhotoBlob.url;
-      
-      const page: Page = {
-        id: pageId,
-        tenant_id: 'default',
-        book_id: bookId,
-        page_number: nextPageNumber,
-        photo: photoUrl,
-        photo_original: photoUrl,
-        thumbnail: thumbnailUrl,        
-        created_at: new Date(),
-        updated_at: new Date(),
-      };
+        const singlePage = await processSingleImage(
+          bookId,
+          nextPageNumber,
+          originalBlob.url,
+          thumbnailBlob.url
+        );
 
-      await db.collection('pages').insertOne(page);
-      uploadedPages.push(page);
-      nextPageNumber++;
+        await db.collection('pages').insertOne(singlePage);
+        uploadedPages.push(singlePage);
+        nextPageNumber += 1;
+
+      } catch (error) {
+        console.error(`Failed to process ${file.name}:`, error);
+        // Skip this image, continue with rest
+        continue;
+      }
     }
 
     // Update book thumbnail and pages_count

@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+const geminiModel = process.env.GEMINI_MODEL || 'gemini-3-flash-preview';
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,7 +37,7 @@ export async function POST(request: NextRequest) {
       : { base64: imageData.base64, mimeType: imageData.mimeType };
 
     // Use Gemini 3 Flash for vision
-    const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+    const model = genAI.getGenerativeModel({ model: geminiModel });
 
     const prompt = `You are an expert at analyzing scanned book spreads to find the optimal vertical split line.
 

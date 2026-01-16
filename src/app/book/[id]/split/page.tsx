@@ -459,7 +459,7 @@ export default function SplitPage({ params }: PageProps) {
         splitPosition: splitPositions[pageId] ?? 500,
         detectedPosition: detectedPositions[pageId],
         wasAdjusted: detectedPositions[pageId] !== undefined &&
-                     detectedPositions[pageId] !== splitPositions[pageId]
+          detectedPositions[pageId] !== splitPositions[pageId]
       }));
 
       const data = await pagesApi.batchSplit(splits);
@@ -599,7 +599,7 @@ export default function SplitPage({ params }: PageProps) {
               <div className="text-sm text-blue-800">
                 <p className="font-medium mb-1">How page splitting works:</p>
                 <p>Click pages to select them — split position is <strong>auto-detected</strong>. Adjust manually if needed.
-                Each page becomes two. <strong>Originals are safe</strong> — we create cropped views with 1% overlap.</p>
+                  Each page becomes two. <strong>Originals are safe</strong> — we create cropped views with 1% overlap.</p>
               </div>
             </div>
           </div>
@@ -737,11 +737,10 @@ export default function SplitPage({ params }: PageProps) {
             return (
               <div
                 key={page.id}
-                className={`bg-white rounded-lg border p-3 transition-all cursor-pointer ${
-                  isSelected
+                className={`bg-white rounded-lg border p-3 transition-all cursor-pointer ${isSelected
                     ? 'border-amber-400 ring-2 ring-amber-200'
                     : 'border-stone-200 hover:border-stone-300'
-                }`}
+                  }`}
                 onClick={(e) => togglePageSelection(page.id, index, e)}
               >
                 {/* Image */}
@@ -899,25 +898,24 @@ export default function SplitPage({ params }: PageProps) {
                   {cropJobStatus === 'completed'
                     ? 'Complete! Redirecting...'
                     : cropJobStatus === 'failed'
-                    ? 'Some images failed, redirecting...'
-                    : `${cropJobProgress?.completed || 0} of ${cropJobProgress?.total || 0} images`}
+                      ? 'Some images failed, redirecting...'
+                      : `${cropJobProgress?.completed || 0} of ${cropJobProgress?.total || 0} images`}
                 </p>
 
                 {/* Progress bar */}
                 {cropJobProgress && cropJobProgress.total > 0 && (
                   <div className="mt-4 w-full bg-stone-200 rounded-full h-2 overflow-hidden">
                     <div
-                      className={`h-full transition-all duration-300 ${
-                        cropJobStatus === 'completed' ? 'bg-green-500' :
-                        cropJobStatus === 'failed' ? 'bg-red-500' : 'bg-amber-500'
-                      }`}
+                      className={`h-full transition-all duration-300 ${cropJobStatus === 'completed' ? 'bg-green-500' :
+                          cropJobStatus === 'failed' ? 'bg-red-500' : 'bg-amber-500'
+                        }`}
                       style={{ width: `${Math.round((cropJobProgress.completed / cropJobProgress.total) * 100)}%` }}
                     />
                   </div>
                 )}
 
                 <p className="text-xs text-stone-400 mt-4">
-                  This ensures OCR uses the correct cropped images
+                  This ensures OCR uses the correct cropped images.
                 </p>
               </>
             )}

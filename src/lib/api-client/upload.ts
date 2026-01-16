@@ -30,7 +30,8 @@ export const upload = {
     });
 
     return await apiClient.post('/api/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
+      headers: { 'Content-Type': 'multipart/form-data' },
+      timeout: 180000 // 3 minutes timeout for uploads (allows ~90 images with Gemini at 2s each)
     });
   },
 };

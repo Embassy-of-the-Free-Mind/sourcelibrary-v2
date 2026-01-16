@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
-import { getGeminiClient, getNextApiKey, reportRateLimitError } from '@/lib/gemini';
+import { getGeminiClient, getNextApiKey, reportRateLimitError } from '@/lib/gemini-client';
 
 // Increase timeout for batch translation
 export const maxDuration = 180;

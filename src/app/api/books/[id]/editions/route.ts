@@ -92,7 +92,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
 
     // Calculate content hash (SHA-256 of all translation text)
     const translationText = translatedPages
-      .map(p => `--- Page ${p.page_number} ---\n${p.translation.data}`)
+      .map(p => `--- Page ${p.page_number} ---\n${p.translation ? p.translation.data : ''}`)
       .join('\n\n');
     const contentHash = crypto.createHash('sha256').update(translationText).digest('hex');
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
-import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemini';
+import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemini-client';
 import { getOcrPrompt, type PromptLookupResult } from '@/lib/prompts';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';

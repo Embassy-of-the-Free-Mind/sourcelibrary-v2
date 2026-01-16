@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { detectSplitWithGemini, extractFeatures } from '@/lib/splitDetectionML';
+import { detectSplitWithGemini, extractFeatures } from '@/lib/page-split/splitDetectionML';
 
 /**
  * POST - Generate ground truth labels for pages using Gemini

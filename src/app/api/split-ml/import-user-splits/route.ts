@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { extractFeatures } from '@/lib/splitDetectionML';
+import { extractFeatures } from '@/lib/page-split/splitDetectionML';
 
 /**
  * Import existing user splits as training data

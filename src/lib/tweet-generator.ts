@@ -5,7 +5,7 @@
  * Supports audience targeting and multiple voice styles for heavy curation workflows.
  */
 
-import { getGeminiClient, reportRateLimitError, getNextApiKey } from './gemini';
+import { getGeminiClient, reportRateLimitError, getNextApiKey } from './gemini-client';
 import Anthropic from '@anthropic-ai/sdk';
 import { DetectedImage } from './types';
 

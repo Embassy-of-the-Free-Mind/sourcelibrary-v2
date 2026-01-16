@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/splitDetectionML';
+import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/page-split/splitDetectionML';
 
 /**
  * POST - Predict split position using the trained ML model

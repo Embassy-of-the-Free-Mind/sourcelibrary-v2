@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { getGeminiClient } from '@/lib/gemini';
+import { getGeminiClient } from '@/lib/gemini-client';
 import { z } from 'zod';
 
 // Validation schema for chat messages

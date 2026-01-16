@@ -20,6 +20,7 @@ import {
 import { IMAGE_LICENSES, type ImageSourceProvider } from '@/lib/types';
 import { books, catalog } from '@/lib/api-client';
 import type { CatalogResult } from '@/lib/api-client';
+import { create } from 'domain';
 
 interface UploadedPage {
   id: string;
@@ -99,6 +100,7 @@ export default function UploadPage() {
           attribution: imageAttribution || undefined,
           access_date: new Date(),
         },
+        created_at: new Date(),
       });
 
       setBookId(book.id);
@@ -228,7 +230,7 @@ export default function UploadPage() {
             <div className="w-12 h-px bg-stone-300" />
             <div className={`flex items-center gap-2 ${step === 'upload' ? 'text-amber-700' : step === 'complete' ? 'text-green-700' : 'text-stone-400'}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'upload' ? 'bg-amber-100 text-amber-700' :
-                  step === 'complete' ? 'bg-green-100 text-green-700' : 'bg-stone-100'
+                step === 'complete' ? 'bg-green-100 text-green-700' : 'bg-stone-100'
                 }`}>
                 {step === 'complete' ? <CheckCircle className="w-5 h-5" /> : '2'}
               </div>
