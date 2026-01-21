@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { Book } from '@/lib/types';
 
 export async function GET() {
   try {
@@ -62,7 +63,7 @@ export async function POST(request: NextRequest) {
     const db = await getDb();
     const bookId = new ObjectId().toHexString();
 
-    const book = {
+    const book: Book = {
       id: bookId,
       tenant_id: 'default',
       title,
@@ -71,11 +72,9 @@ export async function POST(request: NextRequest) {
       language: language || 'Unknown',
       published: published || 'Unknown',
       publisher: publisher || null,
-      place_of_publication: place_of_publication || null,
-      printer: printer || null,
+      place_published: place_of_publication || null,      
       ia_identifier: ia_identifier || null,
-      image_source: image_source || null,
-      pageCount: 0,  // No pages yet - will be updated when pages are added
+      image_source: image_source || null,      
       pages_count: 0,
       status: 'draft',
       created_at: new Date(),

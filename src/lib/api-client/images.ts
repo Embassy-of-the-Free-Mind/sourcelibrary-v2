@@ -126,6 +126,7 @@ async function fetchBase64(
         if (ext === 'png') mimeType = 'image/png';
         else if (ext === 'gif') mimeType = 'image/gif';
         else if (ext === 'webp') mimeType = 'image/webp';
+        else if (ext === 'jp2') mimeType = 'image/jp2';
         else mimeType = 'image/jpeg'; // Default
       }
 
@@ -290,6 +291,7 @@ async function fetchBufferWithMimeType(
       if (ext === 'png') mimeType = 'image/png';
       else if (ext === 'gif') mimeType = 'image/gif';
       else if (ext === 'webp') mimeType = 'image/webp';
+      else if (ext === 'jp2') mimeType = 'image/jp2';
       else mimeType = 'image/jpeg'; // Default
     }
 
