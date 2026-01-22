@@ -18,23 +18,6 @@ interface J2KDecoder {
   // readHeader(), decodeSubResolution(), getNumDecompositions(), etc.
 }
 
-// Cache the OpenJPEG library instance to avoid re-initializing the WASM module
-// This significantly improves performance when converting multiple JP2 files
-// Reset periodically to prevent unbounded memory growth (safety net)
-let openjpegjsInstance: any = null;
-let conversionCount = 0;
-const MAX_CONVERSIONS_BEFORE_RESET = 30;
-
-async function getOpenJPEGJS() {
-  // Reset WASM instance every N conversions to prevent memory leaks
-  // Even with decoder.delete(), this provides an additional safety net
-  if (!openjpegjsInstance || conversionCount >= MAX_CONVERSIONS_BEFORE_RESET) {
-    openjpegjsInstance = await OpenJPEGJS();
-    conversionCount = 0;
-  }
-  conversionCount++;
-  return openjpegjsInstance;
-}
 
 /**
  * Compresses a photo buffer to the specified width and quality.
@@ -86,11 +69,11 @@ export async function convertToJpeg(
     // Decoder instance (OpenJPEG WASM J2KDecoder)
     // Stored outside try block to ensure cleanup in finally
     let decoder: J2KDecoder | null = null;
-    const startTime = Date.now();
 
     try {
-      // Get cached OpenJPEG library instance (initializes only once)
-      const openjpegjs = await getOpenJPEGJS();
+      // Create fresh WASM instance for this conversion
+      // This prevents memory fragmentation from accumulating across requests
+      const openjpegjs = await OpenJPEGJS();
 
       // Create decoder instance
       decoder = new openjpegjs.J2KDecoder() as J2KDecoder;
@@ -118,7 +101,7 @@ export async function convertToJpeg(
         }
       })
         .jpeg({ quality, progressive: true })
-        .toBuffer();      
+        .toBuffer();
 
       return {
         buffer: jpegBuffer,
@@ -127,9 +110,8 @@ export async function convertToJpeg(
     } catch (error) {
       throw new Error(`Failed to decode JP2 image: ${error instanceof Error ? error.message : 'unknown error'}`);
     } finally {
-      // CRITICAL: Free WASM memory to prevent memory leaks
-      // Without this cleanup, decoder instances accumulate in memory
-      // and cause "Input Buffer is empty" errors after ~70 conversions
+      // CRITICAL: Free WASM decoder memory to prevent memory leaks
+      // The WASM module instance will be garbage collected when the function exits
       if (decoder && typeof decoder.delete === 'function') {
         decoder.delete();
       }
