@@ -1,4 +1,5 @@
 export const dynamic = 'force-dynamic';
+export const maxDuration = 180; // 3 minutes for JP2 conversion
 
 import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';

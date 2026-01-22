@@ -1,14 +1,14 @@
 {
   "functions": {
-    "src/app/api/upload/from-s3/route.ts": {
-      "maxDuration": 180,
-      "memory": 1024
-    },
     "src/app/api/**/*.ts": {
       "maxDuration": 60
     },
     "src/app/api/cron/**/*.ts": {
       "maxDuration": 300
+    },
+    "src/app/api/upload/from-s3/route.ts": {
+      "maxDuration": 180,
+      "memory": 1024
     }
   },
   "crons": [
