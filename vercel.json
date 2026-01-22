@@ -1,5 +1,9 @@
 {
   "functions": {
+    "src/app/api/upload/from-s3/route.ts": {
+      "maxDuration": 90,
+      "memory": 1024
+    },
     "src/app/api/**/*.ts": {
       "maxDuration": 60
     },
