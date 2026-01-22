@@ -1,4 +1,7 @@
+// Route segment config - completely disable caching
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 export const maxDuration = 180; // 3 minutes for JP2 conversion
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -47,19 +50,28 @@ const MAX_FILE_SIZE_MEGABYTES = 20 * 1024 * 1024;
  * ```
  */
 export async function POST(request: NextRequest) {
+  // No-cache headers to prevent Edge Cache from caching this route
+  const noCacheHeaders = {
+    'Cache-Control': 'no-store, no-cache, must-revalidate, private',
+    'CDN-Cache-Control': 'no-store',
+    'Vercel-CDN-Cache-Control': 'no-store'
+  };
+
   try {
     const body = await request.json();
     const { bookId, imageUrls } = body;
 
-    // Validate required fields
     if (!bookId) {
-      return NextResponse.json({ error: 'Book ID is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Book ID is required' },
+        { status: 400, headers: noCacheHeaders }
+      );
     }
 
     if (!imageUrls || !Array.isArray(imageUrls) || imageUrls.length === 0) {
       return NextResponse.json(
         { error: 'imageUrls must be a non-empty array' },
-        { status: 400 }
+        { status: 400, headers: noCacheHeaders }
       );
     }
 
@@ -72,7 +84,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       return NextResponse.json(
         { error: error instanceof Error ? error.message : 'Book not found' },
-        { status: 404 }
+        { status: 404, headers: noCacheHeaders }
       );
     }
 
@@ -135,12 +147,14 @@ export async function POST(request: NextRequest) {
       uploaded: uploadedPages.length,
       pages: uploadedPages,
       errors: errors.length > 0 ? errors : undefined
+    }, {
+      headers: noCacheHeaders
     });
   } catch (error) {
     console.error('S3 upload error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Upload failed' },
-      { status: 500 }
+      { status: 500, headers: noCacheHeaders }
     );
   }
 }
