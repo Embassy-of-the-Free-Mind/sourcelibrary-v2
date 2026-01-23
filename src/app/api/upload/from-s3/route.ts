@@ -142,12 +142,27 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Check if any uploads succeeded
+    if (uploadedPages.length === 0 && errors.length > 0) {
+      // Total failure - all images failed
+      return NextResponse.json({
+        success: false,
+        uploaded: 0,
+        errors
+      }, {
+        status: 400,
+        headers: noCacheHeaders
+      });
+    }
+
+    // Partial or full success
     return NextResponse.json({
       success: true,
       uploaded: uploadedPages.length,
       pages: uploadedPages,
       errors: errors.length > 0 ? errors : undefined
     }, {
+      status: errors.length > 0 ? 207 : 200,  // 207 Multi-Status for partial success
       headers: noCacheHeaders
     });
   } catch (error) {
