@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
 
         // Fetch image from S3 with timeout
         const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl, {
-          timeout: 30000
+          timeout: 60000
         });
 
         // Validate size (same 20MB limit as formData)
