@@ -364,6 +364,41 @@ Return each transcription clearly separated with the exact format:
     const responseText = result.response.text();
     console.log(`[batch-ocr] Received response (${responseText.length} chars), parsing...`);
 
+    // Check for empty response (safety filter, rate limit, or API error)
+    if (!responseText || responseText.trim().length === 0) {
+      console.error('[batch-ocr] Gemini returned empty response - likely blocked by safety filter or rate limited');
+
+      // Check if we can get more details from the response
+      const finishReason = result.response.candidates?.[0]?.finishReason;
+      const safetyRatings = result.response.candidates?.[0]?.safetyRatings;
+
+      if (finishReason) {
+        console.error(`[batch-ocr] Finish reason: ${finishReason}`);
+      }
+      if (safetyRatings) {
+        console.error(`[batch-ocr] Safety ratings:`, safetyRatings);
+      }
+
+      const errorMsg = finishReason === 'SAFETY'
+        ? 'Content blocked by safety filters'
+        : 'Gemini returned empty response - possibly rate limited or API error';
+
+      return NextResponse.json({
+        ocrResults: {},
+        processedCount: 0,
+        skippedCount: skippedPageIds.length,
+        requestedCount: pages.length,
+        skippedPageIds,
+        failedPageIds: validPages.map(vp => vp.page.pageId),
+        pageResults: validPages.map(vp => ({
+          pageId: vp.page.pageId,
+          status: 'failed_empty_response',
+          message: `Page ${vp.page.pageNumber} - ${errorMsg}`
+        })),
+        usage: { inputTokens: 0, outputTokens: 0, totalTokens: 0, costUsd: 0 },
+      });
+    }
+
     // Parse the OCR results from the response
     const ocrResults: Record<string, string> = {};
 

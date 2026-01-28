@@ -562,6 +562,16 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             overwrite: overwriteMode,
           });
 
+          // Check if response indicates "no pages to process"
+          if (data.message && (data.translatedCount === 0 || Object.keys(data.translations || {}).length === 0)) {
+            console.log(`[Translation] ${data.message}`);
+            // Mark all as completed (they already have translations or missing OCR)
+            batchIds.forEach(id => {
+              if (!completed.includes(id)) completed.push(id);
+            });
+            continue;
+          }
+
           if (data.usage) {
             runningCost += data.usage.costUsd || 0;
             runningTokens += data.usage.totalTokens || 0;
@@ -569,11 +579,19 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
           // Track which pages were translated
           const translatedIds = Object.keys(data.translations || {});
+          console.log(`[Translation] Batch response: ${translatedIds.length}/${batchIds.length} pages translated`, {
+            batchSize: batchIds.length,
+            translatedCount: data.translatedCount,
+            translatedIds,
+            batchIds
+          });
+
           translatedIds.forEach(id => completed.push(id));
 
           // Mark untranslated pages as failed
           batchIds.forEach(id => {
             if (!translatedIds.includes(id)) {
+              console.warn(`[Translation] Page ${id} marked as failed - not in response`);
               failed.push(id);
             }
           });
@@ -585,9 +603,16 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           }
         } catch (error) {
           const errorMsg = error instanceof Error ? error.message : 'Network error';
-          console.error('Batch translation error:', errorMsg);
+          console.error('[Translation] Batch error:', {
+            error: errorMsg,
+            batchIds,
+            batchSize: batchPages.length,
+          });
           batchIds.forEach(id => failed.push(id));
-          setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+          setProcessing(prev => ({
+            ...prev,
+            lastError: `Translation batch failed: ${errorMsg}`
+          }));
         }
 
         processedCount += batchIds.length;
@@ -609,7 +634,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     } else if (action === 'ocr') {
       // OCR: batches of 5 images, run multiple batches in parallel for speed
       const OCR_BATCH_SIZE = 5;
-      const PARALLEL_BATCHES = 2; // Run 2 batches in parallel (uses 2 API keys)
+      const PARALLEL_BATCHES = concurrency; // Use user-selected parallel batch count
 
       // Sort pages by page number
       const sortedPageIds = [...pageIds].sort((a, b) => {
@@ -656,6 +681,16 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               overwrite: overwriteMode,
             });
 
+            // Check if response indicates "no pages to process"
+            if (data.message && data.processedCount === 0) {
+              console.log(`[OCR] ${data.message}`);
+              // Mark all as completed (they already have OCR)
+              batchIds.forEach(id => {
+                if (!completed.includes(id)) completed.push(id);
+              });
+              return { processedCount: batchIds.length };
+            }
+
             if (data.usage) {
               runningCost += data.usage.costUsd || 0;
               runningTokens += data.usage.totalTokens || 0;
@@ -688,35 +723,43 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               });
             }
 
-            // Show warning if pages need cropped images
-            if (data.needsCropCount && data.needsCropCount > 0) {
-              const cropMsg = `${data.needsCropCount} pages need cropped images. Use the Pipeline to generate them first.`;
-              console.warn(`[OCR] ${cropMsg}`);
-              setProcessing(prev => ({ ...prev, lastError: cropMsg }));
-            }
+            // Update UI immediately as this batch completes (real-time progress)
+            processedCount += batchIds.length;
+            setProcessing(prev => ({
+              ...prev,
+              currentIndex: processedCount,
+              completed: [...completed],
+              failed: [...failed],
+              totalCost: runningCost,
+              totalTokens: runningTokens,
+            }));
           } catch (error) {
             const errorMsg = error instanceof Error ? error.message : 'Network error';
-            console.error('Batch OCR error:', errorMsg);
+            console.error('[OCR] Batch error:', {
+              error: errorMsg,
+              batchIds,
+              batchSize: batchPages.length,
+            });
             batchIds.forEach(id => failed.push(id));
-            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
+            processedCount += batchIds.length;
+            setProcessing(prev => ({
+              ...prev,
+              currentIndex: processedCount,
+              completed: [...completed],
+              failed: [...failed],
+              totalCost: runningCost,
+              totalTokens: runningTokens,
+              lastError: `OCR batch failed: ${errorMsg}`
+            }));
           }
 
           return { processedCount: batchIds.length };
         });
 
         // Wait for all parallel batches to complete
-        const results = await Promise.all(batchPromises);
-        const batchProcessedCount = results.reduce((sum, r) => sum + r.processedCount, 0);
-        processedCount += batchProcessedCount;
+        await Promise.all(batchPromises);
 
-        setProcessing(prev => ({
-          ...prev,
-          currentIndex: processedCount,
-          completed: [...completed],
-          failed: [...failed],
-          totalCost: runningCost,
-          totalTokens: runningTokens,
-        }));
+        // Job progress already updated in real-time, just call final update
         updateJobProgress();
 
         // Small delay between parallel groups to avoid overwhelming the API
@@ -837,9 +880,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       console.log(`[ImageExtraction] Complete: ${completed.length} succeeded, ${failed.length} failed`);
     } else {
       // Summary: parallel per-page processing (text only, simpler)
+      console.log("Concurrency: ", concurrency);
       for (let i = 0; i < pageIds.length; i += concurrency) {
         if (stopRequestedRef.current) break;
-
         const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
         await Promise.all(batch.map(processPage));
 

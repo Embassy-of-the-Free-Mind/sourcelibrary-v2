@@ -235,9 +235,29 @@ Return each translation clearly separated with the exact format:
       }
     }
 
-    // Last resort: if still no translations parsed, split evenly
-    if (Object.keys(translations).length === 0 && pagesToTranslate.length === 1) {
-      translations[pagesToTranslate[0].pageId] = responseText.trim();
+    // Last resort: if still no translations parsed
+    if (Object.keys(translations).length === 0) {
+      if (pagesToTranslate.length === 1) {
+        // Single page - use entire response
+        translations[pagesToTranslate[0].pageId] = responseText.trim();
+      } else {
+        // Multi-page but parsing failed - log and try to split by common patterns
+        console.warn(`[batch-translate] Failed to parse ${pagesToTranslate.length} translations. Response length: ${responseText.length}`);
+        console.warn(`[batch-translate] Response preview: ${responseText.substring(0, 500)}...`);
+
+        // Try splitting by double line breaks as a last resort
+        const sections = responseText.split(/\n\n+/).filter(s => s.trim().length > 50);
+        if (sections.length === pagesToTranslate.length) {
+          console.log(`[batch-translate] Attempting to split by double line breaks: ${sections.length} sections found`);
+          sections.forEach((section, idx) => {
+            if (idx < pagesToTranslate.length) {
+              translations[pagesToTranslate[idx].pageId] = section.trim();
+            }
+          });
+        } else {
+          console.error(`[batch-translate] Could not parse translations. Expected ${pagesToTranslate.length}, found ${sections.length} sections`);
+        }
+      }
     }
 
     // Get token usage

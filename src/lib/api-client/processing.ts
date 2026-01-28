@@ -138,6 +138,10 @@ export const processing = {
     overwrite?: boolean;
   }): Promise<{
     translations: Record<string, string>;
+    translatedCount: number;
+    requestedCount: number;
+    skippedCount?: number;
+    message?: string;
     usage?: {
       inputTokens: number;
       outputTokens: number;
@@ -145,7 +149,10 @@ export const processing = {
       costUsd: number;
     };
   }> => {
-    return await apiClient.post('/api/process/batch-translate', data);
+    // Batch translation can take 30-60 seconds, override default timeout
+    return await apiClient.post('/api/process/batch-translate', data, {
+      timeout: 120000, // 2 minutes
+    });
   },
 
   /**
@@ -163,9 +170,12 @@ export const processing = {
     overwrite?: boolean;
   }): Promise<{
     ocrResults: Record<string, string>;
-    skippedPageIds?: string[];
-    failedPageIds?: string[];
-    needsCropCount?: number;
+    processedCount: number;
+    skippedCount: number;
+    requestedCount: number;
+    skippedPageIds: string[];
+    failedPageIds: string[];
+    message?: string;
     pageResults?: Array<{
       pageId: string;
       status: string;
@@ -178,7 +188,10 @@ export const processing = {
       costUsd: number;
     };
   }> => {
-    return await apiClient.post('/api/process/batch-ocr', data);
+    // Batch OCR can take 30-60 seconds with image processing, override default timeout
+    return await apiClient.post('/api/process/batch-ocr', data, {
+      timeout: 120000, // 2 minutes
+    });
   },
 
   /**
@@ -208,6 +221,9 @@ export const processing = {
       costUsd: number;
     };
   }> => {
-    return await apiClient.post('/api/process/batch-image-extraction', data);
+    // Batch image extraction can take 30-60 seconds with AI processing, override default timeout
+    return await apiClient.post('/api/process/batch-image-extraction', data, {
+      timeout: 120000, // 2 minutes
+    });
   },
 };
