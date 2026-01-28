@@ -60,13 +60,11 @@ export async function POST(request: NextRequest) {
     const pagesToTranslate = (overwrite ? enrichedPages : enrichedPages.filter(page => {
       const dbPage = dbPageMap.get(page.pageId);
       if (dbPage?.translation?.data && dbPage.translation.data.length > 0) {
-        console.log(`[batch-translate] Skipping page ${page.pageNumber} - already has translation`);
         return false;
       }
       return true;
     })).filter(page => {
       if (!page.ocrText) {
-        console.log(`[batch-translate] Skipping page ${page.pageNumber} - no OCR text`);
         return false;
       }
       return true;

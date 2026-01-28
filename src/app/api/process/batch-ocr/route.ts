@@ -89,7 +89,6 @@ async function fetchAndCropImage(
         { id: pageId },
         { $set: { cropped_photo: blob.url, updated_at: new Date() } }
       );
-      console.log(`[batch-ocr] Saved cropped image for page ${pageId}`);
     }).catch(err => {
       console.warn(`[batch-ocr] Failed to save cropped image for ${pageId}:`, err);
     });
@@ -161,7 +160,6 @@ export async function POST(request: NextRequest) {
           status: 'skipped_has_ocr',
           message: `Page ${page.pageNumber} already has OCR (${dbPage.ocr.data.length} chars)`,
         });
-        console.log(`[batch-ocr] Skipping page ${page.pageNumber} - already has OCR`);
         continue;
       }
 
@@ -171,8 +169,6 @@ export async function POST(request: NextRequest) {
 
     // If no pages to process, return early
     if (pagesToProcess.length === 0) {
-      console.log(`[batch-ocr] Nothing to process: ${skippedPageIds.length} have OCR`);
-
       return NextResponse.json({
         ocrResults: {},
         processedCount: 0,
@@ -187,8 +183,6 @@ export async function POST(request: NextRequest) {
     }
 
     // Fetch all images in parallel - with inline cropping for split pages
-    console.log(`[batch-ocr] Fetching ${pagesToProcess.length} images...`);
-
     const imagePromises = pagesToProcess.map(async (page) => {
       const dbPage = dbPageMap.get(page.pageId);
 
@@ -200,7 +194,6 @@ export async function POST(request: NextRequest) {
       if (needsInlineCrop) {
         // Crop inline and save to blob in background
         const originalUrl = dbPage?.photo_original || dbPage?.photo || page.imageUrl;
-        console.log(`[batch-ocr] Cropping page ${page.pageNumber} inline...`);
         const result = await fetchAndCropImage(
           originalUrl,
           { xStart: dbPage!.crop!.xStart, xEnd: dbPage!.crop!.xEnd },
@@ -279,8 +272,6 @@ export async function POST(request: NextRequest) {
         details: e instanceof Error ? e.message : 'Unknown error'
       }, { status: 500 });
     }
-
-    console.log(`[batch-ocr] Processing ${validPages.length} pages with ${modelId}...`);
 
     // Build the batch OCR prompt using the looked-up prompt as base
     // The prompt helper already does language substitution
@@ -362,7 +353,6 @@ Return each transcription clearly separated with the exact format:
     }
 
     const responseText = result.response.text();
-    console.log(`[batch-ocr] Received response (${responseText.length} chars), parsing...`);
 
     // Check for empty response (safety filter, rate limit, or API error)
     if (!responseText || responseText.trim().length === 0) {
@@ -418,7 +408,6 @@ Return each transcription clearly separated with the exact format:
           status: 'processed',
           message: `Page ${pageNum} - OCR complete (${ocr.length} chars)`,
         });
-        console.log(`[batch-ocr] Page ${pageNum} - extracted ${ocr.length} chars`);
       }
     }
 
@@ -432,7 +421,6 @@ Return each transcription clearly separated with the exact format:
         status: 'processed',
         message: `Page ${pageNum} - OCR complete (${responseText.trim().length} chars)`,
       });
-      console.log(`[batch-ocr] Page ${pageNum} - extracted ${responseText.trim().length} chars (single page)`);
     }
 
     // Track pages that weren't parsed from response
@@ -515,8 +503,6 @@ Return each transcription clearly separated with the exact format:
     } catch (e) {
       console.error('Failed to track cost:', e);
     }
-
-    console.log(`[batch-ocr] Complete: ${Object.keys(ocrResults).length} processed, ${skippedPageIds.length} skipped (OCR exists), ${failedPageIds.length} failed`);
 
     return NextResponse.json({
       ocrResults,

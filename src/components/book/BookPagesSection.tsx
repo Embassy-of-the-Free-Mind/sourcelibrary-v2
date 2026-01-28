@@ -579,19 +579,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
           // Track which pages were translated
           const translatedIds = Object.keys(data.translations || {});
-          console.log(`[Translation] Batch response: ${translatedIds.length}/${batchIds.length} pages translated`, {
-            batchSize: batchIds.length,
-            translatedCount: data.translatedCount,
-            translatedIds,
-            batchIds
-          });
-
           translatedIds.forEach(id => completed.push(id));
 
           // Mark untranslated pages as failed
           batchIds.forEach(id => {
             if (!translatedIds.includes(id)) {
-              console.warn(`[Translation] Page ${id} marked as failed - not in response`);
               failed.push(id);
             }
           });
@@ -652,8 +644,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           .filter((p): p is Page => p !== undefined);
         allBatches.push({ batchIds, batchPages });
       }
-
-      console.log(`[OCR] Starting parallel processing: ${allBatches.length} batches, ${PARALLEL_BATCHES} at a time`);
 
       // Process batches in parallel groups
       for (let i = 0; i < allBatches.length; i += PARALLEL_BATCHES) {
