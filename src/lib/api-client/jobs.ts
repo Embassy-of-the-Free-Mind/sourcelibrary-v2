@@ -1,6 +1,7 @@
 import { apiClient } from './client';
 import type { Job, JobStatus } from '@/lib/types';
 import type {
+  JobCreateRequest,
   JobsListResponse,
   JobProcessResponse,
   JobStatusUpdateRequest,
@@ -41,7 +42,7 @@ export const jobs = {
   /**
    * Create a new job
    */
-  create: async (job: Partial<Job>): Promise<Job> => {
+  create: async (job: JobCreateRequest): Promise<Job> => {
     return await apiClient.post('/api/jobs', job);
   },
 

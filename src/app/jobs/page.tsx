@@ -124,17 +124,34 @@ export default function JobsPage() {
     try {
       let done = false;
       let paused = false;
+      let isBatchApiJob = false;
 
       while (!done && !paused) {
         const data = await jobsApi.process(jobId);
-        done = data.processed > 0 && data.success;
+        done = data.done || false;
+        paused = data.paused || false;
+
+        // Check if this is a Batch API job (takes hours, not seconds)
+        // Batch API jobs have batch_phase or gemini_batch_jobs
+        const job = data.job as any;
+        isBatchApiJob = job?.config?.use_batch_api === true ||
+                        job?.batch_phase !== undefined ||
+                        job?.gemini_batch_jobs !== undefined;
 
         // Refresh jobs list
         await fetchJobs();
 
-        // Small delay to prevent hammering
+        // Adaptive delay based on job type
         if (!done && !paused) {
-          await new Promise(r => setTimeout(r, 500));
+          if (isBatchApiJob) {
+            // Batch API jobs take 12-24 hours to complete
+            // Poll every 5 minutes instead of every second
+            await new Promise(r => setTimeout(r, 300000)); // 5 minutes
+          } else {
+            // Realtime jobs complete in seconds/minutes
+            // Poll frequently for fast feedback
+            await new Promise(r => setTimeout(r, 1000)); // 1 second
+          }
         }
       }
     } catch (e) {
@@ -178,7 +195,7 @@ export default function JobsPage() {
         while (!done && resumingStaleRef.current) {
           try {
             const data = await jobsApi.process(job.id);
-            done = data.processed > 0 && data.success;
+            done = !!(data.processed && data.processed > 0 && data.success);
             await fetchJobs();
 
             if (!done) {

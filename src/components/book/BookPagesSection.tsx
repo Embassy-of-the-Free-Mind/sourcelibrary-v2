@@ -360,12 +360,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           type: actionToJobType[action],
           book_id: bookId,
           book_title: bookTitle,
-          config: {
-            page_ids: pageIds,
-            model: selectedModel,
-            prompt_name: currentPrompt?.name,
-            use_batch_api: true,
-          },
+          page_ids: pageIds,
+          model: selectedModel,
+          prompt_name: currentPrompt?.name,
+          use_batch_api: true,
         });
         // Redirect to jobs page
         router.push('/jobs');
@@ -403,16 +401,20 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         type: actionToJobType[action],
         book_id: bookId,
         book_title: bookTitle,
-        config: {
-          page_ids: pageIds,
-          model: selectedModel,
-          prompt_name: currentPrompt?.name,
-        },
+        page_ids: pageIds,
+        model: selectedModel,
+        prompt_name: currentPrompt?.name,
+        use_batch_api: false,  // Realtime processing, not Batch API
       });
       jobId = jobData.id;
+
       // Mark as processing
       if (jobId) {
-        await jobs.updateStatus(jobId, 'processing');
+        try {
+          await jobs.updateStatus(jobId, 'processing');
+        } catch (statusError) {
+          console.error(`[Job ${jobId}] Failed to update status to processing:`, statusError);
+        }
       }
     } catch (error) {
       console.error('Failed to create job record:', error);
@@ -901,7 +903,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           },
         });
       } catch (error) {
-        console.error('Failed to update job status:', error);
+        console.error(`[Job ${jobId}] Failed to update job status:`, error);
+        alert(`Warning: Job tracking failed to update. Check /jobs page manually. Error: ${error instanceof Error ? error.message : 'Unknown'}`);
       }
     }
 

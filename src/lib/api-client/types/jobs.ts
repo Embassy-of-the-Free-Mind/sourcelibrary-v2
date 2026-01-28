@@ -4,6 +4,23 @@
  */
 import type { Job, JobStatus, JobType } from '@/lib/types';
 
+/**
+ * Request body for creating a new job
+ * Note: API expects page_ids/model/prompt_name at top level (not nested in config)
+ * The API will construct the nested config object internally
+ */
+export interface JobCreateRequest {
+  type: JobType;
+  book_id?: string;
+  book_title?: string;
+  page_ids: string[];           // Required at top level
+  model?: string;               // Optional at top level
+  prompt_name?: string;         // Optional at top level
+  language?: string;
+  initiated_by?: string;
+  use_batch_api?: boolean;      // Enable Gemini Batch API (50% discount)
+}
+
 export interface JobLog {
   id: string;
   type: JobType;
@@ -34,11 +51,19 @@ export interface JobsListResponse {
 }
 
 export interface JobProcessResponse {
-  success: boolean;
-  processed: number;
-  message: string;
+  success?: boolean;
+  processed?: number;
+  message?: string;
   done?: boolean;
   paused?: boolean;
+  job?: Job;  // The actual job object with updated status/progress
+  // Batch API specific fields
+  phase?: string;
+  prepared?: number;
+  failed?: number;
+  remaining?: number;
+  batches?: string[];
+  collected?: number;
 }
 
 export interface JobStatusUpdateRequest {

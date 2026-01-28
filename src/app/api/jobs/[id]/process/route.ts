@@ -385,6 +385,16 @@ async function handleBatchApiJob(
 
       // Update job
       const jobStatus = allCompleted ? (anyFailed && totalSuccess === 0 ? 'failed' : 'completed') : 'processing';
+
+      // Only update progress if we have actual results collected
+      // Don't reset progress.completed to 0 when batches are still pending
+      const progressUpdate = totalSuccess > 0 || totalFail > 0
+        ? {
+            'progress.completed': totalSuccess,
+            'progress.failed': totalFail,
+          }
+        : {};
+
       await db.collection('jobs').updateOne(
         { id: jobId },
         {
@@ -392,8 +402,7 @@ async function handleBatchApiJob(
             status: jobStatus,
             gemini_batch_jobs: batchJobs,
             results: allResults,
-            'progress.completed': totalSuccess,
-            'progress.failed': totalFail,
+            ...progressUpdate,
             ...(allCompleted ? { completed_at: now } : {}),
             updated_at: now,
           },

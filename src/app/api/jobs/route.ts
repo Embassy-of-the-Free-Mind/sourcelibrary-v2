@@ -106,7 +106,8 @@ export async function POST(request: NextRequest) {
 
     await db.collection('jobs').insertOne(job as unknown as Record<string, unknown>);
 
-    return NextResponse.json({ job, message: 'Job created' });
+    // Return the job directly (not wrapped) to match the API client type signature
+    return NextResponse.json(job);
   } catch (error) {
     console.error('Error creating job:', error);
     return NextResponse.json(
