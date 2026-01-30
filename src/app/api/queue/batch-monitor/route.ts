@@ -1,7 +1,7 @@
 import { handleCallback } from '@vercel/queue';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
-import { calculateNextCheckDelay, enqueueBatchMonitor, enqueueBookTranslation } from '@/lib/api-client/queues';
+import { calculateNextCheckDelay, enqueueBatchMonitor, enqueueBookTranslation } from '@/lib/api-client/queues.server';
 import type { BatchMonitorPayload } from '@/lib/api-client/types/queues';
 import { logGeminiCall } from '@/lib/gemini-logger';
 

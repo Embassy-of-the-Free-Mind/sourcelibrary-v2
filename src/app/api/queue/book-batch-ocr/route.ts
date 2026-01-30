@@ -5,7 +5,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 import { getPageImageUrl } from '@/lib/utils';
 import { createBatchJobInline, type BatchRequest } from '@/lib/gemini-batch';
-import { enqueueBatchMonitor } from '@/lib/api-client/queues';
+import { enqueueBatchMonitor } from '@/lib/api-client/queues.server';
 import type { BookBatchOcrPayload } from '@/lib/api-client/types/queues';
 
 /**

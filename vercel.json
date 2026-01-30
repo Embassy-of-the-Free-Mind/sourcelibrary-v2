@@ -6,34 +6,44 @@
     "src/app/api/cron/**/*.ts": {
       "maxDuration": 300
     },
-    "src/app/api/queue/**/*.ts": {
-      "maxDuration": 300
+    "app/api/queue/book-batch-ocr/route.ts": {
+      "experimentalTriggers": [
+        {
+          "type": "queue/v1beta",
+          "topic": "book-batch-ocr",
+          "consumer": "default",
+          "retryAfterSeconds": 60,
+          "initialDelaySeconds": 0
+        }
+      ]
+    },
+    "app/api/queue/batch-monitor/route.ts": {      
+      "experimentalTriggers": [
+        {
+          "type": "queue/v1beta",
+          "topic": "batch-monitor",
+          "consumer": "default",
+          "retryAfterSeconds": 60,
+          "initialDelaySeconds": 0
+        }
+      ]
+    },
+    "app/api/queue/book-batch-translation/route.ts": {      
+      "experimentalTriggers": [
+        {
+          "type": "queue/v1beta",
+          "topic": "book-batch-translation",
+          "consumer": "default",
+          "retryAfterSeconds": 60,
+          "initialDelaySeconds": 0
+        }
+      ]
     },
     "src/app/api/upload/from-s3/route.ts": {
       "maxDuration": 180,
       "memory": 1024
     }
   },
-  "queues": [
-    {
-      "name": "book-batch-ocr",
-      "concurrency": 5,
-      "timeout": 300,
-      "maxRetries": 3
-    },
-    {
-      "name": "batch-monitor",
-      "concurrency": 10,
-      "timeout": 300,
-      "maxRetries": 5
-    },
-    {
-      "name": "book-batch-translation",
-      "concurrency": 3,
-      "timeout": 300,
-      "maxRetries": 3
-    }
-  ],
   "crons": [
     {
       "path": "/api/cron/archive-ocr",

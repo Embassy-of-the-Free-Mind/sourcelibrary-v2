@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { enqueueBookOcr } from '@/lib/api-client/queues';
+import { enqueueBookOcr } from '@/lib/api-client/queues.server';
 import type { QueueBooksRequest, QueueBooksResponse } from '@/lib/api-client/types/queues';
 import { nanoid } from 'nanoid';
 

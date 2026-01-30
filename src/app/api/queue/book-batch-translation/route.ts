@@ -2,7 +2,7 @@ import { handleCallback } from '@vercel/queue';
 import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getGeminiClient } from '@/lib/gemini-client';
-import { enqueueBookTranslation } from '@/lib/api-client/queues';
+import { enqueueBookTranslation } from '@/lib/api-client/queues.server';
 import type { BookBatchTranslationPayload } from '@/lib/api-client/types/queues';
 
 /**
