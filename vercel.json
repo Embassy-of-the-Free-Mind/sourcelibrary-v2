@@ -6,23 +6,38 @@
     "src/app/api/cron/**/*.ts": {
       "maxDuration": 300
     },
+    "src/app/api/queue/**/*.ts": {
+      "maxDuration": 300
+    },
     "src/app/api/upload/from-s3/route.ts": {
       "maxDuration": 180,
       "memory": 1024
     }
   },
-  "crons": [
+  "queues": [
     {
-      "path": "/api/cron/submit-ocr",
-      "schedule": "0 0 * * *"
+      "name": "book-batch-ocr",
+      "concurrency": 5,
+      "timeout": 300,
+      "maxRetries": 3
     },
+    {
+      "name": "batch-monitor",
+      "concurrency": 10,
+      "timeout": 300,
+      "maxRetries": 5
+    },
+    {
+      "name": "book-batch-translation",
+      "concurrency": 3,
+      "timeout": 300,
+      "maxRetries": 3
+    }
+  ],
+  "crons": [
     {
       "path": "/api/cron/archive-ocr",
       "schedule": "0 */4 * * *"
-    },
-    {
-      "path": "/api/cron/batch-processor",
-      "schedule": "0 */6 * * *"
     },
     {
       "path": "/api/cron/social-post",

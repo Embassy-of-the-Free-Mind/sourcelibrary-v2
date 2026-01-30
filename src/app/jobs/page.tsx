@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, RefreshCw, Play, Pause, X, RotateCcw, CheckCircle, XCircle, Clock, Loader2, Cloud, Zap, BookOpen, FileText, Plus, StopCircle } from 'lucide-react';
 import type { Job, JobStatus } from '@/lib/types';
-import { jobs as jobsApi, batchJobs, type PendingStats } from '@/lib/api-client';
+import { jobs as jobsApi, batchJobs, type PendingStats, queueBooks } from '@/lib/api-client';
 
 const STATUS_COLORS: Record<JobStatus, string> = {
   pending: 'var(--text-muted)',
@@ -69,15 +69,15 @@ export default function JobsPage() {
     return () => clearInterval(interval);
   }, [fetchJobs, autoRefresh]);
 
-  // Create batch jobs for books needing work
-  const createBatchJobs = async (type: 'ocr' | 'translate' | 'both', limit: number = 10) => {
+  // Create batch jobs for books needing work using new Vercel Queue system
+  const createBatchJobs = async (_type: 'ocr' | 'translate' | 'both', limit: number = 10) => {
     setCreatingJobs(true);
     setCreateResult(null);
     try {
-      const data = await batchJobs.processAll({ type, limit });
-      const ocrCount = data.ocr_jobs?.length || 0;
-      const transCount = data.translate_jobs?.length || 0;
-      setCreateResult(`Created ${ocrCount} OCR + ${transCount} translation jobs`);
+      // Use new Vercel Queue system - auto-finds books needing OCR
+      const data = await queueBooks({ auto: true, limit });
+      const jobCount = data.jobIds?.length || 0;
+      setCreateResult(`Queued ${jobCount} books for processing`);
       await fetchJobs();
     } catch (e) {
       setCreateResult(`Error: ${e instanceof Error ? e.message : 'Unknown error'}`);
@@ -135,8 +135,8 @@ export default function JobsPage() {
         // Batch API jobs have batch_phase or gemini_batch_jobs
         const job = data.job as any;
         isBatchApiJob = job?.config?.use_batch_api === true ||
-                        job?.batch_phase !== undefined ||
-                        job?.gemini_batch_jobs !== undefined;
+          job?.batch_phase !== undefined ||
+          job?.gemini_batch_jobs !== undefined;
 
         // Refresh jobs list
         await fetchJobs();
@@ -385,7 +385,7 @@ export default function JobsPage() {
                   </span>
                 )}
                 <button
-                  onClick={() => createBatchJobs('both', 10)}
+                  onClick={() => createBatchJobs('both', 2)} // TODO: Set it to 10 after testing!
                   disabled={creatingJobs || processingAll}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
                   style={{ background: 'var(--accent-rust)' }}
