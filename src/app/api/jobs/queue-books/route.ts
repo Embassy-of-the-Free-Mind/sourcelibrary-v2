@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { enqueueBookOcr, enqueueBookTranslation } from '@/lib/api-client/queues.server';
 import type { QueueBooksRequest, QueueBooksResponse } from '@/lib/api-client/types/queues';
 import { nanoid } from 'nanoid';
+import { DEFAULT_BATCH_MODEL } from '@/lib/types';
 
 /**
  * POST /api/jobs/queue-books
@@ -176,7 +177,7 @@ export async function POST(request: NextRequest) {
 
       // Create job record
       const jobId = nanoid(12);
-      const model = 'gemini-3-flash-preview';
+      const model = DEFAULT_BATCH_MODEL; 
       const sourceLanguage = book.original_language || 'Latin';
       const targetLanguage = 'English';
 

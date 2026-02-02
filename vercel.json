@@ -6,7 +6,7 @@
     "src/app/api/cron/**/*.ts": {
       "maxDuration": 300
     },
-    "app/api/queue/book-batch-ocr/route.ts": {
+    "src/app/api/queue/book-batch-ocr/route.ts": {
       "experimentalTriggers": [
         {
           "type": "queue/v1beta",
@@ -17,7 +17,7 @@
         }
       ]
     },
-    "app/api/queue/batch-monitor/route.ts": {      
+    "src/app/api/queue/batch-monitor/route.ts": {      
       "experimentalTriggers": [
         {
           "type": "queue/v1beta",
@@ -28,7 +28,7 @@
         }
       ]
     },
-    "app/api/queue/book-batch-translation/route.ts": {      
+    "src/app/api/queue/book-batch-translation/route.ts": {      
       "experimentalTriggers": [
         {
           "type": "queue/v1beta",
