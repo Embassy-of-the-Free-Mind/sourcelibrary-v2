@@ -28,13 +28,24 @@
         }
       ]
     },
-    "src/app/api/queue/book-batch-translation/route.ts": {      
+    "src/app/api/queue/book-batch-translation/route.ts": {
       "experimentalTriggers": [
         {
           "type": "queue/v1beta",
           "topic": "book-batch-translation",
           "consumer": "default",
           "retryAfterSeconds": 60,
+          "initialDelaySeconds": 0
+        }
+      ]
+    },
+    "src/app/api/queue/test-queue/route.ts": {
+      "experimentalTriggers": [
+        {
+          "type": "queue/v1beta",
+          "topic": "test-queue",
+          "consumer": "default",
+          "retryAfterSeconds": 30,
           "initialDelaySeconds": 0
         }
       ]
