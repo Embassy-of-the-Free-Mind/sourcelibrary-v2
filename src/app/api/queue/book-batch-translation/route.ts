@@ -202,6 +202,20 @@ Provide only the translation, maintaining the original structure and formatting.
 
       console.log(`[book-batch-translation] Batch complete: ${successCount} success, ${failCount} failed`);
 
+      // Update job progress
+      await db.collection('jobs').updateOne(
+        { id: dbJobId },
+        {
+          $inc: {
+            'progress.completed': successCount,
+            'progress.failed': failCount
+          },
+          $set: {
+            updated_at: new Date()
+          }
+        }
+      );
+
       // Check if there are more pages to process
       if (!isLastExecution) {
         console.log(`[book-batch-translation] Re-enqueuing for pages ${endPageIndex + 1}-${Math.min(endPageIndex + PAGES_PER_TIMEOUT_WINDOW, pageIds.length)}`);

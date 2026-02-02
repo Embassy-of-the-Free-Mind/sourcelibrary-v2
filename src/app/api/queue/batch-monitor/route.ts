@@ -190,6 +190,20 @@ export const POST = handleCallback({
 
         console.log(`[batch-monitor] Collected ${successCount} results, ${failCount} failed for ${geminiBatchJobId}`);
 
+        // Update job progress
+        await db.collection('jobs').updateOne(
+          { id: dbJobId },
+          {
+            $inc: {
+              'progress.completed': successCount,
+              'progress.failed': failCount
+            },
+            $set: {
+              updated_at: new Date()
+            }
+          }
+        );
+
         // Check if all chunks complete for this book/job
         if (jobType === 'ocr') {
           // Check if all OCR chunks for this book are complete
