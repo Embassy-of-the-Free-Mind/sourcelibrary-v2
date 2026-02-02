@@ -120,11 +120,13 @@ export const POST = handleCallback({
                 { id: pageId },
                 {
                   $set: {
-                    'ocr.data': text,
-                    'ocr.updated_at': now,
-                    'ocr.model': batchJobRecord.model,
-                    'ocr.language': batchJobRecord.language,
-                    'ocr.source': 'batch_api',
+                    ocr: {
+                      data: text,
+                      updated_at: now,
+                      model: batchJobRecord.model,
+                      language: batchJobRecord.language,
+                      source: 'batch_api'
+                    },
                     updated_at: new Date()
                   }
                 }
@@ -134,12 +136,14 @@ export const POST = handleCallback({
                 { id: pageId },
                 {
                   $set: {
-                    'translation.data': text,
-                    'translation.updated_at': now,
-                    'translation.model': batchJobRecord.model,
-                    'translation.source_language': batchJobRecord.source_language,
-                    'translation.target_language': batchJobRecord.target_language,
-                    'translation.source': 'batch_api',
+                    translation: {
+                      data: text,
+                      updated_at: now,
+                      model: batchJobRecord.model,
+                      source_language: batchJobRecord.source_language,
+                      target_language: batchJobRecord.target_language,
+                      source: 'batch_api'
+                    },
                     updated_at: new Date()
                   }
                 }

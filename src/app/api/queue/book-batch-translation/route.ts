@@ -161,12 +161,14 @@ Provide only the translation, maintaining the original structure and formatting.
             { id: page.id },
             {
               $set: {
-                'translation.data': translationText,
-                'translation.updated_at': now,
-                'translation.model': model,
-                'translation.source_language': sourceLanguage,
-                'translation.target_language': targetLanguage,
-                'translation.source': 'realtime_api_sequential',
+                translation: {
+                  data: translationText,
+                  updated_at: now,
+                  model: model,
+                  source_language: sourceLanguage,
+                  target_language: targetLanguage,
+                  source: 'realtime_api_sequential'
+                },
                 updated_at: new Date()
               }
             }

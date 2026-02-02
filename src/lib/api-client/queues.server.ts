@@ -19,10 +19,21 @@ import type {
  * @returns Delay in milliseconds until next check
  */
 export function calculateNextCheckDelay(elapsedHours: number): number {
-  if (elapsedHours < 12) return 6 * 60 * 60 * 1000;  // 6 hours
-  if (elapsedHours < 36) return 3 * 60 * 60 * 1000;  // 3 hours
-  if (elapsedHours < 46) return 1 * 60 * 60 * 1000;  // 1 hour
-  return 15 * 60 * 1000;                              // 15 minutes (critical window)
+  // ============================================================
+  // TESTING MODE: Check frequently for faster feedback
+  // ============================================================
+  if (elapsedHours < 12) return 2 * 60 * 1000;   // 2 minutes
+  if (elapsedHours < 36) return 2 * 60 * 1000;   // 2 minutes
+  if (elapsedHours < 46) return 1 * 60 * 1000;   // 1 minute
+  return 30 * 1000;                               // 30 seconds (critical window)
+
+  // ============================================================
+  // PRODUCTION MODE: Uncomment below and comment out testing mode above
+  // ============================================================
+  // if (elapsedHours < 12) return 6 * 60 * 60 * 1000;  // 6 hours
+  // if (elapsedHours < 36) return 3 * 60 * 60 * 1000;  // 3 hours
+  // if (elapsedHours < 46) return 1 * 60 * 60 * 1000;  // 1 hour
+  // return 15 * 60 * 1000;                              // 15 minutes (critical window)
 }
 
 /**

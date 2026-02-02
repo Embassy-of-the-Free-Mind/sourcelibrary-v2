@@ -166,7 +166,8 @@ export const POST = handleCallback({
           endpoint: '/api/queue/book-batch-ocr',
         });
 
-        // Enqueue to batch-monitor with initial 6h delay
+        // Enqueue to batch-monitor with initial delay
+        // TESTING: 2 minutes | PRODUCTION: 6 hours (uncomment line below, comment out testing line)
         await enqueueBatchMonitor({
           geminiBatchJobId: batchJob.name,
           jobType: 'ocr',
@@ -174,7 +175,8 @@ export const POST = handleCallback({
           dbJobId,
           submittedAt: new Date().toISOString(),
           attemptCount: 0
-        }, 6 * 60 * 60 * 1000); // 6 hours
+        }, 2 * 60 * 1000); // TESTING: 2 minutes
+        // }, 6 * 60 * 60 * 1000); // PRODUCTION: 6 hours
 
         submittedChunks.push({
           chunkIndex: chunk.chunkIndex,

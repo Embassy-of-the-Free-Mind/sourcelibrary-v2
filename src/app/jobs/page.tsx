@@ -29,7 +29,7 @@ export default function JobsPage() {
   const [pendingStats, setPendingStats] = useState<PendingStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [processingJobId, setProcessingJobId] = useState<string | null>(null);
-  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [autoRefresh, setAutoRefresh] = useState(false);
   const [creatingJobs, setCreatingJobs] = useState(false);
   const [createResult, setCreateResult] = useState<string | null>(null);
   const [processingAll, setProcessingAll] = useState(false);
@@ -37,6 +37,7 @@ export default function JobsPage() {
   const processingRef = useRef(false);
   const resumingStaleRef = useRef(false);
   const staleTimeoutMinutes = 5;
+  const BOOKS_BATCH_SIZE = 2;
 
   const fetchJobs = useCallback(async () => {
     try {
@@ -295,7 +296,7 @@ export default function JobsPage() {
                 }`}
             >
               <RefreshCw className={`w-3.5 h-3.5 ${autoRefresh ? 'animate-spin' : ''}`} />
-              {autoRefresh ? 'Live' : 'Paused'}
+              {autoRefresh ? 'Pause' : 'Live'}
             </button>
             <button
               onClick={fetchJobs}
@@ -385,7 +386,7 @@ export default function JobsPage() {
                   </span>
                 )}
                 <button
-                  onClick={() => createBatchJobs('both', 2)} // TODO: Set it to 10 after testing!
+                  onClick={() => createBatchJobs('both', BOOKS_BATCH_SIZE)} // TODO: Set it to 10 after testing!
                   disabled={creatingJobs || processingAll}
                   className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
                   style={{ background: 'var(--accent-rust)' }}
@@ -395,7 +396,7 @@ export default function JobsPage() {
                   ) : (
                     <Plus className="w-4 h-4" />
                   )}
-                  Queue 10 Books
+                  Queue {BOOKS_BATCH_SIZE} Books
                 </button>
                 {preparingJobs.length > 0 && (
                   <button

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { enqueueBookOcr } from '@/lib/api-client/queues.server';
+import { enqueueBookOcr, enqueueBookTranslation } from '@/lib/api-client/queues.server';
 import type { QueueBooksRequest, QueueBooksResponse } from '@/lib/api-client/types/queues';
 import { nanoid } from 'nanoid';
 
@@ -38,18 +38,18 @@ export async function POST(request: NextRequest) {
     // Enforce safety limit
     const effectiveLimit = Math.min(limit, MAX_BOOKS_PER_REQUEST);
 
-    // Auto-find books needing OCR if requested or if no bookIds provided
+    // Auto-find books needing processing if requested or if no bookIds provided
     if (auto || !bookIds || bookIds.length === 0) {
-      console.log('[queue-books] Auto-finding books needing OCR...');
+      console.log('[queue-books] Auto-finding books needing processing...');
       const db = await getDb();
 
-      // Find books that need OCR (no recent processing)
+      // Find books that need OCR or translation
       const candidateBooks = await db.collection('books')
         .find({})
         .limit(500)
         .toArray();
 
-      const booksNeedingOcr: string[] = [];
+      const booksNeedingProcessing: string[] = [];
 
       for (const book of candidateBooks) {
         // Check if book has pages
@@ -63,29 +63,40 @@ export async function POST(request: NextRequest) {
 
         if (pageCount === 0) continue;
 
-        // Check if book has OCR
+        // Check if book has incomplete OCR
         const ocrPageCount = await db.collection('pages').countDocuments({
           book_id: book.id,
-          'ocr.data': { $exists: true, $ne: null }
+          'ocr.data': { $exists: true, $nin: ['', null] }
         });
 
-        if (ocrPageCount < pageCount) {
+        const needsOcr = ocrPageCount < pageCount;
+
+        // Check if book has incomplete translation (only if OCR is complete)
+        let needsTranslation = false;
+        if (!needsOcr && ocrPageCount > 0) {
+          const translationPageCount = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            'translation.data': { $exists: true, $nin: ['', null] }
+          });
+          needsTranslation = translationPageCount < ocrPageCount;
+        }
+
+        if (needsOcr || needsTranslation) {
           // Check for existing active jobs
           const activeJob = await db.collection('jobs').findOne({
             book_id: book.id,
-            type: 'batch_ocr',
             status: { $in: ['pending', 'processing'] }
           });
 
           if (!activeJob) {
-            booksNeedingOcr.push(book.id);
-            if (booksNeedingOcr.length >= effectiveLimit) break;
+            booksNeedingProcessing.push(book.id);
+            if (booksNeedingProcessing.length >= effectiveLimit) break;
           }
         }
       }
 
-      bookIds = booksNeedingOcr;
-      console.log(`[queue-books] Found ${bookIds.length} books needing OCR`);
+      bookIds = booksNeedingProcessing;
+      console.log(`[queue-books] Found ${bookIds.length} books needing processing`);
     }
 
     // Validate input
@@ -118,7 +129,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Get all pages for this book
-      const pages = await db.collection('pages')
+      const allPages = await db.collection('pages')
         .find({
           book_id: bookId,
           $or: [
@@ -129,55 +140,101 @@ export async function POST(request: NextRequest) {
         .sort({ page_number: 1 })
         .toArray();
 
-      if (pages.length === 0) {
+      if (allPages.length === 0) {
         console.warn(`[queue-books] Book ${bookId} has no pages, skipping`);
         continue;
       }
 
-      const pageIds = pages.map(p => p.id);
+      // Determine what this book needs: OCR or Translation
+      const pagesNeedingOcr = allPages.filter(p => !p.ocr?.data || p.ocr.data === '');
+      const pagesWithOcr = allPages.filter(p => p.ocr?.data && p.ocr.data !== '');
+      const pagesNeedingTranslation = pagesWithOcr.filter(p => !p.translation?.data || p.translation.data === '');
+
+      let jobType: 'batch_ocr' | 'batch_translation';
+      let targetPages: typeof allPages;
+      let queueAction: 'ocr' | 'translation';
+
+      if (pagesNeedingOcr.length > 0) {
+        // Book needs OCR - queue only pages without OCR
+        jobType = 'batch_ocr';
+        targetPages = pagesNeedingOcr;
+        queueAction = 'ocr';
+        console.log(`[queue-books] Book ${bookId}: ${pagesNeedingOcr.length}/${allPages.length} pages need OCR`);
+      } else if (pagesNeedingTranslation.length > 0) {
+        // All pages have OCR, but some need translation
+        jobType = 'batch_translation';
+        targetPages = pagesNeedingTranslation;
+        queueAction = 'translation';
+        console.log(`[queue-books] Book ${bookId}: ${pagesNeedingTranslation.length}/${pagesWithOcr.length} pages need translation`);
+      } else {
+        // Book is fully processed
+        console.log(`[queue-books] Book ${bookId}: already fully processed, skipping`);
+        continue;
+      }
+
+      const pageIds = targetPages.map(p => p.id);
 
       // Create job record
       const jobId = nanoid(12);
+      const model = 'gemini-3-flash-preview';
+      const sourceLanguage = book.original_language || 'Latin';
+      const targetLanguage = 'English';
+
       await db.collection('jobs').insertOne({
         id: jobId,
-        type: 'batch_ocr',
+        type: jobType,
         book_id: bookId,
         book_title: book.title,
         status: 'pending',
         progress: {
-          total: pages.length,
+          total: targetPages.length,
           completed: 0,
           failed: 0
         },
         config: {
-          model: 'gemini-3-flash-preview',
-          language: book.original_language || 'Latin',
+          model,
+          language: sourceLanguage,
           page_ids: pageIds,
-          use_batch_api: true
+          ...(jobType === 'batch_ocr' ? { use_batch_api: true } : {
+            source_language: sourceLanguage,
+            target_language: targetLanguage
+          })
         },
         initiated_by: 'queue_system',
         created_at: new Date(),
         updated_at: new Date()
       });
 
-      console.log(`[queue-books] Created job ${jobId} for book ${bookId} (${pages.length} pages)`);
+      console.log(`[queue-books] Created ${jobType} job ${jobId} for book ${bookId} (${targetPages.length} pages)`);
 
-      // Enqueue to book-batch-ocr
-      await enqueueBookOcr({
-        bookId,
-        dbJobId: jobId,
-        pageIds,
-        model: 'gemini-3-flash-preview',
-        language: book.original_language || 'Latin'
-      });
-
-      console.log(`[queue-books] Enqueued book ${bookId} to book-batch-ocr`);
+      // Enqueue to appropriate queue
+      if (queueAction === 'ocr') {
+        await enqueueBookOcr({
+          bookId,
+          dbJobId: jobId,
+          pageIds,
+          model,
+          language: sourceLanguage
+        });
+        console.log(`[queue-books] Enqueued book ${bookId} to book-batch-ocr`);
+      } else {
+        await enqueueBookTranslation({
+          bookId,
+          dbJobId: jobId,
+          pageIds,
+          model,
+          sourceLanguage,
+          targetLanguage,
+          startPageIndex: 0
+        });
+        console.log(`[queue-books] Enqueued book ${bookId} to book-batch-translation`);
+      }
 
       jobIds.push(jobId);
       queuedBooks.push({
         bookId,
         jobId,
-        pageCount: pages.length
+        pageCount: targetPages.length
       });
     }
 
