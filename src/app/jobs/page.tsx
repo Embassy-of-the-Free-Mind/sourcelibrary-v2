@@ -7,19 +7,29 @@ import type { Job, JobStatus } from '@/lib/types';
 import { jobs as jobsApi, batchJobs, type PendingStats, queueBooks } from '@/lib/api-client';
 
 const STATUS_COLORS: Record<JobStatus, string> = {
+  // New SQS-based statuses
   pending: 'var(--text-muted)',
+  ocr: '#3b82f6',              // Blue - OCR processing
+  translation: '#22c55e',       // Green - Translation processing
+  completed: 'var(--accent-sage)',
+  partial: 'var(--accent-gold)',
+  // Legacy statuses
   processing: 'var(--accent-sage)',
   paused: 'var(--accent-gold)',
-  completed: 'var(--accent-sage)',
   failed: 'var(--accent-rust)',
   cancelled: 'var(--text-muted)',
 };
 
 const STATUS_ICONS: Record<JobStatus, typeof CheckCircle> = {
+  // New SQS-based statuses
   pending: Clock,
+  ocr: Loader2,
+  translation: Loader2,
+  completed: CheckCircle,
+  partial: XCircle,
+  // Legacy statuses
   processing: Loader2,
   paused: Pause,
-  completed: CheckCircle,
   failed: XCircle,
   cancelled: X,
 };
@@ -257,9 +267,31 @@ export default function JobsPage() {
     return new Date(date).toLocaleString();
   };
 
+  const getCompleted = (job: Job) => {
+    if (job.status === 'ocr') {
+      return job.progress.ocr_completed ?? 0;
+    } else if (job.status === 'translation' || job.status === 'completed' || job.status === 'partial') {
+      return job.progress.translation_completed ?? 0;
+    } else {
+      // Legacy jobs or other statuses
+      return (job.progress as any).completed ?? 0;
+    }
+  };
+
+  const getFailed = (job: Job) => {
+    return (job as any).failed_page_ids?.length ?? 0;
+  };
+
+  const getPhase = (job: Job) => {
+    if (job.status === 'ocr') return 'OCR';
+    if (job.status === 'translation') return 'Translation';
+    return ''; // No phase label for completed/partial/other statuses
+  };
+
   const getProgress = (job: Job) => {
     if (job.progress.total === 0) return 0;
-    return Math.round(((job.progress.completed + job.progress.failed) / job.progress.total) * 100);
+    const completed = getCompleted(job);
+    return Math.round((completed / job.progress.total) * 100);
   };
 
   // Calculate batch API stats
@@ -678,8 +710,8 @@ export default function JobsPage() {
                   <div className="mb-2">
                     <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
                       <span>
-                        {job.progress.completed} / {job.progress.total} completed
-                        {job.progress.failed > 0 && (
+                        {job.progress.completed ?? 0} / {job.progress.total} completed
+                        {(job.progress.failed ?? 0) > 0 && (
                           <span style={{ color: 'var(--accent-rust)' }}> • {job.progress.failed} failed</span>
                         )}
                       </span>
@@ -690,7 +722,7 @@ export default function JobsPage() {
                         className="h-full rounded-full transition-all"
                         style={{
                           width: `${progress}%`,
-                          background: job.progress.failed > 0 ? 'var(--accent-rust)' : 'var(--accent-sage)',
+                          background: (job.progress.failed ?? 0) > 0 ? 'var(--accent-rust)' : 'var(--accent-sage)',
                         }}
                       />
                     </div>

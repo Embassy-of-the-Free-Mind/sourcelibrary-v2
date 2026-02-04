@@ -39,17 +39,6 @@
         }
       ]
     },
-    "src/app/api/queue/test-queue/route.ts": {
-      "experimentalTriggers": [
-        {
-          "type": "queue/v1beta",
-          "topic": "test-queue",
-          "consumer": "default",
-          "retryAfterSeconds": 30,
-          "initialDelaySeconds": 0
-        }
-      ]
-    },
     "src/app/api/upload/from-s3/route.ts": {
       "maxDuration": 180,
       "memory": 1024

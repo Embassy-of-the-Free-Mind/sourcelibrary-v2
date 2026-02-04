@@ -11,7 +11,7 @@ import {
   Scissors,
   X
 } from 'lucide-react';
-import type { Book, Page } from '@/lib/types';
+import type { Book, Page, JobProgress } from '@/lib/types';
 import SplitModeOverlay from '@/components/pipeline/SplitModeOverlay';
 import { books, pages as pagesApi, splitDetection, jobs } from '@/lib/api-client';
 
@@ -39,7 +39,7 @@ export default function SplitPage({ params }: PageProps) {
 
   // Cropped image generation job tracking
   const [cropJobId, setCropJobId] = useState<string | null>(null);
-  const [cropJobProgress, setCropJobProgress] = useState<{ total: number; completed: number; failed: number } | null>(null);
+  const [cropJobProgress, setCropJobProgress] = useState<JobProgress | null>(null);
   const [cropJobStatus, setCropJobStatus] = useState<'pending' | 'processing' | 'completed' | 'failed' | null>(null);
 
   // Detection algorithm options
@@ -909,7 +909,7 @@ export default function SplitPage({ params }: PageProps) {
                       className={`h-full transition-all duration-300 ${cropJobStatus === 'completed' ? 'bg-green-500' :
                           cropJobStatus === 'failed' ? 'bg-red-500' : 'bg-amber-500'
                         }`}
-                      style={{ width: `${Math.round((cropJobProgress.completed / cropJobProgress.total) * 100)}%` }}
+                      style={{ width: `${Math.round(((cropJobProgress.completed ?? 0) / cropJobProgress.total) * 100)}%` }}
                     />
                   </div>
                 )}

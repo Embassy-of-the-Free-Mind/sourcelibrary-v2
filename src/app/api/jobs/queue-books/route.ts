@@ -1,34 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { enqueueBookOcr, enqueueBookTranslation } from '@/lib/api-client/queues.server';
+import { sendMessage, QUEUE_URLS } from '@/lib/sqs-client';
 import type { QueueBooksRequest, QueueBooksResponse } from '@/lib/api-client/types/queues';
 import { nanoid } from 'nanoid';
-import { DEFAULT_BATCH_MODEL } from '@/lib/types';
+import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 
 /**
  * POST /api/jobs/queue-books
  *
  * Queue multiple books for OCR and translation processing.
- * This is the entry point for the Vercel Queue-based pipeline.
+ * This is the entry point for the SQS-based pipeline.
  *
  * Flow:
  * 1. Creates job records for each book
- * 2. Enqueues books to book-batch-ocr queue
- * 3. OCR completes → batch-monitor triggers book-batch-translation
- * 4. Translation completes → job marked as done
+ * 2. Sends messages to book-processing-queue (SQS FIFO)
+ * 3. Lambda book processor enqueues pages to page-ocr-queue
+ * 4. Lambda OCR processors handle pages (rolling window, max 10 concurrent)
+ * 5. Last OCR page triggers translation phase
+ * 6. Translation completes → job marked as done
  *
  * Queue Specific Books:
- * Body: { bookIds: string[] } (max 10 books internal limit)
- * 
+ * Body: { bookIds: string[] } (recommended <20 books)
+ *
  * Auto-Select and Queue Books:
- * Body: {"auto": true, "limit": 5}
- * 
- * Returns: { success: true, jobIds: string[] }
+ * Body: {"auto": true, "limit": 10}
+ *
+ * Returns: { success: true, jobIds: string[], queuedBooks: [...] }
  */
 
 export const maxDuration = 60; // 1 minute timeout
 
-const MAX_BOOKS_PER_REQUEST = 10; // Safety limit to prevent overload
+const MAX_BOOKS_PER_REQUEST = 20; // Recommended limit (no hard limit, but keeps API responsive)
 
 export async function POST(request: NextRequest) {
   try {
@@ -83,16 +85,19 @@ export async function POST(request: NextRequest) {
         }
 
         if (needsOcr || needsTranslation) {
-          // Check for existing active jobs
-          const activeJob = await db.collection('jobs').findOne({
-            book_id: book.id,
-            status: { $in: ['pending', 'processing'] }
-          });
-
-          if (!activeJob) {
-            booksNeedingProcessing.push(book.id);
-            if (booksNeedingProcessing.length >= effectiveLimit) break;
+          // Check if book already has an active job
+          if (book.current_job_id) {
+            const activeJob = await db.collection('jobs').findOne({
+              id: book.current_job_id,
+              status: { $in: ['pending', 'ocr', 'translation'] }
+            });
+            if (activeJob) {
+              continue; // Skip books with active jobs
+            }
           }
+
+          booksNeedingProcessing.push(book.id);
+          if (booksNeedingProcessing.length >= effectiveLimit) break;
         }
       }
 
@@ -173,13 +178,10 @@ export async function POST(request: NextRequest) {
         continue;
       }
 
-      const pageIds = targetPages.map(p => p.id);
-
-      // Create job record
+      // Create job record with simplified schema
       const jobId = nanoid(12);
-      const model = DEFAULT_BATCH_MODEL; 
+      const model = DEFAULT_MODEL;
       const sourceLanguage = book.original_language || 'Latin';
-      const targetLanguage = 'English';
 
       await db.collection('jobs').insertOne({
         id: jobId,
@@ -189,17 +191,12 @@ export async function POST(request: NextRequest) {
         status: 'pending',
         progress: {
           total: targetPages.length,
-          completed: 0,
-          failed: 0
+          ocr_completed: 0,
+          translation_completed: 0
         },
         config: {
           model,
-          language: sourceLanguage,
-          page_ids: pageIds,
-          ...(jobType === 'batch_ocr' ? { use_batch_api: true } : {
-            source_language: sourceLanguage,
-            target_language: targetLanguage
-          })
+          language: sourceLanguage
         },
         initiated_by: 'queue_system',
         created_at: new Date(),
@@ -208,28 +205,29 @@ export async function POST(request: NextRequest) {
 
       console.log(`[queue-books] Created ${jobType} job ${jobId} for book ${bookId} (${targetPages.length} pages)`);
 
-      // Enqueue to appropriate queue
-      if (queueAction === 'ocr') {
-        await enqueueBookOcr({
-          bookId,
-          dbJobId: jobId,
-          pageIds,
-          model,
-          language: sourceLanguage
+      // Enqueue to SQS book processing queue (skip in local test mode)
+      const localTestMode = process.env.LOCAL_TEST_MODE === 'true';
+
+      if (!localTestMode) {
+        await sendMessage({
+          queueUrl: QUEUE_URLS.bookProcessing,
+          message: {
+            bookId,
+            dbJobId: jobId,
+            phase: queueAction
+          },
+          messageGroupId: bookId
         });
-        console.log(`[queue-books] Enqueued book ${bookId} to book-batch-ocr`);
+        console.log(`[queue-books] Enqueued book ${bookId} to SQS (${queueAction} phase)`);
       } else {
-        await enqueueBookTranslation({
-          bookId,
-          dbJobId: jobId,
-          pageIds,
-          model,
-          sourceLanguage,
-          targetLanguage,
-          startPageIndex: 0
-        });
-        console.log(`[queue-books] Enqueued book ${bookId} to book-batch-translation`);
+        console.log(`[queue-books] LOCAL_TEST_MODE: Skipped SQS send for book ${bookId}. Use test endpoints to process.`);
       }
+
+      // Set current_job_id on book
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { current_job_id: jobId } }
+      );
 
       jobIds.push(jobId);
       queuedBooks.push({

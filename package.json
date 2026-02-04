@@ -7,11 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "npx ts-node --project tests/tsconfig.json tests/simple-test.ts"
+    "test": "npx ts-node --project tests/tsconfig.json tests/simple-test.ts",
+    "lambda:build": "./scripts/build-lambda.sh",
+    "lambda:package": "./scripts/package-lambda.sh",
+    "lambda:all": "npm run lambda:build && npm run lambda:package"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",
     "@auth/mongodb-adapter": "^3.11.1",
+    "@aws-sdk/client-sqs": "^3.982.0",
     "@cornerstonejs/codec-openjpeg": "^1.3.0",
     "@google/genai": "^1.34.0",
     "@google/generative-ai": "^0.24.1",
@@ -44,6 +48,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/aws-lambda": "^8.10.160",
     "@types/node": "^20",
     "@types/pngjs": "^6.0.5",
     "@types/react": "^19",
@@ -53,6 +58,7 @@
     "baseline-browser-mapping": "^2.9.19",
     "commander": "^14.0.2",
     "dotenv-cli": "^11.0.0",
+    "esbuild": "^0.27.2",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
     "pixelmatch": "^7.1.0",

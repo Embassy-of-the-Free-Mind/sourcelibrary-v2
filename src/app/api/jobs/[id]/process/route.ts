@@ -768,7 +768,7 @@ export async function POST(
     }
 
     // Get pages that haven't been processed yet
-    const processedPageIds = new Set(job.results.map(r => r.pageId));
+    const processedPageIds = new Set((job.results || []).map(r => r.pageId));
     const remainingPageIds = (job.config.page_ids || []).filter(
       (pageId: string) => !processedPageIds.has(pageId)
     );
@@ -1181,8 +1181,8 @@ export async function POST(
       {
         $set: {
           results: [...existingResults, ...results],
-          'progress.completed': job.progress.completed + successCount,
-          'progress.failed': job.progress.failed + failCount,
+          'progress.completed': (job.progress.completed ?? 0) + successCount,
+          'progress.failed': (job.progress.failed ?? 0) + failCount,
           'progress.currentItem': null,
           updated_at: new Date(),
         },
@@ -1192,10 +1192,10 @@ export async function POST(
     // Check if job is now complete or failed
     const updatedJob = await db.collection('jobs').findOne({ id }) as Job | null;
     const allProcessed = updatedJob &&
-      (updatedJob.progress.completed + updatedJob.progress.failed) >= updatedJob.progress.total;
+      ((updatedJob.progress.completed ?? 0) + (updatedJob.progress.failed ?? 0)) >= updatedJob.progress.total;
 
     if (allProcessed && updatedJob) {
-      const finalStatus = updatedJob.progress.failed > 0 && updatedJob.progress.completed === 0
+      const finalStatus = (updatedJob.progress.failed ?? 0) > 0 && (updatedJob.progress.completed ?? 0) === 0
         ? 'failed'
         : 'completed';
 
