@@ -93,7 +93,8 @@ export async function processOcrPage(msg: PageOcrMessage): Promise<void> {
 
     // In production with SQS: trigger translation phase via message
     // In local testing: translation will be triggered manually via test endpoint
-    const inProduction = process.env.SQS_BOOK_PROCESSING_QUEUE_URL;
+    const localTestMode = process.env.LOCAL_TEST_MODE === 'true';
+    const inProduction = !localTestMode && process.env.SQS_BOOK_PROCESSING_QUEUE_URL;
 
     if (inProduction) {
       // Production: send SQS message to trigger translation

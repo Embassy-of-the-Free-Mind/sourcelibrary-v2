@@ -6,39 +6,6 @@
     "src/app/api/cron/**/*.ts": {
       "maxDuration": 300
     },
-    "src/app/api/queue/book-batch-ocr/route.ts": {
-      "experimentalTriggers": [
-        {
-          "type": "queue/v1beta",
-          "topic": "book-batch-ocr",
-          "consumer": "default",
-          "retryAfterSeconds": 60,
-          "initialDelaySeconds": 0
-        }
-      ]
-    },
-    "src/app/api/queue/batch-monitor/route.ts": {      
-      "experimentalTriggers": [
-        {
-          "type": "queue/v1beta",
-          "topic": "batch-monitor",
-          "consumer": "default",
-          "retryAfterSeconds": 60,
-          "initialDelaySeconds": 0
-        }
-      ]
-    },
-    "src/app/api/queue/book-batch-translation/route.ts": {
-      "experimentalTriggers": [
-        {
-          "type": "queue/v1beta",
-          "topic": "book-batch-translation",
-          "consumer": "default",
-          "retryAfterSeconds": 60,
-          "initialDelaySeconds": 0
-        }
-      ]
-    },
     "src/app/api/upload/from-s3/route.ts": {
       "maxDuration": 180,
       "memory": 1024
