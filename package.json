@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "npx ts-node --project tests/tsconfig.json tests/simple-test.ts",
-    "lambda:build": "./scripts/build-lambda.sh",
-    "lambda:package": "./scripts/package-lambda.sh",
+    "lambda:build": "./scripts/aws-lambda/build-lambda.sh",
+    "lambda:package": "./scripts/aws-lambda/package-lambda.sh",
     "lambda:all": "npm run lambda:build && npm run lambda:package"
   },
   "dependencies": {

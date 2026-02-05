@@ -106,9 +106,6 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                             <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600">
                                 {job.config.language}
                             </span>
-                            <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-50 text-green-700">
-                                Batch API 50%↓
-                            </span>
                             {job.progress?.total > 0 && (
                                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-500">
                                     {job.progress.total} pages

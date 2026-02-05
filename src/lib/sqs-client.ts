@@ -6,7 +6,7 @@ import type { BookProcessingMessage, PageOcrMessage } from './types/sqs';
 // - In Vercel: reads AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY from environment
 // - In Lambda: automatically uses the Lambda's IAM role credentials
 const sqsClient = new SQSClient({
-  region: process.env.AWS_REGION || 'us-east-1',
+  region: process.env.AWS_REGION || 'eu-central-1',
 });
 
 // Queue URLs from environment

@@ -269,6 +269,9 @@ async function handleTranslationPhase(
     console.log(`[BOOK-TRANS] Translating page ${i + 1}/${pagesToTranslate.length}: ${page.id}`);
 
     try {
+      // Check if page already has translation (for counter logic)
+      const hadTranslation = !!page.translation?.data;
+
       // Get context from previous page
       let context = null;
       if (page.page_number > 1) {
@@ -290,7 +293,7 @@ async function handleTranslationPhase(
         DEFAULT_MODEL
       );
 
-      // Save translation
+      // Save translation (always save, even if exists - allows fixing bad translations)
       await pages.updateOne(
         { id: page.id },
         {
@@ -307,16 +310,19 @@ async function handleTranslationPhase(
         }
       );
 
-      // Update progress
-      await jobs.updateOne(
-        { id: dbJobId },
-        {
-          $inc: { 'progress.translation_completed': 1 },
-          $set: { updated_at: new Date() }
-        }
-      );
-
-      console.log(`[BOOK-TRANS] Completed page ${page.id}`);
+      // Only increment counter if this is a NEW translation (not a retry/fix)
+      if (!hadTranslation) {
+        await jobs.updateOne(
+          { id: dbJobId },
+          {
+            $inc: { 'progress.translation_completed': 1 },
+            $set: { updated_at: new Date() }
+          }
+        );
+        console.log(`[BOOK-TRANS] Completed page ${page.id} (new translation)`);
+      } else {
+        console.log(`[BOOK-TRANS] Re-translated page ${page.id} (counter not incremented)`);
+      }
     } catch (error) {
       console.error(`[BOOK-TRANS] Failed to translate page ${page.id}:`, error);
       // Track failure
