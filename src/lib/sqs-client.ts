@@ -2,12 +2,11 @@ import { SQSClient, SendMessageCommand, SendMessageBatchCommand } from '@aws-sdk
 import type { BookProcessingMessage, PageOcrMessage } from './types/sqs';
 
 // Initialize SQS client
+// Use AWS SDK's default credential provider chain:
+// - In Vercel: reads AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY from environment
+// - In Lambda: automatically uses the Lambda's IAM role credentials
 const sqsClient = new SQSClient({
   region: process.env.AWS_REGION || 'us-east-1',
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
-  },
 });
 
 // Queue URLs from environment

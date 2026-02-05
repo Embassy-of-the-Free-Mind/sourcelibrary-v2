@@ -10,6 +10,14 @@ const SOCIETY_DOMAINS = [
 ];
 
 export function proxy(request: NextRequest) {
+  // TODO: Remove after authentication in place.
+  if (request.method === 'DELETE') {
+    return new NextResponse(
+      JSON.stringify({ error: 'DELETE requests are disabled' }),
+      { status: 403, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
+
   const host = request.headers.get('host') || '';
 
   // Check if this is a Ficino Society domain

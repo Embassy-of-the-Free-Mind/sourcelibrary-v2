@@ -37,7 +37,7 @@ export async function processBook(msg: BookProcessingMessage): Promise<void> {
   if (currentPhase === 'ocr') {
     await handleOcrPhase(bookId, dbJobId, startPageIndex || 0, retryPageIds);
   } else {
-    await handleTranslationPhase(bookId, dbJobId, startPageIndex || 0, retryPageIds);
+    await handleTranslationPhase(bookId, dbJobId, retryPageIds);
   }
 }
 
@@ -74,7 +74,7 @@ async function handleOcrPhase(
 
   if (pagesToProcess.length === 0) {
     console.log(`[BOOK-OCR] No pages need OCR, moving to translation phase`);
-    await handleTranslationPhase(bookId, dbJobId, 0);
+    await handleTranslationPhase(bookId, dbJobId);
     return;
   }
 
@@ -183,14 +183,13 @@ async function handleOcrPhase(
     }
 
     console.log(`[BOOK-OCR] Local mode: All OCR pages processed, moving to translation`);
-    await handleTranslationPhase(bookId, dbJobId, 0);
+    await handleTranslationPhase(bookId, dbJobId);
   }
 }
 
 async function handleTranslationPhase(
   bookId: string,
   dbJobId: string,
-  startPageIndex: number,
   retryPageIds?: string[]
 ): Promise<void> {
   const db = await getDb();
@@ -198,7 +197,7 @@ async function handleTranslationPhase(
   const jobs = db.collection('jobs');
   const startTime = Date.now();
 
-  console.log(`[BOOK-TRANS] Starting translation phase for book ${bookId}, startPageIndex: ${startPageIndex}`);
+  console.log(`[BOOK-TRANS] Starting translation phase for book ${bookId}`);
 
   // Find pages needing translation
   const query: any = { book_id: bookId };
@@ -238,9 +237,11 @@ async function handleTranslationPhase(
   );
 
   // Process pages sequentially with context
-  const endIndex = Math.min(startPageIndex + TRANSLATION_PAGES_PER_CHECKPOINT, pagesToTranslate.length);
+  // Note: startPageIndex tracks cumulative progress, but pagesToTranslate is a fresh query of remaining pages
+  // So we always process from index 0 of this array, taking up to TRANSLATION_PAGES_PER_CHECKPOINT items
+  const pagesToProcess = Math.min(TRANSLATION_PAGES_PER_CHECKPOINT, pagesToTranslate.length);
 
-  for (let i = startPageIndex; i < endIndex; i++) {
+  for (let i = 0; i < pagesToProcess; i++) {
     // Check timeout
     if (Date.now() - startTime > MAX_DURATION) {
       console.log(`[BOOK-TRANS] Timeout approaching at page ${i}, checkpointing`);
@@ -277,7 +278,7 @@ async function handleTranslationPhase(
           'translation.data': { $exists: true }
         });
         if (prevPage?.translation?.data) {
-          context = prevPage.translation.data.slice(-500);
+          context = prevPage.translation.data;
         }
       }
 
@@ -327,26 +328,35 @@ async function handleTranslationPhase(
   }
 
   // Check if more pages remain
-  if (endIndex < pagesToTranslate.length) {
-    console.log(`[BOOK-TRANS] Checkpoint reached, ${pagesToTranslate.length - endIndex} pages remaining`);
+  if (pagesToProcess < pagesToTranslate.length) {
+    console.log(`[BOOK-TRANS] Checkpoint reached, ${pagesToTranslate.length - pagesToProcess} pages remaining`);
 
     const localTestMode = process.env.LOCAL_TEST_MODE === 'true';
     const inProduction = !localTestMode && process.env.SQS_BOOK_PROCESSING_QUEUE_URL;
+
     if (inProduction) {
-      const { sendMessage, QUEUE_URLS } = await import('@/lib/sqs-client');
-      await sendMessage({
-        queueUrl: QUEUE_URLS.bookProcessing,
-        message: {
-          bookId,
-          dbJobId,
-          phase: 'translation',
-          startPageIndex: endIndex
-        },
-        messageGroupId: bookId
-      });
+      console.log(`[BOOK-TRANS] Sending checkpoint message to SQS for book ${bookId}`);
+      try {
+        const { sendMessage, QUEUE_URLS } = await import('@/lib/sqs-client');
+        const result = await sendMessage({
+          queueUrl: QUEUE_URLS.bookProcessing,
+          message: {
+            bookId,
+            dbJobId,
+            phase: 'translation'
+          },
+          messageGroupId: bookId,
+          deduplicationId: `${bookId}-translation-${Date.now()}` // Unique ID prevents deduplication
+        });
+        console.log(`[BOOK-TRANS] Checkpoint message sent successfully:`, result);
+      } catch (error) {
+        console.error(`[BOOK-TRANS] Failed to send checkpoint message:`, error);
+        throw error;
+      }
     } else {
-      // Local mode: continue processing
-      await handleTranslationPhase(bookId, dbJobId, endIndex, retryPageIds);
+      console.log(`[BOOK-TRANS] Local mode: continuing recursively`);
+      // Local mode: continue processing recursively
+      await handleTranslationPhase(bookId, dbJobId, retryPageIds);
     }
   } else {
     // All pages done

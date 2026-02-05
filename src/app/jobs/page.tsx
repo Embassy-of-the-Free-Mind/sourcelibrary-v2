@@ -2,37 +2,10 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, X, RotateCcw, CheckCircle, XCircle, Clock, Loader2, Zap, BookOpen, FileText, Plus, Pause, Cloud } from 'lucide-react';
-import type { Job, JobStatus } from '@/lib/types';
+import { ChevronLeft, RefreshCw, Clock, Loader2, Plus } from 'lucide-react';
+import type { Job } from '@/lib/types';
 import { jobs as jobsApi, batchJobs, type PendingStats, queueBooks } from '@/lib/api-client';
-
-const STATUS_COLORS: Record<JobStatus, string> = {
-  // New SQS-based statuses
-  pending: 'var(--text-muted)',
-  ocr: '#3b82f6',              // Blue - OCR processing
-  translation: '#22c55e',       // Green - Translation processing
-  completed: 'var(--accent-sage)',
-  partial: 'var(--accent-gold)',
-  // Legacy statuses
-  processing: 'var(--accent-sage)',
-  paused: 'var(--accent-gold)',
-  failed: 'var(--accent-rust)',
-  cancelled: 'var(--text-muted)',
-};
-
-const STATUS_ICONS: Record<JobStatus, typeof CheckCircle> = {
-  // New SQS-based statuses
-  pending: Clock,
-  ocr: Loader2,
-  translation: Loader2,
-  completed: CheckCircle,
-  partial: XCircle,
-  // Legacy statuses
-  processing: Loader2,
-  paused: Pause,
-  failed: XCircle,
-  cancelled: X,
-};
+import { JobCard } from './job-card';
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -41,7 +14,8 @@ export default function JobsPage() {
   const [autoRefresh, setAutoRefresh] = useState(false);
   const [creatingJobs, setCreatingJobs] = useState(false);
   const [createResult, setCreateResult] = useState<string | null>(null);
-  const BOOKS_BATCH_SIZE = 2;
+  const BOOKS_BATCH_SIZE = 10;
+  const AUTO_REFRESH_INTERVAL_IN_MS = 10000;
 
   const fetchJobs = useCallback(async () => {
     try {
@@ -70,7 +44,7 @@ export default function JobsPage() {
 
   useEffect(() => {
     if (!autoRefresh) return;
-    const interval = setInterval(fetchJobs, 5000);
+    const interval = setInterval(fetchJobs, AUTO_REFRESH_INTERVAL_IN_MS);
     return () => clearInterval(interval);
   }, [fetchJobs, autoRefresh]);
 
@@ -179,11 +153,11 @@ export default function JobsPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setAutoRefresh(!autoRefresh)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${autoRefresh ? 'bg-green-100 text-green-700' : 'bg-stone-100 text-stone-600'
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${autoRefresh ? 'bg-red-100 text-red-700' : 'bg-stone-100 text-stone-600'
                 }`}
             >
               <RefreshCw className={`w-3.5 h-3.5 ${autoRefresh ? 'animate-spin' : ''}`} />
-              {autoRefresh ? 'Pause' : 'Live'}
+              {autoRefresh ? 'Stop' : 'Start'} Live Update
             </button>
             <button
               onClick={fetchJobs}
@@ -200,70 +174,23 @@ export default function JobsPage() {
 
       <main className="max-w-5xl mx-auto px-6 py-8">
         {/* Stats Cards */}
-        {pendingStats && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-                <Zap className="w-4 h-4" />
-                Active Jobs
-              </div>
-              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--text-primary)' }}>
-                {activeJobs.length}
-              </div>
-              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
-                {ocrJobs.length} OCR, {translationJobs.length} translating
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-                <BookOpen className="w-4 h-4" />
-                Needs OCR
-              </div>
-              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--accent-gold)' }}>
-                {pendingStats.total_pages_needing_ocr.toLocaleString()}
-              </div>
-              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
-                {pendingStats.books_needing_ocr} books
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-                <FileText className="w-4 h-4" />
-                Needs Translation
-              </div>
-              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--accent-sage)' }}>
-                {pendingStats.total_pages_needing_translation.toLocaleString()}
-              </div>
-              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
-                {pendingStats.books_needing_translation} books
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-              <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-                <Cloud className="w-4 h-4" />
-                Est. Cost (Batch)
-              </div>
-              <div className="text-2xl font-medium mt-1" style={{ color: 'var(--accent-rust)' }}>
-                ${((pendingStats.total_pages_needing_ocr * 0.0025) + (pendingStats.total_pages_needing_translation * 0.0015)).toFixed(0)}
-              </div>
-              <div className="text-xs mt-1" style={{ color: 'var(--text-faint)' }}>
-                50% off with Batch API
-              </div>
-            </div>
-          </div>
-        )}
+        {/* {pendingStats && (
+          <StatsCards
+            stats={pendingStats}
+            activeJobsCount={activeJobs.length}
+            ocrJobsCount={ocrJobs.length}
+            translationJobsCount={translationJobs.length}
+          />
+        )} */}
 
         {/* Create Batch Jobs */}
         {pendingStats && (pendingStats.total_pages_needing_ocr > 0 || pendingStats.total_pages_needing_translation > 0) && (
           <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
             <div className="flex items-center justify-between">
               <div>
-                <div className="font-medium" style={{ color: 'var(--text-primary)' }}>Queue Batch Jobs</div>
+                <div className="font-medium" style={{ color: 'var(--text-primary)' }}>Queue Books</div>
                 <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                  Create jobs for books needing OCR or translation
+                  Create jobs for books needing OCR or translation.
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -305,162 +232,14 @@ export default function JobsPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {jobs.map((job) => {
-              const StatusIcon = STATUS_ICONS[job.status];
-              const progress = getProgress(job);
-
-              return (
-                <div
-                  key={job.id}
-                  className="p-4 rounded-xl"
-                  style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}
-                >
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <StatusIcon
-                          className={`w-4 h-4 ${(job.status === 'ocr' || job.status === 'translation') ? 'animate-spin' : ''}`}
-                          style={{ color: STATUS_COLORS[job.status] }}
-                        />
-                        <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
-                          {job.type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                        </span>
-                        <span className="text-xs px-2 py-0.5 rounded-full capitalize" style={{
-                          background: 'var(--bg-warm)',
-                          color: STATUS_COLORS[job.status],
-                        }}>
-                          {job.status}
-                        </span>
-                      </div>
-                      {job.book_title && (
-                        <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-                          {job.book_id ? (
-                            <Link href={`/book/${job.book_id}`} className="hover:underline">
-                              {job.book_title}
-                            </Link>
-                          ) : (
-                            job.book_title
-                          )}
-                        </div>
-                      )}
-                      {/* Job config info */}
-                      <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                        {job.config?.model && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-mono">
-                            {job.config.model.replace('gemini-', '').replace('-preview', '')}
-                          </span>
-                        )}
-                        {job.config?.language && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600">
-                            {job.config.language}
-                          </span>
-                        )}
-                        {job.config?.use_batch_api && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-50 text-green-700">
-                            Batch API 50%↓
-                          </span>
-                        )}
-                        {job.progress?.total > 0 && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-500">
-                            {job.progress.total} pages
-                          </span>
-                        )}
-                        {job.config?.prompt_name && job.config.prompt_name !== 'Standard OCR' && job.config.prompt_name !== 'Standard Translation' && (
-                          <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-700">
-                            {job.config.prompt_name}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      {/* Actions - SQS jobs auto-process */}
-                      {job.status === 'partial' && (
-                        <button
-                          onClick={() => handleAction(job.id, 'retry')}
-                          className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
-                          title="Retry failed pages"
-                        >
-                          <RotateCcw className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
-                        </button>
-                      )}
-                      {/* X to remove from list */}
-                      <button
-                        onClick={() => handleDelete(job.id)}
-                        className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors opacity-40 hover:opacity-100"
-                        title="Remove from list"
-                      >
-                        <X className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="mb-2">
-                    <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
-                      <span>
-                        {getPhase(job) && `${getPhase(job)}: `}{getCompleted(job)} / {job.progress.total} completed
-                        {getFailed(job) > 0 && (
-                          <span style={{ color: 'var(--accent-rust)' }}> • {getFailed(job)} failed</span>
-                        )}
-                      </span>
-                      <span>{progress}%</span>
-                    </div>
-                    <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
-                      <div
-                        className="h-full rounded-full transition-all"
-                        style={{
-                          width: `${progress}%`,
-                          background: getFailed(job) > 0 ? 'var(--accent-rust)' : 'var(--accent-sage)',
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Current item */}
-                  {job.progress.currentItem && job.status === 'processing' && (
-                    <div className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>
-                      Processing: {job.progress.currentItem}
-                    </div>
-                  )}
-
-                  {/* Error message */}
-                  {job.error && (
-                    <div className="text-xs p-2 rounded-lg mb-2" style={{ background: '#fef2f2', color: '#991b1b' }}>
-                      {job.error}
-                    </div>
-                  )}
-
-                  {/* Failed page errors from results */}
-                  {job.results && job.results.filter(r => !r.success && r.error).length > 0 && (
-                    <div className="text-xs p-2 rounded-lg mb-2" style={{ background: '#fef2f2', color: '#991b1b' }}>
-                      <div className="font-medium mb-1">Failed pages:</div>
-                      <ul className="space-y-0.5">
-                        {job.results
-                          .filter(r => !r.success && r.error)
-                          .slice(-5)
-                          .map((r, i) => (
-                            <li key={i}>• {r.error}</li>
-                          ))}
-                        {job.results.filter(r => !r.success).length > 5 && (
-                          <li className="italic opacity-75">
-                            ...and {job.results.filter(r => !r.success).length - 5} more
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Footer info */}
-                  <div className="flex justify-between text-xs" style={{ color: 'var(--text-faint)' }}>
-                    <span>Created: {formatDate(job.created_at)}</span>
-                    {job.completed_at && (
-                      <span>Completed: {formatDate(job.completed_at)}</span>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+            {jobs.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                onRetry={() => handleAction(job.id, 'retry')}
+                onDelete={() => handleDelete(job.id)}
+              />
+            ))}
           </div>
         )}
       </main>
