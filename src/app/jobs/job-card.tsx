@@ -4,24 +4,18 @@ import type { Job, JobStatus } from '@/lib/types';
 
 const STATUS_COLORS: Record<JobStatus, string> = {
     pending: 'var(--text-muted)',
-    ocr: '#3b82f6',
-    translation: '#22c55e',
     completed: 'var(--accent-sage)',
     partial: 'var(--accent-gold)',
     processing: 'var(--accent-sage)',
-    paused: 'var(--accent-gold)',
     failed: 'var(--accent-rust)',
-    cancelled: 'var(--text-muted)',
+    cancelled: 'var(--text-gold)',
 };
 
 const STATUS_ICONS: Record<JobStatus, typeof CheckCircle> = {
     pending: Clock,
-    ocr: Loader2,
-    translation: Loader2,
     completed: CheckCircle,
     partial: XCircle,
     processing: Loader2,
-    paused: Pause,
     failed: XCircle,
     cancelled: X,
 };
@@ -32,29 +26,14 @@ interface JobCardProps {
     onDelete: (jobId: string) => void;
 }
 
-function getCompleted(job: Job) {
-    if (job.status === 'ocr') {
-        return job.progress.ocr_completed ?? 0;
-    } else if (job.status === 'translation' || job.status === 'completed' || job.status === 'partial') {
-        return job.progress.translation_completed ?? 0;
-    } else {
-        return (job.progress as any).completed ?? 0;
-    }
-}
-
 function getFailed(job: Job) {
-    return (job as any).failed_page_ids?.length ?? 0;
+    return job.progress.failed ??= 0; // Ensure backward compatibility if 'failed' is missing    
 }
 
-function getPhase(job: Job) {
-    if (job.status === 'ocr') return 'OCR';
-    if (job.status === 'translation') return 'Translation';
-    return '';
-}
 
 function getProgress(job: Job) {
     if (job.progress.total === 0) return 0;
-    const completed = getCompleted(job);
+    const completed = job.progress.completed ?? 0;
     return Math.round((completed / job.progress.total) * 100);
 }
 
@@ -76,9 +55,12 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                 <div>
                     <div className="flex items-center gap-2">
                         <StatusIcon
-                            className={`w-4 h-4 ${(job.status === 'ocr' || job.status === 'translation') ? 'animate-spin' : ''}`}
+                            className={`w-4 h-4 ${job.status === 'processing' ? 'animate-spin' : ''}`}
                             style={{ color: STATUS_COLORS[job.status] }}
                         />
+                        <span className='capitalize'>
+                            {job.type}
+                        </span>
                         <span className="text-xs px-2 py-0.5 rounded-full capitalize" style={{
                             background: 'var(--bg-warm)',
                             color: STATUS_COLORS[job.status],
@@ -143,7 +125,7 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
             <div className="mb-2">
                 <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
                     <span>
-                        {getPhase(job) && `${getPhase(job)}: `}{getCompleted(job)} / {job.progress.total} completed
+                        {job.progress.completed} / {job.progress.total} Completed
                         {getFailed(job) > 0 && (
                             <span style={{ color: 'var(--accent-rust)' }}> • {getFailed(job)} failed</span>
                         )}
@@ -162,11 +144,12 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
             </div>
 
             {/* Current item */}
-            {job.progress.currentItem && job.status === 'processing' && (
+            {/* TODO: REMOVE IF NOT NEEDED */}
+            {/* {job.progress.currentItem && job.status === 'processing' && (
                 <div className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>
                     Processing: {job.progress.currentItem}
                 </div>
-            )}
+            )} */}
 
             {/* Error message */}
             {job.error && (

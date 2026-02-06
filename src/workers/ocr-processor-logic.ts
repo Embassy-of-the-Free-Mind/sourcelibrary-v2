@@ -29,8 +29,7 @@ function getPageImageUrl(page: Page): string | null {
   );
 }
 
-export async function processOcrPage(event: any): Promise<void> {
-  const message: PageProcessingMessage = JSON.parse(event.Records[0].body);
+export async function processOcrPage(message: PageProcessingMessage): Promise<void> {
   const { bookId, pageId, jobId, customPrompt } = message;
 
   console.log(`[OCR] Processing page ${pageId} for job ${jobId}`);

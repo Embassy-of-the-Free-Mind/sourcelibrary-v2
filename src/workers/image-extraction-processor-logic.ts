@@ -33,8 +33,7 @@ function getPageImageUrl(page: Page): string | null {
   );
 }
 
-export async function processImageExtractionPage(event: any) {
-  const message: PageProcessingMessage = JSON.parse(event.Records[0].body);
+export async function processImageExtractionPage(message: PageProcessingMessage) {
   const { bookId, pageId, jobId } = message;
 
   console.log(`[IMG-EXTRACT] Processing page ${pageId} for job ${jobId}`);

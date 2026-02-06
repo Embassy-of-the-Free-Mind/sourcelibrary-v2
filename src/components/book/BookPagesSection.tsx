@@ -165,16 +165,12 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       try {
         // Get book to check if there's a current job
         const book = await books.get(bookId);
-        book.current_job_id = '2k2mJIQ5CmYM';
         if (book.current_job_id) {
           const job = await jobs.get(book.current_job_id);
-          // Only set if job is still active
-          console.log("Job on fetch:", job);
-          console.log("Job status on fetch:", job.status);
+          // Only set if job is still active          
           if (['pending', 'processing'].includes(job.status)) {
             setCurrentJob(job);
           }
-          console.log('Set current job on mount:', currentJob);
         }
       } catch (error) {
         console.error('Failed to fetch current job:', error);
@@ -376,11 +372,29 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         customPrompt
       });
 
+      // Set current job to show progress UI immediately
+      setCurrentJob({
+        id: response.jobId,
+        type: action,
+        status: 'pending',
+        progress: {
+          total: pageIdsToProcess.length,
+          completed: 0,
+          failed: 0
+        },
+        book_id: bookId,
+        book_title: bookTitle || '',
+        config: {},
+        created_at: new Date(),
+        updated_at: new Date(),
+        initiated_by: 'user'
+      });
+
       // Clear selection and exit batch mode
       setSelectedPages(new Set());
       setBatchMode(false);
 
-      // Refresh to show job status
+      // Refresh to show updated job status
       router.refresh();
     } catch (error) {
       console.error('Failed to queue job:', error);
@@ -395,11 +409,33 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     setLoadingJob(true);
     try {
       const job = await jobs.get(currentJob.id);
-      setCurrentJob(job);
+
+      // If job is completed successfully, hide progress UI and refresh
+      if (job.status === 'completed' && job.progress.failed === 0) {
+        setCurrentJob(null);
+        router.refresh();
+      } else {
+        // Update job state (will show failed/cancelled states)
+        setCurrentJob(job);
+      }
     } catch (error) {
       console.error('Failed to fetch job status:', error);
     } finally {
       setLoadingJob(false);
+    }
+  };
+
+  // Retry failed pages
+  const retryFailedPages = async () => {
+    if (!currentJob) return;
+
+    try {
+      await jobs.retry(currentJob.id);
+      // Refresh job status to show retry progress
+      await fetchJobStatus();
+    } catch (error) {
+      console.error('Failed to retry job:', error);
+      alert(error instanceof Error ? error.message : 'Failed to retry job');
     }
   };
 
@@ -509,7 +545,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {!batchMode && !reorderMode ? (
+            {!batchMode && !reorderMode && !currentJob ? (
               <>
                 <button
                   onClick={() => setBatchMode(true)}
@@ -532,11 +568,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   <Scissors className="w-4 h-4" />
                   Split Pages
                 </Link>
-                <DownloadButton
-                  bookId={bookId}
-                  hasTranslations={pagesWithTranslation > 0}
-                  hasOcr={pagesWithOcr > 0}
-                />
               </>
             ) : batchMode ? (
               <button
@@ -567,58 +598,118 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 </button>
               </div>
             ) : null}
+            {/* Download button - always visible */}
+            <DownloadButton
+              bookId={bookId}
+              hasTranslations={pagesWithTranslation > 0}
+              hasOcr={pagesWithOcr > 0}
+            />
           </div>
         </div>
       </div>
 
       {/* Job Status Banner */}
-      {currentJob && (
-        <div className="bg-blue-50 rounded-xl border border-blue-200 p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Loader2 className="w-5 h-5 text-blue-600 animate-spin" />
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-blue-900">
-                    {actionConfig[currentJob.type].label} in progress
-                  </span>
-                  <span className="text-xs text-blue-600 bg-blue-100 px-2 py-0.5 rounded">
-                    {currentJob.status}
-                  </span>
-                </div>
-                <div className="text-xs text-blue-700 mt-1">
-                  {currentJob.progress.completed} / {currentJob.progress.total} pages completed
-                  {currentJob.progress.failed ? ` • ${currentJob.progress.failed} failed` : ''}
+      {currentJob && (() => {
+        const isProcessing = currentJob.status === 'processing' || currentJob.status === 'pending';
+        const isCancelled = currentJob.status === 'cancelled';
+        const hasFailed = (currentJob.progress.failed ?? 0) > 0;
+
+        // Color scheme based on status
+        const bgColor = isCancelled ? 'bg-stone-50' : hasFailed ? 'bg-red-50' : 'bg-blue-50';
+        const borderColor = isCancelled ? 'border-stone-200' : hasFailed ? 'border-red-200' : 'border-blue-200';
+        const textColor = isCancelled ? 'text-stone-900' : hasFailed ? 'text-red-900' : 'text-blue-900';
+        const subTextColor = isCancelled ? 'text-stone-700' : hasFailed ? 'text-red-700' : 'text-blue-700';
+        const iconColor = isCancelled ? 'text-stone-600' : hasFailed ? 'text-red-600' : 'text-blue-600';
+        const progressBg = isCancelled ? 'bg-stone-200' : hasFailed ? 'bg-red-200' : 'bg-blue-200';
+        const progressBar = isCancelled ? 'bg-stone-600' : hasFailed ? 'bg-red-600' : 'bg-blue-600';
+
+        return (
+          <div className={`${bgColor} rounded-xl border ${borderColor} p-4`}>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {isProcessing ? (
+                  <Loader2 className={`w-5 h-5 ${iconColor} animate-spin`} />
+                ) : isCancelled ? (
+                  <Info className={`w-5 h-5 ${iconColor}`} />
+                ) : (
+                  <AlertCircle className={`w-5 h-5 ${iconColor}`} />
+                )}
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className={`text-sm font-medium ${textColor}`}>
+                      {isProcessing ? `${actionConfig[currentJob.type].label} in progress` :
+                        isCancelled ? `${actionConfig[currentJob.type].label} cancelled` :
+                          `${actionConfig[currentJob.type].label} completed with errors`}
+                    </span>
+                    <span className={`text-xs ${isCancelled ? 'text-stone-600 bg-stone-100' : hasFailed ? 'text-red-600 bg-red-100' : 'text-blue-600 bg-blue-100'} px-2 py-0.5 rounded`}>
+                      {currentJob.status}
+                    </span>
+                  </div>
+                  <div className={`text-xs ${subTextColor} mt-1`}>
+                    {currentJob.progress.completed} / {currentJob.progress.total} pages completed
+                    {hasFailed && ` • ${currentJob.progress.failed} failed`}
+                  </div>
                 </div>
               </div>
+              <div className="flex items-center gap-2">
+                {isProcessing && (
+                  <>
+                    <button
+                      onClick={fetchJobStatus}
+                      disabled={loadingJob}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-blue-700 rounded-lg hover:bg-blue-100 border border-blue-300 disabled:opacity-50"
+                    >
+                      <RefreshCw className={`w-3.5 h-3.5 ${loadingJob ? 'animate-spin' : ''}`} />
+                      Refresh
+                    </button>
+                    <button
+                      onClick={cancelJob}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      Cancel
+                    </button>
+                  </>
+                )}
+                {hasFailed && !isProcessing && (
+                  <>
+                    <button
+                      onClick={retryFailedPages}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      Retry Failed
+                    </button>
+                    <button
+                      onClick={() => setCurrentJob(null)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-stone-700 rounded-lg hover:bg-stone-100 border border-stone-300"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      Close
+                    </button>
+                  </>
+                )}
+                {isCancelled && (
+                  <button
+                    onClick={() => setCurrentJob(null)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-stone-700 rounded-lg hover:bg-stone-100 border border-stone-300"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                    Close
+                  </button>
+                )}
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={fetchJobStatus}
-                disabled={loadingJob}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-blue-700 rounded-lg hover:bg-blue-100 border border-blue-300 disabled:opacity-50"
-              >
-                <RefreshCw className={`w-3.5 h-3.5 ${loadingJob ? 'animate-spin' : ''}`} />
-                Refresh
-              </button>
-              <button
-                onClick={cancelJob}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
-                <X className="w-3.5 h-3.5" />
-                Cancel
-              </button>
+            {/* Progress bar */}
+            <div className={`mt-3 h-2 ${progressBg} rounded-full overflow-hidden`}>
+              <div
+                className={`h-full ${progressBar} transition-all duration-300`}
+                style={{ width: `${(currentJob.progress.completed / currentJob.progress.total) * 100}%` }}
+              />
             </div>
           </div>
-          {/* Progress bar */}
-          <div className="mt-3 h-2 bg-blue-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-blue-600 transition-all duration-300"
-              style={{ width: `${(currentJob.progress.completed / currentJob.progress.total) * 100}%` }}
-            />
-          </div>
-        </div>
-      )}
+        );
+      })()}
 
       {/* Batch Mode Controls */}
       {batchMode && (

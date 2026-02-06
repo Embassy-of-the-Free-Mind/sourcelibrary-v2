@@ -31,30 +31,38 @@ cd dist/lambda-temp
 npm install --production --no-package-lock
 cd ../..
 
-# Package book processor
-echo "📦 Packaging book-processor..."
-cp dist/lambda/book-processor.js dist/lambda-temp/
-cd dist/lambda-temp
-zip -q -r book-processor.zip book-processor.js node_modules
-mv book-processor.zip ../packages/
-cd ../..
-
 # Package OCR processor
 echo "📦 Packaging ocr-processor..."
-rm dist/lambda-temp/book-processor.js
-cp dist/lambda/ocr-processor.js dist/lambda-temp/
+cp dist/lambda/ocr-processor.js dist/lambda-temp/index.js
 cd dist/lambda-temp
-zip -q -r ocr-processor.zip ocr-processor.js node_modules
-mv ocr-processor.zip ../packages/
+zip -q -r ../packages/ocr-processor.zip index.js node_modules
+cd ../..
+
+# Package Translation processor
+echo "📦 Packaging translation-processor..."
+rm dist/lambda-temp/index.js
+cp dist/lambda/translation-processor.js dist/lambda-temp/index.js
+cd dist/lambda-temp
+zip -q -r ../packages/translation-processor.zip index.js node_modules
+cd ../..
+
+# Package Image Extraction processor
+echo "📦 Packaging image-extraction-processor..."
+rm dist/lambda-temp/index.js
+cp dist/lambda/image-extraction-processor.js dist/lambda-temp/index.js
+cd dist/lambda-temp
+zip -q -r ../packages/image-extraction-processor.zip index.js node_modules
 cd ../..
 
 # Cleanup
 rm -rf dist/lambda-temp
 
 echo "✅ Lambda packages created with dependencies:"
-echo "  - dist/packages/book-processor.zip"
 echo "  - dist/packages/ocr-processor.zip"
+echo "  - dist/packages/translation-processor.zip"
+echo "  - dist/packages/image-extraction-processor.zip"
 echo ""
 echo "Upload these to AWS Lambda console or use AWS CLI:"
-echo "  aws lambda update-function-code --function-name sourcelibrary-book-processor --zip-file fileb://dist/packages/book-processor.zip"
 echo "  aws lambda update-function-code --function-name sourcelibrary-ocr-processor --zip-file fileb://dist/packages/ocr-processor.zip"
+echo "  aws lambda update-function-code --function-name sourcelibrary-translation-processor --zip-file fileb://dist/packages/translation-processor.zip"
+echo "  aws lambda update-function-code --function-name sourcelibrary-image-extraction-processor --zip-file fileb://dist/packages/image-extraction-processor.zip"

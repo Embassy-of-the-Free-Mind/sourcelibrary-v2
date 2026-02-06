@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { nanoid } from 'nanoid';
-import type { Job, JobType } from '@/lib/types';
-import { DEFAULT_BATCH_MODEL } from '@/lib/types';
 
 // GET - List all jobs (with optional filters)
 export async function GET(request: NextRequest) {
@@ -36,82 +33,6 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching jobs:', error);
     return NextResponse.json(
       { error: 'Failed to fetch jobs' },
-      { status: 500 }
-    );
-  }
-}
-
-// POST - Create a new job
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const {
-      type,
-      book_id,
-      book_title,
-      page_ids,
-      model,
-      prompt_name,
-      language,
-      initiated_by,
-      use_batch_api,
-    } = body as {
-      type: JobType;
-      book_id?: string;
-      book_title?: string;
-      page_ids: string[];
-      model?: string;
-      prompt_name?: string;
-      language?: string;
-      initiated_by?: string;
-      use_batch_api?: boolean;
-    };
-
-    if (!type || !page_ids || !Array.isArray(page_ids) || page_ids.length === 0) {
-      return NextResponse.json(
-        { error: 'type and page_ids are required' },
-        { status: 400 }
-      );
-    }
-
-    const db = await getDb();
-    const jobId = nanoid(12);
-
-    // Use Batch API if explicitly requested, or if it's a batch_* job type
-    const useBatchApi = use_batch_api === true || type === 'batch_ocr' || type === 'batch_translate';
-
-    const job: Job = {
-      id: jobId,
-      type,
-      status: 'pending',
-      progress: {
-        total: page_ids.length,
-        completed: 0,
-        failed: 0,
-      },
-      book_id,
-      book_title,
-      initiated_by,
-      created_at: new Date(),
-      updated_at: new Date(),
-      results: [],
-      config: {
-        model: model || DEFAULT_BATCH_MODEL,
-        prompt_name,
-        language: language || 'Latin',
-        page_ids,
-        use_batch_api: useBatchApi,
-      },
-    };
-
-    await db.collection('jobs').insertOne(job as unknown as Record<string, unknown>);
-
-    // Return the job directly (not wrapped) to match the API client type signature
-    return NextResponse.json(job);
-  } catch (error) {
-    console.error('Error creating job:', error);
-    return NextResponse.json(
-      { error: 'Failed to create job' },
       { status: 500 }
     );
   }

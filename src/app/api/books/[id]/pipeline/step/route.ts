@@ -23,6 +23,7 @@ async function createCropJob(
   bookId: string,
   db: Awaited<ReturnType<typeof getDb>>
 ): Promise<{ status: 'completed' | 'skipped' | 'job_created'; jobId?: string; result?: Record<string, unknown> }> {
+  return { status: 'skipped', result: { message: 'Crop step is currently disabled' } }; // Disable crop step for now
   // Find pages with crop data but no cropped_photo
   const pages = await db.collection('pages')
     .find({
@@ -44,38 +45,38 @@ async function createCropJob(
   // Create a job to generate cropped images
   const book = await db.collection('books').findOne({ id: bookId });
   const jobId = nanoid(12);
+  // TODO: Remove commented-out code and fix implementation.
+  // const job: Job = {
+  //   id: jobId,
+  //   type: 'generate_cropped_images',
+  //   status: 'pending',
+  //   progress: {
+  //     total: pages.length,
+  //     completed: 0,
+  //     failed: 0,
+  //   },
+  //   book_id: bookId,
+  //   book_title: book?.display_title || book?.title,
+  //   initiated_by: 'pipeline',
+  //   created_at: new Date(),
+  //   updated_at: new Date(),
+  //   results: [],
+  //   config: {
+  //     page_ids: pages.map(p => p.id),
+  //   },
+  // };
 
-  const job: Job = {
-    id: jobId,
-    type: 'generate_cropped_images',
-    status: 'pending',
-    progress: {
-      total: pages.length,
-      completed: 0,
-      failed: 0,
-    },
-    book_id: bookId,
-    book_title: book?.display_title || book?.title,
-    initiated_by: 'pipeline',
-    created_at: new Date(),
-    updated_at: new Date(),
-    results: [],
-    config: {
-      page_ids: pages.map(p => p.id),
-    },
-  };
+  // await db.collection('jobs').insertOne(job as unknown as Record<string, unknown>);
 
-  await db.collection('jobs').insertOne(job as unknown as Record<string, unknown>);
-
-  return {
-    status: 'job_created',
-    jobId,
-    result: {
-      jobId,
-      total: pages.length,
-      message: `Generating cropped images for ${pages.length} pages`
-    }
-  };
+  // return {
+  //   status: 'job_created',
+  //   jobId,
+  //   result: {
+  //     jobId,
+  //     total: pages.length,
+  //     message: `Generating cropped images for ${pages.length} pages`
+  //   }
+  // };
 }
 
 // Create a job for OCR processing
@@ -108,7 +109,7 @@ async function createOcrJob(
 
   const job: Job = {
     id: jobId,
-    type: useBatch ? 'batch_ocr' : 'ocr',
+    type: 'ocr',
     status: 'pending',
     progress: {
       total: pages.length,
@@ -165,7 +166,7 @@ async function createTranslateJob(
 
   const job: Job = {
     id: jobId,
-    type: useBatch ? 'batch_translate' : 'translate',
+    type: 'translation',
     status: 'pending',
     progress: {
       total: pages.length,

@@ -26,6 +26,11 @@ export async function enqueuePagesForJob(
       ? QUEUE_URLS.pageTranslation
       : QUEUE_URLS.pageImageExtraction;
 
+  // Debug: Check queue URL
+  if (!queueUrl) {
+    throw new Error(`Queue URL not configured for action: ${action}`);
+  }
+
   const messages = pageIds.map(pageId => ({
     bookId,
     pageId,
@@ -37,16 +42,21 @@ export async function enqueuePagesForJob(
   for (let i = 0; i < messages.length; i += 10) {
     const batch = messages.slice(i, i + 10);
 
-    // For FIFO queue (translation), add messageGroupId
-    if (action === 'translation') {
-      const fifoEntries = batch.map(msg => ({
-        message: msg,
-        messageGroupId: jobId  // Ensures pages for same job process sequentially
-      }));
-      await sendMessageBatch(queueUrl, fifoEntries);
-    } else {
-      // Standard queues (OCR, image extraction)
-      await sendMessageBatch(queueUrl, batch.map(msg => ({ message: msg })));
+    try {
+      // For FIFO queue (translation), add messageGroupId
+      if (action === 'translation') {
+        const fifoEntries = batch.map(msg => ({
+          message: msg,
+          messageGroupId: jobId  // Ensures pages for same job process sequentially
+        }));
+        await sendMessageBatch(queueUrl, fifoEntries);
+      } else {
+        // Standard queues (OCR, image extraction)
+        await sendMessageBatch(queueUrl, batch.map(msg => ({ message: msg })));
+      }      
+    } catch (error) {
+      console.error(`[queue-utils] Failed to send batch ${i / 10 + 1}:`, error);
+      throw error;
     }
   }
 }

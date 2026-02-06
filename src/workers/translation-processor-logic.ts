@@ -13,8 +13,7 @@ import { DEFAULT_MODEL } from '@/lib/types';
  * 4. Update progress counter
  * 5. Check if job is complete
  */
-export async function processTranslationPage(event: any) {
-  const message: PageProcessingMessage = JSON.parse(event.Records[0].body);
+export async function processTranslationPage(message: PageProcessingMessage) {
   const { bookId, pageId, jobId, customPrompt } = message;
 
   console.log(`[TRANS] Processing page ${pageId} for job ${jobId}`);

@@ -40,13 +40,6 @@ export const jobs = {
   },
 
   /**
-   * Create a new job
-   */
-  create: async (job: JobCreateRequest): Promise<Job> => {
-    return await apiClient.post('/api/jobs', job);
-  },
-
-  /**
    * Update job status
    */
   updateStatus: async (id: string, status: JobStatus): Promise<JobStatusUpdateResponse> => {
