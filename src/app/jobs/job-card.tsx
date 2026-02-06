@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { X, RotateCcw, CheckCircle, XCircle, Clock, Loader2, Pause } from 'lucide-react';
-import type { Job, JobStatus } from '@/lib/types';
+import type { Job, JobStatus, JobType } from '@/lib/types';
 
 const STATUS_COLORS: Record<JobStatus, string> = {
     pending: 'var(--text-muted)',
@@ -24,6 +24,17 @@ interface JobCardProps {
     job: Job;
     onRetry: (jobId: string) => void;
     onDelete: (jobId: string) => void;
+}
+
+function getJobTypeLabel(type: JobType) {
+    switch (type) {
+        case 'ocr':
+            return 'OCR';
+        case 'translation':
+            return 'Translation';
+        case 'image_extraction':
+            return 'Image Extraction';
+    }
 }
 
 function getFailed(job: Job) {
@@ -59,7 +70,7 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                             style={{ color: STATUS_COLORS[job.status] }}
                         />
                         <span className='capitalize'>
-                            {job.type}
+                            {getJobTypeLabel(job.type)}
                         </span>
                         <span className="text-xs px-2 py-0.5 rounded-full capitalize" style={{
                             background: 'var(--bg-warm)',

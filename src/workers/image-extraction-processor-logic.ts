@@ -123,7 +123,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   const completedCount = await pages.countDocuments({
     book_id: bookId,
     id: { $in: targetPageIds },
-    detected_images: { $exists: true, $ne: [] }
+    detected_images: { $exists: true }
   });
 
   await jobs.updateOne(
@@ -138,8 +138,12 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
 
   console.log(`[IMG-EXTRACT] Progress: ${completedCount}/${targetPageIds.length}`);
 
-  // Check if job is complete
-  if (completedCount >= targetPageIds.length) {
+  // Check if job is complete (all pages attempted = completed + failed)
+  const updatedJob = await jobs.findOne({ id: jobId });
+  const failedCount = updatedJob?.progress?.failed || 0;
+  const totalAttempted = completedCount + failedCount;
+
+  if (totalAttempted >= targetPageIds.length) {
     console.log(`[IMG-EXTRACT] Job ${jobId} complete`);
     await jobs.updateOne(
       { id: jobId },

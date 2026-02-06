@@ -2,75 +2,21 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import {
-  FileText,
-  Languages,
-  BookOpen,
-  Loader2,
-  CheckCircle2,
-  Square,
-  Play,
-  Scissors,
-  Wand2,
-  X,
-  Download,
-  Settings,
-  DollarSign,
-  ImageIcon,
-  RotateCcw,
-  AlertCircle,
-  GripVertical,
-  ArrowUpDown,
-  RefreshCw,
-  Info
-} from 'lucide-react';
-import DownloadButton from '@/components/ui/DownloadButton';
-import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
-import { MODEL_PRICING } from '@/lib/ai';
 import type { Page, Prompt } from '@/lib/types';
 import type { JobType, Job } from '@/lib/types/job';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
+import BookPagesStats from './BookPagesStats';
+import BookPagesActions from './BookPagesActions';
+import JobStatusBanner from './JobStatusBanner';
+import BatchModePanel from './BatchModePanel';
+import ReorderModePanel from './ReorderModePanel';
+import PagesGrid from './PagesGrid';
 
 interface BookPagesSectionProps {
   bookId: string;
   bookTitle?: string;
   pages: Page[];
-}
-
-// Estimated token usage per action
-const ESTIMATED_TOKENS = {
-  ocr: { input: 1500, output: 800 },        // Image (~1000) + prompt (~500), output ~800
-  translation: { input: 1000, output: 1000 }, // Input text + prompt, similar output
-  summary: { input: 800, output: 200 },      // Shorter input/output
-  image_extraction: { input: 1500, output: 800 }, // Similar to OCR (image + prompt)
-};
-
-// Calculate cost per page based on model
-function getEstimatedCost(action: JobType, model: string): number {
-  const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
-  const tokens = ESTIMATED_TOKENS[action];
-  const inputCost = (tokens.input / 1_000_000) * pricing.input;
-  const outputCost = (tokens.output / 1_000_000) * pricing.output;
-  return inputCost + outputCost;
-}
-
-// Format relative time
-function formatRelativeTime(date: Date | string | undefined): string {
-  if (!date) return 'Never';
-  const d = new Date(date);
-  const now = new Date();
-  const diffMs = now.getTime() - d.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins}m ago`;
-  if (diffHours < 24) return `${diffHours}h ago`;
-  if (diffDays < 7) return `${diffDays}d ago`;
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
@@ -140,6 +86,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   // Current job status (fetched from API on-demand)
   const [currentJob, setCurrentJob] = useState<Job | null>(null);
   const [loadingJob, setLoadingJob] = useState(false);
+  const [queueing, setQueueing] = useState(false);
+  const [cancelling, setCancelling] = useState(false);
+  const [retrying, setRetrying] = useState(false);
 
   const lastSelectedIndexRef = useRef<number | null>(null);
 
@@ -364,6 +313,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       ? editedPrompts[action] || undefined
       : undefined;
 
+    setQueueing(true);
     try {
       const response = await queueBooks({
         bookId,
@@ -399,6 +349,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     } catch (error) {
       console.error('Failed to queue job:', error);
       alert(error instanceof Error ? error.message : 'Failed to queue job');
+    } finally {
+      setQueueing(false);
     }
   };
 
@@ -429,6 +381,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const retryFailedPages = async () => {
     if (!currentJob) return;
 
+    setRetrying(true);
     try {
       await jobs.retry(currentJob.id);
       // Refresh job status to show retry progress
@@ -436,6 +389,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     } catch (error) {
       console.error('Failed to retry job:', error);
       alert(error instanceof Error ? error.message : 'Failed to retry job');
+    } finally {
+      setRetrying(false);
     }
   };
 
@@ -443,6 +398,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const cancelJob = async () => {
     if (!currentJob) return;
 
+    setCancelling(true);
     try {
       await jobs.cancel(currentJob.id);
       setCurrentJob(null);
@@ -450,24 +406,12 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     } catch (error) {
       console.error('Failed to cancel job:', error);
       alert(error instanceof Error ? error.message : 'Failed to cancel job');
+    } finally {
+      setCancelling(false);
     }
   };
 
-  const actionConfig = {
-    ocr: { label: 'OCR', icon: FileText, color: '#3b82f6' },
-    translation: { label: 'Translation', icon: Languages, color: '#22c55e' },
-    summary: { label: 'Summary', icon: BookOpen, color: '#a855f7' },
-    image_extraction: { label: 'Images', icon: ImageIcon, color: '#f97316' }
-  };
-
   const selectedCount = selectedPages.size;
-  const estimatedCost = selectedCount * getEstimatedCost(action, DEFAULT_MODEL);
-
-  const formatCost = (cost: number) => {
-    if (cost < 0.01) return `$${cost.toFixed(4)}`;
-    if (cost < 1) return `$${cost.toFixed(3)}`;
-    return `$${cost.toFixed(2)}`;
-  };
 
   const [settingCover, setSettingCover] = useState<string | null>(null);
 
@@ -509,500 +453,95 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
   return (
     <div className="space-y-6">
-      {/* Stats Bar - Clean horizontal layout */}
+      {/* Stats Bar & Actions */}
       <div className="bg-white rounded-xl border border-stone-200 p-4">
-        <div className="flex flex-wrap items-center gap-6">
-          {/* OCR stat */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#eff6ff' }}>
-              <FileText className="w-5 h-5" style={{ color: '#3b82f6' }} />
-            </div>
-            <div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-semibold text-stone-900">{pagesWithOcr}</span>
-                <span className="text-sm text-stone-400">/ {totalPages}</span>
-              </div>
-              <div className="text-xs text-stone-500">OCR {lastOcrDate ? `· ${formatRelativeTime(lastOcrDate)}` : ''}</div>
-            </div>
-          </div>
-
-          {/* Translation stat */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f0fdf4' }}>
-              <Languages className="w-5 h-5" style={{ color: '#22c55e' }} />
-            </div>
-            <div>
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-xl font-semibold text-stone-900">{pagesWithTranslation}</span>
-                <span className="text-sm text-stone-400">/ {totalPages}</span>
-              </div>
-              <div className="text-xs text-stone-500">Translated {lastTranslationDate ? `· ${formatRelativeTime(lastTranslationDate)}` : ''}</div>
-            </div>
-          </div>
-
-          {/* Spacer */}
-          <div className="flex-1" />
-
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            {!batchMode && !reorderMode && !currentJob ? (
-              <>
-                <button
-                  onClick={() => setBatchMode(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors text-sm font-medium border border-amber-200"
-                >
-                  <Wand2 className="w-4 h-4" />
-                  Batch Process
-                </button>
-                <button
-                  onClick={enterReorderMode}
-                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
-                >
-                  <ArrowUpDown className="w-4 h-4" />
-                  Reorder
-                </button>
-                <Link
-                  href={`/book/${bookId}/split`}
-                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
-                >
-                  <Scissors className="w-4 h-4" />
-                  Split Pages
-                </Link>
-              </>
-            ) : batchMode ? (
-              <button
-                onClick={exitBatchMode}
-                className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors text-sm"
-              >
-                <X className="w-4 h-4" />
-                Exit
-              </button>
-            ) : reorderMode ? (
-              <div className="flex items-center gap-2">
-                {orderChanged && (
-                  <button
-                    onClick={savePageOrder}
-                    disabled={savingOrder}
-                    className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium disabled:opacity-50"
-                  >
-                    {savingOrder ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
-                    Save Order
-                  </button>
-                )}
-                <button
-                  onClick={exitReorderMode}
-                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-600 rounded-lg hover:bg-stone-200 transition-colors text-sm"
-                >
-                  <X className="w-4 h-4" />
-                  Cancel
-                </button>
-              </div>
-            ) : null}
-            {/* Download button - always visible */}
-            <DownloadButton
-              bookId={bookId}
-              hasTranslations={pagesWithTranslation > 0}
-              hasOcr={pagesWithOcr > 0}
-            />
-          </div>
+        <div className="flex items-center justify-between">
+          <BookPagesStats
+            pagesWithOcr={pagesWithOcr}
+            pagesWithTranslation={pagesWithTranslation}
+            totalPages={totalPages}
+            lastOcrDate={lastOcrDate}
+            lastTranslationDate={lastTranslationDate}
+          />
+          <BookPagesActions
+            bookId={bookId}
+            batchMode={batchMode}
+            reorderMode={reorderMode}
+            currentJob={currentJob}
+            orderChanged={orderChanged}
+            savingOrder={savingOrder}
+            pagesWithOcr={pagesWithOcr}
+            pagesWithTranslation={pagesWithTranslation}
+            onBatchClick={() => setBatchMode(true)}
+            onReorderClick={enterReorderMode}
+            onExitBatch={exitBatchMode}
+            onExitReorder={exitReorderMode}
+            onSaveOrder={savePageOrder}
+          />
         </div>
       </div>
 
       {/* Job Status Banner */}
-      {currentJob && (() => {
-        const isProcessing = currentJob.status === 'processing' || currentJob.status === 'pending';
-        const isCancelled = currentJob.status === 'cancelled';
-        const hasFailed = (currentJob.progress.failed ?? 0) > 0;
-
-        // Color scheme based on status
-        const bgColor = isCancelled ? 'bg-stone-50' : hasFailed ? 'bg-red-50' : 'bg-blue-50';
-        const borderColor = isCancelled ? 'border-stone-200' : hasFailed ? 'border-red-200' : 'border-blue-200';
-        const textColor = isCancelled ? 'text-stone-900' : hasFailed ? 'text-red-900' : 'text-blue-900';
-        const subTextColor = isCancelled ? 'text-stone-700' : hasFailed ? 'text-red-700' : 'text-blue-700';
-        const iconColor = isCancelled ? 'text-stone-600' : hasFailed ? 'text-red-600' : 'text-blue-600';
-        const progressBg = isCancelled ? 'bg-stone-200' : hasFailed ? 'bg-red-200' : 'bg-blue-200';
-        const progressBar = isCancelled ? 'bg-stone-600' : hasFailed ? 'bg-red-600' : 'bg-blue-600';
-
-        return (
-          <div className={`${bgColor} rounded-xl border ${borderColor} p-4`}>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                {isProcessing ? (
-                  <Loader2 className={`w-5 h-5 ${iconColor} animate-spin`} />
-                ) : isCancelled ? (
-                  <Info className={`w-5 h-5 ${iconColor}`} />
-                ) : (
-                  <AlertCircle className={`w-5 h-5 ${iconColor}`} />
-                )}
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className={`text-sm font-medium ${textColor}`}>
-                      {isProcessing ? `${actionConfig[currentJob.type].label} in progress` :
-                        isCancelled ? `${actionConfig[currentJob.type].label} cancelled` :
-                          `${actionConfig[currentJob.type].label} completed with errors`}
-                    </span>
-                    <span className={`text-xs ${isCancelled ? 'text-stone-600 bg-stone-100' : hasFailed ? 'text-red-600 bg-red-100' : 'text-blue-600 bg-blue-100'} px-2 py-0.5 rounded`}>
-                      {currentJob.status}
-                    </span>
-                  </div>
-                  <div className={`text-xs ${subTextColor} mt-1`}>
-                    {currentJob.progress.completed} / {currentJob.progress.total} pages completed
-                    {hasFailed && ` • ${currentJob.progress.failed} failed`}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                {isProcessing && (
-                  <>
-                    <button
-                      onClick={fetchJobStatus}
-                      disabled={loadingJob}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-blue-700 rounded-lg hover:bg-blue-100 border border-blue-300 disabled:opacity-50"
-                    >
-                      <RefreshCw className={`w-3.5 h-3.5 ${loadingJob ? 'animate-spin' : ''}`} />
-                      Refresh
-                    </button>
-                    <button
-                      onClick={cancelJob}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                      Cancel
-                    </button>
-                  </>
-                )}
-                {hasFailed && !isProcessing && (
-                  <>
-                    <button
-                      onClick={retryFailedPages}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5" />
-                      Retry Failed
-                    </button>
-                    <button
-                      onClick={() => setCurrentJob(null)}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-stone-700 rounded-lg hover:bg-stone-100 border border-stone-300"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                      Close
-                    </button>
-                  </>
-                )}
-                {isCancelled && (
-                  <button
-                    onClick={() => setCurrentJob(null)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-stone-700 rounded-lg hover:bg-stone-100 border border-stone-300"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                    Close
-                  </button>
-                )}
-              </div>
-            </div>
-            {/* Progress bar */}
-            <div className={`mt-3 h-2 ${progressBg} rounded-full overflow-hidden`}>
-              <div
-                className={`h-full ${progressBar} transition-all duration-300`}
-                style={{ width: `${(currentJob.progress.completed / currentJob.progress.total) * 100}%` }}
-              />
-            </div>
-          </div>
-        );
-      })()}
+      {currentJob && (
+        <JobStatusBanner
+          job={currentJob}
+          loading={loadingJob}
+          cancelling={cancelling}
+          retrying={retrying}
+          onRefresh={fetchJobStatus}
+          onCancel={cancelJob}
+          onRetry={retryFailedPages}
+          onClose={() => setCurrentJob(null)}
+        />
+      )}
 
       {/* Batch Mode Controls */}
       {batchMode && (
-        <div className="bg-amber-50 rounded-xl border border-amber-200 p-4 space-y-4">
-          {/* Action selector & Selection controls */}
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-stone-600">Action:</span>
-              <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
-                {(['ocr', 'translation', 'image_extraction'] as JobType[]).map(type => {
-                  const { label, icon: Icon, color } = actionConfig[type];
-                  const isSelected = action === type;
-                  return (
-                    <button
-                      key={type}
-                      onClick={() => setAction(type)}
-                      className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${isSelected ? 'text-white' : 'text-stone-600 hover:bg-stone-50'
-                        }`}
-                      style={isSelected ? { backgroundColor: color } : {}}
-                    >
-                      <Icon className="w-3.5 h-3.5" />
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="h-6 w-px bg-amber-300" />
-
-            {/* Mode selector */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-stone-600">Mode:</span>
-              <select
-                value={overwriteMode ? 'all' : 'missing'}
-                onChange={(e) => setOverwriteMode(e.target.value === 'all')}
-                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              >
-                <option value="missing">Only Missing</option>
-                <option value="all">All (Overwrite)</option>
-              </select>
-            </div>
-
-            <div className="h-6 w-px bg-amber-300" />
-
-            <div className="flex items-center gap-3 text-sm">
-              <span className="text-stone-600">
-                <strong>{selectedCount}</strong> selected
-              </span>
-              <button onClick={selectAll} className="text-amber-700 hover:text-amber-800 font-medium">
-                Select all
-              </button>
-              {selectedCount > 0 && (
-                <button onClick={clearSelection} className="text-stone-500 hover:text-stone-700">
-                  Clear
-                </button>
-              )}
-            </div>
-
-            <div className="flex-1" />
-
-            {/* Prompt settings toggle */}
-            <button
-              onClick={() => setShowPromptSettings(!showPromptSettings)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
-                }`}
-            >
-              <Settings className="w-4 h-4" />
-              Prompt Settings
-            </button>
-          </div>
-
-          {/* Prompt Settings Panel */}
-          {showPromptSettings && (
-            <div className="bg-white rounded-lg border border-amber-200 p-4 space-y-3">
-              <div className="flex items-center gap-4">
-                <label className="text-sm text-stone-600">Template:</label>
-                <select
-                  value={selectedPromptIds[action]}
-                  onChange={(e) => handleSelectPrompt(action, e.target.value)}
-                  disabled={promptsLoading}
-                  className="flex-1 max-w-xs px-3 py-1.5 text-sm border border-stone-200 rounded-lg bg-white"
-                >
-                  {promptsLoading ? (
-                    <option>Loading...</option>
-                  ) : (
-                    prompts[action].map(p => (
-                      <option key={p.id || p._id?.toString()} value={p.id || p._id?.toString()}>
-                        {p.name}{p.is_default ? ' (Default)' : ''}
-                      </option>
-                    ))
-                  )}
-                </select>
-              </div>
-              <textarea
-                value={editedPrompts[action]}
-                onChange={e => setEditedPrompts(prev => ({ ...prev, [action]: e.target.value }))}
-                className="w-full h-32 p-3 text-sm border border-stone-200 rounded-lg resize-none font-mono text-stone-700"
-                placeholder={`${actionConfig[action].label} prompt...`}
-              />
-              <p className="text-xs text-stone-400">
-                Use {'{language}'} and {'{target_language}'} as placeholders. Changes apply to this batch only.
-              </p>
-            </div>
-          )}
-
-          {/* Run button */}
-          <div className="flex items-center justify-between pt-2">
-            {/* <div className="flex items-center gap-3 text-sm text-stone-500">
-              {selectedCount > 0 ? (
-                <>
-                  <span>{selectedCount} pages selected</span>
-                  <span className="text-stone-300">·</span>
-                  <span className="text-green-600 flex items-center gap-1">
-                    <DollarSign className="w-3 h-3" />
-                    ~{formatCost(estimatedCost)} est.
-                  </span>
-                </>
-              ) : (
-                <span>Select pages to process</span>
-              )}
-            </div> */}
-            <button
-              onClick={runBatchProcess}
-              disabled={selectedCount === 0 || !!currentJob}
-              className="flex items-center gap-2 px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
-              title={currentJob ? 'Another job is already running for this book' : ''}
-            >
-              <Play className="w-4 h-4" />
-              Start Process
-            </button>
-          </div>
-        </div>
+        <BatchModePanel
+          action={action}
+          overwriteMode={overwriteMode}
+          selectedCount={selectedCount}
+          showPromptSettings={showPromptSettings}
+          selectedPromptIds={selectedPromptIds}
+          editedPrompts={editedPrompts}
+          prompts={prompts}
+          promptsLoading={promptsLoading}
+          currentJob={currentJob}
+          queueing={queueing}
+          onActionChange={setAction}
+          onOverwriteModeChange={setOverwriteMode}
+          onSelectAll={selectAll}
+          onClearSelection={clearSelection}
+          onTogglePromptSettings={() => setShowPromptSettings(!showPromptSettings)}
+          onSelectPrompt={handleSelectPrompt}
+          onEditPrompt={(action, value) => setEditedPrompts(prev => ({ ...prev, [action]: value }))}
+          onStartProcess={runBatchProcess}
+        />
       )}
 
       {/* Reorder Mode Info */}
-      {reorderMode && (
-        <div className="bg-blue-50 rounded-xl border border-blue-200 p-4">
-          <div className="flex items-center gap-3">
-            <GripVertical className="w-5 h-5 text-blue-600" />
-            <div className="flex-1">
-              <p className="text-sm font-medium text-blue-800">Drag pages to reorder them</p>
-              <p className="text-xs text-blue-600">Click and drag any page to move it to a new position</p>
-            </div>
-            {orderChanged && (
-              <span className="text-xs text-blue-600 bg-blue-100 px-2 py-1 rounded">Unsaved changes</span>
-            )}
-          </div>
-        </div>
-      )}
+      {reorderMode && <ReorderModePanel />}
 
       {/* Pages Grid */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-stone-900">Pages</h2>
-          <span className="text-sm text-stone-500">
-            Showing {Math.min(visibleCount, pages.length)} of {pages.length}
-          </span>
-        </div>
-
-        {pages.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-xl border border-stone-200">
-            <FileText className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-            <h3 className="text-lg font-medium text-stone-600">No pages yet</h3>
-            <p className="text-stone-400 text-sm mt-1">Upload pages to start processing</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
-            {pages.slice(0, visibleCount).map((page, index) => {
-              const isSelected = selectedPages.has(page.id);
-              const imageUrl = getImageUrl(page);
-              // Check updated_at since data is excluded from projection for performance
-              const hasOcr = !!page.ocr?.updated_at;
-              const hasTranslation = !!page.translation?.updated_at;
-              const hasSummary = !!page.summary?.updated_at;
-
-              // Reorder mode - draggable pages
-              if (reorderMode) {
-                const isDragging = draggedPageId === page.id;
-                const isDragOver = dragOverPageId === page.id;
-
-                return (
-                  <div
-                    key={page.id}
-                    draggable
-                    onDragStart={() => handleDragStart(page.id)}
-                    onDragOver={(e) => handleDragOver(e, page.id)}
-                    onDragEnd={handleDragEnd}
-                    className={`group relative cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-50' : ''}`}
-                  >
-                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
-                      }`}>
-                      {imageUrl && (
-                        <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover pointer-events-none" />
-                      )}
-                      {/* Drag handle indicator */}
-                      <div className="absolute top-1 left-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                        <GripVertical className="w-3 h-3" />
-                      </div>
-                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
-                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
-                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
-                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
-                      </div>
-                    </div>
-                    <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
-                  </div>
-                );
-              }
-
-              if (batchMode) {
-                return (
-                  <button
-                    key={page.id}
-                    onClick={(e) => togglePage(page.id, index, e)}
-                    className="group relative text-left"
-                  >
-                    <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
-                      }`}>
-                      {imageUrl && (
-                        <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover" />
-                      )}
-                      {isSelected && (
-                        <div className="absolute inset-0 bg-amber-500/20 flex items-center justify-center">
-                          <CheckCircle2 className="w-6 h-6 text-amber-600 drop-shadow" />
-                        </div>
-                      )}
-                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
-                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
-                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
-                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
-                      </div>
-                    </div>
-                    <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
-                  </button>
-                );
-              }
-
-              return (
-                <div key={page.id} className="group relative">
-                  <a href={`/book/${bookId}/page/${page.id}`}>
-                    <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                      {imageUrl && (
-                        <img
-                          src={imageUrl}
-                          alt={`Page ${page.page_number}`}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                        />
-                      )}
-                      <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
-                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" title="OCR" />}
-                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" title="Translated" />}
-                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" title="Summarized" />}
-                      </div>
-                    </div>
-                  </a>
-                  {/* Set as Cover button */}
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setCoverImage(page);
-                    }}
-                    disabled={settingCover === page.id}
-                    className="absolute top-1 right-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80 disabled:opacity-50"
-                    title="Set as cover image"
-                  >
-                    {settingCover === page.id ? (
-                      <Loader2 className="w-3 h-3 animate-spin" />
-                    ) : (
-                      <ImageIcon className="w-3 h-3" />
-                    )}
-                  </button>
-                  <div className="text-center text-[10px] text-stone-400 mt-0.5">{page.page_number}</div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-
-        {/* Load More - auto-loads when scrolled into view */}
-        {visibleCount < pages.length && (
-          <div ref={loadMoreRef} className="mt-6 text-center">
-            <button
-              onClick={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
-              className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"
-            >
-              <RefreshCw className="w-4 h-4" />
-              Load more ({pages.length - visibleCount} remaining)
-            </button>
-          </div>
-        )}
-      </div>
+      <PagesGrid
+        pages={pages}
+        bookId={bookId}
+        batchMode={batchMode}
+        reorderMode={reorderMode}
+        selectedPages={selectedPages}
+        settingCover={settingCover}
+        visibleCount={visibleCount}
+        draggedPageId={draggedPageId}
+        dragOverPageId={dragOverPageId}
+        loadMoreRef={loadMoreRef}
+        onPageToggle={togglePage}
+        onSetCover={setCoverImage}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        onLoadMore={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
+        getImageUrl={getImageUrl}
+      />
     </div>
   );
 }
