@@ -1,39 +1,23 @@
-/**
- * OCR Processor Logic
- *
- * Processes one page at a time for OCR.
- * Used by AWS Lambda in production.
- */
-
 import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
-import { performOCRWithBuffer } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types/ai-models';
-import { images } from '@/lib/api-client/images';
-import type { Page } from '@/lib/types/page';
+import { performTranslation } from '@/lib/ai';
+import { DEFAULT_MODEL } from '@/lib/types';
 
 /**
- * Get page image URL with priority fallbacks:
- * 1. cropped_photo (result of split detection, most refined)
- * 2. archived_photo (Vercel Blob cached version, fast & reliable)
- * 3. photo (main image URL)
- * 4. photo_original (original before any processing)
+ * Translation Processor - processes one page at a time
+ *
+ * Flow:
+ * 1. Check if job is cancelled
+ * 2. Get previous page's translation for context
+ * 3. Translate current page with context
+ * 4. Update progress counter
+ * 5. Check if job is complete
  */
-function getPageImageUrl(page: Page): string | null {
-  return (
-    page.cropped_photo ||
-    page.archived_photo ||
-    page.photo ||
-    page.photo_original ||
-    null
-  );
-}
-
-export async function processOcrPage(event: any): Promise<void> {
+export async function processTranslationPage(event: any) {
   const message: PageProcessingMessage = JSON.parse(event.Records[0].body);
   const { bookId, pageId, jobId, customPrompt } = message;
 
-  console.log(`[OCR] Processing page ${pageId} for job ${jobId}`);
+  console.log(`[TRANS] Processing page ${pageId} for job ${jobId}`);
 
   const db = await getDb();
   const jobs = db.collection('jobs');
@@ -42,12 +26,12 @@ export async function processOcrPage(event: any): Promise<void> {
   // Check if job is cancelled
   const job = await jobs.findOne({ id: jobId });
   if (!job) {
-    console.error(`[OCR] Job ${jobId} not found`);
+    console.error(`[TRANS] Job ${jobId} not found`);
     return;
   }
 
   if (job.status === 'cancelled') {
-    console.log(`[OCR] Job ${jobId} is cancelled, skipping page ${pageId}`);
+    console.log(`[TRANS] Job ${jobId} is cancelled, skipping page ${pageId}`);
     return;
   }
 
@@ -60,16 +44,15 @@ export async function processOcrPage(event: any): Promise<void> {
   }
 
   // Get page
-  const page = await pages.findOne({ id: pageId }) as Page | null;
+  const page = await pages.findOne({ id: pageId });
   if (!page) {
-    console.error(`[OCR] Page ${pageId} not found`);
+    console.error(`[TRANS] Page ${pageId} not found`);
     return;
   }
 
-  // Get image URL with priority fallbacks
-  const imageUrl = getPageImageUrl(page);
-  if (!imageUrl) {
-    console.error(`[OCR] Page ${pageId} has no image URL`);
+  // Check if page has OCR
+  if (!page.ocr?.data) {
+    console.error(`[TRANS] Page ${pageId} has no OCR data`);
     await jobs.updateOne(
       { id: jobId },
       {
@@ -82,30 +65,36 @@ export async function processOcrPage(event: any): Promise<void> {
   }
 
   try {
-    // Get image buffer and MIME type
-    const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);
+    // Get context from previous page (for sequential translation)
+    let context = null;
+    if (page.page_number > 1) {
+      const prevPage = await pages.findOne({
+        book_id: bookId,
+        page_number: page.page_number - 1,
+        'translation.data': { $exists: true }
+      });
+      if (prevPage?.translation?.data) {
+        context = prevPage.translation.data;
+      }
+    }
 
-    console.log(`[OCR] Downloaded image for page ${pageId}, size: ${buffer.length} bytes, type: ${mimeType}`);
-
-    // Perform OCR with custom prompt if provided
-    const ocrResult = await performOCRWithBuffer(
-      buffer,
-      mimeType,
-      job.config.language || 'Latin',
+    // Translate with custom prompt if provided
+    const translationResult = await performTranslation(
+      page.ocr.data,
+      context,
+      'English',
       job.config.model || DEFAULT_MODEL,
       customPrompt
     );
 
-    console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}`);
-
-    // Save OCR result
+    // Save translation
     await pages.updateOne(
       { id: pageId },
       {
         $set: {
-          ocr: {
-            data: ocrResult.text,
-            language: job.config.language || 'Latin',
+          translation: {
+            data: translationResult.text,
+            language: 'English',
             model: job.config.model || DEFAULT_MODEL,
             updated_at: new Date(),
             source: 'ai'
@@ -115,9 +104,9 @@ export async function processOcrPage(event: any): Promise<void> {
       }
     );
 
-    console.log(`[OCR] Saved OCR result for page ${pageId}`);
+    console.log(`[TRANS] Completed page ${pageId}`);
   } catch (error) {
-    console.error(`[OCR] Failed to process page ${pageId}:`, error);
+    console.error(`[TRANS] Failed to process page ${pageId}:`, error);
     await jobs.updateOne(
       { id: jobId },
       {
@@ -134,7 +123,7 @@ export async function processOcrPage(event: any): Promise<void> {
   const completedCount = await pages.countDocuments({
     book_id: bookId,
     id: { $in: targetPageIds },
-    'ocr.data': { $exists: true, $nin: [null, ''] }
+    'translation.data': { $exists: true, $nin: [null, ''] }
   });
 
   await jobs.updateOne(
@@ -147,11 +136,11 @@ export async function processOcrPage(event: any): Promise<void> {
     }
   );
 
-  console.log(`[OCR] Progress: ${completedCount}/${targetPageIds.length}`);
+  console.log(`[TRANS] Progress: ${completedCount}/${targetPageIds.length}`);
 
   // Check if job is complete
   if (completedCount >= targetPageIds.length) {
-    console.log(`[OCR] Job ${jobId} complete`);
+    console.log(`[TRANS] Job ${jobId} complete`);
     await jobs.updateOne(
       { id: jobId },
       {

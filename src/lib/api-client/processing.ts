@@ -117,8 +117,8 @@ export const processing = {
   /**
    * Retry failed items in a job
    */
-  retry: async (jobId: string): Promise<{ success: boolean; retried: number }> => {
-    return await apiClient.post(`/api/process/retry/${jobId}`, {});
+  retry: async (jobId: string): Promise<{ success: boolean; retried: number; message?: string }> => {
+    return await apiClient.post(`/api/jobs/${jobId}/retry`, {});
   },
 
   /**

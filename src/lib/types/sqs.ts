@@ -3,34 +3,27 @@
  */
 
 /**
- * Message sent to book-processing-queue.fifo
- * Orchestrates OCR and translation phases for a book
+ * Message sent to page processing queues (OCR, Translation, Image Extraction)
+ * Single unified interface for all three action types
  */
-export interface BookProcessingMessage {
+export interface PageProcessingMessage {
   bookId: string;
-  dbJobId: string;
-  phase?: 'ocr' | 'translation';
-  startPageIndex?: number; // For checkpointing (OCR enqueueing or translation)
-  retryPageIds?: string[]; // For retry logic - specific pages to reprocess
+  pageId: string;
+  jobId: string;
+  customPrompt?: string;  // Used for OCR and Translation (not Image Extraction)
 }
 
 /**
- * Message sent to page-ocr-queue
- * Processes OCR for a single page
+ * For backward compatibility, keep PageOcrMessage as alias
  */
-export interface PageOcrMessage {
-  bookId: string;
-  pageId: string;
-  dbJobId: string;
-  // No batchId needed - jobId is sufficient for tracking
-}
+export type PageOcrMessage = PageProcessingMessage;
 
 /**
  * SQS send options for generic message sending
  */
 export interface SQSSendOptions {
   queueUrl: string;
-  message: BookProcessingMessage | PageOcrMessage;
+  message: PageProcessingMessage;
   messageGroupId?: string; // Required for FIFO queues
   deduplicationId?: string; // Optional for FIFO (content-based if not provided)
 }

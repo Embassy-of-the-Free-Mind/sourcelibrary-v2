@@ -1,5 +1,5 @@
 import { SQSClient, SendMessageCommand, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
-import type { BookProcessingMessage, PageOcrMessage } from './types/sqs';
+import type { PageProcessingMessage, PageOcrMessage } from './types/sqs';
 
 // Initialize SQS client
 // Use AWS SDK's default credential provider chain:
@@ -11,13 +11,14 @@ const sqsClient = new SQSClient({
 
 // Queue URLs from environment
 export const QUEUE_URLS = {
-  bookProcessing: process.env.SQS_BOOK_PROCESSING_QUEUE_URL || '',
   pageOcr: process.env.SQS_PAGE_OCR_QUEUE_URL || '',
+  pageTranslation: process.env.SQS_PAGE_TRANSLATION_QUEUE_URL || '',
+  pageImageExtraction: process.env.SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL || '',
 };
 
 interface SendMessageOptions {
   queueUrl: string;
-  message: BookProcessingMessage | PageOcrMessage;
+  message: PageProcessingMessage;
   messageGroupId?: string; // Required for FIFO queues
   deduplicationId?: string; // Optional for FIFO (content-based if not provided)
 }
@@ -51,7 +52,7 @@ export async function sendMessage(options: SendMessageOptions) {
 }
 
 interface BatchMessageEntry {
-  message: BookProcessingMessage | PageOcrMessage;
+  message: PageProcessingMessage;
   messageGroupId?: string;
   deduplicationId?: string;
 }
@@ -92,17 +93,6 @@ export async function sendMessageBatch(queueUrl: string, entries: BatchMessageEn
     successful: result.Successful || [],
     failed: result.Failed || [],
   };
-}
-
-/**
- * Helper: Send book processing message to FIFO queue
- */
-export async function sendBookProcessingMessage(message: BookProcessingMessage) {
-  return sendMessage({
-    queueUrl: QUEUE_URLS.bookProcessing,
-    message,
-    messageGroupId: message.bookId, // Use bookId as group ID for FIFO ordering
-  });
 }
 
 /**

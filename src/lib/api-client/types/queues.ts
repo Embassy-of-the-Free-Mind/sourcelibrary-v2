@@ -3,19 +3,24 @@
  * Shared between queue client and queue handlers
  */
 
+import type { JobType } from '@/lib/types/job';
+
 /**
  * Response from queue-books endpoint
  */
 export interface QueueBooksResponse {
   success: boolean;
-  jobIds: string[];        // Database job IDs for tracking
+  jobId: string;           // Single job ID for tracking
+  pageCount: number;       // Number of pages queued
+  message?: string;
 }
 
 /**
- * Request body for queue-books endpoint
+ * Request body for queue-books endpoint (new granular architecture)
  */
 export interface QueueBooksRequest {
-  bookIds?: string[];      // Specific book IDs to queue (optional if auto: true)
-  auto?: boolean;          // Auto-find books needing OCR
-  limit?: number;          // Max books to queue (default 10, max 10)
+  bookId: string;          // Book ID
+  pageIds: string[];       // Specific page IDs to process
+  action: JobType;         // 'ocr' | 'translation' | 'image_extraction'
+  customPrompt?: string;   // Optional custom prompt for OCR/translation
 }

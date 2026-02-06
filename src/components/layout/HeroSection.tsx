@@ -1,23 +1,21 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import Link from 'next/link';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 
 export default function HeroSection() {
-  const [videoLoaded, setVideoLoaded] = useState(false);
   const hasRecorded = useRef(false);
 
   const handleVideoLoad = () => {
     if (!hasRecorded.current && typeof window !== 'undefined') {
       // Use Navigation Timing API for accurate page-relative timing
-      const navStart = performance.timing?.navigationStart || performance.timeOrigin;
+      const navStart = performance.timeOrigin;
       const loadTime = Date.now() - navStart;
       recordLoadingMetric('hero_video_load', loadTime);
       hasRecorded.current = true;
     }
-    setVideoLoaded(true);
   };
 
   return (
@@ -61,7 +59,7 @@ export default function HeroSection() {
             <span className="font-light text-white">Library</span>
           </span>
         </Link>
-        <div className="flex items-center gap-3">
+        {/* <div className="flex items-center gap-3">
           <Link
             href="/upload"
             className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
@@ -71,7 +69,7 @@ export default function HeroSection() {
             </svg>
             Add Book
           </Link>
-        </div>
+        </div> */}
       </header>
 
       {/* Hero Content - text visible immediately, no delay */}

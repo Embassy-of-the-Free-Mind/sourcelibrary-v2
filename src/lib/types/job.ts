@@ -1,37 +1,22 @@
-export type JobType = 
-    'ocr'|
-    'translate' |
-    'batch_ocr' |
-    'batch_translate' |
-    'batch_summary' |
-    'batch_split' |
-    'book_import' |
-    'generate_cropped_images' |
-    'pipeline_stream' |
-    'batch_extract_images';
+export type JobType =
+    // New granular job queue architecture
+    'ocr' |                  // OCR for selected pages
+    'translation' |          // Translation for selected pages
+    'summary' |              // Summary generation for selected pages
+    'image_extraction';      // Image extraction for selected pages
 
 export type JobStatus =
-    // New SQS-based statuses
-    'pending' |       // Job created, not started
-    'ocr' |           // OCR in progress
-    'translation' |   // Translation in progress
+    'pending' |       // Job created, not started (workers haven't picked it up yet)
+    'processing' |    // Workers are actively processing pages
     'completed' |     // All pages processed successfully
-    'partial' |       // Some pages failed after retries
-    // Legacy statuses (backward compatibility)
-    'processing' |
-    'paused' |
-    'failed' |
-    'cancelled';
+    'failed' |        // Job failed completely
+    'cancelled' |     // User cancelled the job
+    'partial';        // Some pages succeeded, some failed (available for retry)
 
 export interface JobProgress {
-  total: number;
-  // New SQS-based counters
-  ocr_completed?: number;          // Pages with OCR done
-  translation_completed?: number;  // Pages with translation done
-  // Legacy counters (backward compatibility)
-  completed?: number;
-  failed?: number;
-  currentItem?: string;
+  total: number;       // Total pages in this job
+  completed: number;   // Pages completed successfully
+  failed?: number;     // Pages that failed (optional, for retry logic)
 }
 
 export interface JobResult {
@@ -107,22 +92,19 @@ export interface Job {
  * These are calculated at runtime rather than stored in the database.
  */
 export function getJobMetrics(job: Job) {
-  // Use new counters if available, fall back to legacy
   const total = job.progress.total || 0;
-  const ocr_completed = job.progress.ocr_completed ?? job.progress.completed ?? 0;
-  const translation_completed = job.progress.translation_completed ?? 0;
+  const completed = job.progress.completed || 0;
   const failed_count = job.failed_page_ids?.length || 0;
-
-  const ocr_pending = total - ocr_completed;
-  const translation_pending = ocr_completed - translation_completed;
+  const pending = total - completed - failed_count;
 
   return {
-    ocr_pending,
-    translation_pending,
+    total,
+    completed,
+    pending,
     failed_count,
     is_retryable: job.status === 'partial' && failed_count > 0,
     completion_percent: total > 0
-      ? Math.round((translation_completed / total) * 100)
+      ? Math.round((completed / total) * 100)
       : 0
   };
 }

@@ -1,16 +1,20 @@
-/**
- * OCR Processor Logic
- *
- * Processes one page at a time for OCR.
- * Used by AWS Lambda in production.
- */
-
 import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
-import { performOCRWithBuffer } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types/ai-models';
-import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
+import { extractWithGemini } from '@/lib/image-extraction';
+import { DEFAULT_MODEL } from '@/lib/types/ai-models';
+
+/**
+ * Image Extraction Processor - processes one page at a time
+ *
+ * Flow:
+ * 1. Check if job is cancelled
+ * 2. Get page image URL (with priority fallbacks)
+ * 3. Extract images with AI vision
+ * 4. Save results to page
+ * 5. Update progress counter
+ * 6. Check if job is complete
+ */
 
 /**
  * Get page image URL with priority fallbacks:
@@ -29,11 +33,11 @@ function getPageImageUrl(page: Page): string | null {
   );
 }
 
-export async function processOcrPage(event: any): Promise<void> {
+export async function processImageExtractionPage(event: any) {
   const message: PageProcessingMessage = JSON.parse(event.Records[0].body);
-  const { bookId, pageId, jobId, customPrompt } = message;
+  const { bookId, pageId, jobId } = message;
 
-  console.log(`[OCR] Processing page ${pageId} for job ${jobId}`);
+  console.log(`[IMG-EXTRACT] Processing page ${pageId} for job ${jobId}`);
 
   const db = await getDb();
   const jobs = db.collection('jobs');
@@ -42,12 +46,12 @@ export async function processOcrPage(event: any): Promise<void> {
   // Check if job is cancelled
   const job = await jobs.findOne({ id: jobId });
   if (!job) {
-    console.error(`[OCR] Job ${jobId} not found`);
+    console.error(`[IMG-EXTRACT] Job ${jobId} not found`);
     return;
   }
 
   if (job.status === 'cancelled') {
-    console.log(`[OCR] Job ${jobId} is cancelled, skipping page ${pageId}`);
+    console.log(`[IMG-EXTRACT] Job ${jobId} is cancelled, skipping page ${pageId}`);
     return;
   }
 
@@ -62,14 +66,14 @@ export async function processOcrPage(event: any): Promise<void> {
   // Get page
   const page = await pages.findOne({ id: pageId }) as Page | null;
   if (!page) {
-    console.error(`[OCR] Page ${pageId} not found`);
+    console.error(`[IMG-EXTRACT] Page ${pageId} not found`);
     return;
   }
 
   // Get image URL with priority fallbacks
   const imageUrl = getPageImageUrl(page);
   if (!imageUrl) {
-    console.error(`[OCR] Page ${pageId} has no image URL`);
+    console.error(`[IMG-EXTRACT] Page ${pageId} has no image URL`);
     await jobs.updateOne(
       { id: jobId },
       {
@@ -82,42 +86,28 @@ export async function processOcrPage(event: any): Promise<void> {
   }
 
   try {
-    // Get image buffer and MIME type
-    const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);
-
-    console.log(`[OCR] Downloaded image for page ${pageId}, size: ${buffer.length} bytes, type: ${mimeType}`);
-
-    // Perform OCR with custom prompt if provided
-    const ocrResult = await performOCRWithBuffer(
-      buffer,
-      mimeType,
-      job.config.language || 'Latin',
-      job.config.model || DEFAULT_MODEL,
-      customPrompt
+    // Extract images with AI vision
+    // extractWithGemini handles fetching and base64 encoding internally
+    const detectedImages = await extractWithGemini(
+      imageUrl,
+      job.config.model || DEFAULT_MODEL
     );
 
-    console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}`);
-
-    // Save OCR result
+    // Save results to page
     await pages.updateOne(
       { id: pageId },
       {
         $set: {
-          ocr: {
-            data: ocrResult.text,
-            language: job.config.language || 'Latin',
-            model: job.config.model || DEFAULT_MODEL,
-            updated_at: new Date(),
-            source: 'ai'
-          },
+          detected_images: detectedImages,
+          image_extraction_updated_at: new Date(),
           updated_at: new Date()
         }
       }
     );
 
-    console.log(`[OCR] Saved OCR result for page ${pageId}`);
+    console.log(`[IMG-EXTRACT] Completed page ${pageId}: ${detectedImages.length} images detected`);
   } catch (error) {
-    console.error(`[OCR] Failed to process page ${pageId}:`, error);
+    console.error(`[IMG-EXTRACT] Failed to process page ${pageId}:`, error);
     await jobs.updateOne(
       { id: jobId },
       {
@@ -134,7 +124,7 @@ export async function processOcrPage(event: any): Promise<void> {
   const completedCount = await pages.countDocuments({
     book_id: bookId,
     id: { $in: targetPageIds },
-    'ocr.data': { $exists: true, $nin: [null, ''] }
+    detected_images: { $exists: true, $ne: [] }
   });
 
   await jobs.updateOne(
@@ -147,11 +137,11 @@ export async function processOcrPage(event: any): Promise<void> {
     }
   );
 
-  console.log(`[OCR] Progress: ${completedCount}/${targetPageIds.length}`);
+  console.log(`[IMG-EXTRACT] Progress: ${completedCount}/${targetPageIds.length}`);
 
   // Check if job is complete
   if (completedCount >= targetPageIds.length) {
-    console.log(`[OCR] Job ${jobId} complete`);
+    console.log(`[IMG-EXTRACT] Job ${jobId} complete`);
     await jobs.updateOne(
       { id: jobId },
       {

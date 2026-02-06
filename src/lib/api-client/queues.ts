@@ -12,11 +12,11 @@ import type {
 import { apiClient } from './client';
 
 /**
- * Queue multiple books for OCR and translation
- * Creates job records and enqueues books to processing pipeline
+ * Queue pages from a book for background processing
+ * Creates a job record and enqueues pages to Lambda workers
  *
- * @param request - Queue request with bookIds or auto: true
- * @returns Job IDs for tracking
+ * @param request - Queue request with bookId, pageIds, action, and optional customPrompt
+ * @returns Job ID and page count for tracking
  */
 export async function queueBooks(request: QueueBooksRequest): Promise<QueueBooksResponse> {
   return await apiClient.post('/api/jobs/queue-books', request);

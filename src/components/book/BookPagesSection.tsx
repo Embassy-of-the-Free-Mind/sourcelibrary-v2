@@ -29,41 +29,14 @@ import DownloadButton from '@/components/ui/DownloadButton';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import type { Page, Prompt } from '@/lib/types';
-import { prompts as promptsApi, jobs, books, processing as processingApi } from '@/lib/api-client';
+import type { JobType, Job } from '@/lib/types/job';
+import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
+import { queueBooks } from '@/lib/api-client/queues';
 
 interface BookPagesSectionProps {
   bookId: string;
   bookTitle?: string;
   pages: Page[];
-}
-
-type ActionType = 'ocr' | 'translation' | 'summary' | 'image_extraction';
-type JobType = 'batch_ocr' | 'batch_translate' | 'batch_summary' | 'batch_extract_images';
-
-const actionToJobType: Record<ActionType, JobType> = {
-  ocr: 'batch_ocr',
-  translation: 'batch_translate',
-  summary: 'batch_summary',
-  image_extraction: 'batch_extract_images',
-};
-
-// Retry settings
-const MAX_RETRIES = 3;
-const INITIAL_RETRY_DELAY = 1000; // 1 second
-
-// Sleep helper
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-interface ProcessingState {
-  active: boolean;
-  type: ActionType | null;
-  currentIndex: number;
-  totalPages: number;
-  completed: string[];
-  failed: string[];
-  totalCost: number;
-  totalTokens: number;
-  lastError?: string;  // Most recent error message for display
 }
 
 // Estimated token usage per action
@@ -75,7 +48,7 @@ const ESTIMATED_TOKENS = {
 };
 
 // Calculate cost per page based on model
-function getEstimatedCost(action: ActionType, model: string): number {
+function getEstimatedCost(action: JobType, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
   const tokens = ESTIMATED_TOKENS[action];
   const inputCost = (tokens.input / 1_000_000) * pricing.input;
@@ -108,12 +81,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [batchMode, setBatchMode] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
-  const [action, setAction] = useState<ActionType>('ocr');
-  const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
-  const [concurrency, setConcurrency] = useState(10); // Parallel batches for OCR (experiment-validated)
+  const [action, setAction] = useState<JobType>('ocr');
+  // const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
-  const [useBatchApi, setUseBatchApi] = useState(false); // Use Gemini Batch API (50% off, 2-24h)
   const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
@@ -146,19 +117,19 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   }, [initialPages]);
 
   // Prompt library state
-  const [prompts, setPrompts] = useState<Record<ActionType, Prompt[]>>({
+  const [prompts, setPrompts] = useState<Record<JobType, Prompt[]>>({
     ocr: [],
     translation: [],
     summary: [],
     image_extraction: []
   });
-  const [selectedPromptIds, setSelectedPromptIds] = useState<Record<ActionType, string>>({
+  const [selectedPromptIds, setSelectedPromptIds] = useState<Record<JobType, string>>({
     ocr: '',
     translation: '',
     summary: '',
     image_extraction: ''
   });
-  const [editedPrompts, setEditedPrompts] = useState<Record<ActionType, string>>({
+  const [editedPrompts, setEditedPrompts] = useState<Record<JobType, string>>({
     ocr: '',
     translation: '',
     summary: '',
@@ -166,17 +137,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   });
   const [promptsLoading, setPromptsLoading] = useState(true);
 
-  const [processing, setProcessing] = useState<ProcessingState>({
-    active: false,
-    type: null,
-    currentIndex: 0,
-    totalPages: 0,
-    completed: [],
-    failed: [],
-    totalCost: 0,
-    totalTokens: 0,
-  });
-  const stopRequestedRef = useRef(false);
+  // Current job status (fetched from API on-demand)
+  const [currentJob, setCurrentJob] = useState<Job | null>(null);
+  const [loadingJob, setLoadingJob] = useState(false);
+
   const lastSelectedIndexRef = useRef<number | null>(null);
 
   // Calculate stats (check updated_at since data is excluded from projection)
@@ -195,6 +159,30 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     .map(p => new Date(p.translation!.updated_at!))
     .sort((a, b) => b.getTime() - a.getTime())[0];
 
+  // Fetch current job on mount
+  useEffect(() => {
+    const fetchCurrentJob = async () => {
+      try {
+        // Get book to check if there's a current job
+        const book = await books.get(bookId);
+        book.current_job_id = '2k2mJIQ5CmYM';
+        if (book.current_job_id) {
+          const job = await jobs.get(book.current_job_id);
+          // Only set if job is still active
+          console.log("Job on fetch:", job);
+          console.log("Job status on fetch:", job.status);
+          if (['pending', 'processing'].includes(job.status)) {
+            setCurrentJob(job);
+          }
+          console.log('Set current job on mount:', currentJob);
+        }
+      } catch (error) {
+        console.error('Failed to fetch current job:', error);
+      }
+    };
+    fetchCurrentJob();
+  }, [bookId]);
+
   // Fetch prompts
   useEffect(() => {
     const fetchPrompts = async () => {
@@ -206,7 +194,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           promptsApi.list({ type: 'summary' })
         ]);
 
-        const loadPrompts = (promptsList: Prompt[], type: ActionType) => {
+        const loadPrompts = (promptsList: Prompt[], type: JobType) => {
           const defaultPrompt = promptsList.find((p: Prompt) => p.is_default) || promptsList[0];
           setPrompts(prev => ({ ...prev, [type]: promptsList }));
           if (defaultPrompt) {
@@ -228,7 +216,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     fetchPrompts();
   }, []);
 
-  const handleSelectPrompt = (type: ActionType, promptId: string) => {
+  const handleSelectPrompt = (type: JobType, promptId: string) => {
     const prompt = prompts[type].find(p => (p.id || p._id?.toString()) === promptId);
     if (prompt) {
       setSelectedPromptIds(prev => ({ ...prev, [type]: promptId }));
@@ -348,576 +336,85 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
     const pageIds = Array.from(selectedPages);
 
-    // Get prompt name for job record
-    const currentPrompt = prompts[action].find(
-      p => (p.id || p._id?.toString()) === selectedPromptIds[action]
-    );
+    // Filter pages based on overwrite mode - check actual data presence
+    let pageIdsToProcess = pageIds;
 
-    // If using Batch API, create job and redirect to jobs page
-    if (useBatchApi) {
-      try {
-        await jobs.create({
-          type: actionToJobType[action],
-          book_id: bookId,
-          book_title: bookTitle,
-          page_ids: pageIds,
-          model: selectedModel,
-          prompt_name: currentPrompt?.name,
-          use_batch_api: true,
-        });
-        // Redirect to jobs page
-        router.push('/jobs');
-        return;
-      } catch (error) {
-        console.error('Failed to create batch job:', error);
-        alert('Failed to create batch job');
-        return;
-      }
+    if (!overwriteMode) {
+      pageIdsToProcess = pageIds.filter(pageId => {
+        const page = pages.find(p => p.id === pageId);
+        if (!page) return false;
+
+        if (action === 'ocr') {
+          // Only process pages without OCR data
+          return !page.ocr?.data;
+        } else if (action === 'translation') {
+          // Only process pages that have OCR but no translation
+          return page.ocr?.data && !page.translation?.data;
+        } else if (action === 'image_extraction') {
+          // Only process pages without detected images
+          return !page.detected_images || page.detected_images.length === 0;
+        }
+        return false;
+      });
     }
 
-    // Realtime processing
-    stopRequestedRef.current = false;
-    setProcessing({
-      active: true,
-      type: action,
-      currentIndex: 0,
-      totalPages: pageIds.length,
-      completed: [],
-      failed: [],
-      totalCost: 0,
-      totalTokens: 0,
-    });
+    if (pageIdsToProcess.length === 0) {
+      alert('All selected pages already have data. Enable overwrite mode to re-process.');
+      return;
+    }
 
-    const completed: string[] = [];
-    const failed: string[] = [];
-    let runningCost = 0;
-    let runningTokens = 0;
-    let processedCount = 0;
+    // Get custom prompt (only for OCR and translation)
+    const customPrompt = (action === 'ocr' || action === 'translation')
+      ? editedPrompts[action] || undefined
+      : undefined;
 
-    // Create job record for tracking
-    let jobId: string | null = null;
     try {
-      const jobData = await jobs.create({
-        type: actionToJobType[action],
-        book_id: bookId,
-        book_title: bookTitle,
-        page_ids: pageIds,
-        model: selectedModel,
-        prompt_name: currentPrompt?.name,
-        use_batch_api: false,  // Realtime processing, not Batch API
+      const response = await queueBooks({
+        bookId,
+        pageIds: pageIdsToProcess,
+        action,
+        customPrompt
       });
-      jobId = jobData.id;
 
-      // Mark as processing
-      if (jobId) {
-        try {
-          await jobs.updateStatus(jobId, 'processing');
-        } catch (statusError) {
-          console.error(`[Job ${jobId}] Failed to update status to processing:`, statusError);
-        }
-      }
+      // Clear selection and exit batch mode
+      setSelectedPages(new Set());
+      setBatchMode(false);
+
+      // Refresh to show job status
+      router.refresh();
     } catch (error) {
-      console.error('Failed to create job record:', error);
+      console.error('Failed to queue job:', error);
+      alert(error instanceof Error ? error.message : 'Failed to queue job');
     }
+  };
 
-    // Helper to update job progress (throttled)
-    let lastJobUpdate = 0;
-    const updateJobProgress = async () => {
-      if (!jobId) return;
-      const now = Date.now();
-      // Only update every 2 seconds to avoid too many requests
-      if (now - lastJobUpdate < 2000) return;
-      lastJobUpdate = now;
+  // Fetch current job status
+  const fetchJobStatus = async () => {
+    if (!currentJob) return;
 
-      try {
-        await jobs.update(jobId, {
-          progress: {
-            total: pageIds.length,
-            completed: completed.length,
-            failed: failed.length
-          },
-        });
-      } catch {
-        // Ignore progress update errors
-      }
-    };
-
-    // Process a single page with retry logic
-    const processPage = async (pageId: string): Promise<void> => {
-      if (stopRequestedRef.current) return;
-
-      const page = pages.find(p => p.id === pageId);
-      if (!page) {
-        failed.push(pageId);
-        return;
-      }
-
-      let lastError: Error | null = null;
-
-      for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-        if (stopRequestedRef.current) return;
-
-        try {
-          // Note: processPage is only called for ocr/translation/summary, never for image_extraction
-          // image_extraction has its own separate batch processing logic
-          const data = await processingApi.process({
-            pageId,
-            action: action as 'ocr' | 'translation' | 'summary',
-            imageUrl: page.photo,
-            language: 'Latin',
-            targetLanguage: 'English',
-            ocrText: action === 'translation' ? page.ocr?.data : undefined,
-            translatedText: action === 'summary' ? page.translation?.data : undefined,
-            customPrompts: {
-              ocr: editedPrompts.ocr,
-              translation: editedPrompts.translation,
-              summary: editedPrompts.summary
-            },
-            autoSave: true,
-            model: selectedModel
-          });
-
-          if (data.usage) {
-            runningCost += data.usage.costUsd || 0;
-            runningTokens += data.usage.totalTokens || 0;
-          }
-          completed.push(pageId);
-          lastError = null;
-          break; // Success, exit retry loop
-        } catch (error) {
-          lastError = error instanceof Error ? error : new Error('Unknown error');
-          console.warn(`Attempt ${attempt + 1}/${MAX_RETRIES} failed for page ${pageId}:`, lastError.message);
-        }
-
-        // Wait before retrying (exponential backoff)
-        if (attempt < MAX_RETRIES - 1 && lastError) {
-          const delay = INITIAL_RETRY_DELAY * Math.pow(2, attempt);
-          await sleep(delay);
-        }
-      }
-
-      if (lastError) {
-        console.error(`All ${MAX_RETRIES} attempts failed for page ${pageId}:`, lastError.message);
-        failed.push(pageId);
-      }
-
-      processedCount++;
-      setProcessing(prev => ({
-        ...prev,
-        currentIndex: processedCount,
-        completed: [...completed],
-        failed: [...failed],
-        totalCost: runningCost,
-        totalTokens: runningTokens,
-      }));
-
-      // Update job progress
-      updateJobProgress();
-    };
-
-    // For translation, use batch API with context (5 pages per request)
-    // For OCR/summary, use parallel per-page processing
-    if (action === 'translation') {
-      const TRANSLATION_BATCH_SIZE = 5;
-      let previousContext = '';
-
-      // Sort pages by page number for proper continuity
-      const sortedPageIds = [...pageIds].sort((a, b) => {
-        const pageA = pages.find(p => p.id === a);
-        const pageB = pages.find(p => p.id === b);
-        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
-      });
-
-      for (let i = 0; i < sortedPageIds.length; i += TRANSLATION_BATCH_SIZE) {
-        if (stopRequestedRef.current) break;
-
-        const batchIds = sortedPageIds.slice(i, Math.min(i + TRANSLATION_BATCH_SIZE, sortedPageIds.length));
-        const batchPages = batchIds
-          .map(id => pages.find(p => p.id === id))
-          .filter((p): p is Page => p !== undefined && !!p.ocr); // Check for OCR presence (data loaded by API)
-
-        if (batchPages.length === 0) {
-          batchIds.forEach(id => failed.push(id));
-          processedCount += batchIds.length;
-          // Update state even when skipping
-          setProcessing(prev => ({
-            ...prev,
-            currentIndex: processedCount,
-            completed: [...completed],
-            failed: [...failed],
-          }));
-          continue;
-        }
-
-        try {
-          const data = await processingApi.batchTranslate({
-            pages: batchPages.map(p => ({
-              pageId: p.id,
-              ocrText: p.ocr?.data || '',
-              pageNumber: p.page_number,
-            })),
-            sourceLanguage: 'Latin',
-            targetLanguage: 'English',
-            customPrompt: editedPrompts.translation,
-            model: selectedModel,
-            previousContext,
-            overwrite: overwriteMode,
-          });
-
-          // Check if response indicates "no pages to process"
-          if (data.message && (data.translatedCount === 0 || Object.keys(data.translations || {}).length === 0)) {
-            console.log(`[Translation] ${data.message}`);
-            // Mark all as completed (they already have translations or missing OCR)
-            batchIds.forEach(id => {
-              if (!completed.includes(id)) completed.push(id);
-            });
-            continue;
-          }
-
-          if (data.usage) {
-            runningCost += data.usage.costUsd || 0;
-            runningTokens += data.usage.totalTokens || 0;
-          }
-
-          // Track which pages were translated
-          const translatedIds = Object.keys(data.translations || {});
-          translatedIds.forEach(id => completed.push(id));
-
-          // Mark untranslated pages as failed
-          batchIds.forEach(id => {
-            if (!translatedIds.includes(id)) {
-              failed.push(id);
-            }
-          });
-
-          // Use last translation as context for next batch
-          if (translatedIds.length > 0) {
-            const lastId = batchPages[batchPages.length - 1].id;
-            previousContext = data.translations[lastId] || '';
-          }
-        } catch (error) {
-          const errorMsg = error instanceof Error ? error.message : 'Network error';
-          console.error('[Translation] Batch error:', {
-            error: errorMsg,
-            batchIds,
-            batchSize: batchPages.length,
-          });
-          batchIds.forEach(id => failed.push(id));
-          setProcessing(prev => ({
-            ...prev,
-            lastError: `Translation batch failed: ${errorMsg}`
-          }));
-        }
-
-        processedCount += batchIds.length;
-        setProcessing(prev => ({
-          ...prev,
-          currentIndex: processedCount,
-          completed: [...completed],
-          failed: [...failed],
-          totalCost: runningCost,
-          totalTokens: runningTokens,
-        }));
-        updateJobProgress();
-
-        // Small delay between batches
-        if (i + TRANSLATION_BATCH_SIZE < sortedPageIds.length && !stopRequestedRef.current) {
-          await sleep(500);
-        }
-      }
-    } else if (action === 'ocr') {
-      // OCR: batches of 5 images, run multiple batches in parallel for speed
-      const OCR_BATCH_SIZE = 5;
-      const PARALLEL_BATCHES = concurrency; // Use user-selected parallel batch count
-
-      // Sort pages by page number
-      const sortedPageIds = [...pageIds].sort((a, b) => {
-        const pageA = pages.find(p => p.id === a);
-        const pageB = pages.find(p => p.id === b);
-        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
-      });
-
-      // Create all batches upfront
-      const allBatches: { batchIds: string[]; batchPages: Page[] }[] = [];
-      for (let i = 0; i < sortedPageIds.length; i += OCR_BATCH_SIZE) {
-        const batchIds = sortedPageIds.slice(i, Math.min(i + OCR_BATCH_SIZE, sortedPageIds.length));
-        const batchPages = batchIds
-          .map(id => pages.find(p => p.id === id))
-          .filter((p): p is Page => p !== undefined);
-        allBatches.push({ batchIds, batchPages });
-      }
-
-      // Process batches in parallel groups
-      for (let i = 0; i < allBatches.length; i += PARALLEL_BATCHES) {
-        if (stopRequestedRef.current) break;
-
-        const parallelBatches = allBatches.slice(i, Math.min(i + PARALLEL_BATCHES, allBatches.length));
-
-        // Process this group of batches in parallel
-        const batchPromises = parallelBatches.map(async ({ batchIds, batchPages }) => {
-          if (batchPages.length === 0) {
-            batchIds.forEach(id => failed.push(id));
-            return { processedCount: batchIds.length };
-          }
-
-          try {
-            const data = await processingApi.batchOcrProcess({
-              pages: batchPages.map(p => ({
-                pageId: p.id,
-                imageUrl: p.photo,
-                pageNumber: p.page_number,
-              })),
-              language: 'Latin',
-              customPrompt: editedPrompts.ocr,
-              model: selectedModel,
-              overwrite: overwriteMode,
-            });
-
-            // Check if response indicates "no pages to process"
-            if (data.message && data.processedCount === 0) {
-              console.log(`[OCR] ${data.message}`);
-              // Mark all as completed (they already have OCR)
-              batchIds.forEach(id => {
-                if (!completed.includes(id)) completed.push(id);
-              });
-              return { processedCount: batchIds.length };
-            }
-
-            if (data.usage) {
-              runningCost += data.usage.costUsd || 0;
-              runningTokens += data.usage.totalTokens || 0;
-            }
-
-            // Track which pages were OCR'd (newly processed)
-            const ocrIds = Object.keys(data.ocrResults || {});
-            ocrIds.forEach(id => completed.push(id));
-
-            // Skipped pages (already have OCR) count as completed
-            (data.skippedPageIds || []).forEach((id: string) => {
-              if (!completed.includes(id)) completed.push(id);
-            });
-
-            // Add failed pages
-            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
-
-            // Log detailed results if available
-            if (data.pageResults) {
-              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
-                if (pr.status === 'skipped_has_ocr') {
-                  console.log(`[OCR] ${pr.message}`);
-                } else if (pr.status === 'skipped_needs_crop') {
-                  console.warn(`[OCR] ${pr.message}`);
-                } else if (pr.status.startsWith('failed')) {
-                  console.error(`[OCR] ${pr.message}`);
-                } else {
-                  console.log(`[OCR] ${pr.message}`);
-                }
-              });
-            }
-
-            // Update UI immediately as this batch completes (real-time progress)
-            processedCount += batchIds.length;
-            setProcessing(prev => ({
-              ...prev,
-              currentIndex: processedCount,
-              completed: [...completed],
-              failed: [...failed],
-              totalCost: runningCost,
-              totalTokens: runningTokens,
-            }));
-          } catch (error) {
-            const errorMsg = error instanceof Error ? error.message : 'Network error';
-            console.error('[OCR] Batch error:', {
-              error: errorMsg,
-              batchIds,
-              batchSize: batchPages.length,
-            });
-            batchIds.forEach(id => failed.push(id));
-            processedCount += batchIds.length;
-            setProcessing(prev => ({
-              ...prev,
-              currentIndex: processedCount,
-              completed: [...completed],
-              failed: [...failed],
-              totalCost: runningCost,
-              totalTokens: runningTokens,
-              lastError: `OCR batch failed: ${errorMsg}`
-            }));
-          }
-
-          return { processedCount: batchIds.length };
-        });
-
-        // Wait for all parallel batches to complete
-        await Promise.all(batchPromises);
-
-        // Job progress already updated in real-time, just call final update
-        updateJobProgress();
-
-        // Small delay between parallel groups to avoid overwhelming the API
-        if (i + PARALLEL_BATCHES < allBatches.length && !stopRequestedRef.current) {
-          await sleep(300);
-        }
-      }
-
-      console.log(`[OCR] Complete: ${completed.length} succeeded, ${failed.length} failed`);
-    } else if (action === 'image_extraction') {
-      // Image extraction: parallel batch processing (like OCR)
-      const IMAGE_BATCH_SIZE = 3;
-      const PARALLEL_BATCHES = 5; // Process 15 images simultaneously
-
-      // Sort pages by page number
-      const sortedPageIds = [...pageIds].sort((a, b) => {
-        const pageA = pages.find(p => p.id === a);
-        const pageB = pages.find(p => p.id === b);
-        return (pageA?.page_number || 0) - (pageB?.page_number || 0);
-      });
-
-      // Create all batches upfront
-      const allBatches: { batchIds: string[]; batchPages: Page[] }[] = [];
-      for (let i = 0; i < sortedPageIds.length; i += IMAGE_BATCH_SIZE) {
-        const batchIds = sortedPageIds.slice(i, Math.min(i + IMAGE_BATCH_SIZE, sortedPageIds.length));
-        const batchPages = batchIds
-          .map(id => pages.find(p => p.id === id))
-          .filter((p): p is Page => p !== undefined);
-        allBatches.push({ batchIds, batchPages });
-      }
-
-      console.log(`[ImageExtraction] Starting parallel processing: ${allBatches.length} batches, ${PARALLEL_BATCHES} at a time`);
-
-      // Process batches in parallel groups
-      for (let i = 0; i < allBatches.length; i += PARALLEL_BATCHES) {
-        if (stopRequestedRef.current) break;
-
-        const parallelBatches = allBatches.slice(i, Math.min(i + PARALLEL_BATCHES, allBatches.length));
-
-        // Process this group of batches in parallel
-        const batchPromises = parallelBatches.map(async ({ batchIds, batchPages }) => {
-          if (batchPages.length === 0) {
-            batchIds.forEach(id => failed.push(id));
-            return { processedCount: batchIds.length };
-          }
-
-          try {
-            const data = await processingApi.batchImageExtraction({
-              pages: batchPages.map(p => ({
-                pageId: p.id,
-                imageUrl: p.photo,
-                pageNumber: p.page_number,
-              })),
-              model: selectedModel,
-              overwrite: overwriteMode,
-            });
-
-            if (data.usage) {
-              runningCost += data.usage.costUsd || 0;
-              runningTokens += data.usage.totalTokens || 0;
-            }
-
-            // Track which pages were processed (with or without detections)
-            const processedIds = Object.keys(data.detectionResults || {});
-            processedIds.forEach(id => completed.push(id));
-
-            // Skipped pages (already have detections) count as completed
-            (data.skippedPageIds || []).forEach((id: string) => {
-              if (!completed.includes(id)) completed.push(id);
-            });
-
-            // Add failed pages
-            (data.failedPageIds || []).forEach((id: string) => failed.push(id));
-
-            // Log detailed results if available
-            if (data.pageResults) {
-              data.pageResults.forEach((pr: { pageId: string; status: string; message: string }) => {
-                if (pr.status === 'skipped_has_detections') {
-                  console.log(`[ImageExtraction] ${pr.message}`);
-                } else if (pr.status.startsWith('failed')) {
-                  console.error(`[ImageExtraction] ${pr.message}`);
-                } else {
-                  console.log(`[ImageExtraction] ${pr.message}`);
-                }
-              });
-            }
-          } catch (error) {
-            const errorMsg = error instanceof Error ? error.message : 'Network error';
-            console.error('Batch image extraction error:', errorMsg);
-            batchIds.forEach(id => failed.push(id));
-            setProcessing(prev => ({ ...prev, lastError: errorMsg }));
-          }
-
-          return { processedCount: batchIds.length };
-        });
-
-        // Wait for all parallel batches to complete
-        const results = await Promise.all(batchPromises);
-        const batchProcessedCount = results.reduce((sum, r) => sum + r.processedCount, 0);
-        processedCount += batchProcessedCount;
-
-        setProcessing(prev => ({
-          ...prev,
-          currentIndex: processedCount,
-          completed: [...completed],
-          failed: [...failed],
-          totalCost: runningCost,
-          totalTokens: runningTokens,
-        }));
-        updateJobProgress();
-
-        // Small delay between parallel groups to avoid overwhelming the API
-        if (i + PARALLEL_BATCHES < allBatches.length && !stopRequestedRef.current) {
-          await sleep(300);
-        }
-      }
-
-      console.log(`[ImageExtraction] Complete: ${completed.length} succeeded, ${failed.length} failed`);
-    } else {
-      // Summary: parallel per-page processing (text only, simpler)
-      console.log("Concurrency: ", concurrency);
-      for (let i = 0; i < pageIds.length; i += concurrency) {
-        if (stopRequestedRef.current) break;
-        const batch = pageIds.slice(i, Math.min(i + concurrency, pageIds.length));
-        await Promise.all(batch.map(processPage));
-
-        // Small delay between batches to avoid rate limiting
-        if (i + concurrency < pageIds.length && !stopRequestedRef.current) {
-          await sleep(500);
-        }
-      }
+    setLoadingJob(true);
+    try {
+      const job = await jobs.get(currentJob.id);
+      setCurrentJob(job);
+    } catch (error) {
+      console.error('Failed to fetch job status:', error);
+    } finally {
+      setLoadingJob(false);
     }
+  };
 
-    // Final job update
-    if (jobId) {
-      try {
-        const finalStatus = stopRequestedRef.current
-          ? 'cancelled'
-          : failed.length === pageIds.length
-            ? 'failed'
-            : 'completed';
+  // Cancel current job
+  const cancelJob = async () => {
+    if (!currentJob) return;
 
-        await jobs.update(jobId, {
-          status: finalStatus,
-          progress: {
-            total: pageIds.length,
-            completed: completed.length,
-            failed: failed.length
-          },
-        });
-      } catch (error) {
-        console.error(`[Job ${jobId}] Failed to update job status:`, error);
-        alert(`Warning: Job tracking failed to update. Check /jobs page manually. Error: ${error instanceof Error ? error.message : 'Unknown'}`);
-      }
+    try {
+      await jobs.cancel(currentJob.id);
+      setCurrentJob(null);
+      router.refresh();
+    } catch (error) {
+      console.error('Failed to cancel job:', error);
+      alert(error instanceof Error ? error.message : 'Failed to cancel job');
     }
-
-    // Final state update with all completed/failed pages
-    setProcessing(prev => ({
-      ...prev,
-      active: false,
-      completed: [...completed],
-      failed: [...failed],
-      totalCost: runningCost,
-      totalTokens: runningTokens,
-    }));
-    if (completed.length > 0) router.refresh();
   };
 
   const actionConfig = {
@@ -928,9 +425,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   };
 
   const selectedCount = selectedPages.size;
-  // ~30 seconds per page, divided by concurrency
-  const estimatedTimeMinutes = Math.ceil((selectedCount * 0.5) / concurrency);
-  const estimatedCost = selectedCount * getEstimatedCost(action, selectedModel);
+  const estimatedCost = selectedCount * getEstimatedCost(action, DEFAULT_MODEL);
 
   const formatCost = (cost: number) => {
     if (cost < 0.01) return `$${cost.toFixed(4)}`;
@@ -1076,141 +571,70 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         </div>
       </div>
 
+      {/* Job Status Banner */}
+      {currentJob && (
+        <div className="bg-blue-50 rounded-xl border border-blue-200 p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Loader2 className="w-5 h-5 text-blue-600 animate-spin" />
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-blue-900">
+                    {actionConfig[currentJob.type].label} in progress
+                  </span>
+                  <span className="text-xs text-blue-600 bg-blue-100 px-2 py-0.5 rounded">
+                    {currentJob.status}
+                  </span>
+                </div>
+                <div className="text-xs text-blue-700 mt-1">
+                  {currentJob.progress.completed} / {currentJob.progress.total} pages completed
+                  {currentJob.progress.failed ? ` • ${currentJob.progress.failed} failed` : ''}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={fetchJobStatus}
+                disabled={loadingJob}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-blue-700 rounded-lg hover:bg-blue-100 border border-blue-300 disabled:opacity-50"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${loadingJob ? 'animate-spin' : ''}`} />
+                Refresh
+              </button>
+              <button
+                onClick={cancelJob}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700"
+              >
+                <X className="w-3.5 h-3.5" />
+                Cancel
+              </button>
+            </div>
+          </div>
+          {/* Progress bar */}
+          <div className="mt-3 h-2 bg-blue-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-blue-600 transition-all duration-300"
+              style={{ width: `${(currentJob.progress.completed / currentJob.progress.total) * 100}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Batch Mode Controls */}
       {batchMode && (
         <div className="bg-amber-50 rounded-xl border border-amber-200 p-4 space-y-4">
-          {/* Processing progress */}
-          {processing.active && (
-            <div className="bg-white rounded-lg p-4 border border-amber-200">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
-                  <span className="text-sm font-medium text-stone-700">
-                    {actionConfig[action].label} · Page {processing.currentIndex} of {processing.totalPages}
-                  </span>
-                </div>
-                <div className="flex items-center gap-4">
-                  {processing.totalCost > 0 && (
-                    <span className="text-xs text-green-600 flex items-center gap-1">
-                      <DollarSign className="w-3 h-3" />
-                      {formatCost(processing.totalCost)}
-                    </span>
-                  )}
-                  <button
-                    onClick={() => { stopRequestedRef.current = true; }}
-                    className="text-xs text-stone-500 hover:text-stone-700 flex items-center gap-1"
-                  >
-                    <Square className="w-3 h-3" /> Stop
-                  </button>
-                </div>
-              </div>
-              <div className="h-1.5 bg-stone-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-amber-500 transition-all duration-300"
-                  style={{ width: `${(processing.currentIndex / processing.totalPages) * 100}%` }}
-                />
-              </div>
-              <div className="flex justify-between mt-1 text-xs text-stone-500">
-                <span>{processing.completed.length} done</span>
-                <div className="flex gap-3">
-                  {processing.totalTokens > 0 && (
-                    <span className="text-stone-400">{(processing.totalTokens / 1000).toFixed(1)}K tokens</span>
-                  )}
-                  {processing.failed.length > 0 && <span className="text-red-500">{processing.failed.length} failed</span>}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Completion message with retry option */}
-          {!processing.active && processing.totalPages > 0 && (
-            <div className={`rounded-lg p-4 border ${processing.failed.length > 0 ? 'bg-red-50 border-red-200' : 'bg-green-50 border-green-200'}`}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  {processing.failed.length > 0 ? (
-                    <AlertCircle className="w-5 h-5 text-red-500" />
-                  ) : (
-                    <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  )}
-                  <div className="flex flex-col">
-                    <span className={`text-sm font-medium ${processing.failed.length > 0 ? 'text-red-700' : 'text-green-700'}`}>
-                      {processing.failed.length > 0
-                        ? `Completed with ${processing.failed.length} failed (${processing.completed.length} succeeded)`
-                        : `All ${processing.completed.length} pages processed successfully`}
-                    </span>
-                    {processing.lastError && processing.failed.length > 0 && (
-                      <span className="text-xs text-red-600 mt-1">
-                        Error: {processing.lastError}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  {processing.totalCost > 0 && (
-                    <span className="text-xs text-stone-500">
-                      Cost: {formatCost(processing.totalCost)}
-                    </span>
-                  )}
-                  {processing.failed.length > 0 && (
-                    <button
-                      onClick={() => {
-                        // Select failed pages and start new batch
-                        setSelectedPages(new Set(processing.failed));
-                        setProcessing({
-                          active: false,
-                          type: null,
-                          currentIndex: 0,
-                          totalPages: 0,
-                          completed: [],
-                          failed: [],
-                          totalCost: 0,
-                          totalTokens: 0,
-                        });
-                      }}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 text-xs font-medium"
-                    >
-                      <RotateCcw className="w-3 h-3" />
-                      Retry {processing.failed.length} Failed
-                    </button>
-                  )}
-                  <button
-                    onClick={() => setProcessing({
-                      active: false,
-                      type: null,
-                      currentIndex: 0,
-                      totalPages: 0,
-                      completed: [],
-                      failed: [],
-                      totalCost: 0,
-                      totalTokens: 0,
-                    })}
-                    className="text-xs text-stone-500 hover:text-stone-700"
-                  >
-                    Dismiss
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* Action selector & Selection controls */}
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
               <span className="text-sm text-stone-600">Action:</span>
               <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
-                {(['ocr', 'translation', 'image_extraction'] as ActionType[]).map(type => {
+                {(['ocr', 'translation', 'image_extraction'] as JobType[]).map(type => {
                   const { label, icon: Icon, color } = actionConfig[type];
                   const isSelected = action === type;
                   return (
                     <button
                       key={type}
-                      onClick={() => {
-                        setAction(type);
-                        // Translation requires realtime mode for context continuity
-                        if (type === 'translation') {
-                          setUseBatchApi(false);
-                        }
-                      }}
+                      onClick={() => setAction(type)}
                       className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium transition-colors ${isSelected ? 'text-white' : 'text-stone-600 hover:bg-stone-50'
                         }`}
                       style={isSelected ? { backgroundColor: color } : {}}
@@ -1221,78 +645,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                   );
                 })}
               </div>
-              {/* Info tooltip */}
-              <div className="relative group">
-                <button className="p-1 text-stone-400 hover:text-stone-600 transition-colors">
-                  <Info className="w-4 h-4" />
-                </button>
-                <div className="absolute left-0 top-full mt-2 w-80 p-3 bg-stone-800 text-white text-xs rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-                  {action === 'ocr' ? (
-                    <>
-                      <p className="font-medium mb-1">OCR (Optical Character Recognition)</p>
-                      <p className="text-stone-300 mb-2">Extracts text from page images. 5 pages/batch, 10 parallel batches recommended.</p>
-                      <p className="text-amber-400 text-[11px] mb-2">Experiment: Batch sizes 1, 5, 10 showed no quality difference. Only batch 20 degraded (30-1 loss).</p>
-                      <Link href="/about/processing" className="text-amber-400 hover:text-amber-300 text-[11px] underline">
-                        Learn more about our experiments →
-                      </Link>
-                    </>
-                  ) : (
-                    <>
-                      <p className="font-medium mb-1">Translation</p>
-                      <p className="text-stone-300 mb-2">Translates OCR text to English. Sequential processing for context continuity.</p>
-                      <p className="text-blue-400 text-[11px] mb-2">Each batch passes the last page&apos;s translation as context to the next batch.</p>
-                      <Link href="/about/processing" className="text-amber-400 hover:text-amber-300 text-[11px] underline">
-                        Learn more about processing →
-                      </Link>
-                    </>
-                  )}
-                </div>
-              </div>
             </div>
 
             <div className="h-6 w-px bg-amber-300" />
-
-            {/* Model selector */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-stone-600">Model:</span>
-              <select
-                value={selectedModel}
-                onChange={(e) => setSelectedModel(e.target.value)}
-                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              >
-                {GEMINI_MODELS.map(model => (
-                  <option key={model.id} value={model.id}>
-                    {model.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Concurrency selector - only for OCR realtime */}
-            {!useBatchApi && action === 'ocr' && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-stone-600">Parallel batches:</span>
-                <select
-                  value={concurrency}
-                  onChange={(e) => setConcurrency(Number(e.target.value))}
-                  className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                >
-                  <option value={1}>1 (sequential)</option>
-                  <option value={2}>2</option>
-                  <option value={5}>5</option>
-                  <option value={10}>10 (recommended)</option>
-                </select>
-              </div>
-            )}
-            {/* Translation batch info */}
-            {action === 'translation' && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-stone-600">Batch:</span>
-                <span className="px-2 py-1.5 text-sm bg-stone-100 text-stone-600 rounded-lg">
-                  5 pages, sequential
-                </span>
-              </div>
-            )}
 
             {/* Mode selector */}
             <div className="flex items-center gap-2">
@@ -1302,39 +657,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
                 onChange={(e) => setOverwriteMode(e.target.value === 'all')}
                 className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
               >
-                <option value="missing">only missing</option>
-                <option value="all">all (overwrite)</option>
+                <option value="missing">Only Missing</option>
+                <option value="all">All (Overwrite)</option>
               </select>
             </div>
-
-            {/* Batch API toggle - only for OCR (translation needs context continuity) */}
-            {action === 'ocr' ? (
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setUseBatchApi(false)}
-                  className={`px-2 py-1.5 text-sm rounded-l-lg border transition-colors ${!useBatchApi
-                    ? 'bg-amber-600 text-white border-amber-600'
-                    : 'bg-white text-stone-600 border-amber-300 hover:bg-amber-50'
-                    }`}
-                >
-                  Realtime
-                </button>
-                <button
-                  onClick={() => setUseBatchApi(true)}
-                  className={`px-2 py-1.5 text-sm rounded-r-lg border-y border-r transition-colors ${useBatchApi
-                    ? 'bg-green-600 text-white border-green-600'
-                    : 'bg-white text-stone-600 border-amber-300 hover:bg-green-50'
-                    }`}
-                  title="50% cheaper, results in 2-24 hours"
-                >
-                  Batch 50%↓
-                </button>
-              </div>
-            ) : (
-              <span className="text-xs text-stone-500 px-2 py-1.5 bg-stone-100 rounded-lg">
-                Sequential (for continuity)
-              </span>
-            )}
 
             <div className="h-6 w-px bg-amber-300" />
 
@@ -1401,10 +727,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
           {/* Run button */}
           <div className="flex items-center justify-between pt-2">
-            <div className="flex items-center gap-3 text-sm text-stone-500">
+            {/* <div className="flex items-center gap-3 text-sm text-stone-500">
               {selectedCount > 0 ? (
                 <>
-                  <span>~{estimatedTimeMinutes} min for {selectedCount} pages</span>
+                  <span>{selectedCount} pages selected</span>
                   <span className="text-stone-300">·</span>
                   <span className="text-green-600 flex items-center gap-1">
                     <DollarSign className="w-3 h-3" />
@@ -1414,14 +740,15 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               ) : (
                 <span>Select pages to process</span>
               )}
-            </div>
+            </div> */}
             <button
               onClick={runBatchProcess}
-              disabled={selectedCount === 0 || processing.active}
+              disabled={selectedCount === 0 || !!currentJob}
               className="flex items-center gap-2 px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
+              title={currentJob ? 'Another job is already running for this book' : ''}
             >
               <Play className="w-4 h-4" />
-              Run {actionConfig[action].label}
+              Start Process
             </button>
           </div>
         </div>

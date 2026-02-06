@@ -1,29 +1,44 @@
-import { NextResponse } from 'next/server';
-import { getJobById, canTransitionTo, updateJobStatus } from '@/lib/job-helpers';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
 
+/**
+ * POST /api/jobs/[id]/cancel
+ *
+ * Cancel a job by setting its status to 'cancelled'.
+ * Workers check job status before processing each page and will skip cancelled jobs.
+ *
+ * Note: Cannot stop a Lambda mid-execution. If a page is currently being
+ * processed when user cancels, that page will finish. This is acceptable.
+ */
 export async function POST(
-  _request: Request,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  try {
-    const { id } = await params;
-    const { job, db } = await getJobById(id);
+  const { id: jobId } = await params;
+  const db = await getDb();
 
-    // Validate state transition
-    const validation = canTransitionTo(job.status, 'cancel');
-    if (!validation.valid) {
-      return NextResponse.json({ error: validation.error }, { status: 400 });
+  const result = await db.collection('jobs').updateOne(
+    { id: jobId },
+    {
+      $set: {
+        status: 'cancelled',
+        updated_at: new Date()
+      }
     }
+  );
 
-    // Update job status
-    await updateJobStatus(db, id, 'cancel');
+  if (result.matchedCount === 0) {
+    return NextResponse.json({ error: 'Job not found' }, { status: 404 });
+  }
 
-    return NextResponse.json({ success: true });
-  } catch (error: any) {
-    console.error('Error cancelling job:', error);
-    return NextResponse.json(
-      { error: error.message || 'Failed to cancel job' },
-      { status: error.statusCode || 500 }
+  // Clear current_job_id from book
+  const job = await db.collection('jobs').findOne({ id: jobId });
+  if (job?.book_id) {
+    await db.collection('books').updateOne(
+      { id: job.book_id },
+      { $unset: { current_job_id: '' } }
     );
   }
+
+  return NextResponse.json({ success: true });
 }

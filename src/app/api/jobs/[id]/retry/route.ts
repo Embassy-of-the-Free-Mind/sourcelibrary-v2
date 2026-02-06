@@ -1,119 +1,77 @@
-import { NextResponse } from 'next/server';
-import { getJobById } from '@/lib/job-helpers';
-import { sendMessage, QUEUE_URLS } from '@/lib/sqs-client';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+import type { JobStatus, JobType } from '@/lib/types/job';
+import { enqueuePagesForJob } from '@/lib/queue-utils';
 
+/**
+ * POST /api/jobs/[id]/retry
+ *
+ * Retry a failed/cancelled/partial job by re-enqueueing failed pages.
+ * Workers will process the failed pages again.
+ */
 export async function POST(
-  _request: Request,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = await params;
-    const { job, db } = await getJobById(id);
+    const { id: jobId } = await params;
+    const db = await getDb();
 
-    // Only retry jobs with partial completion and failed pages
-    if (job.status !== 'partial' && job.status !== 'failed') {
+    const job = await db.collection('jobs').findOne({ id: jobId });
+
+    if (!job) {
+      return NextResponse.json({ error: 'Job not found' }, { status: 404 });
+    }
+
+    // Can only retry jobs that have failures
+    if (job.status !== 'failed' && job.status !== 'cancelled' && job.status !== 'partial') {
       return NextResponse.json(
-        { error: 'Can only retry partial or failed jobs' },
+        { error: 'Can only retry failed, cancelled, or partial jobs' },
         { status: 400 }
       );
     }
 
-    if (!job.failed_page_ids || job.failed_page_ids.length === 0) {
+    // Get failed page IDs
+    const failedPageIds = job.failed_page_ids || [];
+    if (failedPageIds.length === 0) {
       return NextResponse.json(
         { error: 'No failed pages to retry' },
         { status: 400 }
       );
     }
 
-    // Auto-detect what phase needs retry based on progress
-    const needsOcrRetry = job.progress.ocr_completed < job.progress.total;
-    const needsTranslationRetry =
-      job.progress.ocr_completed === job.progress.total &&
-      job.progress.translation_completed < job.progress.ocr_completed;
+    // Re-enqueue failed pages using shared utility
+    await enqueuePagesForJob(
+      job.book_id,
+      failedPageIds,
+      job.type as JobType,
+      jobId,
+      job.config.custom_prompt
+    );
 
-    if (!needsOcrRetry && !needsTranslationRetry) {
-      return NextResponse.json(
-        { error: 'Job is already complete' },
-        { status: 400 }
-      );
-    }
-
-    const failedPageCount = job.failed_page_ids.length;
-
-    if (needsOcrRetry) {
-      // Retry OCR: Re-enqueue book to book-processing-queue for OCR phase with retry pages
-      console.log(`[retry-job] Retrying ${failedPageCount} failed OCR pages for job ${id}`);
-
-      // Update job status back to OCR phase and clear failed_page_ids
-      await db.collection('jobs').updateOne(
-        { id },
-        {
-          $set: {
-            status: 'ocr',
-            updated_at: new Date()
-          },
-          $unset: { failed_page_ids: '' }
+    // Reset job status and clear failed_page_ids
+    await db.collection('jobs').updateOne(
+      { id: jobId },
+      {
+        $set: {
+          status: 'pending' as JobStatus,
+          'progress.failed': 0,
+          failed_page_ids: [],
+          updated_at: new Date()
         }
-      );
+      }
+    );
 
-      // Re-enqueue book to book-processing-queue for OCR phase
-      await sendMessage({
-        queueUrl: QUEUE_URLS.bookProcessing,
-        message: {
-          bookId: job.book_id,
-          dbJobId: id,
-          phase: 'ocr',
-          retryPageIds: job.failed_page_ids
-        },
-        messageGroupId: job.book_id
-      });
-
-      return NextResponse.json({
-        success: true,
-        message: `Requeued ${failedPageCount} pages for OCR retry`,
-        phase: 'ocr'
-      });
-
-    } else if (needsTranslationRetry) {
-      // Retry Translation: Re-enqueue book to book-processing-queue for translation phase
-      console.log(`[retry-job] Retrying ${failedPageCount} failed translation pages for job ${id}`);
-
-      // Update job status back to translation phase and clear failed_page_ids
-      await db.collection('jobs').updateOne(
-        { id },
-        {
-          $set: {
-            status: 'translation',
-            updated_at: new Date()
-          },
-          $unset: { failed_page_ids: '' }
-        }
-      );
-
-      // Re-enqueue book to book-processing-queue for translation phase
-      await sendMessage({
-        queueUrl: QUEUE_URLS.bookProcessing,
-        message: {
-          bookId: job.book_id,
-          dbJobId: id,
-          phase: 'translation',
-          retryPageIds: job.failed_page_ids
-        },
-        messageGroupId: job.book_id
-      });
-
-      return NextResponse.json({
-        success: true,
-        message: `Requeued ${failedPageCount} pages for translation retry`,
-        phase: 'translation'
-      });
-    }
-
-  } catch (error: any) {
+    return NextResponse.json({
+      success: true,
+      message: `Retrying ${failedPageIds.length} failed pages`,
+      retried: failedPageIds.length
+    });
+  } catch (error) {
     console.error('Error retrying job:', error);
     return NextResponse.json(
-      { error: error.message || 'Failed to retry job' },
-      { status: error.statusCode || 500 }
+      { error: error instanceof Error ? error.message : 'Failed to retry job' },
+      { status: 500 }
     );
   }
 }
