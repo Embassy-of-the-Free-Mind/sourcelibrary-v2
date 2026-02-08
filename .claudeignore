@@ -1,0 +1,21 @@
+# Build output
+.next/
+out/
+build/
+dist/
+
+# Dependencies
+node_modules/
+
+# Large data files
+data/
+public/uploads/
+public/test-images/
+
+# MCP server build
+mcp-server/dist/
+mcp-server/node_modules/
+
+# Logs
+logs/
+*.log
