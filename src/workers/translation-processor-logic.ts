@@ -2,6 +2,8 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import { performTranslation } from '@/lib/ai';
 import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
+import { logGeminiCall } from '@/lib/gemini-logger';
+import { classifyError } from '@/lib/errors';
 
 /**
  * Translation Processor - processes one page at a time
@@ -63,6 +65,9 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     return;
   }
 
+  const modelId = job.config.model || DEFAULT_MODEL;
+  const startTime = Date.now();
+
   try {
     // Get context from previous page (for sequential translation)
     let context = null;
@@ -84,8 +89,10 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       'English',
       context ?? undefined,
       customPrompt,
-      job.config.model || DEFAULT_MODEL
+      modelId
     );
+
+    const durationMs = Date.now() - startTime;
 
     // Save translation
     await pages.updateOne(
@@ -95,7 +102,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
           translation: {
             data: translationResult.text,
             language: 'English',
-            model: job.config.model || DEFAULT_MODEL,
+            model: modelId,
             updated_at: new Date(),
             source: 'ai',
             prompt_version: PROMPT_VERSION
@@ -105,9 +112,46 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       }
     );
 
-    console.log(`[TRANS] Completed page ${pageId}`);
+    // Log successful AI call
+    await logGeminiCall({
+      type: 'translate',
+      mode: 'realtime',
+      model: modelId,
+      book_id: bookId,
+      page_ids: [pageId],
+      input_tokens: translationResult.usage.inputTokens,
+      output_tokens: translationResult.usage.outputTokens,
+      status: 'success',
+      job_id: jobId,
+      duration_ms: durationMs,
+      prompt_version: PROMPT_VERSION,
+      endpoint: 'worker/translation',
+    });
+
+    console.log(`[TRANS] Completed page ${pageId}, ${durationMs}ms`);
   } catch (error) {
-    console.error(`[TRANS] Failed to process page ${pageId}:`, error);
+    const durationMs = Date.now() - startTime;
+    const classified = classifyError(error);
+    console.error(`[TRANS] Failed to process page ${pageId} [${classified.category}]:`, error);
+
+    // Log failed AI call
+    await logGeminiCall({
+      type: 'translate',
+      mode: 'realtime',
+      model: modelId,
+      book_id: bookId,
+      page_ids: [pageId],
+      input_tokens: 0,
+      output_tokens: 0,
+      status: 'failed',
+      error_message: classified.message,
+      error_category: classified.category,
+      job_id: jobId,
+      duration_ms: durationMs,
+      prompt_version: PROMPT_VERSION,
+      endpoint: 'worker/translation',
+    });
+
     await jobs.updateOne(
       { id: jobId },
       {

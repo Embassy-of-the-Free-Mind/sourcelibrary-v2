@@ -12,6 +12,8 @@ import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
+import { logGeminiCall } from '@/lib/gemini-logger';
+import { classifyError } from '@/lib/errors';
 
 /**
  * Get page image URL with priority fallbacks:
@@ -81,6 +83,9 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     return;
   }
 
+  const modelId = job.config.model || DEFAULT_MODEL;
+  const startTime = Date.now();
+
   try {
     // Get image buffer and MIME type
     const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);
@@ -94,10 +99,11 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
       job.config.language || 'Latin',
       undefined, // no previous page context in Lambda worker (pages arrive out of order)
       customPrompt,
-      job.config.model || DEFAULT_MODEL
+      modelId
     );
 
-    console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}`);
+    const durationMs = Date.now() - startTime;
+    console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}, ${durationMs}ms`);
 
     // Save OCR result
     await pages.updateOne(
@@ -107,7 +113,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           ocr: {
             data: ocrResult.text,
             language: job.config.language || 'Latin',
-            model: job.config.model || DEFAULT_MODEL,
+            model: modelId,
             updated_at: new Date(),
             source: 'ai',
             prompt_version: PROMPT_VERSION
@@ -117,9 +123,46 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
       }
     );
 
+    // Log successful AI call
+    await logGeminiCall({
+      type: 'ocr',
+      mode: 'realtime',
+      model: modelId,
+      book_id: bookId,
+      page_ids: [pageId],
+      input_tokens: ocrResult.usage.inputTokens,
+      output_tokens: ocrResult.usage.outputTokens,
+      status: 'success',
+      job_id: jobId,
+      duration_ms: durationMs,
+      prompt_version: PROMPT_VERSION,
+      endpoint: 'worker/ocr',
+    });
+
     console.log(`[OCR] Saved OCR result for page ${pageId}`);
   } catch (error) {
-    console.error(`[OCR] Failed to process page ${pageId}:`, error);
+    const durationMs = Date.now() - startTime;
+    const classified = classifyError(error);
+    console.error(`[OCR] Failed to process page ${pageId} [${classified.category}]:`, error);
+
+    // Log failed AI call
+    await logGeminiCall({
+      type: 'ocr',
+      mode: 'realtime',
+      model: modelId,
+      book_id: bookId,
+      page_ids: [pageId],
+      input_tokens: 0,
+      output_tokens: 0,
+      status: 'failed',
+      error_message: classified.message,
+      error_category: classified.category,
+      job_id: jobId,
+      duration_ms: durationMs,
+      prompt_version: PROMPT_VERSION,
+      endpoint: 'worker/ocr',
+    });
+
     await jobs.updateOne(
       { id: jobId },
       {

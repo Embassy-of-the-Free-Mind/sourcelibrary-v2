@@ -4,10 +4,13 @@
  * Logs all Gemini API calls (realtime and batch) for auditing.
  * Stores in MongoDB `gemini_usage` collection.
  *
+ * This is the SINGLE source of truth for AI cost/usage tracking.
+ * The `cost_tracking` collection is deprecated — all new writes go here.
+ *
  * Usage:
  *   import { logGeminiCall, logBatchSubmission, logBatchResult } from '@/lib/gemini-logger';
  *
- *   // For realtime calls
+ *   // For realtime calls (HTTP endpoints)
  *   await logGeminiCall({
  *     type: 'ocr',
  *     model: 'gemini-2.5-flash',
@@ -17,6 +20,29 @@
  *     input_tokens: 1000,
  *     output_tokens: 500,
  *     status: 'success',
+ *   });
+ *
+ *   // For Lambda workers (includes job tracking + timing)
+ *   await logGeminiCall({
+ *     type: 'ocr',
+ *     mode: 'realtime',
+ *     model: 'gemini-2.5-flash',
+ *     book_id: '123',
+ *     page_ids: ['page1'],
+ *     input_tokens: 1000,
+ *     output_tokens: 500,
+ *     status: 'success',
+ *     job_id: 'job_abc',          // Links to jobs collection
+ *     duration_ms: 3200,          // Wall-clock time for AI call
+ *     endpoint: 'worker/ocr',
+ *   });
+ *
+ *   // For failed calls (workers log these too)
+ *   await logGeminiCall({
+ *     ...commonFields,
+ *     status: 'failed',
+ *     error_message: 'Rate limit exceeded',
+ *     error_category: 'rate_limit',  // From classifyError()
  *   });
  *
  *   // For batch submissions
@@ -72,6 +98,11 @@ export interface GeminiUsageLog {
   status: GeminiStatus;
   error_message?: string;
 
+  // Job tracking
+  job_id?: string;          // Links to jobs collection
+  duration_ms?: number;     // Wall-clock time for the AI call
+  error_category?: string;  // Structured classification (rate_limit, timeout, etc.)
+
   // Metadata
   prompt_version?: string;
   endpoint?: string;  // Which API route triggered this
@@ -113,6 +144,9 @@ export async function logGeminiCall(params: {
   output_tokens: number;
   status: GeminiStatus;
   error_message?: string;
+  job_id?: string;
+  duration_ms?: number;
+  error_category?: string;
   prompt_version?: string;
   endpoint?: string;
 }): Promise<void> {
@@ -136,6 +170,9 @@ export async function logGeminiCall(params: {
       cost_usd: calculateCost(params.model, params.input_tokens, params.output_tokens, params.mode === 'batch'),
       status: params.status,
       error_message: params.error_message,
+      job_id: params.job_id,
+      duration_ms: params.duration_ms,
+      error_category: params.error_category,
       prompt_version: params.prompt_version,
       endpoint: params.endpoint,
     };

@@ -213,6 +213,34 @@ This is Source Library v2, a Next.js application for digitizing and translating 
 - **Database**: MongoDB Atlas (credentials in .env.local - DO NOT READ)
 - **Deployment**: Vercel
 
+## Audit Trail & Cost Tracking
+
+All AI calls are logged to the `gemini_usage` MongoDB collection via `logGeminiCall()` in `src/lib/gemini-logger.ts`. This is the **single source of truth** for cost and usage data. The `cost_tracking` collection is deprecated (historical data preserved, no new writes).
+
+### What gets logged
+
+Every AI call — from Lambda workers, batch HTTP endpoints, and cron jobs — writes a record with:
+- `type`: ocr, translate, extract_images, summarize, index
+- `model`, `input_tokens`, `output_tokens`, `cost_usd`
+- `status`: success or failed
+- `job_id`: links to the jobs collection (workers only)
+- `duration_ms`: wall-clock time for the AI call (workers only)
+- `error_category`: structured classification from `classifyError()` (on failure)
+- `endpoint`: which code path triggered the call (e.g. `worker/ocr`, `batch-ocr`)
+
+### Error classification
+
+`src/lib/errors.ts` exports `classifyError(error)` which returns `{ category, message }`.
+Categories: `rate_limit`, `timeout`, `safety_filter`, `invalid_image`, `network`, `api_error`, `no_data`, `unknown`.
+
+### Processing dashboard
+
+```
+GET /api/admin/processing-dashboard?provider=ia
+```
+
+Returns: progress (books by OCR/translation completion tier), costs (7-day and 30-day), top error categories, and pages-per-day velocity.
+
 ## Gemini Models
 
 Use the latest available Gemini models. As of December 2025:

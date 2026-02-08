@@ -92,16 +92,34 @@ function getMimeType(url: string, headerType: string | null | undefined): string
   return 'image/jpeg'; // Default to JPEG
 }
 
+/** Result with token usage, returned when { returnUsage: true } is passed */
+export interface ExtractionResult {
+  images: DetectedImage[];
+  usage: { inputTokens: number; outputTokens: number };
+}
+
 /**
- * Extract illustrations from a page image using Gemini vision
+ * Extract illustrations from a page image using Gemini vision.
+ *
  * @param imageUrl URL to fetch the image from
  * @param model Gemini model to use (default: gemini-2.5-flash)
- * @returns Array of detected images with bounding boxes and metadata
+ * @param options Pass { returnUsage: true } to get token counts alongside images
+ * @returns DetectedImage[] by default, or ExtractionResult with usage when requested
  */
 export async function extractWithGemini(
   imageUrl: string,
-  model: string = DEFAULT_MODEL
-): Promise<DetectedImage[]> {
+  model?: string
+): Promise<DetectedImage[]>;
+export async function extractWithGemini(
+  imageUrl: string,
+  model: string,
+  options: { returnUsage: true }
+): Promise<ExtractionResult>;
+export async function extractWithGemini(
+  imageUrl: string,
+  model: string = DEFAULT_MODEL,
+  options?: { returnUsage: true }
+): Promise<DetectedImage[] | ExtractionResult> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY not set');
@@ -141,16 +159,27 @@ export async function extractWithGemini(
   const data = await response.json();
   const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
+  // Extract token usage from response
+  const usageMetadata = data.usageMetadata;
+  const usage = {
+    inputTokens: usageMetadata?.promptTokenCount || 0,
+    outputTokens: usageMetadata?.candidatesTokenCount || 0,
+  };
+
   // Parse JSON from response
   const jsonMatch = text.match(/\[[\s\S]*\]/);
   if (!jsonMatch) {
+    if (options?.returnUsage) return { images: [], usage };
     return [];
   }
 
   const parsed = JSON.parse(jsonMatch[0]);
-  if (!Array.isArray(parsed)) return [];
+  if (!Array.isArray(parsed)) {
+    if (options?.returnUsage) return { images: [], usage };
+    return [];
+  }
 
-  return parsed.map(item => ({
+  const detectedImages: DetectedImage[] = parsed.map(item => ({
     description: item.description || '',
     type: item.type || 'unknown',
     bbox: item.bbox ? {
@@ -175,6 +204,9 @@ export async function extractWithGemini(
     detection_source: 'vision_model' as const,
     model: model,
   }));
+
+  if (options?.returnUsage) return { images: detectedImages, usage };
+  return detectedImages;
 }
 
 /**

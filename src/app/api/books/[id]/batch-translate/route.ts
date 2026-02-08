@@ -191,23 +191,6 @@ export async function POST(
       notifyBatchTranslation(bookId, translatedPageNumbers).catch(console.error);
     }
 
-    // Track cost
-    try {
-      await db.collection('cost_tracking').insertOne({
-        timestamp: new Date(),
-        action: 'book_batch_translate',
-        bookId,
-        model: modelId,
-        inputTokens: totalInputTokens,
-        outputTokens: totalOutputTokens,
-        totalTokens: totalInputTokens + totalOutputTokens,
-        costUsd: totalCost,
-        pagesProcessed: successCount,
-      });
-    } catch (e) {
-      console.error('Failed to track cost:', e);
-    }
-
     // Log to gemini_usage for auditing
     const successfulPageIds = results.filter(r => r.success).map(r => r.pageId);
     await logGeminiCall({

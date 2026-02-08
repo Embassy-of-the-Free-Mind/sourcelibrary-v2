@@ -194,23 +194,6 @@ export async function POST(
       }
     }
 
-    // Track cost
-    try {
-      await db.collection('cost_tracking').insertOne({
-        timestamp: new Date(),
-        action: 'book_batch_ocr',
-        bookId,
-        model: modelId,
-        inputTokens: totalInputTokens,
-        outputTokens: totalOutputTokens,
-        totalTokens: totalInputTokens + totalOutputTokens,
-        costUsd: totalCost,
-        pagesProcessed: results.filter(r => r.success).length,
-      });
-    } catch (e) {
-      console.error('Failed to track cost:', e);
-    }
-
     // Log to gemini_usage for auditing
     const successfulPageIds = results.filter(r => r.success).map(r => r.pageId);
     await logGeminiCall({

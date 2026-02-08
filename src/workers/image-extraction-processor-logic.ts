@@ -4,6 +4,8 @@ import type { Page } from '@/lib/types/page';
 import { extractWithGemini } from '@/lib/image-extraction';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
+import { logGeminiCall } from '@/lib/gemini-logger';
+import { classifyError } from '@/lib/errors';
 
 /**
  * Image Extraction Processor - processes one page at a time
@@ -85,20 +87,20 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     return;
   }
 
+  const modelId = job.config.model || DEFAULT_MODEL;
+  const startTime = Date.now();
+
   try {
-    // Extract images with AI vision
-    // extractWithGemini handles fetching and base64 encoding internally
-    const detectedImages = await extractWithGemini(
-      imageUrl,
-      job.config.model || DEFAULT_MODEL
-    );
+    // Extract images with AI vision (with usage tracking)
+    const result = await extractWithGemini(imageUrl, modelId, { returnUsage: true });
+    const durationMs = Date.now() - startTime;
 
     // Save results to page
     await pages.updateOne(
       { id: pageId },
       {
         $set: {
-          detected_images: detectedImages,
+          detected_images: result.images,
           image_extraction_updated_at: new Date(),
           image_extraction_prompt_version: PROMPT_VERSION,
           updated_at: new Date()
@@ -106,9 +108,46 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
       }
     );
 
-    console.log(`[IMG-EXTRACT] Completed page ${pageId}: ${detectedImages.length} images detected`);
+    // Log successful AI call
+    await logGeminiCall({
+      type: 'extract_images',
+      mode: 'realtime',
+      model: modelId,
+      book_id: bookId,
+      page_ids: [pageId],
+      input_tokens: result.usage.inputTokens,
+      output_tokens: result.usage.outputTokens,
+      status: 'success',
+      job_id: jobId,
+      duration_ms: durationMs,
+      prompt_version: PROMPT_VERSION,
+      endpoint: 'worker/image-extraction',
+    });
+
+    console.log(`[IMG-EXTRACT] Completed page ${pageId}: ${result.images.length} images detected, ${durationMs}ms`);
   } catch (error) {
-    console.error(`[IMG-EXTRACT] Failed to process page ${pageId}:`, error);
+    const durationMs = Date.now() - startTime;
+    const classified = classifyError(error);
+    console.error(`[IMG-EXTRACT] Failed to process page ${pageId} [${classified.category}]:`, error);
+
+    // Log failed AI call
+    await logGeminiCall({
+      type: 'extract_images',
+      mode: 'realtime',
+      model: modelId,
+      book_id: bookId,
+      page_ids: [pageId],
+      input_tokens: 0,
+      output_tokens: 0,
+      status: 'failed',
+      error_message: classified.message,
+      error_category: classified.category,
+      job_id: jobId,
+      duration_ms: durationMs,
+      prompt_version: PROMPT_VERSION,
+      endpoint: 'worker/image-extraction',
+    });
+
     await jobs.updateOne(
       { id: jobId },
       {
