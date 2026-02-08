@@ -1,16 +1,4 @@
 {
-  "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 60
-    },
-    "app/api/cron/**/*.ts": {
-      "maxDuration": 300
-    },
-    "app/api/upload/from-s3/route.ts": {
-      "maxDuration": 180,
-      "memory": 1024
-    }
-  },
   "crons": [
     {
       "path": "/api/cron/archive-ocr",
