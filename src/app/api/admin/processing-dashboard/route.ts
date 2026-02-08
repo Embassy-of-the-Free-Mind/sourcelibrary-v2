@@ -7,6 +7,7 @@ import { getDb } from '@/lib/mongodb';
  *
  * Returns campaign-level metrics:
  * - Progress: Books by OCR/translation completion tier, filterable by provider
+ *   (computed from pages collection, not stale book summary fields)
  * - Costs: Total spend this week/month from gemini_usage
  * - Errors: Top error categories (last 7 days)
  * - Velocity: Pages processed per day (last 7 days)
@@ -22,64 +23,116 @@ export async function GET(request: Request) {
     const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
     // --- Progress: Books by completion tier ---
+    // Computed from actual pages data, not stale book summary fields
     const bookMatch: Record<string, unknown> = {};
     if (provider) {
       bookMatch['image_source.provider'] = provider;
     }
 
-    const [ocrTiers, translationTiers] = await Promise.all([
-      db.collection('books').aggregate([
-        { $match: bookMatch },
-        {
-          $project: {
-            ocr_pct: {
-              $cond: {
-                if: { $or: [{ $eq: ['$pages_count', null] }, { $eq: ['$pages_count', 0] }] },
-                then: 0,
-                else: { $multiply: [{ $divide: [{ $ifNull: ['$pages_ocr', 0] }, '$pages_count'] }, 100] }
+    const progressPipeline = [
+      { $match: bookMatch },
+      {
+        $lookup: {
+          from: 'pages',
+          let: { bookId: '$id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$book_id', '$$bookId'] } } },
+            {
+              $group: {
+                _id: null,
+                total: { $sum: 1 },
+                has_ocr: {
+                  $sum: {
+                    $cond: [
+                      { $and: [
+                        { $ne: ['$ocr.data', null] },
+                        { $ne: ['$ocr.data', ''] },
+                        { $ifNull: ['$ocr.data', false] }
+                      ]},
+                      1, 0
+                    ]
+                  }
+                },
+                has_translation: {
+                  $sum: {
+                    $cond: [
+                      { $and: [
+                        { $ne: ['$translation.data', null] },
+                        { $ne: ['$translation.data', ''] },
+                        { $ifNull: ['$translation.data', false] }
+                      ]},
+                      1, 0
+                    ]
+                  }
+                },
               }
             }
-          }
-        },
-        {
-          $bucket: {
-            groupBy: '$ocr_pct',
-            boundaries: [0, 1, 50, 100, 101],
-            default: 'other',
-            output: { count: { $sum: 1 } }
-          }
+          ],
+          as: 'page_stats'
         }
-      ]).toArray(),
-
-      db.collection('books').aggregate([
-        { $match: bookMatch },
-        {
-          $project: {
-            trans_pct: { $ifNull: ['$translation_percent', 0] }
-          }
-        },
-        {
-          $bucket: {
-            groupBy: '$trans_pct',
-            boundaries: [0, 1, 50, 100, 101],
-            default: 'other',
-            output: { count: { $sum: 1 } }
-          }
+      },
+      {
+        $project: {
+          page_stats: { $arrayElemAt: ['$page_stats', 0] },
         }
-      ]).toArray(),
-    ]);
+      },
+      {
+        $project: {
+          total: { $ifNull: ['$page_stats.total', 0] },
+          has_ocr: { $ifNull: ['$page_stats.has_ocr', 0] },
+          has_translation: { $ifNull: ['$page_stats.has_translation', 0] },
+          ocr_pct: {
+            $cond: {
+              if: { $or: [
+                { $eq: [{ $ifNull: ['$page_stats.total', 0] }, 0] },
+                { $eq: ['$page_stats', null] }
+              ]},
+              then: 0,
+              else: { $multiply: [
+                { $divide: ['$page_stats.has_ocr', '$page_stats.total'] },
+                100
+              ]}
+            }
+          },
+          trans_pct: {
+            $cond: {
+              if: { $or: [
+                { $eq: [{ $ifNull: ['$page_stats.total', 0] }, 0] },
+                { $eq: ['$page_stats', null] }
+              ]},
+              then: 0,
+              else: { $multiply: [
+                { $divide: ['$page_stats.has_translation', '$page_stats.total'] },
+                100
+              ]}
+            }
+          },
+        }
+      },
+    ];
 
-    function tierLabel(id: number | string): string {
-      if (id === 0) return '0%';
-      if (id === 1) return '1-49%';
-      if (id === 50) return '50-99%';
-      if (id === 100) return '100%';
-      return 'other';
+    const booksWithStats = await db.collection('books').aggregate(progressPipeline).toArray();
+
+    // Bucket into tiers
+    function getTier(pct: number): string {
+      if (pct === 0) return '0%';
+      if (pct < 50) return '1-49%';
+      if (pct < 100) return '50-99%';
+      return '100%';
+    }
+
+    const ocrTiers: Record<string, number> = { '0%': 0, '1-49%': 0, '50-99%': 0, '100%': 0 };
+    const transTiers: Record<string, number> = { '0%': 0, '1-49%': 0, '50-99%': 0, '100%': 0 };
+
+    for (const book of booksWithStats) {
+      ocrTiers[getTier(book.ocr_pct)]++;
+      transTiers[getTier(book.trans_pct)]++;
     }
 
     const progress = {
-      ocr: Object.fromEntries(ocrTiers.map(t => [tierLabel(t._id), t.count])),
-      translation: Object.fromEntries(translationTiers.map(t => [tierLabel(t._id), t.count])),
+      total_books: booksWithStats.length,
+      ocr: ocrTiers,
+      translation: transTiers,
     };
 
     // --- Costs: This week and this month ---
