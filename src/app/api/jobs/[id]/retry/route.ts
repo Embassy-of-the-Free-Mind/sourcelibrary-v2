@@ -24,9 +24,9 @@ export async function POST(
     }
 
     // Can only retry jobs that have failures
-    if (job.status !== 'failed' && job.status !== 'cancelled' && job.status !== 'partial') {
+    if (job.status !== 'failed' && job.status !== 'cancelled' && job.status !== 'partial' && job.status !== 'completed_with_errors') {
       return NextResponse.json(
-        { error: 'Can only retry failed, cancelled, or partial jobs' },
+        { error: 'Can only retry failed, cancelled, or completed_with_errors jobs' },
         { status: 400 }
       );
     }

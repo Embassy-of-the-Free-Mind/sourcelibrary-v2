@@ -6,12 +6,13 @@ export type JobType =
     'image_extraction';      // Image extraction for selected pages
 
 export type JobStatus =
-    'pending' |       // Job created, not started (workers haven't picked it up yet)
-    'processing' |    // Workers are actively processing pages
-    'completed' |     // All pages processed successfully
-    'failed' |        // Job failed completely
-    'cancelled' |     // User cancelled the job
-    'partial';        // Some pages succeeded, some failed (available for retry)
+    'pending' |                // Job created, not started (workers haven't picked it up yet)
+    'processing' |             // Workers are actively processing pages
+    'completed' |              // All pages processed successfully
+    'completed_with_errors' |  // All pages attempted, some failed (retryable)
+    'failed' |                 // Job failed completely
+    'cancelled' |              // User cancelled the job
+    'partial';                 // Legacy: same as completed_with_errors
 
 export interface JobProgress {
   total: number;       // Total pages in this job
@@ -102,7 +103,7 @@ export function getJobMetrics(job: Job) {
     completed,
     pending,
     failed_count,
-    is_retryable: job.status === 'partial' && failed_count > 0,
+    is_retryable: (job.status === 'completed_with_errors' || job.status === 'partial') && failed_count > 0,
     completion_percent: total > 0
       ? Math.round((completed / total) * 100)
       : 0

@@ -5,6 +5,7 @@ import type { Job, JobStatus, JobType } from '@/lib/types';
 const STATUS_COLORS: Record<JobStatus, string> = {
     pending: 'var(--text-muted)',
     completed: 'var(--accent-sage)',
+    completed_with_errors: 'var(--accent-gold)',
     partial: 'var(--accent-gold)',
     processing: 'var(--accent-sage)',
     failed: 'var(--accent-rust)',
@@ -14,6 +15,7 @@ const STATUS_COLORS: Record<JobStatus, string> = {
 const STATUS_ICONS: Record<JobStatus, typeof CheckCircle> = {
     pending: Clock,
     completed: CheckCircle,
+    completed_with_errors: XCircle,
     partial: XCircle,
     processing: Loader2,
     failed: XCircle,
@@ -113,7 +115,7 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                     )}
                 </div>
                 <div className="flex items-center gap-1">
-                    {job.status === 'partial' && (
+                    {(job.status === 'completed_with_errors' || job.status === 'partial') && (
                         <button
                             onClick={() => onRetry(job.id)}
                             className="p-1.5 rounded-lg hover:bg-stone-100 transition-colors"

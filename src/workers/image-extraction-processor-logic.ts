@@ -84,6 +84,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
         $set: { updated_at: new Date() }
       }
     );
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
     return;
   }
 
@@ -156,11 +157,20 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
         $set: { updated_at: new Date() }
       }
     );
-    return;
   }
 
-  // Update progress counter
-  const targetPageIds = job.config.page_ids || [];
+  // Always check completion — runs after both success and failure
+  await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+}
+
+async function checkJobCompletion(
+  db: Awaited<ReturnType<typeof getDb>>,
+  jobs: ReturnType<Awaited<ReturnType<typeof getDb>>['collection']>,
+  pages: ReturnType<Awaited<ReturnType<typeof getDb>>['collection']>,
+  jobId: string,
+  bookId: string,
+  targetPageIds: string[]
+) {
   const completedCount = await pages.countDocuments({
     book_id: bookId,
     id: { $in: targetPageIds },
@@ -179,13 +189,12 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
 
   console.log(`[IMG-EXTRACT] Progress: ${completedCount}/${targetPageIds.length}`);
 
-  // Check if all pages have been attempted (completed + failed)
   const updatedJob = await jobs.findOne({ id: jobId });
   const failedCount = updatedJob?.progress?.failed || 0;
   const totalAttempted = completedCount + failedCount;
 
   if (totalAttempted >= targetPageIds.length) {
-    const finalStatus = failedCount > 0 ? 'partial' : 'completed';
+    const finalStatus = failedCount > 0 ? 'completed_with_errors' : 'completed';
     console.log(`[IMG-EXTRACT] Job ${jobId} ${finalStatus} (${completedCount} succeeded, ${failedCount} failed)`);
     await jobs.updateOne(
       { id: jobId },
