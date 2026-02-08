@@ -1,22 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
-import { MODEL_PRICING } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types';
+import { performOCRWithBuffer } from '@/lib/ai';
+import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 
 // Increase timeout for batch OCR
 export const maxDuration = 300;
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
-
-function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
-  const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
-  const inputCost = (inputTokens / 1_000_000) * pricing.input;
-  const outputCost = (outputTokens / 1_000_000) * pricing.output;
-  return inputCost + outputCost;
-}
 
 // Build cropped image URL
 function buildCroppedImageUrl(baseUrl: string, crop: { xStart: number; xEnd: number }): string {
@@ -35,16 +25,16 @@ function buildCroppedImageUrl(baseUrl: string, crop: { xStart: number; xEnd: num
   return `${baseApiUrl}/api/image?${params.toString()}`;
 }
 
-async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
-  try {
-    const result = await images.fetchBase64(url, { includeMimeType: true });
-    if (typeof result === 'string') {
-      return { data: result, mimeType: 'image/jpeg' };
-    }
-    return { data: result.base64, mimeType: result.mimeType };
-  } catch (error) {
-    console.error('Failed to fetch image:', url, error);
-    return null;
+function getPageImageUrl(page: Record<string, unknown>): string {
+  if (page.crop && page.cropped_photo) {
+    return page.cropped_photo as string;
+  } else if (page.archived_photo && !page.crop) {
+    return page.archived_photo as string;
+  } else {
+    const baseUrl = (page.archived_photo || page.photo_original || page.photo) as string;
+    return page.crop
+      ? buildCroppedImageUrl(baseUrl, page.crop as { xStart: number; xEnd: number })
+      : baseUrl;
   }
 }
 
@@ -52,7 +42,7 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
  * POST /api/books/[id]/batch-ocr
  *
  * Process OCR for pages in a book that need it.
- * Processes in batches of 5 pages at a time.
+ * Processes pages one at a time using the rich DEFAULT_PROMPTS.
  */
 export async function POST(
   request: NextRequest,
@@ -75,10 +65,7 @@ export async function POST(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Find pages that need OCR:
-    // - Have photo/photo_original
-    // - Have crop (split pages) OR are single pages
-    // - Don't have ocr.data
+    // Find pages that need OCR
     const pagesToProcess = await db.collection('pages')
       .find({
         book_id: bookId,
@@ -93,7 +80,6 @@ export async function POST(
       .toArray();
 
     if (pagesToProcess.length === 0) {
-      // Check if all pages already have OCR
       const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
       const pagesWithOcr = await db.collection('pages').countDocuments({
         book_id: bookId,
@@ -131,8 +117,7 @@ export async function POST(
       });
     }
 
-    // Process in batches of 5
-    const batchSize = 5;
+    // Process pages one at a time using the rich prompt
     const results: Array<{
       pageId: string;
       pageNumber: number;
@@ -143,161 +128,73 @@ export async function POST(
     let totalInputTokens = 0;
     let totalOutputTokens = 0;
     let totalCost = 0;
+    let previousPageOcr: string | undefined;
 
-    for (let i = 0; i < pagesToProcess.length; i += batchSize) {
-      const batch = pagesToProcess.slice(i, i + batchSize);
-
-      // Prepare images for this batch
-      const imagePromises = batch.map(async (page) => {
-        // Prefer archived/cropped images over live IA URLs
-        let imageUrl: string;
-
-        if (page.crop && page.cropped_photo) {
-          // Use pre-cropped image if available
-          imageUrl = page.cropped_photo;
-        } else if (page.archived_photo && !page.crop) {
-          // Use archived image for non-cropped pages
-          imageUrl = page.archived_photo;
-        } else {
-          // Fall back to original URL (with crop proxy if needed)
-          const baseUrl = page.archived_photo || page.photo_original || page.photo;
-          imageUrl = page.crop
-            ? buildCroppedImageUrl(baseUrl, page.crop)
-            : baseUrl;
-        }
-
-        const image = await fetchImageAsBase64(imageUrl);
-        return { page, image, imageUrl }; // Track URL for audit
-      });
-
-      const batchData = await Promise.all(imagePromises);
-      const validBatch = batchData.filter(b => b.image !== null);
-
-      // Mark failed fetches
-      batchData.filter(b => b.image === null).forEach(b => {
+    for (const page of pagesToProcess) {
+      const imageUrl = getPageImageUrl(page);
+      if (!imageUrl) {
         results.push({
-          pageId: b.page.id,
-          pageNumber: b.page.page_number,
+          pageId: page.id,
+          pageNumber: page.page_number,
           success: false,
-          error: 'Failed to fetch image'
+          error: 'No image URL'
         });
-      });
-
-      if (validBatch.length === 0) continue;
-
-      // Build OCR prompt for batch
-      const model = genAI.getGenerativeModel({ model: modelId });
-
-      const prompt = `You are an expert OCR system specializing in historical ${language} manuscripts and printed books.
-
-Transcribe the text from each page image accurately:
-- Preserve original spelling, punctuation, and formatting
-- Maintain paragraph structure
-- Note any unclear or damaged text with [unclear] or [damaged]
-- Keep line breaks where they appear significant
-- Transcribe in reading order (left to right, top to bottom)
-
-**You will receive ${validBatch.length} page image(s). Transcribe each one.**
-
-**Output format:**
-Return each transcription clearly separated with the exact format:
-
-=== PAGE 1 ===
-[transcription for first image]
-
-=== PAGE 2 ===
-[transcription for second image]
-
-... and so on for each page image provided.`;
-
-      const content: (string | { inlineData: { mimeType: string; data: string } })[] = [prompt];
-
-      validBatch.forEach(({ image }) => {
-        if (image) {
-          content.push({
-            inlineData: {
-              mimeType: image.mimeType,
-              data: image.data,
-            },
-          });
-        }
-      });
+        continue;
+      }
 
       try {
-        const result = await model.generateContent(content);
-        const responseText = result.response.text();
+        // Fetch image buffer
+        const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);
 
-        // Parse OCR results
-        const ocrResults: Record<string, string> = {};
-        const parts = responseText.split(/===\s*PAGE\s*(\d+)\s*===/i);
-
-        for (let j = 1; j < parts.length; j += 2) {
-          const index = parseInt(parts[j], 10) - 1;
-          const ocr = parts[j + 1]?.trim();
-
-          if (index >= 0 && index < validBatch.length && ocr) {
-            ocrResults[validBatch[index].page.id] = ocr;
-          }
-        }
-
-        // Single page fallback
-        if (Object.keys(ocrResults).length === 0 && validBatch.length === 1) {
-          ocrResults[validBatch[0].page.id] = responseText.trim();
-        }
-
-        // Track tokens
-        const usageMetadata = result.response.usageMetadata;
-        const inputTokens = usageMetadata?.promptTokenCount || 0;
-        const outputTokens = usageMetadata?.candidatesTokenCount || 0;
-        totalInputTokens += inputTokens;
-        totalOutputTokens += outputTokens;
-        totalCost += calculateCost(inputTokens, outputTokens, modelId);
-
-        // Save to database with image URL for audit trail
-        const now = new Date().toISOString();
-        const imageUrlMap = new Map(validBatch.map(b => [b.page.id, b.imageUrl]));
-        const updatePromises = Object.entries(ocrResults).map(([pageId, ocr]) =>
-          db.collection('pages').updateOne(
-            { id: pageId },
-            {
-              $set: {
-                'ocr.data': ocr,
-                'ocr.updated_at': now,
-                'ocr.model': modelId,
-                'ocr.language': language,
-                'ocr.source': 'ai',
-                'ocr.image_url': imageUrlMap.get(pageId) || 'unknown',
-                'ocr.batch_size': validBatch.length,
-              },
-            }
-          )
+        // Use the shared OCR function with rich DEFAULT_PROMPTS
+        const ocrResult = await performOCRWithBuffer(
+          buffer,
+          mimeType,
+          language,
+          previousPageOcr,
+          undefined, // no custom prompt — use DEFAULT_PROMPTS.ocr
+          modelId
         );
-        await Promise.all(updatePromises);
 
-        // Record results
-        validBatch.forEach(({ page }) => {
-          results.push({
-            pageId: page.id,
-            pageNumber: page.page_number,
-            success: !!ocrResults[page.id],
-            error: ocrResults[page.id] ? undefined : 'OCR parsing failed'
-          });
+        // Save to database with full audit trail
+        const now = new Date();
+        await db.collection('pages').updateOne(
+          { id: page.id },
+          {
+            $set: {
+              'ocr.data': ocrResult.text,
+              'ocr.updated_at': now,
+              'ocr.model': modelId,
+              'ocr.language': language,
+              'ocr.source': 'ai',
+              'ocr.prompt_version': PROMPT_VERSION,
+              'ocr.image_url': imageUrl,
+              updated_at: now
+            },
+          }
+        );
+
+        totalInputTokens += ocrResult.usage.inputTokens;
+        totalOutputTokens += ocrResult.usage.outputTokens;
+        totalCost += ocrResult.usage.costUsd;
+        previousPageOcr = ocrResult.text;
+
+        results.push({
+          pageId: page.id,
+          pageNumber: page.page_number,
+          success: true
         });
-
       } catch (error) {
-        // Mark all in batch as failed
-        validBatch.forEach(({ page }) => {
-          results.push({
-            pageId: page.id,
-            pageNumber: page.page_number,
-            success: false,
-            error: error instanceof Error ? error.message : 'OCR failed'
-          });
+        results.push({
+          pageId: page.id,
+          pageNumber: page.page_number,
+          success: false,
+          error: error instanceof Error ? error.message : 'OCR failed'
         });
       }
     }
 
-    // Track total cost (legacy)
+    // Track cost
     try {
       await db.collection('cost_tracking').insertOne({
         timestamp: new Date(),
@@ -327,6 +224,7 @@ Return each transcription clearly separated with the exact format:
       input_tokens: totalInputTokens,
       output_tokens: totalOutputTokens,
       status: successfulPageIds.length > 0 ? 'success' : 'failed',
+      prompt_version: PROMPT_VERSION,
       endpoint: '/api/books/[id]/batch-ocr',
     });
 
@@ -349,13 +247,14 @@ Return each transcription clearly separated with the exact format:
       successful: successCount,
       failed: failedCount,
       remaining: remainingCount,
+      promptVersion: PROMPT_VERSION,
       usage: {
         inputTokens: totalInputTokens,
         outputTokens: totalOutputTokens,
         totalTokens: totalInputTokens + totalOutputTokens,
         costUsd: totalCost.toFixed(4),
       },
-      results: results.slice(0, 20), // First 20 for debugging
+      results: results.slice(0, 20),
     });
 
   } catch (error) {

@@ -3,6 +3,7 @@ import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { Page } from '@/lib/types/page';
 import { extractWithGemini } from '@/lib/image-extraction';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
+import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 
 /**
  * Image Extraction Processor - processes one page at a time
@@ -99,6 +100,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
         $set: {
           detected_images: detectedImages,
           image_extraction_updated_at: new Date(),
+          image_extraction_prompt_version: PROMPT_VERSION,
           updated_at: new Date()
         }
       }
@@ -138,18 +140,19 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
 
   console.log(`[IMG-EXTRACT] Progress: ${completedCount}/${targetPageIds.length}`);
 
-  // Check if job is complete (all pages attempted = completed + failed)
+  // Check if all pages have been attempted (completed + failed)
   const updatedJob = await jobs.findOne({ id: jobId });
   const failedCount = updatedJob?.progress?.failed || 0;
   const totalAttempted = completedCount + failedCount;
 
   if (totalAttempted >= targetPageIds.length) {
-    console.log(`[IMG-EXTRACT] Job ${jobId} complete`);
+    const finalStatus = failedCount > 0 ? 'partial' : 'completed';
+    console.log(`[IMG-EXTRACT] Job ${jobId} ${finalStatus} (${completedCount} succeeded, ${failedCount} failed)`);
     await jobs.updateOne(
       { id: jobId },
       {
         $set: {
-          status: 'completed',
+          status: finalStatus,
           completed_at: new Date(),
           updated_at: new Date()
         }

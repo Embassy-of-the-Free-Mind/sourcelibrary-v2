@@ -1,5 +1,8 @@
 import { ProcessingPrompts } from "./core";
 
+// Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
+export const PROMPT_VERSION = 'v2.2026-02';
+
 export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript page to Markdown.
 
 **Format:** # headings, **bold**, *italic*, ->centered<-, | tables |, > blockquotes, ---

@@ -1,7 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import { performTranslation } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
 
 /**
  * Translation Processor - processes one page at a time
@@ -80,10 +80,11 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     // Translate with custom prompt if provided
     const translationResult = await performTranslation(
       page.ocr.data,
-      context,
+      job.config.language || 'Latin',
       'English',
-      job.config.model || DEFAULT_MODEL,
-      customPrompt
+      context ?? undefined,
+      customPrompt,
+      job.config.model || DEFAULT_MODEL
     );
 
     // Save translation
@@ -96,7 +97,8 @@ export async function processTranslationPage(message: PageProcessingMessage) {
             language: 'English',
             model: job.config.model || DEFAULT_MODEL,
             updated_at: new Date(),
-            source: 'ai'
+            source: 'ai',
+            prompt_version: PROMPT_VERSION
           },
           updated_at: new Date()
         }
@@ -137,14 +139,19 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
   console.log(`[TRANS] Progress: ${completedCount}/${targetPageIds.length}`);
 
-  // Check if job is complete
-  if (completedCount >= targetPageIds.length) {
-    console.log(`[TRANS] Job ${jobId} complete`);
+  // Check if all pages have been attempted (completed + failed)
+  const updatedJob = await jobs.findOne({ id: jobId });
+  const failedCount = updatedJob?.progress?.failed || 0;
+  const totalAttempted = completedCount + failedCount;
+
+  if (totalAttempted >= targetPageIds.length) {
+    const finalStatus = failedCount > 0 ? 'partial' : 'completed';
+    console.log(`[TRANS] Job ${jobId} ${finalStatus} (${completedCount} succeeded, ${failedCount} failed)`);
     await jobs.updateOne(
       { id: jobId },
       {
         $set: {
-          status: 'completed',
+          status: finalStatus,
           completed_at: new Date(),
           updated_at: new Date()
         }

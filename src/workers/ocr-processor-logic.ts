@@ -9,6 +9,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
+import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 
@@ -91,8 +92,9 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
       buffer,
       mimeType,
       job.config.language || 'Latin',
-      job.config.model || DEFAULT_MODEL,
-      customPrompt
+      undefined, // no previous page context in Lambda worker (pages arrive out of order)
+      customPrompt,
+      job.config.model || DEFAULT_MODEL
     );
 
     console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}`);
@@ -107,7 +109,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
             language: job.config.language || 'Latin',
             model: job.config.model || DEFAULT_MODEL,
             updated_at: new Date(),
-            source: 'ai'
+            source: 'ai',
+            prompt_version: PROMPT_VERSION
           },
           updated_at: new Date()
         }
@@ -148,14 +151,19 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
   console.log(`[OCR] Progress: ${completedCount}/${targetPageIds.length}`);
 
-  // Check if job is complete
-  if (completedCount >= targetPageIds.length) {
-    console.log(`[OCR] Job ${jobId} complete`);
+  // Check if all pages have been attempted (completed + failed)
+  const updatedJob = await jobs.findOne({ id: jobId });
+  const failedCount = updatedJob?.progress?.failed || 0;
+  const totalAttempted = completedCount + failedCount;
+
+  if (totalAttempted >= targetPageIds.length) {
+    const finalStatus = failedCount > 0 ? 'partial' : 'completed';
+    console.log(`[OCR] Job ${jobId} ${finalStatus} (${completedCount} succeeded, ${failedCount} failed)`);
     await jobs.updateOne(
       { id: jobId },
       {
         $set: {
-          status: 'completed',
+          status: finalStatus,
           completed_at: new Date(),
           updated_at: new Date()
         }
