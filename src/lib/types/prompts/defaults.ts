@@ -1,7 +1,7 @@
 import { ProcessingPrompts } from "./core";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
-export const PROMPT_VERSION = 'v2.2026-02';
+export const PROMPT_VERSION = 'v3.2026-02';
 
 export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript page to Markdown.
 
@@ -25,7 +25,9 @@ export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript pag
 **If quality issues:** Add <warning>reason</warning> at start.`;
 
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
-  ocr: `Transcribe this {language} manuscript page to Markdown.
+  ocr: `Transcribe this manuscript page to Markdown.
+
+{language_instruction}
 
 **Format:**
 - # ## ### for headings (bigger text = bigger heading) — NEVER combine with centering syntax
@@ -45,7 +47,7 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - Any visual layout that isn't truly tabular
 
 **Metadata tags (hidden from readers):**
-- <lang>detected</lang> — confirm the language
+- <lang>X</lang> — the detected language of this page (REQUIRED — always identify the language)
 - <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
 - <header>X</header> — running headers (NOT in body text)
 - <sig>X</sig> — printer's marks like A2, B1 (NOT in body text)

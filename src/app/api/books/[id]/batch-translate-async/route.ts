@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { getTranslationPrompt } from '@/lib/prompts';
 
 /**
  * Async Batch Translation using Gemini Batch API
@@ -30,7 +31,6 @@ export async function POST(
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
-      language = 'Latin',
       targetLanguage = 'English',
       model = 'gemini-3-flash-preview',
     } = body;
@@ -68,6 +68,11 @@ export async function POST(
     // Build batch requests - each page is a separate request
     const batchRequests = [];
 
+    // Use the canonical translation prompt (with XML tag preservation, summary, keywords)
+    const sourceLanguage = book.original_language || 'Latin';
+    const promptResult = await getTranslationPrompt(sourceLanguage, targetLanguage);
+    const basePrompt = promptResult.text;
+
     for (const page of pagesToProcess) {
       const ocrText = page.ocr?.data;
       if (!ocrText) {
@@ -75,19 +80,8 @@ export async function POST(
         continue;
       }
 
-      const prompt = `You are an expert scholarly translator specializing in historical ${language} texts.
-
-Translate the following ${language} text to ${targetLanguage}:
-- Preserve the author's meaning and style
-- Use clear, modern ${targetLanguage}
-- Keep technical terms with brief explanations if needed
-- Maintain paragraph structure
-- Note any unclear passages with [unclear]
-
-Text to translate:
-${ocrText}
-
-Output only the translation, no commentary.`;
+      // Same format as performTranslation in ai.ts
+      const prompt = basePrompt + `\n\n**Text to translate:**\n${ocrText}`;
 
       batchRequests.push({
         key: page.id,
@@ -122,7 +116,7 @@ Output only the translation, no commentary.`;
       book_id: bookId,
       type: 'translation',
       model,
-      source_language: language,
+      source_language: sourceLanguage,
       target_language: targetLanguage,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,

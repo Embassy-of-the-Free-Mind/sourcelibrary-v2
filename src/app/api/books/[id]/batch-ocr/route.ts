@@ -53,7 +53,6 @@ export async function POST(
     const {
       limit = 25,
       dryRun = false,
-      language = 'Latin',
       model: modelId = DEFAULT_MODEL,
     } = await request.json().catch(() => ({}));
 
@@ -64,6 +63,9 @@ export async function POST(
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
+
+    // Use book's original_language if set, otherwise auto-detect
+    const language = book.original_language || '';
 
     // Find pages that need OCR
     const pagesToProcess = await db.collection('pages')

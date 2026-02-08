@@ -34,6 +34,22 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
 }
 
 /**
+ * Build the OCR prompt with appropriate language instruction.
+ * When language is known, provides a hint but asks the model to verify.
+ * When unknown, asks the model to auto-detect.
+ * Pages often contain multiple languages (Latin + Greek, German + Latin, etc.)
+ * so the model always detects and reports the primary language.
+ */
+function buildOcrPrompt(customPrompt: string | undefined, language: string): string {
+  const languageInstruction = language
+    ? `**Source language:** The primary language is likely **${language}**, but pages may contain text in multiple languages. Transcribe all languages present. Report the primary language in the <lang> tag.`
+    : `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <lang> tag.`;
+  return (customPrompt || DEFAULT_PROMPTS.ocr)
+    .replace('{language_instruction}', languageInstruction)
+    .replace('{language}', language || ''); // backward compat for old prompts in DB
+}
+
+/**
  * Perform OCR with a pre-loaded image buffer.
  * Faster than performOCR when you already have the image data (e.g., after cropping).
  */
@@ -47,7 +63,7 @@ export async function performOCRWithBuffer(
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
-  let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
+  let prompt = buildOcrPrompt(customPrompt, language);
 
   if (previousPageOcr) {
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
@@ -94,7 +110,7 @@ export async function performOCR(
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
-  let prompt = (customPrompt || DEFAULT_PROMPTS.ocr).replace('{language}', language);
+  let prompt = buildOcrPrompt(customPrompt, language);
 
   if (previousPageOcr) {
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;

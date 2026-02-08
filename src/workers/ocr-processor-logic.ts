@@ -97,7 +97,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     const ocrResult = await performOCRWithBuffer(
       buffer,
       mimeType,
-      job.config.language || 'Latin',
+      job.config.language || '',
       undefined, // no previous page context in Lambda worker (pages arrive out of order)
       customPrompt,
       modelId
@@ -113,7 +113,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         $set: {
           ocr: {
             data: ocrResult.text,
-            language: job.config.language || 'Latin',
+            language: job.config.language || 'auto-detect',
             model: modelId,
             updated_at: new Date(),
             source: 'ai',

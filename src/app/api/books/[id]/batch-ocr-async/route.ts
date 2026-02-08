@@ -75,7 +75,6 @@ export async function POST(
     const body = await request.json().catch(() => ({}));
     const {
       limit = 10, // Default to 10 pages per batch (research shows >10 causes quality degradation)
-      language = 'Latin',
       model = 'gemini-3-flash-preview',
     } = body;
 
@@ -120,6 +119,9 @@ export async function POST(
 
     // Build batch requests - each page is a separate request
     const batchRequests = [];
+
+    // Use book's original_language if set, otherwise auto-detect
+    const language = book.original_language || '';
 
     // Get the main OCR prompt with language substituted
     const ocrPromptResult = await getOcrPrompt(language);
