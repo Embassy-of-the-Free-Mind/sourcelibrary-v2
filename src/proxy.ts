@@ -10,6 +10,14 @@ const SOCIETY_DOMAINS = [
 ];
 
 export function proxy(request: NextRequest) {
+  // Redirect www to non-www (SEO: canonical domain)
+  const host = request.headers.get('host') || '';
+  if (host.startsWith('www.sourcelibrary.org')) {
+    const url = request.nextUrl.clone();
+    url.host = 'sourcelibrary.org';
+    return NextResponse.redirect(url, 301);
+  }
+
   // TODO: Remove after authentication in place.
   if (request.method === 'DELETE') {
     return new NextResponse(
@@ -17,8 +25,6 @@ export function proxy(request: NextRequest) {
       { status: 403, headers: { 'Content-Type': 'application/json' } }
     );
   }
-
-  const host = request.headers.get('host') || '';
 
   // Check if this is a Ficino Society domain
   const isSociety = SOCIETY_DOMAINS.some(domain => host.includes(domain)) ||

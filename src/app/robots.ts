@@ -11,7 +11,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: [
           '/book/*/pipeline',
           '/book/*/capture',
-          '/book/*/page/',
         ],
       },
       {

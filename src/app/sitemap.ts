@@ -60,13 +60,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       { projection: { id: 1, updated_at: 1, translation_percent: 1, pages_count: 1, pages_translated: 1 } }
     ).toArray();
 
-    const bookPages: MetadataRoute.Sitemap = books.map((book) => ({
-      url: `${baseUrl}/book/${book.id}`,
-      lastModified: book.updated_at || new Date(),
-      changeFrequency: 'weekly' as const,
-      // Higher priority for books with translations
-      priority: book.translation_percent > 0 ? 0.9 : 0.6,
-    }));
+    const bookPages: MetadataRoute.Sitemap = books.map((book) => {
+      // Normalize dates — some imported books have non-ISO timestamps (e.g. PostgreSQL format)
+      let lastModified: Date;
+      try {
+        lastModified = book.updated_at ? new Date(book.updated_at) : new Date();
+        if (isNaN(lastModified.getTime())) lastModified = new Date();
+      } catch {
+        lastModified = new Date();
+      }
+
+      return {
+        url: `${baseUrl}/book/${book.id}`,
+        lastModified,
+        changeFrequency: 'weekly' as const,
+        priority: book.translation_percent > 0 ? 0.9 : 0.6,
+      };
+    });
 
     // NOTE: /read and /guide pages removed from sitemap to improve indexing.
     // For a new domain, focus on book landing pages only.
