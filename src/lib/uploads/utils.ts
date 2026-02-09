@@ -10,6 +10,7 @@
 
 import type { Db } from 'mongodb';
 import type { Book } from '../types/book';
+import { selectBestCover } from '@/lib/cover-selection';
 
 /**
  * Get file extension from MIME type
@@ -88,14 +89,11 @@ export async function validateBookAndGetPageNumber(
  */
 export async function updateBookAfterUpload(
   db: Db,
-  bookId: string
+  bookId: string,
+  overwriteThumbnail: boolean = false
 ): Promise<void> {
-  // Get the book and first page
+  // Get book and calculate actual page count
   const book = await db.collection<Book>('books').findOne({ id: bookId });
-  const firstPage = await db.collection('pages')
-    .findOne({ book_id: bookId, page_number: 1 });
-
-  // Get actual count of pages from database
   const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
 
   const updateFields: Record<string, unknown> = {
@@ -103,12 +101,20 @@ export async function updateBookAfterUpload(
     pages_count: totalPages
   };
 
-  // Set thumbnail to first page if not already set
-  if (firstPage && !book?.thumbnail) {
-    updateFields.thumbnail = firstPage.photo;
+  // Only run cover selection if overwriting OR no thumbnail exists
+  if (overwriteThumbnail || !book?.thumbnail) {
+    try {
+      const coverResult = await selectBestCover(db, bookId);
+      updateFields.thumbnail = coverResult.selectedImageUrl;
+      updateFields.thumbnail_page = coverResult.pageNumber;
+      updateFields.thumbnail_confidence = coverResult.confidence;
+    } catch (error) {
+      console.error('Cover selection failed, skipping thumbnail update:', error);
+      // Don't fail the entire upload - just skip thumbnail
+    }
   }
 
-  // Update book with actual page count
+  // Update book with page count and thumbnail
   await db.collection('books').updateOne(
     { id: bookId },
     { $set: updateFields }

@@ -74,7 +74,7 @@ export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
         >
           {VERBS[verbIndex]}
         </span>
-        {' the Source...'}
+        {' the Source'}
       </p>
     </div>
   );

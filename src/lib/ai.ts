@@ -1,6 +1,27 @@
 import { DEFAULT_PROMPTS, DEFAULT_MODEL } from './types';
 import { getGeminiClient } from './gemini-client';
 import { images } from './api-client/images';
+import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
+
+// Safety settings for OCR/transcription - disable all filters for historical texts
+const OCR_SAFETY_SETTINGS = [
+  {
+    category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+  {
+    category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
+    threshold: HarmBlockThreshold.BLOCK_NONE,
+  },
+];
 
 // Model pricing per 1M tokens (USD)
 export const MODEL_PRICING: Record<string, { input: number; output: number }> = {
@@ -72,15 +93,23 @@ export async function performOCRWithBuffer(
   const base64Image = imageBuffer.toString('base64');
 
   try {
-    const result = await model.generateContent([
-      prompt,
-      {
-        inlineData: {
-          mimeType,
-          data: base64Image,
+    const result = await model.generateContent({
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: prompt },
+            {
+              inlineData: {
+                mimeType,
+                data: base64Image,
+              },
+            },
+          ],
         },
-      },
-    ]);
+      ],
+      safetySettings: OCR_SAFETY_SETTINGS,
+    });
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;
@@ -132,15 +161,23 @@ export async function performOCR(
   }
 
   try {
-    const result = await model.generateContent([
-      prompt,
-      {
-        inlineData: {
-          mimeType,
-          data: base64Image,
+    const result = await model.generateContent({
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            { text: prompt },
+            {
+              inlineData: {
+                mimeType,
+                data: base64Image,
+              },
+            },
+          ],
         },
-      },
-    ]);
+      ],
+      safetySettings: OCR_SAFETY_SETTINGS,
+    });
 
     const usageMetadata = result.response.usageMetadata;
     const inputTokens = usageMetadata?.promptTokenCount || 0;

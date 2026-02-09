@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     if (!bookId) {
       return NextResponse.json(
-        { error: 'Book ID is required' },
+        { error: 'Book ID is required...' },
         { status: 400 }
       );
     }
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     const book = await db.collection('books').findOne({ id: bookId });
     if (!book) {
       return NextResponse.json(
-        { error: 'Book not found' },
+        { error: 'Book not found!' },
         { status: 404 }
       );
     }
