@@ -3,6 +3,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTranslationPrompt } from '@/lib/prompts';
+import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 
 /**
  * Async Batch Translation using Gemini Batch API
@@ -33,6 +34,7 @@ export async function POST(
       limit = 500,
       targetLanguage = 'English',
       model = 'gemini-3-flash-preview',
+      force = false, // When true, include pages that already have translation (for re-processing)
     } = body;
 
     const db = await getDb();
@@ -43,17 +45,25 @@ export async function POST(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Find pages needing translation (have OCR but no translation)
+    // Find pages to translate
+    // When force=true, include pages that already have translation (for re-processing with new prompts)
+    const translationFilter = force
+      ? {
+          book_id: bookId,
+          'ocr.data': { $exists: true, $nin: [null, ''] },
+        }
+      : {
+          book_id: bookId,
+          'ocr.data': { $exists: true, $nin: [null, ''] },
+          $or: [
+            { 'translation.data': { $exists: false } },
+            { 'translation.data': null },
+            { 'translation.data': '' }
+          ]
+        };
+
     const pagesToProcess = await db.collection('pages')
-      .find({
-        book_id: bookId,
-        'ocr.data': { $exists: true, $nin: [null, ''] },
-        $or: [
-          { 'translation.data': { $exists: false } },
-          { 'translation.data': null },
-          { 'translation.data': '' }
-        ]
-      })
+      .find(translationFilter)
       .sort({ page_number: 1 })
       .limit(limit)
       .toArray();
@@ -118,6 +128,8 @@ export async function POST(
       model,
       source_language: sourceLanguage,
       target_language: targetLanguage,
+      force,
+      prompt_version: PROMPT_VERSION,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,
       status: batchJob.state,
@@ -237,6 +249,7 @@ export async function GET(
                     source_language: jobDoc.source_language,
                     target_language: jobDoc.target_language,
                     source: 'batch_api',
+                    prompt_version: jobDoc.prompt_version || PROMPT_VERSION,
                   },
                   updated_at: new Date()
                 }

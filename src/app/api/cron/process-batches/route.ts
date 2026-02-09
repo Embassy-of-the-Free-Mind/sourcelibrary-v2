@@ -2,30 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 
 export const maxDuration = 300;
 
 /**
  * GET /api/cron/process-batches
  *
- * Automated batch processing cron job. Does three things:
- * 1. Collects results from completed Gemini batch jobs
- * 2. Submits pending jobs to Gemini
- * 3. Queues new OCR/translation work if capacity available
+ * Automated batch processing cron job.
+ * Collects results from completed Gemini batch jobs.
  *
- * Can be triggered by:
- * - Vercel Cron (every 2 hours)
- * - Manual call for testing
+ * For submitting new work, use POST /api/admin/campaign instead.
  *
- * Query params:
- * - skip_queue: Don't queue new work, just process existing
- * - max_new_jobs: Max new jobs to create (default: 5)
+ * Triggered by Vercel Cron (every 2 hours) or manual call.
  */
 export async function GET(request: NextRequest) {
   const startTime = Date.now();
-  const { searchParams } = new URL(request.url);
-  const skipQueue = searchParams.get('skip_queue') === 'true';
-  const maxNewJobs = parseInt(searchParams.get('max_new_jobs') || '5', 10);
 
   // Verify cron secret in production (optional security)
   const cronSecret = request.headers.get('x-cron-secret');
@@ -37,15 +29,12 @@ export async function GET(request: NextRequest) {
 
   const results = {
     collected: [] as Array<{ job_id: string; book_title: string; pages_saved: number; pages_failed: number }>,
-    submitted: [] as Array<{ job_id: string; book_title: string; pages: number }>,
-    queued: [] as Array<{ book_id: string; book_title: string; type: string; pages: number }>,
     errors: [] as string[],
     stats: {
       jobs_checked: 0,
       jobs_completed: 0,
       jobs_still_running: 0,
       pages_saved: 0,
-      new_jobs_created: 0,
     },
   };
 
@@ -101,6 +90,7 @@ export async function GET(request: NextRequest) {
                       model: job.model,
                       language: job.language,
                       source: 'batch_api',
+                      prompt_version: job.prompt_version || PROMPT_VERSION,
                       batch_job_id: job.id,
                       input_tokens: usage?.promptTokenCount || 0,
                       output_tokens: usage?.candidatesTokenCount || 0,
@@ -121,6 +111,7 @@ export async function GET(request: NextRequest) {
                       source_language: job.language,
                       target_language: 'English',
                       source: 'batch_api',
+                      prompt_version: job.prompt_version || PROMPT_VERSION,
                       batch_job_id: job.id,
                       input_tokens: usage?.promptTokenCount || 0,
                       output_tokens: usage?.candidatesTokenCount || 0,
@@ -226,164 +217,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ============================================
-    // PHASE 2: Queue new work if capacity available
-    // ============================================
-    if (!skipQueue && results.stats.jobs_still_running < 10) {
-      console.log('[cron] Phase 2: Queuing new work...');
-
-      // Find books needing OCR (prioritize books with some progress)
-      const booksNeedingWork = await db.collection('books').aggregate([
-        {
-          $lookup: {
-            from: 'pages',
-            localField: 'id',
-            foreignField: 'book_id',
-            as: 'pages',
-          },
-        },
-        {
-          $addFields: {
-            needs_ocr: {
-              $size: {
-                $filter: {
-                  input: '$pages',
-                  cond: {
-                    $or: [
-                      { $eq: ['$$this.ocr.data', null] },
-                      { $eq: ['$$this.ocr.data', ''] },
-                      { $not: { $ifNull: ['$$this.ocr.data', false] } },
-                    ],
-                  },
-                },
-              },
-            },
-            needs_translation: {
-              $size: {
-                $filter: {
-                  input: '$pages',
-                  cond: {
-                    $and: [
-                      { $gt: [{ $strLenCP: { $ifNull: ['$$this.ocr.data', ''] } }, 0] },
-                      {
-                        $or: [
-                          { $eq: ['$$this.translation.data', null] },
-                          { $eq: ['$$this.translation.data', ''] },
-                          { $not: { $ifNull: ['$$this.translation.data', false] } },
-                        ],
-                      },
-                    ],
-                  },
-                },
-              },
-            },
-            total_pages: { $size: '$pages' },
-          },
-        },
-        {
-          $match: {
-            $or: [{ needs_ocr: { $gt: 0 } }, { needs_translation: { $gt: 0 } }],
-          },
-        },
-        {
-          $project: {
-            id: 1,
-            title: 1,
-            display_title: 1,
-            language: 1,
-            needs_ocr: 1,
-            needs_translation: 1,
-            total_pages: 1,
-          },
-        },
-        // Prioritize books that are partially done (some OCR, needs translation)
-        { $sort: { needs_translation: -1, needs_ocr: 1 } },
-        { $limit: maxNewJobs * 2 },
-      ]).toArray();
-
-      let jobsCreated = 0;
-
-      for (const book of booksNeedingWork) {
-        if (jobsCreated >= maxNewJobs) break;
-
-        // Check if there's already an active job for this book
-        const existingJob = await db.collection('batch_jobs').findOne({
-          book_id: book.id,
-          status: { $in: ['pending', 'processing'] },
-        });
-
-        if (existingJob) continue;
-
-        const bookTitle = book.display_title || book.title;
-        const bookId = book.id;
-
-        // Prefer translation if OCR is done
-        if (book.needs_translation > 0) {
-          // Queue translation job via the existing endpoint
-          try {
-            const baseUrl = request.headers.get('host') || 'localhost:3000';
-            const protocol = request.headers.get('x-forwarded-proto') || 'http';
-
-            const response = await fetch(`${protocol}://${baseUrl}/api/batch-jobs`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'translate',
-                bookId,
-                bookTitle,
-                language: book.language || 'Latin',
-              }),
-            });
-
-            if (response.ok) {
-              const data = await response.json();
-              results.queued.push({
-                book_id: bookId,
-                book_title: bookTitle,
-                type: 'translate',
-                pages: data.job?.total_pages || book.needs_translation,
-              });
-              jobsCreated++;
-              results.stats.new_jobs_created++;
-            }
-          } catch (e) {
-            results.errors.push(`Queue translate ${bookTitle}: ${e instanceof Error ? e.message : 'Unknown'}`);
-          }
-
-        } else if (book.needs_ocr > 0) {
-          // Queue OCR job
-          try {
-            const baseUrl = request.headers.get('host') || 'localhost:3000';
-            const protocol = request.headers.get('x-forwarded-proto') || 'http';
-
-            const response = await fetch(`${protocol}://${baseUrl}/api/batch-jobs`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'ocr',
-                bookId,
-                bookTitle,
-                language: book.language || 'Latin',
-              }),
-            });
-
-            if (response.ok) {
-              const data = await response.json();
-              results.queued.push({
-                book_id: bookId,
-                book_title: bookTitle,
-                type: 'ocr',
-                pages: data.job?.total_pages || book.needs_ocr,
-              });
-              jobsCreated++;
-              results.stats.new_jobs_created++;
-            }
-          } catch (e) {
-            results.errors.push(`Queue OCR ${bookTitle}: ${e instanceof Error ? e.message : 'Unknown'}`);
-          }
-        }
-      }
-    }
+    // Phase 2 (auto-queue new work) removed — use POST /api/admin/campaign instead.
 
     const duration = Date.now() - startTime;
 
@@ -392,7 +226,7 @@ export async function GET(request: NextRequest) {
       duration_ms: duration,
       ...results,
       summary: {
-        message: `Collected ${results.stats.pages_saved} pages from ${results.stats.jobs_completed} jobs. ${results.stats.jobs_still_running} jobs still running. Created ${results.stats.new_jobs_created} new jobs.`,
+        message: `Collected ${results.stats.pages_saved} pages from ${results.stats.jobs_completed} jobs. ${results.stats.jobs_still_running} jobs still running.`,
       },
     });
 

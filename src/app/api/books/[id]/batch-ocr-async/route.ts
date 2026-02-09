@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
+import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -76,6 +77,7 @@ export async function POST(
     const {
       limit = 10, // Default to 10 pages per batch (research shows >10 causes quality degradation)
       model = 'gemini-3-flash-preview',
+      force = false, // When true, include pages that already have OCR (for re-processing)
     } = body;
 
     const db = await getDb();
@@ -86,26 +88,31 @@ export async function POST(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Find pages needing OCR (no ocr.data or empty ocr.data)
+    // Find pages to OCR
+    // When force=true, include pages that already have OCR (for re-processing with new prompts)
+    const hasImageFilter = {
+      $or: [
+        { photo: { $exists: true, $ne: null } },
+        { photo_original: { $exists: true, $ne: null } }
+      ]
+    };
+    const ocrFilter = force
+      ? hasImageFilter
+      : {
+          $and: [
+            hasImageFilter,
+            {
+              $or: [
+                { 'ocr.data': { $exists: false } },
+                { 'ocr.data': null },
+                { 'ocr.data': '' }
+              ]
+            }
+          ]
+        };
+
     const pagesToProcess = await db.collection('pages')
-      .find({
-        book_id: bookId,
-        $and: [
-          {
-            $or: [
-              { photo: { $exists: true, $ne: null } },
-              { photo_original: { $exists: true, $ne: null } }
-            ]
-          },
-          {
-            $or: [
-              { 'ocr.data': { $exists: false } },
-              { 'ocr.data': null },
-              { 'ocr.data': '' }
-            ]
-          }
-        ]
-      })
+      .find({ book_id: bookId, ...ocrFilter })
       .sort({ page_number: 1 })
       .limit(limit)
       .toArray();
@@ -185,6 +192,8 @@ export async function POST(
       type: 'ocr',
       model,
       language,
+      force,
+      prompt_version: PROMPT_VERSION,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,
       status: batchJob.state,
@@ -299,6 +308,7 @@ export async function GET(
                   'ocr.model': jobDoc.model,
                   'ocr.language': jobDoc.language,
                   'ocr.source': 'batch_api',
+                  'ocr.prompt_version': jobDoc.prompt_version || PROMPT_VERSION,
                   updated_at: new Date()
                 }
               }
