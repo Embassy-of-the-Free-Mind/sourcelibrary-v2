@@ -188,11 +188,9 @@ async function BookInfo({ id }: { id: string }) {
 
   const { book, pages } = data;
 
-  // Redirect to canonical URL if accessed via ObjectId instead of custom id
-  // This prevents duplicate content issues with Google indexing
-  if (book.id && id !== book.id) {
-    redirect(`/book/${book.id}`);
-  }
+  // Note: ObjectId→custom-id redirect is handled in BookDetailPage above,
+  // before the Suspense boundary, so Google gets a proper 301.
+
   // Note: projection excludes .data fields, so check for object existence instead
   const ocrCount = pages.filter(p => p.ocr).length;
   const translatedCount = pages.filter(p => p.translation).length;
@@ -523,6 +521,20 @@ async function BookInfo({ id }: { id: string }) {
 
 export default async function BookDetailPage({ params }: PageProps) {
   const { id } = await params;
+
+  // Redirect ObjectId URLs to canonical custom-id URLs at the server level
+  // so Google gets a proper 301 without waiting for Suspense to resolve
+  const { ObjectId } = await import('mongodb');
+  if (ObjectId.isValid(id) && id.length === 24) {
+    const db = await getDb();
+    const book = await db.collection('books').findOne(
+      { _id: new ObjectId(id) },
+      { projection: { id: 1 } }
+    );
+    if (book?.id) {
+      redirect(`/book/${book.id}`);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-stone-50">

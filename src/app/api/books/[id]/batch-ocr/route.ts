@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { notifyIndexNow } from '@/lib/indexnow';
 import { images } from '@/lib/api-client';
 
 // Increase timeout for batch OCR
@@ -225,6 +226,11 @@ export async function POST(
 
     const successCount = results.filter(r => r.success).length;
     const failedCount = results.filter(r => !r.success).length;
+
+    // Notify search engines that book content has been updated (non-blocking)
+    if (successCount > 0) {
+      notifyIndexNow([`https://sourcelibrary.org/book/${bookId}`]).catch(console.error);
+    }
 
     return NextResponse.json({
       success: true,

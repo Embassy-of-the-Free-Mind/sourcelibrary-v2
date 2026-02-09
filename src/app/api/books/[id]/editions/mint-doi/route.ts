@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { TranslationEdition, Book, Page } from '@/lib/types';
 import { mintDoi, isZenodoConfigured } from '@/lib/zenodo';
+import { notifyEditionPublished } from '@/lib/indexnow';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -106,6 +107,9 @@ export async function POST(request: NextRequest, context: RouteContext) {
         }
       }
     );
+
+    // Notify search engines about the published edition (non-blocking)
+    notifyEditionPublished(bookId).catch(console.error);
 
     return NextResponse.json({
       success: true,
