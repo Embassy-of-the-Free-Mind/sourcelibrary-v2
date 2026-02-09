@@ -211,10 +211,24 @@ async function checkJobCompletion(
       }
     );
 
-    // Clear current_job_id from book
+    // Update book's pages_translated count with actual count from pages collection
+    const totalPagesWithTranslation = await pages.countDocuments({
+      book_id: bookId,
+      'translation.data': { $exists: true, $ne: '' }
+    });
+
     await db.collection('books').updateOne(
       { id: bookId },
-      { $unset: { current_job_id: '' } }
+      {
+        $set: {
+          pages_translated: totalPagesWithTranslation,
+          last_translation_at: new Date(),
+          updated_at: new Date()
+        },
+        $unset: { current_job_id: '' }
+      }
     );
+
+    console.log(`[TRANS] Updated book ${bookId}: pages_translated = ${totalPagesWithTranslation}`);
   }
 }

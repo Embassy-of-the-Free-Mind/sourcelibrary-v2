@@ -222,10 +222,23 @@ async function checkJobCompletion(
       }
     );
 
-    // Clear current_job_id from book
+    // Update book's pages_ocr count with actual count from pages collection
+    const totalPagesWithOcr = await pages.countDocuments({
+      book_id: bookId,
+      'ocr.data': { $exists: true, $ne: '' }
+    });
+
     await db.collection('books').updateOne(
       { id: bookId },
-      { $unset: { current_job_id: '' } }
+      {
+        $set: {
+          pages_ocr: totalPagesWithOcr,
+          updated_at: new Date()
+        },
+        $unset: { current_job_id: '' }
+      }
     );
+
+    console.log(`[OCR] Updated book ${bookId}: pages_ocr = ${totalPagesWithOcr}`);
   }
 }
