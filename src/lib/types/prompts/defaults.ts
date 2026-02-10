@@ -25,7 +25,9 @@ export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript pag
 **If quality issues:** Add <warning>reason</warning> at start.`;
 
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
-  ocr: `Transcribe this manuscript page to Markdown.
+  ocr: `Transcribe this historical manuscript page to Markdown.
+
+**Context:** This is a scholarly digitization project transcribing public domain manuscripts (16th-18th century) from institutional archives. All materials are out of copyright and provided by partner libraries for open access.
 
 {language_instruction}
 

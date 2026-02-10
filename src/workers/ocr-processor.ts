@@ -12,10 +12,12 @@ import { PageOcrMessage } from '@/lib/types/sqs';
 import { processOcrPage } from './ocr-processor-logic';
 
 export async function handler(event: SQSEvent): Promise<SQSBatchResponse> {
+  console.log('[Lambda-OCR] Handler started, processing', event.Records.length, 'records');
   const failures: SQSBatchItemFailure[] = [];
 
   // Process pages from batch (Lambda event source will send batches)
   for (const record of event.Records) {
+    console.log('[Lambda-OCR] Processing record:', record.messageId);
     try {
       const message: PageOcrMessage = JSON.parse(record.body);
       await processOcrPage(message);

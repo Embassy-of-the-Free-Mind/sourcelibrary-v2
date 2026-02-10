@@ -124,21 +124,25 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
       }
     );
 
-    // Log successful AI call
-    await logGeminiCall({
-      type: 'ocr',
-      mode: 'realtime',
-      model: modelId,
-      book_id: bookId,
-      page_ids: [pageId],
-      input_tokens: ocrResult.usage.inputTokens,
-      output_tokens: ocrResult.usage.outputTokens,
-      status: 'success',
-      job_id: jobId,
-      duration_ms: durationMs,
-      prompt_version: PROMPT_VERSION,
-      endpoint: 'worker/ocr',
-    });
+    // Log successful AI call (non-blocking - don't let logging failures crash the worker)
+    try {
+      await logGeminiCall({
+        type: 'ocr',
+        mode: 'realtime',
+        model: modelId,
+        book_id: bookId,
+        page_ids: [pageId],
+        input_tokens: ocrResult.usage.inputTokens,
+        output_tokens: ocrResult.usage.outputTokens,
+        status: 'success',
+        job_id: jobId,
+        duration_ms: durationMs,
+        prompt_version: PROMPT_VERSION,
+        endpoint: 'worker/ocr',
+      });
+    } catch (logError) {
+      console.error(`[OCR] Failed to log success for page ${pageId}:`, logError);
+    }
 
     console.log(`[OCR] Saved OCR result for page ${pageId}`);
   } catch (error) {
@@ -146,36 +150,124 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     const classified = classifyError(error);
     console.error(`[OCR] Failed to process page ${pageId} [${classified.category}]:`, error);
 
-    // Log failed AI call
-    await logGeminiCall({
-      type: 'ocr',
-      mode: 'realtime',
-      model: modelId,
-      book_id: bookId,
-      page_ids: [pageId],
-      input_tokens: 0,
-      output_tokens: 0,
-      status: 'failed',
-      error_message: classified.message,
-      error_category: classified.category,
-      job_id: jobId,
-      duration_ms: durationMs,
-      prompt_version: PROMPT_VERSION,
-      endpoint: 'worker/ocr',
-    });
+    // RECITATION errors: Retry with fallback model
+    if (classified.category === 'safety_filter' && error instanceof Error && error.message.includes('RECITATION')) {
+      const fallbackModels = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+      const currentModelIndex = fallbackModels.indexOf(modelId);
+      const nextModel = fallbackModels[currentModelIndex + 1];
 
-    await jobs.updateOne(
-      { id: jobId },
-      {
-        $addToSet: { failed_page_ids: pageId },
-        $inc: { 'progress.failed': 1 },
-        $set: { updated_at: new Date() }
+      if (nextModel && currentModelIndex < fallbackModels.length - 1) {
+        console.log(`[OCR] RECITATION error on ${modelId}, retrying page ${pageId} with ${nextModel}`);
+        try {
+          const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);
+          const retryResult = await performOCRWithBuffer(
+            buffer,
+            mimeType,
+            job.config.language || '',
+            undefined,
+            customPrompt,
+            nextModel
+          );
+
+          const retryDuration = Date.now() - startTime;
+          console.log(`[OCR] Retry succeeded with ${nextModel} for page ${pageId}`);
+
+          // Save retry result
+          await pages.updateOne(
+            { id: pageId },
+            {
+              $set: {
+                ocr: {
+                  data: retryResult.text,
+                  language: job.config.language || 'auto-detect',
+                  model: nextModel,
+                  updated_at: new Date(),
+                  source: 'ai',
+                  prompt_version: PROMPT_VERSION
+                },
+                updated_at: new Date()
+              }
+            }
+          );
+
+          // Log successful retry
+          try {
+            await logGeminiCall({
+              type: 'ocr',
+              mode: 'realtime',
+              model: nextModel,
+              book_id: bookId,
+              page_ids: [pageId],
+              input_tokens: retryResult.usage.inputTokens,
+              output_tokens: retryResult.usage.outputTokens,
+              status: 'success',
+              job_id: jobId,
+              duration_ms: retryDuration,
+              prompt_version: PROMPT_VERSION,
+              endpoint: 'worker/ocr',
+            });
+          } catch (logError) {
+            console.error(`[OCR] Failed to log retry success for page ${pageId}:`, logError);
+          }
+
+          // Exit early - retry succeeded, don't mark as failed
+          await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+          return;
+        } catch (retryError) {
+          console.error(`[OCR] Retry with ${nextModel} also failed for page ${pageId}:`, retryError);
+          // Fall through to normal error handling
+        }
+      } else {
+        console.log(`[OCR] No more fallback models to try for page ${pageId}`);
       }
-    );
+    }
+
+    // Log failed AI call (non-blocking - don't let logging failures prevent status updates)
+    try {
+      await logGeminiCall({
+        type: 'ocr',
+        mode: 'realtime',
+        model: modelId,
+        book_id: bookId,
+        page_ids: [pageId],
+        input_tokens: 0,
+        output_tokens: 0,
+        status: 'failed',
+        error_message: classified.message,
+        error_category: classified.category,
+        job_id: jobId,
+        duration_ms: durationMs,
+        prompt_version: PROMPT_VERSION,
+        endpoint: 'worker/ocr',
+      });
+    } catch (logError) {
+      console.error(`[OCR] Failed to log error for page ${pageId}:`, logError);
+    }
+
+    // CRITICAL: Update job status even if logging failed
+    try {
+      await jobs.updateOne(
+        { id: jobId },
+        {
+          $addToSet: { failed_page_ids: pageId },
+          $inc: { 'progress.failed': 1 },
+          $set: { updated_at: new Date() }
+        }
+      );
+    } catch (updateError) {
+      console.error(`[OCR] CRITICAL: Failed to update job status for ${jobId}:`, updateError);
+      // Re-throw so Lambda can retry
+      throw updateError;
+    }
   }
 
   // Always check completion — runs after both success and failure
-  await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+  try {
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+  } catch (completionError) {
+    console.error(`[OCR] Failed to check job completion for ${jobId}:`, completionError);
+    // Don't re-throw - page processing is done, this is just status tracking
+  }
 }
 
 async function checkJobCompletion(
