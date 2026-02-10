@@ -118,10 +118,14 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   // Build cropped image URL if bbox exists
   let displayUrl = imageUrl;
   if (detection.bbox && imageUrl) {
-    // For OG images, we need absolute URL to crop API
-    // Since we can't easily get the host here, use the full page image
-    // The crop will happen client-side or we serve full image
-    displayUrl = imageUrl;
+    const params = new URLSearchParams({
+      url: imageUrl,
+      x: String(detection.bbox.x),
+      y: String(detection.bbox.y),
+      w: String(detection.bbox.width),
+      h: String(detection.bbox.height),
+    });
+    displayUrl = `https://sourcelibrary.org/api/crop-image?${params}`;
   }
 
   return new ImageResponse(
