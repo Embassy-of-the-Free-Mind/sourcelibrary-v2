@@ -33,10 +33,11 @@ interface Detection {
 async function getImageData(id: string): Promise<{ page: PageWithBook; detection: Detection } | null> {
   try {
     const decodedId = decodeURIComponent(id);
-    const [pageId, indexStr] = decodedId.split(':');
+    // Accept both : and - as separators (- for URLs, : for legacy)
+    const match = decodedId.match(/^(.+)[:\-](\d+)$/);
+    if (!match) return null;
+    const [, pageId, indexStr] = match;
     const index = parseInt(indexStr, 10);
-
-    if (!pageId || isNaN(index)) return null;
 
     const db = await getDb();
     const pages = await db.collection('pages').aggregate([
@@ -82,6 +83,11 @@ export async function generateMetadata({
         description: 'Explore historical illustrations from early modern texts.',
         siteName: 'Source Library',
       },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Image',
+        description: 'Explore historical illustrations from early modern texts.',
+      },
     };
   }
 
@@ -91,23 +97,33 @@ export async function generateMetadata({
   const year = page.book?.published;
   const description = detection.description || 'Historical illustration';
 
-  const title = `${description.slice(0, 60)}${description.length > 60 ? '...' : ''} | Source Library`;
+  // Short title: first sentence (up to 70 chars) for social card headline
+  const firstSentence = description.split(/\.\s/)[0];
+  const shortTitle = firstSentence.length > 70
+    ? firstSentence.slice(0, 67) + '...'
+    : firstSentence;
 
-  const fullDescription = `${description}. From "${bookTitle}"${author ? ` by ${author}` : ''}${year ? ` (${year})` : ''}.`;
+  // Attribution line for context
+  const attribution = `${bookTitle}${author ? ` by ${author}` : ''}${year ? ` (${year})` : ''}`;
+
+  // OG title: short description + book info
+  const ogTitle = `${shortTitle} — ${attribution}`;
+
+  const title = `${shortTitle} | Source Library`;
 
   return {
     title,
-    description: fullDescription,
+    description: `${description}. From "${attribution}".`,
     openGraph: {
-      title: description,
-      description: fullDescription,
+      title: ogTitle,
+      description,
       type: 'article',
       siteName: 'Source Library',
     },
     twitter: {
       card: 'summary_large_image',
-      title: description,
-      description: fullDescription,
+      title: ogTitle,
+      description,
     },
   };
 }

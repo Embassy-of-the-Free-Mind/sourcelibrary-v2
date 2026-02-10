@@ -23,9 +23,6 @@ export const metadata: Metadata = {
     'early modern science',
     'primary sources',
   ],
-  alternates: {
-    canonical: '/',
-  },
   icons: {
     icon: [
       { url: '/icon.svg', type: 'image/svg+xml' },

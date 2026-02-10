@@ -430,7 +430,9 @@ export function buildFullTweetText(
   galleryImageId: string,
   maxHashtags: number = 3
 ): string {
-  const link = `https://sourcelibrary.org/gallery/image/${galleryImageId}`;
+  // Use dash separator in URLs for social media crawler compatibility
+  const urlSafeId = galleryImageId.replace(':', '-');
+  const link = `https://sourcelibrary.org/gallery/image/${urlSafeId}`;
   const fullText = `${tweetText}\n\n${link}`;
   const selectedHashtags = hashtags.slice(0, maxHashtags);
   const hashtagText = selectedHashtags.map(h => `#${h.replace(/^#/, '')}`).join(' ');

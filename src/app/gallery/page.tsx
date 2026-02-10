@@ -456,7 +456,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
     ? getCroppedImageUrl(item.imageUrl, item.bbox)
     : item.imageUrl;
 
-  const galleryImageId = `${item.pageId}:${item.detectionIndex}`;
+  const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
 
   return (
     <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">

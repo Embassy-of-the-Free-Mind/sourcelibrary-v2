@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
     const enhanced = candidates.map(candidate => ({
       ...candidate,
       croppedUrl: buildCropUrl(candidate, 'https://sourcelibrary.org'),
-      galleryUrl: `https://sourcelibrary.org/gallery/image/${candidate.galleryImageId}`,
+      galleryUrl: `https://sourcelibrary.org/gallery/image/${candidate.galleryImageId.replace(':', '-')}`,
     }));
 
     return NextResponse.json({

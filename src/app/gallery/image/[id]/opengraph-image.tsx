@@ -50,10 +50,11 @@ interface Detection {
 async function getImageData(id: string): Promise<{ page: PageWithBook; detection: Detection } | null> {
   try {
     const decodedId = decodeURIComponent(id);
-    const [pageId, indexStr] = decodedId.split(':');
+    // Accept both : and - as separators (- for URLs, : for legacy)
+    const match = decodedId.match(/^(.+)[:\-](\d+)$/);
+    if (!match) return null;
+    const [, pageId, indexStr] = match;
     const index = parseInt(indexStr, 10);
-
-    if (!pageId || isNaN(index)) return null;
 
     const db = await getDb();
     const pages = await db.collection('pages').aggregate([
@@ -111,16 +112,19 @@ export default async function Image({ params }: { params: Promise<{ id: string }
 
   const { page, detection } = data;
   const imageUrl = page.cropped_photo || page.photo_original || page.photo;
-  const bookTitle = page.book?.display_title || page.book?.title || 'Unknown';
   const description = detection.description || '';
 
   // Build cropped image URL if bbox exists
   let displayUrl = imageUrl;
   if (detection.bbox && imageUrl) {
-    // For OG images, we need absolute URL to crop API
-    // Since we can't easily get the host here, use the full page image
-    // The crop will happen client-side or we serve full image
-    displayUrl = imageUrl;
+    const params = new URLSearchParams({
+      url: imageUrl,
+      x: String(detection.bbox.x),
+      y: String(detection.bbox.y),
+      w: String(detection.bbox.width),
+      h: String(detection.bbox.height),
+    });
+    displayUrl = `https://sourcelibrary.org/api/crop-image?${params}`;
   }
 
   return new ImageResponse(
@@ -131,81 +135,21 @@ export default async function Image({ params }: { params: Promise<{ id: string }
           width: '100%',
           height: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          position: 'relative',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        {/* Image - takes most of the space */}
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 24,
-            paddingBottom: 100,
-          }}
-        >
-          {displayUrl && (
-            <img
-              src={displayUrl}
-              alt={description}
-              style={{
-                maxWidth: '100%',
-                maxHeight: '100%',
-                objectFit: 'contain',
-                borderRadius: 8,
-              }}
-            />
-          )}
-        </div>
-
-        {/* Bottom bar with metadata */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            background: 'linear-gradient(transparent, rgba(0,0,0,0.9))',
-            padding: '48px 32px 24px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-          }}
-        >
-          {/* Description */}
-          <div
+        {displayUrl && (
+          <img
+            src={displayUrl}
+            alt={description}
             style={{
-              color: '#fafaf9',
-              fontSize: 24,
-              fontFamily: 'serif',
-              lineHeight: 1.3,
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
+              maxWidth: '100%',
+              maxHeight: '100%',
+              objectFit: 'contain',
             }}
-          >
-            {description.length > 100 ? description.slice(0, 100) + '...' : description}
-          </div>
-
-          {/* Book info */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 16,
-              color: '#d6d3d1',
-              fontSize: 16,
-            }}
-          >
-            <span style={{ color: '#f59e0b' }}>Source Library</span>
-            <span>•</span>
-            <span>{bookTitle}</span>
-          </div>
-        </div>
+          />
+        )}
       </div>
     ),
     { ...size }

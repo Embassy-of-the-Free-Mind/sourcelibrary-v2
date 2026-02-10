@@ -408,7 +408,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             subjects: item.metadata?.subjects,
             figures: item.metadata?.figures,
             symbols: item.metadata?.symbols,
-            url: `https://sourcelibrary.org/gallery/image/${item.pageId}:${item.detectionIndex}`,
+            url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
             image_url: item.imageUrl,
           })),
           available_filters: result.filters,
@@ -437,7 +437,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           page: result.pageNumber,
           citation: result.citation,
           urls: {
-            page: `https://sourcelibrary.org/gallery/image/${result.id}`,
+            page: `https://sourcelibrary.org/gallery/image/${result.id.replace(':', '-')}`,
             read_in_context: `https://sourcelibrary.org${result.readUrl}`,
             image: result.imageUrl,
           },
@@ -479,7 +479,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             subjects: item.metadata?.subjects,
             figures: item.metadata?.figures,
             symbols: item.metadata?.symbols,
-            url: `https://sourcelibrary.org/gallery/image/${item.pageId}:${item.detectionIndex}`,
+            url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
           })),
         };
         return {
