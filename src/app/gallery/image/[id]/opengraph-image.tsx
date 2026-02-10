@@ -111,8 +111,13 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   }
 
   const { page, detection } = data;
-  const imageUrl = page.cropped_photo || page.photo_original || page.photo;
+  let imageUrl = page.cropped_photo || page.photo_original || page.photo;
   const description = detection.description || '';
+
+  // Upgrade IIIF URLs to higher resolution for sharper OG images
+  if (imageUrl?.includes('/full/')) {
+    imageUrl = imageUrl.replace(/\/full\/\d+,\//, '/full/2000,/');
+  }
 
   // Build cropped image URL if bbox exists
   let displayUrl = imageUrl;
