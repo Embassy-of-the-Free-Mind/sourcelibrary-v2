@@ -83,6 +83,11 @@ export async function generateMetadata({
         description: 'Explore historical illustrations from early modern texts.',
         siteName: 'Source Library',
       },
+      twitter: {
+        card: 'summary_large_image',
+        title: 'Image',
+        description: 'Explore historical illustrations from early modern texts.',
+      },
     };
   }
 
