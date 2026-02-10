@@ -531,7 +531,7 @@ export default async function BookDetailPage({ params }: PageProps) {
       { _id: new ObjectId(id) },
       { projection: { id: 1 } }
     );
-    if (book?.id) {
+    if (book?.id && book.id !== id) {
       redirect(`/book/${book.id}`);
     }
   }
