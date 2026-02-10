@@ -69,6 +69,28 @@ async function getBooks(): Promise<Book[]> {
       {
         // Sort: books with translations first, then by most recent, then by last updated
         $sort: { has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 }
+      },
+      {
+        // Only send fields needed by BookLibrary/BookCard to the client.
+        // Without this, full book documents (~1200 books) bloat the RSC
+        // payload to ~7 MB — too large for social crawlers (LinkedIn 3 MB limit).
+        $project: {
+          _id: 0,
+          id: 1,
+          title: 1,
+          display_title: 1,
+          author: 1,
+          thumbnail: 1,
+          language: 1,
+          published: 1,
+          categories: 1,
+          pages_count: 1,
+          pages_ocr: 1,
+          pages_translated: 1,
+          translation_percent: 1,
+          last_processed: 1,
+          last_translation_at: 1,
+        }
       }
     ]).toArray();
 
