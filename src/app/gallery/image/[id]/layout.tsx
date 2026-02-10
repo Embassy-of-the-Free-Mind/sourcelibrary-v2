@@ -33,10 +33,11 @@ interface Detection {
 async function getImageData(id: string): Promise<{ page: PageWithBook; detection: Detection } | null> {
   try {
     const decodedId = decodeURIComponent(id);
-    const [pageId, indexStr] = decodedId.split(':');
+    // Accept both : and - as separators (- for URLs, : for legacy)
+    const match = decodedId.match(/^(.+)[:\-](\d+)$/);
+    if (!match) return null;
+    const [, pageId, indexStr] = match;
     const index = parseInt(indexStr, 10);
-
-    if (!pageId || isNaN(index)) return null;
 
     const db = await getDb();
     const pages = await db.collection('pages').aggregate([

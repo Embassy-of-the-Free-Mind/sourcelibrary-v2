@@ -49,16 +49,18 @@ export async function GET(
     const { id } = await params;
     const resolution = new URL(request.url).searchParams.get('resolution') || 'standard';
 
-    // Parse compound ID: pageId:index
-    const [pageId, indexStr] = id.split(':');
-    const detectionIndex = parseInt(indexStr, 10);
+    // Parse compound ID: pageId:index or pageId-index
+    const match = id.match(/^(.+)[:\-](\d+)$/);
 
-    if (!pageId || isNaN(detectionIndex)) {
+    if (!match) {
       return NextResponse.json(
-        { error: 'Invalid image ID format. Expected pageId:index' },
+        { error: 'Invalid image ID format. Expected pageId-index' },
         { status: 400 }
       );
     }
+
+    const [, pageId, indexStr] = match;
+    const detectionIndex = parseInt(indexStr, 10);
 
     const db = await getDb();
 
@@ -196,16 +198,18 @@ export async function PATCH(
     const { id } = await params;
     const body = await request.json();
 
-    // Parse compound ID: pageId:index
-    const [pageId, indexStr] = id.split(':');
-    const detectionIndex = parseInt(indexStr, 10);
+    // Parse compound ID: pageId:index or pageId-index
+    const match = id.match(/^(.+)[:\-](\d+)$/);
 
-    if (!pageId || isNaN(detectionIndex)) {
+    if (!match) {
       return NextResponse.json(
-        { error: 'Invalid image ID format. Expected pageId:index' },
+        { error: 'Invalid image ID format. Expected pageId-index' },
         { status: 400 }
       );
     }
+
+    const [, pageId, indexStr] = match;
+    const detectionIndex = parseInt(indexStr, 10);
 
     const db = await getDb();
 

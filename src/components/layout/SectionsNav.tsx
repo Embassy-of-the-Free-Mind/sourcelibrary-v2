@@ -125,7 +125,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                       </div>
                       <div className="flex gap-2 overflow-x-auto pb-2">
                         {sectionImages.slice(0, 4).map((item) => {
-                          const imageId = `${item.pageId}:${item.detectionIndex}`;
+                          const imageId = `${item.pageId}-${item.detectionIndex}`;
                           const cropUrl = item.bbox
                             ? `/api/crop-image?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
                             : item.imageUrl;

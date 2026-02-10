@@ -484,7 +484,7 @@ export default function GuidePage({ params }: GuidePageProps) {
             {showIllustrations && (
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {illustrations.map((item) => {
-                  const imageId = `${item.pageId}:${item.detectionIndex}`;
+                  const imageId = `${item.pageId}-${item.detectionIndex}`;
                   // Build cropped URL if bbox exists
                   const cropUrl = item.bbox
                     ? `/api/crop-image?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
