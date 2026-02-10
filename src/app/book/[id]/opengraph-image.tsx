@@ -25,8 +25,9 @@ async function getBookForOG(id: string): Promise<Book | null> {
   }
 }
 
-export default async function Image({ params }: { params: { id: string } }) {
-  const book = await getBookForOG(params.id);
+export default async function Image({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const book = await getBookForOG(id);
   const thumbnail = book?.thumbnail;
 
   // If book has a thumbnail, show it
