@@ -32,7 +32,8 @@ interface Detection {
 
 async function getImageData(id: string): Promise<{ page: PageWithBook; detection: Detection } | null> {
   try {
-    const [pageId, indexStr] = id.split(':');
+    const decodedId = decodeURIComponent(id);
+    const [pageId, indexStr] = decodedId.split(':');
     const index = parseInt(indexStr, 10);
 
     if (!pageId || isNaN(index)) return null;
@@ -76,6 +77,11 @@ export async function generateMetadata({
     return {
       title: 'Image | Source Library',
       description: 'Explore historical illustrations from early modern texts.',
+      openGraph: {
+        title: 'Image',
+        description: 'Explore historical illustrations from early modern texts.',
+        siteName: 'Source Library',
+      },
     };
   }
 
