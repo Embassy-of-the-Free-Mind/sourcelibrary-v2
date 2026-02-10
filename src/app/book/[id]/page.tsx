@@ -55,6 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   const title = book.display_title || book.title;
+  const ogTitle = book.published ? `${title} (${book.published})` : title;
   const description = `Read the English translation of "${title}" by ${book.author}${book.published ? ` (${book.published})` : ''}. Digitized and translated with AI from the original ${book.language || 'manuscript'}.`;
   const bookUrl = `/book/${book.id}`;
 
@@ -76,7 +77,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       canonical: bookUrl,
     },
     openGraph: {
-      title,
+      title: ogTitle,
       description,
       type: 'article',
       siteName: 'Source Library',
@@ -98,7 +99,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: ogTitle,
       description,
       ...(book.thumbnail && { images: [book.thumbnail] }),
     },

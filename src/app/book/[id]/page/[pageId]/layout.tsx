@@ -46,7 +46,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
   const bookTitle = book.display_title || book.title;
   const pageNum = page.page_number;
-  const title = `${bookTitle} - Page ${pageNum}`;
+  const ogBookTitle = book.published ? `${bookTitle} (${book.published})` : bookTitle;
+  const title = `${ogBookTitle} - Page ${pageNum}`;
 
   // Use translation excerpt if available, otherwise OCR excerpt
   const textContent = page.translation?.data || page.ocr?.data || '';
