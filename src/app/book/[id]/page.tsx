@@ -128,9 +128,17 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
   // Use the book's id field, or fall back to _id string
   const bookId = book.id || book._id?.toString();
 
-  // Get all page data (including OCR/translation text) so we can filter for batch processing
+  // Fetch pages with lightweight projection — exclude heavy text fields
+  // UI only needs .updated_at for status dots, not the actual .data text
   const pages = await db.collection('pages')
-    .find({ book_id: bookId })
+    .find({ book_id: bookId }, {
+      projection: {
+        'ocr.data': 0,
+        'translation.data': 0,
+        'summary.data': 0,
+        'modernized.data': 0,
+      }
+    })
     .sort({ page_number: 1 })
     .toArray();
 
