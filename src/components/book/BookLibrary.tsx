@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
-import { normalizeText } from '@/lib/utils';
+
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check } from 'lucide-react';
 import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
 
@@ -17,24 +17,38 @@ interface FeaturedTopic {
 }
 
 interface BookLibraryProps {
-  books: Book[];
+  initialBooks: Book[];
+  totalBooks: number;
   languages: string[];
   featuredTopics?: FeaturedTopic[];
 }
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
-const INITIAL_DISPLAY_LIMIT = 50;
-const LOAD_MORE_INCREMENT = 50;
+const DISPLAY_INCREMENT = 50;
+const API_PAGE_SIZE = 100;
 
-export default function BookLibrary({ books, languages, featuredTopics = [] }: BookLibraryProps) {
+export default function BookLibrary({ initialBooks, totalBooks, languages, featuredTopics = [] }: BookLibraryProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
-  const [displayLimit, setDisplayLimit] = useState(INITIAL_DISPLAY_LIMIT);
+  const [displayLimit, setDisplayLimit] = useState(DISPLAY_INCREMENT);
+
+  // API-fetched books state
+  const [apiBooks, setApiBooks] = useState<Book[] | null>(null); // null = using initialBooks
+  const [apiTotal, setApiTotal] = useState(totalBooks);
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+
+  // Track whether we're in "browse" mode (no filters) or "search/filter" mode
+  const isFiltered = searchQuery.trim() !== '' || selectedLanguage !== '' || selectedCategory !== '' || sortBy !== 'recent-translation';
+
+  // The books we're working with
+  const allLoadedBooks = apiBooks ?? initialBooks;
+  const currentTotal = apiBooks !== null ? apiTotal : totalBooks;
 
   // Catalog search state
   const [catalogResults, setCatalogResults] = useState<CatalogResult[]>([]);
@@ -44,79 +58,129 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
 
   // Import state
   const [importingIds, setImportingIds] = useState<Set<string>>(new Set());
-  const [importedBooks, setImportedBooks] = useState<Record<string, string>>({}); // catalogId -> bookId
+  const [importedBooks, setImportedBooks] = useState<Record<string, string>>({});
 
-  const filteredAndSortedBooks = useMemo(() => {
-    let result = [...books];
+  // Debounce ref
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
-    // Filter by search query (diacritic-insensitive)
-    if (searchQuery.trim()) {
-      const query = normalizeText(searchQuery);
-      result = result.filter(book => {
-        const title = normalizeText(book.display_title || book.title || '');
-        const author = normalizeText(book.author || '');
-        const language = normalizeText(book.language || '');
-        const categories = normalizeText((book.categories || []).join(' '));
-        return (
-          title.includes(query) ||
-          author.includes(query) ||
-          language.includes(query) ||
-          categories.includes(query)
-        );
-      });
+  // Fetch books from API
+  const fetchBooks = useCallback(async (params: {
+    search?: string;
+    language?: string;
+    category?: string;
+    sort?: SortOption;
+    skip?: number;
+    append?: boolean;
+  }) => {
+    const { search = '', language = '', category = '', sort = 'recent-translation', skip = 0, append = false } = params;
+
+    // Cancel previous request
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    if (append) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
     }
 
-    // Filter by language
-    if (selectedLanguage) {
-      result = result.filter(book => book.language === selectedLanguage);
+    try {
+      const qs = new URLSearchParams();
+      qs.set('limit', String(API_PAGE_SIZE));
+      qs.set('skip', String(skip));
+      if (search) qs.set('search', search);
+      if (language) qs.set('language', language);
+      if (category) qs.set('category', category);
+      qs.set('sort', sort);
+
+      const res = await fetch(`/api/books/library?${qs}`, { signal: controller.signal });
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+
+      if (append) {
+        setApiBooks(prev => [...(prev ?? initialBooks), ...data.books]);
+      } else {
+        setApiBooks(data.books);
+      }
+      setApiTotal(data.total);
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'AbortError') return;
+      console.error('Failed to fetch books:', error);
+    } finally {
+      if (!controller.signal.aborted) {
+        setLoading(false);
+        setLoadingMore(false);
+      }
     }
+  }, [initialBooks]);
 
-    // Filter by category
-    if (selectedCategory) {
-      result = result.filter(book =>
-        book.categories && book.categories.includes(selectedCategory)
-      );
-    }
-
-    // Sort
-    switch (sortBy) {
-      case 'recent-translation':
-        // Keep server order - already sorted by last_translation_at
-        break;
-      case 'recent':
-        // Sort by last_processed (any update)
-        result.sort((a, b) => {
-          const aDate = a.last_processed ? new Date(a.last_processed).getTime() : 0;
-          const bDate = b.last_processed ? new Date(b.last_processed).getTime() : 0;
-          return bDate - aDate;
-        });
-        break;
-      case 'title-asc':
-        result.sort((a, b) => (a.title || '').localeCompare(b.title || ''));
-        break;
-      case 'title-desc':
-        result.sort((a, b) => (b.title || '').localeCompare(a.title || ''));
-        break;
-    }
-
-    return result;
-  }, [books, searchQuery, selectedLanguage, selectedCategory, sortBy]);
-
-  // Books to display (limited)
-  const displayedBooks = useMemo(() => {
-    return filteredAndSortedBooks.slice(0, displayLimit);
-  }, [filteredAndSortedBooks, displayLimit]);
-
-  const hasMoreBooks = filteredAndSortedBooks.length > displayLimit;
-  const remainingBooks = filteredAndSortedBooks.length - displayLimit;
-
-  // Reset display limit when filters change
+  // When filters change, debounce and fetch from API (or revert to initialBooks)
   useEffect(() => {
-    setDisplayLimit(INITIAL_DISPLAY_LIMIT);
-  }, [searchQuery, selectedLanguage, selectedCategory, sortBy]);
+    // Reset display limit
+    setDisplayLimit(DISPLAY_INCREMENT);
+
+    if (!isFiltered) {
+      // Back to default browse — use initial server data
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      abortRef.current?.abort();
+      setApiBooks(null);
+      setApiTotal(totalBooks);
+      setLoading(false);
+      return;
+    }
+
+    // Debounce the API call
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      fetchBooks({
+        search: searchQuery.trim(),
+        language: selectedLanguage,
+        category: selectedCategory,
+        sort: sortBy,
+      });
+    }, 300);
+
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [searchQuery, selectedLanguage, selectedCategory, sortBy, isFiltered, totalBooks, fetchBooks]);
+
+  // For default browse, do client-side filtering on initialBooks (instant)
+  const filteredBrowseBooks = useMemo(() => {
+    if (isFiltered) return allLoadedBooks;
+
+    // Default browse — initialBooks already sorted by server
+    return initialBooks;
+  }, [isFiltered, allLoadedBooks, initialBooks]);
+
+  // Books to display (limited for performance)
+  const displayedBooks = useMemo(() => {
+    return filteredBrowseBooks.slice(0, displayLimit);
+  }, [filteredBrowseBooks, displayLimit]);
+
+  const hasMoreBooks = isFiltered
+    ? allLoadedBooks.length < currentTotal || filteredBrowseBooks.length > displayLimit
+    : currentTotal > displayLimit;
+  const remainingBooks = currentTotal - Math.min(displayLimit, filteredBrowseBooks.length);
 
   const loadMore = () => {
-    setDisplayLimit(prev => prev + LOAD_MORE_INCREMENT);
+    if (displayLimit < allLoadedBooks.length) {
+      // We have more loaded books to show
+      setDisplayLimit(prev => prev + DISPLAY_INCREMENT);
+    } else if (allLoadedBooks.length < currentTotal) {
+      // Need to fetch more from API
+      setDisplayLimit(prev => prev + DISPLAY_INCREMENT);
+      fetchBooks({
+        search: searchQuery.trim(),
+        language: selectedLanguage,
+        category: selectedCategory,
+        sort: sortBy,
+        skip: allLoadedBooks.length,
+        append: true,
+      });
+    }
   };
 
   // Search external catalogs
@@ -189,15 +253,12 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
       });
 
       setImportedBooks(prev => ({ ...prev, [item.id]: data.book_id }));
-      // Refresh the page to show the new book
       router.refresh();
     } catch (error: any) {
       console.error('Import error:', error);
       const errorMessage = error.message || 'Import failed. Please try again.';
 
-      // Check if book already exists (409 conflict)
       if (errorMessage.includes('already exists')) {
-        // Try to extract book ID from error message if available
         alert('This book already exists in the library.');
       } else {
         alert(`Import failed: ${errorMessage}`);
@@ -344,22 +405,40 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
 
       {/* Book Count */}
       <div className="mb-8 text-gray-700">
-        <span className="font-semibold">{filteredAndSortedBooks.length}</span>
-        {filteredAndSortedBooks.length !== books.length && (
-          <span className="text-gray-500"> of {books.length}</span>
-        )}
-        {' '}book{filteredAndSortedBooks.length !== 1 ? 's' : ''} in library
-        {searchQuery && <span className="text-gray-500"> matching &ldquo;{searchQuery}&rdquo;</span>}
-        {selectedLanguage && <span className="text-gray-500"> in {selectedLanguage}</span>}
-        {selectedCategory && (
-          <span className="text-gray-500">
-            {' '}in {featuredTopics.find(t => t.id === selectedCategory)?.name || selectedCategory}
+        {loading ? (
+          <span className="inline-flex items-center gap-2 text-gray-500">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            Searching...
           </span>
+        ) : (
+          <>
+            <span className="font-semibold">{currentTotal}</span>
+            {' '}book{currentTotal !== 1 ? 's' : ''} in library
+            {searchQuery && <span className="text-gray-500"> matching &ldquo;{searchQuery}&rdquo;</span>}
+            {selectedLanguage && <span className="text-gray-500"> in {selectedLanguage}</span>}
+            {selectedCategory && (
+              <span className="text-gray-500">
+                {' '}in {featuredTopics.find(t => t.id === selectedCategory)?.name || selectedCategory}
+              </span>
+            )}
+          </>
         )}
       </div>
 
       {/* Library Results */}
-      {filteredAndSortedBooks.length === 0 && !hasSearchedCatalog ? (
+      {loading ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
+          {Array.from({ length: 10 }).map((_, i) => (
+            <div key={i} className="space-y-3 animate-pulse">
+              <div className="aspect-[3/4] bg-white/60 rounded-lg" />
+              <div className="space-y-2">
+                <div className="h-4 bg-white/60 rounded w-4/5" />
+                <div className="h-3 bg-white/60 rounded w-3/5" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : displayedBooks.length === 0 && !hasSearchedCatalog ? (
         <div className="text-center py-16">
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-200 flex items-center justify-center">
             <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -447,16 +526,21 @@ export default function BookLibrary({ books, languages, featuredTopics = [] }: B
       )}
 
       {/* Load More Button */}
-      {hasMoreBooks && (
+      {!loading && hasMoreBooks && remainingBooks > 0 && (
         <div className="mt-10 text-center">
           <button
             onClick={loadMore}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors shadow-sm"
+            disabled={loadingMore}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors shadow-sm disabled:opacity-50"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-            Load more ({remainingBooks} remaining)
+            {loadingMore ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            )}
+            {loadingMore ? 'Loading...' : `Load more (${remainingBooks} remaining)`}
           </button>
         </div>
       )}

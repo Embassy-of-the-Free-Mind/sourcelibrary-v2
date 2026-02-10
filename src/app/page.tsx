@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import { getDb } from '@/lib/mongodb';
 import HeroSection from '@/components/layout/HeroSection';
 import BookLibrary from '@/components/book/BookLibrary';
+import BookLibrarySkeleton from '@/components/book/BookLibrarySkeleton';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import SocietyLandingPage from '@/components/layout/SocietyLandingPage';
 import { Book } from '@/lib/types';
@@ -30,75 +32,76 @@ const FEATURED_TOPIC_IDS = [
   'medicine',
 ];
 
-async function getBooks(): Promise<Book[]> {
+const INITIAL_SERVER_LIMIT = 100;
+
+async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translatedCount: number }> {
   try {
     const db = await getDb();
 
-    // Use pre-computed counts from book documents (no expensive $lookup)
-    const books = await db.collection('books').aggregate([
-      {
-        // Ensure id field exists (use _id as fallback for older imports)
-        $addFields: {
-          id: { $ifNull: ['$id', { $toString: '$_id' }] },
-          // Use pre-computed counts, default to 0 if not set
-          pages_count: { $ifNull: ['$pages_count', 0] },
-          pages_translated: { $ifNull: ['$pages_translated', 0] },
-          pages_ocr: { $ifNull: ['$pages_ocr', 0] },
-          // Track last activity timestamps
-          last_processed: { $ifNull: ['$updated_at', '$created_at'] },
-          last_translation_at: { $ifNull: ['$last_translation_at', null] }
-        }
-      },
-      {
-        $addFields: {
-          translation_percent: {
-            $cond: {
-              if: { $gt: ['$pages_count', 0] },
-              then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
-              else: 0
-            }
-          }
-        }
-      },
-      {
-        // Add sort key: books with translations first (1), others last (0)
-        $addFields: {
-          has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } }
-        }
-      },
-      {
-        // Sort: books with translations first, then by most recent, then by last updated
-        $sort: { has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 }
-      },
-      {
-        // Only send fields needed by BookLibrary/BookCard to the client.
-        // Without this, full book documents (~1200 books) bloat the RSC
-        // payload to ~7 MB — too large for social crawlers (LinkedIn 3 MB limit).
-        $project: {
-          _id: 0,
-          id: 1,
-          title: 1,
-          display_title: 1,
-          author: 1,
-          thumbnail: 1,
-          language: 1,
-          published: 1,
-          categories: 1,
-          pages_count: 1,
-          pages_ocr: 1,
-          pages_translated: 1,
-          translation_percent: 1,
-          last_processed: 1,
-          last_translation_at: 1,
-        }
-      }
-    ]).toArray();
+    const [books, totalBooks, translatedCount] = await Promise.all([
+      db.collection('books').aggregate([
+        {
+          $addFields: {
+            id: { $ifNull: ['$id', { $toString: '$_id' }] },
+            pages_count: { $ifNull: ['$pages_count', 0] },
+            pages_translated: { $ifNull: ['$pages_translated', 0] },
+            pages_ocr: { $ifNull: ['$pages_ocr', 0] },
+            last_processed: { $ifNull: ['$updated_at', '$created_at'] },
+            last_translation_at: { $ifNull: ['$last_translation_at', null] },
+          },
+        },
+        {
+          $addFields: {
+            translation_percent: {
+              $cond: {
+                if: { $gt: ['$pages_count', 0] },
+                then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+                else: 0,
+              },
+            },
+          },
+        },
+        {
+          $addFields: {
+            has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },
+          },
+        },
+        {
+          $sort: { has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 },
+        },
+        { $limit: INITIAL_SERVER_LIMIT },
+        {
+          $project: {
+            _id: 0,
+            id: 1,
+            title: 1,
+            display_title: 1,
+            author: 1,
+            thumbnail: 1,
+            language: 1,
+            published: 1,
+            categories: 1,
+            pages_count: 1,
+            pages_ocr: 1,
+            pages_translated: 1,
+            translation_percent: 1,
+            last_processed: 1,
+            last_translation_at: 1,
+          },
+        },
+      ]).toArray(),
+      db.collection('books').countDocuments(),
+      db.collection('books').countDocuments({ pages_translated: { $gt: 0 } }),
+    ]);
 
-    // Serialize to plain objects (remove MongoDB ObjectId etc)
-    return JSON.parse(JSON.stringify(books)) as Book[];
+    return {
+      books: JSON.parse(JSON.stringify(books)) as Book[],
+      totalBooks,
+      translatedCount,
+    };
   } catch (error) {
     console.error('Error fetching books:', error);
-    return [];
+    return { books: [], totalBooks: 0, translatedCount: 0 };
   }
 }
 
@@ -106,7 +109,6 @@ async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
   try {
     const db = await getDb();
 
-    // Get category counts from books
     const categoryCounts = await db.collection('books').aggregate([
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
@@ -117,7 +119,6 @@ async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
       countMap.set(item._id as string, item.count as number);
     }
 
-    // Return featured topics in curated order with counts
     return FEATURED_TOPIC_IDS
       .map(id => {
         const cat = LIBRARY_CATEGORIES.find(c => c.id === id);
@@ -134,35 +135,38 @@ async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
   }
 }
 
-export default async function HomePage() {
-  // Check site mode first
-  const siteMode = await getSiteMode();
-
-  // If we're on the Ficino Society domain, show the Society landing page
-  if (siteMode.isSociety) {
-    return <SocietyLandingPage />;
-  }
-
-  // Otherwise, show the Source Library homepage
-  const [books, featuredTopics] = await Promise.all([
+async function LibrarySection() {
+  const [{ books, totalBooks, translatedCount }, featuredTopics] = await Promise.all([
     getBooks(),
     getFeaturedTopics(),
   ]);
 
-  // Get unique languages for filter
   const languages = [...new Set(books.map(b => b.language))].filter(Boolean) as string[];
-
-  // Count translated books
-  const translatedCount = books.filter(b => (b.translation_percent || 0) > 0).length;
 
   return (
     <>
-      {/* Schema.org JSON-LD for search engines */}
-      <HomePageSchema books={books} bookCount={books.length} translatedCount={translatedCount} />
+      <HomePageSchema books={books} bookCount={totalBooks} translatedCount={translatedCount} />
+      <BookLibrary
+        initialBooks={books}
+        totalBooks={totalBooks}
+        languages={languages}
+        featuredTopics={featuredTopics}
+      />
+    </>
+  );
+}
 
-      <div className="min-h-screen">
-        {/* Hero Section with Video Background */}
-        <HeroSection />
+export default async function HomePage() {
+  const siteMode = await getSiteMode();
+
+  if (siteMode.isSociety) {
+    return <SocietyLandingPage />;
+  }
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section with Video Background */}
+      <HeroSection />
 
       {/* Library Section */}
       <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
@@ -175,7 +179,9 @@ export default async function HomePage() {
           </div>
 
           {/* Search, Filter & Book Grid */}
-          <BookLibrary books={books} languages={languages} featuredTopics={featuredTopics} />
+          <Suspense fallback={<BookLibrarySkeleton />}>
+            <LibrarySection />
+          </Suspense>
         </div>
       </section>
 
@@ -183,10 +189,10 @@ export default async function HomePage() {
       <section id="about" className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Source Library continues the Ficino Society's mission to transform 2500+ years of wisdom texts into a living archive.
+            Source Library continues the Ficino Society&apos;s mission to transform 2500+ years of wisdom texts into a living archive.
           </h2>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-            Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica—recognized by UNESCO's Memory of the World Register—this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
+            Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica—recognized by UNESCO&apos;s Memory of the World Register—this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
           </p>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
             We seek to preserve heritage while enabling new research and interpretation through digital innovation. By digitizing, connecting, and reanimating these works through technology, we aim to spark a new renaissance in the study of philosophy, mysticism, and free thought.
@@ -274,7 +280,6 @@ export default async function HomePage() {
           </div>
         </div>
       </footer>
-      </div>
-    </>
+    </div>
   );
 }
