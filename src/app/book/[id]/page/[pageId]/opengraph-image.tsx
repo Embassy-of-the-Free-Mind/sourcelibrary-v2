@@ -34,8 +34,9 @@ async function getPageData(bookId: string, pageId: string): Promise<{ book: Book
   }
 }
 
-export default async function Image({ params }: { params: { id: string; pageId: string } }) {
-  const { book, page } = await getPageData(params.id, params.pageId);
+export default async function Image({ params }: { params: Promise<{ id: string; pageId: string }> }) {
+  const { id, pageId } = await params;
+  const { book, page } = await getPageData(id, pageId);
 
   const title = book?.display_title || book?.title || 'Unknown Title';
   const author = book?.author || 'Unknown Author';

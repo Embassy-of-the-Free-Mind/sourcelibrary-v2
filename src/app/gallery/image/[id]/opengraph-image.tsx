@@ -81,8 +81,9 @@ async function getImageData(id: string): Promise<{ page: PageWithBook; detection
   }
 }
 
-export default async function Image({ params }: { params: { id: string } }) {
-  const data = await getImageData(params.id);
+export default async function Image({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const data = await getImageData(id);
 
   if (!data) {
     // Fallback for missing images
