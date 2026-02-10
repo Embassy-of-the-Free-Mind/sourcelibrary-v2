@@ -4,6 +4,9 @@ import { ArrowLeft, BookOpen, Scale, CheckCircle2, Languages } from 'lucide-reac
 export const metadata = {
   title: 'Translation Research | Source Library',
   description: 'Benchmark studies comparing AI translations against scholarly editions.',
+  alternates: {
+    canonical: '/about/research',
+  },
 };
 
 export default function ResearchPage() {

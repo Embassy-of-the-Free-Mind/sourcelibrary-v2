@@ -4,6 +4,9 @@ import { ArrowLeft, FlaskConical, Zap, Link2, CheckCircle2, XCircle } from 'luci
 export const metadata = {
   title: 'How Processing Works | Source Library',
   description: 'Learn how Source Library processes OCR and translation with experiment-validated settings.',
+  alternates: {
+    canonical: '/about/processing',
+  },
 };
 
 export default function ProcessingPage() {

@@ -74,10 +74,16 @@ export async function generateMetadata({
   const { id } = await params;
   const data = await getImageData(id);
 
+  // Normalize ID to use - separator for canonical URLs
+  const urlSafeId = decodeURIComponent(id).replace(/:(\d+)$/, '-$1');
+
   if (!data) {
     return {
       title: 'Image | Source Library',
       description: 'Explore historical illustrations from early modern texts.',
+      alternates: {
+        canonical: `/gallery/image/${urlSafeId}`,
+      },
       openGraph: {
         title: 'Image',
         description: 'Explore historical illustrations from early modern texts.',
@@ -114,6 +120,9 @@ export async function generateMetadata({
   return {
     title,
     description: `${description}. From "${attribution}".`,
+    alternates: {
+      canonical: `/gallery/image/${urlSafeId}`,
+    },
     openGraph: {
       title: ogTitle,
       description,

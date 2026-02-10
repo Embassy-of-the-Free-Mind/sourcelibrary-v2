@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   },
   description:
     'Browse illustrations, diagrams, and engravings extracted from rare Hermetic, alchemical, and philosophical texts. Searchable by subject, type, and period.',
+  alternates: {
+    canonical: '/gallery',
+  },
 };
 
 export default function GalleryLayout({
