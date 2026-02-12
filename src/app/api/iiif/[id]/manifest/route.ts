@@ -41,7 +41,9 @@ const LANG_CODES: Record<string, string> = {
 
 function langCode(language?: string): string {
   if (!language) return 'none';
-  return LANG_CODES[language.toLowerCase()] || language.toLowerCase().slice(0, 2);
+  const lower = language.toLowerCase();
+  if (lower === 'unknown' || lower === 'none') return 'none';
+  return LANG_CODES[lower] || lower.slice(0, 2);
 }
 
 /**
