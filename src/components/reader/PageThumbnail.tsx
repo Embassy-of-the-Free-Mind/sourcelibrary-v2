@@ -25,8 +25,9 @@ export default function PageThumbnail({ page, bookId, index }: PageThumbnailProp
   }, []);
 
   // Determine image source type for analytics
-  const getImageSource = (): 'blob' | 'ia' | 'other' => {
-    if ((page as { archived_photo?: string }).archived_photo) return 'blob';
+  const getImageSource = (): 'thumbnail_blob' | 'blob' | 'ia' | 'other' => {
+    if (page.thumbnail_blob) return 'thumbnail_blob';
+    if (page.archived_photo) return 'blob';
     if (page.photo?.includes('archive.org')) return 'ia';
     return 'other';
   };
@@ -55,18 +56,23 @@ export default function PageThumbnail({ page, bookId, index }: PageThumbnailProp
 
   // Build image URL with crop if available
   const getImageUrl = () => {
+    // Pre-generated thumbnail — serve directly, no proxy needed
+    if (page.thumbnail_blob) {
+      return page.thumbnail_blob;
+    }
+
     // Use utility to get best available image (archived > original)
     const baseUrl = getPageImageUrl(page);
     if (!baseUrl) return null;
 
     // If we already have a cropped photo or archived photo, use directly with resize
-    if (page.crop && (page as { cropped_photo?: string }).cropped_photo) {
-      return (page as { cropped_photo?: string }).cropped_photo;
+    if (page.crop && page.cropped_photo) {
+      return page.cropped_photo;
     }
 
     // If we have an archived photo (no crop needed), use it with resize
-    if ((page as { archived_photo?: string }).archived_photo && !page.crop) {
-      return `/api/image?url=${encodeURIComponent((page as { archived_photo?: string }).archived_photo!)}&w=150&q=60`;
+    if (page.archived_photo && !page.crop) {
+      return `/api/image?url=${encodeURIComponent(page.archived_photo)}&w=150&q=60`;
     }
 
     // Apply crop via image proxy if needed

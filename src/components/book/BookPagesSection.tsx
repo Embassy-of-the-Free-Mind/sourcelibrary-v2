@@ -306,11 +306,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         if (!page) return false;
 
         if (action === 'ocr') {
-          // Only process pages without OCR data
-          return !page.ocr?.data;
+          // Only process pages without OCR (check updated_at since .data is excluded from projection)
+          return !page.ocr?.updated_at;
         } else if (action === 'translation') {
           // Only process pages that have OCR but no translation
-          return page.ocr?.data && !page.translation?.data;
+          return page.ocr?.updated_at && !page.translation?.updated_at;
         } else if (action === 'image_extraction') {
           // Only process pages without detected images
           return !page.detected_images || page.detected_images.length === 0;

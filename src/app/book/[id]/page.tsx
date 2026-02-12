@@ -110,14 +110,24 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
   const db = await getDb();
 
   // Try to find by custom id field first, then by _id
-  let book = await db.collection('books').findOne({ id });
+  // Exclude heavy fields not used on the book detail page
+  const bookProjection = {
+    chapters: 0,
+    reading_sections: 0,
+    pipeline: 0,
+    split_check: 0,
+    'index.sectionSummaries': 0,
+    pages_ocr: 0,
+    translation_percent: 0,
+  };
+  let book = await db.collection('books').findOne({ id }, { projection: bookProjection });
 
   // If not found, try _id (for books imported without custom id)
   if (!book) {
     try {
       const { ObjectId } = await import('mongodb');
       if (ObjectId.isValid(id)) {
-        book = await db.collection('books').findOne({ _id: new ObjectId(id) });
+        book = await db.collection('books').findOne({ _id: new ObjectId(id) }, { projection: bookProjection });
       }
     } catch {
       // Invalid ObjectId format, book not found
@@ -131,6 +141,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
 
   // Fetch pages with lightweight projection — exclude heavy text fields
   // UI only needs .updated_at for status dots, not the actual .data text
+  // For detected_images, only array length is needed (image count display)
   const pages = await db.collection('pages')
     .find({ book_id: bookId }, {
       projection: {
@@ -138,6 +149,11 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
         'translation.data': 0,
         'summary.data': 0,
         'modernized.data': 0,
+        'detected_images.description': 0,
+        'detected_images.gallery_rationale': 0,
+        'detected_images.museum_description': 0,
+        'detected_images.metadata': 0,
+        'split_detection': 0,
       }
     })
     .sort({ page_number: 1 })

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
+import { compress_photo } from '@/lib/image-manipulation';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
@@ -120,18 +121,37 @@ export async function POST(
               addRandomSuffix: false,
             });
 
+            // Generate 150px thumbnail from the same buffer
+            let thumbnailUrl: string | undefined;
+            try {
+              const thumbBuffer = await compress_photo(buffer, 150, 60);
+              const thumbFilename = `thumbnails/${bookId}/${page.page_number}.jpg`;
+              const thumbBlob = await put(thumbFilename, thumbBuffer, {
+                access: 'public',
+                contentType: 'image/jpeg',
+                addRandomSuffix: false,
+                allowOverwrite: true,
+              });
+              thumbnailUrl = thumbBlob.url;
+            } catch {
+              // Non-fatal — thumbnail can be generated later
+            }
+
             // Update page record
+            const updateFields: Record<string, unknown> = {
+              archived_photo: blob.url,
+              'archive_metadata.archived_at': new Date(),
+              'archive_metadata.source_url': sourceUrl,
+              'archive_metadata.bytes': bytes,
+              updated_at: new Date()
+            };
+            if (thumbnailUrl) {
+              updateFields.thumbnail_blob = thumbnailUrl;
+            }
+
             await db.collection('pages').updateOne(
               { id: page.id },
-              {
-                $set: {
-                  archived_photo: blob.url,
-                  'archive_metadata.archived_at': new Date(),
-                  'archive_metadata.source_url': sourceUrl,
-                  'archive_metadata.bytes': bytes,
-                  updated_at: new Date()
-                }
-              }
+              { $set: updateFields }
             );
 
             totalBytesUploaded += bytes;
