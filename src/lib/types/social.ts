@@ -37,6 +37,7 @@ export interface SocialPost {
     model: string;
     generated_at: Date;
     alternatives: string[];      // Other tweet options generated
+    research_notes?: string;     // AI chain-of-thought research before writing
   };
 
   // After posting to Twitter

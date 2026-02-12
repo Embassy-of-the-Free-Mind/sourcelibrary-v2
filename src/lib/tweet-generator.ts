@@ -63,6 +63,16 @@ export interface TweetGenerationInput {
   // Model and prompt options
   model?: TweetModel;       // 'gemini' or 'claude'
   customPrompt?: string;    // User-provided prompt/guidance
+  // Research context from DB (page translations, book summaries)
+  researchContext?: {
+    pageTranslation?: string;
+    adjacentTranslation?: string;
+    bookOverview?: string;
+    bookThemes?: string[];
+    bookQuotes?: Array<{ text: string; page: number }>;
+    sectionSummary?: string;
+    sectionConcepts?: string[];
+  };
 }
 
 export interface TweetVariation {
@@ -80,6 +90,7 @@ export interface TweetGenerationResult {
   alternatives: string[];
   // New: structured variations for curation
   variations?: TweetVariation[];
+  research?: string;
 }
 
 // =============================================================================
@@ -221,6 +232,40 @@ function buildVariationPrompt(
   const allHashtags = new Set<string>();
   audiences.forEach(a => AUDIENCE_CONTEXTS[a].hashtags.forEach(h => allHashtags.add(h)));
 
+  // Build research context block if available
+  const rc = input.researchContext;
+  let researchBlock = '';
+  if (rc && (rc.pageTranslation || rc.bookOverview || rc.sectionSummary)) {
+    const parts: string[] = [];
+    if (rc.pageTranslation) {
+      parts.push(`SOURCE TEXT (translation of this page):\n${rc.pageTranslation}`);
+    }
+    if (rc.adjacentTranslation) {
+      parts.push(`NEXT PAGE:\n${rc.adjacentTranslation}`);
+    }
+    if (rc.bookOverview) {
+      parts.push(`ABOUT THIS BOOK:\n${rc.bookOverview}${rc.bookThemes?.length ? `\nThemes: ${rc.bookThemes.join(', ')}` : ''}`);
+    }
+    if (rc.sectionSummary) {
+      parts.push(`THIS SECTION:\n${rc.sectionSummary}${rc.sectionConcepts?.length ? `\nKey concepts: ${rc.sectionConcepts.join(', ')}` : ''}`);
+    }
+    if (rc.bookQuotes?.length) {
+      parts.push(`NOTABLE QUOTES NEARBY:\n${rc.bookQuotes.map(q => `"${q.text}" (p. ${q.page})`).join('\n')}`);
+    }
+    researchBlock = parts.join('\n\n');
+  }
+
+  const cotInstruction = researchBlock ? `
+RESEARCH PHASE (required before writing tweets):
+Before writing any tweets, think carefully about:
+1. What does the text on this page actually say? What is the author arguing or describing?
+2. Who is this author and why do they matter in this tradition?
+3. What makes this specific page/image noteworthy — what would a scholar find interesting?
+4. What connections exist to ideas that modern readers would recognize?
+
+Write your research as 3-5 sentences of genuine insight in the "research" field. This is not a summary — it's your expert notes on what makes this worth sharing.
+` : '';
+
   return `You are crafting tweets for Source Library, a digital archive of rare Western esoteric texts (alchemy, Hermetica, Kabbalah, Renaissance philosophy, mysticism).
 
 Your goal: Create authentic content that resonates with specific intellectual communities. No generic social media speak. Write like someone who actually studies these traditions.
@@ -233,7 +278,7 @@ IMAGE BEING SHARED:
 - Subjects: ${input.metadata?.subjects?.join(', ') || 'N/A'}
 - Symbols Present: ${input.metadata?.symbols?.join(', ') || 'N/A'}
 - Figures Depicted: ${input.metadata?.figures?.join(', ') || 'N/A'}
-
+${researchBlock ? `\n${researchBlock}\n` : ''}${cotInstruction}
 TARGET AUDIENCES (write for these communities):
 ${audienceDescriptions}
 
@@ -253,7 +298,7 @@ ${[...allHashtags].join(', ')}
 
 OUTPUT FORMAT (JSON only, no markdown):
 {
-  "variations": [
+  ${researchBlock ? `"research": "Your 3-5 sentence expert research notes on what makes this worth sharing",\n  ` : ''}"variations": [
     {
       "tweet": "The tweet text (under 200 chars)",
       "hashtags": ["tag1", "tag2", "tag3"],
@@ -279,7 +324,7 @@ Generate ${count} variations using different audience/voice combinations.`;
  */
 export async function generateTweetVariations(
   input: TweetGenerationInput
-): Promise<TweetVariation[]> {
+): Promise<{ research?: string; variations: TweetVariation[] }> {
   const audiences = input.audiences || ['general'];
   const voices = input.voices || ['scholarly', 'aesthetic'];
   const count = input.variationCount || Math.max(4, audiences.length * voices.length);
@@ -297,7 +342,7 @@ export async function generateTweetVariations(
 /**
  * Generate variations using Gemini
  */
-async function generateWithGemini(prompt: string): Promise<TweetVariation[]> {
+async function generateWithGemini(prompt: string): Promise<{ research?: string; variations: TweetVariation[] }> {
   const apiKey = getNextApiKey();
   const genAI = getGeminiClient();
   const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
@@ -317,7 +362,7 @@ async function generateWithGemini(prompt: string): Promise<TweetVariation[]> {
 /**
  * Generate variations using Claude
  */
-async function generateWithClaude(prompt: string): Promise<TweetVariation[]> {
+async function generateWithClaude(prompt: string): Promise<{ research?: string; variations: TweetVariation[] }> {
   const anthropic = getAnthropicClient();
 
   const result = await anthropic.messages.create({
@@ -336,7 +381,7 @@ async function generateWithClaude(prompt: string): Promise<TweetVariation[]> {
 /**
  * Parse JSON variations from AI response text
  */
-function parseVariationsFromText(text: string): TweetVariation[] {
+function parseVariationsFromText(text: string): { research?: string; variations: TweetVariation[] } {
   let jsonStr = text;
   const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
   if (jsonMatch) {
@@ -349,7 +394,10 @@ function parseVariationsFromText(text: string): TweetVariation[] {
   }
 
   const parsed = JSON.parse(jsonStr);
-  return parsed.variations || [];
+  return {
+    research: parsed.research || undefined,
+    variations: parsed.variations || [],
+  };
 }
 
 /**
@@ -359,24 +407,25 @@ export async function generateTweet(
   input: TweetGenerationInput
 ): Promise<TweetGenerationResult> {
   // Use the new variation system but return in old format
-  const variations = await generateTweetVariations({
+  const result = await generateTweetVariations({
     ...input,
     audiences: input.audiences || ['general', 'esoteric'],
     voices: input.voices || ['scholarly', 'aesthetic', 'mysterious'],
     variationCount: 3,
   });
 
-  if (variations.length === 0) {
+  if (result.variations.length === 0) {
     throw new Error('No variations generated');
   }
 
-  const primary = variations[0];
+  const primary = result.variations[0];
   return {
     tweet: primary.tweet,
     hashtags: primary.hashtags,
     hookType: mapVoiceToHookType(primary.voice),
-    alternatives: variations.slice(1).map(v => v.tweet),
-    variations,
+    alternatives: result.variations.slice(1).map(v => v.tweet),
+    variations: result.variations,
+    research: result.research,
   };
 }
 

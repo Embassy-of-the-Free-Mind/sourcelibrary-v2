@@ -75,6 +75,7 @@ interface GeneratedTweet {
   hookType: string;
   alternatives: string[];
   variations?: TweetVariation[];
+  research?: string;
   image: ImageCandidate;
   croppedUrl: string;
   post?: SocialPost;
@@ -945,6 +946,18 @@ export default function SocialAdminPage() {
                           </button>
                         </div>
 
+                        {/* Research Notes */}
+                        {generatedTweet.research && (
+                          <div className="bg-amber-950/30 rounded-lg p-3 border border-amber-800/40">
+                            <p className="text-[10px] text-amber-500 uppercase tracking-wide mb-1.5 font-medium">
+                              Research Notes
+                            </p>
+                            <p className="text-sm text-amber-100/80 leading-relaxed">
+                              {generatedTweet.research}
+                            </p>
+                          </div>
+                        )}
+
                         {/* Variation Cards */}
                         {generatedTweet.variations && generatedTweet.variations.length > 0 ? (
                           <div className="space-y-3">
@@ -1657,6 +1670,17 @@ function PostCard({
               </span>
             ))}
           </div>
+        )}
+
+        {!isEditing && post.generated_by?.research_notes && (
+          <details className="mt-2 group">
+            <summary className="text-[10px] text-amber-500/70 uppercase tracking-wide cursor-pointer hover:text-amber-400 select-none">
+              Research Notes
+            </summary>
+            <p className="text-xs text-amber-100/60 mt-1 leading-relaxed">
+              {post.generated_by.research_notes}
+            </p>
+          </details>
         )}
 
         {post.error && <p className="text-xs text-red-400 mt-2">{post.error}</p>}

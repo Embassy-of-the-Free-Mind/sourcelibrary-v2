@@ -6,6 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import {
   generateTweet,
@@ -17,10 +18,113 @@ import {
   TweetVoice,
   TweetVariation,
   TweetModel,
+  TweetGenerationInput,
 } from '@/lib/tweet-generator';
-import { getImageCandidate, buildCropUrl } from '@/lib/social-image-selector';
+import { getImageCandidate, buildCropUrl, SocialImageCandidate } from '@/lib/social-image-selector';
 import { nanoid } from 'nanoid';
 import { SocialPost } from '@/lib/types';
+
+/**
+ * Fetch research context for a candidate image: page translations + book summaries.
+ * Returns undefined fields gracefully when data doesn't exist.
+ */
+async function fetchResearchContext(
+  db: Db,
+  candidate: SocialImageCandidate
+): Promise<TweetGenerationInput['researchContext']> {
+  const bookId = candidate.bookId;
+  const pageNumber = candidate.pageNumber;
+
+  // Run page + book queries in parallel
+  const [pageResults, bookDoc] = await Promise.all([
+    // Fetch translation for this page and the next page
+    db.collection('pages')
+      .find(
+        {
+          book_id: bookId,
+          page_number: { $in: [pageNumber, pageNumber + 1] },
+        },
+        {
+          projection: {
+            page_number: 1,
+            'translation.data': 1,
+          },
+        }
+      )
+      .toArray(),
+
+    // Fetch book-level context (books use string `id` field, not ObjectId `_id`)
+    db.collection('books')
+      .findOne(
+        { id: bookId },
+        {
+          projection: {
+            'reading_summary.overview': 1,
+            'reading_summary.themes': 1,
+            'reading_summary.quotes': 1,
+            'index.bookSummary.brief': 1,
+            'index.sectionSummaries': 1,
+          },
+        }
+      ),
+  ]);
+
+  const context: TweetGenerationInput['researchContext'] = {};
+
+  // Page translation
+  const currentPage = pageResults.find((p) => p.page_number === pageNumber);
+  const nextPage = pageResults.find((p) => p.page_number === pageNumber + 1);
+
+  if (currentPage?.translation?.data) {
+    context.pageTranslation = currentPage.translation.data.slice(0, 800);
+  }
+  if (nextPage?.translation?.data) {
+    context.adjacentTranslation = nextPage.translation.data.slice(0, 400);
+  }
+
+  // Book overview
+  if (bookDoc?.reading_summary?.overview) {
+    context.bookOverview = bookDoc.reading_summary.overview.slice(0, 500);
+  } else if (bookDoc?.index?.bookSummary?.brief) {
+    context.bookOverview = bookDoc.index.bookSummary.brief.slice(0, 500);
+  }
+
+  // Themes
+  if (bookDoc?.reading_summary?.themes?.length) {
+    context.bookThemes = bookDoc.reading_summary.themes;
+  }
+
+  // Quotes near this page (within 5 pages)
+  if (bookDoc?.reading_summary?.quotes?.length) {
+    const nearbyQuotes = bookDoc.reading_summary.quotes
+      .filter((q: { page?: number }) => q.page && Math.abs(q.page - pageNumber) <= 5)
+      .slice(0, 3)
+      .map((q: { text: string; page: number }) => ({ text: q.text, page: q.page }));
+    if (nearbyQuotes.length > 0) {
+      context.bookQuotes = nearbyQuotes;
+    }
+  }
+
+  // Section summary — find the section this page belongs to
+  if (bookDoc?.index?.sectionSummaries?.length) {
+    const section = bookDoc.index.sectionSummaries.find(
+      (s: { startPage?: number; endPage?: number }) =>
+        s.startPage && s.endPage && pageNumber >= s.startPage && pageNumber <= s.endPage
+    );
+    if (section) {
+      if (section.summary) {
+        context.sectionSummary = section.summary.slice(0, 300);
+      }
+      if (section.concepts?.length) {
+        context.sectionConcepts = section.concepts;
+      }
+    }
+  }
+
+  // Only return if we found something useful
+  const hasContent = context.pageTranslation || context.bookOverview || context.sectionSummary;
+  return hasContent ? context : undefined;
+}
 
 /**
  * GET /api/social/generate
@@ -94,8 +198,11 @@ export async function POST(request: NextRequest) {
     // Validate model
     const validModel: TweetModel = ['gemini', 'claude'].includes(model) ? model : 'gemini';
 
+    // Fetch research context (page translations + book summaries)
+    const researchContext = await fetchResearchContext(db, candidate);
+
     // Generate variations using AI
-    const variations = await generateTweetVariations({
+    const result = await generateTweetVariations({
       description: candidate.description,
       museumDescription: candidate.museumDescription,
       type: candidate.type,
@@ -108,7 +215,10 @@ export async function POST(request: NextRequest) {
       variationCount: Math.min(variationCount, 8),
       model: validModel,
       customPrompt: customPrompt || undefined,
+      researchContext,
     });
+
+    const { variations, research } = result;
 
     // Build cropped image URL
     const croppedUrl = buildCropUrl(candidate, 'https://sourcelibrary.org');
@@ -122,6 +232,7 @@ export async function POST(request: NextRequest) {
 
     const response: {
       variations: Array<TweetVariation & { fullTweet: string; charCount: number }>;
+      research?: string;
       image: typeof candidate;
       croppedUrl: string;
       post?: SocialPost;
@@ -133,6 +244,7 @@ export async function POST(request: NextRequest) {
       alternatives: string[];
     } = {
       variations: enrichedVariations,
+      research,
       image: candidate,
       croppedUrl,
       // Backward compatibility - use first variation
@@ -171,6 +283,7 @@ export async function POST(request: NextRequest) {
           model: validModel === 'claude' ? 'claude-sonnet-4' : 'gemini-3-flash-preview',
           generated_at: new Date(),
           alternatives: variations.slice(1).map(v => v.tweet),
+          ...(research ? { research_notes: research } : {}),
         },
 
         created_at: new Date(),
