@@ -1,4 +1,5 @@
 import { Book, TranslationEdition } from '@/lib/types';
+import { BASE_URL, getLicenseUrl } from './schema-utils';
 
 interface SchemaOrgMetadataProps {
   book: Book;
@@ -19,7 +20,7 @@ export default function SchemaOrgMetadata({
   pageCount,
   translatedCount,
   currentEdition,
-  baseUrl = 'https://sourcelibrary.org',
+  baseUrl = BASE_URL,
   currentPage,
 }: SchemaOrgMetadataProps) {
   // Original work metadata
@@ -51,6 +52,15 @@ export default function SchemaOrgMetadata({
         propertyID: 'USTC',
         value: book.ustc_id,
       },
+    }),
+    ...(pageCount > 0 && { numberOfPages: pageCount }),
+    ...(book.thumbnail && {
+      image: book.thumbnail,
+      thumbnailUrl: book.thumbnail,
+    }),
+    ...(book.categories && book.categories.length > 0 && {
+      genre: book.categories,
+      about: book.categories.map(c => ({ '@type': 'Thing', name: c })),
     }),
   };
 
@@ -159,17 +169,6 @@ export default function SchemaOrgMetadata({
       dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd, null, 0) }}
     />
   );
-}
-
-function getLicenseUrl(license: string): string {
-  const licenseUrls: Record<string, string> = {
-    'CC0-1.0': 'https://creativecommons.org/publicdomain/zero/1.0/',
-    'CC-BY-4.0': 'https://creativecommons.org/licenses/by/4.0/',
-    'CC-BY-SA-4.0': 'https://creativecommons.org/licenses/by-sa/4.0/',
-    'CC-BY-NC-4.0': 'https://creativecommons.org/licenses/by-nc/4.0/',
-    'CC-BY-NC-SA-4.0': 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
-  };
-  return licenseUrls[license] || license;
 }
 
 function getDescription(book: Book, translatedCount: number, pageCount: number): string {

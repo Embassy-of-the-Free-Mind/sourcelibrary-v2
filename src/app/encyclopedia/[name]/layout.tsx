@@ -1,12 +1,14 @@
+import { cache } from 'react';
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
+import EntitySchema from '@/components/seo/EntitySchema';
 
 interface LayoutProps {
   params: Promise<{ name: string }>;
   children: React.ReactNode;
 }
 
-async function getEntity(name: string) {
+const getEntity = cache(async (name: string) => {
   try {
     const db = await getDb();
     const entity = await db.collection('entities').findOne({ name });
@@ -14,7 +16,7 @@ async function getEntity(name: string) {
   } catch {
     return null;
   }
-}
+});
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { name } = await params;
@@ -59,6 +61,24 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   };
 }
 
-export default function EntityLayout({ children }: LayoutProps) {
-  return children;
+export default async function EntityLayout({ params, children }: LayoutProps) {
+  const { name } = await params;
+  const decodedName = decodeURIComponent(name);
+  const entity = await getEntity(decodedName);
+
+  return (
+    <>
+      {entity && (
+        <EntitySchema
+          name={decodedName}
+          type={entity.type}
+          description={entity.description}
+          wikipediaUrl={entity.wikipedia_url}
+          bookCount={entity.book_count}
+          books={entity.books}
+        />
+      )}
+      {children}
+    </>
+  );
 }

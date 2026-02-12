@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { getDb } from '@/lib/mongodb';
 
 export const alt = 'Image Gallery - Source Library';
 export const size = {
@@ -7,7 +8,69 @@ export const size = {
 };
 export const contentType = 'image/png';
 
+async function getFeaturedImages(): Promise<string[]> {
+  try {
+    const db = await getDb();
+    const results = await db.collection('pages').aggregate([
+      {
+        $match: {
+          'detected_images.0': { $exists: true },
+          $or: [
+            { cropped_photo: { $exists: true, $ne: '' } },
+            { photo_original: { $exists: true, $ne: '' } },
+            { photo: { $exists: true, $ne: '' } },
+          ],
+          detected_images: {
+            $elemMatch: {
+              bbox: { $exists: true },
+              detection_source: { $in: ['vision_model', 'manual'] },
+              gallery_quality: { $gte: 0.8 },
+            },
+          },
+        },
+      },
+      { $unwind: '$detected_images' },
+      {
+        $match: {
+          'detected_images.bbox': { $exists: true },
+          'detected_images.gallery_quality': { $gte: 0.8 },
+        },
+      },
+      { $sort: { 'detected_images.gallery_quality': -1 } },
+      { $limit: 5 },
+      {
+        $project: {
+          imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
+          bbox: '$detected_images.bbox',
+        },
+      },
+    ]).toArray();
+
+    return results.map((r) => {
+      let url = r.imageUrl as string;
+      if (url?.includes('/full/')) {
+        url = url.replace(/\/full\/\d+,\//, '/full/800,/');
+      }
+      if (r.bbox) {
+        const params = new URLSearchParams({
+          url,
+          x: String(r.bbox.x),
+          y: String(r.bbox.y),
+          w: String(r.bbox.width),
+          h: String(r.bbox.height),
+        });
+        return `https://sourcelibrary.org/api/crop-image?${params}`;
+      }
+      return url;
+    });
+  } catch {
+    return [];
+  }
+}
+
 export default async function Image() {
+  const images = await getFeaturedImages();
+
   return new ImageResponse(
     (
       <div
@@ -37,7 +100,7 @@ export default async function Image() {
           }}
         />
 
-        {/* Grid of image placeholders */}
+        {/* Grid of featured images */}
         <div
           style={{
             display: 'flex',
@@ -45,34 +108,43 @@ export default async function Image() {
             marginBottom: 40,
           }}
         >
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div
-              key={i}
-              style={{
-                width: 100,
-                height: 100,
-                background: `rgba(201, 168, 108, ${0.08 + i * 0.04})`,
-                borderRadius: 8,
-                border: '1px solid rgba(201, 168, 108, 0.2)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={`rgba(201, 168, 108, ${0.3 + i * 0.1})`}
-                strokeWidth="1.5"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <path d="M21 15l-5-5L5 21" />
-              </svg>
-            </div>
-          ))}
+          {images.length > 0
+            ? images.map((url, i) => (
+                <div
+                  key={i}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 8,
+                    border: '1px solid rgba(201, 168, 108, 0.3)',
+                    overflow: 'hidden',
+                    display: 'flex',
+                  }}
+                >
+                  <img
+                    src={url}
+                    alt=""
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
+                  />
+                </div>
+              ))
+            : [1, 2, 3, 4, 5].map((i) => (
+                <div
+                  key={i}
+                  style={{
+                    width: 100,
+                    height: 100,
+                    background: `rgba(201, 168, 108, ${0.08 + i * 0.04})`,
+                    borderRadius: 8,
+                    border: '1px solid rgba(201, 168, 108, 0.2)',
+                    display: 'flex',
+                  }}
+                />
+              ))}
         </div>
 
         {/* Title */}
@@ -103,7 +175,7 @@ export default async function Image() {
             display: 'flex',
           }}
         >
-          Illustrations from rare Hermetic, alchemical & philosophical texts
+          Illustrations from rare Hermetic, alchemical &amp; philosophical texts
         </div>
 
         {/* Source Library branding */}

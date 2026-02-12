@@ -6,31 +6,59 @@
  * Each image becomes a citable, shareable, discoverable unit.
  */
 
+import { cache } from 'react';
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
+import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
 
 interface PageWithBook {
   id: string;
   book_id: string;
   page_number: number;
+  photo?: string;
+  archived_photo?: string;
+  cropped_photo?: string;
   detected_images?: Array<{
     description: string;
     type?: string;
+    museum_description?: string;
+    metadata?: {
+      subjects?: string[];
+      figures?: string[];
+      symbols?: string[];
+      style?: string;
+      technique?: string;
+    };
   }>;
   book?: {
+    id: string;
     title?: string;
     display_title?: string;
     author?: string;
-    published?: number;
+    published?: string;
+    license?: string;
+    image_source?: {
+      provider?: string;
+      license?: string;
+      attribution?: string;
+    };
   };
 }
 
 interface Detection {
   description: string;
   type?: string;
+  museum_description?: string;
+  metadata?: {
+    subjects?: string[];
+    figures?: string[];
+    symbols?: string[];
+    style?: string;
+    technique?: string;
+  };
 }
 
-async function getImageData(id: string): Promise<{ page: PageWithBook; detection: Detection } | null> {
+const getImageData = cache(async (id: string): Promise<{ page: PageWithBook; detection: Detection; detectionIndex: number } | null> => {
   try {
     const decodedId = decodeURIComponent(id);
     // Accept both : and - as separators (- for URLs, : for legacy)
@@ -60,11 +88,11 @@ async function getImageData(id: string): Promise<{ page: PageWithBook; detection
 
     if (index < 0 || index >= detections.length) return null;
 
-    return { page, detection: detections[index] };
+    return { page, detection: detections[index], detectionIndex: index };
   } catch {
     return null;
   }
-}
+});
 
 export async function generateMetadata({
   params,
@@ -137,10 +165,34 @@ export async function generateMetadata({
   };
 }
 
-export default function ImageLayout({
+export default async function ImageLayout({
+  params,
   children,
 }: {
+  params: Promise<{ id: string }>;
   children: React.ReactNode;
 }) {
-  return children;
+  const { id } = await params;
+  const data = await getImageData(id);
+  const urlSafeId = decodeURIComponent(id).replace(/:(\d+)$/, '-$1');
+
+  if (!data) return children;
+
+  const { page, detection } = data;
+  const imageUrl = page.cropped_photo || page.archived_photo || page.photo;
+
+  return (
+    <>
+      <GalleryImageSchema
+        imageId={urlSafeId}
+        description={detection.description}
+        museumDescription={detection.museum_description}
+        type={detection.type}
+        metadata={detection.metadata}
+        imageUrl={imageUrl}
+        book={page.book}
+      />
+      {children}
+    </>
+  );
 }

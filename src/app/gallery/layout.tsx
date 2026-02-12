@@ -1,14 +1,27 @@
 import { Metadata } from 'next';
+import GallerySchema from '@/components/seo/GallerySchema';
+
+const galleryTitle = 'Image Gallery - Source Library';
+const galleryDescription =
+  'Browse illustrations, diagrams, and engravings extracted from rare Hermetic, alchemical, and philosophical texts. Searchable by subject, type, and period.';
 
 export const metadata: Metadata = {
   title: {
     template: '%s | Source Library Gallery',
-    default: 'Image Gallery - Source Library',
+    default: galleryTitle,
   },
-  description:
-    'Browse illustrations, diagrams, and engravings extracted from rare Hermetic, alchemical, and philosophical texts. Searchable by subject, type, and period.',
+  description: galleryDescription,
   alternates: {
     canonical: '/gallery',
+  },
+  openGraph: {
+    title: galleryTitle,
+    description: galleryDescription,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: galleryTitle,
+    description: galleryDescription,
   },
 };
 
@@ -17,5 +30,10 @@ export default function GalleryLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <GallerySchema />
+      {children}
+    </>
+  );
 }

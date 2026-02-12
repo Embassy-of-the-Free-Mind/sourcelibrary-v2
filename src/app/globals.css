@@ -39,6 +39,26 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Newsreader', Georgia, serif;
+
+  /* Palette as Tailwind utilities */
+  --color-cream: #fdfcf9;
+  --color-warm: #f5f0e8;
+  --color-dark: #1a1612;
+  --color-primary: #1a1612;
+  --color-secondary: #444;
+  --color-muted: #888;
+  --color-accent-rust: #9e4a3a;
+  --color-accent-gold: #c9a86c;
+  --color-accent-sage: #8b9a7d;
+  --color-accent-slate: #546b8a;
+  --color-accent-violet: #7c5db5;
+  --color-border-light: #e8e4dc;
+  --color-border-medium: #d4cfc4;
+
+  /* Container widths */
+  --container-narrow: 680px;
+  --container-medium: 900px;
+  --container-wide: 1200px;
 }
 
 /* Base styles */
@@ -107,6 +127,46 @@ a:hover {
 
 .prose-manuscript p {
   margin-bottom: 1.5em;
+}
+
+/* Prose styling for content/document pages */
+.prose-content {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 17px;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+.prose-content p {
+  margin-bottom: 1.25em;
+}
+
+.prose-content h2 {
+  margin-top: 2.5em;
+  margin-bottom: 0.75em;
+}
+
+.prose-content h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose-content a {
+  color: var(--accent-rust);
+  text-decoration-color: var(--accent-rust);
+  text-underline-offset: 3px;
+}
+
+.prose-content a:hover {
+  text-decoration-color: var(--text-primary);
+}
+
+.prose-content ul, .prose-content ol {
+  margin-bottom: 1.25em;
+}
+
+.prose-content li {
+  margin-bottom: 0.25em;
 }
 
 /* Notes styling */
