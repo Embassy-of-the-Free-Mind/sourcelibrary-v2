@@ -111,6 +111,35 @@ export async function POST() {
         : `error: ${err.message}`;
     }
 
+    // Gemini usage - lookup by book_id for history/cost queries
+    // Query: { book_id }
+    try {
+      await db.collection('gemini_usage').createIndex(
+        { book_id: 1, timestamp: 1 },
+        { name: 'gemini_usage_book_ts_idx', background: true }
+      );
+      results['gemini_usage.gemini_usage_book_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gemini_usage.gemini_usage_book_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Audit log - lookup by book_id
+    try {
+      await db.collection('audit_log').createIndex(
+        { book_id: 1 },
+        { name: 'audit_log_book_idx', background: true }
+      );
+      results['audit_log.audit_log_book_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['audit_log.audit_log_book_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Deleted books - lookup for restore
     try {
       await db.collection('deleted_books').createIndex(
@@ -145,7 +174,7 @@ export async function POST() {
 export async function GET() {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'analytics_events', 'deleted_books'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

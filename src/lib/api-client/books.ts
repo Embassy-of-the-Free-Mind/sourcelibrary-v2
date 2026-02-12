@@ -385,6 +385,35 @@ export const books = {
   },
 
   /**
+   * Get book provenance history timeline
+   */
+  history: async (id: string): Promise<{
+    book_id: string;
+    book_title: string;
+    events: Array<{
+      type: string;
+      timestamp: string;
+      description: string;
+      pages?: number;
+      cost_usd?: number;
+      model?: string;
+      status?: string;
+      provider?: string;
+      source_url?: string;
+      version?: string;
+      doi?: string;
+      action?: string;
+    }>;
+    summary: {
+      total_ai_cost_usd: number;
+      first_event: string | null;
+      last_event: string | null;
+    };
+  }> => {
+    return await apiClient.get(`/api/books/${id}/history`);
+  },
+
+  /**
    * Get a quote from the book
    */
   quote: async (id: string): Promise<{ quote: string; page: number; context: string }> => {

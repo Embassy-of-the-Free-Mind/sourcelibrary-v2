@@ -12,7 +12,7 @@
 - Review scripts for hardcoded credentials before committing
 
 ## Stack
-- Next.js 14, MongoDB Atlas, Gemini AI, Vercel deployment
+- Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
 - Production database: `bookstore` (1,200+ books), NOT `sourcelibrary_research`
 
 ## AI Models — IMPORTANT
@@ -22,8 +22,10 @@
 
 ## Audit Trail
 All AI calls logged to `gemini_usage` collection via `logGeminiCall()` in `src/lib/gemini-logger.ts`.
+- Book history timeline: `GET /api/books/[id]/history` (assembles from 5 collections)
 - Dashboard: `GET /api/admin/processing-dashboard?provider=ia`
 - Error classification: `src/lib/errors.ts` → `classifyError(error)`
+- `cost_tracking` collection is DEPRECATED — use `gemini_usage` for all cost queries
 
 ## QA Audit Workflow
 - Check 20-30 pages per book, compare catalog metadata vs title page OCR, align to USTC
@@ -37,3 +39,10 @@ Books imported before Dec 30, 2025 may have wrong page counts. See `docs/ia-page
 ## Reference Docs
 - Import APIs (Gallica, IA, MDZ, Wellcome, e-rara): @.claude/docs/import-apis.md
 - Image archiving & provenance: @.claude/docs/image-archiving.md
+- Observability & audit trail: @.claude/docs/observability.md
+- Page processing lifecycle: @.claude/docs/page-lifecycle.md
+- Lambda worker architecture: @.claude/docs/worker-architecture.md
+- Batch processing (Gemini Batch API): @.claude/docs/batch-processing.md
+- Edition publishing & DOI minting: @.claude/docs/editions.md
+- Social media system: @.claude/docs/social-media.md
+- Analytics & engagement: @.claude/docs/analytics.md

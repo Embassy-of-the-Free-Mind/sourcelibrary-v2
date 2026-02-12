@@ -1,139 +1,108 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { History, ChevronDown, ChevronUp, FileText, Languages, BookOpen, Scissors, Loader2, CheckCircle2, XCircle, Clock, RefreshCw, AlertTriangle } from 'lucide-react';
-import { jobs } from '@/lib/api-client';
+import {
+  History, ChevronDown, ChevronUp, Loader2,
+  Download, Archive, FileText, Languages,
+  BookOpen, ListTree, Images, Award, RotateCcw,
+} from 'lucide-react';
+import { books } from '@/lib/api-client';
 
-interface JobResult {
-  pageId: string;
-  success: boolean;
-  error?: string;
-  duration?: number;
+interface HistoryEvent {
+  type: string;
+  timestamp: string;
+  description: string;
+  pages?: number;
+  cost_usd?: number;
+  model?: string;
+  status?: string;
+  provider?: string;
+  source_url?: string;
+  version?: string;
+  doi?: string;
+  action?: string;
 }
 
-interface Job {
-  id: string;
-  type: string;
-  status: string;
-  progress: {
-    total: number;
-    completed: number;
-    failed: number;
+interface HistoryResponse {
+  book_id: string;
+  book_title: string;
+  events: HistoryEvent[];
+  summary: {
+    total_ai_cost_usd: number;
+    first_event: string | null;
+    last_event: string | null;
   };
-  config?: {
-    model?: string;
-    prompt_name?: string;
-    language?: string;
-    page_ids?: string[];
-  };
-  error?: string;
-  results?: JobResult[];
-  created_at: string;
-  completed_at?: string;
-  initiated_by?: string;
 }
 
 interface BookHistoryProps {
   bookId: string;
 }
 
-const jobTypeConfig: Record<string, { label: string; icon: typeof FileText; color: string }> = {
-  batch_ocr: { label: 'OCR', icon: FileText, color: '#3b82f6' },
-  batch_translate: { label: 'Translation', icon: Languages, color: '#22c55e' },
-  batch_summary: { label: 'Summary', icon: BookOpen, color: '#a855f7' },
-  batch_split: { label: 'Split', icon: Scissors, color: '#f59e0b' },
+const eventConfig: Record<string, { label: string; icon: typeof FileText; color: string }> = {
+  imported:           { label: 'Import',           icon: Download,   color: '#78716c' }, // stone
+  archived:           { label: 'Archive',          icon: Archive,    color: '#f59e0b' }, // amber
+  ocr:                { label: 'OCR',              icon: FileText,   color: '#3b82f6' }, // blue
+  translation:        { label: 'Translation',      icon: Languages,  color: '#22c55e' }, // green
+  summary:            { label: 'Summary',          icon: BookOpen,   color: '#a855f7' }, // purple
+  index:              { label: 'Index',            icon: ListTree,   color: '#6366f1' }, // indigo
+  image_extraction:   { label: 'Image Extraction', icon: Images,     color: '#ec4899' }, // pink
+  edition_published:  { label: 'Edition',          icon: Award,      color: '#10b981' }, // emerald
+  admin_action:       { label: 'Admin',            icon: RotateCcw,  color: '#ef4444' }, // red
 };
 
-const statusConfig: Record<string, { icon: typeof CheckCircle2; color: string }> = {
-  completed: { icon: CheckCircle2, color: '#22c55e' },
-  failed: { icon: XCircle, color: '#ef4444' },
-  processing: { icon: Loader2, color: '#3b82f6' },
-  pending: { icon: Clock, color: '#a855f7' },
-  cancelled: { icon: XCircle, color: '#6b7280' },
-};
-
-function formatRelativeTime(date: string): string {
-  const d = new Date(date);
-  const now = new Date();
-  const diffMs = now.getTime() - d.getTime();
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins}m ago`;
-  if (diffHours < 24) return `${diffHours}h ago`;
-  if (diffDays < 7) return `${diffDays}d ago`;
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-function formatDuration(start: string, end?: string): string {
-  if (!end) return 'In progress';
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  const diffMs = endDate.getTime() - startDate.getTime();
-  const diffSecs = Math.floor(diffMs / 1000);
-  const diffMins = Math.floor(diffSecs / 60);
+function formatCost(usd: number): string {
+  if (usd < 0.01) return `$${usd.toFixed(4)}`;
+  return `$${usd.toFixed(2)}`;
+}
 
-  if (diffSecs < 60) return `${diffSecs}s`;
-  if (diffMins < 60) return `${diffMins}m ${diffSecs % 60}s`;
-  return `${Math.floor(diffMins / 60)}h ${diffMins % 60}m`;
+function monthKey(dateStr: string): string {
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function monthLabel(key: string): string {
+  const [year, month] = key.split('-');
+  const d = new Date(parseInt(year), parseInt(month) - 1);
+  return d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
 
 export default function BookHistory({ bookId }: BookHistoryProps) {
   const [expanded, setExpanded] = useState(false);
-  const [jobsList, setJobsList] = useState<Job[]>([]);
+  const [data, setData] = useState<HistoryResponse | null>(null);
   const [loading, setLoading] = useState(false);
-  const [expandedErrors, setExpandedErrors] = useState<Set<string>>(new Set());
-  const [retrying, setRetrying] = useState<string | null>(null);
-
-  const fetchJobs = async () => {
-    setLoading(true);
-    try {
-      const data = await jobs.list({ book_id: bookId, limit: 20 });
-      setJobsList(data.jobs || []);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (expanded && jobsList.length === 0) {
-      fetchJobs();
+    if (expanded && !data) {
+      setLoading(true);
+      setError(null);
+      books.history(bookId)
+        .then(setData)
+        .catch((err: Error) => setError(err.message))
+        .finally(() => setLoading(false));
     }
-  }, [expanded, bookId, jobsList.length]);
+  }, [expanded, bookId, data]);
 
-  const toggleErrorExpand = (jobId: string) => {
-    setExpandedErrors(prev => {
-      const next = new Set(prev);
-      if (next.has(jobId)) {
-        next.delete(jobId);
-      } else {
-        next.add(jobId);
-      }
-      return next;
-    });
-  };
-
-  const getErrorsForJob = (job: Job): { jobError?: string; pageErrors: { pageId: string; error: string }[] } => {
-    const pageErrors: { pageId: string; error: string }[] = [];
-    if (job.results) {
-      for (const result of job.results) {
-        if (!result.success && result.error) {
-          pageErrors.push({ pageId: result.pageId, error: result.error });
-        }
-      }
+  // Group events by month
+  const groupedEvents: Array<{ month: string; label: string; events: HistoryEvent[] }> = [];
+  if (data?.events) {
+    const groups = new Map<string, HistoryEvent[]>();
+    for (const event of data.events) {
+      const mk = monthKey(event.timestamp);
+      if (!groups.has(mk)) groups.set(mk, []);
+      groups.get(mk)!.push(event);
     }
-    return { jobError: job.error, pageErrors };
-  };
+    for (const [key, events] of groups) {
+      groupedEvents.push({ month: key, label: monthLabel(key), events });
+    }
+  }
 
-  const hasErrors = (job: Job): boolean => {
-    if (job.error) return true;
-    if (job.results?.some(r => !r.success && r.error)) return true;
-    return false;
-  };
+  const eventCount = data?.events?.length || 0;
 
   return (
     <div className="bg-white rounded-xl border border-stone-200">
@@ -143,9 +112,9 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
       >
         <div className="flex items-center gap-2 text-stone-700">
           <History className="w-5 h-5" />
-          <span className="font-medium">Processing History</span>
-          {jobsList.length > 0 && (
-            <span className="text-xs text-stone-400">({jobsList.length} jobs)</span>
+          <span className="font-medium">Book History</span>
+          {eventCount > 0 && (
+            <span className="text-xs text-stone-400">({eventCount} events)</span>
           )}
         </div>
         {expanded ? (
@@ -162,117 +131,114 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
               <Loader2 className="w-5 h-5 animate-spin mr-2" />
               Loading history...
             </div>
-          ) : jobsList.length === 0 ? (
+          ) : error ? (
+            <div className="text-center py-8 text-red-500 text-sm">
+              Failed to load history: {error}
+            </div>
+          ) : !data || data.events.length === 0 ? (
             <div className="text-center py-8 text-stone-400">
-              No processing history yet
+              No history yet
             </div>
           ) : (
-            <div className="divide-y divide-stone-100">
-              {jobsList.map(job => {
-                const typeInfo = jobTypeConfig[job.type] || { label: job.type, icon: FileText, color: '#6b7280' };
-                const statusInfo = statusConfig[job.status] || statusConfig.pending;
-                const TypeIcon = typeInfo.icon;
-                const StatusIcon = statusInfo.icon;
-                const jobHasErrors = hasErrors(job);
-                const isErrorExpanded = expandedErrors.has(job.id);
-                const errors = jobHasErrors ? getErrorsForJob(job) : null;
-                const canRetry = job.status === 'failed' || job.status === 'cancelled';
-                const isRetrying = retrying === job.id;
-
-                return (
-                  <div key={job.id} className="border-b border-stone-100 last:border-b-0">
-                    <div className="px-4 py-3 flex items-center gap-4">
-                      {/* Type icon */}
-                      <div
-                        className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: `${typeInfo.color}15` }}
-                      >
-                        <TypeIcon className="w-4 h-4" style={{ color: typeInfo.color }} />
-                      </div>
-
-                      {/* Info */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-stone-800">{typeInfo.label}</span>
-                          <span className="text-xs text-stone-400">
-                            {job.progress.completed}/{job.progress.total} pages
-                          </span>
-                          {job.progress.failed > 0 && (
-                            <button
-                              onClick={() => toggleErrorExpand(job.id)}
-                              className="text-xs text-red-500 hover:text-red-600 flex items-center gap-1"
-                            >
-                              ({job.progress.failed} failed)
-                              {jobHasErrors && (
-                                <ChevronDown className={`w-3 h-3 transition-transform ${isErrorExpanded ? 'rotate-180' : ''}`} />
-                              )}
-                            </button>
-                          )}
-                        </div>
-                        <div className="text-xs text-stone-400 flex items-center gap-2 flex-wrap">
-                          <span>{formatRelativeTime(job.created_at)}</span>
-                          {job.config?.model && (
-                            <>
-                              <span className="text-stone-300">·</span>
-                              <span>{job.config.model}</span>
-                            </>
-                          )}
-                          {job.completed_at && (
-                            <>
-                              <span className="text-stone-300">·</span>
-                              <span>{formatDuration(job.created_at, job.completed_at)}</span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="flex items-center gap-2 flex-shrink-0">
-                        <StatusIcon
-                          className={`w-5 h-5 ${job.status === 'processing' ? 'animate-spin' : ''}`}
-                          style={{ color: statusInfo.color }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Expanded error logs */}
-                    {isErrorExpanded && errors && (
-                      <div className="px-4 pb-3">
-                        <div className="bg-red-50 border border-red-100 rounded-lg p-3 text-sm">
-                          {errors.jobError && (
-                            <div className="flex items-start gap-2 text-red-700 mb-2">
-                              <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
-                              <div>
-                                <span className="font-medium">Job error:</span> {errors.jobError}
-                              </div>
-                            </div>
-                          )}
-                          {errors.pageErrors.length > 0 && (
-                            <div className="space-y-1">
-                              <div className="text-red-600 font-medium text-xs mb-1">
-                                Page errors ({errors.pageErrors.length}):
-                              </div>
-                              <div className="max-h-32 overflow-y-auto space-y-1">
-                                {errors.pageErrors.map((err, idx) => (
-                                  <div key={idx} className="text-xs text-red-600 flex gap-2">
-                                    <span className="text-red-400 font-mono flex-shrink-0">
-                                      {err.pageId.slice(0, 8)}...
-                                    </span>
-                                    <span className="truncate">{err.error}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                          {!errors.jobError && errors.pageErrors.length === 0 && (
-                            <div className="text-red-500 text-xs">No error details available</div>
-                          )}
-                        </div>
-                      </div>
-                    )}
+            <div className="px-4 pb-4">
+              {/* Timeline */}
+              {groupedEvents.map((group) => (
+                <div key={group.month}>
+                  {/* Month header */}
+                  <div className="sticky top-0 bg-white pt-3 pb-1 z-10">
+                    <span className="text-xs font-medium text-stone-400 uppercase tracking-wider">
+                      {group.label}
+                    </span>
                   </div>
-                );
-              })}
+
+                  {/* Events in this month */}
+                  <div className="relative ml-3 border-l-2 border-stone-100 pl-4 space-y-3 pb-2">
+                    {group.events.map((event, idx) => {
+                      const config = eventConfig[event.type] || eventConfig.imported;
+                      const Icon = config.icon;
+
+                      return (
+                        <div key={`${event.type}-${event.timestamp}-${idx}`} className="relative">
+                          {/* Timeline dot */}
+                          <div
+                            className="absolute -left-[23px] top-1 w-3 h-3 rounded-full border-2 border-white"
+                            style={{ backgroundColor: config.color }}
+                          />
+
+                          <div className="flex items-start gap-3">
+                            {/* Icon */}
+                            <div
+                              className="w-7 h-7 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5"
+                              style={{ backgroundColor: `${config.color}12` }}
+                            >
+                              <Icon className="w-3.5 h-3.5" style={{ color: config.color }} />
+                            </div>
+
+                            {/* Content */}
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-baseline gap-2 flex-wrap">
+                                <span className="text-sm text-stone-800">
+                                  {event.description}
+                                </span>
+                                {event.source_url && (
+                                  <a
+                                    href={event.source_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-xs text-blue-500 hover:text-blue-600 truncate max-w-[200px]"
+                                  >
+                                    source
+                                  </a>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-stone-400 mt-0.5 flex-wrap">
+                                <span>{formatDate(event.timestamp)}</span>
+                                {event.model && (
+                                  <>
+                                    <span className="text-stone-300">·</span>
+                                    <span>{event.model}</span>
+                                  </>
+                                )}
+                                {event.cost_usd != null && event.cost_usd > 0 && (
+                                  <>
+                                    <span className="text-stone-300">·</span>
+                                    <span>{formatCost(event.cost_usd)}</span>
+                                  </>
+                                )}
+                                {event.doi && (
+                                  <>
+                                    <span className="text-stone-300">·</span>
+                                    <a
+                                      href={`https://doi.org/${event.doi}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-blue-500 hover:text-blue-600"
+                                    >
+                                      DOI
+                                    </a>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+
+              {/* Cost summary footer */}
+              {data.summary.total_ai_cost_usd > 0 && (
+                <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-400">
+                  <span>Total AI cost: {formatCost(data.summary.total_ai_cost_usd)}</span>
+                  {data.summary.first_event && data.summary.last_event && (
+                    <span>
+                      {formatDate(data.summary.first_event)} — {formatDate(data.summary.last_event)}
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
