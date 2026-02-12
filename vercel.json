@@ -15,10 +15,6 @@
     {
       "path": "/api/cron/process-batches",
       "schedule": "0 */2 * * *"
-    },
-    {
-      "path": "/api/cron/generate-thumbnails",
-      "schedule": "*/5 * * * *"
     }
   ]
 }
