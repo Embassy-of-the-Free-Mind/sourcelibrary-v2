@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performModernization } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 // Simple hash function to detect translation changes
 function hashString(str: string): string {
@@ -93,18 +94,19 @@ export async function POST(
       }
     );
 
-    // Track cost
+    // Log AI usage to gemini_usage (single source of truth)
     const duration = Date.now() - startTime;
-    await db.collection('cost_tracking').insertOne({
-      page_id: id,
-      book_id: page.book_id,
-      action: 'modernize',
+    logGeminiCall({
+      type: 'translate',
+      mode: 'realtime',
       model,
+      book_id: page.book_id,
+      page_ids: [id],
       input_tokens: result.usage.inputTokens,
       output_tokens: result.usage.outputTokens,
-      cost_usd: result.usage.costUsd,
+      status: 'success',
       duration_ms: duration,
-      created_at: new Date()
+      endpoint: '/api/pages/modernize',
     });
 
     return NextResponse.json({

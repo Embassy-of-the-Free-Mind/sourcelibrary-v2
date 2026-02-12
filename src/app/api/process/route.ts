@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { logGeminiCall } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL } from '@/lib/types';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
@@ -403,21 +404,23 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Track total cost in a separate collection for analytics
+    // Log AI usage to gemini_usage (single source of truth)
     if (totalUsage.costUsd > 0) {
-      try {
-        await db.collection('cost_tracking').insertOne({
-          pageId,
-          bookId: pageId ? (await db.collection('pages').findOne({ id: pageId }))?.book_id : null,
-          action,
-          model,
-          ...totalUsage,
-          timestamp: Date.now(),
-          created_at: new Date(),
-        });
-      } catch (e) {
-        console.error('Failed to track cost:', e);
-      }
+      const page = pageId ? await db.collection('pages').findOne({ id: pageId }) : null;
+      const typeMap: Record<string, 'ocr' | 'translate' | 'summarize'> = {
+        ocr: 'ocr', translation: 'translate', summary: 'summarize', all: 'ocr',
+      };
+      logGeminiCall({
+        type: typeMap[action] || 'ocr',
+        mode: 'realtime',
+        model,
+        book_id: page?.book_id,
+        page_ids: pageId ? [pageId] : undefined,
+        input_tokens: totalUsage.inputTokens,
+        output_tokens: totalUsage.outputTokens,
+        status: 'success',
+        endpoint: '/api/process',
+      });
     }
 
     return NextResponse.json({ ...results, usage: totalUsage });

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 // Validation schema for page updates
 const pageUpdateSchema = z.object({
@@ -122,6 +123,23 @@ export async function PATCH(
         { id: updatedPage.book_id },
         { $inc: { edit_count: 1 } }
       ).catch(() => {}); // Non-critical, don't fail the request
+
+      const editedFields = [
+        body.ocr && 'ocr',
+        body.translation && 'translation',
+        body.summary && 'summary',
+      ].filter(Boolean);
+
+      logAuditEvent({
+        action: 'page_edited',
+        book_id: updatedPage.book_id,
+        metadata: {
+          page_id: id,
+          page_number: updatedPage.page_number,
+          edited_fields: editedFields,
+          edited_by: editedBy,
+        },
+      });
     }
 
     return NextResponse.json(updatedPage);

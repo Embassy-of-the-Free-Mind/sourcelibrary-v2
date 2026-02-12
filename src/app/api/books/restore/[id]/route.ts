@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 /**
  * Restore a deleted book from the deleted_books archive
@@ -57,6 +58,14 @@ export async function POST(
 
     // Remove from deleted_books
     await db.collection('deleted_books').deleteOne({ _id: archivedBook._id });
+
+    // Audit log (non-blocking)
+    logAuditEvent({
+      action: 'book_restored',
+      book_id: bookData.id,
+      book_title: bookData.title,
+      pages_affected: pages?.length || 0,
+    });
 
     return NextResponse.json({
       success: true,

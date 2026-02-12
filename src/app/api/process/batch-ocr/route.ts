@@ -4,6 +4,7 @@ import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemini-client';
 import { getOcrPrompt, type PromptLookupResult } from '@/lib/prompts';
+import { logGeminiCall } from '@/lib/gemini-logger';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
 import { images } from '@/lib/api-client';
@@ -483,26 +484,19 @@ Return each transcription clearly separated with the exact format:
 
     await Promise.all(updatePromises);
 
-    // Track cost
-    try {
-      await db.collection('cost_tracking').insertOne({
-        timestamp: new Date(),
-        action: 'batch_ocr',
-        model: modelId,
-        inputTokens,
-        outputTokens,
-        totalTokens: inputTokens + outputTokens,
-        costUsd,
-        pagesProcessed: Object.keys(ocrResults).length,
-        metadata: {
-          pageIds: pages.map(p => p.pageId),
-          batchSize: pages.length,
-          failedFetches: failedPageIds.length,
-        },
-      });
-    } catch (e) {
-      console.error('Failed to track cost:', e);
-    }
+    // Log AI usage to gemini_usage (single source of truth)
+    logGeminiCall({
+      type: 'ocr',
+      mode: 'realtime',
+      model: modelId,
+      book_id: dbPages[0]?.book_id,
+      page_ids: pages.map(p => p.pageId),
+      page_count: Object.keys(ocrResults).length,
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      status: 'success',
+      endpoint: '/api/process/batch-ocr',
+    });
 
     return NextResponse.json({
       ocrResults,

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { TranslationEdition, Contributor, Page, Book } from '@/lib/types';
 import crypto from 'crypto';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 // SPDX license options
 export const LICENSES = [
@@ -190,6 +191,14 @@ export async function POST(request: NextRequest, context: RouteContext) {
         }
       }
     );
+
+    logAuditEvent({
+      action: 'edition_published',
+      book_id: bookId,
+      book_title: book.title,
+      pages_affected: translatedPages.length,
+      metadata: { version, license, edition_id: edition.id },
+    });
 
     return NextResponse.json({
       success: true,

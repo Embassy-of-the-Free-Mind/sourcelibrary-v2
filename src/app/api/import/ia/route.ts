@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 /**
  * Import a book from Internet Archive
@@ -201,6 +202,15 @@ export async function POST(request: NextRequest) {
     }
 
     await db.collection('pages').insertMany(pageDocs);
+
+    // Audit log (non-blocking)
+    logAuditEvent({
+      action: 'book_imported',
+      book_id: bookIdStr,
+      book_title: title,
+      pages_affected: pageDocs.length,
+      metadata: { provider: 'internet_archive', identifier: ia_identifier },
+    });
 
     // Fire off split detection check (non-blocking)
     // This will set book.needs_splitting based on aspect ratio of pages 10 & 15

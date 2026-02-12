@@ -438,16 +438,16 @@ export async function GET(request: NextRequest) {
       console.error('Error fetching pipeline health stats:', e);
     }
 
-    // Get cost tracking stats
+    // Get cost tracking stats from gemini_usage (single source of truth)
     try {
       // Total costs
-      const totalCostResult = await db.collection('cost_tracking').aggregate([
-        { $match: { timestamp: { $gte: cutoffMs } } },
+      const totalCostResult = await db.collection('gemini_usage').aggregate([
+        { $match: { timestamp: { $gte: cutoffDate } } },
         {
           $group: {
             _id: null,
-            totalCost: { $sum: '$costUsd' },
-            totalTokens: { $sum: '$totalTokens' },
+            totalCost: { $sum: '$cost_usd' },
+            totalTokens: { $sum: { $add: ['$input_tokens', '$output_tokens'] } },
           },
         },
       ]).toArray();
@@ -458,18 +458,18 @@ export async function GET(request: NextRequest) {
       }
 
       // Cost by day
-      const costByDayResult = await db.collection('cost_tracking').aggregate([
-        { $match: { timestamp: { $gte: cutoffMs } } },
+      const costByDayResult = await db.collection('gemini_usage').aggregate([
+        { $match: { timestamp: { $gte: cutoffDate } } },
         {
           $group: {
             _id: {
               $dateToString: {
                 format: '%Y-%m-%d',
-                date: { $toDate: '$timestamp' },
+                date: '$timestamp',
               },
             },
-            cost: { $sum: '$costUsd' },
-            tokens: { $sum: '$totalTokens' },
+            cost: { $sum: '$cost_usd' },
+            tokens: { $sum: { $add: ['$input_tokens', '$output_tokens'] } },
           },
         },
         { $sort: { _id: 1 } },
@@ -482,12 +482,12 @@ export async function GET(request: NextRequest) {
       }));
 
       // Cost by action type
-      const costByActionResult = await db.collection('cost_tracking').aggregate([
-        { $match: { timestamp: { $gte: cutoffMs } } },
+      const costByActionResult = await db.collection('gemini_usage').aggregate([
+        { $match: { timestamp: { $gte: cutoffDate } } },
         {
           $group: {
-            _id: '$action',
-            cost: { $sum: '$costUsd' },
+            _id: '$type',
+            cost: { $sum: '$cost_usd' },
             count: { $sum: 1 },
           },
         },

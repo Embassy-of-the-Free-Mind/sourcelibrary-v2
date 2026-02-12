@@ -341,6 +341,17 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Log search query (fire-and-forget)
+    db.collection('analytics_events').insertOne({
+      event: 'search_query',
+      query,
+      results_count: results.length,
+      filters: { language, category, year, bookId },
+      timestamp: new Date(),
+      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      created_at: new Date(),
+    }).catch(() => {});
+
     return NextResponse.json({
       query,
       total: results.length,

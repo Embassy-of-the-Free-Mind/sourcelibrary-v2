@@ -34,7 +34,7 @@ When a `gemini_usage` record has a `job_id` matching the `jobs` collection, it's
 
 **Single source of truth:** `gemini_usage` collection via `logGeminiCall()` in `src/lib/gemini-logger.ts`
 
-The `cost_tracking` collection is deprecated — some legacy routes still write to it but reads should use `gemini_usage`.
+The `cost_tracking` collection is fully deprecated — zero active writers or readers remain. All cost data flows through `gemini_usage`.
 
 ### Dashboards
 - **Processing dashboard:** `GET /api/admin/processing-dashboard` — progress bins, costs (7d/30d), error categories, velocity
@@ -53,22 +53,32 @@ The `cost_tracking` collection is deprecated — some legacy routes still write 
 | `gemini_usage` | AI call logging (tokens, cost, model, status) | `book_id + timestamp` |
 | `jobs` | Processing job tracking (progress, status) | `book_id + type + status` |
 | `batch_jobs` | Gemini Batch API job tracking | — |
-| `audit_log` | Admin destructive actions (resets) | `book_id` |
+| `audit_log` | Admin/system actions (imports, deletes, edits, resets, editions, DOIs) | `book_id` |
 | `analytics_pageviews` | Web traffic (path, referrer, country) | — |
-| `analytics_events` | Deduplication index | `event + book_id + ip + timestamp` |
+| `analytics_events` | Deduplication index + search query logging | `event + book_id + ip + timestamp` |
 | `loading_metrics` | Frontend performance (p50, p95) | — |
 | `likes` | User engagement (book/page/image) | — |
 | `highlights` | User-selected passages | `book_id + page_id` |
 | `annotations` | Community notes with threading | — |
 | `social_posts` | Tweet scheduling and metrics | — |
 | `split_adjustments` | ML split detection feedback | — |
-| `cost_tracking` | **DEPRECATED** — use `gemini_usage` | — |
+| `cost_tracking` | **DEPRECATED** — no active writers/readers, use `gemini_usage` | — |
 
 ---
 
+## Audit Logger
+
+`src/lib/audit-logger.ts` — `logAuditEvent()`. Non-blocking, typed actions. Writes to `audit_log` collection.
+
+**Logged actions:** `book_imported`, `book_deleted`, `book_deleted_permanent`, `book_restored`, `book_reimported`, `book_metadata_updated`, `edition_published`, `doi_minted`, `page_edited`, `reset_book_ocr`
+
+All audit events automatically appear in the Book History timeline.
+
+## Search Query Logging
+
+Search queries are logged to `analytics_events` with `event: 'search_query'` from three routes: `/api/search`, `/api/search/unified`, `/api/books/[id]/search`.
+
 ## Known Gaps
 
-1. **audit_log is minimal** — only covers OCR/translation resets. Imports, deletes, edition publishing, manual page edits are not logged.
-2. **cost_tracking still written** — legacy routes (`stitch-translations`, `modernize`, `process`, `batch-ocr`, `batch-translate`) still write to the deprecated collection.
-3. **No page edit tracking** — no `manually_edited` or `manually_edited_at` fields on pages. Manual OCR/translation corrections are invisible.
-4. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection.
+1. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection. Needs admin UI + auth first.
+2. **No search analytics dashboard** — search queries are logged but no dashboard to analyze them yet.

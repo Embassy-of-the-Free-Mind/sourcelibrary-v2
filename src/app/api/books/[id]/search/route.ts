@@ -172,6 +172,17 @@ export async function GET(
       if (hasTranslation) translationPages++;
     }
 
+    // Log search query (fire-and-forget)
+    db.collection('analytics_events').insertOne({
+      event: 'search_query',
+      query: trimmedQuery,
+      results_count: results.length,
+      filters: { book_id: bookId, source: 'book_search' },
+      timestamp: new Date(),
+      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      created_at: new Date(),
+    }).catch(() => {});
+
     return NextResponse.json({
       query: trimmedQuery,
       total: results.length,

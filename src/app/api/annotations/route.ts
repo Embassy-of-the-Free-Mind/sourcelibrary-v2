@@ -132,7 +132,9 @@ export async function POST(request: NextRequest) {
       user_name: user_name?.trim() || 'Anonymous',
       upvotes: 0,
       upvoted_by: [],
-      status: 'approved', // Auto-approve for now; add moderation later
+      // TODO: Add moderation audit trail — requires admin UI + auth first.
+      // Currently auto-approves all annotations with no logging.
+      status: 'approved',
       parent_id: parent_id || undefined,
       reply_count: 0,
       encyclopedia_refs: encyclopedia_refs || undefined,

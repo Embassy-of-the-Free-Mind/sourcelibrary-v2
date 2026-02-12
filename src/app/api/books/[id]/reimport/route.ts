@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { ia } from '@/lib/api-client/images';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 /**
  * Re-import a book from its original source
@@ -46,6 +47,14 @@ export async function POST(
           }
         }
       );
+
+      logAuditEvent({
+        action: 'book_reimported',
+        book_id: bookId,
+        book_title: book.title,
+        pages_affected: result.modifiedCount,
+        metadata: { mode: 'soft' },
+      });
 
       return NextResponse.json({
         success: true,
@@ -179,6 +188,14 @@ export async function POST(
           }
         }
       );
+
+      logAuditEvent({
+        action: 'book_reimported',
+        book_id: bookId,
+        book_title: book.title,
+        pages_affected: pageDocs.length,
+        metadata: { mode: 'full', pages_deleted: deleteResult.deletedCount, pages_created: pageDocs.length },
+      });
 
       return NextResponse.json({
         success: true,

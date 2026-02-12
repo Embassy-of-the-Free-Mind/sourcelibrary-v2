@@ -320,6 +320,15 @@ export async function GET(
       const actionLabels: Record<string, string> = {
         reset_book_ocr: 'OCR reset',
         reset_book: 'Book reset',
+        book_imported: 'Imported',
+        book_deleted: 'Archived (soft delete)',
+        book_deleted_permanent: 'Permanently deleted',
+        book_restored: 'Restored from archive',
+        book_reimported: 'Re-imported',
+        book_metadata_updated: 'Metadata updated',
+        edition_published: 'Edition published',
+        doi_minted: 'DOI minted',
+        page_edited: 'Page manually edited',
       };
       const label = actionLabels[entry.action] || entry.action;
       const pagesStr = entry.pages_affected ? ` (${entry.pages_affected} pages)` : '';

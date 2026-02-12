@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 export async function GET(
   request: NextRequest,
@@ -77,6 +78,15 @@ export async function DELETE(
       await db.collection('pages').deleteMany({ book_id: bookId });
       await db.collection('books').deleteOne({ _id: book._id });
 
+      // Audit log (non-blocking)
+      logAuditEvent({
+        action: 'book_deleted',
+        book_id: bookId,
+        book_title: book.title,
+        pages_affected: pages.length,
+        metadata: { recoverable: true },
+      });
+
       return NextResponse.json({
         success: true,
         message: `Archived "${book.title}" with ${pages.length} pages`,
@@ -107,6 +117,14 @@ export async function DELETE(
 
       // OK to purge - it's been 7+ days
       await db.collection('deleted_books').deleteOne({ _id: archivedBook._id });
+
+      logAuditEvent({
+        action: 'book_deleted_permanent',
+        book_id: bookId,
+        book_title: archivedBook.title,
+        metadata: { recoverable: false, source: 'archive' },
+      });
+
       return NextResponse.json({
         success: true,
         message: `PERMANENTLY deleted archived book "${archivedBook.title}"`,
@@ -118,6 +136,14 @@ export async function DELETE(
     // Book is not archived - permanent delete from active (should be rare)
     const pagesResult = await db.collection('pages').deleteMany({ book_id: bookId });
     await db.collection('books').deleteOne({ _id: book._id });
+
+    logAuditEvent({
+      action: 'book_deleted_permanent',
+      book_id: bookId,
+      book_title: book.title,
+      pages_affected: pagesResult.deletedCount,
+      metadata: { recoverable: false, source: 'active' },
+    });
 
     return NextResponse.json({
       success: true,
@@ -172,6 +198,17 @@ export async function PATCH(
       { _id: book._id },
       { $set: updates }
     );
+
+    const bookId = book.id || book._id.toString();
+    const changedFields = Object.keys(updates).filter(k => k !== 'updated_at');
+    if (changedFields.length > 0) {
+      logAuditEvent({
+        action: 'book_metadata_updated',
+        book_id: bookId,
+        book_title: book.title,
+        metadata: { fields_changed: changedFields },
+      });
+    }
 
     return NextResponse.json({ success: true, updated: Object.keys(updates) });
   } catch (error) {

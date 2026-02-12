@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 export const maxDuration = 300;
 
@@ -205,24 +206,20 @@ export async function POST(
 
     const costUsd = calculateCost(totalInputTokens, totalOutputTokens, modelId);
 
-    // Track cost
+    // Log AI usage to gemini_usage (single source of truth)
     if (!dryRun) {
-      try {
-        await db.collection('cost_tracking').insertOne({
-          timestamp: new Date(),
-          action: 'stitch_translations',
-          model: modelId,
-          inputTokens: totalInputTokens,
-          outputTokens: totalOutputTokens,
-          totalTokens: totalInputTokens + totalOutputTokens,
-          costUsd,
-          bookId,
-          pagesProcessed: pages.length - 1,
-          pagesFixed: fixedCount,
-        });
-      } catch (e) {
-        console.error('Failed to track cost:', e);
-      }
+      logGeminiCall({
+        type: 'translate',
+        mode: 'realtime',
+        model: modelId,
+        book_id: bookId,
+        page_ids: pages.map((p) => String(p.id)),
+        page_count: pages.length - 1,
+        input_tokens: totalInputTokens,
+        output_tokens: totalOutputTokens,
+        status: 'success',
+        endpoint: '/api/books/stitch-translations',
+      });
     }
 
     return NextResponse.json({

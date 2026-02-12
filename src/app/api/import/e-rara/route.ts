@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 interface IIIFManifest {
   label?: string;
@@ -278,6 +279,15 @@ export async function POST(request: NextRequest) {
     }
 
     await db.collection('pages').insertMany(pageDocs);
+
+    // Audit log (non-blocking)
+    logAuditEvent({
+      action: 'book_imported',
+      book_id: bookIdStr,
+      book_title: title,
+      pages_affected: pageDocs.length,
+      metadata: { provider: 'e-rara', identifier: numericId },
+    });
 
     // Fire off split detection check (non-blocking)
     const baseUrl = process.env.NEXT_PUBLIC_URL || process.env.VERCEL_URL

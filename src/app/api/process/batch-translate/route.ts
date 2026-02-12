@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { getGeminiClient, getNextApiKey, reportRateLimitError } from '@/lib/gemini-client';
+import { logGeminiCall } from '@/lib/gemini-logger';
 
 // Increase timeout for batch translation
 export const maxDuration = 180;
@@ -304,25 +305,19 @@ Return each translation clearly separated with the exact format:
       }).catch(() => {}); // Non-critical
     }
 
-    // Track cost
-    try {
-      await db.collection('cost_tracking').insertOne({
-        timestamp: new Date(),
-        action: 'batch_translation',
-        model: modelId,
-        inputTokens,
-        outputTokens,
-        totalTokens: inputTokens + outputTokens,
-        costUsd,
-        pagesProcessed: Object.keys(translations).length,
-        metadata: {
-          pageIds: pages.map(p => p.pageId),
-          batchSize: pages.length,
-        },
-      });
-    } catch (e) {
-      console.error('Failed to track cost:', e);
-    }
+    // Log AI usage to gemini_usage (single source of truth)
+    logGeminiCall({
+      type: 'translate',
+      mode: 'realtime',
+      model: modelId,
+      book_id: firstPage?.book_id,
+      page_ids: pages.map(p => p.pageId),
+      page_count: Object.keys(translations).length,
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      status: 'success',
+      endpoint: '/api/process/batch-translate',
+    });
 
     return NextResponse.json({
       translations,
