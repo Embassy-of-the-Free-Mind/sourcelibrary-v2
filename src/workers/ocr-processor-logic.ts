@@ -327,7 +327,7 @@ async function checkJobCompletion(
           pages_ocr: totalPagesWithOcr,
           updated_at: new Date()
         },
-        $unset: { current_job_id: '' }
+        $unset: { job: '' }
       }
     );
 

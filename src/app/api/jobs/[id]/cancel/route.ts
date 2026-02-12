@@ -31,12 +31,12 @@ export async function POST(
     return NextResponse.json({ error: 'Job not found' }, { status: 404 });
   }
 
-  // Clear current_job_id from book
+  // Clear job from book
   const job = await db.collection('jobs').findOne({ id: jobId });
   if (job?.book_id) {
     await db.collection('books').updateOne(
       { id: job.book_id },
-      { $unset: { current_job_id: '' } }
+      { $unset: { job: '' } }
     );
   }
 

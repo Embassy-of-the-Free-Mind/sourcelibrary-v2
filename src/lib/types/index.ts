@@ -1,6 +1,7 @@
 export * from './book';
 export * from './page';
 export * from './job';
+export * from './batch-job';
 export * from './pipeline';
 export * from './ai-models';
 export * from './dublin-core';

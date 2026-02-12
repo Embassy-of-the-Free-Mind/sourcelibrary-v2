@@ -36,7 +36,10 @@ export interface Book {
   // Workflow status
   status?: BookStatus;
   summary?: string | BookSummary;
-  current_job_id?: string;  // Active SQS job (set during processing, cleared on completion)
+  job?: {  // Active processing job (set during processing, cleared on completion)
+    type: 'realtime' | 'batch';
+    job_id: string;
+  };
 
   // Standard identifiers
   doi?: string;                 // Digital Object Identifier (e.g., "10.5281/zenodo.12345")

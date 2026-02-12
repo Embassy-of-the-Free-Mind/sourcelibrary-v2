@@ -49,7 +49,6 @@ export interface BatchJobStatus {
 }
 
 export interface BatchResponse {
-  key: string;
   response?: {
     candidates: Array<{
       content: {
@@ -61,6 +60,9 @@ export interface BatchResponse {
       candidatesTokenCount: number;
       totalTokenCount: number;
     };
+  };
+  metadata?: {
+    key: string;
   };
   error?: {
     code: number;

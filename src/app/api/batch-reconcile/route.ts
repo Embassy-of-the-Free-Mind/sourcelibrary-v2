@@ -129,7 +129,7 @@ export async function POST(request: Request) {
         const isOcr = geminiJob.displayName?.startsWith('ocr');
 
         for (const result of batchResults) {
-          const pageId = (result as { metadata?: { key?: string }; key?: string }).metadata?.key || result.key;
+          const pageId = (result as { metadata?: { key?: string }; key?: string }).metadata?.key;
 
           if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
             continue;

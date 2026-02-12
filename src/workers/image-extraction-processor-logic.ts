@@ -207,10 +207,10 @@ async function checkJobCompletion(
       }
     );
 
-    // Clear current_job_id from book
+    // Clear job from book
     await db.collection('books').updateOne(
       { id: bookId },
-      { $unset: { current_job_id: '' } }
+      { $unset: { job: '' } }
     );
   }
 }

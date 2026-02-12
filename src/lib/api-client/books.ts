@@ -135,6 +135,30 @@ export const books = {
   },
 
   /**
+   * Batch OCR book pages with parent-child job architecture (multi-batch)
+   * Handles large books by splitting into multiple Gemini batches
+   * Only supports OCR and image extraction (not translation/summary)
+   */
+  batchOcrMulti: async (
+    id: string,
+    request: {
+      pageIds: string[];
+      action: Extract<import('@/lib/types/job').JobType, 'ocr' | 'image_extraction'>;
+      overwriteMode?: boolean;
+    }
+  ): Promise<{
+    success: boolean;
+    parentJobId: string;
+    childJobIds: string[];
+    totalBatches: number;
+    totalPages: number;
+    error?: string;
+  }> => {
+    // Use 2-minute timeout for batch operations (fetching images + Gemini submission)
+    return await apiClient.post(`/api/books/${id}/batch-ocr-multi`, request, { timeout: 120000 });
+  },
+
+  /**
    * Batch translate book pages (async with Gemini Batch API)
    */
   batchTranslateAsync: async (id: string, request: BatchTranslateRequest): Promise<BatchTranslateResponse> => {

@@ -73,9 +73,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Check for active job (exclude terminal statuses: completed, failed, cancelled, partial)
-    if (book.current_job_id) {
+    if (book.job) {
       const activeJob = await db.collection('jobs').findOne({
-        id: book.current_job_id,
+        id: book.job.job_id,
         status: { $nin: ['completed', 'failed', 'cancelled', 'partial'] as JobStatus[] }
       });
       if (activeJob) {
@@ -114,10 +114,10 @@ export async function POST(request: NextRequest) {
 
     console.log(`[queue-books] Created ${action} job ${jobId} for book ${bookId} (${pageIds.length} pages)`);
 
-    // Set current_job_id on book
+    // Set active job on book
     await db.collection('books').updateOne(
       { id: bookId },
-      { $set: { current_job_id: jobId } }
+      { $set: { job: { type: 'realtime', job_id: jobId } } }
     );
 
     // Enqueue pages to appropriate queue

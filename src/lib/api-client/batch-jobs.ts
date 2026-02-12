@@ -39,4 +39,20 @@ export const batchJobs = {
 
     return await apiClient.post(`/api/batch-jobs/process-pending?${params}`);
   },
+
+  /**
+   * List batch jobs (parent jobs only)
+   */
+  list: async (params?: { limit?: number }): Promise<{ success: boolean; jobs: any[]; total: number }> => {
+    const queryParams = new URLSearchParams();
+    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    return await apiClient.get(`/api/batch-jobs/list?${queryParams.toString()}`);
+  },
+
+  /**
+   * Get a single batch job by ID
+   */
+  get: async (jobId: string): Promise<any> => {
+    return await apiClient.get(`/api/batch-jobs/${jobId}`);
+  },
 };

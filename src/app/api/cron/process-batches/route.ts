@@ -33,7 +33,8 @@ export async function GET(request: NextRequest) {
     stats: {
       jobs_checked: 0,
       jobs_completed: 0,
-      jobs_still_running: 0,
+      jobs_pending: 0,
+      jobs_processing: 0,
       pages_saved: 0,
     },
   };
@@ -44,12 +45,16 @@ export async function GET(request: NextRequest) {
     // ============================================
     // PHASE 1: Collect results from completed jobs
     // ============================================
-    console.log('[cron] Phase 1: Checking for completed batch jobs...');
 
+    // Query only child jobs (those with parent_job_id) and existing standalone jobs
+    // New parent-child jobs use job_name, old jobs use gemini_job_name
     const pendingJobs = await db.collection('batch_jobs')
       .find({
         status: { $in: ['pending', 'processing'] },
-        gemini_job_name: { $exists: true },
+        $or: [
+          { job_name: { $exists: true, $nin: [null, ''] } },
+          { gemini_job_name: { $exists: true, $nin: [null, ''] } }
+        ]
       })
       .toArray();
 
@@ -57,30 +62,44 @@ export async function GET(request: NextRequest) {
 
     for (const job of pendingJobs) {
       try {
-        const geminiStatus = await getBatchJobStatus(job.gemini_job_name);
+        // Support both job_name (new) and gemini_job_name (old)
+        const jobName = job.job_name || job.gemini_job_name;
+        if (!jobName) {
+          console.warn(`[cron] Job ${job.id} has no job_name or gemini_job_name`);
+          continue;
+        }
+
+        const geminiStatus = await getBatchJobStatus(jobName);
 
         if ((geminiStatus.state as string) === 'JOB_STATE_SUCCEEDED' || (geminiStatus.state as string) === 'BATCH_STATE_SUCCEEDED') {
           // Job complete - collect results
           console.log(`[cron] Collecting results for ${job.id} (${job.book_title})`);
 
-          const batchResults = await getBatchJobResults(job.gemini_job_name);
+          const batchResults = await getBatchJobResults(jobName);
           let successCount = 0;
           let failCount = 0;
-          const now = new Date();
+          const now = new Date();          
 
           for (const result of batchResults) {
-            const pageId = result.key;
+            // Extract page ID from metadata
+            const pageId = result.metadata?.key;
 
-            if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+            if (!pageId) {
+              console.warn('[cron] No page ID found in result:', JSON.stringify(result, null, 2));
+              failCount++;
+              continue;
+            }            
+
+            if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {              
               failCount++;
               continue;
             }
 
             const text = result.response.candidates[0].content.parts[0].text;
-            const usage = result.response.usageMetadata;
+            const usage = result.response.usageMetadata;            
 
             if (job.type === 'ocr') {
-              await db.collection('pages').updateOne(
+              const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {
                   $set: {
@@ -98,9 +117,15 @@ export async function GET(request: NextRequest) {
                     updated_at: now,
                   },
                 }
-              );
+              );              
+
+              if (updateResult.matchedCount === 0) {
+                console.warn(`[cron] Page ${pageId} not found in database!`);
+                failCount++;
+                continue;
+              }
             } else {
-              await db.collection('pages').updateOne(
+              const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {
                   $set: {
@@ -120,6 +145,12 @@ export async function GET(request: NextRequest) {
                   },
                 }
               );
+
+              if (updateResult.matchedCount === 0) {
+                console.warn(`[cron] Page ${pageId} not found in database!`);
+                failCount++;
+                continue;
+              }
             }
             successCount++;
           }
@@ -142,6 +173,11 @@ export async function GET(request: NextRequest) {
           // Update book page counts
           await updateBookCounts(db, job.book_id);
 
+          // If this is a child job, update parent job progress
+          if (job.parent_job_id) {
+            await updateParentJobProgress(db, job.parent_job_id);
+          }
+
           // Calculate total tokens from results
           let totalInputTokens = 0;
           let totalOutputTokens = 0;
@@ -163,7 +199,7 @@ export async function GET(request: NextRequest) {
             page_ids: job.page_ids,
             page_count: successCount,
             batch_job_id: job.id,
-            gemini_job_name: job.gemini_job_name,
+            gemini_job_name: jobName,
             input_tokens: totalInputTokens,
             output_tokens: totalOutputTokens,
             status: successCount > 0 ? 'success' : 'failed',
@@ -179,11 +215,32 @@ export async function GET(request: NextRequest) {
           results.stats.jobs_completed++;
           results.stats.pages_saved += successCount;
 
-        } else if (geminiStatus.state === 'JOB_STATE_RUNNING' || geminiStatus.state === 'JOB_STATE_PENDING') {
-          // Still running
-          results.stats.jobs_still_running++;
+        } else if (geminiStatus.state === 'JOB_STATE_PENDING') {
+          // Job queued but not started yet
+          results.stats.jobs_pending++;
 
-          // Update our status
+          // Keep status as pending
+          await db.collection('batch_jobs').updateOne(
+            { id: job.id },
+            {
+              $set: {
+                status: 'pending',
+                gemini_state: geminiStatus.state,
+                updated_at: new Date(),
+              },
+            }
+          );
+
+          // If this is a child job, update parent job progress
+          if (job.parent_job_id) {
+            await updateParentJobProgress(db, job.parent_job_id);
+          }
+
+        } else if (geminiStatus.state === 'JOB_STATE_RUNNING') {
+          // Job actively processing
+          results.stats.jobs_processing++;
+
+          // Update status to processing
           await db.collection('batch_jobs').updateOne(
             { id: job.id },
             {
@@ -194,6 +251,11 @@ export async function GET(request: NextRequest) {
               },
             }
           );
+
+          // If this is a child job, update parent job progress
+          if (job.parent_job_id) {
+            await updateParentJobProgress(db, job.parent_job_id);
+          }
 
         } else if (geminiStatus.state === 'JOB_STATE_FAILED') {
           // Failed - mark it
@@ -226,7 +288,7 @@ export async function GET(request: NextRequest) {
       duration_ms: duration,
       ...results,
       summary: {
-        message: `Collected ${results.stats.pages_saved} pages from ${results.stats.jobs_completed} jobs. ${results.stats.jobs_still_running} jobs still running.`,
+        message: `Collected ${results.stats.pages_saved} pages from ${results.stats.jobs_completed} jobs. ${results.stats.jobs_processing} jobs processing, ${results.stats.jobs_pending} jobs pending.`,
       },
     });
 
@@ -237,6 +299,89 @@ export async function GET(request: NextRequest) {
       details: error instanceof Error ? error.message : 'Unknown error',
       partial_results: results,
     }, { status: 500 });
+  }
+}
+
+/**
+ * Update parent job progress by aggregating child job statuses
+ */
+async function updateParentJobProgress(
+  db: Awaited<ReturnType<typeof getDb>>,
+  parentJobId: string
+) {
+  const parent = await db.collection('batch_jobs').findOne({ id: parentJobId });
+  if (!parent || !parent.child_job_ids) return;
+
+  // Get all child jobs
+  const children = await db.collection('batch_jobs')
+    .find({ id: { $in: parent.child_job_ids } })
+    .toArray();
+
+  // Aggregate progress
+  const progress = {
+    completed: 0,
+    failed: 0,
+    pending: 0,
+    total: parent.total_pages
+  };
+
+  // Check if ALL children are done (success or fail)
+  let allChildrenDone = true;
+  let anyChildFailed = false;
+
+  for (const child of children) {
+    // Child is done if status is saved, completed, or failed
+    const childIsDone = ['saved', 'completed', 'failed'].includes(child.status);
+
+    if (!childIsDone) {
+      allChildrenDone = false;
+    }
+
+    if (child.status === 'saved' || child.status === 'completed') {
+      progress.completed += child.page_count || 0;
+    } else if (child.status === 'failed') {
+      progress.failed += child.page_count || 0;
+      anyChildFailed = true;
+    } else {
+      progress.pending += child.page_count || 0;
+    }
+  }
+
+  // Determine parent status
+  let parentStatus: string;
+
+  if (allChildrenDone) {
+    // All children finished
+    parentStatus = anyChildFailed || progress.failed > 0
+      ? 'completed_with_errors'
+      : 'completed';
+  } else {
+    // Some children still processing
+    parentStatus = progress.completed > 0 ? 'processing' : 'pending';
+  }
+
+  const update: any = {
+    progress,
+    status: parentStatus,
+    updated_at: new Date()
+  };
+
+  // Set completed_at if all done
+  if (allChildrenDone && !parent.completed_at) {
+    update.completed_at = new Date();
+  }
+
+  await db.collection('batch_jobs').updateOne(
+    { id: parentJobId },
+    { $set: update }
+  );
+
+  // Clear job from book when parent job completes
+  if (allChildrenDone && parent.book_id) {
+    await db.collection('books').updateOne(
+      { id: parent.book_id },
+      { $unset: { job: '' } }
+    );
   }
 }
 

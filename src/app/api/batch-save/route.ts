@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
 
         for (const result of batchResults) {
           // Key is in metadata.key for inline responses, or just 'key' for file-based
-          const pageId = (result as { metadata?: { key?: string }; key?: string }).metadata?.key || result.key;
+          const pageId = (result as { metadata?: { key?: string }; key?: string }).metadata?.key;
 
           if (result.error) {
             failed++;

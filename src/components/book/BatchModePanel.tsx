@@ -13,8 +13,10 @@ interface BatchModePanelProps {
   promptsLoading: boolean;
   currentJob: Job | null;
   queueing: boolean;
+  processingMode: 'realtime' | 'batch';
   onActionChange: (action: JobType) => void;
   onOverwriteModeChange: (overwrite: boolean) => void;
+  onProcessingModeChange: (mode: 'realtime' | 'batch') => void;
   onSelectAll: () => void;
   onClearSelection: () => void;
   onTogglePromptSettings: () => void;
@@ -41,8 +43,10 @@ export default function BatchModePanel({
   promptsLoading,
   currentJob,
   queueing,
+  processingMode,
   onActionChange,
   onOverwriteModeChange,
+  onProcessingModeChange,
   onSelectAll,
   onClearSelection,
   onTogglePromptSettings,
@@ -91,6 +95,38 @@ export default function BatchModePanel({
             <option value="all">All (Overwrite)</option>
           </select>
         </div>
+
+        {/* Processing Mode Toggle - Only for OCR and Image Extraction */}
+        {(action === 'ocr' || action === 'image_extraction') && (
+          <>
+            <div className="h-6 w-px bg-amber-300" />
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Processing:</span>
+              <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
+                <button
+                  onClick={() => onProcessingModeChange('realtime')}
+                  className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+                    processingMode === 'realtime'
+                      ? 'bg-blue-600 text-white'
+                      : 'text-stone-600 hover:bg-stone-50'
+                  }`}
+                >
+                  Real-time
+                </button>
+                <button
+                  onClick={() => onProcessingModeChange('batch')}
+                  className={`px-3 py-1.5 text-sm font-medium transition-colors ${
+                    processingMode === 'batch'
+                      ? 'bg-purple-600 text-white'
+                      : 'text-stone-600 hover:bg-stone-50'
+                  }`}
+                >
+                  Batch (50% cheaper)
+                </button>
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="h-6 w-px bg-amber-300" />
 
@@ -152,6 +188,15 @@ export default function BatchModePanel({
           />
           <p className="text-xs text-stone-400">
             Use {'{language}'} and {'{target_language}'} as placeholders. Changes apply to this batch only.
+          </p>
+        </div>
+      )}
+
+      {/* Batch Mode Info */}
+      {(action === 'ocr' || action === 'image_extraction') && processingMode === 'batch' && (
+        <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+          <p className="text-xs text-purple-700">
+            <strong>Batch Mode:</strong> Results in ~24 hours • 50% cheaper than real-time • Overwrite: {overwriteMode ? 'All pages' : 'Missing only'}
           </p>
         </div>
       )}

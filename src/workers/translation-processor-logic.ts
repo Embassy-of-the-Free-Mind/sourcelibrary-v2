@@ -225,7 +225,7 @@ async function checkJobCompletion(
           last_translation_at: new Date(),
           updated_at: new Date()
         },
-        $unset: { current_job_id: '' }
+        $unset: { job: '' }
       }
     );
 

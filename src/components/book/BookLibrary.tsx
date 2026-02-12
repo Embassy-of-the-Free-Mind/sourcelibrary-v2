@@ -151,8 +151,8 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
   const filteredBrowseBooks = useMemo(() => {
     if (isFiltered) return allLoadedBooks;
 
-    // Default browse — initialBooks already sorted by server
-    return initialBooks;
+    // Default browse — use allLoadedBooks (includes any loaded-more books)
+    return allLoadedBooks;
   }, [isFiltered, allLoadedBooks, initialBooks]);
 
   // Books to display (limited for performance)
