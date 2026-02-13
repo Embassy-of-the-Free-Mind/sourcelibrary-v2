@@ -147,7 +147,7 @@ Frontend: `/experiments` pages for running and reviewing experiments.
 
 ## Analytics Dashboard (`/analytics`)
 
-Four tabs:
+Five tabs:
 
 | Tab | Content |
 |-----|---------|
@@ -178,3 +178,4 @@ Search queries are logged from three routes: `/api/search`, `/api/search/unified
 
 - **Feature flags / A/B routing** — only manual experiments via dedicated UI
 - **Moderation audit** — annotations auto-approved, no admin approval tracking
+- **Per-user sessions** — no login/auth, so no user-level analytics (only anonymous visitor_id)
