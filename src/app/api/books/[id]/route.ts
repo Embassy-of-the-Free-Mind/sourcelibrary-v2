@@ -44,6 +44,7 @@ export async function GET(
         crop: 1,
         'ocr.updated_at': 1,
         'translation.updated_at': 1,
+        'summary.updated_at': 1,
         'detected_images.type': 1,
       };
     }

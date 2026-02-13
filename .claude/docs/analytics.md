@@ -71,11 +71,11 @@ Sent via `sendGAEvent()` helper (`src/lib/ga.ts`), fire-and-forget:
 
 ### Likes
 
-**Collection:** `likes`
+**Collection:** `likes` (unique index on `target_type + target_id + visitor_id`)
 
 | Route | Purpose |
 |-------|---------|
-| `POST /api/likes` | Toggle like (anonymous visitor_id) |
+| `POST /api/likes` | Toggle like (atomic deleteOne + conditional insertOne) |
 | `GET /api/likes` | Batch fetch like counts |
 | `GET /api/likes/popular` | Most liked items with enrichment |
 | `GET /api/likes/mine` | User's likes by visitor_id |

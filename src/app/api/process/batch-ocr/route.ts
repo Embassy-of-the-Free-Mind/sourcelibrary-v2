@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { MODEL_PRICING } from '@/lib/ai';
-import { DEFAULT_MODEL } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType } from '@/lib/types';
 import { getGeminiClient, reportRateLimitError, getNextApiKey } from '@/lib/gemini-client';
 import { getOcrPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -468,14 +468,15 @@ Return each transcription clearly separated with the exact format:
               model: modelId,
               language: language,
               prompt: ocrPrompt.reference,
-              source: 'ai',  // Mark as AI-generated
-              // Processing metadata (tokens distributed across batch)
+              prompt_version: PROMPT_VERSION,
+              source: 'ai',
               input_tokens: tokensPerPage.input,
               output_tokens: tokensPerPage.output,
               cost_usd: tokensPerPage.cost,
               batch_size: pagesProcessed,
               image_url: imageUrlMap.get(pageId) || 'unknown',
             },
+            ...(extractPageType(ocrText) ? { page_type: extractPageType(ocrText) } : {}),
             updated_at: now,
           },
         }
@@ -496,6 +497,7 @@ Return each transcription clearly separated with the exact format:
       output_tokens: outputTokens,
       status: 'success',
       endpoint: '/api/process/batch-ocr',
+      prompt_version: PROMPT_VERSION,
     });
 
     return NextResponse.json({

@@ -120,17 +120,18 @@ function BookSearchBar({ bookId }: { bookId: string }) {
           <Search className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
         )}
         <input
-          type="text"
+          type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim() && setShowResults(true)}
           placeholder="Search this book..."
+          aria-label="Search within this book"
           className="bg-transparent outline-none text-xs w-full"
           style={{ color: 'var(--text-primary)' }}
         />
         {query && (
-          <button onClick={() => { setQuery(''); setResults([]); setShowResults(false); }}>
-            <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+          <button onClick={() => { setQuery(''); setResults([]); setShowResults(false); }} aria-label="Clear search">
+            <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} aria-hidden="true" />
           </button>
         )}
       </div>
@@ -138,11 +139,13 @@ function BookSearchBar({ bookId }: { bookId: string }) {
         <div
           className="absolute bottom-full left-0 right-0 mb-1 rounded-lg shadow-xl overflow-hidden z-50"
           style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)', maxHeight: '300px', overflowY: 'auto' }}
+          role="listbox"
+          aria-label="Search results"
         >
           {isSearching ? (
-            <div className="p-3 text-center text-xs" style={{ color: 'var(--text-muted)' }}>Searching...</div>
+            <div className="p-3 text-center text-xs" role="status" style={{ color: 'var(--text-muted)' }}>Searching...</div>
           ) : results.length === 0 ? (
-            <div className="p-3 text-center text-xs" style={{ color: 'var(--text-muted)' }}>No results for &quot;{query}&quot;</div>
+            <div className="p-3 text-center text-xs" role="status" style={{ color: 'var(--text-muted)' }}>No results for &quot;{query}&quot;</div>
           ) : (
             <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
               {results.slice(0, 10).map((r) => (
@@ -730,8 +733,8 @@ export default function TranslationEditor({
           {/* Row 1: Back + Title ... Page Navigator */}
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-              <a href={`/book/${book.id}`} className="p-1 rounded-md hover:bg-stone-100 transition-colors shrink-0" style={{ color: 'var(--text-muted)' }}>
-                <BookOpen className="w-5 h-5" />
+              <a href={`/book/${book.id}`} className="p-1 rounded-md hover:bg-stone-100 transition-colors shrink-0" style={{ color: 'var(--text-muted)' }} aria-label="Back to book">
+                <BookOpen className="w-5 h-5" aria-hidden="true" />
               </a>
               <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-base sm:text-lg font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
@@ -747,19 +750,19 @@ export default function TranslationEditor({
                 disabled={!previousPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
                 style={{ color: 'var(--text-secondary)' }}
-                title="Previous page (←)"
+                aria-label="Previous page"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
-              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1}/{pages.length}</span>
+              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
                 disabled={!nextPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
                 style={{ color: 'var(--text-secondary)' }}
-                title="Next page (→)"
+                aria-label="Next page"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -767,7 +770,7 @@ export default function TranslationEditor({
           {/* Row 2: Panel toggles ... Mode toggle + Like */}
           <div className="flex items-center justify-between mt-2 sm:mt-3">
             {/* Panel visibility toggles */}
-            <div className="flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+            <div className="flex items-center gap-0.5 p-1 rounded-lg" role="toolbar" aria-label="Panel visibility">
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? '' : 'opacity-50'}`}
@@ -776,9 +779,10 @@ export default function TranslationEditor({
                   color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
                   boxShadow: showImagePanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
                 }}
-                title="Toggle source image"
+                aria-label={`${showImagePanel ? 'Hide' : 'Show'} source image`}
+                aria-pressed={showImagePanel}
               >
-                <ImageIcon className="w-4 h-4" />
+                <ImageIcon className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">Image</span>
               </button>
               <button
@@ -789,9 +793,10 @@ export default function TranslationEditor({
                   color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
                   boxShadow: showOcrPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
                 }}
-                title="Toggle original text"
+                aria-label={`${showOcrPanel ? 'Hide' : 'Show'} original text`}
+                aria-pressed={showOcrPanel}
               >
-                <FileText className="w-4 h-4" />
+                <FileText className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">OCR</span>
               </button>
               <button
@@ -802,9 +807,10 @@ export default function TranslationEditor({
                   color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
                   boxShadow: showTranslationPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
                 }}
-                title="Toggle translation"
+                aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
+                aria-pressed={showTranslationPanel}
               >
-                <Languages className="w-4 h-4" />
+                <Languages className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">English</span>
               </button>
             </div>
@@ -837,17 +843,17 @@ export default function TranslationEditor({
                   onClick={() => setShowHighlights(true)}
                   className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
                   style={{ color: 'var(--text-muted)' }}
-                  title="View highlights"
+                  aria-label="View highlights"
                 >
-                  <Highlighter className="w-4 h-4" />
+                  <Highlighter className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <button
                   onClick={() => setShowAnnotations(true)}
                   className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
                   style={{ color: 'var(--text-muted)' }}
-                  title="View annotations"
+                  aria-label="View annotations"
                 >
-                  <StickyNote className="w-4 h-4" />
+                  <StickyNote className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <GoogleTranslate />
               </div>
@@ -952,7 +958,7 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
-                      <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
+                      <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} />
                       </div>
                     ) : (

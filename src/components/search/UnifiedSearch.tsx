@@ -84,14 +84,17 @@ export default function UnifiedSearch() {
     <div ref={containerRef} className="relative w-full">
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
         <input
           ref={inputRef}
-          type="text"
+          type="search"
           value={query}
           onChange={(e) => handleQueryChange(e.target.value)}
           onFocus={() => results && setIsOpen(true)}
           placeholder="Search books, concepts, people..."
+          aria-label="Search the library"
+          aria-expanded={isOpen}
+          aria-autocomplete="list"
           className="w-full pl-12 pr-12 py-4 bg-white/95 backdrop-blur border border-white/20 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-lg shadow-lg"
         />
         {loading && (
@@ -101,8 +104,9 @@ export default function UnifiedSearch() {
           <button
             onClick={clearSearch}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            aria-label="Clear search"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         )}
       </div>

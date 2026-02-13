@@ -177,8 +177,8 @@ export default function GalleryPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-4">
             {/* Source Library Logo */}
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
+              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
                 <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
                 <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
@@ -206,7 +206,7 @@ export default function GalleryPage() {
             <div className="relative flex-1 max-w-xs" ref={bookSearchRef}>
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
               <input
-                type="text"
+                type="search"
                 value={bookSearchQuery}
                 onChange={(e) => {
                   setBookSearchQuery(e.target.value);
@@ -214,6 +214,7 @@ export default function GalleryPage() {
                 }}
                 onFocus={() => setShowBookDropdown(true)}
                 placeholder="Find a book..."
+                aria-label="Filter by book"
                 className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
               />
               {bookSearchLoading && (
@@ -245,10 +246,11 @@ export default function GalleryPage() {
             <form onSubmit={handleImageSearch} className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
               <input
-                type="text"
+                type="search"
                 value={imageSearchQuery}
                 onChange={(e) => setImageSearchQuery(e.target.value)}
                 placeholder="Search image content (serpent, Mercury, emblem...)"
+                aria-label="Search image descriptions"
                 className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
               />
             </form>

@@ -218,8 +218,9 @@ export async function POST(
     // Process judgments one at a time
     for (const judgment of pendingJudgments) {
       try {
-        // Fetch the page image
-        const image = await fetchImageAsBase64(judgment.page.photo);
+        // Fetch the page image (use fallback chain)
+        const imageUrl = judgment.page.cropped_photo || judgment.page.archived_photo || judgment.page.photo || judgment.page.photo_original;
+        const image = imageUrl ? await fetchImageAsBase64(imageUrl) : null;
         if (!image) {
           console.error('Failed to fetch image for page:', judgment.page_id);
           errors++;

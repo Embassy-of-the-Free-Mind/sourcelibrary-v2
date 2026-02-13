@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
 import type { Page, Prompt } from '@/lib/types';
 import type { JobType, Job } from '@/lib/types/job';
 import { prompts as promptsApi, jobs, books, batchJobs } from '@/lib/api-client';
@@ -23,7 +22,6 @@ interface BookPagesSectionProps {
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
 export default function BookPagesSection({ bookId, bookTitle, pages: initialPages }: BookPagesSectionProps) {
-  const router = useRouter();
   const [pages, setPages] = useState(initialPages);
   const [batchMode, setBatchMode] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
@@ -62,6 +60,18 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   useEffect(() => {
     setPages(initialPages);
   }, [initialPages]);
+
+  // Client-side refresh: fetch updated pages without triggering Suspense
+  const refreshPages = useCallback(async () => {
+    try {
+      const book = await books.get(bookId);
+      if ('pages' in book && book.pages) {
+        setPages(book.pages);
+      }
+    } catch (error) {
+      console.error('Failed to refresh pages:', error);
+    }
+  }, [bookId]);
 
   // Prompt library state
   const [prompts, setPrompts] = useState<Record<JobType, Prompt[]>>({
@@ -289,7 +299,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       await books.reorder(bookId, pageIds);
       setOrderChanged(false);
       setReorderMode(false);
-      router.refresh();
     } catch (error) {
       console.error('Failed to save order:', error);
     } finally {
@@ -393,9 +402,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       // Clear selection and exit batch mode
       setSelectedPages(new Set());
       setBatchMode(false);
-
-      // Refresh to show updated job status
-      router.refresh();
     } catch (error) {
       console.error('Failed to queue job:', error);
       alert(error instanceof Error ? error.message : 'Failed to queue job');
@@ -412,10 +418,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     try {
       const job = await jobs.get(currentJob.id);
 
-      // If job is completed successfully, hide progress UI and refresh
+      // If job is completed successfully, hide progress UI and refresh pages
       if (job.status === 'completed' && job.progress.failed === 0) {
         setCurrentJob(null);
-        router.refresh();
+        refreshPages();
       } else {
         // Update job state (will show failed/cancelled states)
         setCurrentJob(job);
@@ -435,10 +441,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     try {
       const bj = await batchJobs.get(currentBatchJob.id);
 
-      // If batch job completed successfully (no failed pages), clear
+      // If batch job completed successfully (no failed pages), clear and refresh pages
       if (bj.status === 'completed' && (bj.progress?.failed ?? 0) === 0) {
         setCurrentBatchJob(null);
-        router.refresh();
+        refreshPages();
       } else {
         setCurrentBatchJob(bj);
       }
@@ -474,7 +480,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     try {
       await jobs.cancel(currentJob.id);
       setCurrentJob(null);
-      router.refresh();
     } catch (error) {
       console.error('Failed to cancel job:', error);
       alert(error instanceof Error ? error.message : 'Failed to cancel job');
@@ -511,7 +516,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       }
 
       await books.update(bookId, updates);
-      router.refresh();
     } catch (error) {
       console.error('Error setting cover:', error);
     } finally {

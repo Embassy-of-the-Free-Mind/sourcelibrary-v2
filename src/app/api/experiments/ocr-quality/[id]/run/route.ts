@@ -91,9 +91,49 @@ export async function POST(
     const book = await db.collection('books').findOne({ id: experiment.book_id });
     const bookLanguage = book?.original_language || '';
 
-    const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
     const batchSize = condition.batchSize || 1;
     const promptType = condition.promptType;
+
+    // "existing" condition — read current OCR from pages instead of running Gemini
+    if (promptType === 'existing') {
+      await db.collection('ocr_experiments').updateOne(
+        { id },
+        { $set: { [`progress.${condition_id}`]: { status: 'running', processed: 0, total: allPages.length, started_at: new Date().toISOString() } } }
+      );
+
+      let saved = 0;
+      for (const page of pages) {
+        const ocrData = page.ocr?.data || '';
+        await db.collection('ocr_experiment_results').insertOne({
+          id: crypto.randomUUID(),
+          experiment_id: id,
+          condition_id,
+          page_id: page.id,
+          page_number: page.page_number,
+          ocr: ocrData,
+          success: !!ocrData,
+          error: ocrData ? null : 'No existing OCR',
+          created_at: new Date().toISOString(),
+        });
+        saved++;
+      }
+
+      await db.collection('ocr_experiments').updateOne(
+        { id },
+        { $set: { [`progress.${condition_id}`]: { status: 'complete', processed: saved, total: allPages.length, completed_at: new Date().toISOString() } } }
+      );
+
+      const currentExp = await db.collection('ocr_experiments').findOne({ id });
+      const updatedConditionsRun = [...(currentExp?.conditions_run || []), condition_id];
+      await db.collection('ocr_experiments').updateOne(
+        { id },
+        { $set: { conditions_run: updatedConditionsRun, status: 'running', updated_at: new Date().toISOString() } }
+      );
+
+      return NextResponse.json({ success: true, condition_id, pages_processed: saved, success_count: saved, failed_count: 0, cost: 0, tokens: 0 });
+    }
+
+    const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
 
     // Select prompt — custom prompts go through getOcrPrompt for {language_instruction} substitution
     let basePrompt: string;

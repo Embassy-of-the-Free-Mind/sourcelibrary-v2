@@ -28,7 +28,6 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
         if (data.book_id) {
           setStats({ reads: data.reads, edits: data.edits });
         }
-        console.log('Book analytics data:', data);
       })
       .catch(console.error);
   }, [bookId]);
@@ -39,7 +38,7 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
       <div className="flex items-center gap-4 text-sm text-stone-400">
         <div className="flex items-center gap-1.5">
           <Eye className="w-4 h-4 opacity-50" />
-          <span className="w-6 h-4 bg-stone-200 rounded animate-pulse" />
+          <span className="w-8 h-4 bg-stone-200 rounded animate-pulse" />
         </div>
       </div>
     );

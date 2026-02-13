@@ -311,8 +311,8 @@ async function BookInfo({ id }: { id: string }) {
               </div>
 
               {/* Actions */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-4 text-sm">
-                {/* Unlocks after complete */}
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-5 text-sm">
+                {/* Primary action */}
                 {isComplete ? (
                   <PublishEditionButton
                     bookId={book.id}
@@ -328,52 +328,53 @@ async function BookInfo({ id }: { id: string }) {
                   </span>
                 )}
 
-                {/* Utilities - always available */}
-                <span className="hidden sm:inline text-stone-600">|</span>
-                <div className="px-2 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                  <LikeButton
-                    targetType="book"
-                    targetId={book.id}
-                    size="sm"
-                    showCount={true}
+                {/* Utility actions — grouped in a subtle container */}
+                <div className="flex flex-wrap items-center gap-1 rounded-lg bg-white/5 px-1 py-0.5">
+                  <div className="px-2 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
+                    <LikeButton
+                      targetType="book"
+                      targetId={book.id}
+                      size="sm"
+                      showCount={true}
+                    />
+                  </div>
+                  <BookShare
+                    title={book.display_title || book.title}
+                    author={book.author}
+                    year={book.published}
+                    bookId={book.id}
+                    doi={book.doi}
+                    className="text-stone-300 hover:text-white hover:bg-white/10"
                   />
+                  <CiteButton
+                    bookId={book.id}
+                    title={book.title}
+                    displayTitle={book.display_title}
+                    author={book.author}
+                    year={book.published}
+                    publisher={book.publisher}
+                    placePublished={book.place_published}
+                    language={book.language}
+                    doi={book.doi}
+                    className="text-stone-300 hover:text-white hover:bg-white/10"
+                  />
+                  <Link
+                    href={`/gallery?bookId=${book.id}`}
+                    className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                  >
+                    <Images className="w-4 h-4" />
+                    Gallery
+                  </Link>
+                  <DownloadButton
+                    bookId={book.id}
+                    hasTranslations={hasTranslations}
+                    hasOcr={hasOcr}
+                    hasImages={pages.length > 0}
+                    variant="header"
+                  />
+                  <BookAnalytics bookId={book.id} />
+                  <SearchPanel bookId={book.id} />
                 </div>
-                <BookShare
-                  title={book.display_title || book.title}
-                  author={book.author}
-                  year={book.published}
-                  bookId={book.id}
-                  doi={book.doi}
-                  className="text-stone-300 hover:text-white hover:bg-white/10"
-                />
-                <CiteButton
-                  bookId={book.id}
-                  title={book.title}
-                  displayTitle={book.display_title}
-                  author={book.author}
-                  year={book.published}
-                  publisher={book.publisher}
-                  placePublished={book.place_published}
-                  language={book.language}
-                  doi={book.doi}
-                  className="text-stone-300 hover:text-white hover:bg-white/10"
-                />
-                <Link
-                  href={`/gallery?bookId=${book.id}`}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <Images className="w-4 h-4" />
-                  Gallery
-                </Link>
-                <DownloadButton
-                  bookId={book.id}
-                  hasTranslations={hasTranslations}
-                  hasOcr={hasOcr}
-                  hasImages={pages.length > 0}
-                  variant="header"
-                />
-                <BookAnalytics bookId={book.id} />
-                <SearchPanel bookId={book.id} />
               </div>
 
               {/* Bibliographic Info */}
@@ -383,13 +384,16 @@ async function BookInfo({ id }: { id: string }) {
         </div>
       </div>
 
+      {/* Gradient bridge from dark header to light content */}
+      <div className="h-6 bg-gradient-to-b from-stone-900 to-transparent" />
+
       {/* Book Summary */}
       {(() => {
         return (
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-white rounded-lg border border-stone-200 p-6">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-stone-900">About This Book</h2>
+                <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>About This Book</h2>
                 {hasTranslations ? (
                   <Link
                     href={`/book/${book.id}/guide`}
@@ -414,9 +418,9 @@ async function BookInfo({ id }: { id: string }) {
                 />
               </div>
               {hasSummary ? (
-                <div className="prose prose-stone prose-sm max-w-none">
+                <div className="prose-content max-w-none">
                   {summaryText!.split('\n\n').map((paragraph: string, i: number) => (
-                    <p key={i} className="text-stone-700 leading-relaxed mb-4 last:mb-0">
+                    <p key={i} className="mb-4 last:mb-0">
                       {paragraph}
                     </p>
                   ))}
@@ -451,9 +455,9 @@ async function BookInfo({ id }: { id: string }) {
               if (!hasEntities) return null;
 
               return (
-                <div className="bg-white rounded-lg border border-stone-200 p-6 mt-6">
+                <div className="card p-6 mt-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold text-stone-900">Index</h2>
+                    <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Index</h2>
                     <Link
                       href="/encyclopedia"
                       className="text-sm text-amber-700 hover:text-amber-800"
@@ -574,12 +578,12 @@ export default async function BookDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-cream">
       {/* Header - renders immediately */}
       <header className="bg-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-4">
-          <Link href="/" className="flex items-center gap-2 text-stone-700 hover:text-stone-900 transition-colors" title="Back to Library">
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <Link href="/" className="flex items-center gap-2 text-stone-700 hover:text-stone-900 transition-colors" aria-label="Back to library">
+            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
               <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
               <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />

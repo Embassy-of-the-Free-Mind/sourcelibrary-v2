@@ -54,12 +54,12 @@ The `cost_tracking` collection is fully deprecated — zero active writers or re
 | `jobs` | Processing job tracking (progress, status) | `book_id + type + status` |
 | `batch_jobs` | Gemini Batch API job tracking | — |
 | `audit_log` | Admin/system actions (imports, deletes, edits, resets, editions, DOIs) | `book_id` |
-| `analytics_pageviews` | Web traffic (path, referrer, country) | — |
+| `analytics_pageviews` | Web traffic (path, referrer, country) | `timestamp`, `path + timestamp` |
 | `analytics_events` | Deduplication index + search query logging | `event + book_id + ip + timestamp` |
 | `loading_metrics` | Frontend performance (p50, p95) | — |
-| `likes` | User engagement (book/page/image) | — |
+| `likes` | User engagement (book/page/image) | `target_type + target_id + visitor_id` (unique), `target_type + target_id`, `visitor_id + target_type` |
 | `highlights` | User-selected passages | `book_id + page_id` |
-| `annotations` | Community notes with threading | — |
+| `annotations` | Community notes with threading | `book_id + page_id` |
 | `social_posts` | Tweet scheduling and metrics | — |
 | `split_adjustments` | ML split detection feedback | — |
 | `cost_tracking` | **DEPRECATED** — no active writers/readers, use `gemini_usage` | — |
