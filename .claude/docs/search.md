@@ -94,3 +94,5 @@ Features:
 ## Analytics
 
 Search queries logged to `analytics_events` collection with `event: 'search_query'` from all three search routes. Schema: `{ event, query, results_count, filters, timestamp, ip, created_at }`.
+
+**Dashboard:** `GET /api/analytics/search?days=30` — top queries, zero-result queries (content gaps), volume by source/day. Visible on the Search tab at `/analytics`.

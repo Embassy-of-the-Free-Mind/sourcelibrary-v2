@@ -6,6 +6,7 @@ import { Search, Book, FileText, ExternalLink, Filter, X, Loader2, Quote, User, 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi, categories as categoriesApi, utils, type SearchResult, type IndexSearchResult, type IndexSearchResponse } from '@/lib/api-client';
+import { sendGAEvent } from '@/lib/ga';
 
 const INDEX_TYPES = [
   { value: '', label: 'All Types', icon: Search },
@@ -123,6 +124,7 @@ export default function SearchPage() {
         setTotal(data.total || 0);
         setIndexByType(data.byType || null);
         setResults([]);
+        sendGAEvent({ action: 'search', category: 'engagement', label: searchQuery, value: data.total || 0, search_term: searchQuery });
       } else {
         // Book/page search
         const data = await searchApi.search(searchQuery, {
@@ -141,6 +143,7 @@ export default function SearchPage() {
         setTotal(data.total || 0);
         setIndexResults([]);
         setIndexByType(null);
+        sendGAEvent({ action: 'search', category: 'engagement', label: searchQuery, value: data.total || 0, search_term: searchQuery });
       }
     } catch (error) {
       console.error('Search error:', error);

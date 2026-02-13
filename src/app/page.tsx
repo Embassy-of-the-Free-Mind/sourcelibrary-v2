@@ -47,27 +47,18 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
             pages_translated: { $ifNull: ['$pages_translated', 0] },
             pages_ocr: { $ifNull: ['$pages_ocr', 0] },
             last_processed: { $ifNull: ['$updated_at', '$created_at'] },
-            last_translation_at: { $ifNull: ['$last_translation_at', null] },
-          },
-        },
-        {
-          $addFields: {
             translation_percent: {
               $cond: {
-                if: { $gt: ['$pages_count', 0] },
-                then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+                if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+                then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 0] }] }, 100] }] },
                 else: 0,
               },
             },
           },
         },
+        // Descending sort: nulls go last, so translated books surface first
         {
-          $addFields: {
-            has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },
-          },
-        },
-        {
-          $sort: { has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 },
+          $sort: { last_translation_at: -1, last_processed: -1, title: 1 },
         },
         { $limit: INITIAL_SERVER_LIMIT },
         {

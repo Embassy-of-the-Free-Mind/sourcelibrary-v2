@@ -343,12 +343,33 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
           <MetadataSection title="Processing Details" icon={Cpu} defaultOpen={false}>
             <MetadataRow
               label="OCR prompt"
-              value={page.ocr?.prompt?.name || page.ocr?.prompt_name || 'default'}
+              value={page.ocr?.prompt_version || page.ocr?.prompt?.name || page.ocr?.prompt_name || 'unknown'}
             />
+            {page.ocr?.model && (
+              <MetadataRow label="OCR model" value={page.ocr.model} mono />
+            )}
+            {page.ocr?.source && (
+              <MetadataRow label="OCR source" value={page.ocr.source} />
+            )}
+            {page.ocr?.updated_at && (
+              <MetadataRow label="OCR updated" value={formatDate(page.ocr.updated_at)} />
+            )}
+            {page.page_type && page.page_type !== 'text' && (
+              <MetadataRow label="Page type" value={page.page_type} />
+            )}
             <MetadataRow
               label="Translation prompt"
-              value={page.translation?.prompt?.name || page.translation?.prompt_name || 'default'}
+              value={page.translation?.prompt_version || page.translation?.prompt?.name || page.translation?.prompt_name || 'unknown'}
             />
+            {page.translation?.model && (
+              <MetadataRow label="Translation model" value={page.translation.model} mono />
+            )}
+            {page.translation?.source && (
+              <MetadataRow label="Translation source" value={page.translation.source} />
+            )}
+            {page.translation?.updated_at && (
+              <MetadataRow label="Translation updated" value={formatDate(page.translation.updated_at)} />
+            )}
             {page.summary && (
               <>
                 <MetadataRow

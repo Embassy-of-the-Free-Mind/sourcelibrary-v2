@@ -39,36 +39,16 @@ export async function POST(request: NextRequest) {
     }
 
     const db = await getDb();
+    const filter = { target_type, target_id, visitor_id };
 
-    // Check if already liked
-    const existing = await db.collection('likes').findOne({
-      target_type,
-      target_id,
-      visitor_id,
-    });
+    // Atomic toggle: try to delete first — if nothing was deleted, insert
+    const deleted = await db.collection('likes').deleteOne(filter);
+    const liked = deleted.deletedCount === 0;
 
-    let liked: boolean;
-
-    if (existing) {
-      // Unlike
-      await db.collection('likes').deleteOne({
-        target_type,
-        target_id,
-        visitor_id,
-      });
-      liked = false;
-    } else {
-      // Like
-      await db.collection('likes').insertOne({
-        target_type,
-        target_id,
-        visitor_id,
-        created_at: new Date(),
-      });
-      liked = true;
+    if (liked) {
+      await db.collection('likes').insertOne({ ...filter, created_at: new Date() });
     }
 
-    // Get new count
     const count = await db.collection('likes').countDocuments({
       target_type,
       target_id,

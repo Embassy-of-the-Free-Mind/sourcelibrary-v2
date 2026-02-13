@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Get global stats - single aggregation for reads/edits
+    // Get global stats - use estimatedDocumentCount for fast totals (called on every page load via footer)
     const [bookStats, totalBooks, totalPages, pagesTranslated] = await Promise.all([
       db.collection('books').aggregate([
         { $group: {
@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
           totalEdits: { $sum: '$edit_count' }
         } }
       ]).toArray(),
-      db.collection('books').countDocuments(),
-      db.collection('pages').countDocuments(),
+      db.collection('books').estimatedDocumentCount(),
+      db.collection('pages').estimatedDocumentCount(),
       db.collection('pages').countDocuments({
         'translation.data': { $exists: true, $ne: '' }
       }),

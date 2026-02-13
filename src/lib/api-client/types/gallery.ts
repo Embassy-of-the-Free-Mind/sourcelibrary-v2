@@ -50,8 +50,6 @@ export interface BookInfo {
 export interface GalleryFilters {
   types: string[];
   subjects: string[];
-  figures: string[];
-  symbols: string[];
   yearRange: { minYear: number | null; maxYear: number | null };
 }
 

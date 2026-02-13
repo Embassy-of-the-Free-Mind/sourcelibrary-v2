@@ -19,15 +19,14 @@ export default function GlobalFooter() {
 
   useEffect(() => {
     setMounted(true);
-    analytics.usage()
-      .then(data => {
-        // Map the new API response to the GlobalStats format
+    analytics.stats()
+      .then((data: any) => {
         setStats({
-          totalReads: data.summary.totalHits,
-          totalEdits: 0, // Not tracked in new API
-          totalBooks: data.summary.totalBooks,
-          totalPages: data.summary.totalPages,
-          pagesTranslated: data.summary.pagesWithTranslation,
+          totalReads: data.totalReads || 0,
+          totalEdits: data.totalEdits || 0,
+          totalBooks: data.totalBooks || 0,
+          totalPages: data.totalPages || 0,
+          pagesTranslated: data.pagesTranslated || 0,
         });
       })
       .catch(console.error);

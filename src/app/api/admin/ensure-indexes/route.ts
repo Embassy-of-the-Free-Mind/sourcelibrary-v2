@@ -240,6 +240,20 @@ export async function POST() {
         : `error: ${err.message}`;
     }
 
+    // Pages - gallery quality sort (gallery aggregation sorts by gallery_quality desc)
+    try {
+      await db.collection('pages').createIndex(
+        { 'detected_images.gallery_quality': -1, book_id: 1, page_number: 1 },
+        { name: 'pages_gallery_quality_idx', background: true, sparse: true }
+      );
+      results['pages.pages_gallery_quality_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_gallery_quality_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Books - full-text search on title, author, summary
     // Used by /api/search and /api/search/unified
     // Only ONE text index allowed per collection
@@ -302,6 +316,95 @@ export async function POST() {
     } catch (e) {
       const err = e as Error;
       results['pages.pages_thumbnail_archived_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Likes - toggle lookup (visitor + target)
+    // Query: { target_type, target_id, visitor_id }
+    try {
+      await db.collection('likes').createIndex(
+        { target_type: 1, target_id: 1, visitor_id: 1 },
+        { name: 'likes_target_visitor_idx', unique: true, background: true }
+      );
+      results['likes.likes_target_visitor_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['likes.likes_target_visitor_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Likes - count aggregation
+    // Query: { target_type, target_id }
+    try {
+      await db.collection('likes').createIndex(
+        { target_type: 1, target_id: 1 },
+        { name: 'likes_target_idx', background: true }
+      );
+      results['likes.likes_target_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['likes.likes_target_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Likes - visitor's likes lookup
+    // Query: { visitor_id, target_type }
+    try {
+      await db.collection('likes').createIndex(
+        { visitor_id: 1, target_type: 1 },
+        { name: 'likes_visitor_type_idx', background: true }
+      );
+      results['likes.likes_visitor_type_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['likes.likes_visitor_type_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Analytics pageviews - timestamp for date range queries
+    // Query: { timestamp: { $gte } } used by all traffic aggregations
+    try {
+      await db.collection('analytics_pageviews').createIndex(
+        { timestamp: -1 },
+        { name: 'pageviews_timestamp_idx', background: true }
+      );
+      results['analytics_pageviews.pageviews_timestamp_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['analytics_pageviews.pageviews_timestamp_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Analytics pageviews - path + timestamp for top pages
+    try {
+      await db.collection('analytics_pageviews').createIndex(
+        { path: 1, timestamp: -1 },
+        { name: 'pageviews_path_ts_idx', background: true }
+      );
+      results['analytics_pageviews.pageviews_path_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['analytics_pageviews.pageviews_path_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Annotations - lookup by book and page
+    // Query: { book_id, page_id }
+    try {
+      await db.collection('annotations').createIndex(
+        { book_id: 1, page_id: 1 },
+        { name: 'annotations_book_page_idx', background: true }
+      );
+      results['annotations.annotations_book_page_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['annotations.annotations_book_page_idx'] = err.message.includes('already exists')
         ? 'exists'
         : `error: ${err.message}`;
     }

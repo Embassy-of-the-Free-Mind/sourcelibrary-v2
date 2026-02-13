@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Eye, Edit3 } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import { sendGAEvent } from '@/lib/ga';
 
 interface BookAnalyticsProps {
   bookId: string;
@@ -19,6 +20,7 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
   useEffect(() => {
     // Track the read
     analytics.track({ event: 'book_read', book_id: bookId }).catch(console.error);
+    sendGAEvent({ action: 'book_view', category: 'engagement', label: bookId });
 
     // Fetch stats
     analytics.stats(bookId)

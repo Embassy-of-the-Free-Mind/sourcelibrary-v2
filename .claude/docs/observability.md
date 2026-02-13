@@ -78,7 +78,15 @@ All audit events automatically appear in the Book History timeline.
 
 Search queries are logged to `analytics_events` with `event: 'search_query'` from three routes: `/api/search`, `/api/search/unified`, `/api/books/[id]/search`.
 
+## Cached Book-Level Counts
+
+Book documents store `pages_count`, `pages_ocr`, and `pages_translated` as a **performance cache**. These are updated inline by workers and batch routes, and refreshed every 6 hours by the `sync-page-counts` cron.
+
+- **Source of truth:** always the `pages` collection
+- **Cron:** `GET /api/cron/sync-page-counts` (every 6h) — single aggregation + bulk update
+- **Manual sync:** `POST /api/admin/sync-page-counts` (with `?dry_run=true` option)
+- **`translation_percent`** is never stored — always computed at read time from `pages_translated / pages_count`
+
 ## Known Gaps
 
 1. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection. Needs admin UI + auth first.
-2. **No search analytics dashboard** — search queries are logged but no dashboard to analyze them yet.

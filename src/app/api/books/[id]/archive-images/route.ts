@@ -119,6 +119,7 @@ export async function POST(
               access: 'public',
               contentType: mimeType,
               addRandomSuffix: false,
+              allowOverwrite: true,
             });
 
             // Generate 150px thumbnail from the same buffer

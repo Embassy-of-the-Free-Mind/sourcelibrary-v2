@@ -1,9 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { measurePerf } from './perf';
 import { BOOK } from './fixtures';
 
 test.describe('Book Detail', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(`/book/${BOOK.id}`);
+  });
+
+  test.afterEach(async ({ page }, testInfo) => {
+    await measurePerf(page, `book-detail: ${testInfo.title}`);
   });
 
   test('book title heading is visible', async ({ page }) => {

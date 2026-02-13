@@ -44,8 +44,11 @@ export const books = {
    * @param options - Optional query parameters
    * @param options.full - Include full OCR/translation data and pages array (default: false)
    */
-  get: async (id: string, options?: { full?: boolean }): Promise<Book | BookWithPages> => {
-    const query = options?.full ? '?full=true' : '';
+  get: async (id: string, options?: { full?: boolean; pages?: 'nav' | 'default' }): Promise<Book | BookWithPages> => {
+    const params = new URLSearchParams();
+    if (options?.full) params.set('full', 'true');
+    if (options?.pages) params.set('pages', options.pages);
+    const query = params.toString() ? `?${params.toString()}` : '';
     return await apiClient.get(`/api/books/${id}${query}`);
   },
 

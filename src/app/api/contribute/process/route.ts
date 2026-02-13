@@ -250,12 +250,7 @@ export async function POST(request: NextRequest) {
           const pagesCount = book.pages_count || 0;
           await db.collection('books').updateOne(
             { _id: new ObjectId(bookId) },
-            {
-              $set: {
-                pages_translated: translateCount,
-                translation_percent: pagesCount > 0 ? Math.round((translateCount / pagesCount) * 100) : 0,
-              },
-            }
+            { $set: { pages_translated: translateCount } }
           );
         }
 

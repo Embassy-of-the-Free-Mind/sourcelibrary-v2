@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { measurePerf } from './perf';
 
 test.describe('Navigation Flow', () => {
   test('homepage -> book detail -> page reader', async ({ page }) => {
     // 1. Start at homepage
     await page.goto('/');
     await expect(page).toHaveTitle(/Source Library/i);
+    await measurePerf(page, 'nav-flow: homepage');
 
     // 2. Click first book card
     const bookLink = page.locator('a[href*="/book/"]').first();
@@ -14,6 +16,7 @@ test.describe('Navigation Flow', () => {
     // 3. Verify book detail page
     await expect(page).toHaveURL(/\/book\//);
     await expect(page.getByRole('heading').first()).toBeVisible();
+    await measurePerf(page, 'nav-flow: book detail');
 
     // 4. Click first page link (format: /book/{bookId}/page/{pageId})
     const pageLink = page.locator('a[href*="/page/"]').first();
@@ -23,5 +26,6 @@ test.describe('Navigation Flow', () => {
     // 5. Verify page reader loaded (URL contains /page/)
     await expect(page).toHaveURL(/\/page\//);
     await expect(page.getByText(/page not found/i)).not.toBeVisible({ timeout: 15_000 });
+    await measurePerf(page, 'nav-flow: page reader');
   });
 });

@@ -38,6 +38,7 @@ import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
 import { gallery } from '@/lib/api-client';
 import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
+import { sendGAEvent } from '@/lib/ga';
 
 export default function ImageDetailPage({
   params
@@ -75,6 +76,7 @@ export default function ImageDetailPage({
       try {
         const json = await gallery.get(imageId!);
         setData(json);
+        sendGAEvent({ action: 'view_item', category: 'gallery', label: imageId!, content_type: 'image' });
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load');
       } finally {

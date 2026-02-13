@@ -1,37 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { getDb } from '@/lib/mongodb';
 
-const MONGODB_URI = process.env.MONGODB_URI;
-const MONGODB_DB = process.env.MONGODB_DB;
+const SITE_HOST = 'sourcelibrary.org';
 
 export async function POST(request: NextRequest) {
-  if (!MONGODB_URI || !MONGODB_DB) {
-    return NextResponse.json(
-      { error: 'Database not configured' },
-      { status: 500 }
-    );
-  }
-
   try {
-    const { path, referrer, userAgent } = await request.json();
+    const body = await request.json();
+    // Support both formats: { path, referrer, userAgent } and { event, properties: { path, referrer, userAgent } }
+    const { path, referrer, userAgent } = body.properties || body;
 
-    const client = new MongoClient(MONGODB_URI);
-    await client.connect();
-    const db = client.db(MONGODB_DB);
+    const db = await getDb();
 
-    // Parse referrer
+    // Parse referrer — filter out self-referrals
     let referrerDomain = 'direct';
-    if (referrer && referrer !== location.origin) {
+    if (referrer) {
       try {
         const url = new URL(referrer);
-        referrerDomain = url.hostname.replace('www.', '');
+        const hostname = url.hostname.replace('www.', '');
+        if (hostname !== SITE_HOST) {
+          referrerDomain = hostname;
+        }
       } catch {
         referrerDomain = referrer.split('/')[2] || 'unknown';
       }
     }
 
     // Detect country (basic - from IP via headers)
-    const country = request.headers.get('cf-ipcountry') || 'Unknown';
+    const country = request.headers.get('x-vercel-ip-country') || request.headers.get('cf-ipcountry') || 'Unknown';
 
     // Insert analytics record
     await db.collection('analytics_pageviews').insertOne({
@@ -43,7 +38,6 @@ export async function POST(request: NextRequest) {
       ip: request.headers.get('x-forwarded-for')?.split(',')[0] || 'unknown',
     });
 
-    await client.close();
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Track error:', error);

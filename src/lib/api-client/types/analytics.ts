@@ -30,16 +30,10 @@ export interface UsageStats {
     pagesWithTranslation: number;
     ocrPercentage: number;
     translationPercentage: number;
-    totalHits: number;
-    uniqueVisitors: number;
   };
-  hitsByDay: Array<{ date: string; hits: number; uniqueVisitors: number }>;
-  processingByDay: Array<{ date: string; ocr: number; translation: number }>;
   modelUsage: Array<{ model: string; count: number }>;
   promptUsage: Array<{ prompt: string; count: number }>;
   recentBooks: Array<{ title: string; author: string; created_at: string; pages_count: number }>;
-  visitorsByCountry: Array<{ country: string; countryCode: string; hits: number; visitors: number }>;
-  visitorLocations: Array<{ city: string; country: string; countryCode: string; hits: number; lat: number; lon: number }>;
   costStats?: {
     totalCost: number;
     totalTokens: number;

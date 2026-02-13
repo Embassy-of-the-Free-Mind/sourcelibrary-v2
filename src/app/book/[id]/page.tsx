@@ -152,21 +152,24 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
   // Use the book's id field, or fall back to _id string
   const bookId = book.id || book._id?.toString();
 
-  // Fetch pages with lightweight projection — exclude heavy text fields
-  // UI only needs .updated_at for status dots, not the actual .data text
-  // For detected_images, only array length is needed (image count display)
+  // Inclusion projection — only fetch fields the book detail UI actually uses
+  // Status dots need .updated_at; image count needs array length via .type
   const pages = await db.collection('pages')
     .find({ book_id: bookId }, {
       projection: {
-        'ocr.data': 0,
-        'translation.data': 0,
-        'summary.data': 0,
-        'modernized.data': 0,
-        'detected_images.description': 0,
-        'detected_images.gallery_rationale': 0,
-        'detected_images.museum_description': 0,
-        'detected_images.metadata': 0,
-        'split_detection': 0,
+        _id: 0,
+        id: 1,
+        page_number: 1,
+        photo: 1,
+        photo_original: 1,
+        archived_photo: 1,
+        thumbnail: 1,
+        thumbnail_blob: 1,
+        crop: 1,
+        'ocr.updated_at': 1,
+        'translation.updated_at': 1,
+        'summary.updated_at': 1,
+        'detected_images.type': 1,
       }
     })
     .sort({ page_number: 1 })

@@ -99,6 +99,11 @@ export default function GalleryPage() {
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined
         });
+        // On pagination (offset > 0), API skips filter computation.
+        // Preserve filters from the initial page load.
+        if (page > 0 && data?.filters && (!json.filters?.types?.length)) {
+          json.filters = data.filters;
+        }
         setData(json);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load gallery');

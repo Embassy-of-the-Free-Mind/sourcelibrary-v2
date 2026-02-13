@@ -20,18 +20,33 @@ export const analytics = {
   },
 
   /**
-   * Get usage statistics
+   * Get usage statistics (extended timeout — this endpoint aggregates many collections)
    */
   usage: async (days?: number): Promise<UsageStats> => {
     const url = days ? `/api/analytics/usage?days=${days}` : '/api/analytics/usage';
-    return await apiClient.get(url);
+    return await apiClient.get(url, { timeout: 90000 });
   },
 
   /**
-   * Get loading/performance metrics
+   * Get loading/performance metrics (extended timeout for aggregation queries)
    */
   loading: async (hours?: number): Promise<any> => {
     const url = hours ? `/api/analytics/loading?hours=${hours}` : '/api/analytics/loading';
+    return await apiClient.get(url, { timeout: 90000 });
+  },
+
+  /**
+   * Get traffic data (pageviews, referrers, countries)
+   */
+  traffic: async (): Promise<any> => {
+    return await apiClient.get('/api/analytics');
+  },
+
+  /**
+   * Get search query analytics
+   */
+  search: async (days?: number): Promise<any> => {
+    const url = days ? `/api/analytics/search?days=${days}` : '/api/analytics/search';
     return await apiClient.get(url);
   },
 

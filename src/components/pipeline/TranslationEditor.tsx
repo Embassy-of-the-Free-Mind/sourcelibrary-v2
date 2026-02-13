@@ -32,6 +32,7 @@ import HighlightSelection from '@/components/annotations/HighlightSelection';
 import { BookShare } from '@/components/ui/ShareButton';
 import { GoogleTranslate } from '@/components/search/GoogleTranslate';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
+import { sendGAEvent } from '@/lib/ga';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
@@ -111,7 +112,7 @@ function BookSearchBar({ bookId }: { bookId: string }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative flex-1 max-w-xs">
+    <div ref={containerRef} className="relative max-w-md mx-auto w-full">
       <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: 'rgba(0,0,0,0.05)' }}>
         {isSearching ? (
           <Loader2 className="w-3 h-3 animate-spin" style={{ color: 'var(--text-muted)' }} />
@@ -525,33 +526,32 @@ export default function TranslationEditor({
     const width = widths[tier];
     const quality = qualities[tier];
 
-    // Cast to access optional fields
-    const pageData = p as unknown as Record<string, unknown>;
-    const croppedPhoto = pageData.cropped_photo as string | undefined;
-    const archivedPhoto = pageData.archived_photo as string | undefined;
-
-    // If we have a pre-generated cropped photo (for split pages), use it directly
-    if (p.crop && croppedPhoto) {
-      return croppedPhoto;
+    // Pre-generated cropped photo (split pages) — use directly
+    if (p.crop && p.cropped_photo) {
+      return p.cropped_photo;
     }
 
-    // Prefer archived photo (Vercel Blob) for faster/reliable loading
-    const baseUrl = archivedPhoto || p.photo_original || p.photo;
+    // Prefer archived photo (Vercel Blob), then original sources
+    const baseUrl = p.archived_photo || p.photo_original || p.photo;
     if (!baseUrl) return '';
 
-    // Build URL with crop parameters if available
+    // Cropping requires the image proxy for server-side crop
     if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
       return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
     }
 
-    // No crop - still go through image API for consistent sizing
+    // Archived images: serve directly from Blob CDN (skip proxy)
+    if (p.archived_photo) {
+      return p.archived_photo;
+    }
+
+    // External sources: proxy for resize/optimization
     return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
   };
 
   // URLs for current page at different quality tiers
-  const pageFullUrl = getImageUrl(page, 'full');          // For magnifier (2400px, cropped if split)
-  const pageDisplayUrl = getImageUrl(page, 'display');    // For main view (1200px)
-  const pageThumbnailUrl = getImageUrl(page, 'thumbnail'); // For fast loading (400px)
+  const pageFullUrl = getImageUrl(page, 'full');       // For magnifier (2400px, cropped if split)
+  const pageDisplayUrl = getImageUrl(page, 'display'); // For main view (1200px)
 
   // Keyboard navigation
   useEffect(() => {
@@ -576,17 +576,16 @@ export default function TranslationEditor({
         page_id: page.id
       }
     ).catch(() => { }); // Fire and forget
+    sendGAEvent({ action: 'page_read', category: 'engagement', label: book.id, value: page.page_number });
   }, [book.id, page.id]);
 
   // Prefetch adjacent page images for faster navigation
   useEffect(() => {
     const getSmallImageUrl = (p: Page) => {
       if (p.thumbnail) return p.thumbnail;
-      if (p.compressed_photo) return p.compressed_photo;
-      // Use resize API for small version, prefer archived_photo
-      const pageData = p as unknown as Record<string, unknown>;
-      const baseUrl = (pageData.archived_photo as string) || p.photo;
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
+      if (p.archived_photo) return p.archived_photo;
+      const baseUrl = p.photo_original || p.photo;
+      return baseUrl ? `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60` : '';
     };
 
     const prefetchImage = (url: string) => {
@@ -1148,12 +1147,17 @@ export default function TranslationEditor({
           );
         })()}
 
-        {/* Footer with search + nav hint */}
-        <div className="px-4 py-1.5 flex items-center justify-between gap-4 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <span className="hidden lg:inline shrink-0">← → to navigate</span>
-          <span className="lg:hidden shrink-0">Swipe to navigate</span>
-          <BookSearchBar bookId={book.id} />
-          <span className="hidden sm:flex items-center gap-1 shrink-0">CC0 Public Domain</span>
+        {/* Footer: nav hint + search */}
+        <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+          <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs">
+            <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
+            <span className="lg:hidden">Swipe left/right to navigate</span>
+            <span className="hidden sm:inline">·</span>
+            <span className="hidden sm:inline">CC0 Public Domain</span>
+          </div>
+          <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
+            <BookSearchBar bookId={book.id} />
+          </div>
         </div>
 
         {/* Page Assistant Modal */}
