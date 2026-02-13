@@ -24,7 +24,22 @@ export async function GET(
     // Use ?full=true to include OCR/translation/summary data
     const projection = includeFull
       ? {}
-      : { 'ocr.data': 0, 'translation.data': 0, 'summary.data': 0 };
+      : {
+          'ocr.data': 0,
+          'ocr.model': 0,
+          'ocr.language': 0,
+          'translation.data': 0,
+          'translation.model': 0,
+          'translation.language': 0,
+          'summary.data': 0,
+          'modernized.data': 0,
+          'detected_images.description': 0,
+          'detected_images.museum_description': 0,
+          'detected_images.gallery_rationale': 0,
+          'detected_images.metadata': 0,
+          'archive_metadata': 0,
+          'split_detection': 0,
+        };
 
     const pages = await db.collection('pages')
       .find({ book_id: id })

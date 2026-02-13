@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GlobalFooter from "@/components/layout/GlobalFooter";
 import Providers from "@/components/providers/Providers";
-import { Analytics } from "@vercel/analytics/react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import PageTracker from "@/components/reader/PageTracker";
 import { getSiteMode } from "@/lib/site-mode.server";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
@@ -78,7 +78,7 @@ export default async function RootLayout({
           <GlobalFooter />
           <SiteModeIndicator />
         </Providers>
-        <Analytics />
+        <GoogleAnalytics gaId="G-C1QJNTSZT2" />
         <PageTracker />
       </body>
     </html>
