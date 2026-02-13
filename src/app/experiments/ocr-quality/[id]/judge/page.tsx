@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ocrQualityExperiments } from '@/lib/api-client';
+import NotesRenderer from '@/components/reader/NotesRenderer';
 
 interface Comparison {
   page_id: string;
@@ -32,6 +33,7 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
   const [stats, setStats] = useState<JudgmentStats>({ total: 0, completed: 0, remaining: 0 });
   const [submitting, setSubmitting] = useState(false);
   const [showImage, setShowImage] = useState(true);
+  const [reasoning, setReasoning] = useState('');
 
   const fetchNextComparison = useCallback(async () => {
     setLoading(true);
@@ -74,7 +76,9 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
         condition_b: comparison.condition_b,
         comparison_type: comparison.comparison_type,
         winner: actualWinner,
+        ...(reasoning.trim() ? { reasoning: reasoning.trim() } : {}),
       });
+      setReasoning('');
       fetchNextComparison();
     } catch (error) {
       console.error('Error submitting judgment:', error);
@@ -87,6 +91,9 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (submitting || loading) return;
+      // Don't capture shortcuts when typing in the notes field
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'TEXTAREA' || tag === 'INPUT') return;
       if (e.key === '1' || e.key === 'a') submitJudgment('left');
       if (e.key === '2' || e.key === 'b') submitJudgment('right');
       if (e.key === '3' || e.key === 't') submitJudgment('tie');
@@ -198,9 +205,11 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
               </div>
             </div>
             <div className="p-4 max-h-[70vh] overflow-auto">
-              <pre className="text-base whitespace-pre-wrap font-serif leading-relaxed text-primary">
-                {leftOcr || '(empty)'}
-              </pre>
+              {leftOcr ? (
+                <NotesRenderer text={leftOcr} showMetadata={false} />
+              ) : (
+                <p className="text-muted italic">(empty)</p>
+              )}
             </div>
           </div>
 
@@ -213,15 +222,28 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
               </div>
             </div>
             <div className="p-4 max-h-[70vh] overflow-auto">
-              <pre className="text-base whitespace-pre-wrap font-serif leading-relaxed text-primary">
-                {rightOcr || '(empty)'}
-              </pre>
+              {rightOcr ? (
+                <NotesRenderer text={rightOcr} showMetadata={false} />
+              ) : (
+                <p className="text-muted italic">(empty)</p>
+              )}
             </div>
           </div>
         </div>
 
+        {/* Notes */}
+        <div className="max-w-2xl mx-auto mt-5">
+          <textarea
+            value={reasoning}
+            onChange={e => setReasoning(e.target.value)}
+            placeholder="Notes on your judgment (optional) — what made one better?"
+            rows={2}
+            className="w-full px-3 py-2.5 text-base border border-border-medium rounded-lg bg-white resize-y leading-relaxed placeholder:text-muted"
+          />
+        </div>
+
         {/* Judgment buttons */}
-        <div className="flex items-center justify-center gap-4 mt-6">
+        <div className="flex items-center justify-center gap-4 mt-4">
           <button
             onClick={() => submitJudgment('left')}
             disabled={submitting}

@@ -24,7 +24,7 @@ interface OCRComparison {
   question: string;
 }
 
-const JUDGE_PROMPT = `You are an expert evaluator of OCR (Optical Character Recognition) quality for historical manuscripts.
+const JUDGE_SYSTEM_PROMPT = `You are an expert evaluator of OCR (Optical Character Recognition) quality for historical manuscripts.
 
 You will be shown:
 1. An image of a manuscript page
@@ -39,12 +39,31 @@ Evaluation criteria (in order of importance):
 4. **Formatting** - Line breaks, paragraph structure
 5. **Special characters** - Abbreviations, diacritics, ligatures
 
-Compare carefully and respond with ONLY one of:
-- "A" if transcription A is clearly better
-- "B" if transcription B is clearly better
-- "TIE" if they are roughly equal in quality
+Respond in exactly two lines:
+Line 1: Your verdict — A, B, or TIE
+Line 2: Brief reasoning (one sentence)`;
 
-Do not explain your reasoning. Just output A, B, or TIE.`;
+function buildCalibrationExamples(
+  humanJudgments: Array<{
+    condition_a: string;
+    condition_b: string;
+    winner: string;
+    reasoning?: string;
+    ocr_a?: string;
+    ocr_b?: string;
+  }>
+): string {
+  if (humanJudgments.length === 0) return '';
+
+  const examples = humanJudgments
+    .map((j, i) => {
+      const winner = j.winner === 'a' ? 'A' : j.winner === 'b' ? 'B' : 'TIE';
+      return `Example ${i + 1}: Verdict: ${winner} — ${j.reasoning}`;
+    })
+    .join('\n');
+
+  return `\n\nHere are calibration examples from a human expert reviewing similar pages in this experiment. Align your judgment criteria with these examples:\n${examples}`;
+}
 
 function calculateCost(inputTokens: number, outputTokens: number): number {
   const inputCost = (inputTokens / 1_000_000) * CLAUDE_PRICING.input;
@@ -163,6 +182,19 @@ export async function POST(
       });
     }
 
+    // Fetch human judgments with reasoning for calibration
+    const humanExamples = existingJudgments
+      .filter(j => j.judge_type === 'human' && j.reasoning?.trim())
+      .slice(0, 10) // Cap at 10 to keep prompt manageable
+      .map(j => ({
+        condition_a: j.condition_a as string,
+        condition_b: j.condition_b as string,
+        winner: j.winner as string,
+        reasoning: j.reasoning as string,
+      }));
+
+    const calibrationText = buildCalibrationExamples(humanExamples);
+
     // Initialize progress
     await db.collection('ocr_experiments').updateOne(
       { id },
@@ -195,20 +227,19 @@ export async function POST(
         }
 
         // Build the prompt with both transcriptions
-        const textPrompt = `${JUDGE_PROMPT}
-
-=== TRANSCRIPTION A ===
+        const textPrompt = `=== TRANSCRIPTION A ===
 ${judgment.ocr_a.slice(0, 3000)}
 
 === TRANSCRIPTION B ===
 ${judgment.ocr_b.slice(0, 3000)}
 
-Which transcription is more accurate? Reply with only A, B, or TIE.`;
+Which transcription is more accurate to the manuscript image? Reply with your verdict and brief reasoning on two lines.`;
 
         // Call Claude with vision
         const result = await anthropic.messages.create({
           model: JUDGE_MODEL,
-          max_tokens: 10,
+          max_tokens: 150,
+          system: JUDGE_SYSTEM_PROMPT + calibrationText,
           messages: [
             {
               role: 'user',
@@ -231,7 +262,9 @@ Which transcription is more accurate? Reply with only A, B, or TIE.`;
         });
 
         const responseText = result.content[0].type === 'text' ? result.content[0].text : '';
-        const response = responseText.trim().toUpperCase();
+        const responseLines = responseText.trim().split('\n');
+        const verdictLine = responseLines[0]?.toUpperCase() || '';
+        const aiReasoning = responseLines.slice(1).join(' ').trim();
         const inputTokens = result.usage.input_tokens;
         const outputTokens = result.usage.output_tokens;
         const cost = calculateCost(inputTokens, outputTokens);
@@ -239,17 +272,17 @@ Which transcription is more accurate? Reply with only A, B, or TIE.`;
         totalCost += cost;
         totalTokens += inputTokens + outputTokens;
 
-        // Parse the winner
+        // Parse the winner from first line
         let winner: 'a' | 'b' | 'tie' = 'tie';
-        if (response.startsWith('A')) {
+        if (verdictLine.startsWith('A')) {
           winner = 'a';
-        } else if (response.startsWith('B')) {
+        } else if (verdictLine.startsWith('B')) {
           winner = 'b';
-        } else if (response.includes('TIE')) {
+        } else if (verdictLine.includes('TIE')) {
           winner = 'tie';
         }
 
-        // Save the judgment
+        // Save the judgment with reasoning
         await db.collection('ocr_judgments').insertOne({
           id: crypto.randomUUID(),
           experiment_id: id,
@@ -260,7 +293,9 @@ Which transcription is more accurate? Reply with only A, B, or TIE.`;
           winner,
           judge_type: 'ai',
           judge_model: JUDGE_MODEL,
-          ai_response: response,
+          ai_response: responseText.trim(),
+          ...(aiReasoning ? { reasoning: aiReasoning } : {}),
+          calibrated_from: humanExamples.length,
           created_at: new Date().toISOString(),
         });
 
@@ -315,6 +350,7 @@ Which transcription is more accurate? Reply with only A, B, or TIE.`;
       is_complete: isComplete,
       cost: totalCost,
       tokens: totalTokens,
+      calibrated_from_human_judgments: humanExamples.length,
     });
   } catch (error) {
     console.error('Error in auto-judge:', error);

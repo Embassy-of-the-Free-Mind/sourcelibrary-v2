@@ -351,11 +351,13 @@ export default function TranslationEditor({
     : pages.find(p => p.split_from === page.id); // This is the left half, find the right
 
   // Check if OCR/translation exists on either half (data loss warning)
+  // Use updated_at instead of .data — sibling pages come from the lightweight list
+  // which excludes text fields but retains timestamps
   const hasDataOnSplit = !!(
-    page.ocr?.data ||
-    page.translation?.data ||
-    siblingPage?.ocr?.data ||
-    siblingPage?.translation?.data
+    page.ocr?.data || page.ocr?.updated_at ||
+    page.translation?.data || page.translation?.updated_at ||
+    siblingPage?.ocr?.updated_at ||
+    siblingPage?.translation?.updated_at
   );
 
   // Reset the split

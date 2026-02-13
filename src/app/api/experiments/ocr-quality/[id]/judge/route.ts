@@ -122,12 +122,14 @@ export async function POST(
       condition_b,
       comparison_type,
       winner,
+      reasoning,
     }: {
       page_id: string;
       condition_a: string;
       condition_b: string;
       comparison_type: string;
       winner: 'a' | 'b' | 'tie';
+      reasoning?: string;
     } = await request.json();
 
     if (!page_id || !condition_a || !condition_b || !comparison_type || !winner) {
@@ -156,6 +158,8 @@ export async function POST(
       condition_b,
       comparison_type,
       winner,
+      judge_type: 'human' as const,
+      ...(reasoning?.trim() ? { reasoning: reasoning.trim() } : {}),
       created_at: new Date().toISOString(),
     };
 
