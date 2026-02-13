@@ -35,10 +35,10 @@ export function BatchJobCard({ job }: Props) {
   const statusColor = isPending
     ? 'text-purple-600'
     : isComplete
-    ? 'text-green-600'
-    : hasErrors
-    ? 'text-amber-600'
-    : 'text-red-600';
+      ? 'text-green-600'
+      : hasErrors
+        ? 'text-amber-600'
+        : 'text-red-600';
 
   return (
     <div className="p-4 rounded-xl bg-white border border-stone-200">

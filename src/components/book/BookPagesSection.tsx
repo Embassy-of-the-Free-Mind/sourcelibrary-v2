@@ -86,6 +86,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
   // Current job status (fetched from API on-demand)
   const [currentJob, setCurrentJob] = useState<Job | null>(null);
+  // Initial job check loading - hide actions until we know if a job is active
+  const [checkingActiveJob, setCheckingActiveJob] = useState(true);
   const [loadingJob, setLoadingJob] = useState(false);
   const [queueing, setQueueing] = useState(false);
   const [cancelling, setCancelling] = useState(false);
@@ -94,6 +96,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   // Batch mode state (Gemini Batch API)
   const [processingMode, setProcessingMode] = useState<'realtime' | 'batch'>('realtime');
   const [currentBatchJob, setCurrentBatchJob] = useState<any>(null);
+  const [loadingBatchJob, setLoadingBatchJob] = useState(false);
 
   const lastSelectedIndexRef = useRef<number | null>(null);
 
@@ -140,6 +143,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       } catch (error) {
         console.error('Failed to fetch current job:', error);
       }
+        // Mark initial check complete so actions can be shown if no active job
+        setCheckingActiveJob(false);
     };
     fetchCurrentJob();
   }, [bookId]);
@@ -422,6 +427,28 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     }
   };
 
+  // Fetch batch job status (for Gemini batch jobs)
+  const fetchBatchJobStatus = async () => {
+    if (!currentBatchJob) return;
+
+    setLoadingBatchJob(true);
+    try {
+      const bj = await batchJobs.get(currentBatchJob.id);
+
+      // If batch job completed successfully (no failed pages), clear
+      if (bj.status === 'completed' && (bj.progress?.failed ?? 0) === 0) {
+        setCurrentBatchJob(null);
+        router.refresh();
+      } else {
+        setCurrentBatchJob(bj);
+      }
+    } catch (error) {
+      console.error('Failed to fetch batch job status:', error);
+    } finally {
+      setLoadingBatchJob(false);
+    }
+  };
+
   // Retry failed pages
   const retryFailedPages = async () => {
     if (!currentJob) return;
@@ -513,6 +540,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             batchMode={batchMode}
             reorderMode={reorderMode}
             currentJob={currentJob}
+            currentBatchJob={currentBatchJob}
+            checkingJob={checkingActiveJob}
             orderChanged={orderChanged}
             savingOrder={savingOrder}
             pagesWithOcr={pagesWithOcr}
@@ -531,6 +560,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         <BatchJobStatusBanner
           job={currentBatchJob}
           onClose={() => setCurrentBatchJob(null)}
+          onRefresh={fetchBatchJobStatus}
+          loading={loadingBatchJob}
         />
       )}
 

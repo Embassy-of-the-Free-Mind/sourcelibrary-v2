@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         page_ids: pageIds,
         custom_prompt: customPrompt,
         model: DEFAULT_MODEL,
-        language: book.original_language || ''
+        language: book.language || "auto-detect"
       },
       initiated_by: 'user',
       created_at: new Date(),

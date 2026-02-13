@@ -101,11 +101,6 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                             <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600">
                                 {job.config.language}
                             </span>
-                            {job.progress?.total > 0 && (
-                                <span className="text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-500">
-                                    {job.progress.total} pages
-                                </span>
-                            )}
                             {job.config.prompt_name !== 'Standard OCR' && job.config.prompt_name !== 'Standard Translation' && (
                                 <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-50 text-purple-700">
                                     {job.config.prompt_name}
@@ -114,7 +109,7 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                         </div>
                     )}
                 </div>
-                <div className="flex items-center gap-1">
+                {/* <div className="flex items-center gap-1">
                     {(job.status === 'completed_with_errors' || job.status === 'partial') && (
                         <button
                             onClick={() => onRetry(job.id)}
@@ -131,7 +126,7 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                     >
                         <X className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
                     </button>
-                </div>
+                </div> */}
             </div>
 
             {/* Progress bar */}
@@ -155,14 +150,6 @@ export function JobCard({ job, onRetry, onDelete }: JobCardProps) {
                     />
                 </div>
             </div>
-
-            {/* Current item */}
-            {/* TODO: REMOVE IF NOT NEEDED */}
-            {/* {job.progress.currentItem && job.status === 'processing' && (
-                <div className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>
-                    Processing: {job.progress.currentItem}
-                </div>
-            )} */}
 
             {/* Error message */}
             {job.error && (

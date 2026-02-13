@@ -18,9 +18,11 @@ interface Props {
     created_at: Date;
   };
   onClose: () => void;
+  onRefresh?: () => void;
+  loading?: boolean;
 }
 
-export default function BatchJobStatusBanner({ job, onClose }: Props) {
+export default function BatchJobStatusBanner({ job, onClose, onRefresh, loading = false }: Props) {
   const isPending = job.status === 'pending' || job.status === 'processing';
   const completed = job.progress?.completed || 0;
   const total = job.progress?.total || job.total_pages;
@@ -73,6 +75,16 @@ export default function BatchJobStatusBanner({ job, onClose }: Props) {
         </div>
 
         <div className="flex items-center gap-2 ml-4">
+          {isPending && onRefresh && (
+            <button
+              onClick={onRefresh}
+              disabled={loading}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-purple-700 rounded-lg hover:bg-purple-100 border border-purple-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Loader2 className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </button>
+          )}
           <Link
             href="/jobs?tab=batch"
             className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white text-purple-700 rounded-lg hover:bg-purple-100 border border-purple-300"
