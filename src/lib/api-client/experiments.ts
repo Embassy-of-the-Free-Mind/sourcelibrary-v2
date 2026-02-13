@@ -126,6 +126,7 @@ export const ocrQualityExperiments = {
     condition_b: string;
     comparison_type: string;
     winner: 'a' | 'b' | 'tie';
+    reasoning?: string;
   }): Promise<{ success: boolean }> => {
     return await apiClient.post(`/api/experiments/ocr-quality/${id}/judge`, data);
   },

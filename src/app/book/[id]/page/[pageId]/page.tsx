@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback, Suspense } from 'react';
+import { useEffect, useState, useCallback, useRef, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -8,6 +8,7 @@ import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
 import { books, pages as pagesApi } from '@/lib/api-client';
+import type { BookWithPages } from '@/lib/api-client';
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;
@@ -25,8 +26,12 @@ export default function PageEditorPage({ params }: PageProps) {
   const [initialPageId, setInitialPageId] = useState<string>('');
   const [currentPageId, setCurrentPageId] = useState<string>('');
   const [book, setBook] = useState<Book | null>(null);
-  const [pages, setPages] = useState<Page[]>([]);
+  const [pageList, setPageList] = useState<Page[]>([]); // Lightweight page list (no text data)
+  const [currentPage, setCurrentPage] = useState<Page | null>(null); // Full current page data
   const [loading, setLoading] = useState(true);
+
+  // Page cache: stores full page data keyed by page ID
+  const pageCacheRef = useRef<Map<string, Page>>(new Map());
 
   useEffect(() => {
     params.then(({ id, pageId }) => {
@@ -39,23 +44,70 @@ export default function PageEditorPage({ params }: PageProps) {
   // Track loading metrics
   const { markLoaded } = useLoadingMetrics('page_editor', { bookId });
 
-  // Only fetch book data once when bookId changes (not on every page change)
-  useEffect(() => {
-    if (!bookId) return;
+  // Fetch a single page's full data, with cache
+  const fetchPageData = useCallback(async (pageId: string): Promise<Page | null> => {
+    const cached = pageCacheRef.current.get(pageId);
+    if (cached) return cached;
 
-    async function fetchData() {
+    try {
+      const page = await pagesApi.get(pageId);
+      pageCacheRef.current.set(pageId, page);
+      return page;
+    } catch (error) {
+      console.error(`Failed to fetch page ${pageId}:`, error);
+      return null;
+    }
+  }, []);
+
+  // Prefetch pages around the current index (5 ahead, 2 behind)
+  const prefetchAround = useCallback((index: number, pages: Page[]) => {
+    const start = Math.max(0, index - 2);
+    const end = Math.min(pages.length - 1, index + 5);
+
+    for (let i = start; i <= end; i++) {
+      if (i === index) continue; // Skip current (already fetched)
+      const pageId = pages[i].id;
+      if (!pageCacheRef.current.has(pageId)) {
+        // Silent background fetch — don't await
+        fetchPageData(pageId);
+      }
+    }
+  }, [fetchPageData]);
+
+  // Initial load: fetch book metadata + lightweight page list, and current page data in parallel
+  useEffect(() => {
+    if (!bookId || !currentPageId) return;
+
+    // Only run initial load once per book
+    if (book && book.id === bookId && pageList.length > 0) return;
+
+    async function fetchInitialData() {
       setLoading(true);
       const startTime = performance.now();
       try {
-        const bookData = await books.get(bookId, { full: true }) as import('@/lib/api-client').BookWithPages;
+        // Parallel: book metadata (with lightweight pages) + current page full data
+        const [bookData, pageData] = await Promise.all([
+          books.get(bookId) as Promise<BookWithPages>,
+          pagesApi.get(currentPageId),
+        ]);
 
         setBook(bookData);
-        setPages(bookData.pages || []);
+        setPageList(bookData.pages || []);
+
+        // Cache and set the current page
+        pageCacheRef.current.set(currentPageId, pageData);
+        setCurrentPage(pageData);
+
         markLoaded();
 
-        // Log fetch timing in dev
         if (process.env.NODE_ENV === 'development') {
           console.log(`[Page Editor] Loaded in ${(performance.now() - startTime).toFixed(0)}ms`);
+        }
+
+        // Prefetch nearby pages
+        const idx = (bookData.pages || []).findIndex((p: Page) => p.id === currentPageId);
+        if (idx >= 0) {
+          prefetchAround(idx, bookData.pages || []);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -64,28 +116,60 @@ export default function PageEditorPage({ params }: PageProps) {
       }
     }
 
-    fetchData();
-  }, [bookId, markLoaded]);
+    fetchInitialData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookId]);
 
-  // Client-side navigation - no refetch, just update URL and current page
+  // When currentPageId changes (navigation), load that page's data
+  useEffect(() => {
+    if (!currentPageId || !bookId || loading) return;
+    if (pageList.length === 0) return;
+
+    async function loadPage() {
+      const cached = pageCacheRef.current.get(currentPageId);
+      if (cached) {
+        setCurrentPage(cached);
+      } else {
+        // Show what we can immediately (image from lightweight list), fetch text
+        const pageData = await fetchPageData(currentPageId);
+        if (pageData) {
+          setCurrentPage(pageData);
+        }
+      }
+
+      // Prefetch around new position
+      const idx = pageList.findIndex(p => p.id === currentPageId);
+      if (idx >= 0) {
+        prefetchAround(idx, pageList);
+      }
+    }
+
+    loadPage();
+  }, [currentPageId, bookId, loading, pageList, fetchPageData, prefetchAround]);
+
+  // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string) => {
     setCurrentPageId(newPageId);
     // Update URL without triggering a refetch
     window.history.pushState(null, '', `/book/${bookId}/page/${newPageId}`);
   }, [bookId]);
 
-  // Derive current page from pages array
-  const currentPage = pages.find(p => p.id === currentPageId) || null;
-  const currentIndex = pages.findIndex(p => p.id === currentPageId);
+  const currentIndex = pageList.findIndex(p => p.id === currentPageId);
 
   const handleSave = async (data: { ocr?: string; translation?: string; summary?: string }) => {
     if (!currentPage) return;
 
-    await pagesApi.update(currentPage.id, {
+    const updatedPage = await pagesApi.update(currentPage.id, {
       ocr: data.ocr ? { data: data.ocr, language: book?.language || 'Latin' } : undefined,
       translation: data.translation ? { data: data.translation, language: 'English' } : undefined,
       summary: data.summary ? { data: data.summary } : undefined
     });
+
+    // Update the cache with the saved data
+    if (updatedPage) {
+      pageCacheRef.current.set(currentPage.id, updatedPage as unknown as Page);
+      setCurrentPage(updatedPage as unknown as Page);
+    }
   };
 
   if (loading) {
@@ -139,17 +223,18 @@ export default function PageEditorPage({ params }: PageProps) {
       <TranslationEditor
         book={book}
         page={currentPage}
-        pages={pages}
+        pages={pageList}
         currentIndex={currentIndex}
         onNavigate={handleNavigate}
         onSave={handleSave}
         onRefresh={async () => {
           try {
-            const data = await books.get(bookId, { full: true }) as import('@/lib/api-client').BookWithPages;
-            setBook(data);
-            setPages(data.pages || []);
+            // Re-fetch only the current page, not the entire book
+            const pageData = await pagesApi.get(currentPageId);
+            pageCacheRef.current.set(currentPageId, pageData);
+            setCurrentPage(pageData);
           } catch (error) {
-            console.error('Failed to refresh book data:', error);
+            console.error('Failed to refresh page data:', error);
           }
         }}
       />

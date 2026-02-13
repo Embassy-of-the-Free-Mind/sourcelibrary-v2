@@ -292,6 +292,20 @@ export async function POST() {
         : `error: ${err.message}`;
     }
 
+    // Pages - thumbnail lookup (find pages needing thumbnails, filter by thumbnail status)
+    try {
+      await db.collection('pages').createIndex(
+        { thumbnail_blob: 1, archived_photo: 1 },
+        { name: 'pages_thumbnail_archived_idx', background: true }
+      );
+      results['pages.pages_thumbnail_archived_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_thumbnail_archived_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results

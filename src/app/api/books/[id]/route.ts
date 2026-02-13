@@ -47,7 +47,13 @@ export async function GET(
       .sort({ page_number: 1 })
       .toArray();
 
-    return NextResponse.json({ ...book, pages });
+    const cacheControl = includeFull
+      ? 'private, no-cache'
+      : 'public, max-age=60, stale-while-revalidate=300';
+
+    return NextResponse.json({ ...book, pages }, {
+      headers: { 'Cache-Control': cacheControl }
+    });
   } catch (error) {
     console.error('Error fetching book:', error);
     return NextResponse.json({ error: 'Failed to fetch book' }, { status: 500 });

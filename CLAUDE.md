@@ -47,3 +47,4 @@ Books imported before Dec 30, 2025 may have wrong page counts. See `docs/ia-page
 - Social media system: @.claude/docs/social-media.md
 - Analytics & engagement: @.claude/docs/analytics.md
 - Search system: @.claude/docs/search.md
+- Schema.org structured data: @.claude/docs/structured-data.md
