@@ -19,52 +19,55 @@ export interface OCRComparison {
 // POST /api/experiments/ocr-quality - Create OCR quality experiment
 export async function POST(request: NextRequest) {
   try {
+    const body = await request.json();
     const {
       book_id,
       start_page,
       end_page,
+      page_ids: directPageIds,
       conditions,
       comparisons,
     }: {
-      book_id: string;
-      start_page: number;
-      end_page: number;
+      book_id?: string;
+      start_page?: number;
+      end_page?: number;
+      page_ids?: string[];
       conditions: OCRCondition[];
       comparisons: OCRComparison[];
-    } = await request.json();
+    } = body;
 
-    if (!book_id || !start_page || !end_page) {
-      return NextResponse.json({ error: 'book_id, start_page, end_page required' }, { status: 400 });
+    if (!book_id && !directPageIds?.length) {
+      return NextResponse.json({ error: 'book_id or page_ids required' }, { status: 400 });
     }
 
     const db = await getDb();
 
-    // Debug: Check book exists
-    const book = await db.collection('books').findOne({ id: book_id });
-    console.log('Book lookup:', { book_id, found: !!book, title: book?.title });
-
-    // Get pages in range
-    const pages = await db
-      .collection('pages')
-      .find({
-        book_id,
-        page_number: { $gte: start_page, $lte: end_page },
-      })
-      .sort({ page_number: 1 })
-      .toArray();
-
-    console.log('Pages query:', { book_id, start_page, end_page, found: pages.length });
+    let pages;
+    if (directPageIds?.length) {
+      // Direct page IDs — can span multiple books
+      pages = await db
+        .collection('pages')
+        .find({ id: { $in: directPageIds } })
+        .sort({ page_number: 1 })
+        .toArray();
+    } else {
+      // Page range within a single book
+      pages = await db
+        .collection('pages')
+        .find({
+          book_id,
+          page_number: { $gte: start_page!, $lte: end_page! },
+        })
+        .sort({ page_number: 1 })
+        .toArray();
+    }
 
     if (pages.length === 0) {
-      // Debug: Check if any pages exist for this book at all
-      const allPages = await db.collection('pages').countDocuments({ book_id });
-      const samplePage = await db.collection('pages').findOne({ book_id });
-      console.log('Debug pages:', { allPages, samplePageNumber: samplePage?.page_number });
-
-      return NextResponse.json({
-        error: `No pages found in range ${start_page}-${end_page}. Book has ${allPages} pages total.`
-      }, { status: 404 });
+      return NextResponse.json({ error: 'No pages found' }, { status: 404 });
     }
+
+    // Derive book_id from pages if not provided
+    const effectiveBookId = book_id || pages[0].book_id;
 
     const experimentId = crypto.randomUUID();
     const pageCount = pages.length;
@@ -73,9 +76,9 @@ export async function POST(request: NextRequest) {
     const experiment = {
       id: experimentId,
       type: 'ocr_quality',
-      book_id,
-      start_page,
-      end_page,
+      book_id: effectiveBookId,
+      ...(start_page ? { start_page } : {}),
+      ...(end_page ? { end_page } : {}),
       page_ids: pages.map(p => p.id),
       page_count: pageCount,
       conditions,

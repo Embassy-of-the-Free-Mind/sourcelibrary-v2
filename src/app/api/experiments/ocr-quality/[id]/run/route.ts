@@ -68,12 +68,20 @@ export async function POST(
       return NextResponse.json({ error: 'Condition already run' }, { status: 400 });
     }
 
-    // Get pages
-    const pages = await db
+    // Check for existing results (resume support)
+    const existingResults = await db
+      .collection('ocr_experiment_results')
+      .find({ experiment_id: id, condition_id })
+      .toArray();
+    const donePageIds = new Set(existingResults.map(r => r.page_id));
+
+    // Get pages, filtering out already-processed ones
+    const allPages = await db
       .collection('pages')
       .find({ id: { $in: experiment.page_ids } })
       .sort({ page_number: 1 })
       .toArray();
+    const pages = allPages.filter(p => !donePageIds.has(p.id));
 
     if (pages.length === 0) {
       return NextResponse.json({ error: 'No pages found' }, { status: 404 });
@@ -110,15 +118,15 @@ export async function POST(
     let totalCost = 0;
     let totalTokens = 0;
 
-    // Initialize progress tracking
+    // Initialize progress tracking (account for already-done pages)
     await db.collection('ocr_experiments').updateOne(
       { id },
       {
         $set: {
           [`progress.${condition_id}`]: {
             status: 'running',
-            processed: 0,
-            total: pages.length,
+            processed: existingResults.length,
+            total: allPages.length,
             started_at: new Date().toISOString(),
           },
         },
@@ -297,7 +305,7 @@ Return each transcription clearly separated:
         { id },
         {
           $set: {
-            [`progress.${condition_id}.processed`]: results.length,
+            [`progress.${condition_id}.processed`]: existingResults.length + results.length,
             [`progress.${condition_id}.last_update`]: new Date().toISOString(),
           },
         }
@@ -305,12 +313,13 @@ Return each transcription clearly separated:
     }
 
     // Mark condition as complete
+    const totalProcessed = existingResults.length + results.length;
     await db.collection('ocr_experiments').updateOne(
       { id },
       {
         $set: {
           [`progress.${condition_id}.status`]: 'complete',
-          [`progress.${condition_id}.processed`]: results.length,
+          [`progress.${condition_id}.processed`]: totalProcessed,
           [`progress.${condition_id}.completed_at`]: new Date().toISOString(),
         },
       }

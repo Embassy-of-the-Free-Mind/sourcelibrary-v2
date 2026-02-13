@@ -33,6 +33,7 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
   const [stats, setStats] = useState<JudgmentStats>({ total: 0, completed: 0, remaining: 0 });
   const [submitting, setSubmitting] = useState(false);
   const [showImage, setShowImage] = useState(true);
+  const [renderOcr, setRenderOcr] = useState(true);
   const [reasoning, setReasoning] = useState('');
 
   const fetchNextComparison = useCallback(async () => {
@@ -98,6 +99,7 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
       if (e.key === '2' || e.key === 'b') submitJudgment('right');
       if (e.key === '3' || e.key === 't') submitJudgment('tie');
       if (e.key === 'i') setShowImage(prev => !prev);
+      if (e.key === 'r') setRenderOcr(prev => !prev);
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -165,6 +167,17 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
             >
               Image
             </button>
+            <button
+              onClick={() => setRenderOcr(prev => !prev)}
+              className={`px-3 py-1.5 rounded-lg text-base transition-colors ${
+                renderOcr
+                  ? 'bg-accent-violet/10 text-accent-violet'
+                  : 'bg-warm text-muted'
+              }`}
+              title="Toggle rendering (r)"
+            >
+              {renderOcr ? 'Rendered' : 'Raw'}
+            </button>
             <div className="text-base">
               <span className="font-medium text-primary">{stats.completed}</span>
               <span className="text-muted"> / {stats.total}</span>
@@ -206,7 +219,11 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
             </div>
             <div className="p-4 max-h-[70vh] overflow-auto">
               {leftOcr ? (
-                <NotesRenderer text={leftOcr} showMetadata={false} />
+                renderOcr ? (
+                  <NotesRenderer text={leftOcr} showMetadata={false} />
+                ) : (
+                  <pre className="whitespace-pre-wrap text-sm font-mono text-primary leading-relaxed">{leftOcr}</pre>
+                )
               ) : (
                 <p className="text-muted italic">(empty)</p>
               )}
@@ -223,7 +240,11 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
             </div>
             <div className="p-4 max-h-[70vh] overflow-auto">
               {rightOcr ? (
-                <NotesRenderer text={rightOcr} showMetadata={false} />
+                renderOcr ? (
+                  <NotesRenderer text={rightOcr} showMetadata={false} />
+                ) : (
+                  <pre className="whitespace-pre-wrap text-sm font-mono text-primary leading-relaxed">{rightOcr}</pre>
+                )
               ) : (
                 <p className="text-muted italic">(empty)</p>
               )}
@@ -271,7 +292,8 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
           Keyboard: <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm">1/A</kbd> Left &middot;
           <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">2/B</kbd> Right &middot;
           <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">3/T</kbd> Tie &middot;
-          <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">I</kbd> Toggle image
+          <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">I</kbd> Toggle image &middot;
+          <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">R</kbd> Toggle rendering
         </p>
       </div>
     </div>
