@@ -123,6 +123,7 @@ async function archivePage(page: any, db: any): Promise<boolean> {
             access: 'public',
             contentType: mimeType,
             addRandomSuffix: false,
+            allowOverwrite: true,
           });
           break;
         } catch (blobErr: any) {
@@ -318,13 +319,16 @@ async function main() {
     return;
   }
 
-  const CHUNK_SIZE = 5000;
+  const CHUNK_SIZE = PAGE_LIMIT > 0 ? Math.min(5000, PAGE_LIMIT) : 5000;
   let totalSuccess = 0;
   let totalFailed = 0;
   let processed = 0;
   const startTime = Date.now();
 
   while (true) {
+    const remaining = PAGE_LIMIT > 0 ? PAGE_LIMIT - processed : CHUNK_SIZE;
+    if (remaining <= 0) break;
+
     // Re-query each chunk to skip pages completed by other workers
     const pages = await db.collection('pages')
       .find(query, {
@@ -335,7 +339,7 @@ async function main() {
         }
       })
       .sort({ book_id: 1, page_number: 1 })
-      .limit(CHUNK_SIZE)
+      .limit(Math.min(CHUNK_SIZE, remaining))
       .toArray();
 
     if (pages.length === 0) break;
@@ -345,8 +349,6 @@ async function main() {
     totalSuccess += success;
     totalFailed += failed;
     processed += pages.length;
-
-    if (PAGE_LIMIT > 0 && processed >= PAGE_LIMIT) break;
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

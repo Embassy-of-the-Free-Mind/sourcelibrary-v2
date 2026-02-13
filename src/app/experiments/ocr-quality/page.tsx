@@ -132,10 +132,18 @@ export default function OCRExperimentsDashboard() {
                   )}
 
                   <div className="flex gap-3">
-                    {allConditionsRun && !judgingDone && (
+                    {allConditionsRun && (
+                      <Link
+                        href={`/experiments/ocr-quality/${exp.id}/review`}
+                        className="btn-secondary"
+                      >
+                        Review
+                      </Link>
+                    )}
+                    {allConditionsRun && !judgingDone && exp.comparisons?.length > 0 && (
                       <Link
                         href={`/experiments/ocr-quality/${exp.id}/judge`}
-                        className="btn-primary"
+                        className="btn-secondary"
                       >
                         Judge
                       </Link>

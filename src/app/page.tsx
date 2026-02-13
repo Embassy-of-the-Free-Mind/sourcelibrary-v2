@@ -78,6 +78,7 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
             display_title: 1,
             author: 1,
             thumbnail: 1,
+            thumbnail_blob: 1,
             language: 1,
             published: 1,
             categories: 1,

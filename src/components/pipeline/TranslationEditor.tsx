@@ -17,7 +17,7 @@ import {
   MessageSquare,
   RotateCcw,
   Sparkles,
-  MessageCircle,
+  Search,
   Highlighter,
   StickyNote,
   Info
@@ -69,6 +69,102 @@ function EditSourceBadge({ source, editedBy, editedAt }: {
     >
       AI
     </span>
+  );
+}
+
+// Inline book search bar for the page reader footer
+function BookSearchBar({ bookId }: { bookId: string }) {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    if (!query.trim()) { setResults([]); setShowResults(false); return; }
+    setShowResults(true);
+    debounceRef.current = setTimeout(async () => {
+      setIsSearching(true);
+      try {
+        const res = await fetch(`/api/books/${bookId}/search?q=${encodeURIComponent(query.trim())}`);
+        if (res.ok) {
+          const data = await res.json();
+          setResults(data.results || []);
+        }
+      } catch { /* ignore */ }
+      finally { setIsSearching(false); }
+    }, 300);
+    return () => { if (debounceRef.current) clearTimeout(debounceRef.current); };
+  }, [query, bookId]);
+
+  // Close on click outside
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setShowResults(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative flex-1 max-w-xs">
+      <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: 'rgba(0,0,0,0.05)' }}>
+        {isSearching ? (
+          <Loader2 className="w-3 h-3 animate-spin" style={{ color: 'var(--text-muted)' }} />
+        ) : (
+          <Search className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+        )}
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => query.trim() && setShowResults(true)}
+          placeholder="Search this book..."
+          className="bg-transparent outline-none text-xs w-full"
+          style={{ color: 'var(--text-primary)' }}
+        />
+        {query && (
+          <button onClick={() => { setQuery(''); setResults([]); setShowResults(false); }}>
+            <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+          </button>
+        )}
+      </div>
+      {showResults && query.trim() && (
+        <div
+          className="absolute bottom-full left-0 right-0 mb-1 rounded-lg shadow-xl overflow-hidden z-50"
+          style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)', maxHeight: '300px', overflowY: 'auto' }}
+        >
+          {isSearching ? (
+            <div className="p-3 text-center text-xs" style={{ color: 'var(--text-muted)' }}>Searching...</div>
+          ) : results.length === 0 ? (
+            <div className="p-3 text-center text-xs" style={{ color: 'var(--text-muted)' }}>No results for &quot;{query}&quot;</div>
+          ) : (
+            <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
+              {results.slice(0, 10).map((r) => (
+                <a
+                  key={r.pageId}
+                  href={`/book/${bookId}/page/${r.pageId}?highlight=${encodeURIComponent(query.trim())}`}
+                  className="block px-3 py-2 hover:bg-stone-50 transition-colors"
+                >
+                  <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Page {r.pageNumber}</span>
+                  {r.matches?.[0] && (
+                    <p
+                      className="text-xs mt-0.5 line-clamp-1"
+                      style={{ color: 'var(--text-muted)' }}
+                      dangerouslySetInnerHTML={{ __html: r.matches[0].snippet }}
+                    />
+                  )}
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -1037,17 +1133,6 @@ export default function TranslationEditor({
                         <Sparkles className="w-4 h-4" />
                         Explain
                       </button>
-                      <button
-                        onClick={() => {
-                          setAssistantMode('ask');
-                          setShowAssistant(true);
-                        }}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all hover:bg-violet-50"
-                        style={{ color: 'var(--accent-violet)' }}
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                        Ask AI
-                      </button>
                     </div>
                   )}
                 </div>
@@ -1063,18 +1148,12 @@ export default function TranslationEditor({
           );
         })()}
 
-        {/* Navigation hint + CC0 footer */}
-        <div className="px-4 py-1.5 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-4 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
-          <span className="lg:hidden">Swipe left/right to navigate</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="flex items-center gap-2">
-            CC0 Public Domain
-            <span className="hidden sm:inline">•</span>
-            <a href="mailto:derek@ancientwisdomtrust.org" className="hover:underline" style={{ color: 'var(--accent-rust)' }}>
-              derek@ancientwisdomtrust.org
-            </a>
-          </span>
+        {/* Footer with search + nav hint */}
+        <div className="px-4 py-1.5 flex items-center justify-between gap-4 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+          <span className="hidden lg:inline shrink-0">← → to navigate</span>
+          <span className="lg:hidden shrink-0">Swipe to navigate</span>
+          <BookSearchBar bookId={book.id} />
+          <span className="hidden sm:flex items-center gap-1 shrink-0">CC0 Public Domain</span>
         </div>
 
         {/* Page Assistant Modal */}

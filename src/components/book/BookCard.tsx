@@ -35,12 +35,15 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
     };
   }, []);
 
+  // Use Vercel Blob CDN thumbnail if available, fall back to original
+  const thumbnailUrl = book.thumbnail_blob || book.thumbnail;
+
   // Determine image source type for analytics
   const getImageSource = (): 'blob' | 'ia' | 'local' | 'other' => {
-    if (!book.thumbnail) return 'other';
-    if (book.thumbnail.includes('blob.vercel-storage.com')) return 'blob';
-    if (book.thumbnail.includes('archive.org')) return 'ia';
-    if (book.thumbnail.startsWith('/api/')) return 'local';
+    if (!thumbnailUrl) return 'other';
+    if (thumbnailUrl.includes('blob.vercel-storage.com')) return 'blob';
+    if (thumbnailUrl.includes('archive.org')) return 'ia';
+    if (thumbnailUrl.startsWith('/api/')) return 'local';
     return 'other';
   };
 
@@ -109,13 +112,13 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
         {/* Image area - shimmer until loaded */}
         <div className="aspect-[3/4] relative bg-stone-100 overflow-hidden flex-shrink-0">
           {/* Shimmer placeholder - only for images, shows until loaded */}
-          {!imageLoaded && !imageError && book.thumbnail && (
+          {!imageLoaded && !imageError && thumbnailUrl && (
             <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
           )}
 
-          {book.thumbnail && !imageError ? (
+          {thumbnailUrl && !imageError ? (
             <Image
-              src={book.thumbnail}
+              src={thumbnailUrl}
               alt={book.title}
               fill
               className={cn(

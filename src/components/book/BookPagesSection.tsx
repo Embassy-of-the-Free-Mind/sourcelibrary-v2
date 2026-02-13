@@ -490,16 +490,27 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const setCoverImage = async (page: Page) => {
     setSettingCover(page.id);
     try {
-      const baseUrl = page.photo_original || page.photo;
-      // Use a higher quality thumbnail for the cover
-      let thumbnailUrl = baseUrl;
-      if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-        thumbnailUrl = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-      } else {
-        thumbnailUrl = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80`;
+      const updates: Record<string, unknown> = {};
+
+      // Set thumbnail_blob from pre-generated CDN thumbnail
+      if (page.thumbnail_blob) {
+        updates.thumbnail_blob = page.thumbnail_blob;
       }
 
-      await books.update(bookId, { thumbnail: thumbnailUrl });
+      // For main thumbnail, prefer archived_photo (full-size Blob), fall back to /api/image
+      const typedPage = page as Page & { archived_photo?: string };
+      if (typedPage.archived_photo) {
+        updates.thumbnail = typedPage.archived_photo;
+      } else {
+        const baseUrl = page.photo_original || page.photo;
+        if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+          updates.thumbnail = `/api/image?url=${encodeURIComponent(baseUrl!)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+        } else {
+          updates.thumbnail = `/api/image?url=${encodeURIComponent(baseUrl!)}&w=400&q=80`;
+        }
+      }
+
+      await books.update(bookId, updates);
       router.refresh();
     } catch (error) {
       console.error('Error setting cover:', error);
@@ -509,6 +520,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   };
 
   const getImageUrl = (page: Page) => {
+    // Prefer pre-generated Vercel Blob thumbnail (fast CDN)
+    if (page.thumbnail_blob) {
+      return page.thumbnail_blob;
+    }
     if (page.thumbnail) {
       return page.thumbnail;
     }

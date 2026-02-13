@@ -201,7 +201,7 @@ export async function PATCH(
     // Allowed fields to update
     const allowedFields = [
       'title', 'display_title', 'author', 'language', 'published',
-      'thumbnail', 'categories', 'status', 'summary', 'dublin_core',
+      'thumbnail', 'thumbnail_blob', 'categories', 'status', 'summary', 'dublin_core',
       // USTC catalog fields
       'ustc_id', 'place_published', 'publisher', 'format',
       // Image source and licensing

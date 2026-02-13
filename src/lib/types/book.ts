@@ -23,7 +23,8 @@ export interface Book {
   format?: string;            // Book format (folio, quarto, octavo, etc.)
 
   // Display and categorization
-  thumbnail?: string;
+  thumbnail?: string;          // Original IIIF URL (from import)
+  thumbnail_blob?: string;     // Vercel Blob CDN URL (fast, pre-generated)
   categories?: string[];
   pages_count?: number;
   pages_translated?: number;  // Number of pages with translations

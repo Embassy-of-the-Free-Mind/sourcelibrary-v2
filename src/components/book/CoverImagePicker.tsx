@@ -10,11 +10,12 @@ import type { Page } from '@/lib/types';
 interface CoverImagePickerProps {
   bookId: string;
   currentThumbnail?: string;
+  currentThumbnailBlob?: string;
   bookTitle: string;
   pages: Page[];
 }
 
-export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, pages }: CoverImagePickerProps) {
+export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, pages }: CoverImagePickerProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
@@ -30,23 +31,46 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, handleClose]);
 
-  const getPageImageUrl = (page: Page, width: number = 150) => {
-    // Priority: archived_photo > photo_original > photo (same as utils.ts)
+  const getPageImageUrl = (page: Page) => {
+    // Prefer pre-generated Vercel Blob thumbnail (fast CDN)
+    if (page.thumbnail_blob) return page.thumbnail_blob;
+
     const typedPage = page as Page & { archived_photo?: string };
     const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
     if (!baseUrl) return null;
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
     }
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=60`;
+    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
   };
 
   const selectCover = async (page: Page) => {
     setSaving(page.id);
     try {
-      const thumbnailUrl = getPageImageUrl(page, 400);
+      // Prefer Blob URLs for fast loading; fall back to /api/image proxy
+      const typedPage = page as Page & { archived_photo?: string };
+      const updates: Record<string, unknown> = {};
 
-      await books.update(bookId, { thumbnail: thumbnailUrl || undefined });
+      if (page.thumbnail_blob) {
+        updates.thumbnail_blob = page.thumbnail_blob;
+      }
+
+      // For the main thumbnail, use archived_photo (full-size Blob) or /api/image fallback
+      const blobUrl = typedPage.archived_photo;
+      if (blobUrl) {
+        updates.thumbnail = blobUrl;
+      } else {
+        const baseUrl = page.photo_original || page.photo;
+        if (baseUrl) {
+          if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+            updates.thumbnail = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+          } else {
+            updates.thumbnail = `/api/image?url=${encodeURIComponent(baseUrl)}&w=400&q=80`;
+          }
+        }
+      }
+
+      await books.update(bookId, updates);
       setIsOpen(false);
       router.refresh();
     } catch (error) {
@@ -64,9 +88,9 @@ export default function CoverImagePicker({ bookId, currentThumbnail, bookTitle, 
         className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
         title="Click to change cover image"
       >
-        {currentThumbnail ? (
+        {(currentThumbnailBlob || currentThumbnail) ? (
           <Image
-            src={currentThumbnail}
+            src={currentThumbnailBlob || currentThumbnail!}
             alt={bookTitle}
             fill
             className="object-cover group-hover:opacity-80 transition-opacity"

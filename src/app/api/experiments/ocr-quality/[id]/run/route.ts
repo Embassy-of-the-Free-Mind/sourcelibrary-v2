@@ -177,6 +177,19 @@ export async function POST(
           totalCost += cost;
           totalTokens += inputTokens + outputTokens;
 
+          // Save result immediately for resume support
+          await db.collection('ocr_experiment_results').insertOne({
+            id: crypto.randomUUID(),
+            experiment_id: id,
+            condition_id,
+            page_id: page.id,
+            page_number: page.page_number,
+            ocr: text,
+            success: true,
+            error: null,
+            created_at: new Date().toISOString(),
+          });
+
           results.push({
             page_id: page.id,
             page_number: page.page_number,
@@ -184,6 +197,19 @@ export async function POST(
             success: true,
           });
         } catch (error) {
+          // Save failed result immediately too
+          await db.collection('ocr_experiment_results').insertOne({
+            id: crypto.randomUUID(),
+            experiment_id: id,
+            condition_id,
+            page_id: page.id,
+            page_number: page.page_number,
+            ocr: '',
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+            created_at: new Date().toISOString(),
+          });
+
           results.push({
             page_id: page.id,
             page_number: page.page_number,
@@ -325,23 +351,7 @@ Return each transcription clearly separated:
       }
     );
 
-    // Save results
-    const now = new Date().toISOString();
-    const resultDocs = results.map(r => ({
-      id: crypto.randomUUID(),
-      experiment_id: id,
-      condition_id,
-      page_id: r.page_id,
-      page_number: r.page_number,
-      ocr: r.ocr,
-      success: r.success,
-      error: r.error || null,
-      created_at: now,
-    }));
-
-    if (resultDocs.length > 0) {
-      await db.collection('ocr_experiment_results').insertMany(resultDocs);
-    }
+    // Results already saved per-page above
 
     // Update experiment - get current and update
     const currentExp = await db.collection('ocr_experiments').findOne({ id });
@@ -353,7 +363,7 @@ Return each transcription clearly separated:
         $set: {
           conditions_run: updatedConditionsRun,
           status: 'running',
-          updated_at: now,
+          updated_at: new Date().toISOString(),
           total_cost: (currentExp?.total_cost || 0) + totalCost,
           total_tokens: (currentExp?.total_tokens || 0) + totalTokens,
         },

@@ -4,11 +4,10 @@ import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { Calendar, Globe, FileText, BookText, Workflow, MessageCircle, BookMarked, User, MapPin, Lightbulb, Images } from 'lucide-react';
+import { Calendar, Globe, FileText, BookText, BookMarked, User, MapPin, Lightbulb, Images } from 'lucide-react';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import BookHistory from '@/components/book/BookHistory';
-import BookChat from '@/components/book/BookChat';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
@@ -264,6 +263,7 @@ async function BookInfo({ id }: { id: string }) {
               <CoverImagePicker
                 bookId={book.id}
                 currentThumbnail={book.thumbnail}
+                currentThumbnailBlob={book.thumbnail_blob}
                 bookTitle={book.title}
                 pages={pages}
               />
@@ -307,18 +307,8 @@ async function BookInfo({ id }: { id: string }) {
                 )}
               </div>
 
-              {/* Actions - organized by progression */}
+              {/* Actions */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-4 text-sm">
-                {/* Unlocks after translation */}
-                {hasTranslations ? (
-                  <BookChat bookId={book.id} bookTitle={book.display_title || book.title} inline />
-                ) : (
-                  <span className="flex items-center gap-1.5 px-3 py-1.5 text-stone-500 cursor-not-allowed" title="Translate pages first">
-                    <MessageCircle className="w-4 h-4" />
-                    <span className="opacity-60">Ask AI</span>
-                  </span>
-                )}
-
                 {/* Unlocks after complete */}
                 {isComplete ? (
                   <PublishEditionButton
@@ -365,13 +355,6 @@ async function BookInfo({ id }: { id: string }) {
                   doi={book.doi}
                   className="text-stone-300 hover:text-white hover:bg-white/10"
                 />
-                <Link
-                  href={`/book/${book.id}/pipeline`}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <Workflow className="w-4 h-4" />
-                  Pipeline
-                </Link>
                 <Link
                   href={`/gallery?bookId=${book.id}`}
                   className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"

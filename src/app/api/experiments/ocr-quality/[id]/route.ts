@@ -33,11 +33,13 @@ export async function GET(
       resultsByCondition[r._id] = { count: r.count, successCount: r.successCount };
     });
 
-    return NextResponse.json({
+    const response: Record<string, unknown> = {
       id: experiment.id,
       status: experiment.status,
       book_id: experiment.book_id,
       page_count: experiment.page_count,
+      page_ids: experiment.page_ids || [],
+      conditions: experiment.conditions || [],
       conditions_run: experiment.conditions_run || [],
       progress: experiment.progress || {},
       judging_progress: experiment.judging_progress || null,
@@ -51,7 +53,41 @@ export async function GET(
       random_judging_cost: experiment.random_judging_cost || 0,
       created_at: experiment.created_at,
       updated_at: experiment.updated_at,
-    });
+    };
+
+    // Include review data (OCR results + page images) when requested
+    const includeParam = request.nextUrl.searchParams.get('include');
+    if (includeParam === 'review') {
+      const [ocrResults, pages] = await Promise.all([
+        db.collection('ocr_experiment_results')
+          .find({ experiment_id: id })
+          .sort({ page_number: 1 })
+          .toArray(),
+        db.collection('pages')
+          .find(
+            { id: { $in: experiment.page_ids || [] } },
+            { projection: { id: 1, page_number: 1, photo: 1, archived_photo: 1, book_id: 1 } }
+          )
+          .toArray(),
+      ]);
+
+      const pageMap = new Map(pages.map(p => [p.id, p]));
+
+      response.review_results = ocrResults.map(r => {
+        const page = pageMap.get(r.page_id);
+        return {
+          page_id: r.page_id,
+          page_number: r.page_number,
+          condition_id: r.condition_id,
+          ocr: r.ocr,
+          success: r.success,
+          image_url: page?.archived_photo || page?.photo || '',
+          book_id: page?.book_id || '',
+        };
+      });
+    }
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error('Error fetching experiment:', error);
     return NextResponse.json({ error: 'Failed to fetch experiment' }, { status: 500 });
