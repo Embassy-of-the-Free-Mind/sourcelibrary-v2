@@ -19,6 +19,7 @@ import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
 import CategoryPicker from '@/components/ui/CategoryPicker';
 import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
+import CiteButton from '@/components/ui/CiteButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -70,12 +71,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? new Date(book.updated_at).toISOString()
     : undefined;
 
+  // Google Scholar meta tags for academic discoverability
+  // https://scholar.google.com/intl/en/scholar/inclusion.html#indexing
+  const scholarMeta: Record<string, string> = {
+    'citation_title': book.title,
+    'citation_author': book.author,
+    'citation_fulltext_html_url': `https://sourcelibrary.org${bookUrl}`,
+  };
+  if (book.published) scholarMeta['citation_publication_date'] = book.published;
+  if (book.language) scholarMeta['citation_language'] = book.language;
+  if (book.publisher) scholarMeta['citation_publisher'] = book.publisher;
+  if (book.doi) scholarMeta['citation_doi'] = book.doi;
+
   return {
     title: `${title} - Source Library`,
     description,
     alternates: {
       canonical: bookUrl,
     },
+    other: scholarMeta,
     openGraph: {
       title: ogTitle,
       description,
@@ -336,6 +350,18 @@ async function BookInfo({ id }: { id: string }) {
                   author={book.author}
                   year={book.published}
                   bookId={book.id}
+                  doi={book.doi}
+                  className="text-stone-300 hover:text-white hover:bg-white/10"
+                />
+                <CiteButton
+                  bookId={book.id}
+                  title={book.title}
+                  displayTitle={book.display_title}
+                  author={book.author}
+                  year={book.published}
+                  publisher={book.publisher}
+                  placePublished={book.place_published}
+                  language={book.language}
                   doi={book.doi}
                   className="text-stone-300 hover:text-white hover:bg-white/10"
                 />
