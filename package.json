@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "test": "npx ts-node --project tests/tsconfig.json tests/simple-test.ts",
+    "test:e2e": "npx playwright test",
+    "test:e2e:headed": "npx playwright test --headed",
+    "test:e2e:ui": "npx playwright test --ui",
     "lambda:build": "./scripts/aws-lambda/build-lambda.sh",
     "lambda:package": "./scripts/aws-lambda/package-lambda.sh",
     "lambda:all": "npm run lambda:build && npm run lambda:package"
@@ -46,6 +49,7 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@types/aws-lambda": "^8.10.160",
     "@types/node": "^20",
