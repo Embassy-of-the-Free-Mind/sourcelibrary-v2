@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 
     // Run book and index search in parallel
     const [booksResult, indexResult] = await Promise.all([
-      searchBooks(db, queryRegex, limit),
+      searchBooks(db, query, queryRegex, limit),
       searchIndex(db, queryNormalized, limit)
     ]);
 
@@ -72,35 +72,39 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function searchBooks(db: any, queryRegex: RegExp, limit: number) {
-  const books = await db.collection('books')
-    .find({
+async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: number) {
+  let books;
+  let total;
+
+  try {
+    // Use $text index for fast, relevance-ranked search
+    const projection = {
+      id: 1, title: 1, display_title: 1, author: 1,
+      language: 1, published: 1, pages_count: 1, pages_translated: 1,
+      score: { $meta: 'textScore' },
+    };
+    books = await db.collection('books')
+      .find({ $text: { $search: query } }, { projection })
+      .sort({ score: { $meta: 'textScore' } })
+      .limit(limit)
+      .toArray();
+    total = await db.collection('books').countDocuments({ $text: { $search: query } });
+  } catch {
+    // Fallback to regex
+    const filter = {
       $or: [
         { title: queryRegex },
         { display_title: queryRegex },
-        { author: queryRegex }
-      ]
-    })
-    .project({
-      id: 1,
-      title: 1,
-      display_title: 1,
-      author: 1,
-      language: 1,
-      published: 1,
-      pages_count: 1,
-      pages_translated: 1
-    })
-    .limit(limit)
-    .toArray();
-
-  const total = await db.collection('books').countDocuments({
-    $or: [
-      { title: queryRegex },
-      { display_title: queryRegex },
-      { author: queryRegex }
-    ]
-  });
+        { author: queryRegex },
+      ],
+    };
+    books = await db.collection('books')
+      .find(filter)
+      .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1 })
+      .limit(limit)
+      .toArray();
+    total = await db.collection('books').countDocuments(filter);
+  }
 
   return {
     results: books.map((b: any) => ({

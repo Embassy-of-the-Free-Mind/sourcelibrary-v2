@@ -43,6 +43,7 @@ export async function GET(request: NextRequest) {
     const hasTranslation = searchParams.get('has_translation');
     const bookId = searchParams.get('book_id'); // Filter to specific book
     const searchContent = searchParams.get('search_content') !== 'false'; // Default true
+    const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
     const offset = parseInt(searchParams.get('offset') || '0');
 
@@ -58,128 +59,116 @@ export async function GET(request: NextRequest) {
     const results: SearchResult[] = [];
     const seenBooks = new Set<string>();
 
-    // Build regex for text search
+    // Build regex for fallback text search
     const queryRegex = new RegExp(escapeRegex(query), 'i');
+
+    // Helper: build common book-level filters (language, category, year, etc.)
+    function buildBookFilters(): Record<string, unknown> {
+      const filters: Record<string, unknown> = {};
+      if (language) filters.language = language;
+      if (category) filters.categories = category;
+      if (dateFrom || dateTo) {
+        filters.published = {};
+        if (dateFrom) (filters.published as Record<string, string>).$gte = dateFrom;
+        if (dateTo) (filters.published as Record<string, string>).$lte = dateTo;
+      }
+      if (year || yearFrom || yearTo) {
+        const yearFilter: Record<string, number> = {};
+        if (year) {
+          const yearNum = parseInt(year);
+          if (!isNaN(yearNum)) filters.year = yearNum;
+        } else {
+          if (yearFrom) {
+            const yearNum = parseInt(yearFrom);
+            if (!isNaN(yearNum)) yearFilter.$gte = yearNum;
+          }
+          if (yearTo) {
+            const yearNum = parseInt(yearTo);
+            if (!isNaN(yearNum)) yearFilter.$lte = yearNum;
+          }
+          if (Object.keys(yearFilter).length > 0) filters.year = yearFilter;
+        }
+      }
+      if (hasDoi === 'true') filters.doi = { $exists: true, $ne: null };
+      if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
+      return filters;
+    }
+
+    // Helper: convert book document to search result
+    function bookToResult(typedBook: Book): SearchResult {
+      const summaryText = typeof typedBook.summary === 'string'
+        ? typedBook.summary
+        : typedBook.summary?.data || (typedBook as any).reading_summary?.overview;
+      return {
+        id: typedBook.id,
+        type: 'book',
+        book_id: typedBook.id,
+        title: typedBook.title,
+        display_title: typedBook.display_title,
+        author: typedBook.author,
+        language: typedBook.language,
+        published: typedBook.published,
+        page_count: typedBook.pages_count,
+        translated_count: typedBook.pages_translated,
+        has_doi: !!typedBook.doi,
+        doi: typedBook.doi,
+        categories: typedBook.categories,
+        summary: summaryText ? extractSnippet(summaryText, query) : undefined,
+        snippet_type: summaryText ? 'summary' : undefined,
+      };
+    }
 
     // When searching within a specific book, skip book-level search
     // and only search page content
     if (!bookId) {
-      // Build book filter
-      const bookFilter: Record<string, unknown> = {};
+      const bookFilters = buildBookFilters();
 
-      // Text search on books (title, author, display_title)
-      bookFilter.$or = [
-        { title: queryRegex },
-        { display_title: queryRegex },
-        { author: queryRegex },
-        { 'summary.data': queryRegex },
-        { summary: queryRegex }, // For string summaries
-      ];
-
-      if (language) {
-        bookFilter.language = language;
+      // Try $text search first (uses books_text_idx), fall back to regex
+      let books;
+      try {
+        books = await db.collection('books')
+          .find(
+            { $text: { $search: query }, ...bookFilters },
+            { projection: { score: { $meta: 'textScore' } } }
+          )
+          .sort({ score: { $meta: 'textScore' } })
+          .limit(limit)
+          .toArray();
+      } catch {
+        // Fallback: regex search on title, author, summary
+        books = await db.collection('books')
+          .find({
+            $or: [
+              { title: queryRegex },
+              { display_title: queryRegex },
+              { author: queryRegex },
+              { 'summary.data': queryRegex },
+              { summary: queryRegex },
+            ],
+            ...bookFilters,
+          })
+          .limit(limit)
+          .toArray();
       }
-
-      if (category) {
-        bookFilter.categories = category;
-      }
-
-      if (dateFrom || dateTo) {
-        bookFilter.published = {};
-        if (dateFrom) (bookFilter.published as Record<string, string>).$gte = dateFrom;
-        if (dateTo) (bookFilter.published as Record<string, string>).$lte = dateTo;
-      }
-
-      // Year filtering - uses numeric extraction from published field
-      if (year || yearFrom || yearTo) {
-        const yearConditions = [];
-        if (year) {
-          // Exact year match (e.g., "1533" or "c. 1533" or "1533-1534")
-          yearConditions.push({ published: { $regex: year, $options: 'i' } });
-        } else {
-          // Year range - match any 4-digit year within range
-          if (yearFrom) {
-            const yearNum = parseInt(yearFrom);
-            if (!isNaN(yearNum)) {
-              // Match years >= yearFrom
-              const yearPattern = new RegExp(`\\b(${Array.from({length: 2100 - yearNum}, (_, i) => yearNum + i).slice(0, 100).join('|')})\\b`);
-              yearConditions.push({ published: { $regex: yearPattern } });
-            }
-          }
-          if (yearTo) {
-            const yearNum = parseInt(yearTo);
-            if (!isNaN(yearNum)) {
-              // Match years <= yearTo
-              const startYear = yearFrom ? parseInt(yearFrom) : 1400;
-              const yearPattern = new RegExp(`\\b(${Array.from({length: yearNum - startYear + 1}, (_, i) => startYear + i).join('|')})\\b`);
-              yearConditions.push({ published: { $regex: yearPattern } });
-            }
-          }
-        }
-        if (yearConditions.length > 0) {
-          if (yearConditions.length === 1) {
-            bookFilter.$and = [...((bookFilter.$and as any[]) || []), yearConditions[0]];
-          } else {
-            bookFilter.$and = [...((bookFilter.$and as any[]) || []), { $and: yearConditions }];
-          }
-        }
-      }
-
-      if (hasDoi === 'true') {
-        bookFilter.doi = { $exists: true, $ne: null };
-      }
-
-      if (hasTranslation === 'true') {
-        bookFilter.pages_translated = { $gt: 0 };
-      }
-
-      // Search books
-      const books = await db.collection('books')
-        .find(bookFilter)
-        .limit(limit)
-        .toArray();
 
       for (const book of books) {
-        const typedBook = book as unknown as Book;
-        const summaryText = typeof typedBook.summary === 'string'
-          ? typedBook.summary
-          : typedBook.summary?.data;
-
-        results.push({
-          id: typedBook.id,
-          type: 'book',
-          book_id: typedBook.id,
-          title: typedBook.title,
-          display_title: typedBook.display_title,
-          author: typedBook.author,
-          language: typedBook.language,
-          published: typedBook.published,
-          page_count: typedBook.pages_count,
-          translated_count: typedBook.pages_translated,
-          has_doi: !!typedBook.doi,
-          doi: typedBook.doi,
-          categories: typedBook.categories,
-          summary: summaryText ? extractSnippet(summaryText, query) : undefined,
-          snippet_type: summaryText ? 'summary' : undefined,
-        });
-        seenBooks.add(typedBook.id);
+        results.push(bookToResult(book as unknown as Book));
+        seenBooks.add((book as any).id);
       }
     }
 
-    // Search page translations if requested and we have room
+    // Search page content if requested and we have room
     // When searching within a specific book, always search content
     if (searchContent && (bookId || results.length < limit)) {
-      const pageFilter: Record<string, unknown> = {
-        'translation.data': queryRegex,
-      };
+      const pageLimit = limit - results.length;
 
-      // If searching within a specific book, filter to that book only
+      // Build page filter with optional book_id constraint
+      const pageFilter: Record<string, unknown> = {};
       if (bookId) {
         pageFilter.book_id = bookId;
       }
 
-      // Apply book-level filters via lookup or pre-fetch book IDs
-      let allowedBookIds: string[] | null = null;
+      // Pre-fetch allowed book IDs if book-level filters are active
       if (!bookId && (language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true')) {
         const bookIdFilter: Record<string, unknown> = {};
         if (language) bookIdFilter.language = language;
@@ -189,33 +178,47 @@ export async function GET(request: NextRequest) {
           if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
           if (dateTo) (bookIdFilter.published as Record<string, string>).$lte = dateTo;
         }
-        if (hasDoi === 'true') {
-          bookIdFilter.doi = { $exists: true, $ne: null };
-        }
+        if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
 
         const filteredBooks = await db.collection('books')
           .find(bookIdFilter)
           .project({ id: 1 })
           .toArray();
-        allowedBookIds = filteredBooks.map(b => b.id);
-
+        const allowedBookIds = filteredBooks.map(b => b.id);
         if (allowedBookIds.length > 0) {
           pageFilter.book_id = { $in: allowedBookIds };
         }
       }
 
-      const pages = await db.collection('pages')
-        .find(pageFilter)
-        .limit(limit - results.length)
-        .toArray();
+      // Try $text search first (uses pages_text_idx — searches both OCR and translation)
+      let pages;
+      try {
+        pages = await db.collection('pages')
+          .find(
+            { $text: { $search: query }, ...pageFilter },
+            { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1, score: { $meta: 'textScore' } } }
+          )
+          .sort({ score: { $meta: 'textScore' } })
+          .limit(pageLimit)
+          .toArray();
+      } catch {
+        // Fallback: regex on translation text only
+        pages = await db.collection('pages')
+          .find(
+            { 'translation.data': queryRegex, ...pageFilter },
+            { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1 } }
+          )
+          .limit(pageLimit)
+          .toArray();
+      }
 
       // Get book info for page results
-      const bookIds = [...new Set(pages.map(p => p.book_id as string))];
+      const pageBookIds = [...new Set(pages.map(p => p.book_id as string))];
       const bookMap = new Map<string, Book>();
 
-      if (bookIds.length > 0) {
+      if (pageBookIds.length > 0) {
         const pageBooks = await db.collection('books')
-          .find({ id: { $in: bookIds } })
+          .find({ id: { $in: pageBookIds } })
           .toArray();
         for (const b of pageBooks) {
           bookMap.set(b.id as string, b as unknown as Book);
@@ -229,7 +232,11 @@ export async function GET(request: NextRequest) {
         // Skip if we already have this book in results
         if (seenBooks.has(book.id)) continue;
 
+        // Use translation snippet if available, otherwise OCR
         const translationText = page.translation?.data as string || '';
+        const ocrText = page.ocr?.data as string || '';
+        const snippetSource = translationText ? translationText : ocrText;
+        const snippetType = translationText ? 'translation' : 'ocr';
 
         results.push({
           id: `${book.id}-p${page.page_number}`,
@@ -246,25 +253,39 @@ export async function GET(request: NextRequest) {
           doi: book.doi,
           categories: book.categories,
           page_number: page.page_number as number,
-          snippet: extractSnippet(translationText, query),
-          snippet_type: 'translation',
+          snippet: extractSnippet(snippetSource, query),
+          snippet_type: snippetType,
         });
       }
     }
 
-    // Sort: books first, then by relevance (title match > content match)
-    results.sort((a, b) => {
-      // Books before pages
-      if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
-      // Title matches first
-      const aTitle = (a.display_title || a.title).toLowerCase();
-      const bTitle = (b.display_title || b.title).toLowerCase();
-      const queryLower = query.toLowerCase();
-      const aTitleMatch = aTitle.includes(queryLower);
-      const bTitleMatch = bTitle.includes(queryLower);
-      if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
-      return 0;
-    });
+    // Sort results
+    if (sortBy === 'date_asc' || sortBy === 'date_desc') {
+      const dir = sortBy === 'date_asc' ? 1 : -1;
+      results.sort((a, b) => {
+        const aYear = parseInt(a.published?.match(/\d{4}/)?.[0] || '0');
+        const bYear = parseInt(b.published?.match(/\d{4}/)?.[0] || '0');
+        return (aYear - bYear) * dir;
+      });
+    } else if (sortBy === 'title') {
+      results.sort((a, b) => {
+        const aTitle = (a.display_title || a.title).toLowerCase();
+        const bTitle = (b.display_title || b.title).toLowerCase();
+        return aTitle.localeCompare(bTitle);
+      });
+    } else {
+      // Default: relevance — books first, title matches first
+      results.sort((a, b) => {
+        if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
+        const aTitle = (a.display_title || a.title).toLowerCase();
+        const bTitle = (b.display_title || b.title).toLowerCase();
+        const queryLower = query.toLowerCase();
+        const aTitleMatch = aTitle.includes(queryLower);
+        const bTitleMatch = bTitle.includes(queryLower);
+        if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
+        return 0;
+      });
+    }
 
     // Apply offset
     const paginatedResults = results.slice(offset, offset + limit);
@@ -274,63 +295,52 @@ export async function GET(request: NextRequest) {
     if (year && !bookId) {
       const yearNum = parseInt(year);
       if (!isNaN(yearNum)) {
-        // Build array of nearby years (excluding exact year)
         const nearbyYears: number[] = [];
         for (let y = yearNum - 5; y <= yearNum + 5; y++) {
           if (y !== yearNum && y > 1400) nearbyYears.push(y);
         }
 
-        // Build regex to match any nearby year
         const nearbyPattern = new RegExp(`\\b(${nearbyYears.join('|')})\\b`);
 
-        const nearbyFilter: Record<string, unknown> = {
-          $or: [
-            { title: queryRegex },
-            { display_title: queryRegex },
-            { author: queryRegex },
-            { 'summary.data': queryRegex },
-            { summary: queryRegex },
-          ],
-          published: { $regex: nearbyPattern },
-        };
+        // Use $text for nearby search too, with year range filter
+        let nearbyBooks;
+        try {
+          const nearbyFilter: Record<string, unknown> = {
+            $text: { $search: query },
+            published: { $regex: nearbyPattern },
+          };
+          if (seenBooks.size > 0) nearbyFilter.id = { $nin: Array.from(seenBooks) };
+          if (language) nearbyFilter.language = language;
+          if (category) nearbyFilter.categories = category;
 
-        // Exclude books already in main results
-        if (seenBooks.size > 0) {
-          nearbyFilter.id = { $nin: Array.from(seenBooks) };
+          nearbyBooks = await db.collection('books')
+            .find(nearbyFilter, { projection: { score: { $meta: 'textScore' } } })
+            .sort({ score: { $meta: 'textScore' } })
+            .limit(10)
+            .toArray();
+        } catch {
+          // Fallback: regex
+          const nearbyFilter: Record<string, unknown> = {
+            $or: [
+              { title: queryRegex },
+              { display_title: queryRegex },
+              { author: queryRegex },
+              { 'summary.data': queryRegex },
+              { summary: queryRegex },
+            ],
+            published: { $regex: nearbyPattern },
+          };
+          if (seenBooks.size > 0) nearbyFilter.id = { $nin: Array.from(seenBooks) };
+          if (language) nearbyFilter.language = language;
+          if (category) nearbyFilter.categories = category;
+
+          nearbyBooks = await db.collection('books')
+            .find(nearbyFilter)
+            .limit(10)
+            .toArray();
         }
 
-        if (language) nearbyFilter.language = language;
-        if (category) nearbyFilter.categories = category;
-
-        const nearbyBooks = await db.collection('books')
-          .find(nearbyFilter)
-          .limit(10)
-          .toArray();
-
-        nearby = nearbyBooks.map(book => {
-          const typedBook = book as unknown as Book;
-          const summaryText = typeof typedBook.summary === 'string'
-            ? typedBook.summary
-            : typedBook.summary?.data;
-
-          return {
-            id: typedBook.id,
-            type: 'book' as const,
-            book_id: typedBook.id,
-            title: typedBook.title,
-            display_title: typedBook.display_title,
-            author: typedBook.author,
-            language: typedBook.language,
-            published: typedBook.published,
-            page_count: typedBook.pages_count,
-            translated_count: typedBook.pages_translated,
-            has_doi: !!typedBook.doi,
-            doi: typedBook.doi,
-            categories: typedBook.categories,
-            summary: summaryText ? extractSnippet(summaryText, query) : undefined,
-            snippet_type: summaryText ? 'summary' as const : undefined,
-          };
-        });
+        nearby = nearbyBooks.map(book => bookToResult(book as unknown as Book));
 
         // Sort nearby by year distance from target
         nearby.sort((a, b) => {
@@ -357,6 +367,7 @@ export async function GET(request: NextRequest) {
       total: results.length,
       offset,
       limit,
+      sort: sortBy,
       results: paginatedResults,
       ...(nearby.length > 0 && { nearby, nearby_range: `${parseInt(year!) - 5}-${parseInt(year!) + 5}` }),
       filters: {

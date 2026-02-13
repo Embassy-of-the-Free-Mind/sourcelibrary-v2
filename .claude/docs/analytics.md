@@ -136,6 +136,6 @@ Four tabs:
 
 ## Not Tracked
 
-- **Search analytics** — no tracking of search queries or results
+- **Search analytics dashboard** — queries are logged to `analytics_events` but no dashboard to analyze them yet
 - **Feature flags / A/B routing** — only manual experiments via dedicated UI
 - **Moderation audit** — annotations auto-approved, no admin approval tracking

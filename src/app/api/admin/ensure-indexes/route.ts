@@ -154,6 +154,144 @@ export async function POST() {
         : `error: ${err.message}`;
     }
 
+    // Batch jobs - cron reconciliation queries pending/processing jobs
+    // Query: { status: { $in: ['pending', 'processing'] } } sorted by created_at
+    try {
+      await db.collection('batch_jobs').createIndex(
+        { status: 1, created_at: 1 },
+        { name: 'batch_jobs_status_created_idx', background: true }
+      );
+      results['batch_jobs.batch_jobs_status_created_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['batch_jobs.batch_jobs_status_created_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Batch jobs - lookup by book
+    // Query: { book_id, status }
+    try {
+      await db.collection('batch_jobs').createIndex(
+        { book_id: 1, status: 1 },
+        { name: 'batch_jobs_book_status_idx', background: true }
+      );
+      results['batch_jobs.batch_jobs_book_status_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['batch_jobs.batch_jobs_book_status_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - year filtering (gallery year range queries)
+    try {
+      await db.collection('books').createIndex(
+        { year: 1 },
+        { name: 'books_year_idx', background: true }
+      );
+      results['books.books_year_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_year_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - language filtering (library route)
+    try {
+      await db.collection('books').createIndex(
+        { language: 1 },
+        { name: 'books_language_idx', background: true }
+      );
+      results['books.books_language_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_language_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - index.generatedAt existence (unified search fetches all indexed books)
+    try {
+      await db.collection('books').createIndex(
+        { 'index.generatedAt': 1 },
+        { name: 'books_index_generated_idx', background: true, sparse: true }
+      );
+      results['books.books_index_generated_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_index_generated_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Pages - detected_images existence (gallery initial $match)
+    try {
+      await db.collection('pages').createIndex(
+        { 'detected_images.0': 1, book_id: 1 },
+        { name: 'pages_detected_images_book_idx', background: true, sparse: true }
+      );
+      results['pages.pages_detected_images_book_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_detected_images_book_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - full-text search on title, author, summary
+    // Used by /api/search and /api/search/unified
+    // Only ONE text index allowed per collection
+    try {
+      await db.collection('books').createIndex(
+        {
+          title: 'text',
+          display_title: 'text',
+          author: 'text',
+          'reading_summary.overview': 'text',
+        },
+        {
+          name: 'books_text_idx',
+          background: true,
+          default_language: 'none',
+          language_override: '_text_lang',
+          weights: { title: 10, display_title: 10, author: 5, 'reading_summary.overview': 1 },
+        }
+      );
+      results['books.books_text_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_text_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Pages - full-text search on OCR and translation text
+    // Used by /api/books/[id]/search ($text with book_id filter)
+    // NOTE: This index will be large (~hundreds of MB) due to OCR/translation text
+    try {
+      await db.collection('pages').createIndex(
+        {
+          'translation.data': 'text',
+          'ocr.data': 'text',
+        },
+        {
+          name: 'pages_text_idx',
+          background: true,
+          default_language: 'none',
+          language_override: '_text_lang',
+          weights: { 'translation.data': 2, 'ocr.data': 1 },
+        }
+      );
+      results['pages.pages_text_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_text_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
@@ -174,7 +312,7 @@ export async function POST() {
 export async function GET() {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

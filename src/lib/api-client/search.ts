@@ -17,6 +17,9 @@ export const search = {
     if (filters?.has_doi) params.append('has_doi', filters.has_doi);
     if (filters?.has_translation) params.append('has_translation', filters.has_translation);
     if (filters?.category) params.append('category', filters.category);
+    if (filters?.sort) params.append('sort', filters.sort);
+    if (filters?.offset) params.append('offset', filters.offset.toString());
+    if (filters?.limit) params.append('limit', filters.limit.toString());
 
     return await apiClient.get(`/api/search?${params}`);
   },

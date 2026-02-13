@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Search, Book, FileText, ExternalLink, Filter, X, Loader2, Quote, User, MapPin, Lightbulb, BookOpen, Languages } from 'lucide-react';
+import { Search, Book, FileText, ExternalLink, Filter, X, Loader2, Quote, User, MapPin, Lightbulb, BookOpen, Languages, ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi, categories as categoriesApi, utils, type SearchResult, type IndexSearchResult, type IndexSearchResponse } from '@/lib/api-client';
@@ -57,6 +57,11 @@ export default function SearchPage() {
   const [dateTo, setDateTo] = useState(searchParams.get('date_to') || '');
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
   const [hasTranslation, setHasTranslation] = useState(searchParams.get('has_translation') === 'true');
+  const [sortBy, setSortBy] = useState<'relevance' | 'date_asc' | 'date_desc' | 'title'>(
+    (searchParams.get('sort') as any) || 'relevance'
+  );
+  const [offset, setOffset] = useState(parseInt(searchParams.get('offset') || '0'));
+  const RESULTS_PER_PAGE = 20;
 
   // Fetch languages and categories on mount
   useEffect(() => {
@@ -98,7 +103,7 @@ export default function SearchPage() {
     fetchFilterOptions();
   }, []);
 
-  const performSearch = useCallback(async (searchQuery: string, mode: 'books' | 'index' = searchMode) => {
+  const performSearch = useCallback(async (searchQuery: string, mode: 'books' | 'index' = searchMode, pageOffset: number = offset) => {
     if (!searchQuery || searchQuery.length < 2) {
       setResults([]);
       setIndexResults([]);
@@ -127,6 +132,9 @@ export default function SearchPage() {
           date_to: dateTo || undefined,
           has_doi: hasDoi ? 'true' : undefined,
           has_translation: hasTranslation ? 'true' : undefined,
+          sort: sortBy !== 'relevance' ? sortBy : undefined,
+          offset: pageOffset > 0 ? pageOffset : undefined,
+          limit: RESULTS_PER_PAGE,
         });
 
         setResults(data.results || []);
@@ -142,14 +150,14 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  }, [searchMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation]);
+  }, [searchMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     performSearch(value);
     updateUrl(value);
   }, 300);
 
-  const updateUrl = (q: string = query) => {
+  const updateUrl = (q: string = query, pageOffset: number = offset) => {
     const params = new URLSearchParams();
     if (q) params.set('q', q);
     if (searchMode === 'index') {
@@ -162,19 +170,22 @@ export default function SearchPage() {
       if (dateTo) params.set('date_to', dateTo);
       if (hasDoi) params.set('has_doi', 'true');
       if (hasTranslation) params.set('has_translation', 'true');
+      if (sortBy !== 'relevance') params.set('sort', sortBy);
+      if (pageOffset > 0) params.set('offset', pageOffset.toString());
     }
     router.replace(`/search?${params.toString()}`, { scroll: false });
   };
 
   useEffect(() => {
     if (query) {
-      performSearch(query);
-      updateUrl();
+      performSearch(query, searchMode, offset);
+      updateUrl(query, offset);
     }
-  }, [searchMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation]);
+  }, [searchMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset]);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
+    setOffset(0);
     debouncedSearch(value);
   };
 
@@ -185,9 +196,11 @@ export default function SearchPage() {
     setDateTo('');
     setHasDoi(false);
     setHasTranslation(false);
+    setSortBy('relevance');
+    setOffset(0);
   };
 
-  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation;
+  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || sortBy !== 'relevance';
 
   // Group results by category
   const groupedResults = () => {
@@ -282,20 +295,35 @@ export default function SearchPage() {
               )}
             </div>
             {searchMode === 'books' && (
-              <button
-                onClick={() => setShowFilters(!showFilters)}
-                className={`px-4 py-3 border rounded-xl flex items-center gap-2 transition-colors ${
-                  showFilters || hasActiveFilters
-                    ? 'bg-amber-100 border-amber-300 text-amber-800'
-                    : 'border-stone-300 text-stone-600 hover:bg-stone-50'
-                }`}
-              >
-                <Filter className="w-5 h-5" />
-                Filters
-                {hasActiveFilters && (
-                  <span className="w-2 h-2 bg-amber-500 rounded-full" />
-                )}
-              </button>
+              <>
+                <div className="relative">
+                  <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
+                  <select
+                    value={sortBy}
+                    onChange={(e) => { setSortBy(e.target.value as any); setOffset(0); }}
+                    className="pl-9 pr-3 py-3 border border-stone-300 rounded-xl text-sm text-stone-600 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 appearance-none cursor-pointer"
+                  >
+                    <option value="relevance">Relevance</option>
+                    <option value="date_desc">Newest first</option>
+                    <option value="date_asc">Oldest first</option>
+                    <option value="title">Title A-Z</option>
+                  </select>
+                </div>
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className={`px-4 py-3 border rounded-xl flex items-center gap-2 transition-colors ${
+                    showFilters || hasActiveFilters
+                      ? 'bg-amber-100 border-amber-300 text-amber-800'
+                      : 'border-stone-300 text-stone-600 hover:bg-stone-50'
+                  }`}
+                >
+                  <Filter className="w-5 h-5" />
+                  Filters
+                  {hasActiveFilters && (
+                    <span className="w-2 h-2 bg-amber-500 rounded-full" />
+                  )}
+                </button>
+              </>
             )}
           </div>
 
@@ -426,6 +454,11 @@ export default function SearchPage() {
             ) : (
               <>
                 Found <span className="font-medium text-stone-900">{total}</span> results for &ldquo;{query}&rdquo;
+                {total > RESULTS_PER_PAGE && (
+                  <span className="ml-2 text-stone-500">
+                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, total)})
+                  </span>
+                )}
               </>
             )}
           </div>
@@ -540,6 +573,31 @@ export default function SearchPage() {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {searchMode === 'books' && total > RESULTS_PER_PAGE && !loading && (
+          <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-stone-200">
+            <button
+              onClick={() => { const newOffset = Math.max(0, offset - RESULTS_PER_PAGE); setOffset(newOffset); window.scrollTo(0, 0); }}
+              disabled={offset === 0}
+              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Previous
+            </button>
+            <span className="text-sm text-stone-600">
+              Page {Math.floor(offset / RESULTS_PER_PAGE) + 1} of {Math.ceil(total / RESULTS_PER_PAGE)}
+            </span>
+            <button
+              onClick={() => { const newOffset = offset + RESULTS_PER_PAGE; setOffset(newOffset); window.scrollTo(0, 0); }}
+              disabled={offset + RESULTS_PER_PAGE >= total}
+              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         )}
 

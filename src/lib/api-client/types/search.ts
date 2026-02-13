@@ -31,11 +31,17 @@ export interface SearchFilters {
   has_doi?: string;
   has_translation?: string;
   category?: string;
+  sort?: 'relevance' | 'date_asc' | 'date_desc' | 'title';
+  offset?: number;
+  limit?: number;
 }
 
 export interface SearchResponse {
   query: string;
   total: number;
+  offset: number;
+  limit: number;
+  sort: string;
   results: SearchResult[];
   filters: SearchFilters;
 }
