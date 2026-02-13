@@ -92,7 +92,7 @@ export async function POST(
     const bookLanguage = book?.original_language || '';
 
     const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
-    const batchSize = condition.batchSize;
+    const batchSize = condition.batchSize || 1;
     const promptType = condition.promptType;
 
     // Select prompt — custom prompts go through getOcrPrompt for {language_instruction} substitution
@@ -146,7 +146,8 @@ export async function POST(
         // Single page processing
         const page = batch[0];
         try {
-          const image = await fetchImageAsBase64(page.photo);
+          const imageUrl = page.cropped_photo || page.archived_photo || page.photo || page.photo_original;
+          const image = imageUrl ? await fetchImageAsBase64(imageUrl) : null;
           if (!image) {
             results.push({
               page_id: page.id,

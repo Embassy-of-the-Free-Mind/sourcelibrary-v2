@@ -7,25 +7,26 @@ export async function GET(request: NextRequest) {
     const collection = db.collection('analytics_pageviews');
 
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const recentWithPath = { timestamp: { $gte: thirtyDaysAgo }, path: { $ne: null } };
 
-    // Run all queries in parallel
+    // Run all queries in parallel — all scoped to 30-day window, excluding null paths
     const [totalPageviews, totalVisitors, topPages, topReferrers, topCountries] = await Promise.all([
-      collection.countDocuments(),
-      collection.distinct('ip', { timestamp: { $gte: thirtyDaysAgo } }),
+      collection.countDocuments(recentWithPath),
+      collection.distinct('ip', recentWithPath),
       collection.aggregate([
-        { $match: { timestamp: { $gte: thirtyDaysAgo }, path: { $ne: null } } },
+        { $match: recentWithPath },
         { $group: { _id: '$path', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 10 },
       ]).toArray(),
       collection.aggregate([
-        { $match: { timestamp: { $gte: thirtyDaysAgo } } },
+        { $match: recentWithPath },
         { $group: { _id: '$referrer', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 10 },
       ]).toArray(),
       collection.aggregate([
-        { $match: { timestamp: { $gte: thirtyDaysAgo } } },
+        { $match: { ...recentWithPath, country: { $ne: 'Unknown' } } },
         { $group: { _id: '$country', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         { $limit: 10 },
