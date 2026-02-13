@@ -91,17 +91,43 @@ export const ocrQualityExperiments = {
   },
 
   /**
-   * Run an OCR quality experiment
+   * Run a single condition of an OCR quality experiment
    */
-  run: async (id: string): Promise<{ success: boolean; message: string }> => {
-    return await apiClient.post(`/api/experiments/ocr-quality/${id}/run`);
+  run: async (id: string, conditionId: string): Promise<{ success: boolean; pages_processed?: number }> => {
+    return await apiClient.post(`/api/experiments/ocr-quality/${id}/run`, { condition_id: conditionId });
   },
 
   /**
-   * Judge OCR results manually
+   * Get next blind comparison for manual judging
    */
-  judge: async (id: string, judgments: Array<{ page_id: string; model: string; prompt: string; score: number; reasoning: string }>): Promise<{ success: boolean }> => {
-    return await apiClient.post(`/api/experiments/ocr-quality/${id}/judge`, { judgments });
+  getNextJudgment: async (id: string): Promise<{
+    comparison: {
+      page_id: string;
+      page_number: number;
+      image_url: string;
+      condition_a: string;
+      condition_b: string;
+      ocr_a: string;
+      ocr_b: string;
+      comparison_type: string;
+      left_is_a: boolean;
+    } | null;
+    stats: { total: number; completed: number; remaining: number };
+  }> => {
+    return await apiClient.get(`/api/experiments/ocr-quality/${id}/judge`);
+  },
+
+  /**
+   * Submit a single judgment
+   */
+  submitJudgment: async (id: string, data: {
+    page_id: string;
+    condition_a: string;
+    condition_b: string;
+    comparison_type: string;
+    winner: 'a' | 'b' | 'tie';
+  }): Promise<{ success: boolean }> => {
+    return await apiClient.post(`/api/experiments/ocr-quality/${id}/judge`, data);
   },
 
   /**

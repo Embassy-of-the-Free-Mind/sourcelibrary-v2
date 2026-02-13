@@ -3,13 +3,6 @@
 import { useState, useEffect, useCallback, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import {
-  ArrowLeft,
-  Loader2,
-  CheckCircle2,
-  SkipForward,
-  Image as ImageIcon,
-} from 'lucide-react';
 import { ocrQualityExperiments } from '@/lib/api-client';
 
 interface Comparison {
@@ -21,7 +14,6 @@ interface Comparison {
   ocr_a: string;
   ocr_b: string;
   comparison_type: string;
-  // Randomized for blind judging
   left_is_a: boolean;
 }
 
@@ -44,15 +36,11 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
   const fetchNextComparison = useCallback(async () => {
     setLoading(true);
     try {
-      // Note: This needs a specific method in ocrQualityExperiments for getting next comparison
-      const data = await ocrQualityExperiments.get(id);
+      const data = await ocrQualityExperiments.getNextJudgment(id);
       if (data.comparison) {
-        setComparison(data.comparison as any);
-        if (data.stats) {
-          setStats(data.stats as any);
-        }
+        setComparison(data.comparison);
+        setStats(data.stats);
       } else {
-        // All done!
         router.push(`/experiments/ocr-quality/${id}/results`);
       }
     } catch (error) {
@@ -70,7 +58,6 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
     if (!comparison) return;
     setSubmitting(true);
 
-    // Translate back from left/right to a/b
     let actualWinner: 'a' | 'b' | 'tie';
     if (winner === 'tie') {
       actualWinner = 'tie';
@@ -81,15 +68,13 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
     }
 
     try {
-      // Note: Need to add submitJudgment method to ocrQualityExperiments
-      await ocrQualityExperiments.judge(id, [{
+      await ocrQualityExperiments.submitJudgment(id, {
         page_id: comparison.page_id,
-        model: comparison.condition_a,
-        prompt: comparison.condition_b,
-        score: actualWinner === 'a' ? 1 : actualWinner === 'b' ? 0 : 0.5,
-        reasoning: comparison.comparison_type
-      }]);
-
+        condition_a: comparison.condition_a,
+        condition_b: comparison.condition_b,
+        comparison_type: comparison.comparison_type,
+        winner: actualWinner,
+      });
       fetchNextComparison();
     } catch (error) {
       console.error('Error submitting judgment:', error);
@@ -114,22 +99,21 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
 
   if (loading && !comparison) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-stone-400" />
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-muted">Loading comparison...</p>
       </div>
     );
   }
 
   if (!comparison) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <CheckCircle2 className="w-16 h-16 text-green-600 mx-auto mb-4" />
-          <h2 className="text-xl font-bold text-stone-900 mb-2">All Done!</h2>
-          <p className="text-stone-600 mb-4">You've completed all judgments.</p>
+          <p className="text-2xl text-primary mb-2">All Done!</p>
+          <p className="text-lg text-secondary mb-4">You've completed all judgments.</p>
           <Link
             href={`/experiments/ocr-quality/${id}/results`}
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+            className="btn-primary"
           >
             View Results
           </Link>
@@ -140,23 +124,24 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
 
   const leftOcr = comparison.left_is_a ? comparison.ocr_a : comparison.ocr_b;
   const rightOcr = comparison.left_is_a ? comparison.ocr_b : comparison.ocr_a;
+  const progress = stats.total > 0 ? (stats.completed / stats.total) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-stone-100">
+    <div className="min-h-screen bg-warm">
       {/* Header */}
-      <div className="bg-white border-b border-stone-200 px-4 py-3 sticky top-0 z-10">
+      <div className="bg-white border-b border-border-light px-4 py-3 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Link
-              href={`/experiments/ocr-quality`}
-              className="p-2 text-stone-400 hover:text-stone-600 hover:bg-stone-100 rounded-lg"
+              href="/experiments/ocr-quality"
+              className="text-base text-muted hover:text-secondary transition-colors"
             >
-              <ArrowLeft className="w-5 h-5" />
+              &larr;
             </Link>
             <div>
-              <h1 className="font-semibold text-stone-900">OCR Quality Judging</h1>
-              <p className="text-xs text-stone-500">
-                Page {comparison.page_number} • {comparison.comparison_type}
+              <h1 className="text-lg font-semibold text-primary">OCR Quality Judging</h1>
+              <p className="text-base text-muted">
+                Page {comparison.page_number} &middot; {comparison.comparison_type}
               </p>
             </div>
           </div>
@@ -164,19 +149,23 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
           <div className="flex items-center gap-4">
             <button
               onClick={() => setShowImage(prev => !prev)}
-              className={`p-2 rounded-lg ${showImage ? 'bg-blue-100 text-blue-600' : 'bg-stone-100 text-stone-400'}`}
+              className={`px-3 py-1.5 rounded-lg text-base transition-colors ${
+                showImage
+                  ? 'bg-accent-violet/10 text-accent-violet'
+                  : 'bg-warm text-muted'
+              }`}
               title="Toggle image (i)"
             >
-              <ImageIcon className="w-5 h-5" />
+              Image
             </button>
-            <div className="text-sm">
-              <span className="font-medium text-stone-900">{stats.completed}</span>
-              <span className="text-stone-500"> / {stats.total}</span>
+            <div className="text-base">
+              <span className="font-medium text-primary">{stats.completed}</span>
+              <span className="text-muted"> / {stats.total}</span>
             </div>
-            <div className="w-32 h-2 bg-stone-200 rounded-full overflow-hidden">
+            <div className="w-32 h-2 bg-warm rounded-full overflow-hidden">
               <div
-                className="h-full bg-purple-600 transition-all"
-                style={{ width: `${(stats.completed / stats.total) * 100}%` }}
+                className="h-full bg-accent-violet transition-all"
+                style={{ width: `${progress}%` }}
               />
             </div>
           </div>
@@ -188,9 +177,9 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
         <div className={`grid gap-4 ${showImage ? 'grid-cols-3' : 'grid-cols-2'}`}>
           {/* Original image */}
           {showImage && (
-            <div className="bg-white rounded-xl border border-stone-200 p-2">
-              <div className="text-xs font-medium text-stone-500 mb-2 text-center">Original</div>
-              <div className="aspect-[3/4] bg-stone-100 rounded-lg overflow-hidden">
+            <div className="card p-2">
+              <div className="text-base font-medium text-muted mb-2 text-center">Original</div>
+              <div className="aspect-[3/4] bg-warm rounded-lg overflow-hidden">
                 <img
                   src={comparison.image_url}
                   alt={`Page ${comparison.page_number}`}
@@ -200,31 +189,31 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
             </div>
           )}
 
-          {/* Left OCR (could be A or B) */}
-          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            <div className="bg-blue-50 px-4 py-2 border-b border-blue-100">
+          {/* Left OCR */}
+          <div className="card overflow-hidden">
+            <div className="bg-blue-50 px-4 py-2.5 border-b border-blue-100">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-blue-900">Left</span>
-                <span className="text-xs text-blue-600 font-mono">Press 1 or A</span>
+                <span className="text-base font-semibold text-blue-900">Left</span>
+                <span className="text-sm text-blue-600 font-mono">Press 1 or A</span>
               </div>
             </div>
             <div className="p-4 max-h-[70vh] overflow-auto">
-              <pre className="text-sm text-stone-800 whitespace-pre-wrap font-serif leading-relaxed">
+              <pre className="text-base whitespace-pre-wrap font-serif leading-relaxed text-primary">
                 {leftOcr || '(empty)'}
               </pre>
             </div>
           </div>
 
           {/* Right OCR */}
-          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            <div className="bg-amber-50 px-4 py-2 border-b border-amber-100">
+          <div className="card overflow-hidden">
+            <div className="bg-amber-50 px-4 py-2.5 border-b border-amber-100">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-amber-900">Right</span>
-                <span className="text-xs text-amber-600 font-mono">Press 2 or B</span>
+                <span className="text-base font-semibold text-amber-900">Right</span>
+                <span className="text-sm text-amber-600 font-mono">Press 2 or B</span>
               </div>
             </div>
             <div className="p-4 max-h-[70vh] overflow-auto">
-              <pre className="text-sm text-stone-800 whitespace-pre-wrap font-serif leading-relaxed">
+              <pre className="text-base whitespace-pre-wrap font-serif leading-relaxed text-primary">
                 {rightOcr || '(empty)'}
               </pre>
             </div>
@@ -243,7 +232,7 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
           <button
             onClick={() => submitJudgment('tie')}
             disabled={submitting}
-            className="py-4 px-8 bg-stone-200 text-stone-700 rounded-xl font-semibold hover:bg-stone-300 disabled:opacity-50"
+            className="py-4 px-8 bg-warm text-secondary rounded-xl font-semibold hover:bg-border-light disabled:opacity-50 text-base"
           >
             Tie (3)
           </button>
@@ -256,11 +245,11 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
           </button>
         </div>
 
-        <p className="text-center text-sm text-stone-500 mt-3">
-          Keyboard: <kbd className="px-1.5 py-0.5 bg-stone-200 rounded text-xs">1/A</kbd> Left •
-          <kbd className="px-1.5 py-0.5 bg-stone-200 rounded text-xs ml-2">2/B</kbd> Right •
-          <kbd className="px-1.5 py-0.5 bg-stone-200 rounded text-xs ml-2">3/T</kbd> Tie •
-          <kbd className="px-1.5 py-0.5 bg-stone-200 rounded text-xs ml-2">I</kbd> Toggle image
+        <p className="text-center text-base text-muted mt-3">
+          Keyboard: <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm">1/A</kbd> Left &middot;
+          <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">2/B</kbd> Right &middot;
+          <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">3/T</kbd> Tie &middot;
+          <kbd className="px-1.5 py-0.5 bg-warm rounded text-sm ml-2">I</kbd> Toggle image
         </p>
       </div>
     </div>

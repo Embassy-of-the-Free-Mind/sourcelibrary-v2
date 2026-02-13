@@ -113,17 +113,26 @@ export interface OcrQualityExperiment {
   updated_at?: Date;
 }
 
+export interface OcrQualityCondition {
+  id: string;
+  batchSize: number;
+  promptType: 'simple' | 'elaborate' | 'custom';
+  label: string;
+  customPrompt?: string;
+}
+
+export interface OcrQualityComparison {
+  a: string;
+  b: string;
+  question: string;
+}
+
 export interface OcrQualityCreateRequest {
-  name: string;
-  description?: string;
   book_id: string;
-  page_sample_ids?: string[];
-  models: string[];
-  prompts?: string[];
-  model_a?: string;
-  model_b?: string;
-  start_page?: number;
-  page_count?: number;
+  start_page: number;
+  end_page: number;
+  conditions: OcrQualityCondition[];
+  comparisons: OcrQualityComparison[];
 }
 
 export interface ExperimentJudgeResponse {

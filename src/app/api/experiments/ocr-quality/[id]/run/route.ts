@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { LATIN_PROMPTS, DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
+import { getOcrPrompt } from '@/lib/prompts';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
 
@@ -78,14 +79,25 @@ export async function POST(
       return NextResponse.json({ error: 'No pages found' }, { status: 404 });
     }
 
+    // Fetch book language for prompt language instruction
+    const book = await db.collection('books').findOne({ id: experiment.book_id });
+    const bookLanguage = book?.original_language || '';
+
     const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
     const batchSize = condition.batchSize;
     const promptType = condition.promptType;
 
-    // Select prompt
-    const basePrompt = promptType === 'elaborate'
-      ? LATIN_PROMPTS.ocr
-      : SIMPLE_OCR_PROMPT;
+    // Select prompt — custom prompts go through getOcrPrompt for {language_instruction} substitution
+    let basePrompt: string;
+    if (condition.customPrompt) {
+      const promptResult = await getOcrPrompt(bookLanguage, { customText: condition.customPrompt });
+      basePrompt = promptResult.text;
+    } else if (promptType === 'elaborate') {
+      const promptResult = await getOcrPrompt(bookLanguage);
+      basePrompt = promptResult.text;
+    } else {
+      basePrompt = SIMPLE_OCR_PROMPT;
+    }
 
     const results: Array<{
       page_id: string;

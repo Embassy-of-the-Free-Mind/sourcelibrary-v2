@@ -1,23 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
-const CONDITION_LABELS: Record<string, string> = {
-  'b1_simple': 'Batch 1 + Simple',
-  'b1_elaborate': 'Batch 1 + Elaborate',
-  'b5_simple': 'Batch 5 + Simple',
-  'b5_elaborate': 'Batch 5 + Elaborate',
-  'b10_simple': 'Batch 10 + Simple',
-  'b10_elaborate': 'Batch 10 + Elaborate',
-  'b20_simple': 'Batch 20 + Simple',
-  'b20_elaborate': 'Batch 20 + Elaborate',
-};
-
 // ELO rating calculation
 function calculateELO(judgments: Array<{ condition_a: string; condition_b: string; winner: string }>) {
-  const K = 32; // K-factor
+  const K = 32;
   const ratings: Record<string, number> = {};
 
-  // Initialize all conditions at 1500
   const conditions = new Set<string>();
   judgments.forEach(j => {
     conditions.add(j.condition_a);
@@ -25,16 +13,13 @@ function calculateELO(judgments: Array<{ condition_a: string; condition_b: strin
   });
   conditions.forEach(c => { ratings[c] = 1500; });
 
-  // Process each judgment
   judgments.forEach(j => {
     const rA = ratings[j.condition_a];
     const rB = ratings[j.condition_b];
 
-    // Expected scores
     const eA = 1 / (1 + Math.pow(10, (rB - rA) / 400));
     const eB = 1 / (1 + Math.pow(10, (rA - rB) / 400));
 
-    // Actual scores
     let sA: number, sB: number;
     if (j.winner === 'a') {
       sA = 1; sB = 0;
@@ -44,7 +29,6 @@ function calculateELO(judgments: Array<{ condition_a: string; condition_b: strin
       sA = 0.5; sB = 0.5;
     }
 
-    // Update ratings
     ratings[j.condition_a] = rA + K * (sA - eA);
     ratings[j.condition_b] = rB + K * (sB - eB);
   });
@@ -60,7 +44,6 @@ function binomialPValue(wins: number, n: number): number {
   const stdDev = Math.sqrt(n * p * (1 - p));
   if (stdDev === 0) return 1;
   const z = Math.abs(wins - expected) / stdDev;
-  // Two-tailed p-value using normal approximation
   return 2 * (1 - normalCDF(z));
 }
 
@@ -87,13 +70,21 @@ export async function GET(
     const { id } = await params;
     const db = await getDb();
 
-    // Get experiment
+    // Get experiment (for condition labels)
     const experiment = await db.collection('ocr_experiments').findOne({ id });
     if (!experiment) {
       return NextResponse.json({ error: 'Experiment not found' }, { status: 404 });
     }
 
-    // Get all judgments (including random matchups)
+    // Build label lookup from experiment conditions
+    const conditionLabels: Record<string, string> = {};
+    if (experiment.conditions && Array.isArray(experiment.conditions)) {
+      for (const cond of experiment.conditions) {
+        conditionLabels[cond.id] = cond.label || cond.id;
+      }
+    }
+
+    // Get all judgments
     const judgments = await db
       .collection('ocr_judgments')
       .find({ experiment_id: id })
@@ -103,7 +94,6 @@ export async function GET(
       return NextResponse.json({ error: 'No judgments yet' }, { status: 404 });
     }
 
-    // Separate fixed vs random judgments for reporting
     const fixedJudgments = judgments.filter(j => j.comparison_type !== 'random');
     const randomJudgments = judgments.filter(j => j.comparison_type === 'random');
 
@@ -145,6 +135,8 @@ export async function GET(
         comparison_type: type,
         condition_a: stats.condition_a,
         condition_b: stats.condition_b,
+        label_a: conditionLabels[stats.condition_a] || stats.condition_a,
+        label_b: conditionLabels[stats.condition_b] || stats.condition_b,
         a_wins: stats.a_wins,
         b_wins: stats.b_wins,
         ties: stats.ties,
@@ -156,7 +148,7 @@ export async function GET(
       };
     });
 
-    // Calculate overall condition stats
+    // Calculate overall condition stats — initialize from actual judgments, not a hardcoded list
     const conditionStats: Record<string, {
       wins: number;
       losses: number;
@@ -164,28 +156,25 @@ export async function GET(
       comparisons: number;
     }> = {};
 
-    // Initialize all conditions
-    Object.keys(CONDITION_LABELS).forEach(cond => {
-      conditionStats[cond] = { wins: 0, losses: 0, ties: 0, comparisons: 0 };
-    });
-
-    // Aggregate wins/losses
     judgments.forEach(j => {
       const a = j.condition_a;
       const b = j.condition_b;
 
-      if (conditionStats[a]) conditionStats[a].comparisons++;
-      if (conditionStats[b]) conditionStats[b].comparisons++;
+      if (!conditionStats[a]) conditionStats[a] = { wins: 0, losses: 0, ties: 0, comparisons: 0 };
+      if (!conditionStats[b]) conditionStats[b] = { wins: 0, losses: 0, ties: 0, comparisons: 0 };
+
+      conditionStats[a].comparisons++;
+      conditionStats[b].comparisons++;
 
       if (j.winner === 'a') {
-        if (conditionStats[a]) conditionStats[a].wins++;
-        if (conditionStats[b]) conditionStats[b].losses++;
+        conditionStats[a].wins++;
+        conditionStats[b].losses++;
       } else if (j.winner === 'b') {
-        if (conditionStats[a]) conditionStats[a].losses++;
-        if (conditionStats[b]) conditionStats[b].wins++;
+        conditionStats[a].losses++;
+        conditionStats[b].wins++;
       } else {
-        if (conditionStats[a]) conditionStats[a].ties++;
-        if (conditionStats[b]) conditionStats[b].ties++;
+        conditionStats[a].ties++;
+        conditionStats[b].ties++;
       }
     });
 
@@ -197,12 +186,12 @@ export async function GET(
     })));
 
     const conditions = Object.entries(conditionStats)
-      .filter(([_, stats]) => stats.comparisons > 0)
+      .filter(([, stats]) => stats.comparisons > 0)
       .map(([cond, stats]) => {
         const nonTies = stats.wins + stats.losses;
         return {
           condition_id: cond,
-          label: CONDITION_LABELS[cond] || cond,
+          label: conditionLabels[cond] || cond,
           total_wins: stats.wins,
           total_losses: stats.losses,
           total_ties: stats.ties,
@@ -215,27 +204,27 @@ export async function GET(
     // Sort by ELO for ranking
     const rankedConditions = [...conditions].sort((a, b) => b.elo - a.elo);
 
-    // Generate recommendation
-    const bestCondition = rankedConditions[0];
+    // Generate recommendation dynamically from ranked data
     let recommendation = `Based on ${judgments.length} judgments, `;
+    const best = rankedConditions[0];
 
-    if (bestCondition) {
-      recommendation += `**${bestCondition.label}** performed best (ELO: ${bestCondition.elo}). `;
+    if (best && rankedConditions.length >= 2) {
+      recommendation += `**${best.label}** performed best (ELO: ${best.elo}, win rate: ${(best.win_rate * 100).toFixed(0)}%).`;
 
-      // Check if elaborate vs simple matters
-      const promptComp = comparisons.find(c => c.comparison_type.includes('Simple vs Elaborate'));
-      if (promptComp && promptComp.significant) {
-        const winner = promptComp.a_win_rate > promptComp.b_win_rate ? 'Simple' : 'Elaborate';
-        recommendation += `The ${winner} prompt is significantly better. `;
-      } else if (promptComp) {
-        recommendation += `Prompt complexity doesn't significantly affect quality. `;
+      // Check if any comparisons are statistically significant
+      const sigComparisons = comparisons.filter(c => c.significant);
+      if (sigComparisons.length > 0) {
+        const sigSummary = sigComparisons.map(c => {
+          const winnerLabel = c.a_win_rate > c.b_win_rate ? c.label_a : c.label_b;
+          const winRate = Math.max(c.a_win_rate, c.b_win_rate);
+          return `${winnerLabel} beats its opponent (${(winRate * 100).toFixed(0)}% win rate, p=${c.p_value.toFixed(3)})`;
+        });
+        recommendation += ` Significant results: ${sigSummary.join('; ')}.`;
+      } else {
+        recommendation += ` No statistically significant differences found — consider more pages for stronger signal.`;
       }
-
-      // Check batch size degradation
-      const batch10vs20 = comparisons.find(c => c.comparison_type.includes('10 vs 20'));
-      if (batch10vs20 && batch10vs20.significant && batch10vs20.a_win_rate > batch10vs20.b_win_rate) {
-        recommendation += `Quality degrades at batch size 20 - stay at 10 or lower.`;
-      }
+    } else if (best) {
+      recommendation += `only one condition has data: **${best.label}**.`;
     } else {
       recommendation = 'Not enough data to make a recommendation.';
     }
