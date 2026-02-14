@@ -56,7 +56,13 @@ export async function POST(request: NextRequest) {
 
     // Fetch IIIF manifest from Gallica
     const manifestUrl = `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/manifest.json`;
-    const manifestRes = await fetch(manifestUrl);
+    const manifestRes = await fetch(manifestUrl, {
+      headers: {
+        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+        'Accept': 'application/json, application/ld+json',
+        'Referer': 'https://gallica.bnf.fr/',
+      }
+    });
 
     if (!manifestRes.ok) {
       return NextResponse.json(

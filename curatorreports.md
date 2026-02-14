@@ -5227,7 +5227,109 @@ Astrology is central to both the Western esoteric tradition and Indian knowledge
 
 All 190 books queued for Lambda OCR processing (~64,000 pages). Using gemini-3-flash-preview model with Sanskrit/Devanagari-aware prompts.
 
-### Session 029 TOTAL: 190 books, ~64,000 pages
+### Batch 28: Agent-Found Texts (13 books, ~5,185 pages)
+
+Additional texts discovered by research agents, imported alongside the ongoing OCR of Batches 1-27.
+
+| Title | Author | Year | Pages | Book ID | IA Identifier |
+|-------|--------|------|-------|---------|---------------|
+| Bhrigu Sutra | Bhrigu; Siddha Nath Sharma (ed.) | 1900 | 70 | 6990791845cec16092a296d0 | bhrigu-sutra-siddha-nath-sharma |
+| Varahamihira Horasastram | Varahamihira; Aiyangar (ed.) | 1951 | 872 | 699078e81b3bb91c9a507f09 | in.ernet.dli.2015.326830 |
+| Panchavinshatika Muhurta Pradarshini | Nahnidatta | 1900 | 43 | 69907938b621b177c1af5c51 | NahnidattaPanchavinshatikaMuhurtaPradarshini |
+| Muhurta Chakra Deepika | Pt. Ram Dayal Jyoti | 1874 | 75 | 69907959b621b177c1af6679 | cEfL_muhurta-chakra-deepika... |
+| Jataka Alankara with Tika | Krishna Daya Bharana | 1900 | 137 | 6990795bb621b177c1af684d | jataka-alankara-with-tika... |
+| Svarodaya Vigyan | Pandit Hiralal Dungar | 1900 | 431 | 6990795eb621b177c1af6a83 | svarodaya-vigyan-pandit-hiralal-dungar |
+| Lagna Chandrika with Subodhini | Daivajna Vachaspati | 1900 | 199 | 6990796fb621b177c1af7208 | lagna-chandrika-with-subodhini... |
+| Surya Siddhanta (Ranganatha) | Ranganatha (comm.); RC Panday | 1900 | 927 | 69907971b621b177c1af74df | surya-siddhanta |
+| Prashna Chandeshwar | Unknown | 1900 | 103 | 69907975b621b177c1af7bf1 | prashna-chandeshvar |
+| Surya Siddhanta Gudartha Prakasika | Ranganatha; Baladev Prasad Mishra | 1900 | 856 | 6990799359c453700d93c428 | suryasiddhantagudarthaprakasika... |
+| Jyotish Prashna Kundali Vichar | Unknown | 1900 | 1,089 | 6990799759c453700d93c972 | jyotish-prashna-kundali-vichar |
+| Lagna Chandrika (Basti Ram) | Pt. Kashinath; Basti Ram | 1935 | 283 | 699079abdb8b55d19ec67203 | lagna-chandrika-with-pandit-bastiram... |
+| Hanuman Jyotish (Kannada) | Unknown | 1900 | 100 | 699079addb8b55d19ec67321 | hanuman-jyotish-randhir-prakashan |
+
+### Batch 29: eGangotri Manuscripts (10 books, ~1,000 pages)
+
+Handwritten Devanagari manuscripts from the Raghunath Temple collection, Jammu (eGangotri/Dharmartha Trust).
+
+| Title | Shelf # | Pages | Book ID | IA Identifier |
+|-------|---------|-------|---------|---------------|
+| Jyotish Manuscript 2547 | Alm 8 Shlf 2 | 100 | 6990799a59c453700d93cdb5 | Jyotish2547... |
+| Jyotish Manuscript 2504 | Alm 8 Shlf 2 | 100 | 6990799e59c453700d93d2f7 | Jyotish2504... |
+| Jyotish Manuscript 2564 | Alm 8 Shlf 2 | 100 | 699079a2db8b55d19ec66bdd | Jyotish2564... |
+| Graha Ganit 5037 | Alm 22 Shlf 6 | 100 | 699079a6db8b55d19ec66ebe | GrahGanit5037... |
+| Laghu Jataka | Alm 8 | 100 | 699079aadb8b55d19ec6719d | LaghnatakDevanagari... |
+| Jyotish Shastra 5028 | Alm 22 Shlf 6 | 100 | 699079dfdb8b55d19ec682ec | JyotishShastra5028... |
+| Jyotish Shastra 2543 | Alm 8 Shlf 2 | 100 | 699079e3db8b55d19ec683b8 | JyotishShastra2543... |
+| Jyotish Shastra 2567 | Alm 8 Shlf 2 | 100 | 699079e6db8b55d19ec6841e | JyotishShastra2567... |
+| Jyotish Ratnamala 2563 | Alm 8 Shlf 2 | 100 | 699079eadb8b55d19ec68553 | JyotishRatnamala2563... |
+| Jyotish Darpan 5018 | Alm 22 Shlf 6 | 100 | 699079eddb8b55d19ec68713 | JyotishDarpan5018... |
+| Graha Laghu 5022 | Alm 22 Shlf 6 | 100 | 699079f17012ba97b5f1d9d7 | GrahLaghu5022... |
+| Hora Shastra 5023 | Alm 22 Shlf 6 | 100 | 699079f57012ba97b5f1da3d | HoraShastra5023... |
+| Muhurta 5024 | Alm 22 Shlf 6 | 100 | 699079f87012ba97b5f1daa3 | Muhurta5024... |
+| Nakshatra Phala 5025 | Alm 22 Shlf 6 | 100 | 699079fcdb8b55d19ec688ff | NakshatraPhala5025... |
+| Tajik Shastra 5029 | Alm 22 Shlf 6 | 100 | 69907a00db8b55d19ec689cb | TajikShastra5029... |
+
+### Batch 28-29 Highlights
+
+- **Varahamihira Horasastram (872p)** — Major Varahamihira work from 1951 Adyar Library edition. 522+ pages of Sanskrit jyotish with scholarly apparatus.
+- **Surya Siddhanta (Ranganatha Commentary) (927p)** — A second major edition of the Surya Siddhanta with Ranganatha's exposition, complementing the one already in the collection.
+- **Jyotish Prashna Kundali Vichar (1,089p)** — Comprehensive horary astrology text on chart interpretation.
+- **eGangotri Manuscripts** — 15 handwritten Devanagari manuscripts from the Raghunath Temple, Jammu. These are palm-leaf/paper originals representing living manuscript traditions — exactly the kind of primary source material that makes this collection unique.
+
+### OCR Processing (continued)
+
+Batch 28-29 books (28 books, 6,685 pages) also queued for Lambda OCR. Combined with Batches 1-27, total queue: ~170 books, ~59,250 pages.
+
+### Batch 30: Priority eGangotri Manuscripts (20 books, ~9,549 pages)
+
+Key manuscripts from the Raghunath Temple (Dharmartha Trust) collection, Jammu. Handwritten Devanagari on palm leaf and paper.
+
+Major texts:
+- **Jyotirvidabharanam of Kalidasa (2,937p)** — Massive manuscript attributed to Kalidasa (the astrologer, not the poet). One of the largest single manuscripts in the collection.
+- **Siddhanta Sarvabhauma Purvardha of Munisvara (2,202p)** — First half of Munisvara's comprehensive astronomical treatise.
+- **Brihat Jataka Vivritti by Bhattotpala (1,248p)** — Bhattotpala's extensive commentary on Varahamihira's natal astrology masterwork.
+- **Siddhanta Sarvabhauma Uttarardha (722p)** — Second half of Munisvara's treatise.
+- **Yuddha Jayarnava (539p)** — Military astrology (yuddha = battle). Timing warfare by planetary positions.
+- **Yogayatra Vivritti by Bhattotpala (445p)** — Commentary on Varahamihira's text on auspicious travel timing.
+- Other texts: Shripati Bhatt's Jyotish Ratnamala, Prithuyashas' Shatapanchashika, Prashna Bhairava, Hora Chakram, etc.
+
+### Batch 31: eGangotri Manuscripts II (20 books, ~3,635 pages)
+
+Specialized topics from the Raghunath Temple collection:
+- **Pati Ganita with Tika of Sridharacharya (1,063p)** — Mathematical text with commentary by the great 10th-century mathematician.
+- **Bha Vigyanam (959p)** — Astronomical/astrological science text.
+- **Pancha Svara of Prajapati Das (394p)** — Breath divination connected to five cosmic sounds.
+- **Raj Vijaya (411p)** — Royal astrology/victory text.
+- Also: Samudrikam (body reading), Bhukamp Lakshan Phalam (earthquake omens), Garga Muni texts, Vivah Ratna (marriage astrology), Shani Chakram (Saturn).
+
+### Batch 32: eGangotri Manuscripts III (20 books, ~6,981 pages)
+
+- **Siddhanta Sara Kaustubha of Jagannatha (1,890p)** — Major siddhanta text.
+- **Narpati Jayacharya (858p)** — Royal astrology manual.
+- **Siddhanta Kaustubha of Jagannatha (878p)** — Another major work by the same author.
+- **Siddhanta Tattva Viveka of Kamalakara (725p)** — Important philosophical-astronomical treatise.
+- **Shambhu Hora Prakash of Punyaraja (657p)** — Hora (horoscopy) text.
+- Also: Lilavati of Bhaskaracharya (mathematics), Lomash Samhita, Vriddha Gargi, Gauri Jatakam, dream interpretation texts, theft divination, military astrology.
+
+### Batch 33: eGangotri Manuscripts IV (26 books, ~4,198 pages)
+
+Remaining manuscripts completing the entire eGangotri jyotish collection:
+- **Siddhanta Tattva Viveka (second copy, 849p)** — Kamalakara's treatise, another manuscript tradition.
+- **Ranvir Vijaya (574p + 558p, two copies)** — Royal victory astrology.
+- **Siddhanta Shiromani (327p)** — Bhaskaracharya's masterwork in manuscript form.
+- **Surya Siddhanta (171p)** — Manuscript copy of the foundational astronomical text.
+- **Muhurta Chintamani of Ram Daivajna (276p)** — Key muhurta text.
+- **Jyotish Samgraha (156p)** — Jyotish compilation.
+- Also: Samudrikam copies, Jyotish Kalpataru, Pancha Svara variants, Hora Chakram, Hoda Chakram, etc.
+
+### Batch 30-33 Highlights
+
+The eGangotri/Raghunath Temple collection is extraordinary. These are **handwritten Sanskrit manuscripts** — not printed books — representing the living manuscript tradition of Indian astronomy and astrology. The collection includes:
+- Works by every major author: Varahamihira, Bhattotpala, Bhaskaracharya, Kalidasa, Munisvara, Jagannatha, Kamalakara, Prithuyashas, Shripati
+- Every branch of jyotish: siddhanta (astronomy), hora (horoscopy), samhita (mundane), muhurta (electional), prashna (horary), svarodaya (breath divination), samudrika (body reading), yuddha (military)
+- Unique texts not available in print: earthquake omens, theft divination, dream interpretation, five-breath cosmology
+
+### Session 029 TOTAL: ~299 books, ~95,000 pages
 
 ---
 

@@ -136,7 +136,8 @@ export async function POST(request: NextRequest) {
     // Fetch IIIF manifest
     const manifestRes = await fetch(manifest_url, {
       headers: {
-        'Accept': 'application/json',
+        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+        'Accept': 'application/json, application/ld+json',
       }
     });
 

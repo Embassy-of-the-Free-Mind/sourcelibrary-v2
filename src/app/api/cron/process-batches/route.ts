@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
     // New parent-child jobs use job_name, old jobs use gemini_job_name
     const pendingJobs = await db.collection('batch_jobs')
       .find({
-        status: { $in: ['pending', 'processing'] },
+        status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
         $or: [
           { job_name: { $exists: true, $nin: [null, ''] } },
           { gemini_job_name: { $exists: true, $nin: [null, ''] } }

@@ -73,46 +73,94 @@ Autonomous book acquisition agent for Source Library, focused on Western esoteri
 | Image quality | 1x | Readable scans |
 | Research value | 1x | Citations, scholarly interest |
 
-## Import APIs
+## Import APIs (12 Sources)
+
+Full API reference: `.claude/docs/import-apis.md`
 
 ### Internet Archive
 ```bash
 curl -X POST "https://sourcelibrary.org/api/import/ia" \
   -H "Content-Type: application/json" \
-  -d '{
-    "ia_identifier": "bookid123",
-    "title": "Book Title",
-    "author": "Author Name",
-    "year": 1617,
-    "original_language": "Latin"
-  }'
+  -d '{ "ia_identifier": "bookid123", "title": "...", "author": "...", "year": 1617, "original_language": "Latin" }'
 ```
 
 ### Gallica (BnF)
 ```bash
 curl -X POST "https://sourcelibrary.org/api/import/gallica" \
   -H "Content-Type: application/json" \
-  -d '{
-    "ark": "bpt6k61073880",
-    "title": "Book Title",
-    "author": "Author Name",
-    "year": 1617,
-    "original_language": "Latin"
-  }'
+  -d '{ "ark": "bpt6k61073880", "title": "...", "author": "...", "year": 1617, "original_language": "Latin" }'
 ```
 
 ### MDZ (Bavarian State Library)
 ```bash
 curl -X POST "https://sourcelibrary.org/api/import/mdz" \
   -H "Content-Type: application/json" \
-  -d '{
-    "bsb_id": "bsb00029099",
-    "title": "Book Title",
-    "author": "Author Name",
-    "year": 1473,
-    "original_language": "Latin"
-  }'
+  -d '{ "bsb_id": "bsb00029099", "title": "...", "author": "...", "year": 1473, "original_language": "Latin" }'
 ```
+
+### Wellcome Collection
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/wellcome" \
+  -H "Content-Type: application/json" \
+  -d '{ "work_id": "pqusmy2a", "title": "...", "author": "...", "language": "Latin", "published": "1650" }'
+```
+
+### e-rara (Swiss Rare Books)
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/e-rara" \
+  -H "Content-Type: application/json" \
+  -d '{ "erara_id": "8962689", "title": "...", "author": "...", "language": "German", "published": "1650" }'
+```
+
+### Bodleian Library (Oxford)
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/bodleian" \
+  -H "Content-Type: application/json" \
+  -d '{ "uuid": "ae9f6cca-...", "title": "...", "author": "...", "language": "Latin", "published": "1550" }'
+```
+
+### Cambridge Digital Library (CUDL)
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/cambridge" \
+  -H "Content-Type: application/json" \
+  -d '{ "ms_id": "MS-ADD-03996", "title": "...", "author": "...", "language": "Latin", "published": "1500" }'
+```
+
+### HAB Wolfenbuttel
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/hab" \
+  -H "Content-Type: application/json" \
+  -d '{ "hab_id": "cod-guelf-18-1-aug-2f", "title": "...", "author": "...", "language": "Latin", "published": "1450" }'
+```
+
+### Vatican Library (DigiVatLib)
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/vatican" \
+  -H "Content-Type: application/json" \
+  -d '{ "mss_id": "Pal.lat.235", "title": "...", "author": "...", "language": "Latin", "published": "1400" }'
+```
+
+### Google Books (via IA mirror)
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/google-books" \
+  -H "Content-Type: application/json" \
+  -d '{ "google_books_id": "aTo6AQAAMAAJ", "title": "...", "author": "...", "language": "Latin", "published": "1617" }'
+```
+
+### Europeana (Aggregator)
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/europeana" \
+  -H "Content-Type: application/json" \
+  -d '{ "record_id": "/2022704/lmu_bsb00029099", "title": "...", "author": "...", "language": "Latin", "published": "1473" }'
+```
+
+### Generic IIIF (Any Library)
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/iiif" \
+  -H "Content-Type: application/json" \
+  -d '{ "manifest_url": "https://example.org/iiif/manifest.json", "title": "...", "author": "...", "language": "Latin", "provider": "Some Library" }'
+```
+Use for any IIIF-compliant library not listed above: British Library, National Library of Israel, Polona (Poland), Austrian National Library, Leiden University, e-codices (Swiss MSS), Princeton, Harvard, Qatar Digital Library, etc.
 
 ## Check Existing Collection
 
@@ -151,11 +199,19 @@ curl -s "https://sourcelibrary.org/api/books" | jq '.[] | select(.author | conta
   - Strong in incunabula, 15th-16th century
 
 ### Discovery Methods
-- Archive.org searches by theme/author
+- Archive.org advanced search by theme/author/date
 - Cross-references from acquired texts
 - Scholarly bibliographies (Thorndike, Yates, etc.)
-- BnF Gallica catalog searches
-- MDZ/BSB Munich digitization searches
+- BnF Gallica catalog searches (`site:gallica.bnf.fr`)
+- MDZ/BSB Munich digitization searches (`site:digitale-sammlungen.de`)
+- Bodleian Digital Library (`site:digital.bodleian.ox.ac.uk`)
+- Cambridge CUDL (`cudl.lib.cam.ac.uk`)
+- Vatican DigiVatLib (`digi.vatlib.it`)
+- Wellcome Collection (`wellcomecollection.org`)
+- e-rara Swiss rare books (`e-rara.ch`)
+- Europeana aggregator (`europeana.eu`)
+- Biblissima IIIF aggregator (`iiif.biblissima.fr/collections/`)
+- Generic IIIF: British Library, NLI, Polona, Austrian National Library, Leiden, e-codices, Princeton, Harvard, Qatar Digital Library
 
 ## Report Format
 

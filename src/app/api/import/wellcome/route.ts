@@ -102,7 +102,12 @@ export async function POST(request: NextRequest) {
     const manifestUrl = iiifLocation.url;
 
     // Fetch IIIF manifest
-    const manifestRes = await fetch(manifestUrl);
+    const manifestRes = await fetch(manifestUrl, {
+      headers: {
+        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+        'Accept': 'application/json, application/ld+json',
+      }
+    });
 
     if (!manifestRes.ok) {
       return NextResponse.json(

@@ -70,7 +70,12 @@ export async function POST(request: NextRequest) {
 
     // Fetch IIIF manifest from MDZ
     const manifestUrl = `https://api.digitale-sammlungen.de/iiif/presentation/v2/${normalizedId}/manifest`;
-    const manifestRes = await fetch(manifestUrl);
+    const manifestRes = await fetch(manifestUrl, {
+      headers: {
+        'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; scholarly digital library)',
+        'Accept': 'application/json, application/ld+json',
+      }
+    });
 
     if (!manifestRes.ok) {
       return NextResponse.json(

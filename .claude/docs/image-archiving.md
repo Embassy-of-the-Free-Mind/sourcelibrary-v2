@@ -24,3 +24,13 @@ node scripts/evaluate-extraction.mjs BOOK_ID
 ```
 - Gallery: https://sourcelibrary.org/gallery?book=BOOK_ID
 - Cost: ~$0.0003/page, ~$0.10-0.25 for a 300-800 page book
+
+### OCR-Aware Extraction (Feb 2026)
+When OCR has already been run on a page, the image extraction prompt receives OCR context:
+- **Page type** from `<page-type>` tag (illustration, diagram, text, etc.)
+- **Preliminary detections** from OCR's `<detected-images>` tag (rough bounding boxes to refine)
+- **Text density** (line count summary) — helps model understand text vs image regions
+
+This improves bounding box accuracy by giving the model layout awareness. Falls back gracefully when OCR hasn't been run yet.
+
+Implementation: `buildOcrContext()` in `src/lib/image-extraction.ts`, called from the Lambda worker when `page.ocr.data` exists.

@@ -137,47 +137,99 @@ curl -s "https://sourcelibrary.org/api/admin/stats"
 curl -s "https://sourcelibrary.org/api/books" | jq '[.[] | {id, title, author, year}]'
 ```
 
-### Import from Internet Archive
+### Import APIs (12 Sources)
 
+#### Internet Archive
 ```bash
 curl -s -X POST "https://sourcelibrary.org/api/import/ia" \
   -H "Content-Type: application/json" \
-  -d '{
-    "ia_identifier": "bookid123",
-    "title": "Book Title",
-    "author": "Author Name",
-    "year": 1617,
-    "original_language": "Latin"
-  }'
+  -d '{ "ia_identifier": "bookid123", "title": "...", "author": "...", "year": 1617, "original_language": "Latin" }'
 ```
 
-### Import from Gallica (BnF)
-
+#### Gallica (BnF)
 ```bash
 curl -s -X POST "https://sourcelibrary.org/api/import/gallica" \
   -H "Content-Type: application/json" \
-  -d '{
-    "ark": "bpt6k61073880",
-    "title": "Book Title",
-    "author": "Author Name",
-    "year": 1617,
-    "original_language": "Latin"
-  }'
+  -d '{ "ark": "bpt6k61073880", "title": "...", "author": "...", "year": 1617, "original_language": "Latin" }'
 ```
 
-### Import from MDZ (Bavarian State Library)
-
+#### MDZ (Bavarian State Library)
 ```bash
 curl -s -X POST "https://sourcelibrary.org/api/import/mdz" \
   -H "Content-Type: application/json" \
-  -d '{
-    "bsb_id": "bsb00029099",
-    "title": "Book Title",
-    "author": "Author Name",
-    "year": 1473,
-    "original_language": "Latin"
-  }'
+  -d '{ "bsb_id": "bsb00029099", "title": "...", "author": "...", "year": 1473, "original_language": "Latin" }'
 ```
+
+#### Wellcome Collection
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/wellcome" \
+  -H "Content-Type: application/json" \
+  -d '{ "work_id": "pqusmy2a", "title": "...", "author": "...", "language": "Latin", "published": "1650" }'
+```
+Find work IDs: `https://api.wellcomecollection.org/catalogue/v2/works?query=alchemy&availabilities=online`
+
+#### e-rara (Swiss Rare Books)
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/e-rara" \
+  -H "Content-Type: application/json" \
+  -d '{ "erara_id": "8962689", "title": "...", "author": "...", "language": "German", "published": "1650" }'
+```
+
+#### Bodleian Library (Oxford)
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/bodleian" \
+  -H "Content-Type: application/json" \
+  -d '{ "uuid": "ae9f6cca-ae5c-4149-8fe4-95e6eca187f5", "title": "...", "author": "...", "language": "Latin", "published": "1550" }'
+```
+Browse: https://digital.bodleian.ox.ac.uk/
+
+#### Cambridge Digital Library (CUDL)
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/cambridge" \
+  -H "Content-Type: application/json" \
+  -d '{ "ms_id": "MS-ADD-03996", "title": "...", "author": "...", "language": "Latin", "published": "1500" }'
+```
+Browse: https://cudl.lib.cam.ac.uk/
+
+#### HAB Wolfenbuttel
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/hab" \
+  -H "Content-Type: application/json" \
+  -d '{ "hab_id": "cod-guelf-18-1-aug-2f", "title": "...", "author": "...", "language": "Latin", "published": "1450" }'
+```
+If default manifest URL doesn't work, add `"manifest_url": "https://diglib.hab.de/drucke/some-id/manifest.json"`.
+
+#### Vatican Library (DigiVatLib)
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/vatican" \
+  -H "Content-Type: application/json" \
+  -d '{ "mss_id": "Pal.lat.235", "title": "...", "author": "...", "language": "Latin", "published": "1400" }'
+```
+Browse: https://digi.vatlib.it/
+
+#### Google Books (via IA mirror)
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/google-books" \
+  -H "Content-Type: application/json" \
+  -d '{ "google_books_id": "aTo6AQAAMAAJ", "title": "...", "author": "...", "language": "Latin", "published": "1617" }'
+```
+Imports via IA mirrors (`bub_gb_*`). Returns 404 if not mirrored.
+
+#### Europeana (Aggregator)
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/europeana" \
+  -H "Content-Type: application/json" \
+  -d '{ "record_id": "/2022704/lmu_bsb00029099", "title": "...", "author": "...", "language": "Latin", "published": "1473" }'
+```
+Aggregates from thousands of institutions. Extracts IIIF manifest from source provider.
+
+#### Generic IIIF (Any Library)
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/import/iiif" \
+  -H "Content-Type: application/json" \
+  -d '{ "manifest_url": "https://example.org/iiif/manifest.json", "title": "...", "author": "...", "language": "Latin", "provider": "Some Library", "start_page": 1, "end_page": 100 }'
+```
+Fallback for any IIIF-compliant repository not covered above. Use for British Library, National Library of Israel, Polona, Austrian National Library, Leiden, e-codices, Princeton, Harvard, Qatar Digital Library, etc.
 
 ---
 
@@ -188,13 +240,23 @@ curl -s -X POST "https://sourcelibrary.org/api/import/mdz" \
 ```bash
 # Search Archive.org by author
 curl -s "https://archive.org/advancedsearch.php?q=creator:(Paracelsus)+mediatype:(texts)+date:[1500+TO+1700]&output=json&rows=50" | jq '.response.docs[] | {identifier, title, date, creator}'
-
-# Search Gallica
-# Use web search for: site:gallica.bnf.fr "Author Name"
-
-# Search MDZ
-# Use web search for: site:digitale-sammlungen.de "Author Name"
 ```
+
+**Web search patterns for each library:**
+- Archive.org: `site:archive.org "Author Name" texts`
+- Gallica: `site:gallica.bnf.fr "Author Name"`
+- MDZ: `site:digitale-sammlungen.de "Author Name"`
+- Wellcome: `site:wellcomecollection.org "Author Name"`
+- Bodleian: `site:digital.bodleian.ox.ac.uk "Author Name"` or search at https://digital.bodleian.ox.ac.uk/
+- Cambridge: search at https://cudl.lib.cam.ac.uk/
+- Vatican: search at https://digi.vatlib.it/
+- e-rara: `site:e-rara.ch "Author Name"` or browse https://www.e-rara.ch/
+- Europeana: search at https://www.europeana.eu/
+- British Library: search at https://www.bl.uk/manuscripts/ (use generic IIIF import)
+- National Library of Israel: search at https://www.nli.org.il/ (use generic IIIF import)
+- Polona (Poland): search at https://polona.pl/ (use generic IIIF import)
+- e-codices (Swiss MSS): search at https://e-codices.unifr.ch/ (use generic IIIF import)
+- Biblissima (aggregator): search at https://iiif.biblissima.fr/collections/
 
 ### Phase 2: Evaluation
 
@@ -296,13 +358,35 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs" \
 - **IA Catalog** (`data/ia_catalog.csv`) - 9,000 entries
 
 ### Online Sources
-| Source | URL Pattern | Notes |
-|--------|-------------|-------|
-| Archive.org | `archive.org/details/[ID]` | Primary source |
-| Gallica | `gallica.bnf.fr/ark:/[ARK]` | French materials |
-| MDZ/BSB | `digitale-sammlungen.de/[BSB_ID]` | German materials |
-| e-rara | `e-rara.ch` | Swiss rare books |
-| HathiTrust | `babel.hathitrust.org` | Requires login |
+| Source | URL Pattern | Import API | Notes |
+|--------|-------------|------------|-------|
+| Archive.org | `archive.org/details/[ID]` | `/api/import/ia` | Primary source |
+| Gallica (BnF) | `gallica.bnf.fr/ark:/[ARK]` | `/api/import/gallica` | French materials |
+| MDZ/BSB | `digitale-sammlungen.de/[BSB_ID]` | `/api/import/mdz` | German materials |
+| Wellcome | `wellcomecollection.org` | `/api/import/wellcome` | Medical/alchemical |
+| e-rara | `e-rara.ch` | `/api/import/e-rara` | Swiss rare books |
+| Bodleian | `digital.bodleian.ox.ac.uk` | `/api/import/bodleian` | Oxford manuscripts |
+| Cambridge | `cudl.lib.cam.ac.uk` | `/api/import/cambridge` | CUDL manuscripts |
+| HAB | `diglib.hab.de` | `/api/import/hab` | Wolfenbuttel |
+| Vatican | `digi.vatlib.it` | `/api/import/vatican` | Vatican manuscripts |
+| Europeana | `europeana.eu` | `/api/import/europeana` | Aggregator (1000s of libs) |
+| Google Books | `books.google.com` | `/api/import/google-books` | Via IA mirrors |
+| Any IIIF | any IIIF manifest | `/api/import/iiif` | Generic fallback |
+| HathiTrust | `babel.hathitrust.org` | N/A | Requires login |
+
+### Additional IIIF Libraries (use generic IIIF import)
+| Library | URL | Strengths |
+|---------|-----|-----------|
+| British Library | `bl.uk/manuscripts` | Sloane/Harley alchemical MSS |
+| National Library of Israel | `nli.org.il` | Kabbalah, Hebrew MSS |
+| Polona (Poland) | `polona.pl` | Medieval Central European |
+| Austrian National Library | `onb.ac.at` | 850k items, papyri |
+| Leiden University | `digitalcollections.universiteitleiden.nl` | 6,500 Islamic MSS |
+| e-codices (Swiss MSS) | `e-codices.unifr.ch` | Alchemical MSS |
+| Princeton | `dpul.princeton.edu` | 10k Islamic MSS |
+| Harvard | `library.harvard.edu` | Houghton alchemy/hermeticism |
+| Qatar Digital Library | `qdl.qa` | Arabic science |
+| Biblissima | `iiif.biblissima.fr` | IIIF aggregator for pre-1800 MSS |
 
 ---
 

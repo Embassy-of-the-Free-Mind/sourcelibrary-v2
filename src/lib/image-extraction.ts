@@ -113,12 +113,12 @@ export async function extractWithGemini(
 export async function extractWithGemini(
   imageUrl: string,
   model: string,
-  options: { returnUsage: true }
+  options: { returnUsage: true; ocrData?: string }
 ): Promise<ExtractionResult>;
 export async function extractWithGemini(
   imageUrl: string,
   model: string = DEFAULT_MODEL,
-  options?: { returnUsage: true }
+  options?: { returnUsage?: true; ocrData?: string }
 ): Promise<DetectedImage[] | ExtractionResult> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
