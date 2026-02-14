@@ -5329,7 +5329,34 @@ The eGangotri/Raghunath Temple collection is extraordinary. These are **handwrit
 - Every branch of jyotish: siddhanta (astronomy), hora (horoscopy), samhita (mundane), muhurta (electional), prashna (horary), svarodaya (breath divination), samudrika (body reading), yuddha (military)
 - Unique texts not available in print: earthquake omens, theft divination, dream interpretation, five-breath cosmology
 
-### Session 029 TOTAL: ~299 books, ~95,000 pages
+### Batch 34: Agent-Found Texts (8 books, ~4,981 pages)
+
+Texts found via automated IA search for high-priority jyotish works not yet in the collection:
+- **Deva Keralam (Chandrakala Nadi) (3,110p)** — The massive nadi astrology text, foundational for predictive techniques.
+- **Jataka Parijata (KSS Edition) (911p)** — Kashi Sanskrit Series scholarly edition of Vaidyanatha Dikshita's classic.
+- **Surya Siddhanta (Gudartha Prakasika) (856p)** — Another major commentary edition.
+- **Tajika Nilakanthi (1888 edition) (225p)** — Annual horoscopy by Nilakantha.
+- **Laghu Parashari (193p)** — Condensed version of Parashara's hora shastra.
+- **Sanketa Nidhi (Telugu) (169p)** and **Ganakaranjani (Telugu) (170p)** — Telugu-language jyotish texts.
+- **Bhrigu Prashna Nadi (142p)** — Horary technique attributed to Bhrigu.
+- **Horasara of Prithuyasas (61p)** — Compact hora text by Prithuyasas.
+
+### Batch 29 Issue: Phantom Manuscripts
+
+15 eGangotri manuscripts from Alm 8/Shlf 2 and Alm 22/Shlf 6 were imported but the IA identifiers don't exist. These shelves were never digitized. All 15 books have 100 blank pages each — 1,500 phantom pages. These need cleanup (deletion) in a future session.
+
+Also failed: Hanuman Jyotish Kannada (PDF-only, no IIIF), Bhrigu Samhita Phalita (non-existent IA item), Nada Brahma (German music book, not jyotish — imported by mistake).
+
+### OCR Status (Session End)
+
+- **192 completed** — 59,182 pages OCR'd with zero failures
+- **41 processing** — 30,144 done, ~3,300 remaining
+- **30 completed with errors** — 3,597 OK, 2,242 failed (almost all phantom books)
+- **Real success rate: >99%** on books with actual images
+
+### Session 029 TOTAL: ~307 books, ~100,000 pages
+
+This is the largest single acquisition session in Source Library history. The collection now covers every major branch of Sanskrit jyotish shastra — siddhanta, hora, samhita, muhurta, prashna, svarodaya, samudrika, ganita — with texts by every canonical author from Parashara and Varahamihira through Bhattotpala, Bhaskaracharya, and Kamalakara. The eGangotri manuscript collection (Batches 30-33) adds ~85 handwritten manuscripts, a unique primary source corpus not available through any other digital library.
 
 ---
 
