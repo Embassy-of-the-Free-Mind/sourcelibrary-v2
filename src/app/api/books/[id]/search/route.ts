@@ -58,12 +58,6 @@ function generateSnippet(text: string, query: string, contextChars: number = 80)
     if (start > 0) snippet = '...' + snippet;
     if (end < text.length) snippet = snippet + '...';
 
-    // Highlight all query words in the snippet
-    for (const word of words) {
-      const regex = new RegExp(`(${escapeRegex(word)})`, 'gi');
-      snippet = snippet.replace(regex, '<mark>$1</mark>');
-    }
-
     matches.push({
       field: 'ocr', // Will be set by caller
       snippet,

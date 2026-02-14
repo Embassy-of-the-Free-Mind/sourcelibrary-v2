@@ -28,6 +28,7 @@ import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import PageAssistant from '@/components/reader/PageAssistant';
 import HighlightsPanel from '@/components/annotations/HighlightsPanel';
 import AnnotationPanel from '@/components/annotations/AnnotationPanel';
+import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import { BookShare } from '@/components/ui/ShareButton';
 import { GoogleTranslate } from '@/components/search/GoogleTranslate';
@@ -159,8 +160,9 @@ function BookSearchBar({ bookId }: { bookId: string }) {
                     <p
                       className="text-xs mt-0.5 line-clamp-1"
                       style={{ color: 'var(--text-muted)' }}
-                      dangerouslySetInnerHTML={{ __html: r.matches[0].snippet }}
-                    />
+                    >
+                      <HighlightedText text={r.matches[0].snippet} query={query} />
+                    </p>
                   )}
                 </a>
               ))}

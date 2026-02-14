@@ -70,6 +70,7 @@ Fast search for the homepage dropdown. Runs book search and index search in para
 
 - Books: `$text` with `textScore`, limited to 5 results
 - Index: scans all books with `index.generatedAt`, matches normalized terms in concepts/people/places/keywords
+- **Alias expansion:** Before index matching, queries `entities` collection for name/alias matches and expands search terms to include all forms (e.g. "hermes" also matches "Hermes Trismegistus" and all aliases)
 
 Returns `{ books: { results, total }, index: { results, total } }`.
 
@@ -77,19 +78,81 @@ Returns `{ books: { results, total }, index: { results, total } }`.
 
 Searches page content within a single book. Uses `$text` on `pages_text_idx` with `book_id` filter. Hard-capped at 50 results.
 
+## Index Search (`/api/search/index`)
+
+Searches AI-generated book indexes for concepts, people, places, keywords, and quotes.
+
+**Parameters:**
+| Param | Type | Default | Description |
+|-------|------|---------|-------------|
+| `q` | string | required | Query (min 2 chars) |
+| `type` | string | — | Filter by type: concept, person, place, keyword, quote |
+| `book_id` | string | — | Search within specific book |
+| `aggregate` | "true" | — | Cross-book aggregation via entities collection |
+| `limit` | int | 20 | Max results (capped at 100) |
+
+**Aggregated mode** (`aggregate=true`):
+- Queries `entities` collection instead of scanning individual book indexes
+- Matches on `name` and `aliases` (regex, case-insensitive)
+- Returns enriched results with `book_count`, `total_mentions`, `description`, `aliases`, `books[]`
+- Sorted by `book_count` desc
+- Types: `AggregatedIndexResult` / `AggregatedIndexSearchResponse` in `src/lib/api-client/types/search.ts`
+
+**Per-book mode** (default):
+- Scans all books with `index.generatedAt`, matches normalized terms
+- Uses `expandSearchTerms()` for alias expansion via entities collection
+- Returns per-book results with type, term, book info, page references
+
 ## UI
 
 **Page:** `src/app/search/page.tsx`
 **Client:** `src/lib/api-client/search.ts`
 **Types:** `src/lib/api-client/types/search.ts`
 
-Features:
+### Search Page Features
 - Two modes: "Books & Pages" and "Index (Concepts, People, Quotes)"
 - Sort dropdown (Relevance / Newest / Oldest / Title A-Z)
 - Pagination (prev/next, 20 per page)
 - Filter panel: language, category, date range, DOI, translation
 - Results grouped by category
 - Index results with type badges and page references
+- **Aggregation toggle** in index mode: "Grouped across books" (default) vs "Per-book results"
+- **Popular queries** shown on empty search state as clickable pills (fetched from analytics)
+
+### Homepage Dropdown (`UnifiedSearch`)
+**Component:** `src/components/search/UnifiedSearch.tsx`
+
+- Instant search with debounced API calls to `/api/search/unified`
+- **Keyboard navigation:** ArrowDown/ArrowUp/Enter with visual highlight, ARIA listbox attributes
+- **Popular queries:** Shown when input is focused but empty (top queries from `/api/analytics/search`)
+- Results grouped into books and index entries with "See all results" link
+
+### Search from Reader (`HighlightSelection`)
+**Component:** `src/components/annotations/HighlightSelection.tsx`
+
+- Search icon in text selection popup opens `/search?q={selectedText}` in new tab
+- Truncates selection to 100 chars for URL
+
+### Within-Book Index Panel (`BookIndexPanel`)
+**Component:** `src/components/book/BookIndexPanel.tsx`
+
+Client component on book detail pages with two states:
+- **Collapsed** (default): Tag cloud with 15-per-type limit for people/places/concepts, "Browse full index" button
+- **Expanded:** Search/filter input, type tabs (All/People/Places/Concepts/Keywords/Vocabulary) with count badges, alphabetical entries with encyclopedia links and page number links
+
+Uses `normalizeText()` for diacritics-insensitive client-side filtering. Index data passed from server component — no additional API call.
+
+## Semantic Search (Entity Aliases)
+
+Both `/api/search/unified` and `/api/search/index` expand search terms via the `entities` collection before matching:
+
+1. Query `entities` for documents where `name` or `aliases` match the search term (regex, case-insensitive)
+2. If found, expand search terms to include canonical name + all aliases
+3. Match against all expanded terms using `normalizeText()` for diacritics-insensitive comparison
+
+Requires `{ aliases: 1 }` index on `entities` collection (defined in `ensure-indexes` route).
+
+Coverage depends on how well-populated `entities.aliases` is — the feature works immediately with whatever aliases exist and improves as more are added.
 
 ## Analytics
 

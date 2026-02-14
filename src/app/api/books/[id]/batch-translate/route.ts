@@ -41,7 +41,7 @@ export async function POST(
       .find({
         book_id: bookId,
         'ocr.data': { $exists: true, $nin: [null, ''] },
-        'translation.data': { $exists: false }
+        'translation.data': { $in: [null, ''] }
       })
       .sort({ page_number: 1 })
       .limit(limit)
@@ -55,7 +55,7 @@ export async function POST(
       });
       const pagesWithTranslation = await db.collection('pages').countDocuments({
         book_id: bookId,
-        'translation.data': { $exists: true }
+        'translation.data': { $exists: true, $nin: [null, ''] }
       });
 
       return NextResponse.json({
@@ -72,7 +72,7 @@ export async function POST(
       const totalNeeding = await db.collection('pages').countDocuments({
         book_id: bookId,
         'ocr.data': { $exists: true, $ne: null },
-        'translation.data': { $exists: false }
+        'translation.data': { $in: [null, ''] }
       });
 
       return NextResponse.json({
@@ -212,7 +212,7 @@ export async function POST(
     const remainingCount = await db.collection('pages').countDocuments({
       book_id: bookId,
       'ocr.data': { $exists: true, $ne: null },
-      'translation.data': { $exists: false }
+      'translation.data': { $in: [null, ''] }
     });
 
     const failedCount = results.filter(r => !r.success).length;
@@ -295,12 +295,12 @@ export async function GET(
     });
     const pagesWithTranslation = await db.collection('pages').countDocuments({
       book_id: bookId,
-      'translation.data': { $exists: true, $ne: null }
+      'translation.data': { $exists: true, $nin: [null, ''] }
     });
     const pagesNeedingTranslation = await db.collection('pages').countDocuments({
       book_id: bookId,
       'ocr.data': { $exists: true, $ne: null },
-      'translation.data': { $exists: false }
+      'translation.data': { $in: [null, ''] }
     });
 
     return NextResponse.json({

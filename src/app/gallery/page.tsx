@@ -9,6 +9,7 @@ import {
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
+import HighlightedText from '@/components/search/HighlightedText';
 import {
   gallery,
   books,
@@ -231,10 +232,12 @@ export default function GalleryPage() {
                       className="w-full px-4 py-2 text-left text-stone-800 hover:bg-amber-50 border-b border-stone-100 last:border-0"
                     >
                       <div className="font-medium text-sm line-clamp-1">
-                        {book.display_title || book.title}
+                        <HighlightedText text={book.display_title || book.title} query={bookSearchQuery} />
                       </div>
                       {book.author && (
-                        <div className="text-xs text-stone-500">{book.author}</div>
+                        <div className="text-xs text-stone-500">
+                          <HighlightedText text={book.author} query={bookSearchQuery} />
+                        </div>
                       )}
                     </button>
                   ))}
@@ -421,7 +424,7 @@ export default function GalleryPage() {
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {data.items.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} />
+                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
               ))}
             </div>
 
@@ -456,7 +459,7 @@ export default function GalleryPage() {
   );
 }
 
-function GalleryCard({ item }: { item: GalleryItem }) {
+function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
   const [imageError, setImageError] = useState(false);
 
   const displayUrl = item.bbox
@@ -502,7 +505,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
 
         <div className="p-2">
           <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
-            {item.description}
+            {query ? <HighlightedText text={item.description} query={query} /> : item.description}
           </p>
           <p className="text-[10px] text-stone-400 line-clamp-1">
             {item.bookTitle}
