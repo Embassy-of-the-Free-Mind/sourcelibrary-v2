@@ -4692,7 +4692,103 @@ Hatha Yoga Pradipika   Fechner/Tesla              ↓                Ouspensky
 
 ### Supplement 5 TOTAL: 25 books, ~9,532 pages
 
-## Session 028 GRAND TOTAL: 103 books, ~39,514 pages
+### Supplement 6: The Missing Links — Greek Theory to Modern Sound Philosophy (29 books)
+
+**Rationale:** After Supplements 1-5 built the core chain (Pythagoras → acoustics → magnetism → mesmerism → psychophysics → New Thought → cross-cultural resonance), a systematic audit revealed gaps in the Pythagorean-to-modern continuum. This supplement fills them: Greek music theory not yet covered, Renaissance music-magic, the scientific acoustics revolution, modern sound philosophy, and vibration-consciousness bridging texts.
+
+#### A. Greek Music Theory & Neoplatonic Commentary
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Harmonics | Ptolemy (tr. Andrew Barker) | 1999 | 295 | 699067df249ce014347d4580 |
+| Commentary on the Timaeus of Plato | Proclus (tr. Thomas Taylor) | 1820 | 496 | 699067e58da6face82f777b5 |
+
+*Note: Kepler Harmonices Mundi, Plato Timaeus, Theon of Smyrna, Aristides Quintilianus, Nicomachus, Boethius De Musica, Aristoxenus Harmonika, Philolaus/Archytas fragments, Iamblichus all already in collection.*
+
+#### B. Renaissance & Baroque Music-Cosmology
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Musurgia Universalis, vol. 2 | Athanasius Kircher | 1650 | 534 | 699067e2249ce014347d471d |
+| De Vita Libri Tres (Latin, 1529) | Marsilio Ficino | 1529 | 400 | 69906831249ce014347d5b5c |
+| Three Books on Life (English) | Marsilio Ficino (tr. Kaske/Clark) | 1989 | 388 | 69906838249ce014347d5d55 |
+| Music Explained as Science and Art | Antoine Fabre d'Olivet | 1987 | 198 | 6990694d2f82e0fda4806802 |
+
+*Note: Mersenne Harmonie Universelle, Zarlino Istitutioni, Rameau Treatise already in collection.*
+
+#### C. Scientific Acoustics
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| On the Sensations of Tone | Hermann von Helmholtz | 1954 | 612 | 6990696298875c9438076758 |
+| Theory of Sound, vol. 1 | Lord Rayleigh | 1942 | 503 | 69906819249ce014347d53d5 |
+| Theory of Sound, vol. 2 | Lord Rayleigh | 1894 | 534 | 699067e9249ce014347d49d8 |
+| Sound: A Course of Eight Lectures | John Tyndall | 1867 | 467 | 699069a4d69de0e69806f01e |
+| Théorie analytique de la chaleur | Joseph Fourier | 1822 | 684 | 699068a7249ce014347d715a |
+| Tuning and Temperament: A Historical Survey | J. Murray Barbour | 1951 | 252 | 6990696598875c94380769be |
+
+*Note: Helmholtz German original (Die Lehre von den Tonempfindungen) already in collection. Now have the English Ellis translation too.*
+
+#### D. Philosophy of Music & Sound
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| The Birth of Tragedy | Friedrich Nietzsche | 2000 | 230 | 699067ed249ce014347d4d66 |
+| Monadology and Other Philosophical Essays | G.W. Leibniz | 1930 | 234 | 6990683d249ce014347d5f43 |
+| Silence: Lectures and Writings | John Cage | 1973 | 294 | 69906841249ce014347d6033 |
+| Three Classics in the Aesthetic of Music | Debussy, Busoni, Ives | 1962 | 222 | 69906994d69de0e69806e6ce |
+| New Musical Resources | Henry Cowell | 1969 | 194 | 69906868249ce014347d626a |
+| The Magic of Tone and the Art of Music | Dane Rudhyar | 1982 | 232 | 699067f1249ce014347d50e2 |
+
+#### E. Music-Cosmology Bridges
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Harmonies of Heaven and Earth | Joscelyn Godwin | 1987 | 238 | 699068448da6face82f77b69 |
+| Cosmic Music: Musical Keys to the Interpretation of Reality | Marius Schneider et al. | 1989 | 262 | 69906864249ce014347d615e |
+| The Soundscape: Our Sonic Environment and the Tuning of the World | R. Murray Schafer | 1994 | 326 | 6990686c249ce014347d6333 |
+| The Mysticism of Sound and Music (Sufi Message vol. 1) | Hazrat Inayat Khan | 1964 | 189 | 6990687e249ce014347d64c5 |
+| Northern Indian Music | Alain Daniélou | 1954 | 426 | 699069392f82e0fda48056fc |
+| The Secret Teachings of All Ages | Manly P. Hall | 1928 | 654 | 699069352f82e0fda480546c |
+
+#### F. Vibration, Consciousness & Process
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Wholeness and the Implicate Order | David Bohm | 1981 | 246 | 6990689c8034a3640265bb70 |
+| Stalking the Wild Pendulum | Itzhak Bentov | 1977 | 186 | 699068a1249ce014347d6f82 |
+| A New Science of Life | Rupert Sheldrake | 1995 | 278 | 699068a4249ce014347d703f |
+| What Is Life? | Erwin Schrödinger | 1945 | 114 | 699068bc90f6a221d3a9a784 |
+| Process and Reality | Alfred North Whitehead | 1929 | 454 | 6990693b2f82e0fda48058a8 |
+
+### Supplement 6 Highlights
+
+**The Acoustics Revolution:** Helmholtz (1863), Rayleigh (1877-78), and Tyndall (1867) represent the moment when Pythagorean mystical harmony became measurable physics. Fourier's heat equation (1822) provided the mathematical basis for all harmonic analysis. Together with Chladni (already in collection), these form the complete scientific acoustics canon.
+
+**Ficino De Vita (both Latin and English):** The crucial Renaissance text linking Neoplatonic music-magic to medical practice. Ficino's spiritus theory — that celestial harmonies flow through planetary music into the human spirit — is the bridge between Ptolemy's Harmonics and Mesmer's magnetic fluid.
+
+**Nietzsche Birth of Tragedy:** The Dionysian/Apollonian duality is fundamentally a theory of vibration — the tension between form (harmony, number) and ecstatic dissolution (the primal ground-tone). This is where the Pythagorean thread enters modern philosophy.
+
+**The Chain Now Complete:**
+```
+ANCIENT:     Pythagoras → Philolaus → Plato Timaeus → Aristoxenus → Ptolemy Harmonics
+                                                                         ↓
+NEOPLATONIC: Nicomachus → Theon → Proclus on Timaeus → Boethius → Macrobius
+                                                                         ↓
+RENAISSANCE: Ficino De Vita → Zarlino → Mersenne → Kircher Musurgia → Rameau
+                                                                         ↓
+SCIENTIFIC:  Fourier → Tyndall → Helmholtz → Rayleigh → Chladni
+                                                                         ↓
+MODERN:      Nietzsche → Busoni/Ives → Cowell → Cage → Schafer
+                                    ↓
+COSMIC:      Fabre d'Olivet → Rudhyar → Godwin → Schneider
+                                    ↓
+CONSCIOUSNESS: Leibniz → Whitehead → Bohm → Sheldrake → Bentov → Schrödinger
+```
+
+### Supplement 6 TOTAL: 29 books, ~10,093 pages
+
+## Session 028 GRAND TOTAL: 132 books, ~49,607 pages
 
 ---
 
@@ -4844,7 +4940,190 @@ Astrology is central to both the Western esoteric tradition and Indian knowledge
 - **Muhurta Ganapati & Muhurta Martanda** — two key electional astrology texts in Devanagari manuscript form. Muhurta (auspicious timing) is the most practically applied branch of Jyotish.
 - **Jataka Bharnam** — massive 963-page natal astrology text in Devanagari, one of the most detailed treatments of planetary effects in each house and sign.
 
-### Session 029 TOTAL: 59 books, ~30,600 pages
+### Acquired — Sanskrit Originals, Batch 8 (Hora, Prashna, Svarodaya)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Uttara Kalamrita | Kalidasa | 1900 | — | 6990664f2ec9f7db57179fb3 | uttarakalamrita |
+| Shiva Svarodaya | Khemraj 1899 ed. | 1899 | — | 699066532ec9f7db5717a012 | ShivaSvarodaya1899KhemrajEdition |
+| Karana Kutuhala | Bhaskaracharya | 1900 | — | 699066582ec9f7db5717a0a5 | KaranaKutuhala |
+| Daivajnavallabha | CGV manuscript | 1800 | 79 | 6990665a2ec9f7db5717a149 | DaivajnavallabhaCGV |
+| Laghumanasa with Paramesvara Vyakhya | Manjula | 1900 | — | 6990665c2ec9f7db5717a19a | LaghumanasaParamesvara |
+| Lagna Chandrika | Unknown | 1900 | — | 6990665e2ec9f7db5717a1dd | LagnaChandrika |
+| Prashna Deepakam | Unknown | 1900 | 33 | 699066672ec9f7db5717a270 | PrashnaDeepakam |
+| Bhrigu Sutram | Bhrigu | 1900 | 85 | 6990666a2ec9f7db5717a293 | bhrigu-sutra-siddha-nath-sharma |
+| Prashna Marga Sanskrit Commentary | Nilakantha | 1900 | 600 | 6990666c2ec9f7db5717a2ea | PrashnaMargaSanskrit |
+| Bhrigu Samhita Kundali Khanda | Bhrigu | 1900 | 201 | 6990666f2ec9f7db5717a544 | BhriguSamhitaKundali |
+
+### Acquired — Sanskrit Originals, Batch 9 (Varahamihira & Muhurta)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Varahamihira Horasastram Vol. 1 | Varahamihira | 1900 | 521 | 699066b9249ce014347d1688 | VarahamihiraHorasastramV1 |
+| Brhadyatra of Varahamihira | Varahamihira | 1900 | 92 | 699066bc249ce014347d1893 | BrhadyatraVarahamihira |
+| Brihat Muhurta Sindhu | Unknown | 1900 | 1072 | 699066c0249ce014347d18f1 | BrihatMuhurtaSindhu |
+| Muhurta Ratna | Unknown | 1900 | 107 | 699066c3249ce014347d1d23 | MuhurtaRatna |
+| Pashakavali (Dice Divination) | Unknown | 1800 | 15 | 699066c5249ce014347d1d90 | PashakavaliCGV |
+| Jataka Paddhati | Unknown | 1800 | 13 | 699066c8249ce014347d1da1 | JatakaPaddhatiCGV |
+
+### Acquired — Sanskrit Originals, Batch 10 (CGV Manuscripts & More)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Shatpanchashika | Prithuyashas | 1800 | 6 | 699066d1249ce014347d1db0 | ShatpanchashikaCGV |
+| Muhurta Muktamani | Unknown | 1800 | 7 | 699066d4249ce014347d1db8 | MuhurtaMuktamaniCGV |
+| Ramala Grantha (Geomancy) | Unknown | 1800 | 16 | 699066d6249ce014347d1dc1 | RamalaGrantha |
+| Rajavallabha (Royal Astrology) | Unknown | 1800 | 35 | 699066d8249ce014347d1df8 | Rajavallabha |
+| Hanuman Jyotish | Unknown | 1800 | 82 | 699066db249ce014347d1e4c | HanumanJyotish |
+| Surya Siddhanta Gudhartha Prakash 1913 | Unknown; Khemraj | 1913 | 570 | 699066de249ce014347d2088 | SuryaSiddhantaKhemraj1913 |
+
+### Acquired — Sanskrit/Marathi, Batch 11 (Prashna & More)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Prashna Manorama | Unknown | 1800 | 10 | 699066ea249ce014347d2088 | PrashnaManoramaCGV |
+| Buddhi Vilasa | Unknown | 1800 | 50 | 699066ed249ce014347d2094 | BuddhiVilasaCGV |
+| Chandra Bhavadhyaya | Unknown | 1800 | 11 | 699066ef249ce014347d20c8 | ChandraBhavadhyaya |
+| Navagraha Nyasa Vidhi | Unknown | 1800 | 13 | 699066f2249ce014347d20d5 | NavagrahahNyasaVidhi |
+| Ashvamedhiyayatra (Brhadyatra) | Varahamihira | 1900 | 208 | 699066f3249ce014347d20e4 | AshvamedhiyayatraVarahamihira |
+| Ramala Shastra | Unknown | 1900 | 384 | 699066f5249ce014347d21b6 | RamalaShastra |
+
+### Acquired — Multi-Language, Batch 12 (Telugu, Hindi)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Vriddha Yavanajataka Vol. 1 | Minaraja; ed. Pingree | 1900 | 381 | 6990670d249ce014347d2594 | VriddhaYavanajatakaV1 |
+| Vriddha Yavanajataka Vol. 2 | Minaraja; ed. Pingree | 1900 | 189 | 69906710249ce014347d27a2 | VriddhaYavanajatakaV2 |
+| Nakshatra Chudamani | Unknown | 1900 | 40 | 699067158da6face82f775b1 | NakshatraChudamaniTelugu |
+| Navaratna Vivaha Paddhati | Unknown | 1900 | 671 | 69906717249ce014347d28b8 | NavaratnaVivahaPaddhati |
+| Surya Siddhanta Kashi Series | Unknown | 1900 | 509 | 6990671b249ce014347d2b59 | SuryaSiddhantaKashi |
+| Tej Svarodaya Vigyan | Unknown | 1950 | 106 | 6990671e249ce014347d2d5b | TejSvarodayaVigyan |
+
+### Acquired — Tamil Originals, Batch 13
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Pancha Pakshi Shastra | Unknown | 1863 | 104 | 6990672e249ce014347d2ddd | PanchaPakshiShastra1863 |
+| Manita Marma Chastiram | Unknown | 1921 | 1338 | 69906732249ce014347d2e4a | ManitaMarmaChastiram |
+| Nadi Jothidam | Unknown | 1924 | 716 | 69906735249ce014347d3386 | NadiJothidam1924 |
+| Jotida Chintamani 200 | Unknown | 1900 | 160 | 69906737249ce014347d3654 | JotidaChintamani200 |
+| Uromarishi Suttiram Nuru | Unknown | 1868 | 14 | 6990673a249ce014347d36f6 | UromarishiSuttiram1868 |
+| Kandar Nadi | Unknown | 1900 | 126 | 6990673c249ce014347d3706 | KandarNadi |
+
+### Acquired — Telugu/Kannada, Batch 14
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Sankalpa Prashnalu | Unknown | 1900 | 62 | 69906744249ce014347d3793 | SankalpaPrashnalu |
+| Kalachakranubhala Granthamu | Unknown | 1900 | 215 | 69906748249ce014347d37d6 | KalachakranubhalaGranthamu |
+| Muhurta Dipika (Telugu) | Unknown | 1900 | 477 | 6990674b249ce014347d38b2 | MuhurtaDipikaTelugu |
+| Jyotishsastra Vishayamu | Unknown | 1900 | 30 | 6990674f249ce014347d3ab7 | JyotishsastraVishayamu |
+| Jalashilpi Polli Shakunavu | Unknown | 1900 | 81 | 69906753249ce014347d3ab7 | JalashilpiPolliKannada |
+| Hasta Purusha Stri Anga Samudrika | Unknown | 1900 | 128 | 69906756249ce014347d3b0c | HastaPurushaKannada |
+
+### Acquired — Malayalam/Kannada/Telugu/Tamil, Batch 15
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Prasnamargam Poorvardham | Unknown | 1900 | 41 | 69906760249ce014347d3b97 | PrasnamargamMalayalam |
+| Jyotishya Megha Malavu | Unknown | 1900 | 102 | 69906763249ce014347d3bc2 | JyotishyaMeghaMalavu |
+| Jataka Chandrika (Kannada) | Unknown | 1900 | 103 | 69906766249ce014347d3c2a | JatakaChandrikaKannada |
+| Jyotisya Vidya Prakashika | Unknown | 1900 | 844 | 69906768249ce014347d3c95 | JyotisyaVidyaPrakashikaTelugu |
+| Pancha Patchichastiram | Unknown | 1893 | 146 | 6990676c249ce014347d3fe6 | PanchaPatchichastiramTamil |
+| Sataka Chintamani (Mula Padam) | Unknown | 1883 | 361 | 699067708da6face82f775dc | SatakaChintamaniTamil |
+
+### Acquired — Sanskrit Hora & Prasna, Batch 16
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Muhurta Kalpa Druma | Viththala Dikshit | 1935 | 138 | 6990681a249ce014347d55cf | LIkA_muhurta-kalpa-drum... |
+| Bhrigu Samhita Yogavali | Nandalal Sastri; Khemraj | 1910 | 1215 | 69906821249ce014347d5660 | Bhrigu_Samhita_Yogavali... |
+| Yogayatra with Utpala Commentary | Varahamihira; Utpala | 1900 | 35 | 69906825249ce014347d5b25 | wg731 |
+| Brhadyogayatra of Varahamihira | Varahamihira | 1900 | 11 | 69906828249ce014347d5b4d | wg730 |
+| Shiva Svarodaya with Bhasha Tika | Mihira Chandra | 1900 | 98 | 69906834249ce014347d5cef | OMtY_shiva-svarodaya... |
+| Bhrigu Samhita Phalita Sarvanga Darshana | Unknown | 1900 | 100 | 6990683c249ce014347d5ede | SINj_bhrigu-samhita... |
+| Muhurta Kalpa Druma (Naval Kishore) | Viththala Dikshit | 1892 | 837 | 699068458da6face82f77c58 | MuhurtaKalpaDrumHindi1892... |
+| Kerala Prasna Shastra | Unknown | 1900 | 195 | 699068be90f6a221d3a9a7fa | kerala-prasna-shastra |
+
+### Acquired — South Indian Languages, Batch 17
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Todukuri Sastiram (Tamil) | Unknown | 1893 | 40 | 6990687b249ce014347d648c | dli.rmrl.009034 |
+| Sakadeva Sastiram (Tamil) | Unknown | 1905 | 12 | 6990687d249ce014347d64b7 | dli.rmrl.008289 |
+| Manaiyati Chastiram (Tamil) | Unknown | 1889 | 172 | 69906880249ce014347d6584 | in.ernet.dli.2015.292847 |
+| Kerala Choothidam (Tamil) | Unknown | 1899 | 114 | 69906883249ce014347d6632 | in.ernet.dli.2015.295133 |
+| Siddhanta Panchangamu (Telugu) | Unknown | 1915 | 1480 | 69906885249ce014347d66a6 | in.ernet.dli.2015.370426 |
+| Muhurta Dipika (Kannada) | Unknown | 1909 | 508 | 6990688a249ce014347d6c74 | in.ernet.dli.2015.484375 |
+| Saptarishi Nadi (Tamil) | K. Natesan | 1951 | 440 | 699068a18034a3640265bd30 | saptarisinadimeshalagnam... |
+
+### Acquired — Prasna & Hora, Batch 18
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Tatkala Bhrigu Prasna (Prasna Kalpa Vriksha) | Unknown | 1913 | 71 | 699068c290f6a221d3a9a8c2 | in.ernet.dli.2015.312513 |
+| Rama Ajna Prasna (Hindi) | Unknown | 1900 | 51 | 699068c790f6a221d3a9a90f | RamaAjnaPrasnaHindi |
+| Stri Jataka | Khemraj Publishers | 1900 | 228 | 699068e42e4efe9106769c67 | stri-jataka-khemraj-publishers |
+| Garga Hora Shastra | Garga; ed. K.K. Pathak | 1920 | 239 | 699068e72e4efe9106769d4e | gargahorashastrapathakk.k. |
+| Brihat Parashara Hora Shastram Uttara Khanda | Parashara; Khemraj 1932 | 1932 | 2143 | 699068ea2e4efe9106769e41 | BrihatParasharHoraShastram... |
+| Jataka Chandrika (Sanskrit, Venkatesha) | Venkatesha Pandita | 1900 | 172 | 699068ed2e4efe910676a6a3 | jatakachandrikachundrika... |
+| Saravali of Kalyanavarma | Kalyanavarma; Nirnaya Sagar 1907 | 1907 | 339 | 699068f92f82e0fda4803d74 | saravalisubrahmanyasastry... |
+| Karma Vipaka Samhita | Unknown | 1900 | 339 | 699068fd2f82e0fda4803ec9 | inir_karma-vipaka-samhita... |
+| Jyothisha Marga Deepika (Malayalam) | Unknown | 1900 | 108 | 699069002f82e0fda480401e | in.ernet.dli.2015.277940 |
+| Siddhanta Saravali | ed. Vraj Vallabha Dwivedi | 1920 | 157 | 699069022f82e0fda480408c | SiddhantaSaravaliEdVraj... |
+
+### Acquired — Phala/Dasha/Ashtakavarga, Batch 19
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Phala Deepika of Mantreshwara | Mantreshwara; ed. G.S. Kapoor | 1920 | 230 | 699069172f82e0fda4804135 | phaladipikamantresvara... |
+| Vimshottari Dasha Prayoga (Kashi ms.) | Anonymous | 1800 | 10 | 6990691a2f82e0fda480421d | zeil_1-vimshottari-dasha... |
+| Ashtaka Varga Phala (Kashi ms.) | Anonymous | 1800 | 10 | 6990691e2f82e0fda4804229 | uwqv_8-ashtaka-varga... |
+| Jotisha Prasna Phala Ganana (Telugu) | Unknown | 1975 | 57 | 699069202f82e0fda4804235 | jotishaprasnapha035806mbp |
+| Phala Deepika with Hindi Commentary | Mantreshwara; comm. Pathak | 1950 | 215 | 699069232f82e0fda48045ea | vWVn_phala-dipika... |
+| Jataka Phala Chintamani (Telugu) | Unknown | 1950 | 64 | 699069262f82e0fda4804ae7 | jataka-phala-chintamani |
+
+### Acquired — Brihat Samhita Editions & Tajika, Batch 20
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Tajika Neelakanthi | Neelakantha | 1926 | 110 | 6990693f2f82e0fda4805a70 | in.ernet.dli.2015.312318 |
+| Brihat Samhita Part 1 (Dwivedi ed.) | Varahamihira; Dwivedi | 1996 | 456 | 699069412f82e0fda4805ae0 | vzEI_brihat-samhita-part-1... |
+| Brihat Samhita Part 2 (Bhattotpala) | Varahamihira; Bhattotpala | 1996 | 600 | 699069442f82e0fda4805caa | lPan_brihat-samhita-part-2... |
+| Brihat Samhita (Kern 1865 ed.) | Varahamihira; H. Kern | 1865 | 297 | 699069472f82e0fda480618d | brihatsamhitavarahamihira... |
+| Brihat Samhita Vivritti (Manuscript) | Varahamihira | 1700 | 618 | 6990694b2f82e0fda4806596 | BrihatSamhitaVivritti... |
+| Brihat Samhita (Venkateshwara Steam Press) | Varahamihira; Baldev Misra | 1910 | 454 | 6990694d2f82e0fda48068c9 | brihatsamhitavarahamihira... |
+
+### Batches 8-20 Highlights
+
+**Sanskrit Hora & Jataka:**
+- **Brihat Parashara Hora Shastram Uttara Khanda (Khemraj 1932)** — 2,143 pages. The second half of the most fundamental Jyotish text, in original Devanagari. Combined with the existing BPHS, provides the complete Parashara system.
+- **Bhrigu Samhita Yogavali (Khemraj 1910)** — 1,215 pages of planetary yoga combinations. The Bhrigu tradition claims to contain pre-computed horoscopes for all beings.
+- **Garga Hora Shastra** — attributed to Garga, one of the earliest named Indian astronomers. Extremely rare text.
+- **Saravali (Nirnaya Sagar 1907)** — the oldest available printed edition of Kalyanavarma's masterwork, predating the 1928 edition.
+- **Stri Jataka** — women's astrology, a specialized branch of natal horoscopy. Rare text focused on female horoscopes.
+
+**Brihat Samhita Collection:**
+- Now 5 editions of Varahamihira's encyclopedic mundane astrology text: Kern 1865 (oldest critical edition), Venkateshwara Steam Press, Dwivedi Parts 1-2, and a manuscript Vivritti. Total ~2,425 pages of Brihat Samhita across editions.
+
+**South Indian Languages — First Acquisitions:**
+- **Tamil (11 texts):** Pancha Pakshi Shastra (1863, oldest), Nadi Jothidam (1924), Saptarishi Nadi, Manita Marma Chastiram (1,338p), and 7 more. Tamil Nadi astrology is a unique tradition with no Western parallel.
+- **Telugu (7 texts):** Siddhanta Panchangamu (1,480p), Muhurta Dipika, Kalachakranubhala, Jataka Phala Chintamani, and more.
+- **Kannada (4 texts):** Muhurta Dipika (508p), Jataka Chandrika, Jalashilpi Polli Shakunavu (omen divination), Hasta Purusha (palmistry).
+- **Malayalam (3 texts):** Prasnamargam Poorvardham, Jyothisha Marga Deepika, Kerala Prasna Shastra. The Kerala Prasna tradition is one of the most sophisticated predictive systems in Jyotish.
+- **Hindi (2 texts):** Rama Ajna Prasna (Ramayana-based dice divination), Tej Svarodaya Vigyan.
+- **Marathi (1 text):** Ramala Shastra (384p geomancy).
+
+**Kashi Maharani Manuscripts:**
+- Vimshottari Dasha Prayoga and Ashtaka Varga Phala — rare manuscript-form texts from the Kashi Maharani collection, covering planetary period systems and the ashtakavarga point system.
+
+**Divination & Specialized:**
+- **Pashakavali** — dice divination (Sanskrit)
+- **Ramala Grantha/Shastra** — Indian geomancy (Sanskrit/Marathi), the Indian adaptation of Arabic ilm al-raml
+- **Pancha Pakshi Shastra** — Tamil five-bird system, a unique biorhythmic divination technique
+- **Karma Vipaka Samhita** — karmic astrology linking nakshatras to past-life karma
+
+### Session 029 TOTAL: 148 books, ~55,000 pages
 
 ---
 
