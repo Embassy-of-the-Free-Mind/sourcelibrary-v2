@@ -2,12 +2,31 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { Search, Book, FileText, ExternalLink, Filter, X, Loader2, Quote, User, MapPin, Lightbulb, BookOpen, Languages, ChevronLeft, ChevronRight, ArrowUpDown } from 'lucide-react';
+import Image from 'next/image';
+import {
+  Search, Book, FileText, ExternalLink, Filter, X, Loader2,
+  Quote, User, MapPin, Lightbulb, BookOpen, Languages,
+  ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
+} from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-import { search as searchApi, categories as categoriesApi, utils, type SearchResult, type IndexSearchResult, type IndexSearchResponse } from '@/lib/api-client';
+import {
+  search as searchApi,
+  gallery as galleryApi,
+  categories as categoriesApi,
+  utils,
+  type SearchResult,
+  type IndexSearchResult,
+  type GalleryItem,
+} from '@/lib/api-client';
 import { sendGAEvent } from '@/lib/ga';
 import HighlightedText from '@/components/search/HighlightedText';
+
+// How many results to show in unified view per section
+const PREVIEW_BOOKS = 5;
+const PREVIEW_INDEX = 5;
+const PREVIEW_IMAGES = 6;
+const RESULTS_PER_PAGE = 20;
 
 const INDEX_TYPES = [
   { value: '', label: 'All Types', icon: Search },
@@ -19,117 +38,98 @@ const INDEX_TYPES = [
   { value: 'vocabulary', label: 'Vocabulary', icon: Languages },
 ];
 
-interface LanguageOption {
-  value: string;
-  label: string;
-  book_count?: number;
-}
+interface LanguageOption { value: string; label: string; }
+interface CategoryOption { value: string; label: string; icon?: string; }
 
-interface CategoryOption {
-  value: string;
-  label: string;
-  icon?: string;
-  book_count?: number;
-}
+type ViewMode = 'unified' | 'books' | 'index' | 'images';
 
 export default function SearchPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const initialMode = (searchParams.get('mode') as ViewMode) || 'unified';
   const [query, setQuery] = useState(searchParams.get('q') || '');
-  const [results, setResults] = useState<SearchResult[]>([]);
-  const [indexResults, setIndexResults] = useState<IndexSearchResult[]>([]);
-  const [total, setTotal] = useState(0);
-  const [indexByType, setIndexByType] = useState<IndexSearchResponse['byType'] | null>(null);
+  const [viewMode, setViewMode] = useState<ViewMode>(initialMode);
   const [loading, setLoading] = useState(false);
-  const [showFilters, setShowFilters] = useState(false);
-  const [searchMode, setSearchMode] = useState<'books' | 'index'>(
-    searchParams.get('mode') === 'index' ? 'index' : 'books'
-  );
+
+  // Unified results
+  const [bookResults, setBookResults] = useState<SearchResult[]>([]);
+  const [bookTotal, setBookTotal] = useState(0);
+  const [indexResults, setIndexResults] = useState<IndexSearchResult[]>([]);
+  const [indexTotal, setIndexTotal] = useState(0);
+  const [imageResults, setImageResults] = useState<GalleryItem[]>([]);
+  const [imageTotal, setImageTotal] = useState(0);
+
+  // Drill-down state
+  const [offset, setOffset] = useState(parseInt(searchParams.get('offset') || '0'));
   const [indexType, setIndexType] = useState(searchParams.get('type') || '');
+  const [sortBy, setSortBy] = useState<'relevance' | 'date_asc' | 'date_desc' | 'title'>(
+    (searchParams.get('sort') as any) || 'relevance'
+  );
 
-  // Dynamic filter options
-  const [languages, setLanguages] = useState<LanguageOption[]>([{ value: '', label: 'All Languages' }]);
-  const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
-
-  // Filters
+  // Filters (books mode)
+  const [showFilters, setShowFilters] = useState(false);
   const [language, setLanguage] = useState(searchParams.get('language') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
   const [dateFrom, setDateFrom] = useState(searchParams.get('date_from') || '');
   const [dateTo, setDateTo] = useState(searchParams.get('date_to') || '');
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
   const [hasTranslation, setHasTranslation] = useState(searchParams.get('has_translation') === 'true');
-  const [sortBy, setSortBy] = useState<'relevance' | 'date_asc' | 'date_desc' | 'title'>(
-    (searchParams.get('sort') as any) || 'relevance'
-  );
-  const [offset, setOffset] = useState(parseInt(searchParams.get('offset') || '0'));
-  const [suggestion, setSuggestion] = useState<string | null>(null);
-  const RESULTS_PER_PAGE = 20;
+  const [languages, setLanguages] = useState<LanguageOption[]>([{ value: '', label: 'All Languages' }]);
+  const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
 
-  // Fetch languages and categories on mount
+  // Suggestions
+  const [suggestion, setSuggestion] = useState<string | null>(null);
+
+  // Load filter options
   useEffect(() => {
-    const fetchFilterOptions = async () => {
+    (async () => {
       try {
-        // Fetch languages
-        const langData = await utils.languages();
+        const [langData, catData] = await Promise.all([utils.languages(), categoriesApi.list()]);
         if (langData.languages) {
           setLanguages([
             { value: '', label: 'All Languages' },
-            ...langData.languages.map((lang: any) => ({
-              value: lang.code,
-              label: `${lang.name} (${lang.book_count})`,
-              book_count: lang.book_count,
-            })),
+            ...langData.languages.map((l: any) => ({ value: l.code, label: `${l.name} (${l.book_count})` })),
           ]);
         }
-
-        // Fetch categories
-        const catData = await categoriesApi.list();
         if (catData.categories) {
           setCategories([
             { value: '', label: 'All Categories' },
             ...catData.categories
-              .filter((cat: any) => cat.book_count > 0)
-              .map((cat: any) => ({
-                value: cat.id,
-                label: `${cat.icon ? cat.icon + ' ' : ''}${cat.name} (${cat.book_count})`,
-                icon: cat.icon,
-                book_count: cat.book_count,
-              })),
+              .filter((c: any) => c.book_count > 0)
+              .map((c: any) => ({ value: c.id, label: `${c.icon ? c.icon + ' ' : ''}${c.name} (${c.book_count})`, icon: c.icon })),
           ]);
         }
-      } catch (error) {
-        console.error('Error fetching filter options:', error);
-      }
-    };
-
-    fetchFilterOptions();
+      } catch {}
+    })();
   }, []);
 
-  const performSearch = useCallback(async (searchQuery: string, mode: 'books' | 'index' = searchMode, pageOffset: number = offset) => {
-    if (!searchQuery || searchQuery.length < 2) {
-      setResults([]);
-      setIndexResults([]);
-      setTotal(0);
-      setIndexByType(null);
+  const performSearch = useCallback(async (q: string, mode: ViewMode = viewMode, pageOffset = 0) => {
+    if (!q || q.length < 2) {
+      setBookResults([]); setBookTotal(0);
+      setIndexResults([]); setIndexTotal(0);
+      setImageResults([]); setImageTotal(0);
       return;
     }
-
     setLoading(true);
 
     try {
-      if (mode === 'index') {
-        // Index search
-        const data = await searchApi.index(searchQuery, { type: indexType || undefined });
-
-        setIndexResults(data.results || []);
-        setTotal(data.total || 0);
-        setIndexByType(data.byType || null);
-        setResults([]);
-        sendGAEvent({ action: 'search', category: 'engagement', label: searchQuery, value: data.total || 0, search_term: searchQuery });
-      } else {
-        // Book/page search
-        const data = await searchApi.search(searchQuery, {
+      if (mode === 'unified') {
+        // Run all three in parallel, limited previews
+        const [bookData, indexData, imageData] = await Promise.all([
+          searchApi.search(q, { limit: PREVIEW_BOOKS }),
+          searchApi.index(q, {}),
+          galleryApi.list({ query: q, limit: PREVIEW_IMAGES }),
+        ]);
+        setBookResults(bookData.results || []);
+        setBookTotal(bookData.total || 0);
+        setIndexResults((indexData.results || []).slice(0, PREVIEW_INDEX));
+        setIndexTotal(indexData.total || 0);
+        setImageResults(imageData.items || []);
+        setImageTotal(imageData.total || 0);
+        sendGAEvent({ action: 'search', category: 'engagement', label: q, value: (bookData.total || 0) + (indexData.total || 0) + (imageData.total || 0), search_term: q });
+      } else if (mode === 'books') {
+        const data = await searchApi.search(q, {
           language: language || undefined,
           category: category || undefined,
           date_from: dateFrom || undefined,
@@ -140,35 +140,30 @@ export default function SearchPage() {
           offset: pageOffset > 0 ? pageOffset : undefined,
           limit: RESULTS_PER_PAGE,
         });
-
-        setResults(data.results || []);
-        setTotal(data.total || 0);
-        setIndexResults([]);
-        setIndexByType(null);
-        sendGAEvent({ action: 'search', category: 'engagement', label: searchQuery, value: data.total || 0, search_term: searchQuery });
+        setBookResults(data.results || []);
+        setBookTotal(data.total || 0);
+      } else if (mode === 'index') {
+        const data = await searchApi.index(q, { type: indexType || undefined });
+        setIndexResults(data.results || []);
+        setIndexTotal(data.total || 0);
+      } else if (mode === 'images') {
+        const data = await galleryApi.list({ query: q, limit: RESULTS_PER_PAGE, offset: pageOffset });
+        setImageResults(data.items || []);
+        setImageTotal(data.total || 0);
       }
     } catch (error) {
       console.error('Search error:', error);
-      setResults([]);
-      setIndexResults([]);
-      setTotal(0);
     } finally {
       setLoading(false);
     }
-  }, [searchMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy]);
 
-  const debouncedSearch = useDebouncedCallback((value: string) => {
-    performSearch(value);
-    updateUrl(value);
-  }, 300);
-
-  const updateUrl = (q: string = query, pageOffset: number = offset) => {
+  const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
     const params = new URLSearchParams();
     if (q) params.set('q', q);
-    if (searchMode === 'index') {
-      params.set('mode', 'index');
-      if (indexType) params.set('type', indexType);
-    } else {
+    if (mode !== 'unified') params.set('mode', mode);
+    if (mode === 'index' && indexType) params.set('type', indexType);
+    if (mode === 'books') {
       if (language) params.set('language', language);
       if (category) params.set('category', category);
       if (dateFrom) params.set('date_from', dateFrom);
@@ -176,86 +171,58 @@ export default function SearchPage() {
       if (hasDoi) params.set('has_doi', 'true');
       if (hasTranslation) params.set('has_translation', 'true');
       if (sortBy !== 'relevance') params.set('sort', sortBy);
-      if (pageOffset > 0) params.set('offset', pageOffset.toString());
     }
+    if (pageOffset > 0) params.set('offset', pageOffset.toString());
     router.replace(`/search?${params.toString()}`, { scroll: false });
-  };
+  }, [router, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy]);
 
-  useEffect(() => {
-    if (query) {
-      performSearch(query, searchMode, offset);
-      updateUrl(query, offset);
-    }
-  }, [searchMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset]);
+  const debouncedSearch = useDebouncedCallback((value: string) => {
+    setOffset(0);
+    performSearch(value, viewMode, 0);
+    updateUrl(value, viewMode, 0);
+  }, 300);
 
-  // Fetch suggestions on zero results
-  const noResults = query.length >= 2 && !loading && results.length === 0 && indexResults.length === 0;
+  // Re-search when filters/sort/mode change
   useEffect(() => {
-    if (!noResults || query.length < 3) {
-      setSuggestion(null);
-      return;
+    if (query.length >= 2) {
+      performSearch(query, viewMode, offset);
+      updateUrl(query, viewMode, offset);
     }
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset]);
+
+  // Fuzzy suggestions on zero results
+  const totalResults = bookTotal + indexTotal + imageTotal;
+  const noResults = query.length >= 2 && !loading && totalResults === 0;
+  useEffect(() => {
+    if (!noResults || query.length < 3) { setSuggestion(null); return; }
     let cancelled = false;
     searchApi.suggest(query).then(data => {
       if (!cancelled) setSuggestion(data.suggestions?.[0] || null);
-    }).catch(() => {
-      if (!cancelled) setSuggestion(null);
-    });
+    }).catch(() => { if (!cancelled) setSuggestion(null); });
     return () => { cancelled = true; };
   }, [noResults, query]);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
-    setOffset(0);
     debouncedSearch(value);
   };
 
-  const clearFilters = () => {
-    setLanguage('');
-    setCategory('');
-    setDateFrom('');
-    setDateTo('');
-    setHasDoi(false);
-    setHasTranslation(false);
-    setSortBy('relevance');
+  const drillInto = (mode: ViewMode) => {
+    setViewMode(mode);
     setOffset(0);
   };
 
-  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || sortBy !== 'relevance';
-
-  // Group results by category
-  const groupedResults = () => {
-    if (category) {
-      // If filtering by category, don't group (all results are same category)
-      return { [category]: results };
-    }
-
-    const groups: Record<string, SearchResult[]> = {
-      uncategorized: [],
-    };
-
-    results.forEach(result => {
-      if (!result.categories || result.categories.length === 0) {
-        groups.uncategorized.push(result);
-      } else {
-        // Add to the first category (primary category)
-        const primaryCategory = result.categories[0];
-        if (!groups[primaryCategory]) {
-          groups[primaryCategory] = [];
-        }
-        groups[primaryCategory].push(result);
-      }
-    });
-
-    // Remove empty groups
-    Object.keys(groups).forEach(key => {
-      if (groups[key].length === 0) {
-        delete groups[key];
-      }
-    });
-
-    return groups;
+  const backToUnified = () => {
+    setViewMode('unified');
+    setOffset(0);
+    setShowFilters(false);
   };
+
+  const clearFilters = () => {
+    setLanguage(''); setCategory(''); setDateFrom(''); setDateTo('');
+    setHasDoi(false); setHasTranslation(false); setSortBy('relevance'); setOffset(0);
+  };
+  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || sortBy !== 'relevance';
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -272,31 +239,22 @@ export default function SearchPage() {
       {/* Search Bar */}
       <div className="bg-white border-b border-stone-200 sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 py-4">
-          {/* Mode Toggle */}
-          <div className="flex gap-2 mb-3">
-            <button
-              onClick={() => setSearchMode('books')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                searchMode === 'books'
-                  ? 'bg-amber-100 text-amber-800 border border-amber-300'
-                  : 'bg-stone-100 text-stone-600 border border-transparent hover:bg-stone-200'
-              }`}
-            >
-              <Book className="w-4 h-4 inline mr-1.5" />
-              Books & Pages
-            </button>
-            <button
-              onClick={() => setSearchMode('index')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                searchMode === 'index'
-                  ? 'bg-amber-100 text-amber-800 border border-amber-300'
-                  : 'bg-stone-100 text-stone-600 border border-transparent hover:bg-stone-200'
-              }`}
-            >
-              <Lightbulb className="w-4 h-4 inline mr-1.5" />
-              Index (Concepts, People, Quotes)
-            </button>
-          </div>
+          {/* Back to unified + mode label */}
+          {viewMode !== 'unified' && (
+            <div className="flex items-center gap-2 mb-3">
+              <button
+                onClick={backToUnified}
+                className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                All results
+              </button>
+              <span className="text-sm text-stone-400">/</span>
+              <span className="text-sm font-medium text-stone-700">
+                {viewMode === 'books' ? 'Books & Pages' : viewMode === 'index' ? 'Index' : 'Images'}
+              </span>
+            </div>
+          )}
 
           <div className="flex gap-3">
             <div className="flex-1 relative">
@@ -305,9 +263,7 @@ export default function SearchPage() {
                 type="text"
                 value={query}
                 onChange={(e) => handleQueryChange(e.target.value)}
-                placeholder={searchMode === 'index'
-                  ? "Search concepts, people, places, quotes..."
-                  : "Search books, authors, translations..."}
+                placeholder="Search books, concepts, people, images..."
                 className="w-full pl-12 pr-4 py-3 border border-stone-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-lg"
                 autoFocus
               />
@@ -315,7 +271,7 @@ export default function SearchPage() {
                 <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 animate-spin" />
               )}
             </div>
-            {searchMode === 'books' && (
+            {viewMode === 'books' && (
               <>
                 <div className="relative">
                   <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
@@ -340,23 +296,21 @@ export default function SearchPage() {
                 >
                   <Filter className="w-5 h-5" />
                   Filters
-                  {hasActiveFilters && (
-                    <span className="w-2 h-2 bg-amber-500 rounded-full" />
-                  )}
+                  {hasActiveFilters && <span className="w-2 h-2 bg-amber-500 rounded-full" />}
                 </button>
               </>
             )}
           </div>
 
-          {/* Index Type Filter */}
-          {searchMode === 'index' && (
+          {/* Index type filter pills (index drill-down mode) */}
+          {viewMode === 'index' && (
             <div className="mt-3 flex flex-wrap gap-2">
               {INDEX_TYPES.map((type) => {
                 const Icon = type.icon;
                 return (
                   <button
                     key={type.value}
-                    onClick={() => setIndexType(type.value)}
+                    onClick={() => { setIndexType(type.value); setOffset(0); }}
                     className={`px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5 transition-colors ${
                       indexType === type.value
                         ? 'bg-amber-100 text-amber-800 border border-amber-300'
@@ -365,99 +319,56 @@ export default function SearchPage() {
                   >
                     <Icon className="w-3.5 h-3.5" />
                     {type.label}
-                    {indexByType && type.value && (
-                      <span className="text-xs opacity-70">
-                        ({indexByType[type.value as keyof typeof indexByType] || 0})
-                      </span>
-                    )}
                   </button>
                 );
               })}
             </div>
           )}
 
-          {/* Filters Panel */}
-          {showFilters && (
+          {/* Filters Panel (books drill-down mode) */}
+          {showFilters && viewMode === 'books' && (
             <div className="mt-4 p-4 bg-stone-50 rounded-xl border border-stone-200">
               <div className="flex items-center justify-between mb-3">
                 <span className="font-medium text-stone-700">Filters</span>
                 {hasActiveFilters && (
-                  <button
-                    onClick={clearFilters}
-                    className="text-sm text-stone-500 hover:text-stone-700 flex items-center gap-1"
-                  >
-                    <X className="w-4 h-4" />
-                    Clear all
+                  <button onClick={clearFilters} className="text-sm text-stone-500 hover:text-stone-700 flex items-center gap-1">
+                    <X className="w-4 h-4" /> Clear all
                   </button>
                 )}
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm text-stone-600 mb-1">Language</label>
-                  <select
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
-                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  >
-                    {languages.map((lang) => (
-                      <option key={lang.value} value={lang.value}>
-                        {lang.label}
-                      </option>
-                    ))}
+                  <select value={language} onChange={(e) => setLanguage(e.target.value)}
+                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm text-stone-600 mb-1">Subject</label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  >
-                    {categories.map((cat) => (
-                      <option key={cat.value} value={cat.value}>
-                        {cat.label}
-                      </option>
-                    ))}
+                  <select value={category} onChange={(e) => setCategory(e.target.value)}
+                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                   </select>
                 </div>
                 <div>
                   <label className="block text-sm text-stone-600 mb-1">Published After</label>
-                  <input
-                    type="text"
-                    value={dateFrom}
-                    onChange={(e) => setDateFrom(e.target.value)}
-                    placeholder="e.g., 1500"
-                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  />
+                  <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
+                    placeholder="e.g., 1500" className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
                 </div>
                 <div>
                   <label className="block text-sm text-stone-600 mb-1">Published Before</label>
-                  <input
-                    type="text"
-                    value={dateTo}
-                    onChange={(e) => setDateTo(e.target.value)}
-                    placeholder="e.g., 1700"
-                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  />
+                  <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
+                    placeholder="e.g., 1700" className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
                 </div>
                 <div className="flex flex-col gap-2 pt-6">
                   <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={hasDoi}
-                      onChange={(e) => setHasDoi(e.target.checked)}
-                      className="rounded border-stone-300 text-amber-500 focus:ring-amber-500"
-                    />
-                    Has DOI
+                    <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
+                      className="rounded border-stone-300 text-amber-500 focus:ring-amber-500" /> Has DOI
                   </label>
                   <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={hasTranslation}
-                      onChange={(e) => setHasTranslation(e.target.checked)}
-                      className="rounded border-stone-300 text-amber-500 focus:ring-amber-500"
-                    />
-                    Has translation
+                    <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
+                      className="rounded border-stone-300 text-amber-500 focus:ring-amber-500" /> Has translation
                   </label>
                 </div>
               </div>
@@ -468,35 +379,24 @@ export default function SearchPage() {
 
       {/* Results */}
       <main className="max-w-5xl mx-auto px-4 py-8">
-        {query.length >= 2 && (
-          <div className="mb-6 text-stone-600">
-            {loading ? (
-              'Searching...'
-            ) : (
-              <>
-                Found <span className="font-medium text-stone-900">{total}</span> results for &ldquo;{query}&rdquo;
-                {total > RESULTS_PER_PAGE && (
-                  <span className="ml-2 text-stone-500">
-                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, total)})
-                  </span>
-                )}
-              </>
-            )}
-          </div>
-        )}
-
+        {/* Empty state */}
         {!query && (
           <div className="text-center py-16">
             <Book className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <h2 className="text-xl font-medium text-stone-700 mb-2">Search the Library</h2>
             <p className="text-stone-500 max-w-md mx-auto">
-              Search across translated historical texts. Find primary sources on alchemy,
-              natural philosophy, and early modern science.
+              Search across translated historical texts, concepts, people, and illustrations.
             </p>
           </div>
         )}
 
-        {query && results.length === 0 && indexResults.length === 0 && !loading && (
+        {/* Loading */}
+        {query.length >= 2 && loading && viewMode === 'unified' && (
+          <div className="text-stone-500 mb-6">Searching...</div>
+        )}
+
+        {/* No results */}
+        {noResults && (
           <div className="text-center py-16">
             <Search className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <h2 className="text-xl font-medium text-stone-700 mb-2">No results found</h2>
@@ -504,253 +404,342 @@ export default function SearchPage() {
               <p className="text-stone-600">
                 Did you mean{' '}
                 <button
-                  onClick={() => {
-                    setQuery(suggestion);
-                    setOffset(0);
-                    performSearch(suggestion, searchMode, 0);
-                    updateUrl(suggestion, 0);
-                  }}
+                  onClick={() => { setQuery(suggestion); setOffset(0); performSearch(suggestion, viewMode, 0); updateUrl(suggestion, viewMode, 0); }}
                   className="font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2"
-                >
-                  {suggestion}
-                </button>
-                ?
+                >{suggestion}</button>?
               </p>
             ) : (
-              <p className="text-stone-500">
-                Try different keywords or adjust your filters.
-              </p>
+              <p className="text-stone-500">Try different keywords.</p>
             )}
           </div>
         )}
 
-        {/* Book/Page Results */}
-        {searchMode === 'books' && results.length > 0 && (
-          <div className="space-y-8">
-            {Object.entries(groupedResults()).map(([categoryId, categoryResults]) => {
-              const categoryInfo = categories.find(c => c.value === categoryId);
-              const categoryName = categoryInfo?.label.replace(/\s*\(\d+\)$/, '') ||
-                                   (categoryId === 'uncategorized' ? 'Other' :
-                                   categoryId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '));
-              const categoryIcon = categoryInfo?.icon;
-
-              return (
-                <div key={categoryId} className="space-y-4">
-                  {!category && ( // Only show category headers when not filtering by a specific category
-                    <div className="flex items-center gap-2 pb-2 border-b border-stone-200">
-                      {categoryIcon && <span className="text-xl">{categoryIcon}</span>}
-                      <h2 className="text-lg font-semibold text-stone-800">
-                        {categoryName}
-                      </h2>
-                      <span className="text-sm text-stone-500">
-                        ({categoryResults.length})
-                      </span>
-                    </div>
+        {/* ==================== UNIFIED VIEW ==================== */}
+        {viewMode === 'unified' && !loading && query.length >= 2 && totalResults > 0 && (
+          <div className="space-y-10">
+            {/* Books Section */}
+            {bookTotal > 0 && (
+              <section>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
+                    <Book className="w-5 h-5 text-amber-600" />
+                    Books & Pages
+                    <span className="text-sm font-normal text-stone-500">({bookTotal})</span>
+                  </h2>
+                  {bookTotal > PREVIEW_BOOKS && (
+                    <button onClick={() => drillInto('books')} className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1">
+                      See all {bookTotal} <ChevronRight className="w-4 h-4" />
+                    </button>
                   )}
-                  {categoryResults.map((result) => (
-              <Link
-                key={result.id}
-                href={result.type === 'page'
-                  ? `/book/${result.book_id}/page/${result.page_number}`
-                  : `/book/${result.book_id}`
-                }
-                className="block bg-white rounded-xl border border-stone-200 p-5 hover:border-amber-300 hover:shadow-md transition-all"
-              >
-                <div className="flex items-start gap-4">
-                  <div className={`p-2 rounded-lg ${
-                    result.type === 'book' ? 'bg-amber-100' : 'bg-blue-100'
-                  }`}>
-                    {result.type === 'book' ? (
-                      <Book className="w-5 h-5 text-amber-700" />
-                    ) : (
-                      <FileText className="w-5 h-5 text-blue-700" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="font-medium text-stone-900 line-clamp-1">
-                          <HighlightedText text={result.display_title || result.title} query={query} />
-                          {result.type === 'page' && (
-                            <span className="text-stone-500 font-normal ml-2">
-                              — Page {result.page_number}
-                            </span>
-                          )}
-                        </h3>
-                        <p className="text-sm text-stone-600 mt-1">
-                          <HighlightedText text={result.author} query={query} /> • {result.published} • {result.language}
-                        </p>
-                      </div>
-                      {result.has_doi && result.doi && (
-                        <a
-                          href={`https://doi.org/${result.doi}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium hover:bg-green-200"
-                        >
-                          DOI
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
-                    {result.snippet && (
-                      <p className="mt-3 text-sm text-stone-600 line-clamp-2">
-                        <HighlightedText text={result.snippet} query={query} />
-                      </p>
-                    )}
-                    {result.type === 'book' && result.page_count && (
-                      <p className="mt-2 text-xs text-stone-500">
-                        {result.page_count} pages
-                        {result.translated_count ? ` • ${result.translated_count} translated` : ''}
-                      </p>
-                    )}
-                  </div>
                 </div>
-              </Link>
+                <div className="space-y-3">
+                  {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
+                    <BookResultCard key={result.id} result={result} query={query} />
                   ))}
                 </div>
-              );
-            })}
+              </section>
+            )}
+
+            {/* Index Section */}
+            {indexTotal > 0 && (
+              <section>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
+                    <Lightbulb className="w-5 h-5 text-purple-600" />
+                    Index
+                    <span className="text-sm font-normal text-stone-500">({indexTotal})</span>
+                  </h2>
+                  {indexTotal > PREVIEW_INDEX && (
+                    <button onClick={() => drillInto('index')} className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1">
+                      See all {indexTotal} <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                <div className="space-y-3">
+                  {indexResults.slice(0, PREVIEW_INDEX).map((result, idx) => (
+                    <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Images Section */}
+            {imageTotal > 0 && (
+              <section>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
+                    <ImageIcon className="w-5 h-5 text-rose-600" />
+                    Images
+                    <span className="text-sm font-normal text-stone-500">({imageTotal})</span>
+                  </h2>
+                  {imageTotal > PREVIEW_IMAGES && (
+                    <button onClick={() => drillInto('images')} className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1">
+                      See all {imageTotal} <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
+                    <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
         )}
 
-        {/* Pagination */}
-        {searchMode === 'books' && total > RESULTS_PER_PAGE && !loading && (
-          <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-stone-200">
-            <button
-              onClick={() => { const newOffset = Math.max(0, offset - RESULTS_PER_PAGE); setOffset(newOffset); window.scrollTo(0, 0); }}
-              disabled={offset === 0}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Previous
-            </button>
-            <span className="text-sm text-stone-600">
-              Page {Math.floor(offset / RESULTS_PER_PAGE) + 1} of {Math.ceil(total / RESULTS_PER_PAGE)}
-            </span>
-            <button
-              onClick={() => { const newOffset = offset + RESULTS_PER_PAGE; setOffset(newOffset); window.scrollTo(0, 0); }}
-              disabled={offset + RESULTS_PER_PAGE >= total}
-              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
-            >
-              Next
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+        {/* ==================== BOOKS DRILL-DOWN ==================== */}
+        {viewMode === 'books' && query.length >= 2 && (
+          <>
+            {!loading && (
+              <div className="mb-6 text-stone-600">
+                Found <span className="font-medium text-stone-900">{bookTotal}</span> books & pages for &ldquo;{query}&rdquo;
+                {bookTotal > RESULTS_PER_PAGE && (
+                  <span className="ml-2 text-stone-500">
+                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, bookTotal)})
+                  </span>
+                )}
+              </div>
+            )}
+            {loading && <div className="text-stone-500 mb-6">Searching...</div>}
+            <div className="space-y-3">
+              {bookResults.map((result) => (
+                <BookResultCard key={result.id} result={result} query={query} />
+              ))}
+            </div>
+            <Pagination total={bookTotal} offset={offset} setOffset={setOffset} loading={loading} />
+          </>
         )}
 
-        {/* Index Results */}
-        {searchMode === 'index' && (
-          <div className="space-y-4">
-            {indexResults.map((result, idx) => {
-              const TypeIcon = INDEX_TYPES.find(t => t.value === result.type)?.icon || Search;
-              const typeLabel = INDEX_TYPES.find(t => t.value === result.type)?.label || result.type;
-              const isQuote = result.type === 'quote';
+        {/* ==================== INDEX DRILL-DOWN ==================== */}
+        {viewMode === 'index' && query.length >= 2 && (
+          <>
+            {!loading && (
+              <div className="mb-6 text-stone-600">
+                Found <span className="font-medium text-stone-900">{indexTotal}</span> index entries for &ldquo;{query}&rdquo;
+              </div>
+            )}
+            {loading && <div className="text-stone-500 mb-6">Searching...</div>}
+            <div className="space-y-3">
+              {indexResults.map((result, idx) => (
+                <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
+              ))}
+            </div>
+          </>
+        )}
 
-              return (
-                <Link
-                  key={`${result.book_id}-${result.type}-${idx}`}
-                  href={isQuote && result.quote_page
-                    ? `/book/${result.book_id}/guide?page=${result.quote_page}`
-                    : result.pages && result.pages.length > 0
-                    ? `/book/${result.book_id}/guide?page=${result.pages[0]}`
-                    : `/book/${result.book_id}`
-                  }
-                  className="block bg-white rounded-xl border border-stone-200 p-5 hover:border-amber-300 hover:shadow-md transition-all"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`p-2 rounded-lg ${
-                      result.type === 'concept' ? 'bg-purple-100' :
-                      result.type === 'person' ? 'bg-blue-100' :
-                      result.type === 'place' ? 'bg-green-100' :
-                      result.type === 'quote' ? 'bg-amber-100' :
-                      result.type === 'vocabulary' ? 'bg-rose-100' :
-                      'bg-stone-100'
-                    }`}>
-                      <TypeIcon className={`w-5 h-5 ${
-                        result.type === 'concept' ? 'text-purple-700' :
-                        result.type === 'person' ? 'text-blue-700' :
-                        result.type === 'place' ? 'text-green-700' :
-                        result.type === 'quote' ? 'text-amber-700' :
-                        result.type === 'vocabulary' ? 'text-rose-700' :
-                        'text-stone-700'
-                      }`} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className={`text-xs px-2 py-0.5 rounded-full ${
-                              result.type === 'concept' ? 'bg-purple-100 text-purple-700' :
-                              result.type === 'person' ? 'bg-blue-100 text-blue-700' :
-                              result.type === 'place' ? 'bg-green-100 text-green-700' :
-                              result.type === 'quote' ? 'bg-amber-100 text-amber-700' :
-                              result.type === 'vocabulary' ? 'bg-rose-100 text-rose-700' :
-                              'bg-stone-100 text-stone-700'
-                            }`}>
-                              {typeLabel}
-                            </span>
-                          </div>
-                          {isQuote ? (
-                            <>
-                              <blockquote className="font-serif text-stone-800 italic border-l-2 border-amber-300 pl-3 my-2">
-                                &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
-                              </blockquote>
-                              {result.quote_significance && (
-                                <p className="text-sm text-stone-600 mt-2">
-                                  <HighlightedText text={result.quote_significance} query={query} />
-                                </p>
-                              )}
-                            </>
-                          ) : (
-                            <h3 className="font-medium text-stone-900">
-                              <HighlightedText text={result.term} query={query} />
-                            </h3>
-                          )}
-                          <p className="text-sm text-stone-500 mt-2">
-                            From: <span className="text-stone-700">{result.book_title}</span>
-                            <span className="mx-1">•</span>
-                            {result.book_author}
-                          </p>
-                          {result.section_title && (
-                            <p className="text-xs text-stone-500 mt-1">
-                              Section: {result.section_title}
-                            </p>
-                          )}
-                          {result.pages && result.pages.length > 0 && (
-                            <p className="text-xs text-stone-500 mt-1">
-                              Pages: {result.pages.slice(0, 5).join(', ')}
-                              {result.pages.length > 5 && ` +${result.pages.length - 5} more`}
-                            </p>
-                          )}
-                          {isQuote && result.quote_page && (
-                            <p className="text-xs text-stone-500 mt-1">
-                              Page {result.quote_page}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+        {/* ==================== IMAGES DRILL-DOWN ==================== */}
+        {viewMode === 'images' && query.length >= 2 && (
+          <>
+            {!loading && (
+              <div className="mb-6 text-stone-600">
+                Found <span className="font-medium text-stone-900">{imageTotal}</span> images for &ldquo;{query}&rdquo;
+                {imageTotal > RESULTS_PER_PAGE && (
+                  <span className="ml-2 text-stone-500">
+                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, imageTotal)})
+                  </span>
+                )}
+              </div>
+            )}
+            {loading && <div className="text-stone-500 mb-6">Searching...</div>}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {imageResults.map((item, idx) => (
+                <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large />
+              ))}
+            </div>
+            <Pagination total={imageTotal} offset={offset} setOffset={setOffset} loading={loading} />
+          </>
         )}
       </main>
 
       {/* Footer */}
       <footer className="border-t border-stone-200 mt-16 py-8 bg-white">
         <div className="max-w-5xl mx-auto px-4 text-center text-sm text-stone-500">
-          <p>
-            Source Library — Making historical texts accessible through AI-assisted translation.
-          </p>
-          <p className="mt-2">
-            All translations are citable with DOIs via Zenodo.
-          </p>
+          <p>Source Library — Making historical texts accessible through AI-assisted translation.</p>
+          <p className="mt-2">All translations are citable with DOIs via Zenodo.</p>
         </div>
       </footer>
+    </div>
+  );
+}
+
+// ==================== RESULT CARDS ====================
+
+function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
+  return (
+    <Link
+      href={result.type === 'page' ? `/book/${result.book_id}/page/${result.page_number}` : `/book/${result.book_id}`}
+      className="block bg-white rounded-xl border border-stone-200 p-4 hover:border-amber-300 hover:shadow-md transition-all"
+    >
+      <div className="flex items-start gap-3">
+        <div className={`p-2 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-amber-100' : 'bg-blue-100'}`}>
+          {result.type === 'book' ? <Book className="w-4 h-4 text-amber-700" /> : <FileText className="w-4 h-4 text-blue-700" />}
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h3 className="font-medium text-stone-900 line-clamp-1">
+                <HighlightedText text={result.display_title || result.title} query={query} />
+                {result.type === 'page' && <span className="text-stone-500 font-normal ml-2">— Page {result.page_number}</span>}
+              </h3>
+              <p className="text-sm text-stone-600 mt-0.5">
+                <HighlightedText text={result.author} query={query} /> • {result.published} • {result.language}
+              </p>
+            </div>
+            {result.has_doi && result.doi && (
+              <a href={`https://doi.org/${result.doi}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium hover:bg-green-200 flex-shrink-0">
+                DOI <ExternalLink className="w-3 h-3" />
+              </a>
+            )}
+          </div>
+          {result.snippet && (
+            <p className="mt-2 text-sm text-stone-600 line-clamp-2">
+              <HighlightedText text={result.snippet} query={query} />
+            </p>
+          )}
+          {result.type === 'book' && result.page_count && (
+            <p className="mt-1.5 text-xs text-stone-500">
+              {result.page_count} pages{result.translated_count ? ` • ${result.translated_count} translated` : ''}
+            </p>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function IndexResultCard({ result, query }: { result: IndexSearchResult; query: string }) {
+  const TypeIcon = INDEX_TYPES.find(t => t.value === result.type)?.icon || Search;
+  const typeLabel = INDEX_TYPES.find(t => t.value === result.type)?.label || result.type;
+  const isQuote = result.type === 'quote';
+
+  return (
+    <Link
+      href={isQuote && result.quote_page
+        ? `/book/${result.book_id}/guide?page=${result.quote_page}`
+        : result.pages && result.pages.length > 0
+        ? `/book/${result.book_id}/guide?page=${result.pages[0]}`
+        : `/book/${result.book_id}`
+      }
+      className="block bg-white rounded-xl border border-stone-200 p-4 hover:border-purple-300 hover:shadow-md transition-all"
+    >
+      <div className="flex items-start gap-3">
+        <div className={`p-2 rounded-lg flex-shrink-0 ${
+          result.type === 'concept' ? 'bg-purple-100' :
+          result.type === 'person' ? 'bg-blue-100' :
+          result.type === 'place' ? 'bg-green-100' :
+          result.type === 'quote' ? 'bg-amber-100' :
+          result.type === 'vocabulary' ? 'bg-rose-100' : 'bg-stone-100'
+        }`}>
+          <TypeIcon className={`w-4 h-4 ${
+            result.type === 'concept' ? 'text-purple-700' :
+            result.type === 'person' ? 'text-blue-700' :
+            result.type === 'place' ? 'text-green-700' :
+            result.type === 'quote' ? 'text-amber-700' :
+            result.type === 'vocabulary' ? 'text-rose-700' : 'text-stone-700'
+          }`} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <span className={`text-xs px-2 py-0.5 rounded-full ${
+            result.type === 'concept' ? 'bg-purple-100 text-purple-700' :
+            result.type === 'person' ? 'bg-blue-100 text-blue-700' :
+            result.type === 'place' ? 'bg-green-100 text-green-700' :
+            result.type === 'quote' ? 'bg-amber-100 text-amber-700' :
+            result.type === 'vocabulary' ? 'bg-rose-100 text-rose-700' : 'bg-stone-100 text-stone-700'
+          }`}>{typeLabel}</span>
+
+          {isQuote ? (
+            <>
+              <blockquote className="font-serif text-stone-800 italic border-l-2 border-amber-300 pl-3 my-2">
+                &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
+              </blockquote>
+              {result.quote_significance && (
+                <p className="text-sm text-stone-600 mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
+              )}
+            </>
+          ) : (
+            <h3 className="font-medium text-stone-900 mt-1"><HighlightedText text={result.term} query={query} /></h3>
+          )}
+
+          <p className="text-sm text-stone-500 mt-1.5">
+            From: <span className="text-stone-700">{result.book_title}</span> • {result.book_author}
+          </p>
+          {result.pages && result.pages.length > 0 && (
+            <p className="text-xs text-stone-500 mt-1">
+              Pages: {result.pages.slice(0, 5).join(', ')}{result.pages.length > 5 && ` +${result.pages.length - 5} more`}
+            </p>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function ImageResultCard({ item, query, large }: { item: GalleryItem; query: string; large?: boolean }) {
+  const [imageError, setImageError] = useState(false);
+
+  const displayUrl = item.bbox
+    ? `/api/crop-image?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
+    : item.imageUrl;
+
+  return (
+    <Link
+      href={`/gallery/image/${item.pageId}-${item.detectionIndex}`}
+      className="group block bg-white rounded-lg border border-stone-200 overflow-hidden hover:border-rose-300 hover:shadow-md transition-all"
+    >
+      <div className={`relative bg-stone-100 ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>
+        {!imageError ? (
+          <Image
+            src={displayUrl}
+            alt={item.description}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes={large ? '(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw' : '(max-width: 640px) 50vw, 16vw'}
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <ImageIcon className="w-8 h-8 text-stone-300" />
+          </div>
+        )}
+      </div>
+      <div className="p-2">
+        <p className="text-xs text-stone-700 line-clamp-2 mb-1">
+          {query ? <HighlightedText text={item.description} query={query} /> : item.description}
+        </p>
+        <p className="text-[10px] text-stone-400 line-clamp-1">{item.bookTitle}</p>
+      </div>
+    </Link>
+  );
+}
+
+// ==================== PAGINATION ====================
+
+function Pagination({ total, offset, setOffset, loading }: {
+  total: number; offset: number; setOffset: (n: number) => void; loading: boolean;
+}) {
+  if (total <= RESULTS_PER_PAGE || loading) return null;
+
+  return (
+    <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-stone-200">
+      <button
+        onClick={() => { setOffset(Math.max(0, offset - RESULTS_PER_PAGE)); window.scrollTo(0, 0); }}
+        disabled={offset === 0}
+        className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
+      >
+        <ChevronLeft className="w-4 h-4" /> Previous
+      </button>
+      <span className="text-sm text-stone-600">
+        Page {Math.floor(offset / RESULTS_PER_PAGE) + 1} of {Math.ceil(total / RESULTS_PER_PAGE)}
+      </span>
+      <button
+        onClick={() => { setOffset(offset + RESULTS_PER_PAGE); window.scrollTo(0, 0); }}
+        disabled={offset + RESULTS_PER_PAGE >= total}
+        className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
+      >
+        Next <ChevronRight className="w-4 h-4" />
+      </button>
     </div>
   );
 }
