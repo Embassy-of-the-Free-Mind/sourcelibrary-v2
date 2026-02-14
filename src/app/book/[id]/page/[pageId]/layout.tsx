@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { Book, Page } from '@/lib/types';
+import { Book, Page, TranslationEdition } from '@/lib/types';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -62,6 +62,17 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
   const pageUrl = `/book/${id}/page/${pageId}`;
 
+  // Image fallback chain
+  const imageUrl = page.cropped_photo || page.archived_photo || page.photo || page.photo_original;
+
+  // Publication date from edition or book creation
+  const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published');
+  const publishedDate = currentEdition?.published_at
+    ? new Date(currentEdition.published_at).toISOString()
+    : book.created_at
+    ? new Date(book.created_at).toISOString()
+    : undefined;
+
   return {
     title: `${title} - Source Library`,
     description,
@@ -75,20 +86,22 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       siteName: 'Source Library',
       locale: 'en_US',
       url: pageUrl,
-      ...(page.photo && {
+      ...(imageUrl && {
         images: [
           {
-            url: page.photo,
+            url: imageUrl,
             alt: `${bookTitle} - Page ${pageNum}`,
           },
         ],
       }),
+      ...(publishedDate && { publishedTime: publishedDate }),
+      authors: [book.author],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      ...(page.photo && { images: [page.photo] }),
+      ...(imageUrl && { images: [imageUrl] }),
     },
   };
 }
