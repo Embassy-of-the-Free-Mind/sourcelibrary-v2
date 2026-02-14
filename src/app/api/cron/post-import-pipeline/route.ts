@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
+import { POST as batchOcrPost } from '@/app/api/books/[id]/batch-ocr-async/route';
+import { POST as batchTranslatePost } from '@/app/api/books/[id]/batch-translate-async/route';
 
 export const maxDuration = 300;
 
@@ -14,8 +16,9 @@ const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 
 function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_URL
-    || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  // Use production URL for external calls (enrichment).
+  // OCR/translate use direct imports — no HTTP needed.
+  return process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
 }
 
 function hasTimeBudget(startTime: number): boolean {
@@ -168,17 +171,18 @@ export async function GET(request: NextRequest) {
       for (const book of readyForOcr) {
         if (!hasTimeBudget(startTime)) break;
         try {
-          const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ limit: book.pages_count || 500 }),
+          // Call batch-ocr-async directly (avoids internal HTTP 405 routing issues)
+          const fakeReq = new NextRequest(
+            `http://localhost/api/books/${book.id}/batch-ocr-async`,
+            {
+              method: 'POST',
+              body: JSON.stringify({ limit: book.pages_count || 500 }),
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+          const res = await batchOcrPost(fakeReq, {
+            params: Promise.resolve({ id: book.id }),
           });
-
-          if (!res.ok) {
-            log.errors.push(`OCR submit ${book.id}: HTTP ${res.status}`);
-            continue;
-          }
-
           const data = await res.json();
 
           if (data.jobName) {
@@ -191,7 +195,7 @@ export async function GET(request: NextRequest) {
             await setPipelineStatus(db, book.id, 'ocr_complete');
             log.ocr_advanced++;
           } else {
-            log.errors.push(`OCR submit ${book.id}: unexpected response`);
+            log.errors.push(`OCR submit ${book.id}: ${data.error || 'unexpected response'}`);
           }
         } catch (err) {
           log.errors.push(`OCR submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
@@ -252,17 +256,18 @@ export async function GET(request: NextRequest) {
       for (const book of readyForTranslate) {
         if (!hasTimeBudget(startTime)) break;
         try {
-          const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ limit: book.pages_count || 500 }),
+          // Call batch-translate-async directly (avoids internal HTTP routing issues)
+          const fakeReq = new NextRequest(
+            `http://localhost/api/books/${book.id}/batch-translate-async`,
+            {
+              method: 'POST',
+              body: JSON.stringify({ limit: book.pages_count || 500 }),
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+          const res = await batchTranslatePost(fakeReq, {
+            params: Promise.resolve({ id: book.id }),
           });
-
-          if (!res.ok) {
-            log.errors.push(`Translate submit ${book.id}: HTTP ${res.status}`);
-            continue;
-          }
-
           const data = await res.json();
 
           if (data.jobName) {
@@ -274,7 +279,7 @@ export async function GET(request: NextRequest) {
             await setPipelineStatus(db, book.id, 'translate_complete');
             log.translate_advanced++;
           } else {
-            log.errors.push(`Translate submit ${book.id}: unexpected response`);
+            log.errors.push(`Translate submit ${book.id}: ${data.error || 'unexpected response'}`);
           }
         } catch (err) {
           log.errors.push(`Translate submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
