@@ -5167,7 +5167,67 @@ Astrology is central to both the Western esoteric tradition and Indian knowledge
 - **Navagraha Vidhana Paddhati (1857)** — pre-colonial planetary worship manual. Extremely early printing date.
 - **Gobhila Graha Sutram** — Vedic-era planetary ritual text attributed to Gobhila, connecting the oldest ritual layer to later Jyotish practice.
 
-### Session 029 TOTAL: 166 books, ~61,000 pages
+### Batches 24-27: CGV Manuscripts & Printed Editions
+
+**Batch 24: CGV Muhurta & Jyotisha Manuscripts (6 texts, 368 pages)**
+
+| Title | Author | Year | Pages | Book ID | IA Identifier |
+|-------|--------|------|-------|---------|---------------|
+| Muhurta Darpana | Unknown | c.1700 | 70 | 69906d06...50a1 | muhurtadarpana-CGV-PSS-0151-0381 |
+| Muhurta Martanda with Martanda Vallabha | Unknown | c.1700 | 117 | 69906d0a...50e9 | muhurtamartanda_martandavallabhasahita-CGV-SDPB-0103 |
+| Jyotisha Grantha (Astrology Collection) | Unknown | c.1700 | 97 | 69906d0d...5160 | jyotishagrantha-CGV-PSS-0141-0240 |
+| Mandapa Muhurta | Unknown | c.1700 | 46 | 69906d11...51c3 | mandapamuhurta-CGV-SDPB-0920 |
+| Jyotisha Vrittashata | Unknown | c.1700 | 27 | 69906d15...51f3 | jyotishavrittashata-CGV-PSS-0144-0238 |
+| Hora Vritti | Unknown | c.1700 | 11 | 69906d19...5210 | horavritti-CGV-PSS-0139-1321 |
+
+**Batch 25: CGV Graha & Navagraha Manuscripts (6 texts, 182 pages)**
+
+| Title | Author | Year | Pages | Book ID | IA Identifier |
+|-------|--------|------|-------|---------|---------------|
+| Prayogaratna Graha Makha Prayoga | Unknown | c.1700 | 48 | 69906d23...521d | prayogaratna_grahamakhaprayoga_-CGV-PSS-0537-0177 |
+| Navagraha Makha Prayoga (Laghu Shaunaki) | Unknown | c.1700 | 36 | 69906d28...524f | navagrahamakhaprayoga_laghushaunaki-CGV-SDPB-0190 |
+| Navagraha Makha Prayoga with Vinayaka Shanti | Unknown | c.1700 | 23 | 69906d2c...5275 | navagrahamakhaprayoga_vinayakashantipaddhati-CGV-SDPB-0126 |
+| Navagraha Shanti | Unknown | c.1700 | 25 | 69906d30...528e | navagrahashanti-CGV-PSS-0506-0405 |
+| Graha Makha Prayoga Paddhati | Unknown | c.1700 | 20 | 69906d35...52a9 | grahamakhaprayogapaddhati-CGV-SDPB-0744 |
+| Svara Tattva Udaya | Unknown | c.1700 | 30 | 69906d39...52bf | svaratattvodaya-CGV-PSS-0184-1187 |
+
+**Batch 26: CGV Prashna, Phala, Tithi & Smaller Manuscripts (6 texts, 96 pages)**
+
+| Title | Author | Year | Pages | Book ID | IA Identifier |
+|-------|--------|------|-------|---------|---------------|
+| Dvadasha Bhavanan Phalani | Unknown | c.1700 | 14 | 69906d42...52df | dvadashabhavanan_phalani-CGV-PSS-0135-0243 |
+| Nirnayoddhara Tithi Nirnaya | Unknown | c.1700 | 35 | 69906d45...52ef | nirnayoddhara_tithinirnaya_-CGV-PSS-0516-0368 |
+| Tithi Nirnaya | Unknown | c.1700 | 27 | 69906d49...5314 | tithinirnaya-CGV-PSS-0587-0927 |
+| Sankranti Phala | Unknown | c.1700 | 9 | 69906d4d...5331 | sankrantiphala-CGV-PSS-0168-1470 |
+| Yogini Dasha | Unknown | c.1700 | 6 | 69906d50...533c | yoginidasha-CGV-PSS-0190-1571 |
+| Graha Kaumudi | Unknown | c.1700 | 5 | 69906d53...5344 | grahakaumudi-CGV-PSS-0137-1033 |
+
+**Batch 27: Printed Editions (6 texts, 2,292 pages)**
+
+| Title | Author | Year | Pages | Book ID | IA Identifier |
+|-------|--------|------|-------|---------|---------------|
+| Muhurta Chintamani of Ram Daivagya | Ram Daivagya | 1923 | 1,018 | 69906d73...534f | muhurta-chintamani-of-ram-daivagya-1923... |
+| Muhurta Martanda (Kedar Datt Joshi) | Kedar Datt Joshi | c.1900 | 98 | 69906d77...574b | muhurta-martand-kedar-datt-joshi_202210 |
+| Brahma Siddhanta | Madhu Sudan Ojha | 1961 | 551 | 69906d7a...57b1 | BrahmaSiddhanta1961Pt.MadhuSudanOjha |
+| Brihaspati Sutra | Brihaspati | 1921 | 104 | 69906d7f...59da | brihaspatisutrao00brharich |
+| Ramal Navaratna | Param Sukh Upadhyaya | c.1800 | 211 | 69906d83...5a44 | ramal-navaratna-of-param-sukh-upadhyaya-mahidhar-sharma |
+| Muhurta Chintamani Tika (Vaidyanath 1871) | Vaidyanath | 1871 | 310 | 69906d87...5b19 | jgny_muhurta-chintamani-tika-by-vaidyanath-1871... |
+
+### Batches 24-27 Highlights
+
+- **CGV Manuscript Collection (18 texts):** Palm-leaf and paper manuscripts from the Chunilal Gandhi Vidyabhavan (Surat). Original Sanskrit manuscripts of muhurta, hora, graha, navagraha, tithi, and phala texts. These are primary manuscript sources — not published editions — making them exceptionally valuable for textual criticism and philology.
+- **Muhurta Darpana (70p)** — manuscript mirror of electional astrology. Rare survival of a text known mainly through later printed editions.
+- **Muhurta Martanda with Martanda Vallabha (117p)** — the largest CGV muhurta manuscript, including the Vallabha commentary. Critical for establishing the textual tradition.
+- **Svara Tattva Udaya (30p)** — breath divination manuscript (svarodaya tradition). Connects respiration science to astronomical timing.
+- **Muhurta Chintamani of Ram Daivagya (1,018p)** — massive 1923 Lakshmi Venkateshwara Press edition with extensive commentary. The standard printed reference.
+- **Brahma Siddhanta (551p)** — BHU Press 1961 edition with Siddhanta Prakashika commentary by Madhu Sudan Ojha. Foundational siddhanta text with modern scholarly apparatus.
+- **Ramal Navaratna (211p)** — geomantic astrology (ramala shastra) text. Unique tradition bridging Indian and Perso-Arabic divination methods.
+
+### OCR Processing
+
+All 190 books queued for Lambda OCR processing (~64,000 pages). Using gemini-3-flash-preview model with Sanskrit/Devanagari-aware prompts.
+
+### Session 029 TOTAL: 190 books, ~64,000 pages
 
 ---
 
@@ -5243,5 +5303,73 @@ First acquisitions using three newly built import routes: Bodleian Library (Oxfo
 - Split detection queued for all imports
 
 ## Session 030 TOTAL: 12 books, 3,199 pages
+
+---
+
+# Session 031: 2026-02-14 — Early Science, Natural Magic, Sympathy, Bestiaries
+
+## Overview
+
+Focused acquisition across four sources: Bodleian, Cambridge, Vatican, and Internet Archive. Themes: medieval optics and light theory, sympathetic magic and weapon-salve, bestiaries and lapidaries, astrological compendia, ritual magic (Ars Notoria), Michael Scot's natural philosophy, and the Roger Bacon / John Dee / Newton tradition.
+
+## Cambridge Digital Library (6 new)
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Astronomy and Astrology: Oxford Scientific Compendium | Maudith, Grosseteste, Sahl ibn Bishr, et al. | 1330 | 807 | 69906e648a353648e1ecf7df |
+| Turba Philosophorum + 56 alchemical items | Morienus, pseudo-Avicenna, Geber, et al. | 1400 | 343 | 69906e698a353648e1ecfb0b |
+| Alchemical Treatises (Ripley, pseudo-Bacon, Llull) | George Ripley, pseudo-Bacon, Llull, et al. | 1490 | 299 | 69906e6b8a353648e1ecfc64 |
+| Judicial Astrology and Astronomy | John Dunstable (compiler) | 1440 | 309 | 69906e6d8a353648e1ecfd91 |
+| Greek Divinatory Texts (Geomancy, Onomancy) | Nicholas of Otranto, pseudo-Pythagoras, et al. | 1325 | 290 | 69906e708a353648e1ecfec8 |
+| Alchemical Texts (Geber, Rasis, Du Wes) | Giles Du Wes, Geber, Rasis, et al. | 1510 | 358 | 69906e738a353648e1ecffec |
+
+## Vatican Library (7 new)
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Compendium astronomicum et magicum | Peter Peregrinus, Pseudo-Albertus, Alcabitius, Al-Kindi | 1458 | 888 | 69906ec78a353648e1ed015e |
+| Liber introductorius | Michael Scot | 1300 | 390 | 69906eca7d027b8182c0a9dc |
+| Astrological and Natural Philosophical Works | Michael Scot | 1300 | 246 | 69906ecf7d027b8182c0ab65 |
+| Speculum astronomiae | Pseudo-Albertus Magnus | 1280 | 266 | 69906ed28a353648e1ed04da |
+| Astronomische Sammelhandschrift | Regiomontanus, Peuerbach, Hermes Trismegistus | 1480 | 630 | 69906ed58a353648e1ed05e7 |
+| Ars Notoria sive Flores Aurei | Anonymous (pseudo-Solomonic) | 1325 | 72 | 69906ed78a353648e1ed085f |
+| Compendium astrologicum | Hermes, Albumasar, Messahallah, Thebit ben Corat | 1444 | 338 | 69906ed98a353648e1ed08a9 |
+
+## Bodleian Library (6 new)
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Herbarium / Liber medicinae ex animalibus | Pseudo-Apuleius, Pseudo-Dioscorides | 1095 | 197 | 69906f584b3bd4d1fffd0672 |
+| Bestiary (MS. Bodley 764) | Anonymous | 1240 | 298 | 69906f5b4b3bd4d1fffd0739 |
+| The Ashmole Bestiary | Anonymous; Hugh of Fouilloy | 1210 | 226 | 69906f5e4b3bd4d1fffd0865 |
+| Astronomical Texts (Sacrobosco, Albumasar, Alcabitius) | Sacrobosco, Albumasar, Alcabitius, Al-Kindi | 1350 | 368 | 69906f624b3bd4d1fffd0949 |
+| The Tudor Pattern Book (Herbal-Bestiary) | Anonymous | 1525 | 105 | 69906f654b3bd4d1fffd0abb |
+| Wonders of the East / Astronomical-Calendrical Treatise | Anonymous | 1150 | 77 | 69906f694b3bd4d1fffd0b26 |
+
+## Internet Archive (10 new)
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Opticae Thesaurus (Alhazen + Witelo) | Ibn al-Haytham, Witelo, ed. Risner | 1572 | 793 | 69906ff9245959b9547d5ccb |
+| Perspectiva Communis | John Peckham | 1542 | 134 | 69906ffd245959b9547d5fe6 |
+| Perspectiva | Roger Bacon, ed. Combach | 1614 | 262 | 69907000245959b9547d606e |
+| De Refractione Optices Parte Libri Novem | Giambattista della Porta | 1593 | 244 | 69907003245959b9547d6176 |
+| De Magnetica Vulnerum Curatione | Rudolph Goclenius | 1613 | 320 | 69907005245959b9547d626c |
+| De Lapidibus Pretiosis Enchiridion | Marbode of Rennes | 1531 | 128 | 69907008245959b9547d63ae |
+| Physiologus de Naturis XII Animalium | Anonymous | 1490 | 66 | 6990700a245959b9547d6430 |
+| Coelestis Physiognomoniae Libri Sex | Giambattista della Porta | 1603 | 206 | 6990700c245959b9547d6474 |
+| De Arte Cyclognomica Tomi III | Cornelius Gemma | 1569 | 485 | 6990700f245959b9547d6544 |
+| De Occulta Philosophia Liber Quartus (Latin) | Pseudo-Agrippa | 1559 | 46 | 69907011245959b9547d672b |
+
+## Thematic Highlights
+
+- **Medieval Optics Arc:** Alhazen (1572 Risner ed.) -> Bacon Perspectiva -> Peckham textbook -> della Porta refraction. The complete transmission chain from Islamic optics to early modern telescope science.
+- **Sympathetic Magic:** Goclenius's De Magnetica Vulnerum Curatione (1613) — the missing origin text of the weapon-salve debate, answered by Fludd and Digby (both already in collection).
+- **Bestiaries:** Three complementary items — Physiologus (the 2nd c. ur-text, 1490 incunable), Bodley 764 (gold-leaf miniatures, 1240), Ashmole Bestiary (finest illustrations, 1210).
+- **Michael Scot:** Two Vatican witnesses to the works of Frederick II's court astrologer. Pal.lat.1370 + Vat.lat.4087.
+- **Ritual Magic:** Ars Notoria (Vat.lat.6842), the Solomonic invocation system for acquiring knowledge through angelic contact — the exact text the Speculum astronomiae (also imported) tries to condemn.
+- **Astronomical Compendia:** Three massive compendia — the 807-page Cambridge Oxford compendium, the 888-page Vatican Pal.lat.1340, and the 630-page Regiomontanus/Hermes collection.
+
+## Session 031 TOTAL: 29 books, 9,191 pages
 
 ---
