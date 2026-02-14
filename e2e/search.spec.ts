@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { measurePerf } from './perf';
 import { SEARCH } from './fixtures';
 
 test.describe('Search', () => {
@@ -9,6 +10,7 @@ test.describe('Search', () => {
     const resultLinks = page.locator('a[href*="/book/"]');
     await expect(resultLinks.first()).toBeVisible({ timeout: 20_000 });
     expect(await resultLinks.count()).toBeGreaterThanOrEqual(SEARCH.minResults);
+    await measurePerf(page, 'search: shows results for known query');
   });
 
   test('result cards link to books', async ({ page }) => {
@@ -21,6 +23,7 @@ test.describe('Search', () => {
     await expect(firstResult).toBeVisible();
     const href = await firstResult.getAttribute('href');
     expect(href).toMatch(/\/book\//);
+    await measurePerf(page, 'search: result cards link to books');
   });
 
   test('mode tabs switch between Books and Index', async ({ page }) => {
@@ -33,5 +36,6 @@ test.describe('Search', () => {
 
     // URL should update to reflect mode change
     await expect(page).toHaveURL(/mode=index|tab=index|type=index/i);
+    await measurePerf(page, 'search: mode tabs switch');
   });
 });

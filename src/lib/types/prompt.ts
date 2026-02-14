@@ -718,27 +718,6 @@ SCHOLARLY ACCESSIBLE: accurate to the German, readable for modern English speake
 <keywords>key concepts, names, themes in English — for indexing</keywords>`
 };
 
-export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript page to Markdown.
-
-**Format:** # headings, **bold**, *italic*, ->centered<-, | tables |, > blockquotes, ---
-
-**Metadata (hidden from readers):**
-<lang>X</lang> <page-num>N</page-num> <header>X</header> <sig>X</sig> <meta>X</meta> <warning>X</warning> <vocab>X</vocab>
-
-**Inline annotations (visible to readers):**
-<margin>X</margin> <gloss>X</gloss> <insert>X</insert> <unclear>X</unclear>
-<note>X</note> <term>X</term> <image-desc>description</image-desc>
-
-**Tables:** Use markdown tables for any columnar data, lists, charts. Preserve structure.
-
-**Rules:**
-- Page numbers, headers, signatures → metadata tags ONLY, not in body text
-- Preserve original spelling, punctuation, line breaks
-- IGNORE partial text at page edges (from facing page)
-- End with <vocab>key terms, names, concepts</vocab>
-
-**If quality issues:** Add <warning>reason</warning> at start.`;
-
 // Default prompts with XML annotation support
 // OCR Prompt v2025-01-06
 export const DEFAULT_PROMPTS: ProcessingPrompts = {

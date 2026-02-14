@@ -3,26 +3,18 @@ import { ProcessingPrompts } from "./core";
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
 export const PROMPT_VERSION = 'v3.2026-02';
 
-export const STREAMLINED_OCR_PROMPT = `Transcribe this {language} manuscript page to Markdown.
+const VALID_PAGE_TYPES = new Set([
+  'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
+  'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
+]);
 
-**Format:** # headings, **bold**, *italic*, ->centered<-, | tables |, > blockquotes, ---
-
-**Metadata (hidden from readers):**
-<lang>X</lang> <page-num>N</page-num> <header>X</header> <sig>X</sig> <meta>X</meta> <warning>X</warning> <vocab>X</vocab>
-
-**Inline annotations (visible to readers):**
-<margin>X</margin> <gloss>X</gloss> <insert>X</insert> <unclear>X</unclear>
-<note>X</note> <term>X</term> <image-desc>description</image-desc>
-
-**Tables:** Use markdown tables for any columnar data, lists, charts. Preserve structure.
-
-**Rules:**
-- Page numbers, headers, signatures → metadata tags ONLY, not in body text
-- Preserve original spelling, punctuation, line breaks
-- IGNORE partial text at page edges (from facing page)
-- End with <vocab>key terms, names, concepts</vocab>
-
-**If quality issues:** Add <warning>reason</warning> at start.`;
+/** Extract <page-type> from OCR text. Returns undefined if not found or invalid. */
+export function extractPageType(ocrText: string): string | undefined {
+  const match = ocrText.match(/<page-type>([\s\S]*?)<\/page-type>/i);
+  if (!match) return undefined;
+  const type = match[1].trim().toLowerCase();
+  return VALID_PAGE_TYPES.has(type) ? type : undefined;
+}
 
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
   ocr: `Transcribe this historical manuscript page to Markdown.
@@ -50,8 +42,9 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Metadata tags (hidden from readers):**
 - <lang>X</lang> — the detected language of this page (REQUIRED — always identify the language)
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text
 - <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
-- <header>X</header> — running headers (NOT in body text)
+- <header>X</header> — running headers/chapter titles at top of page (NEVER duplicate as heading in body)
 - <sig>X</sig> — printer's marks like A2, B1 (NOT in body text)
 - <meta>X</meta> — hidden metadata (image quality, catchwords)
 - <warning>X</warning> — quality issues (faded, damaged, blurry)
@@ -67,10 +60,11 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
-2. Page numbers/headers/signatures go in metadata tags only, never in body
-3. IGNORE partial text at left/right edges (from facing page in spread)
-4. Capture ALL text including margins and annotations
-5. End with <vocab>key terms, names, concepts</vocab>
+2. Page numbers/headers/signatures go in metadata tags ONLY — NEVER duplicate as ## headings or body text. Example: "DISCURSUS IV." at top of page → <header>DISCURSUS IV.</header> and nothing else
+3. Decorative initials (drop caps): merge large ornamental first letters with the word they begin. A large "L" followed by "EX" → "Lex", not "L Ex"
+4. IGNORE partial text at left/right edges (from facing page in spread)
+5. Capture ALL text including margins and annotations
+6. End with <vocab>key terms, names, concepts</vocab>
 
 **If image has quality issues**, start with <warning>describe issue</warning>
 

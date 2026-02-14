@@ -6,6 +6,8 @@ import { Search, Book, FileText, ExternalLink, Filter, X, Loader2, Quote, User, 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi, categories as categoriesApi, utils, type SearchResult, type IndexSearchResult, type IndexSearchResponse } from '@/lib/api-client';
+import { sendGAEvent } from '@/lib/ga';
+import HighlightedText from '@/components/search/HighlightedText';
 
 const INDEX_TYPES = [
   { value: '', label: 'All Types', icon: Search },
@@ -61,6 +63,7 @@ export default function SearchPage() {
     (searchParams.get('sort') as any) || 'relevance'
   );
   const [offset, setOffset] = useState(parseInt(searchParams.get('offset') || '0'));
+  const [suggestion, setSuggestion] = useState<string | null>(null);
   const RESULTS_PER_PAGE = 20;
 
   // Fetch languages and categories on mount
@@ -123,6 +126,7 @@ export default function SearchPage() {
         setTotal(data.total || 0);
         setIndexByType(data.byType || null);
         setResults([]);
+        sendGAEvent({ action: 'search', category: 'engagement', label: searchQuery, value: data.total || 0, search_term: searchQuery });
       } else {
         // Book/page search
         const data = await searchApi.search(searchQuery, {
@@ -141,6 +145,7 @@ export default function SearchPage() {
         setTotal(data.total || 0);
         setIndexResults([]);
         setIndexByType(null);
+        sendGAEvent({ action: 'search', category: 'engagement', label: searchQuery, value: data.total || 0, search_term: searchQuery });
       }
     } catch (error) {
       console.error('Search error:', error);
@@ -182,6 +187,22 @@ export default function SearchPage() {
       updateUrl(query, offset);
     }
   }, [searchMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset]);
+
+  // Fetch suggestions on zero results
+  const noResults = query.length >= 2 && !loading && results.length === 0 && indexResults.length === 0;
+  useEffect(() => {
+    if (!noResults || query.length < 3) {
+      setSuggestion(null);
+      return;
+    }
+    let cancelled = false;
+    searchApi.suggest(query).then(data => {
+      if (!cancelled) setSuggestion(data.suggestions?.[0] || null);
+    }).catch(() => {
+      if (!cancelled) setSuggestion(null);
+    });
+    return () => { cancelled = true; };
+  }, [noResults, query]);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
@@ -479,9 +500,27 @@ export default function SearchPage() {
           <div className="text-center py-16">
             <Search className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <h2 className="text-xl font-medium text-stone-700 mb-2">No results found</h2>
-            <p className="text-stone-500">
-              Try different keywords or adjust your filters.
-            </p>
+            {suggestion ? (
+              <p className="text-stone-600">
+                Did you mean{' '}
+                <button
+                  onClick={() => {
+                    setQuery(suggestion);
+                    setOffset(0);
+                    performSearch(suggestion, searchMode, 0);
+                    updateUrl(suggestion, 0);
+                  }}
+                  className="font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2"
+                >
+                  {suggestion}
+                </button>
+                ?
+              </p>
+            ) : (
+              <p className="text-stone-500">
+                Try different keywords or adjust your filters.
+              </p>
+            )}
           </div>
         )}
 
@@ -531,7 +570,7 @@ export default function SearchPage() {
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <h3 className="font-medium text-stone-900 line-clamp-1">
-                          {result.display_title || result.title}
+                          <HighlightedText text={result.display_title || result.title} query={query} />
                           {result.type === 'page' && (
                             <span className="text-stone-500 font-normal ml-2">
                               — Page {result.page_number}
@@ -539,7 +578,7 @@ export default function SearchPage() {
                           )}
                         </h3>
                         <p className="text-sm text-stone-600 mt-1">
-                          {result.author} • {result.published} • {result.language}
+                          <HighlightedText text={result.author} query={query} /> • {result.published} • {result.language}
                         </p>
                       </div>
                       {result.has_doi && result.doi && (
@@ -557,7 +596,7 @@ export default function SearchPage() {
                     </div>
                     {result.snippet && (
                       <p className="mt-3 text-sm text-stone-600 line-clamp-2">
-                        {result.snippet}
+                        <HighlightedText text={result.snippet} query={query} />
                       </p>
                     )}
                     {result.type === 'book' && result.page_count && (
@@ -656,17 +695,17 @@ export default function SearchPage() {
                           {isQuote ? (
                             <>
                               <blockquote className="font-serif text-stone-800 italic border-l-2 border-amber-300 pl-3 my-2">
-                                &ldquo;{result.quote_text}&rdquo;
+                                &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
                               </blockquote>
                               {result.quote_significance && (
                                 <p className="text-sm text-stone-600 mt-2">
-                                  {result.quote_significance}
+                                  <HighlightedText text={result.quote_significance} query={query} />
                                 </p>
                               )}
                             </>
                           ) : (
                             <h3 className="font-medium text-stone-900">
-                              {result.term}
+                              <HighlightedText text={result.term} query={query} />
                             </h3>
                           )}
                           <p className="text-sm text-stone-500 mt-2">

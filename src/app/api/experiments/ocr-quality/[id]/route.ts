@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getOcrPrompt } from '@/lib/prompts';
 
 // GET /api/experiments/ocr-quality/[id] - Get experiment status and progress
 export async function GET(
@@ -85,6 +86,26 @@ export async function GET(
           book_id: page?.book_id || '',
         };
       });
+
+      // Resolve prompt text for each condition
+      const conditions = experiment.conditions || [];
+      const book = experiment.book_id
+        ? await db.collection('books').findOne({ id: experiment.book_id }, { projection: { original_language: 1 } })
+        : null;
+      const lang = book?.original_language || '';
+
+      const resolvedPrompts: Record<string, string> = {};
+      for (const cond of conditions) {
+        if (cond.customPrompt) {
+          resolvedPrompts[cond.id] = cond.customPrompt;
+        } else if (cond.promptType === 'elaborate' || cond.promptType === 'custom') {
+          const result = await getOcrPrompt(lang);
+          resolvedPrompts[cond.id] = result.text;
+        } else {
+          resolvedPrompts[cond.id] = '(simple/unknown prompt type)';
+        }
+      }
+      response.resolved_prompts = resolvedPrompts;
     }
 
     return NextResponse.json(response);

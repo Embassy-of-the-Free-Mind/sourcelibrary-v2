@@ -14,9 +14,33 @@
 - `BookAnalytics` component in `src/components/book/BookAnalytics.tsx` — auto-tracks `book_read` on mount, displays read/edit counts
 
 ### Traffic Dashboard
-- `GET /api/analytics` — top pages, referrers, countries (30-day window)
-- `GET /api/analytics/stats` — book-specific or global read/edit counts
-- Vercel Analytics also installed (`@vercel/analytics/react` in layout.tsx) — separate from internal system
+- `GET /api/analytics` — top pages, referrers, countries from `analytics_pageviews` (30-day window)
+- `GET /api/analytics/stats` — book-specific or global read/edit counts from `books.read_count`/`edit_count`
+
+### Two Traffic Systems
+1. **Google Analytics** (`G-C1QJNTSZT2`) — external, linked from Usage tab summary card. Authoritative for traffic data. Custom events via `sendGAEvent()` in `src/lib/ga.ts`.
+2. **Custom `analytics_pageviews`** — internal `POST /api/track`, shown on Traffic tab. Provides quick internal view of top pages, referrers, countries without leaving the app.
+
+Note: Vercel Analytics was removed (Feb 2026) — redundant with GA.
+
+### GA Custom Events
+Sent via `sendGAEvent()` helper (`src/lib/ga.ts`), fire-and-forget:
+
+| Event | Source component | Data |
+|-------|-----------------|------|
+| `book_view` | `BookAnalytics` | book_id |
+| `page_read` | `TranslationEditor` | book_id, page_number |
+| `search` | Search page | search_term, result count |
+| `view_item` | Gallery image detail | image_id |
+
+### API Client
+`src/lib/api-client/analytics.ts`:
+- `analytics.stats(book_id?)` — fast read/edit counts (used by footer on every page)
+- `analytics.usage(days?)` — heavy pipeline/cost analytics (Usage tab, 90s timeout)
+- `analytics.loading(hours?)` — performance metrics (Performance tab)
+- `analytics.traffic()` — pageview/referrer/country data (Traffic tab)
+- `analytics.search(days?)` — search query analytics (Search tab)
+- `analytics.track(data)` — log book_read/page_read/page_edit events
 
 ---
 
@@ -47,11 +71,11 @@
 
 ### Likes
 
-**Collection:** `likes`
+**Collection:** `likes` (unique index on `target_type + target_id + visitor_id`)
 
 | Route | Purpose |
 |-------|---------|
-| `POST /api/likes` | Toggle like (anonymous visitor_id) |
+| `POST /api/likes` | Toggle like (atomic deleteOne + conditional insertOne) |
 | `GET /api/likes` | Batch fetch like counts |
 | `GET /api/likes/popular` | Most liked items with enrichment |
 | `GET /api/likes/mine` | User's likes by visitor_id |
@@ -123,19 +147,35 @@ Frontend: `/experiments` pages for running and reviewing experiments.
 
 ## Analytics Dashboard (`/analytics`)
 
-Four tabs:
+Five tabs:
 
 | Tab | Content |
 |-----|---------|
-| **Usage** | Books, pages OCR'd, translated, visitors, API cost. Pipeline health (splits, enrichment, images, batch jobs). Cost-to-complete estimates. Language/category/source breakdowns. Traffic chart, visitor map, countries table. |
+| **Usage** | Books, pages OCR'd, translated, API cost. Pipeline health (splits, enrichment, images, batch jobs). Cost-to-complete estimates. Language/category/source breakdowns. Model/prompt usage. Cost by action/day charts. |
 | **Performance** | Loading metrics by name (avg/min/max/p50/p95). Source stats (Blob vs IA). Recent samples. Time range selector. |
 | **Logs** | Job list with type/status filters. |
-| **Vercel** | Top pages, referrers, countries from Vercel Analytics API. |
+| **Search** | Top queries, zero-result queries (content gaps), searches by source (full/quick/within-book). Days selector. |
+| **Traffic** | Top pages, referrers, countries from custom `analytics_pageviews` collection. |
+
+---
+
+## Search Analytics
+
+**Route:** `GET /api/analytics/search?days=30`
+**Frontend:** Search tab on `/analytics`
+
+Aggregates `analytics_events` where `event: 'search_query'`. Returns:
+- **Top queries** — frequency, avg results, last searched
+- **Zero-result queries** — content gaps (what users want but can't find)
+- **Searches by source** — global search, quick search (homepage dropdown), within-book search
+- **Searches by day** — volume trends with unique query counts
+
+Search queries are logged from three routes: `/api/search`, `/api/search/unified`, `/api/books/[id]/search`.
 
 ---
 
 ## Not Tracked
 
-- **Search analytics dashboard** — queries are logged to `analytics_events` but no dashboard to analyze them yet
 - **Feature flags / A/B routing** — only manual experiments via dedicated UI
 - **Moderation audit** — annotations auto-approved, no admin approval tracking
+- **Per-user sessions** — no login/auth, so no user-level analytics (only anonymous visitor_id)

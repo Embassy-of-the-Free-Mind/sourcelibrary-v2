@@ -2,7 +2,8 @@ import { NextRequest } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { DEFAULT_PROMPTS, DEFAULT_MODEL } from '@/lib/types';
+import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType } from '@/lib/types';
+import { getOcrPrompt } from '@/lib/prompts';
 import { images } from '@/lib/api-client';
 
 export const dynamic = 'force-dynamic';
@@ -23,7 +24,8 @@ async function performOCRWithKey(
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
 
-  let prompt = DEFAULT_PROMPTS.ocr.replace('{language}', language);
+  const promptResult = await getOcrPrompt(language);
+  let prompt = promptResult.text;
   if (previousPageOcr) {
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
   }
@@ -173,14 +175,18 @@ export async function POST(request: NextRequest) {
               );
 
               // Update page with OCR result
+              const pageType = extractPageType(result.text);
               await db.collection('pages').updateOne(
                 { _id: page._id },
                 {
                   $set: {
                     'ocr.data': result.text,
                     'ocr.model': DEFAULT_MODEL,
+                    'ocr.prompt_version': PROMPT_VERSION,
                     'ocr.processed_at': new Date(),
+                    'ocr.source': 'contributor',
                     'ocr.contributed_by': contributorName || 'Anonymous',
+                    ...(pageType && { page_type: pageType }),
                   },
                 }
               );
@@ -209,7 +215,9 @@ export async function POST(request: NextRequest) {
                   $set: {
                     'translation.data': result.text,
                     'translation.model': DEFAULT_MODEL,
+                    'translation.prompt_version': PROMPT_VERSION,
                     'translation.processed_at': new Date(),
+                    'translation.source': 'contributor',
                     'translation.contributed_by': contributorName || 'Anonymous',
                   },
                 }
@@ -250,12 +258,7 @@ export async function POST(request: NextRequest) {
           const pagesCount = book.pages_count || 0;
           await db.collection('books').updateOne(
             { _id: new ObjectId(bookId) },
-            {
-              $set: {
-                pages_translated: translateCount,
-                translation_percent: pagesCount > 0 ? Math.round((translateCount / pagesCount) * 100) : 0,
-              },
-            }
+            { $set: { pages_translated: translateCount } }
           );
         }
 

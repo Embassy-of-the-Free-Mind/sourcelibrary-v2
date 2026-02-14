@@ -48,8 +48,8 @@ export default function HeroSection() {
 
       {/* Header Navigation - visible immediately */}
       <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
-        <Link href="/" className="text-white flex items-center gap-3">
-          <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <Link href="/" className="text-white flex items-center gap-3" aria-label="Source Library home">
+          <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
             <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
             <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
@@ -93,7 +93,7 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20" aria-hidden="true">
         <svg className="w-6 h-6 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>

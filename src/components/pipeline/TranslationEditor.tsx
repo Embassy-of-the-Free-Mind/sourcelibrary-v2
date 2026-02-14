@@ -28,10 +28,12 @@ import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
 import PageAssistant from '@/components/reader/PageAssistant';
 import HighlightsPanel from '@/components/annotations/HighlightsPanel';
 import AnnotationPanel from '@/components/annotations/AnnotationPanel';
+import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
 import { BookShare } from '@/components/ui/ShareButton';
 import { GoogleTranslate } from '@/components/search/GoogleTranslate';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
+import { sendGAEvent } from '@/lib/ga';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
@@ -111,7 +113,7 @@ function BookSearchBar({ bookId }: { bookId: string }) {
   }, []);
 
   return (
-    <div ref={containerRef} className="relative flex-1 max-w-xs">
+    <div ref={containerRef} className="relative max-w-md mx-auto w-full">
       <div className="flex items-center gap-1.5 px-2 py-1 rounded" style={{ background: 'rgba(0,0,0,0.05)' }}>
         {isSearching ? (
           <Loader2 className="w-3 h-3 animate-spin" style={{ color: 'var(--text-muted)' }} />
@@ -119,17 +121,18 @@ function BookSearchBar({ bookId }: { bookId: string }) {
           <Search className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
         )}
         <input
-          type="text"
+          type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim() && setShowResults(true)}
           placeholder="Search this book..."
+          aria-label="Search within this book"
           className="bg-transparent outline-none text-xs w-full"
           style={{ color: 'var(--text-primary)' }}
         />
         {query && (
-          <button onClick={() => { setQuery(''); setResults([]); setShowResults(false); }}>
-            <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} />
+          <button onClick={() => { setQuery(''); setResults([]); setShowResults(false); }} aria-label="Clear search">
+            <X className="w-3 h-3" style={{ color: 'var(--text-muted)' }} aria-hidden="true" />
           </button>
         )}
       </div>
@@ -137,11 +140,13 @@ function BookSearchBar({ bookId }: { bookId: string }) {
         <div
           className="absolute bottom-full left-0 right-0 mb-1 rounded-lg shadow-xl overflow-hidden z-50"
           style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)', maxHeight: '300px', overflowY: 'auto' }}
+          role="listbox"
+          aria-label="Search results"
         >
           {isSearching ? (
-            <div className="p-3 text-center text-xs" style={{ color: 'var(--text-muted)' }}>Searching...</div>
+            <div className="p-3 text-center text-xs" role="status" style={{ color: 'var(--text-muted)' }}>Searching...</div>
           ) : results.length === 0 ? (
-            <div className="p-3 text-center text-xs" style={{ color: 'var(--text-muted)' }}>No results for &quot;{query}&quot;</div>
+            <div className="p-3 text-center text-xs" role="status" style={{ color: 'var(--text-muted)' }}>No results for &quot;{query}&quot;</div>
           ) : (
             <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
               {results.slice(0, 10).map((r) => (
@@ -155,8 +160,9 @@ function BookSearchBar({ bookId }: { bookId: string }) {
                     <p
                       className="text-xs mt-0.5 line-clamp-1"
                       style={{ color: 'var(--text-muted)' }}
-                      dangerouslySetInnerHTML={{ __html: r.matches[0].snippet }}
-                    />
+                    >
+                      <HighlightedText text={r.matches[0].snippet} query={query} />
+                    </p>
                   )}
                 </a>
               ))}
@@ -525,33 +531,32 @@ export default function TranslationEditor({
     const width = widths[tier];
     const quality = qualities[tier];
 
-    // Cast to access optional fields
-    const pageData = p as unknown as Record<string, unknown>;
-    const croppedPhoto = pageData.cropped_photo as string | undefined;
-    const archivedPhoto = pageData.archived_photo as string | undefined;
-
-    // If we have a pre-generated cropped photo (for split pages), use it directly
-    if (p.crop && croppedPhoto) {
-      return croppedPhoto;
+    // Pre-generated cropped photo (split pages) — use directly
+    if (p.crop && p.cropped_photo) {
+      return p.cropped_photo;
     }
 
-    // Prefer archived photo (Vercel Blob) for faster/reliable loading
-    const baseUrl = archivedPhoto || p.photo_original || p.photo;
+    // Prefer archived photo (Vercel Blob), then original sources
+    const baseUrl = p.archived_photo || p.photo_original || p.photo;
     if (!baseUrl) return '';
 
-    // Build URL with crop parameters if available
+    // Cropping requires the image proxy for server-side crop
     if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
       return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
     }
 
-    // No crop - still go through image API for consistent sizing
+    // Archived images: serve directly from Blob CDN (skip proxy)
+    if (p.archived_photo) {
+      return p.archived_photo;
+    }
+
+    // External sources: proxy for resize/optimization
     return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
   };
 
   // URLs for current page at different quality tiers
-  const pageFullUrl = getImageUrl(page, 'full');          // For magnifier (2400px, cropped if split)
-  const pageDisplayUrl = getImageUrl(page, 'display');    // For main view (1200px)
-  const pageThumbnailUrl = getImageUrl(page, 'thumbnail'); // For fast loading (400px)
+  const pageFullUrl = getImageUrl(page, 'full');       // For magnifier (2400px, cropped if split)
+  const pageDisplayUrl = getImageUrl(page, 'display'); // For main view (1200px)
 
   // Keyboard navigation
   useEffect(() => {
@@ -576,17 +581,16 @@ export default function TranslationEditor({
         page_id: page.id
       }
     ).catch(() => { }); // Fire and forget
+    sendGAEvent({ action: 'page_read', category: 'engagement', label: book.id, value: page.page_number });
   }, [book.id, page.id]);
 
   // Prefetch adjacent page images for faster navigation
   useEffect(() => {
     const getSmallImageUrl = (p: Page) => {
       if (p.thumbnail) return p.thumbnail;
-      if (p.compressed_photo) return p.compressed_photo;
-      // Use resize API for small version, prefer archived_photo
-      const pageData = p as unknown as Record<string, unknown>;
-      const baseUrl = (pageData.archived_photo as string) || p.photo;
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
+      if (p.archived_photo) return p.archived_photo;
+      const baseUrl = p.photo_original || p.photo;
+      return baseUrl ? `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60` : '';
     };
 
     const prefetchImage = (url: string) => {
@@ -731,8 +735,8 @@ export default function TranslationEditor({
           {/* Row 1: Back + Title ... Page Navigator */}
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-              <a href={`/book/${book.id}`} className="p-1 rounded-md hover:bg-stone-100 transition-colors shrink-0" style={{ color: 'var(--text-muted)' }}>
-                <BookOpen className="w-5 h-5" />
+              <a href={`/book/${book.id}`} className="p-1 rounded-md hover:bg-stone-100 transition-colors shrink-0" style={{ color: 'var(--text-muted)' }} aria-label="Back to book">
+                <BookOpen className="w-5 h-5" aria-hidden="true" />
               </a>
               <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-base sm:text-lg font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
@@ -748,19 +752,19 @@ export default function TranslationEditor({
                 disabled={!previousPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
                 style={{ color: 'var(--text-secondary)' }}
-                title="Previous page (←)"
+                aria-label="Previous page"
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
-              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1}/{pages.length}</span>
+              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
                 disabled={!nextPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
                 style={{ color: 'var(--text-secondary)' }}
-                title="Next page (→)"
+                aria-label="Next page"
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -768,7 +772,7 @@ export default function TranslationEditor({
           {/* Row 2: Panel toggles ... Mode toggle + Like */}
           <div className="flex items-center justify-between mt-2 sm:mt-3">
             {/* Panel visibility toggles */}
-            <div className="flex items-center gap-0.5 p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+            <div className="flex items-center gap-0.5 p-1 rounded-lg" role="toolbar" aria-label="Panel visibility">
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? '' : 'opacity-50'}`}
@@ -777,9 +781,10 @@ export default function TranslationEditor({
                   color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
                   boxShadow: showImagePanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
                 }}
-                title="Toggle source image"
+                aria-label={`${showImagePanel ? 'Hide' : 'Show'} source image`}
+                aria-pressed={showImagePanel}
               >
-                <ImageIcon className="w-4 h-4" />
+                <ImageIcon className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">Image</span>
               </button>
               <button
@@ -790,9 +795,10 @@ export default function TranslationEditor({
                   color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
                   boxShadow: showOcrPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
                 }}
-                title="Toggle original text"
+                aria-label={`${showOcrPanel ? 'Hide' : 'Show'} original text`}
+                aria-pressed={showOcrPanel}
               >
-                <FileText className="w-4 h-4" />
+                <FileText className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">OCR</span>
               </button>
               <button
@@ -803,9 +809,10 @@ export default function TranslationEditor({
                   color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
                   boxShadow: showTranslationPanel ? '0 1px 2px rgba(0,0,0,0.05)' : 'none'
                 }}
-                title="Toggle translation"
+                aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
+                aria-pressed={showTranslationPanel}
               >
-                <Languages className="w-4 h-4" />
+                <Languages className="w-4 h-4" aria-hidden="true" />
                 <span className="hidden sm:inline">English</span>
               </button>
             </div>
@@ -838,17 +845,17 @@ export default function TranslationEditor({
                   onClick={() => setShowHighlights(true)}
                   className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
                   style={{ color: 'var(--text-muted)' }}
-                  title="View highlights"
+                  aria-label="View highlights"
                 >
-                  <Highlighter className="w-4 h-4" />
+                  <Highlighter className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <button
                   onClick={() => setShowAnnotations(true)}
                   className="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100"
                   style={{ color: 'var(--text-muted)' }}
-                  title="View annotations"
+                  aria-label="View annotations"
                 >
-                  <StickyNote className="w-4 h-4" />
+                  <StickyNote className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <GoogleTranslate />
               </div>
@@ -953,7 +960,7 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
-                      <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
+                      <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} />
                       </div>
                     ) : (
@@ -1148,12 +1155,17 @@ export default function TranslationEditor({
           );
         })()}
 
-        {/* Footer with search + nav hint */}
-        <div className="px-4 py-1.5 flex items-center justify-between gap-4 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <span className="hidden lg:inline shrink-0">← → to navigate</span>
-          <span className="lg:hidden shrink-0">Swipe to navigate</span>
-          <BookSearchBar bookId={book.id} />
-          <span className="hidden sm:flex items-center gap-1 shrink-0">CC0 Public Domain</span>
+        {/* Footer: nav hint + search */}
+        <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
+          <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs">
+            <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
+            <span className="lg:hidden">Swipe left/right to navigate</span>
+            <span className="hidden sm:inline">·</span>
+            <span className="hidden sm:inline">CC0 Public Domain</span>
+          </div>
+          <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
+            <BookSearchBar bookId={book.id} />
+          </div>
         </div>
 
         {/* Page Assistant Modal */}

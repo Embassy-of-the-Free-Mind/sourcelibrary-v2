@@ -1,8 +1,13 @@
 import { test, expect } from '@playwright/test';
+import { measurePerf } from './perf';
 
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/');
+  });
+
+  test.afterEach(async ({ page }, testInfo) => {
+    await measurePerf(page, `homepage: ${testInfo.title}`);
   });
 
   test('page title contains Source Library', async ({ page }) => {

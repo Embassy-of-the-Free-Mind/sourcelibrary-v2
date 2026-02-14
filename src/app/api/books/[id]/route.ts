@@ -11,6 +11,7 @@ export async function GET(
     const { id } = await params;
     const { searchParams } = new URL(request.url);
     const includeFull = searchParams.get('full') === 'true';
+    const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
     const db = await getDb();
 
     // Get book
@@ -19,27 +20,34 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Get pages for this book
-    // By default, exclude large text fields for faster loading
-    // Use ?full=true to include OCR/translation/summary data
-    const projection = includeFull
-      ? {}
-      : {
-          'ocr.data': 0,
-          'ocr.model': 0,
-          'ocr.language': 0,
-          'translation.data': 0,
-          'translation.model': 0,
-          'translation.language': 0,
-          'summary.data': 0,
-          'modernized.data': 0,
-          'detected_images.description': 0,
-          'detected_images.museum_description': 0,
-          'detected_images.gallery_rationale': 0,
-          'detected_images.metadata': 0,
-          'archive_metadata': 0,
-          'split_detection': 0,
-        };
+    // Page projections:
+    // - full: all fields (for admin/processing views)
+    // - default: navigation + images + status (for book detail page grid)
+    // - nav: minimal (id, page_number, split_from) for page viewer navigation only
+    let projection: Record<string, unknown>;
+    if (includeFull) {
+      projection = {};
+    } else if (pagesMode === 'nav') {
+      projection = { _id: 0, id: 1, page_number: 1, split_from: 1 };
+    } else {
+      projection = {
+        _id: 0,
+        id: 1,
+        page_number: 1,
+        split_from: 1,
+        photo: 1,
+        photo_original: 1,
+        archived_photo: 1,
+        cropped_photo: 1,
+        thumbnail: 1,
+        thumbnail_blob: 1,
+        crop: 1,
+        'ocr.updated_at': 1,
+        'translation.updated_at': 1,
+        'summary.updated_at': 1,
+        'detected_images.type': 1,
+      };
+    }
 
     const pages = await db.collection('pages')
       .find({ book_id: id })

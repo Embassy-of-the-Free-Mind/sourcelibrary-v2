@@ -9,7 +9,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
-import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -107,6 +107,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}, ${durationMs}ms`);
 
     // Save OCR result
+    const pageType = extractPageType(ocrResult.text);
     await pages.updateOne(
       { id: pageId },
       {
@@ -119,6 +120,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
             source: 'ai',
             prompt_version: PROMPT_VERSION
           },
+          ...(pageType && { page_type: pageType }),
           updated_at: new Date()
         }
       }
@@ -173,6 +175,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           console.log(`[OCR] Retry succeeded with ${nextModel} for page ${pageId}`);
 
           // Save retry result
+          const retryPageType = extractPageType(retryResult.text);
           await pages.updateOne(
             { id: pageId },
             {
@@ -185,6 +188,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
                   source: 'ai',
                   prompt_version: PROMPT_VERSION
                 },
+                ...(retryPageType && { page_type: retryPageType }),
                 updated_at: new Date()
               }
             }

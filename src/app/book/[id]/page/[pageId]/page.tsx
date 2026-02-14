@@ -85,9 +85,9 @@ export default function PageEditorPage({ params }: PageProps) {
       setLoading(true);
       const startTime = performance.now();
       try {
-        // Parallel: book metadata (with lightweight pages) + current page full data
+        // Parallel: book metadata (nav-only page list) + current page full data
         const [bookData, pageData] = await Promise.all([
-          books.get(bookId) as Promise<BookWithPages>,
+          books.get(bookId, { pages: 'nav' }) as Promise<BookWithPages>,
           pagesApi.get(currentPageId),
         ]);
 

@@ -109,12 +109,12 @@ export default function SupportPage() {
             {/* Donate Buttons */}
             <div className="space-y-4">
               <a
-                href="https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind"
+                href="https://www.ancientwisdomtrust.org/become-a-patron"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-center bg-stone-900 hover:bg-stone-800 text-white text-lg py-4 px-6 rounded-full transition-colors"
               >
-                Donate Now
+                Become a Patron
               </a>
 
               <a

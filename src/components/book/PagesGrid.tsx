@@ -1,5 +1,23 @@
+import { useState } from 'react';
 import { CheckCircle2, GripVertical, Loader2, ImageIcon, FileText, RefreshCw } from 'lucide-react';
 import type { Page } from '@/lib/types';
+
+function PageImage({ src, alt, className }: { src: string; alt: string; className?: string }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <>
+      {!loaded && (
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'} ${className || ''}`}
+        onLoad={() => setLoaded(true)}
+      />
+    </>
+  );
+}
 
 interface PagesGridProps {
   pages: Page[];
@@ -45,17 +63,19 @@ export default function PagesGrid({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-stone-900">Pages</h2>
+        <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Pages</h2>
         <span className="text-sm text-stone-500">
           Showing {Math.min(visibleCount, pages.length)} of {pages.length}
         </span>
       </div>
 
       {pages.length === 0 ? (
-        <div className="text-center py-16 bg-white rounded-xl border border-stone-200">
-          <FileText className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-          <h3 className="text-lg font-medium text-stone-600">No pages yet</h3>
-          <p className="text-stone-400 text-sm mt-1">Upload pages to start processing</p>
+        <div className="text-center py-16 card">
+          <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--bg-warm)' }}>
+            <FileText className="w-8 h-8" style={{ color: 'var(--text-faint)' }} />
+          </div>
+          <h3 className="text-lg font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-secondary)' }}>No pages yet</h3>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Upload pages to start processing</p>
         </div>
       ) : (
         <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-2">
@@ -81,10 +101,12 @@ export default function PagesGrid({
                   onDragEnd={onDragEnd}
                   className={`group relative cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-50' : ''}`}
                 >
-                  <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
+                  <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 relative ${isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
                     }`}>
-                    {imageUrl && (
-                      <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover pointer-events-none" />
+                    {imageUrl ? (
+                      <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="pointer-events-none" />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
                     )}
                     {/* Drag handle indicator */}
                     <div className="absolute top-1 left-1 p-1 bg-black/60 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity">
@@ -108,10 +130,12 @@ export default function PagesGrid({
                   onClick={(e) => onPageToggle(page.id, index, e)}
                   className="group relative text-left"
                 >
-                  <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 ${isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
+                  <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 relative ${isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
                     }`}>
-                    {imageUrl && (
-                      <img src={imageUrl} alt={`Page ${page.page_number}`} className="w-full h-full object-cover" />
+                    {imageUrl ? (
+                      <PageImage src={imageUrl} alt={`Page ${page.page_number}`} />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
                     )}
                     {isSelected && (
                       <div className="absolute inset-0 bg-amber-500/20 flex items-center justify-center">
@@ -132,19 +156,19 @@ export default function PagesGrid({
             return (
               <div key={page.id} className="group relative">
                 <a href={`/book/${bookId}/page/${page.id}`}>
-                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                    {imageUrl && (
-                      <img
-                        src={imageUrl}
-                        alt={`Page ${page.page_number}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                      />
+                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative">
+                    {imageUrl ? (
+                      <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="group-hover:scale-105 transition-transform duration-200" />
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
                     )}
-                    <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
-                      {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" title="OCR" />}
-                      {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" title="Translated" />}
-                      {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" title="Summarized" />}
-                    </div>
+                    {(hasOcr || hasTranslation || hasSummary) && (
+                      <div className="absolute bottom-1 right-1 flex gap-0.5 bg-black/40 rounded-full px-1 py-0.5">
+                        {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-400" title="OCR" />}
+                        {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-400" title="Translated" />}
+                        {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-400" title="Summarized" />}
+                      </div>
+                    )}
                   </div>
                 </a>
                 {/* Set as Cover button */}

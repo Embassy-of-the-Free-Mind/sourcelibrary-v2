@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Search, X, FileText, Languages, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import HighlightedText from './HighlightedText';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -222,9 +223,10 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
                           ) : (
                             <FileText className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
                           )}
-                          <span
+                          <HighlightedText
+                            text={match.snippet}
+                            query={query}
                             className="text-stone-600 line-clamp-2"
-                            dangerouslySetInnerHTML={{ __html: match.snippet }}
                           />
                         </div>
                       ))}

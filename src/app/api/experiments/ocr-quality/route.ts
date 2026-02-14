@@ -5,7 +5,7 @@ import crypto from 'crypto';
 export interface OCRCondition {
   id: string;
   batchSize: number;
-  promptType: 'simple' | 'elaborate' | 'custom';
+  promptType: 'simple' | 'elaborate' | 'custom' | 'existing';
   label: string;
   customPrompt?: string;
 }

@@ -54,12 +54,12 @@ The `cost_tracking` collection is fully deprecated — zero active writers or re
 | `jobs` | Processing job tracking (progress, status) | `book_id + type + status` |
 | `batch_jobs` | Gemini Batch API job tracking | — |
 | `audit_log` | Admin/system actions (imports, deletes, edits, resets, editions, DOIs) | `book_id` |
-| `analytics_pageviews` | Web traffic (path, referrer, country) | — |
+| `analytics_pageviews` | Web traffic (path, referrer, country) | `timestamp`, `path + timestamp` |
 | `analytics_events` | Deduplication index + search query logging | `event + book_id + ip + timestamp` |
 | `loading_metrics` | Frontend performance (p50, p95) | — |
-| `likes` | User engagement (book/page/image) | — |
+| `likes` | User engagement (book/page/image) | `target_type + target_id + visitor_id` (unique), `target_type + target_id`, `visitor_id + target_type` |
 | `highlights` | User-selected passages | `book_id + page_id` |
-| `annotations` | Community notes with threading | — |
+| `annotations` | Community notes with threading | `book_id + page_id` |
 | `social_posts` | Tweet scheduling and metrics | — |
 | `split_adjustments` | ML split detection feedback | — |
 | `cost_tracking` | **DEPRECATED** — no active writers/readers, use `gemini_usage` | — |
@@ -78,7 +78,15 @@ All audit events automatically appear in the Book History timeline.
 
 Search queries are logged to `analytics_events` with `event: 'search_query'` from three routes: `/api/search`, `/api/search/unified`, `/api/books/[id]/search`.
 
+## Cached Book-Level Counts
+
+Book documents store `pages_count`, `pages_ocr`, and `pages_translated` as a **performance cache**. These are updated inline by workers and batch routes, and refreshed every 6 hours by the `sync-page-counts` cron.
+
+- **Source of truth:** always the `pages` collection
+- **Cron:** `GET /api/cron/sync-page-counts` (every 6h) — single aggregation + bulk update
+- **Manual sync:** `POST /api/admin/sync-page-counts` (with `?dry_run=true` option)
+- **`translation_percent`** is never stored — always computed at read time from `pages_translated / pages_count`
+
 ## Known Gaps
 
 1. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection. Needs admin UI + auth first.
-2. **No search analytics dashboard** — search queries are logged but no dashboard to analyze them yet.

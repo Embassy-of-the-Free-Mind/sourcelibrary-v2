@@ -11,7 +11,7 @@ interface LayoutProps {
 const getEntity = cache(async (name: string) => {
   try {
     const db = await getDb();
-    const entity = await db.collection('entities').findOne({ name });
+    const entity = await db.collection('entities').findOne({ name }, { sort: { book_count: -1 } });
     return entity;
   } catch {
     return null;

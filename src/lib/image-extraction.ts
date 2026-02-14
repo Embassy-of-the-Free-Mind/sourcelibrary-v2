@@ -78,7 +78,7 @@ export interface DetectedImage {
   model: string;
 }
 
-const DEFAULT_MODEL = 'gemini-2.5-flash';
+const DEFAULT_MODEL = 'gemini-3-flash-preview';
 
 function getMimeType(url: string, headerType: string | null | undefined): string {
   // S3 often returns application/octet-stream, so detect from URL extension

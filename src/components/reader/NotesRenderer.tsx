@@ -33,6 +33,7 @@ function getLanguageCode(language: string | undefined): string | undefined {
 
 interface ExtractedMetadata {
   language?: string;
+  pageType?: string;        // <page-type> - title-page, frontispiece, text, etc.
   pageNumber?: string;
   folio?: string;
   signature?: string;       // [[signature: ...]] - printer's signature marks
@@ -69,6 +70,12 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract language
   result = result.replace(/<lang>([\s\S]*?)<\/lang>/gi, (_, lang) => {
     metadata.language = lang.trim();
+    return '';
+  });
+
+  // Extract page type
+  result = result.replace(/<page-type>([\s\S]*?)<\/page-type>/gi, (_, type) => {
+    metadata.pageType = type.trim().toLowerCase();
     return '';
   });
 
@@ -206,7 +213,7 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   result = result.replace(/\[\[header:\s*(.*?)\]\]/gi, () => '');
 
   // Catch-all: remove any remaining bracket metadata tags
-  result = result.replace(/\[\[(?:markup|language|page\s*number|folio|signature|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
+  result = result.replace(/\[\[(?:markup|language|page\s*number|page\s*type|folio|signature|warning|meta|abbrev|vocabulary|summary|keywords|header):\s*[\s\S]*?\]\]/gi, '');
 
   // Clean up extra whitespace from removed metadata
   result = result.replace(/^\s*\n/gm, '\n').replace(/\n{3,}/g, '\n\n').trim();
@@ -406,7 +413,7 @@ function processChildren(children: ReactNode, showNotes: boolean): ReactNode {
 function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const hasMetadata = metadata.language || metadata.pageNumber || metadata.folio ||
+  const hasMetadata = metadata.language || metadata.pageType || metadata.pageNumber || metadata.folio ||
     metadata.signature || metadata.warning || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
     metadata.vocabulary.length > 0 || metadata.summary || metadata.keywords.length > 0;
 
@@ -440,6 +447,11 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
         {metadata.language && (
           <span className="ml-auto px-1.5 py-0.5 bg-stone-200 rounded text-stone-600">
             {metadata.language}
+          </span>
+        )}
+        {metadata.pageType && metadata.pageType !== 'text' && (
+          <span className="px-1.5 py-0.5 bg-indigo-100 rounded text-indigo-700">
+            {metadata.pageType}
           </span>
         )}
         {(metadata.pageNumber || metadata.folio) && (

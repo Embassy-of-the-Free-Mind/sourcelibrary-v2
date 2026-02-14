@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Eye, Edit3 } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import { sendGAEvent } from '@/lib/ga';
 
 interface BookAnalyticsProps {
   bookId: string;
@@ -19,6 +20,7 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
   useEffect(() => {
     // Track the read
     analytics.track({ event: 'book_read', book_id: bookId }).catch(console.error);
+    sendGAEvent({ action: 'book_view', category: 'engagement', label: bookId });
 
     // Fetch stats
     analytics.stats(bookId)
@@ -26,7 +28,6 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
         if (data.book_id) {
           setStats({ reads: data.reads, edits: data.edits });
         }
-        console.log('Book analytics data:', data);
       })
       .catch(console.error);
   }, [bookId]);
@@ -37,7 +38,7 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
       <div className="flex items-center gap-4 text-sm text-stone-400">
         <div className="flex items-center gap-1.5">
           <Eye className="w-4 h-4 opacity-50" />
-          <span className="w-6 h-4 bg-stone-200 rounded animate-pulse" />
+          <span className="w-8 h-4 bg-stone-200 rounded animate-pulse" />
         </div>
       </div>
     );

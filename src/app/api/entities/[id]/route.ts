@@ -25,9 +25,10 @@ export async function GET(
     // If not found, try by URL-encoded name (for friendly URLs)
     if (!entity) {
       const decodedName = decodeURIComponent(id);
-      entity = await db.collection('entities').findOne({
-        name: { $regex: `^${decodedName}$`, $options: 'i' }
-      });
+      entity = await db.collection('entities').findOne(
+        { name: { $regex: `^${decodedName}$`, $options: 'i' } },
+        { sort: { book_count: -1 } }
+      );
     }
 
     if (!entity) {

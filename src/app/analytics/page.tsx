@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, MapPin, Globe, DollarSign, Coins, ListChecks, CheckCircle, XCircle, Pause, Loader2, Database, HardDrive, Archive, BarChart3 } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Clock, BookOpen, FileText, Languages, Users, Globe, DollarSign, Coins, ListChecks, CheckCircle, XCircle, Pause, Loader2, Database, HardDrive, Archive, BarChart3, Search, AlertTriangle } from 'lucide-react';
 import { analytics, jobs } from '@/lib/api-client';
 import { JobLog } from '@/lib/api-client';
 
@@ -48,16 +48,10 @@ interface UsageData {
     pagesWithTranslation: number;
     ocrPercentage: number;
     translationPercentage: number;
-    totalHits: number;
-    uniqueVisitors: number;
   };
-  hitsByDay: Array<{ date: string; hits: number; uniqueVisitors: number }>;
-  processingByDay: Array<{ date: string; ocr: number; translation: number }>;
   modelUsage: Array<{ model: string; count: number }>;
   promptUsage: Array<{ prompt: string; count: number }>;
   recentBooks: Array<{ title: string; author: string; created_at: string; pages_count: number }>;
-  visitorsByCountry: Array<{ country: string; countryCode: string; hits: number; visitors: number }>;
-  visitorLocations: Array<{ city: string; country: string; countryCode: string; hits: number; lat: number; lon: number }>;
   costStats?: {
     totalCost: number;
     totalTokens: number;
@@ -114,6 +108,7 @@ export default function AnalyticsPage() {
   const [perfData, setPerfData] = useState<PerformanceData | null>(null);
   const [usageData, setUsageData] = useState<UsageData | null>(null);
   const [vercelData, setVercelData] = useState<VercelAnalytics | null>(null);
+  const [searchData, setSearchData] = useState<any | null>(null);
   const [jobLogs, setJobLogs] = useState<JobLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [hours, setHours] = useState(24);
@@ -121,20 +116,15 @@ export default function AnalyticsPage() {
   const [jobLimit, setJobLimit] = useState(50);
   const [jobTypeFilter, setJobTypeFilter] = useState<string>('');
   const [jobStatusFilter, setJobStatusFilter] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'usage' | 'performance' | 'logs' | 'vercel'>('usage');
+  const [activeTab, setActiveTab] = useState<'usage' | 'performance' | 'logs' | 'search' | 'traffic'>('usage');
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async () => {
+  const fetchUsageData = async () => {
     setLoading(true);
     setError(null);
     try {
-      const [perfData, usageDataResult] = await Promise.all([
-        analytics.loading(hours),
-        analytics.usage(days),
-      ]);
-
-      setPerfData(perfData);
-      setUsageData(usageDataResult);
+      const data = await analytics.usage(days);
+      setUsageData(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
@@ -142,12 +132,38 @@ export default function AnalyticsPage() {
     }
   };
 
-  const fetchVercelData = async () => {
+  const fetchPerfData = async () => {
     setLoading(true);
     setError(null);
     try {
-      const data = await analytics.stats();
-      setVercelData(data as any);
+      const data = await analytics.loading(hours);
+      setPerfData(data);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchTrafficData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await analytics.traffic();
+      setVercelData(data);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSearchData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await analytics.search(days);
+      setSearchData(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
@@ -174,10 +190,16 @@ export default function AnalyticsPage() {
   };
 
   useEffect(() => {
-    if (activeTab === 'usage' || activeTab === 'performance') {
-      fetchData();
+    if (activeTab === 'usage') {
+      fetchUsageData();
     }
-  }, [hours, days, activeTab]);
+  }, [days, activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'performance') {
+      fetchPerfData();
+    }
+  }, [hours, activeTab]);
 
   useEffect(() => {
     if (activeTab === 'logs') {
@@ -186,8 +208,14 @@ export default function AnalyticsPage() {
   }, [activeTab, jobLimit, jobTypeFilter, jobStatusFilter]);
 
   useEffect(() => {
-    if (activeTab === 'vercel') {
-      fetchVercelData();
+    if (activeTab === 'search') {
+      fetchSearchData();
+    }
+  }, [days, activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'traffic') {
+      fetchTrafficData();
     }
   }, [activeTab]);
 
@@ -249,12 +277,16 @@ export default function AnalyticsPage() {
   };
 
   const handleRefresh = () => {
-    if (activeTab === 'logs') {
+    if (activeTab === 'usage') {
+      fetchUsageData();
+    } else if (activeTab === 'performance') {
+      fetchPerfData();
+    } else if (activeTab === 'logs') {
       fetchJobLogs();
-    } else if (activeTab === 'vercel') {
-      fetchVercelData();
-    } else {
-      fetchData();
+    } else if (activeTab === 'search') {
+      fetchSearchData();
+    } else if (activeTab === 'traffic') {
+      fetchTrafficData();
     }
   };
 
@@ -312,18 +344,28 @@ export default function AnalyticsPage() {
                 Logs
               </button>
               <button
-                onClick={() => setActiveTab('vercel')}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'vercel' ? 'shadow-sm' : ''}`}
+                onClick={() => setActiveTab('search')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'search' ? 'shadow-sm' : ''}`}
                 style={{
-                  background: activeTab === 'vercel' ? 'var(--bg-white)' : 'transparent',
-                  color: activeTab === 'vercel' ? 'var(--text-primary)' : 'var(--text-muted)',
+                  background: activeTab === 'search' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'search' ? 'var(--text-primary)' : 'var(--text-muted)',
                 }}
               >
-                Vercel
+                Search
+              </button>
+              <button
+                onClick={() => setActiveTab('traffic')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'traffic' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'traffic' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'traffic' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Traffic
               </button>
             </div>
 
-            {activeTab === 'usage' && (
+            {(activeTab === 'usage' || activeTab === 'search') && (
               <select
                 value={days}
                 onChange={(e) => setDays(parseInt(e.target.value))}
@@ -461,18 +503,18 @@ export default function AnalyticsPage() {
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer" className="p-4 rounded-xl block hover:opacity-80 transition-opacity" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
                   <div className="flex items-center gap-2 mb-2">
                     <Users className="w-4 h-4" style={{ color: 'var(--text-muted)' }} />
-                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Visitors</span>
+                    <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Traffic</span>
                   </div>
-                  <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
-                    {formatNumber(usageData.summary.uniqueVisitors)}
+                  <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                    Google Analytics
                   </div>
-                  <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                    {formatNumber(usageData.summary.totalHits)} total hits
+                  <div className="text-xs mt-1" style={{ color: 'var(--accent-sage)' }}>
+                    View traffic data &rarr;
                   </div>
-                </div>
+                </a>
 
                 {/* API Cost Card */}
                 <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
@@ -941,123 +983,6 @@ export default function AnalyticsPage() {
               </div>
             )}
 
-            {/* Traffic Chart */}
-            {usageData?.hitsByDay && usageData.hitsByDay.length > 0 && (
-              <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-                <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
-                  Traffic Over Time
-                </h2>
-                <div className="h-48 flex items-end gap-1">
-                  {usageData.hitsByDay.map((day, i) => {
-                    const maxHits = Math.max(...usageData.hitsByDay.map(d => d.hits));
-                    const height = maxHits > 0 ? (day.hits / maxHits) * 100 : 0;
-                    return (
-                      <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                        <div
-                          className="w-full rounded-t transition-all hover:opacity-80"
-                          style={{
-                            height: `${height}%`,
-                            minHeight: day.hits > 0 ? '4px' : '0',
-                            background: 'var(--accent-sage)',
-                          }}
-                          title={`${day.date}: ${day.hits} hits, ${day.uniqueVisitors} visitors`}
-                        />
-                        {i % Math.ceil(usageData.hitsByDay.length / 7) === 0 && (
-                          <span className="text-xs" style={{ color: 'var(--text-faint)' }}>
-                            {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* Visitors by Country */}
-            {usageData?.visitorsByCountry && usageData.visitorsByCountry.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* World Map */}
-                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                    <Globe className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
-                    Visitor Locations
-                  </h2>
-                  <div className="relative bg-stone-100 rounded-lg overflow-hidden" style={{ aspectRatio: '2/1' }}>
-                    {/* Simple world map background */}
-                    <svg viewBox="0 0 360 180" className="w-full h-full" style={{ background: 'var(--bg-warm)' }}>
-                      {/* Simplified continent outlines */}
-                      <path d="M80,40 Q100,30 120,35 L140,40 Q160,45 150,60 L130,70 Q110,75 90,65 L80,50 Z" fill="var(--border-light)" />
-                      <path d="M150,45 Q180,40 210,50 L240,55 Q260,60 250,80 L220,90 Q190,95 160,85 L145,70 Z" fill="var(--border-light)" />
-                      <path d="M250,50 Q280,45 310,55 L330,65 Q340,80 320,100 L290,110 Q260,115 240,100 L235,80 Z" fill="var(--border-light)" />
-                      <path d="M85,90 Q100,85 115,95 L120,110 Q115,130 95,135 L80,125 Q75,110 85,90 Z" fill="var(--border-light)" />
-                      <path d="M155,95 Q170,100 180,115 L175,135 Q160,145 145,135 L140,115 Q145,100 155,95 Z" fill="var(--border-light)" />
-                      <path d="M280,130 Q310,125 330,140 L325,160 Q300,170 275,160 L270,145 Z" fill="var(--border-light)" />
-
-                      {/* Visitor location dots */}
-                      {usageData.visitorLocations?.map((loc, i) => {
-                        // Convert lat/lon to SVG coordinates (simple equirectangular)
-                        const x = ((loc.lon + 180) / 360) * 360;
-                        const y = ((90 - loc.lat) / 180) * 180;
-                        const size = Math.min(8, Math.max(3, Math.log(loc.hits + 1) * 2));
-                        return (
-                          <g key={i}>
-                            <circle
-                              cx={x}
-                              cy={y}
-                              r={size}
-                              fill="var(--accent-rust)"
-                              opacity={0.7}
-                            >
-                              <title>{`${loc.city}, ${loc.country}: ${loc.hits} hits`}</title>
-                            </circle>
-                            <circle
-                              cx={x}
-                              cy={y}
-                              r={size + 3}
-                              fill="var(--accent-rust)"
-                              opacity={0.2}
-                            />
-                          </g>
-                        );
-                      })}
-                    </svg>
-                  </div>
-                </div>
-
-                {/* Country List */}
-                <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-                  <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                    <MapPin className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
-                    Visitors by Country
-                  </h2>
-                  <div className="space-y-3 max-h-64 overflow-y-auto">
-                    {usageData.visitorsByCountry.slice(0, 10).map((c, i) => {
-                      const total = usageData.visitorsByCountry.reduce((a, b) => a + b.hits, 0);
-                      const pct = total > 0 ? (c.hits / total) * 100 : 0;
-                      return (
-                        <div key={i}>
-                          <div className="flex justify-between text-sm mb-1">
-                            <span style={{ color: 'var(--text-primary)' }}>
-                              {c.country}
-                            </span>
-                            <span style={{ color: 'var(--text-muted)' }}>
-                              {formatNumber(c.hits)} hits • {c.visitors} visitors
-                            </span>
-                          </div>
-                          <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
-                            <div
-                              className="h-full rounded-full"
-                              style={{ width: `${pct}%`, background: 'var(--accent-rust)' }}
-                            />
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
 
             {/* Model & Prompt Usage */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1522,8 +1447,114 @@ export default function AnalyticsPage() {
               </div>
             )}
           </div>
-        ) : activeTab === 'vercel' ? (
-          /* Vercel Analytics Tab */
+        ) : activeTab === 'search' ? (
+          /* Search Tab */
+          <div className="space-y-8">
+            {searchData ? (
+              <>
+                {/* Summary */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <Search className="w-4 h-4" style={{ color: 'var(--accent-violet)' }} />
+                      <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Total Searches</span>
+                    </div>
+                    <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(searchData.totalSearches)}
+                    </div>
+                  </div>
+                  <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
+                      <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Unique Queries</span>
+                    </div>
+                    <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(searchData.topQueries?.length || 0)}
+                    </div>
+                  </div>
+                  <div className="p-4 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <AlertTriangle className="w-4 h-4" style={{ color: 'var(--accent-rust)' }} />
+                      <span className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>Zero-Result Queries</span>
+                    </div>
+                    <div className="text-2xl font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      {formatNumber(searchData.zeroResultQueries?.length || 0)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Top Queries */}
+                  {searchData.topQueries && searchData.topQueries.length > 0 && (
+                    <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                      <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                        <Search className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                        Top Searches
+                      </h2>
+                      <div className="space-y-2">
+                        {searchData.topQueries.slice(0, 20).map((q: any, idx: number) => (
+                          <div key={idx} className="flex items-center justify-between py-2" style={{ borderBottom: idx < Math.min(searchData.topQueries.length, 20) - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                            <div className="flex-1 min-w-0">
+                              <span className="font-medium text-sm truncate block" style={{ color: 'var(--text-primary)' }}>{q.query}</span>
+                              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>avg {q.avg_results} results</span>
+                            </div>
+                            <span className="text-sm font-medium ml-3 shrink-0" style={{ color: 'var(--text-secondary)' }}>{q.count}x</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Zero-Result Queries (Content Gaps) */}
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <AlertTriangle className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+                      Content Gaps
+                      <span className="text-xs font-normal" style={{ color: 'var(--text-muted)' }}>(zero results)</span>
+                    </h2>
+                    {searchData.zeroResultQueries && searchData.zeroResultQueries.length > 0 ? (
+                      <div className="space-y-2">
+                        {searchData.zeroResultQueries.map((q: any, idx: number) => (
+                          <div key={idx} className="flex items-center justify-between py-2" style={{ borderBottom: idx < searchData.zeroResultQueries.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                            <span className="font-medium text-sm truncate" style={{ color: 'var(--accent-rust)' }}>{q.query}</span>
+                            <span className="text-sm font-medium ml-3 shrink-0" style={{ color: 'var(--text-muted)' }}>{q.count}x</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm" style={{ color: 'var(--text-muted)' }}>No zero-result queries in this period</p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Search by Source */}
+                {searchData.searchesBySource && searchData.searchesBySource.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>Searches by Source</h2>
+                    <div className="flex gap-4 flex-wrap">
+                      {searchData.searchesBySource.map((s: any, idx: number) => {
+                        const labels: Record<string, string> = { global: 'Full Search', unified: 'Quick Search', book_search: 'Within Book' };
+                        return (
+                          <div key={idx} className="px-4 py-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+                            <div className="text-xs font-medium uppercase" style={{ color: 'var(--text-muted)' }}>{labels[s.source] || s.source}</div>
+                            <div className="text-xl font-semibold mt-1" style={{ color: 'var(--text-primary)' }}>{formatNumber(s.count)}</div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+                <Search className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p>No search data available yet</p>
+                <p className="text-sm mt-1">Search queries will appear here as users search the library</p>
+              </div>
+            )}
+          </div>
+        ) : activeTab === 'traffic' ? (
+          /* Traffic Tab */
           <div className="space-y-8">
             {vercelData && (
               <>
@@ -1605,9 +1636,9 @@ export default function AnalyticsPage() {
                 </div>
 
                 <div className="p-4 rounded-lg text-sm" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
-                  <p>Real-time analytics from Vercel. For more detailed analytics, visit the{' '}
-                    <a href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80" style={{ color: 'var(--accent-rust)' }}>
-                      Vercel dashboard
+                  <p>Pageview data from internal tracking. For detailed traffic analytics, see{' '}
+                    <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80" style={{ color: 'var(--accent-rust)' }}>
+                      Google Analytics
                     </a>.
                   </p>
                 </div>
@@ -1617,14 +1648,8 @@ export default function AnalyticsPage() {
             {!vercelData && !loading && (
               <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
                 <BarChart3 className="w-12 h-12 mx-auto mb-4 opacity-30" />
-                <p>No Vercel analytics data available</p>
-                <p className="text-sm mt-2">
-                  Check the{' '}
-                  <a href="https://vercel.com/dashboard" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80" style={{ color: 'var(--accent-rust)' }}>
-                    Vercel dashboard
-                  </a>{' '}
-                  for analytics.
-                </p>
+                <p>No traffic data available yet</p>
+                <p className="text-sm mt-1">Pageview data will appear here as the site is used</p>
               </div>
             )}
           </div>

@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+export const maxDuration = 30;
+
+// In-memory cache keyed by query string (persists for serverless function lifetime)
+const galleryCache = new Map<string, { data: unknown; timestamp: number }>();
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
 /**
  * GET /api/gallery
  *
@@ -22,6 +28,14 @@ import { getDb } from '@/lib/mongodb';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+
+    // Return cached result if fresh (keyed on full query string)
+    const cacheKey = searchParams.toString() || '__default__';
+    const cached = galleryCache.get(cacheKey);
+    if (cached && (Date.now() - cached.timestamp) < CACHE_TTL_MS) {
+      return NextResponse.json(cached.data);
+    }
+
     const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
     const bookId = searchParams.get('bookId') || searchParams.get('book');
@@ -36,195 +50,150 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
 
-    // Build aggregation pipeline
-const pipeline: object[] = [];
-
-// Stage 1: Match pages with detected images + image URLs (+ prefilter detected_images via $elemMatch)
-const pageMatch: Record<string, unknown> = {
-  'detected_images.0': { $exists: true },
-  $or: [
-    { cropped_photo: { $exists: true, $ne: '' } },
-    { photo_original: { $exists: true, $ne: '' } },
-    { photo: { $exists: true, $ne: '' } }
-  ]
-};
-
-if (bookId) pageMatch.book_id = bookId;
-
-// Build the *same* detection constraints you later apply after unwind, but as an early page-level prefilter
-const elemAnd: any[] = [
-  { bbox: { $exists: true } },
-  { detection_source: { $in: ['vision_model', 'manual'] } }
-];
-
-if (minQuality !== null) elemAnd.push({ gallery_quality: { $gte: minQuality } });
-if (imageType) elemAnd.push({ type: imageType });
-if (subjectFilter) elemAnd.push({ 'metadata.subjects': subjectFilter });
-if (figureFilter) elemAnd.push({ 'metadata.figures': figureFilter });
-if (symbolFilter) elemAnd.push({ 'metadata.symbols': symbolFilter });
-
-if (searchQuery) {
-  elemAnd.push({
-    $or: [
-      { description: { $regex: searchQuery, $options: 'i' } },
-      { museum_description: { $regex: searchQuery, $options: 'i' } },
-      { 'metadata.subjects': { $regex: searchQuery, $options: 'i' } },
-      { 'metadata.figures': { $regex: searchQuery, $options: 'i' } },
-      { 'metadata.symbols': { $regex: searchQuery, $options: 'i' } }
-    ]
-  });
-}
-
-pageMatch.detected_images = { $elemMatch: { $and: elemAnd } };
-
-pipeline.push({ $match: pageMatch });
-
-// Stage 2: Lookup book info (needed for year filtering + sort + projection)
-pipeline.push({
-  $lookup: {
-    from: 'books',
-    localField: 'book_id',
-    foreignField: 'id',
-    as: 'book'
-  }
-});
-pipeline.push({ $unwind: { path: '$book', preserveNullAndEmptyArrays: true } });
-
-// Stage 3: Filter by year range if specified
-if (yearStart !== null || yearEnd !== null) {
-  const yearMatch: Record<string, unknown> = {};
-  if (yearStart !== null) yearMatch['book.year'] = { $gte: yearStart };
-  if (yearEnd !== null) {
-    yearMatch['book.year'] = { ...(yearMatch['book.year'] as object), $lte: yearEnd };
-  }
-  pipeline.push({ $match: yearMatch });
-}
-
-// Stage 3.5 (optional but useful): Keep only fields you actually use downstream
-pipeline.push({
-  $project: {
-    id: 1,
-    book_id: 1,
-    page_number: 1,
-    cropped_photo: 1,
-    photo_original: 1,
-    photo: 1,
-    detected_images: 1,
-    book: 1
-  }
-});
-
-// Stage 4: Unwind detected_images to get individual items
-pipeline.push({ $unwind: { path: '$detected_images', includeArrayIndex: 'detectionIndex' } });
-
-// Stage 5: Filter individual images (same logic, but no accidental overwrite)
-const imageAnd: any[] = [
-  { 'detected_images.bbox': { $exists: true } },
-  { 'detected_images.detection_source': { $in: ['vision_model', 'manual'] } }
-];
-
-if (minQuality !== null) imageAnd.push({ 'detected_images.gallery_quality': { $gte: minQuality } });
-if (imageType) imageAnd.push({ 'detected_images.type': imageType });
-if (subjectFilter) imageAnd.push({ 'detected_images.metadata.subjects': subjectFilter });
-if (figureFilter) imageAnd.push({ 'detected_images.metadata.figures': figureFilter });
-if (symbolFilter) imageAnd.push({ 'detected_images.metadata.symbols': symbolFilter });
-
-if (searchQuery) {
-  imageAnd.push({
-    $or: [
-      { 'detected_images.description': { $regex: searchQuery, $options: 'i' } },
-      { 'detected_images.museum_description': { $regex: searchQuery, $options: 'i' } },
-      { 'detected_images.metadata.subjects': { $regex: searchQuery, $options: 'i' } },
-      { 'detected_images.metadata.figures': { $regex: searchQuery, $options: 'i' } },
-      { 'detected_images.metadata.symbols': { $regex: searchQuery, $options: 'i' } }
-    ]
-  });
-}
-
-pipeline.push({ $match: { $and: imageAnd } });
-
-// Stage 6: Sort by quality, then by book/page
-pipeline.push({
-  $sort: {
-    'detected_images.gallery_quality': -1,
-    'book.year': 1,
-    'book_id': 1,
-    'page_number': 1
-  }
-});
-
-// Stage 7: Facet for pagination and aggregations (unchanged behavior)
-pipeline.push({
-  $facet: {
-    items: [
-      { $skip: offset },
-      { $limit: limit },
-      {
-        $project: {
-          pageId: '$id',
-          bookId: '$book_id',
-          pageNumber: '$page_number',
-          detectionIndex: '$detectionIndex',
-          imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
-          bookTitle: { $ifNull: ['$book.display_title', { $ifNull: ['$book.title', 'Unknown'] }] },
-          author: '$book.author',
-          year: '$book.year',
-          description: '$detected_images.description',
-          type: '$detected_images.type',
-          bbox: '$detected_images.bbox',
-          confidence: '$detected_images.confidence',
-          galleryQuality: '$detected_images.gallery_quality',
-          museumDescription: '$detected_images.museum_description',
-          metadata: '$detected_images.metadata'
-        }
+    // Build image filter conditions — used both as $elemMatch pre-filter and post-unwind filter.
+    // $elemMatch only guarantees one match per document; post-unwind filter ensures every
+    // unwound element individually satisfies the constraints.
+    function buildImageFilters(prefix: string) {
+      const p = prefix ? `${prefix}.` : '';
+      const conditions: Record<string, unknown>[] = [
+        { [`${p}bbox`]: { $exists: true } },
+        { [`${p}detection_source`]: { $in: ['vision_model', 'manual'] } },
+      ];
+      if (minQuality !== null) conditions.push({ [`${p}gallery_quality`]: { $gte: minQuality } });
+      if (imageType) conditions.push({ [`${p}type`]: imageType });
+      if (subjectFilter) conditions.push({ [`${p}metadata.subjects`]: subjectFilter });
+      if (figureFilter) conditions.push({ [`${p}metadata.figures`]: figureFilter });
+      if (symbolFilter) conditions.push({ [`${p}metadata.symbols`]: symbolFilter });
+      if (searchQuery) {
+        conditions.push({
+          $or: [
+            { [`${p}description`]: { $regex: searchQuery, $options: 'i' } },
+            { [`${p}museum_description`]: { $regex: searchQuery, $options: 'i' } },
+            { [`${p}metadata.subjects`]: { $regex: searchQuery, $options: 'i' } },
+            { [`${p}metadata.figures`]: { $regex: searchQuery, $options: 'i' } },
+            { [`${p}metadata.symbols`]: { $regex: searchQuery, $options: 'i' } },
+          ],
+        });
       }
-    ],
-    total: [{ $count: 'count' }],
-    types: [
-      { $group: { _id: '$detected_images.type' } },
-      { $match: { _id: { $ne: null } } },
-      { $sort: { _id: 1 } }
-    ],
-    subjects: [
-      { $unwind: { path: '$detected_images.metadata.subjects', preserveNullAndEmptyArrays: false } },
-      { $group: { _id: '$detected_images.metadata.subjects' } },
-      { $sort: { _id: 1 } },
-      { $limit: 50 }
-    ],
-    figures: [
-      { $unwind: { path: '$detected_images.metadata.figures', preserveNullAndEmptyArrays: false } },
-      { $group: { _id: '$detected_images.metadata.figures' } },
-      { $sort: { _id: 1 } },
-      { $limit: 50 }
-    ],
-    symbols: [
-      { $unwind: { path: '$detected_images.metadata.symbols', preserveNullAndEmptyArrays: false } },
-      { $group: { _id: '$detected_images.metadata.symbols' } },
-      { $sort: { _id: 1 } },
-      { $limit: 50 }
-    ],
-    yearRange: [
-      {
-        $group: {
-          _id: null,
-          minYear: { $min: '$book.year' },
-          maxYear: { $max: '$book.year' }
-        }
+      return conditions;
+    }
+
+    const pipeline: object[] = [];
+
+    // Stage 1: Match pages with detected images + image URLs (prefilter via $elemMatch)
+    const pageMatch: Record<string, unknown> = {
+      'detected_images.0': { $exists: true },
+      $or: [
+        { cropped_photo: { $exists: true, $ne: '' } },
+        { photo_original: { $exists: true, $ne: '' } },
+        { photo: { $exists: true, $ne: '' } },
+      ],
+      detected_images: { $elemMatch: { $and: buildImageFilters('') } },
+    };
+    if (bookId) pageMatch.book_id = bookId;
+    pipeline.push({ $match: pageMatch });
+
+    // Stage 2: Lookup book info (needed for year filtering + sort + projection)
+    pipeline.push({
+      $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' },
+    });
+    pipeline.push({ $unwind: { path: '$book', preserveNullAndEmptyArrays: true } });
+
+    // Stage 3: Filter by year range if specified
+    if (yearStart !== null || yearEnd !== null) {
+      const yearMatch: Record<string, unknown> = {};
+      if (yearStart !== null) yearMatch['book.year'] = { $gte: yearStart };
+      if (yearEnd !== null) {
+        yearMatch['book.year'] = { ...(yearMatch['book.year'] as object), $lte: yearEnd };
       }
-    ]
-  }
-});
+      pipeline.push({ $match: yearMatch });
+    }
 
-const [result] = await db.collection('pages').aggregate(pipeline).toArray();
+    // Stage 3.5: Strip to fields needed downstream (reduces memory before unwind)
+    pipeline.push({
+      $project: {
+        id: 1, book_id: 1, page_number: 1,
+        cropped_photo: 1, photo_original: 1, photo: 1,
+        detected_images: 1, book: 1,
+      },
+    });
 
+    // Stage 4: Unwind to individual images
+    pipeline.push({ $unwind: { path: '$detected_images', includeArrayIndex: 'detectionIndex' } });
 
-    // Handle empty aggregation result to prevent TypeError
+    // Stage 5: Post-unwind filter (same conditions, prefixed with 'detected_images')
+    pipeline.push({ $match: { $and: buildImageFilters('detected_images') } });
+
+    // Stage 6: Sort by quality, then by book/page
+    pipeline.push({
+      $sort: {
+        'detected_images.gallery_quality': -1,
+        'book.year': 1,
+        'book_id': 1,
+        'page_number': 1,
+      },
+    });
+
+    // Stage 7: Facet — only compute filter aggregations on first page (offset === 0).
+    // Filters represent the full result set and don't change between pages.
+    const facet: Record<string, object[]> = {
+      items: [
+        { $skip: offset },
+        { $limit: limit },
+        {
+          $project: {
+            pageId: '$id',
+            bookId: '$book_id',
+            pageNumber: '$page_number',
+            detectionIndex: '$detectionIndex',
+            imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
+            bookTitle: { $ifNull: ['$book.display_title', { $ifNull: ['$book.title', 'Unknown'] }] },
+            author: '$book.author',
+            year: '$book.year',
+            description: '$detected_images.description',
+            type: '$detected_images.type',
+            bbox: '$detected_images.bbox',
+            confidence: '$detected_images.confidence',
+            galleryQuality: '$detected_images.gallery_quality',
+            museumDescription: '$detected_images.museum_description',
+            metadata: '$detected_images.metadata',
+          },
+        },
+      ],
+      total: [{ $count: 'count' }],
+    };
+
+    if (offset === 0) {
+      facet.types = [
+        { $group: { _id: '$detected_images.type' } },
+        { $match: { _id: { $ne: null } } },
+        { $sort: { _id: 1 } },
+      ];
+      facet.subjects = [
+        { $unwind: { path: '$detected_images.metadata.subjects', preserveNullAndEmptyArrays: false } },
+        { $group: { _id: '$detected_images.metadata.subjects' } },
+        { $sort: { _id: 1 } },
+        { $limit: 50 },
+      ];
+      facet.yearRange = [
+        {
+          $group: {
+            _id: null,
+            minYear: { $min: '$book.year' },
+            maxYear: { $max: '$book.year' },
+          },
+        },
+      ];
+    }
+
+    pipeline.push({ $facet: facet });
+
+    const [result] = await db.collection('pages').aggregate(pipeline, { allowDiskUse: true }).toArray();
+
     const items = result?.items || [];
     const total = result?.total?.[0]?.count || 0;
     const types = result?.types?.map((t: { _id: string }) => t._id).filter(Boolean) || [];
     const subjects = result?.subjects?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
-    const figures = result?.figures?.map((f: { _id: string }) => f._id).filter(Boolean) || [];
-    const symbols = result?.symbols?.map((s: { _id: string }) => s._id).filter(Boolean) || [];
     const yearRange = result?.yearRange?.[0] || { minYear: null, maxYear: null };
 
     // Get book info if filtered by bookId
@@ -256,7 +225,7 @@ const [result] = await db.collection('pages').aggregate(pipeline).toArray();
       }
     }
 
-    return NextResponse.json({
+    const responseData = {
       items,
       total,
       limit,
@@ -265,11 +234,15 @@ const [result] = await db.collection('pages').aggregate(pipeline).toArray();
       filters: {
         types,
         subjects,
-        figures,
-        symbols,
-        yearRange
-      }
-    });
+        yearRange,
+      },
+    };
+
+    // Cache result (cap at 50 entries to bound memory)
+    if (galleryCache.size > 50) galleryCache.clear();
+    galleryCache.set(cacheKey, { data: responseData, timestamp: Date.now() });
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error('Gallery error:', error);
     return NextResponse.json(

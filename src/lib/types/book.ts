@@ -27,9 +27,9 @@ export interface Book {
   thumbnail_blob?: string;     // Vercel Blob CDN URL (fast, pre-generated)
   categories?: string[];
   pages_count?: number;
-  pages_translated?: number;  // Number of pages with translations
-  pages_ocr?: number;         // Number of pages with OCR
-  translation_percent?: number; // Percentage of pages translated (0-100)
+  pages_translated?: number;  // CACHED — synced from pages collection by cron every 6h + inline by workers
+  pages_ocr?: number;         // CACHED — synced from pages collection by cron every 6h + inline by workers
+  translation_percent?: number; // Computed at read time from pages_translated/pages_count (never stored)
   created_at?: Date;
   updated_at?: Date;
   last_processed?: Date;  // Last OCR or translation update

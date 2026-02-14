@@ -19,15 +19,14 @@ export default function GlobalFooter() {
 
   useEffect(() => {
     setMounted(true);
-    analytics.usage()
-      .then(data => {
-        // Map the new API response to the GlobalStats format
+    analytics.stats()
+      .then((data: any) => {
         setStats({
-          totalReads: data.summary.totalHits,
-          totalEdits: 0, // Not tracked in new API
-          totalBooks: data.summary.totalBooks,
-          totalPages: data.summary.totalPages,
-          pagesTranslated: data.summary.pagesWithTranslation,
+          totalReads: data.totalReads || 0,
+          totalEdits: data.totalEdits || 0,
+          totalBooks: data.totalBooks || 0,
+          totalPages: data.totalPages || 0,
+          pagesTranslated: data.pagesTranslated || 0,
         });
       })
       .catch(console.error);
@@ -71,8 +70,8 @@ export default function GlobalFooter() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
             <span>CC0 Public Domain</span>
             <span className="hidden sm:inline">•</span>
-            <Link href="/about/research" className="text-amber-600 hover:text-amber-500 transition-colors">
-              Research
+            <Link href="/about" className="text-amber-600 hover:text-amber-500 transition-colors">
+              About
             </Link>
             <span className="hidden sm:inline">•</span>
             <Link href="/support" className="text-amber-600 hover:text-amber-500 transition-colors">
@@ -122,10 +121,10 @@ export default function GlobalFooter() {
           <span>CC0 Public Domain</span>
           <span className="hidden sm:inline">•</span>
           <Link
-            href="/about/research"
+            href="/about"
             className="text-amber-600 hover:text-amber-500 transition-colors"
           >
-            Research
+            About
           </Link>
           <span className="hidden sm:inline">•</span>
           <Link

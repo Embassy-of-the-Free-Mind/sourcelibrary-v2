@@ -30,21 +30,21 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Get global stats - single aggregation for reads/edits
-    const [bookStats, totalBooks, totalPages, pagesTranslated] = await Promise.all([
+    // Get global stats - fast queries only (called on every page load via footer)
+    // Uses cached pages_translated from books instead of scanning 916k pages
+    const [bookStats, totalBooks, totalPages] = await Promise.all([
       db.collection('books').aggregate([
         { $group: {
           _id: null,
           totalReads: { $sum: '$read_count' },
-          totalEdits: { $sum: '$edit_count' }
+          totalEdits: { $sum: '$edit_count' },
+          pagesTranslated: { $sum: { $ifNull: ['$pages_translated', 0] } },
         } }
       ]).toArray(),
-      db.collection('books').countDocuments(),
-      db.collection('pages').countDocuments(),
-      db.collection('pages').countDocuments({
-        'translation.data': { $exists: true, $ne: '' }
-      }),
+      db.collection('books').estimatedDocumentCount(),
+      db.collection('pages').estimatedDocumentCount(),
     ]);
+    const pagesTranslated = bookStats[0]?.pagesTranslated || 0;
 
     return NextResponse.json({
       global: true,

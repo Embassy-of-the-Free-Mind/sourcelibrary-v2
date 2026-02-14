@@ -1,9 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { measurePerf } from './perf';
 import { BOOK, PAGE } from './fixtures';
 
 test.describe('Page Reader', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(`/book/${BOOK.id}/page/${PAGE.id}`);
+  });
+
+  test.afterEach(async ({ page }, testInfo) => {
+    await measurePerf(page, `page-reader: ${testInfo.title}`);
   });
 
   test('page loads without error', async ({ page }) => {

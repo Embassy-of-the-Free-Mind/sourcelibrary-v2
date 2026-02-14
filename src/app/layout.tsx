@@ -71,8 +71,11 @@ export default async function RootLayout({
         />
       </head>
       <body className="antialiased min-h-screen flex flex-col">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Providers siteMode={siteMode}>
-          <div className="flex-1">
+          <div id="main-content" className="flex-1">
             {children}
           </div>
           <GlobalFooter />

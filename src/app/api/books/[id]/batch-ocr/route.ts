@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCRWithBuffer } from '@/lib/ai';
-import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { notifyIndexNow } from '@/lib/indexnow';
 import { images } from '@/lib/api-client';
@@ -161,6 +161,7 @@ export async function POST(
 
         // Save to database with full audit trail
         const now = new Date();
+        const pageType = extractPageType(ocrResult.text);
         await db.collection('pages').updateOne(
           { id: page.id },
           {
@@ -172,6 +173,7 @@ export async function POST(
               'ocr.source': 'ai',
               'ocr.prompt_version': PROMPT_VERSION,
               'ocr.image_url': imageUrl,
+              ...(pageType && { page_type: pageType }),
               updated_at: now
             },
           }

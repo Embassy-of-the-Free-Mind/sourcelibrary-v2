@@ -11,22 +11,23 @@ async function getPageData(bookId: string, pageId: string): Promise<{ book: Book
   try {
     const db = await getDb();
 
-    // Get book
-    let book = await db.collection('books').findOne({ id: bookId });
+    // Fetch book and page in parallel
+    const [book, page] = await Promise.all([
+      db.collection('books').findOne({ id: bookId }),
+      db.collection('pages').findOne({ id: pageId }),
+    ]);
+
+    // Fallback: try ObjectId lookup for book
     if (!book) {
       const { ObjectId } = await import('mongodb');
       if (ObjectId.isValid(bookId)) {
-        book = await db.collection('books').findOne({ _id: new ObjectId(bookId) });
+        const bookByOid = await db.collection('books').findOne({ _id: new ObjectId(bookId) });
+        return { book: bookByOid as unknown as Book | null, page: page as unknown as Page | null };
       }
     }
 
-    if (!book) return { book: null, page: null };
-
-    // Get page
-    const page = await db.collection('pages').findOne({ id: pageId });
-
     return {
-      book: book as unknown as Book,
+      book: book as unknown as Book | null,
       page: page as unknown as Page | null
     };
   } catch {

@@ -9,6 +9,7 @@ import {
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
+import HighlightedText from '@/components/search/HighlightedText';
 import {
   gallery,
   books,
@@ -99,6 +100,11 @@ export default function GalleryPage() {
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined
         });
+        // On pagination (offset > 0), API skips filter computation.
+        // Preserve filters from the initial page load.
+        if (page > 0 && data?.filters && (!json.filters?.types?.length)) {
+          json.filters = data.filters;
+        }
         setData(json);
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Failed to load gallery');
@@ -172,8 +178,8 @@ export default function GalleryPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-4">
             {/* Source Library Logo */}
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
+              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
                 <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
                 <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
@@ -201,7 +207,7 @@ export default function GalleryPage() {
             <div className="relative flex-1 max-w-xs" ref={bookSearchRef}>
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
               <input
-                type="text"
+                type="search"
                 value={bookSearchQuery}
                 onChange={(e) => {
                   setBookSearchQuery(e.target.value);
@@ -209,6 +215,7 @@ export default function GalleryPage() {
                 }}
                 onFocus={() => setShowBookDropdown(true)}
                 placeholder="Find a book..."
+                aria-label="Filter by book"
                 className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
               />
               {bookSearchLoading && (
@@ -225,10 +232,12 @@ export default function GalleryPage() {
                       className="w-full px-4 py-2 text-left text-stone-800 hover:bg-amber-50 border-b border-stone-100 last:border-0"
                     >
                       <div className="font-medium text-sm line-clamp-1">
-                        {book.display_title || book.title}
+                        <HighlightedText text={book.display_title || book.title} query={bookSearchQuery} />
                       </div>
                       {book.author && (
-                        <div className="text-xs text-stone-500">{book.author}</div>
+                        <div className="text-xs text-stone-500">
+                          <HighlightedText text={book.author} query={bookSearchQuery} />
+                        </div>
                       )}
                     </button>
                   ))}
@@ -240,10 +249,11 @@ export default function GalleryPage() {
             <form onSubmit={handleImageSearch} className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
               <input
-                type="text"
+                type="search"
                 value={imageSearchQuery}
                 onChange={(e) => setImageSearchQuery(e.target.value)}
                 placeholder="Search image content (serpent, Mercury, emblem...)"
+                aria-label="Search image descriptions"
                 className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
               />
             </form>
@@ -414,7 +424,7 @@ export default function GalleryPage() {
           <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {data.items.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} />
+                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
               ))}
             </div>
 
@@ -449,7 +459,7 @@ export default function GalleryPage() {
   );
 }
 
-function GalleryCard({ item }: { item: GalleryItem }) {
+function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
   const [imageError, setImageError] = useState(false);
 
   const displayUrl = item.bbox
@@ -495,7 +505,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
 
         <div className="p-2">
           <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
-            {item.description}
+            {query ? <HighlightedText text={item.description} query={query} /> : item.description}
           </p>
           <p className="text-[10px] text-stone-400 line-clamp-1">
             {item.bookTitle}

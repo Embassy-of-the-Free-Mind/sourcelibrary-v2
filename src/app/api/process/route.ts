@@ -4,7 +4,7 @@ import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, 
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { logGeminiCall } from '@/lib/gemini-logger';
-import { DEFAULT_MODEL } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType } from '@/lib/types';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
 
@@ -336,16 +336,19 @@ export async function POST(request: NextRequest) {
           language: language || 'Latin',
           model,
           prompt: promptRefs.ocr.reference,
+          prompt_version: PROMPT_VERSION,
           updated_at: new Date(),
-          source: 'ai',  // Mark as AI-generated
-          // Processing metadata for reproducibility
+          source: 'ai',
           input_tokens: metadata.ocr?.inputTokens,
           output_tokens: metadata.ocr?.outputTokens,
           cost_usd: metadata.ocr?.costUsd,
           processing_ms: metadata.ocr?.durationMs,
-          // Track which image was used for debugging split page issues
           image_url: metadata.ocr?.imageUrl,
         };
+        const pageType = extractPageType(results.ocr);
+        if (pageType) {
+          updateData['page_type'] = pageType;
+        }
       }
 
       if (results.translation && promptRefs.translation) {

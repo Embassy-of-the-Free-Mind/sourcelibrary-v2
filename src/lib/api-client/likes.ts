@@ -18,13 +18,6 @@ export const likes = {
   },
 
   /**
-   * Get like count for a target
-   */
-  getCount: async (targetType: LikeTargetType, targetId: string): Promise<{ count: number }> => {
-    return await apiClient.get(`/api/likes/count?target_type=${targetType}&target_id=${targetId}`);
-  },
-
-  /**
    * Get popular items (most liked)
    */
   getPopular: async <T = unknown>(params: {
