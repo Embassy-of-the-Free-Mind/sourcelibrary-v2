@@ -7,6 +7,13 @@ export type ImageSourceProvider =
   | 'gallica'
   | 'e_rara'
   | 'mdz'  // Münchener DigitalisierungsZentrum
+  | 'bodleian'   // Bodleian Library, University of Oxford
+  | 'cambridge'  // Cambridge Digital Library (CUDL)
+  | 'hab'        // Herzog August Bibliothek Wolfenbüttel
+  | 'vatican'    // Biblioteca Apostolica Vaticana (DigiVatLib)
+  | 'europeana'  // Europeana aggregator
+  | 'iiif'       // Generic IIIF source
+  | 'wellcome'   // Wellcome Collection
   | 'library'
   | 'user_upload'
   | 'other';

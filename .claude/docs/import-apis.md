@@ -1,8 +1,8 @@
 # Import APIs Reference
 
-Source Library supports importing from five digital library sources.
+Source Library supports importing from 12 digital library sources.
 
-## Gallica (Bibliothèque nationale de France)
+## Gallica (Bibliothque nationale de France)
 ```
 POST /api/import/gallica
 { "ark": "bpt6k61073880", "title": "...", "author": "...", "year": 1617, "original_language": "Latin" }
@@ -33,6 +33,62 @@ POST /api/import/e-rara
 { "erara_id": "8962689", "title": "...", "author": "...", "language": "German", "published": "1650" }
 ```
 Browse: https://www.e-rara.ch/
+
+## Generic IIIF
+```
+POST /api/import/iiif
+{ "manifest_url": "https://example.org/iiif/manifest.json", "title": "...", "author": "...", "language": "Latin", "provider": "Some Library", "start_page": 1, "end_page": 100 }
+```
+
+## Bodleian Library (University of Oxford)
+```
+POST /api/import/bodleian
+{ "uuid": "ae9f6cca-ae5c-4149-8fe4-95e6eca187f5", "title": "...", "author": "...", "language": "Latin", "published": "1550" }
+```
+Browse: https://digital.bodleian.ox.ac.uk/
+
+## Cambridge Digital Library (CUDL)
+```
+POST /api/import/cambridge
+{ "ms_id": "MS-ADD-03996", "title": "...", "author": "...", "language": "Latin", "published": "1500" }
+```
+Browse: https://cudl.lib.cam.ac.uk/
+
+## HAB Wolfenbttel (Herzog August Bibliothek)
+```
+POST /api/import/hab
+{ "hab_id": "cod-guelf-18-1-aug-2f", "title": "...", "author": "...", "language": "Latin", "published": "1450" }
+```
+HAB manifest URLs vary by collection. Provide `manifest_url` if the default pattern doesn't work:
+```
+{ "hab_id": "some-id", "manifest_url": "https://diglib.hab.de/drucke/some-id/manifest.json", "title": "...", "author": "..." }
+```
+Browse: https://diglib.hab.de/
+
+## Vatican Library (DigiVatLib)
+```
+POST /api/import/vatican
+{ "mss_id": "Pal.lat.235", "title": "...", "author": "...", "language": "Latin", "published": "1400" }
+```
+Browse: https://digi.vatlib.it/
+
+## Google Books (via Internet Archive mirror)
+```
+POST /api/import/google-books
+{ "google_books_id": "aTo6AQAAMAAJ", "title": "...", "author": "...", "language": "Latin", "published": "1617" }
+```
+Google Books has no IIIF access. This route imports via Internet Archive mirrors (`bub_gb_*` identifiers). Returns a 404 with guidance if the book isn't mirrored on IA.
+
+## Europeana (aggregator)
+```
+POST /api/import/europeana
+{ "record_id": "/2022704/lmu_bsb00029099", "title": "...", "author": "...", "language": "Latin", "published": "1473" }
+```
+Europeana aggregates metadata from thousands of institutions. This route fetches the record, extracts the IIIF manifest from the source provider, and imports via IIIF. Provide `manifest_url` directly if auto-detection fails.
+
+Browse: https://www.europeana.eu/
+
+Optional: set `EUROPEANA_API_KEY` env var for higher rate limits.
 
 ## Common behavior
 All import routes: fetch IIIF manifests, create book+page records in MongoDB, queue split detection, return book ID and URL.

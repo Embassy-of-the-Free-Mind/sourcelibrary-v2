@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCRWithBuffer } from '@/lib/ai';
-import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, parseDetectedImages } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { notifyIndexNow } from '@/lib/indexnow';
 import { images } from '@/lib/api-client';
@@ -162,18 +162,22 @@ export async function POST(
         // Save to database with full audit trail
         const now = new Date();
         const pageType = extractPageType(ocrResult.text);
+        const detectedImages = parseDetectedImages(ocrResult.text);
         await db.collection('pages').updateOne(
           { id: page.id },
           {
             $set: {
-              'ocr.data': ocrResult.text,
-              'ocr.updated_at': now,
-              'ocr.model': modelId,
-              'ocr.language': language,
-              'ocr.source': 'ai',
-              'ocr.prompt_version': PROMPT_VERSION,
-              'ocr.image_url': imageUrl,
+              ocr: {
+                data: ocrResult.text,
+                updated_at: now,
+                model: modelId,
+                language,
+                source: 'ai' as const,
+                prompt_version: PROMPT_VERSION,
+                image_url: imageUrl,
+              },
               ...(pageType && { page_type: pageType }),
+              ...(detectedImages.length > 0 && { detected_images: detectedImages }),
               updated_at: now
             },
           }

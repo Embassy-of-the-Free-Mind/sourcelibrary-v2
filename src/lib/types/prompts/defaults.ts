@@ -1,4 +1,5 @@
 import { ProcessingPrompts } from "./core";
+import type { DetectedImage } from "../page";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
 export const PROMPT_VERSION = 'v3.2026-02';
@@ -14,6 +15,76 @@ export function extractPageType(ocrText: string): string | undefined {
   if (!match) return undefined;
   const type = match[1].trim().toLowerCase();
   return VALID_PAGE_TYPES.has(type) ? type : undefined;
+}
+
+const VALID_IMAGE_TYPES = new Set([
+  'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
+  'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score', 'unknown',
+]);
+
+/** Parse <detected-images> JSON from OCR text into typed DetectedImage[]. Returns empty array if none found. */
+export function parseDetectedImages(ocrText: string): DetectedImage[] {
+  const match = ocrText.match(/<detected-images>([\s\S]*?)<\/detected-images>/i);
+  if (!match) return [];
+
+  try {
+    const raw = JSON.parse(match[1].trim());
+    if (!Array.isArray(raw)) return [];
+
+    const now = new Date();
+    return raw
+      .filter((img: Record<string, unknown>) => img && typeof img.description === 'string')
+      .map((img: Record<string, unknown>) => {
+        const result: DetectedImage = {
+          description: img.description as string,
+          detection_source: 'ocr_tag',
+          detected_at: now,
+        };
+
+        if (typeof img.type === 'string' && VALID_IMAGE_TYPES.has(img.type)) {
+          result.type = img.type as DetectedImage['type'];
+        }
+
+        if (img.bbox && typeof img.bbox === 'object') {
+          const b = img.bbox as Record<string, unknown>;
+          if (typeof b.x === 'number' && typeof b.y === 'number' &&
+              typeof b.width === 'number' && typeof b.height === 'number') {
+            result.bbox = { x: b.x, y: b.y, width: b.width, height: b.height };
+          }
+        }
+
+        if (typeof img.gallery_quality === 'number') {
+          result.gallery_quality = Math.max(0, Math.min(1, img.gallery_quality));
+        }
+
+        if (typeof img.museum_rationale === 'string') {
+          result.gallery_rationale = img.museum_rationale;
+        }
+
+        if (typeof img.confidence === 'number') {
+          result.confidence = img.confidence;
+        }
+
+        if (typeof img.museum_description === 'string') {
+          result.museum_description = img.museum_description;
+        }
+
+        if (img.metadata && typeof img.metadata === 'object') {
+          const m = img.metadata as Record<string, unknown>;
+          result.metadata = {};
+          if (Array.isArray(m.subjects)) result.metadata.subjects = m.subjects.filter((s: unknown) => typeof s === 'string');
+          if (Array.isArray(m.figures)) result.metadata.figures = m.figures.filter((s: unknown) => typeof s === 'string');
+          if (Array.isArray(m.symbols)) result.metadata.symbols = m.symbols.filter((s: unknown) => typeof s === 'string');
+          if (typeof m.style === 'string') result.metadata.style = m.style;
+          if (typeof m.technique === 'string') result.metadata.technique = m.technique;
+        }
+
+        return result;
+      });
+  } catch {
+    // Malformed JSON — not unusual from AI output
+    return [];
+  }
 }
 
 export const DEFAULT_PROMPTS: ProcessingPrompts = {

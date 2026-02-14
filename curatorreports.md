@@ -4184,3 +4184,741 @@ Extending the genealogy back beyond Grotius (1625) to ancient and medieval sourc
 **Research Value**: Collection now enables tracing complete intellectual genealogy of classical liberal economic and political philosophy from ancient Greek virtue ethics and natural law theory through medieval Thomistic synthesis, early modern natural law, Scottish Enlightenment moral philosophy, to classical and Austrian economics. PLUS parallel Celtic legal tradition as example of non-state customary law system.
 
 ---
+
+# Session 027: 2026-02-14 — Collection Gap Analysis & Deep Acquisition
+
+## Summary
+- Books acquired: 21
+- Total pages: ~8,280
+- Languages: Latin, Greek, Italian, German
+- Date range: 1474-1733
+- Theme: Systematic gap analysis across all collection areas
+
+## Thematic Rationale
+
+With the roadmap essentially complete (75/75 books imported), this session pivoted to systematic gap identification. Every major theme was audited: Hermetica, alchemy, Kabbalah, Rosicrucianism, natural magic, early science, astrology, architecture, emblemata, esoteric music, Neoplatonism, medieval philosophy, and Renaissance cosmology. The collection (now 490+ books) is remarkably comprehensive. Gaps found were in secondary but important works: Kircher encyclopedias, Renaissance iconography, foundational astrology, medieval Neoplatonism, and the Perennial Philosophy tradition.
+
+## Books Acquired
+
+### Roadmap Completion (2)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 1 | Utriusque Cosmi Historia | Robert Fludd | 1617 | 220 | 69904dd67d19f3f2aac1d49d |
+| 2 | De Coelesti Hierarchia (MS) | Pseudo-Dionysius | c.1300 | 1 | 69904dd97d19f3f2aac1d57b |
+
+### Renaissance Memory & Encyclopedism (5)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 3 | Tutte le Opere | Giulio Camillo | 1555 | 273 | 69904fb17d19f3f2aac1d59a |
+| 4 | China Illustrata | Athanasius Kircher | 1667 | 324 | 69904fba7d19f3f2aac1d6ad |
+| 5 | Ars Magna Sciendi | Athanasius Kircher | 1669 | 532 | 69904fc47d19f3f2aac1d7f3 |
+| 6 | Turris Babel | Athanasius Kircher | 1679 | 297 | 6990505e7d19f3f2aac1e2b7 |
+| 7 | Iter Exstaticum Coeleste | Athanasius Kircher | 1660 | 760 | 6990507e7d19f3f2aac1e3e2 |
+
+### Neoplatonism & Natural Magic (4)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 8 | De Vanitate Scientiarum | Heinrich Cornelius Agrippa | 1643 | 388 | 69904fcd7d19f3f2aac1da09 |
+| 9 | De Sole et Lumine | Marsilio Ficino | 1493 | 88 | 69904fd77d19f3f2aac1db8f |
+| 10 | De Christiana Religione | Marsilio Ficino | 1474 | 226 | 6990500f7d19f3f2aac1dbee |
+| 11 | De Umbris Idearum | Giordano Bruno | 1582 | 251 | 699050d07d19f3f2aac1e6e4 |
+
+### Emblemata & Iconography (2)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 12 | Hieroglyphica | Pierio Valeriano | 1575 | 945 | 699050447d19f3f2aac1dcd4 |
+| 13 | Iconologia | Cesare Ripa | 1603 | 558 | 699050547d19f3f2aac1e087 |
+
+### Medieval Philosophy & Liberal Arts (4)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 14 | Commentary on Plato's Timaeus | Chalcidius | 1520 | 150 | 699051d18d19cbc90d9d5136 |
+| 15 | De Nuptiis Philologiae et Mercurii | Martianus Capella; Grotius (ed.) | 1599 | 464 | 699051d48d19cbc90d9d51ce |
+| 16 | De Divisione Naturae | John Scotus Eriugena | 1681 | 418 | 6990521d8d19cbc90d9d53ab |
+| 17 | Opus Majus | Roger Bacon | 1733 | 530 | 6990527b8d19cbc90d9d6242 |
+
+### Perennial Philosophy & Astrology (4)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 18 | De Perenni Philosophia | Agostino Steuco | 1540 | 625 | 6990527e8d19cbc90d9d6456 |
+| 19 | Christianopolis | Johann Valentin Andreae | 1619 | 234 | 699052e5d7712f78163cd414 |
+| 20 | Tetrabiblos | Claudius Ptolemy | 1535 | 272 | 6990532bd7712f78163cd522 |
+| 21 | Astronomica (Scaliger ed.) | Marcus Manilius | 1600 | 724 | 699053427d19f3f2aac1e7e4 |
+
+## Highlights
+
+- **Ficino De Christiana Religione (1474)** — incunabulum, among the earliest printed editions of this work
+- **Ptolemy Tetrabiblos (1535)** — editio princeps of the Greek text, foundational Western astrology
+- **Manilius Astronomica (1600)** — Joseph Scaliger's landmark edition, oldest Latin astrological poem
+- **Eriugena De Divisione Naturae (1681)** — editio princeps, most important medieval Neoplatonic cosmology
+- **Steuco De Perenni Philosophia (1540)** — first edition, coined the concept "perennial philosophy"
+- **Kircher suite** — 4 new encyclopedias (China, Ars Magna, Turris Babel, Iter Exstaticum) join existing 5+ Kircher works
+
+## Remaining Gaps (for future sessions)
+
+- **Cusanus De Docta Ignorantia** — no early edition on IA
+- **Hildegard Scivias** — no printed edition on IA
+- **Patrizi Nova de Universis Philosophia** — not on IA
+- **Grosseteste De Luce** — only in modern critical editions
+- **Campanella De Sensu Rerum et Magia** — original Latin not on IA
+
+## Session 027 TOTAL: 21 books, ~8,280 pages
+
+---
+
+# Session 028: 2026-02-14 — Harmony, Resonance & Vibration
+
+## Summary
+- Books acquired: 22
+- Total pages: ~7,620
+- Languages: German, French, Latin, Italian, Greek, English
+- Date range: 1758-1922 (with ancient Greek sources in 19th c. critical editions)
+- Theme: The complete arc of vibration — from Pythagorean cosmic harmony through acoustics, animal magnetism, and thought vibration
+
+## Thematic Rationale
+
+Building a thematic collection tracing the idea of vibration, resonance, and harmony across the full Western tradition. The arc runs from ancient Pythagorean musical mathematics (Philolaus, Nicomachus, Aristides Quintilianus) through Neoplatonic cosmic harmony (Proclus on the Timaeus), Enlightenment acoustic science (Rameau, Tartini, Euler), the birth of modern acoustics (Chladni, Helmholtz), the "invisible force" traditions (Mesmer's animal magnetism, Reichenbach's odic force, Boscovich's atomic vibration), and into the esoteric/New Thought vibration doctrine (Kybalion, Atkinson, Troward, Besant's Thought-Forms). The collection already held strong Renaissance/Baroque coverage (Kepler, Kircher, Mersenne, Fludd, Giorgi, Zarlino, Boethius) — this session fills the gaps above and below that core.
+
+## Books Acquired
+
+### Ancient Pythagorean & Cosmic Harmony (4)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 1 | Philolaos des Pythagoreers Lehren | Philolaus (ed. Boeckh) | 1819 | 209 | 699058fdaaa7f10ed4cfa811 |
+| 2 | Musici scriptores graeci | Karl von Jan (ed.) | 1895 | 618 | 6955742ef63a757109173030 |
+| 3 | De Musica libri tres | Aristides Quintilianus | 1882 | 183 | 699058e4aaa7f10ed4cfa6ba |
+| 4 | Procli In Platonis Timaeum (2 vols) | Proclus (ed. Diehl) | 1903 | 890 | 69905927/6990592a |
+
+### Enlightenment Music Theory (3)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 5 | Traité de l'harmonie | Jean-Philippe Rameau | 1722 | 496 | 695575ba57e3b773024f23d1 |
+| 6 | Trattato di musica | Giuseppe Tartini | 1754 | 200 | 6990585617295890441358e0 |
+| 7 | Tentamen novae theoriae musicae | Leonhard Euler | 1739 | 312 | 6990585917295890441359aa |
+
+### Science of Sound & Vibration (3)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 8 | Entdeckungen über die Theorie des Klanges | E.F.F. Chladni | 1787 | 123 | 69905808172958904413516a |
+| 9 | Die Akustik | E.F.F. Chladni | 1802 | 381 | 6990580b17295890441351e7 |
+| 10 | Die Lehre von den Tonempfindungen | Hermann von Helmholtz | 1865 | 634 | 6990581417295890441355bd |
+
+### Animal Magnetism & Invisible Forces (4)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 11 | Mémoire sur le magnétisme animal | Franz Anton Mesmer | 1779 | 394 | 6990580e1729589044135366 |
+| 12 | Abhandlung über den thierischen Magnetismus | Franz Anton Mesmer | 1781 | 201 | 6990581117295890441354f2 |
+| 13 | Der sensitive Mensch (2 vols) | Karl von Reichenbach | 1854 | 1706 | 69905881/69905885 |
+| 14 | Philosophiae naturalis theoria | R.G. Boscovich | 1758 | 384 | 6990592daaa7f10ed4cfac63 |
+
+### Theosophical Vibration (2)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 15 | Thought-Forms | Besant & Leadbeater | 1905 | 180 | 6990585d1729589044135ae4 |
+| 16 | Occult Chemistry | Besant & Leadbeater | 1908 | 156 | 699058e7aaa7f10ed4cfa773 |
+
+### New Thought & Thought Vibration (4)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 17 | Thought Vibration | William Walker Atkinson | 1906 | 161 | 699058161729589044135839 |
+| 18 | Thoughts Are Things | Prentice Mulford | 1889 | 202 | 699058601729589044135b9a |
+| 19 | The Edinburgh Lectures on Mental Science | Thomas Troward | 1909 | 156 | 69905888aaa7f10ed4cfa52d |
+| 20 | The Kybalion | Three Initiates | 1908 | 234 | 699058adaaa7f10ed4cfa5ce |
+
+### Esoteric Cosmology (2)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 21 | Tertium Organum | P.D. Ouspensky | 1922 | 364 | 6990595eaaa7f10ed4cfade7 |
+| 22 | The Rosicrucian Cosmo-Conception | Max Heindel | 1910 | 550 | 69905961aaa7f10ed4cfaf55 |
+
+## Highlights
+
+- **Chladni (1787/1802)** — founder of acoustics; his vibrating-plate experiments literally made sound visible, prefiguring cymatics
+- **Boscovich (1758)** — proto-vibrational atomic theory: all matter is point-particles with forces of attraction/repulsion — influenced Faraday, Kelvin, and modern field theory
+- **Reichenbach (1854)** — 1,706 pages of systematic experiments on the "od" force, the last great investigation of an invisible vital energy before scientific materialism closed the door
+- **Musici scriptores graeci** — complete Greek music theory corpus (Aristotle, Euclid, Nicomachus, Bacchius, Gaudentius, Alypius) in one volume
+- **Proclus In Timaeum** — the most extensive surviving ancient commentary on cosmic harmony, the World Soul, and the mathematics of creation
+
+## Already In Collection (strong existing coverage)
+
+Kepler *Harmonices Mundi*, Kircher *Musurgia Universalis* + *Phonurgia Nova* + *Magnes*, Mersenne *Harmonie Universelle* (3 tomes), Fludd *Utriusque Cosmi*, Giorgi *De Harmonia Mundi*, Boethius *De Musica*, Zarlino *Istitutioni* + *Dimostrationi*, Gaffurius *Theorica* + *Practica*, Aristoxenus *Harmonika*, Meibom *Antiquae Musicae Auctores*, Macrobius *In Somnium Scipionis*, Iamblichus *Life of Pythagoras*, Glareanus *Dodecachordon*, Guido d'Arezzo *Micrologus*, Vincenzo Galilei *Dialogo*, Praetorius *Syntagma Musicum*, Gilbert *De Magnete*, Blavatsky *Secret Doctrine* + *Isis Unveiled*, Besant *Introduction to Yoga*
+
+## Remaining Gaps
+
+- ~~**Ptolemy Harmonics**~~ — FILLED via Wallis Opera Mathematica vol. 3 (1699)
+- **Sauveur** — acoustics founder, no works found on IA
+- **Thomas Young** — wave interference experiments (1802), not searched specifically
+- **Al-Farabi / Al-Kindi** — Islamic music theory, only modern translations available
+- **Fabre d'Olivet** — *La Musique expliquée* (only modern English translation on IA)
+- **Hans Jenny *Cymatics*** — 1967, too modern for primary source collection
+
+## Session 028 Supplement: Sympathetic Resonance & Sympathy Tradition (5 books)
+
+Following the user's direction "wallis & newton... sympathetic resonance --> sympathy" — tracing the concept of sympathy as action-at-a-distance from Renaissance natural philosophy through the weapon salve controversy to Newton's aether.
+
+### Sympathetic Resonance & Sympathy (5)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 23 | Opera Mathematica vol. 3 (contains Ptolemy Harmonics, Porphyry, Bryennius) | John Wallis | 1699 | 1,230 | 69905abeaaa7f10ed4cfb1a5 |
+| 24 | Opticks (1st ed.) | Isaac Newton | 1704 | 411 | 69905ac2aaa7f10ed4cfb677 |
+| 25 | De Sympathia et Antipathia Rerum | Girolamo Fracastoro | 1546 | 184 | 69905ac4aaa7f10ed4cfb814 |
+| 26 | Two Treatises: The Nature of Bodies and the Nature of Man's Soul (1st ed.) | Kenelm Digby | 1644 | 518 | 69905b44aaa7f10ed4cfb8d5 |
+| 27 | Discourse on the Powder of Sympathy | Kenelm Digby | 1664 | 171 | 69905b47aaa7f10ed4cfbadd |
+
+### Supplement Highlights
+
+- **Wallis Opera Mathematica vol. 3 (1699)** — Contains the only 17th-century edition of Ptolemy's Harmonics, plus Porphyry's commentary and Manuel Bryennius. This is how Newton and Enlightenment scholars accessed Greek harmonic theory.
+- **Newton Opticks (1704)** — The Queries at the end introduce Newton's vibratory aether hypothesis: light as vibrations, nerve signals as vibrations, gravitational attraction through an "aethereal medium." The bridge from mechanical philosophy to field theory.
+- **Fracastoro De Sympathia (1546)** — The foundational Renaissance text theorizing sympathy/antipathy as natural forces. Influenced the entire occult sympathy tradition and early attempts to explain action at a distance.
+- **Digby Two Treatises (1644)** — Massive philosophical work on the nature of bodies (corpuscular philosophy + sympathetic action) and the soul. Central to the 17th-century debate on how things act on each other without contact.
+- **Digby Powder of Sympathy (1664)** — His famous Montpellier lecture on healing wounds at a distance by treating the weapon that caused them. The most famous case study of sympathetic action in early modern natural philosophy.
+
+### Already In Collection (Sympathy Tradition)
+
+- Agrippa *De Occulta Philosophia* (multiple editions) — sympathies and occult virtues
+- Della Porta *Magia Naturalis* (multiple editions) — natural magic through sympathies
+- Kircher *Magnes* (1641) — magnetic sympathy and universal attraction
+- Van Helmont *Ortus Medicinae* + *Opuscula Medica Inaudita* — sympathetic medicine, weapon salve
+- Plotinus *Enneads* — cosmic sympathy as universal principle
+- Adam Smith *Theory of Moral Sentiments* — sympathy as moral philosophy
+- David Hume *Treatise of Human Nature* — sympathy as psychological mechanism
+- Ficino *De Vita* — astral sympathies and talismanic magic
+- Swedenborg *Arcana Caelestia* (5 vols) — correspondences as cosmic sympathy
+
+## Session 028 Supplement 2: New Thought & Influences (20 books)
+
+Building the complete New Thought canon and tracing its intellectual genealogy back through mesmerism, Transcendentalism, spiritualism, and the suggestion/hypnotism tradition.
+
+### The Lineage: Mesmerism → Mind-Cure → New Thought
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 28 | Neurypnology (The Rationale of Hypnotism) | James Braid | 1843 | 300 | 69905d152fd6a0399389ed52 |
+| 29 | The Principles of Nature | Andrew Jackson Davis | 1847 | 822 | 69905c85aaa7f10ed4cfbbc3 |
+| 30 | Le Livre des Esprits | Allan Kardec | 1860 | 527 | 69905cd3aaa7f10ed4cfcdb4 |
+| 31 | The Mental Cure | Warren Felt Evans | 1869 | 374 | 69905c8baaa7f10ed4cfc0d7 |
+| 32 | Die Philosophie der Mystik | Carl du Prel | 1884 | 570 | 69905cd7aaa7f10ed4cfcfc5 |
+| 33 | De la suggestion et de ses applications | Hippolyte Bernheim | 1886 | 446 | 69905d402fd6a0399389f20e |
+| 34 | Science and Health with Key to the Scriptures | Mary Baker Eddy | 1887 | 618 | 69905c90aaa7f10ed4cfc33f |
+| 35 | The Quimby Manuscripts | P.P. Quimby (ed. Dresser) | 1921 | 474 | 69905c87aaa7f10ed4cfbefb |
+
+### Transcendentalist & Esoteric Christianity Influences
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 36 | Essays (including The Over-Soul) | Ralph Waldo Emerson | 1841 | 278 | 69905cc5aaa7f10ed4cfcc9c |
+| 37 | The Perfect Way | Anna Kingsford & Edward Maitland | 1882 | 394 | 69905cc1aaa7f10ed4cfcb10 |
+
+### Core New Thought Canon
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 38 | Ideal Suggestion Through Mental Photography | Henry Wood | 1893 | 167 | 69905c92aaa7f10ed4cfc5ab |
+| 39 | The Law of Psychic Phenomena | Thomson Jay Hudson | 1893 | 424 | 69905cbdaaa7f10ed4cfc966 |
+| 40 | The Power of Silence | Horatio W. Dresser | 1895 | 230 | 69905c9eaaa7f10ed4cfc7d2 |
+| 41 | In Tune with the Infinite | Ralph Waldo Trine | 1897 | 238 | 69905c8eaaa7f10ed4cfc24f |
+| 42 | As a Man Thinketh | James Allen | 1903 | 60 | 69905d5b2fd6a0399389f3d1 |
+| 43 | The Science of Getting Rich | Wallace D. Wattles | 1910 | 170 | 69905ca1aaa7f10ed4cfc8ba |
+| 44 | The Creative Process in the Individual | Thomas Troward | 1910 | 112 | 69905d5d2fd6a0399389f40f |
+| 45 | Christian Healing | Charles Fillmore | 1912 | 280 | 69905d0daaa7f10ed4cfd6a4 |
+| 46 | Your Forces and How to Use Them | Christian D. Larson | 1912 | 338 | 69905d0aaaa7f10ed4cfd51a |
+
+### Historiography
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 47 | A History of the New Thought Movement | Horatio W. Dresser | 1919 | 380 | 69905c9caaa7f10ed4cfc654 |
+| 48 | Lessons in Truth | H. Emilie Cady | 1919 | 99 | 69905d10aaa7f10ed4cfdb66 |
+
+### Supplement 2 Highlights
+
+- **The full Quimby → Evans → Eddy → Trine lineage** is now complete. Quimby was the fountainhead (mesmerist-turned-mind-healer in the 1850s-60s). Evans was his first student to systematize the theory. Eddy studied with Quimby and built Christian Science. Trine popularized it as "In Tune with the Infinite" (1897 bestseller).
+- **Braid (1843)** coined "hypnotism" and gave mesmerism a scientific framework. **Bernheim (1886)** developed the suggestion theory at the Nancy school. Together they provided the psychological vocabulary New Thought would adopt.
+- **A.J. Davis (1847)** — 822-page channeled cosmology delivered while in mesmeric trance at age 19. The bridge from Swedenborg and mesmerism to American spiritualism and New Thought.
+- **Emerson's "The Over-Soul"** is the philosophical DNA of all New Thought — the idea that individual minds participate in a universal Mind.
+- **Du Prel (1884)** — the German philosopher who tried to ground mystical experience in psychology and physiology, influencing the Continental mind-cure tradition.
+- **Kardec (1860)** — French spiritism's founding text, influential in Latin America and on the "spirit communication" strand of New Thought.
+
+### Already In Collection (New Thought Adjacent)
+
+- Hartley *Observations on Man* (1749) — vibratory association psychology
+- Swedenborg *Arcana Caelestia* (5 vols) — correspondences doctrine
+- Mesmer *Mémoire* + *Abhandlung* — animal magnetism
+- Blavatsky *Secret Doctrine* + *Isis Unveiled* — Theosophical influence
+- Besant *Thought-Forms* + *Occult Chemistry* — vibratory clairvoyance
+- Atkinson *Thought Vibration* — New Thought vibration theory
+- Mulford *Thoughts Are Things* — early New Thought
+- Troward *Edinburgh Lectures* — mental science
+- Kybalion — Hermetic New Thought synthesis
+- William James *Varieties of Religious Experience* — pragmatist validation
+- Reichenbach *Der sensitive Mensch* — odic force
+
+### Supplement 3: Chain Gap Fills — Mesmerism & Unconscious (7 books)
+
+Filling missing links in the conceptual chain from Plato → sympathy → mesmerism → unconscious → New Thought.
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 49 | Timaeus (Archer-Hind critical edition) | Plato | 1888 | 380 | 69905f1140bc3a0478efa1d3 |
+| 50 | Mémoires pour servir à l'histoire du magnétisme animal | Marquis de Puységur | 1820 | 518 | 69905f1440bc3a0478efa351 |
+| 51 | De la cause du sommeil lucide | Abbé Faria | 1819 | 482 | 69905f1740bc3a0478efa559 |
+| 52 | Histoire critique du magnétisme animal | J.P.F. Deleuze | 1813 | 660 | 69905f1a40bc3a0478efa73d |
+| 53 | Die Welt als Wille und Vorstellung | Arthur Schopenhauer | 1844 | 655 | 69905f1c40bc3a0478efa9d3 |
+| 54 | Philosophie des Unbewussten | Eduard von Hartmann | 1869 | 686 | 69905f1e40bc3a0478efac64 |
+| 55 | De Incantationibus | Pietro Pomponazzi | 1556 | 402 | 69905f2040bc3a0478efaf14 |
+
+### Supplement 3 Highlights
+
+- **Puységur (1784/1820)** discovered "magnetic somnambulism" — the missing link between Mesmer's crisis therapy and modern hypnosis. His patient Victor Race spoke lucidly while entranced, proving the mind had layers Mesmer never theorized.
+- **Faria (1819)** — the Goan abbé who rejected magnetic fluid entirely and proposed "lucid sleep" was caused by suggestion and concentration. Direct precursor to Braid's hypnotism.
+- **Deleuze (1813)** — the systematizer who made mesmerism respectable through careful clinical documentation. His *Histoire critique* was the standard reference for 50 years.
+- **Schopenhauer (1844)** — "The Will" as blind unconscious force driving all phenomena. Direct philosophical foundation for Hartmann's unconscious and, through him, Freud and the entire depth psychology tradition.
+- **Hartmann (1869)** — coined "the Unconscious" as a philosophical category. Bestseller in 1870s Germany, bridging Schopenhauer's metaphysics to experimental psychology.
+- **Pomponazzi (1556)** — naturalistic explanation of sympathetic magic, demonic possession, and faith healing. Distinct from his *De Immortalitate* already in collection — this text specifically addresses the mechanism of action at a distance.
+
+### The Chain (Now Filled)
+
+```
+Plato (Timaeus) → Neoplatonism → Ficino → Agrippa/Della Porta → Pomponazzi
+    ↓                                                              ↓
+Pythagorean harmony → Kepler → Newton (Opticks) → Hartley (vibrations)
+    ↓                                                              ↓
+Mesmer → Puységur → Faria/Deleuze → Braid → Bernheim → suggestion theory
+    ↓                                                              ↓
+Schopenhauer → Hartmann → Du Prel → unconscious psychology
+    ↓                                                              ↓
+Swedenborg → A.J. Davis → Quimby → Evans/Eddy/Trine → New Thought canon
+```
+
+### Supplement 4: Vibration → Consciousness — Physics to Psychophysics (21 books)
+
+Extending the chain from Pythagorean harmony through experimental physics, acoustics, electromagnetism, psychophysics, and into the vibration metaphysics of the late 19th century. Fills the gap between Kepler/Newton and the New Thought movement with the actual scientific pathway.
+
+#### Hooke & Huygens (5 new)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 56 | An Attempt to Prove the Motion of the Earth | Robert Hooke | 1674 | ~53 | 69906056ef12272ffdc8cdee |
+| 57 | A Description of Helioscopes | Robert Hooke | 1676 | ~40 | 69906059ef12272ffdc8cef1 |
+| 58 | The Diary of Robert Hooke, 1672-1680 | Robert Hooke | 1672 | ~582 | 69906065ef12272ffdc8cfc2 |
+| 59 | Kosmotheoros, sive De Terris Coelestibus | Christiaan Huygens | 1699 | ~166 | 6990605def12272ffdc8cf1a |
+| 60 | Opera Varia | Christiaan Huygens | 1734 | ~575 | 699060c8322e01b1349a3561 |
+
+#### Acoustics & Wave Theory (5 new)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 61 | Tentamen novae theoriae musicae | Leonhard Euler | 1739 | ~312 | 6990585917295890441359aa |
+| 62 | Entdeckungen über die Theorie des Klanges | E.F.F. Chladni | 1787 | ~126 | 6990627b40bf901934ab9b7f |
+| 63 | Die Akustik | E.F.F. Chladni | 1802 | ~381 | 6990580b17295890441351e7 |
+| 64 | A Course of Lectures on Natural Philosophy, Vol. I | Thomas Young | 1807 | ~896 | 699062b540bf901934ab9c00 |
+| 65 | Experimental Researches in Electricity | Michael Faraday | 1839 | ~938 | 699062b840bf901934ab9f82 |
+
+#### Electro-Vitalism & Naturphilosophie (4 new)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 66 | De viribus electricitatis in motu musculari | Luigi Galvani | 1791 | ~72 | 6990632bef12272ffdc8fe76 |
+| 67 | Beweis, daß ein beständiger Galvanismus den Lebensproceß begleite | Johann Wilhelm Ritter | 1798 | ~215 | 69906334ef12272ffdc90656 |
+| 68 | Von der Weltseele | F.W.J. Schelling | 1798 | ~351 | 6990632eef12272ffdc90136 |
+| 69 | Fragmente aus dem Nachlasse eines jungen Physikers, Vol. I | Johann Wilhelm Ritter | 1810 | ~371 | 6990636eef12272ffdc916af |
+
+#### Psychophysics & Panpsychism (4 new)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 70 | Nanna, oder über das Seelenleben der Pflanzen | Gustav Theodor Fechner | 1848 | ~424 | 69906315ef12272ffdc8f0a7 |
+| 71 | Zend-Avesta | Gustav Theodor Fechner | 1851 | ~406 | 69906312e7b7642c081de690 |
+| 72 | The Soul in Nature | Hans Christian Ørsted | 1852 | ~520 | 6990636bef12272ffdc914a5 |
+| 73 | Elemente der Psychophysik, Vol. I | Gustav Theodor Fechner | 1860 | ~361 | 699062f0ef12272ffdc8e403 |
+| 74 | Elemente der Psychophysik, Vol. II | Gustav Theodor Fechner | 1860 | ~585 | 699062f2ef12272ffdc8e789 |
+
+#### Vibration Metaphysics (3 new)
+
+| # | Title | Author | Year | Pages | Book ID |
+|---|-------|--------|------|-------|---------|
+| 75 | The Principles of Psychology, Vol. I | William James | 1890 | ~711 | 69905fd576b6f3a91fb0f699 |
+| 76 | The Principles of Psychology, Vol. II | William James | 1890 | ~722 | 69905fd8bb4fb4d3519a60b2 |
+| 77 | Keely and His Discoveries: Aerial Navigation | C.S.J. Bloomfield-Moore | 1893 | ~420 | 69906352ef12272ffdc910f3 |
+| 78 | The Inventions, Researches and Writings of Nikola Tesla | Nikola Tesla; ed. T.C. Martin | 1894 | ~522 | 69906355ef12272ffdc91299 |
+
+### Supplement 4 Highlights
+
+- **Hooke's Attempt (1674)** — three laws of gravitational motion proposed before Newton. Hooke understood gravity as a vibratory spring force (ut tensio, sic vis). Newton acknowledged Hooke's inverse-square hint but denied the proof.
+- **Huygens' Kosmotheoros (1699)** — his deathbed speculation that the same physical laws (light, vibration, matter) operate throughout the cosmos, and therefore other worlds must harbor life.
+- **Chladni (1787)** — sand patterns on vibrating plates made sound visible for the first time. Napoleon was so impressed he funded further research. The birth of cymatics.
+- **Galvani (1791)** → **Ritter (1798)** — Galvani showed electricity moves muscles; Ritter proved galvanism accompanies all life processes. Ritter then spiraled into mysticism, trying to detect the "world-soul" in galvanic currents. His *Fragmente* (1810) reads like Novalis meets laboratory notebooks.
+- **Schelling's Weltseele (1798)** — the philosophical capstone: electricity, magnetism, chemistry, and life are all expressions of a single World Soul (Weltseele). This is the Naturphilosophie that Ørsted, Ritter, and the romantics were grounding in experiment.
+- **Fechner's triple trajectory** — panpsychist philosophy (*Nanna*, *Zend-Avesta*) plus rigorous psychophysics (*Elemente*). The same man who argued plants have souls also invented the mathematical relationship between stimulus and sensation (Weber-Fechner law). The vibration chain personified.
+- **Ørsted's Soul in Nature (1852)** — the discoverer of electromagnetism's philosophical testament: nature is ensouled, beauty and natural law are the same thing, and the forces of nature are spiritual forces.
+- **Keely (1893)** — the most controversial figure in the chain. Claimed to have built machines powered by "vibratory force" and "etheric disintegration." Probably a fraud, but Bloomfield-Moore's account documents the entire culture of vibratory physics as received by the New Thought milieu.
+- **Tesla (1894)** — high-frequency oscillations, resonance experiments, alternating currents. Tesla's vision of the earth as a vibrating body transmitting energy wirelessly is the engineering realization of what the Naturphilosophen imagined.
+
+### The Extended Chain (Now Complete)
+
+```
+ANTIQUITY:    Pythagoras → Plato (Timaeus) → Neoplatonists → Boethius
+                                                    ↓
+RENAISSANCE:  Ficino → Agrippa → Della Porta → Pomponazzi → Fracastoro
+                                                    ↓
+SCIENTIFIC    Kepler (Harmonices) → Hooke (springs/vibration) → Huygens (waves)
+REVOLUTION:   Newton (Opticks) → Euler (musical vibration math)
+                                                    ↓
+ACOUSTICS:    Chladni (1787, visible sound) → Young (1807, wave interference)
+              → Helmholtz (1863, tone perception) [already in collection]
+                                                    ↓
+ELECTRO-      Galvani (1791) → Ritter (1798-1810) → Schelling (Weltseele)
+VITALISM:     → Ørsted (electromagnetism + soul) → Faraday (field theory)
+                                                    ↓
+MESMERISM:    Mesmer → Puységur → Faria/Deleuze → Braid → Bernheim
+              → Hartley (vibratory association)
+                                                    ↓
+PSYCHO-       Fechner (psychophysics + panpsychism) → Du Prel
+PHYSICS:      → Schopenhauer → Hartmann (the Unconscious)
+                                                    ↓
+NEW THOUGHT:  A.J. Davis → Quimby → Evans/Eddy/Trine/Fillmore
+              Atkinson (Thought Vibration) → Keely → Tesla
+              Emerson → Hudson → Allen → Troward → Larson
+```
+
+### Already In Collection (Supplement 4 Adjacent)
+
+- Hooke: Micrographia, Posthumous Works, Lampas, Lectures de Potentia Restitutiva, Philosophical Experiments, Lectiones Cutlerianae
+- Huygens: Traité de la Lumière, Horologium Oscillatorium
+- Helmholtz: Die Lehre von den Tonempfindungen (imported earlier this session)
+- Euler: Mechanica Vols. I & II
+- Reichenbach: Der sensitive Mensch (odic force)
+- Schelling: Bruno, Darlegung des wahren Verhältnisses
+
+### Note
+- Duplicate Chladni *Entdeckungen*: `69905808172958904413516a` and `6990627b40bf901934ab9b7f` (two IA scans imported). One should be cleaned up.
+
+### Supplement 5: Cross-Cultural Resonance — Arabic, Indian, Chinese, Sufi, Russian (25 books)
+
+**Thematic Rationale:** The vibration/harmony chain traced in Supplements 1-4 is fundamentally Western. But the deepest philosophical formulations of sound-as-reality come from Sanskrit (spanda, nada brahma), Chinese (qi/ganying resonance), Sufi (sama, inner sound), and the Arabic transmission that mediated Greek thought back into Europe. This supplement bridges all traditions.
+
+#### Arabic / Islamic Philosophy
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| On First Philosophy (Fi al-Falsafa al-Ula) | Al-Kindi | 1974 | 53 | `699065713dc2ed39a49f139f` |
+| Tahafut al-Falasifa (Incoherence of the Philosophers) | Al-Ghazali | 2000 | 357 | `69906543726f64800c10abfe` |
+| Philosophus Autodidactus (Hayy ibn Yaqzan) | Ibn Tufayl | 1671 | 223 | `6990650b3dc2ed39a49f05e2` |
+| Fusus al-Hikam (Bezels of Wisdom) | Ibn Arabi | 1229 | 175 | `699065b23dc2ed39a49f26e1` |
+
+#### Sufi Sound Mysticism
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| The Mysticism of Sound and Music | Hazrat Inayat Khan | 1996 | 346 | `699065af3dc2ed39a49f245c` |
+| Masnavi (Mathnawi) — Nicholson 5-vol set | Rumi | 1996 | 522 | `699065b6726f64800c10c094` |
+
+#### Indian Vibration / Nada Tradition
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Spanda Karikas (The Divine Creative Pulsation) | Vasugupta | 1913 | 192 | `699065163dc2ed39a49f06c3` |
+| Natyashastra | Bharata Muni | 1929 | 422 | `6990653d726f64800c10a557` |
+| Sangita Ratnakara (Ocean of Music) | Sarngadeva | 1943 | 1277 | `69906540726f64800c10a6ff` |
+| Hatha Yoga Pradipika | Svatmarama | 1914 | 86 | `6990656e3dc2ed39a49f0fc7` |
+| Bhagavad Gita (The Song Celestial) | Edwin Arnold (trans.) | 1906 | 198 | `699065e7726f64800c10c689` |
+| Songs of Kabir | Kabir (Tagore, trans.) | 1915 | 175 | `699065ce3dc2ed39a49f279b` |
+
+#### Chinese Cosmology & Resonance
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| I Ching (Wilhelm/Baynes) | Richard Wilhelm (trans.) | 1968 | 816 | `6990653a726f64800c10a225` |
+| Yi King (Sacred Books of the East, Vol. 16) | James Legge (trans.) | 1882 | 490 | `699065623dc2ed39a49f0c60` |
+| Tao Te Ching (The Way and Its Power) | Lao Tzu (Waley, trans.) | 1958 | 264 | `69906566726f64800c10beec` |
+| Zhuangzi (Basic Writings) | Zhuangzi (Watson, trans.) | 2003 | 190 | `6990656b3dc2ed39a49f0f07` |
+| Liezi (Book of Lieh-tzu) | Liezi (Eva Wong, trans.) | 1995 | 274 | `699065a13dc2ed39a49f21e8` |
+| The Secret of the Golden Flower | Wilhelm (trans.), Jung (comm.) | 1962 | 182 | `699065693dc2ed39a49f0e4f` |
+| Huainanzi | Liu An (Major, trans.) | 2010 | 1010 | `6990651f3dc2ed39a49f0867` |
+| Lüshi Chunqiu (Annals of Lü Buwei) | Lü Buwei (Knoblock, trans.) | 2000 | 888 | `69906546726f64800c10ae65` |
+| Huangdi Neijing (Yellow Emperor's Classic) | Ilza Veith (trans.) | 1966 | 294 | `6990659a3dc2ed39a49f1e7b` |
+
+#### Russian / Fourth Way / Traditionalism
+
+| Title | Author | Year | Pages | Book ID |
+|-------|--------|------|-------|---------|
+| Lectures on Godmanhood | Vladimir Solovyov | 1948 | 224 | `6990651a3dc2ed39a49f0785` |
+| In Search of the Miraculous | P. D. Ouspensky | 1949 | 100 | `6990660eef12272ffdc95256` |
+| Nada Brahma (The World Is Sound) | Joachim-Ernst Berendt | 1983 | 326 | `6990659d3dc2ed39a49f1fa6` |
+| Introduction to Hindu Doctrines | René Guénon | 1945 | 685 | `699065f7ef12272ffdc9490e` |
+| The Crisis of the Modern World | René Guénon | 1942 | 33 | `699065f4ef12272ffdc948e8` |
+
+*Note: Ouspensky's Tertium Organum already in collection (`6990595eaaa7f10ed4cfade7`).*
+
+### Supplement 5 Highlights
+
+- **Al-Kindi** — the "philosopher of the Arabs," first to systematize Greek philosophy in Arabic. His *On First Philosophy* argues for a single cosmic agent intellect — the bridge between emanation metaphysics and astral/radiative causation in *De Radiis*.
+- **Spanda Karikas** — Kashmir Shaivism's foundational text on divine vibration (*spanda*). Reality is not static Being but rhythmic pulsation. The closest Indian parallel to Pythagorean resonance.
+- **Sangita Ratnakara** — 13th century encyclopedic treatise on Indian music. Nada (sound) as cosmic principle, not just physical phenomenon. The *svara* (tone) system maps onto chakras and emotional states.
+- **Lüshi Chunqiu** — 3rd century BCE encyclopedia with the most detailed pre-modern Chinese theory of *ganying* (stimulus-response resonance). Musical tuning as political cosmology — the correct pitch literally keeps the state in harmony.
+- **Inayat Khan** — Sufi master who brought the *sama* (listening) tradition to the West. Sound as the creative force behind all manifestation. Direct lineage from Rumi's *Masnavi* reed-flute opening.
+- **Ouspensky's *In Search of the Miraculous*** — Gurdjieff's Law of Octaves: all processes unfold through the musical scale, with "shocks" needed at semitone intervals. The most systematic modern attempt to make vibration-cosmology scientific.
+- **Two I Chings** — Legge (1882, scholarly) and Wilhelm/Baynes (1968, esoteric). The *yao* (line changes) embody *ganying* — the universe as resonant field responding to human intention.
+
+### Cross-Tradition Resonance Map
+
+```
+VEDIC VIBRATION        GREEK HARMONY        CHINESE RESONANCE       SUFI SOUND
+Rig Veda (Vac)    →    Pythagoras       ←   Yi Jing (ganying)      Rumi (reed)
+    ↓                       ↓                     ↓                    ↓
+Spanda Karikas         Plato Timaeus        Lüshi Chunqiu          Ibn Arabi
+Natyashastra           Boethius             Huainanzi              Inayat Khan
+Sangita Ratnakara      Fludd / Kepler       Huangdi Neijing
+    ↓                       ↓                     ↓                    ↓
+Nada Brahma (modern)   Chladni/Helmholtz    Secret Golden Flower   Gurdjieff
+Hatha Yoga Pradipika   Fechner/Tesla              ↓                Ouspensky
+                              ↓             Zhuangzi / Liezi            ↓
+                       ALL CONVERGE → sound/vibration as substrate of reality
+```
+
+### Supplement 5 TOTAL: 25 books, ~9,532 pages
+
+## Session 028 GRAND TOTAL: 103 books, ~39,514 pages
+
+---
+
+## Session 029: 2026-02-14 — Astrology & Jyotish Collection
+
+### Thematic Rationale
+Astrology is central to both the Western esoteric tradition and Indian knowledge systems. The collection had zero Sanskrit/Jyotish texts and only a handful of European astrology works (Firmicus Maternus, Picatrix, Pico). This session establishes a new Jyotish collection and adds key Arabic/Islamic astrological texts.
+
+### Acquired — Sanskrit Jyotish
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Surya Siddhanta with Gudhartha-prakasaka | Ranganatha | 1859 | 977 | 69905f3d40bc3a0478efb0a8 | dli.csl.5298 |
+| Brihat Samhita | Varahamihira | 1933 | 1333 | 69905f4140bc3a0478efb47b | varahi-brihat-samhita-1933-lakshmi-venkateshwar-press |
+| Brihat Jataka with Bhattotpala Commentary | Varahamihira | 1944 | 722 | 69905f4440bc3a0478efb9b2 | brihatjatakaofvarahamihiravivruttiofbhattolpalasitaramjha_202003_434_V |
+| Brihat Parashara Hora Shastra | Parashara | 1900 | 1947 | 69905f4640bc3a0478efbc86 | brihat-parashar-hora-shastra |
+| Phaladeepika | Mantreswara | 1937 | 140 | 69905f4940bc3a0478efc423 | Phaladeepika1stEd.ByVSubrahmanyaSastri |
+| Aryabhatiya with Bhatadipika | Aryabhata | 1874 | 130 | 69905f4a40bc3a0478efc4b1 | aryabhatiyawithc00arya |
+| Panchasiddhantika | Varahamihira | 1889 | 1116 | 69905f5340bc3a0478efc535 | wg1078 |
+
+### Acquired — Arabic/Islamic Astrology
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Kitab Al Bulhan | Abd al-Hasan Al-Isfahani | 1390 | 805 | 69905f5740bc3a0478efc993 | KitabAlBulhan |
+| Introductorium in Astronomiam | Abu Mashar (Albumasar) | 1489 | — | 69905e3c2fd6a039938a1980 | ita-bnc-in1-00001014-001 |
+| De magnis coniunctionibus | Abu Mashar (Albumasar) | 1489 | 241 | 69905f5c16e44b939ade6475 | ita-bnc-in1-00001014-002 |
+| Flores Astrologiae | Abu Mashar (Albumasar) | 1488 | 186 | 69905f5e16e44b939ade6568 | ita-bnc-in2-00001888-001 |
+
+### Notes
+- Albumasar Introductorium already existed in collection (imported earlier same session)
+- All Sanskrit texts are in original Devanagari script, not English translations
+- The 3 Albumasar incunabula (1488-1489) are exceptionally rare — printed by Erhard Ratdolt in Augsburg
+- Kitab Al Bulhan is a stunning illuminated Arabic manuscript from Jalayirid Baghdad
+
+### Acquired — Sanskrit Jyotish (Batch 2)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Saravali | Kalyana Varma | 1900 | 878 | 699060198cbcc9a4dba2c10a | saravali |
+| Muhurta Chintamani | Daivagna Rama | 1900 | 424 | 6990601c8cbcc9a4dba2c47a | muhurta-chintamani |
+| Jataka Parijata | Vaidyanatha Dikshita | 1900 | 701 | 6990601f8cbcc9a4dba2c624 | jataka-parijata |
+| Tajika Nilakanthi | Nilakantha | 1900 | 1556 | 699060218cbcc9a4dba2c8e3 | tajika-nilakanthi |
+| Laghu Parashari (Jataka Chandrika) | Parashara | 1900 | 112 | 699060238cbcc9a4dba2cef9 | laghu-parashari |
+| Sarvartha Chintamani | Venkatesa Daivagna | 1900 | 452 | 6990605019adda121f1b17d6 | sarvartha-chintamani |
+| Chamatkara Chintamani | Bhatta Narayana | 1900 | 104 | 69906055ef12272ffdc8cd84 | chamatkara-chintamani |
+
+### Acquired — European Astrology
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Christian Astrology | William Lilly | 1647 | 1429 | 699060258cbcc9a4dba2cf6b | christianastrolo00lill |
+| Decem tractatus astronomiae | Guido Bonatti | 1491 | 818 | 6990602f8cbcc9a4dba2d502 | bonatti-decem-tractatus |
+| Astrologicorum Libri VI | Tommaso Campanella | 1630 | 593 | 699060328cbcc9a4dba2d836 | campanella-astrologicorum |
+| Tetrabiblos | Claudius Ptolemy | 1535 | 202 | 69906057ef12272ffdc8ce25 | ptolemy-tetrabiblos |
+| Astronomicon (1461 incunabulum) | Marcus Manilius | 1461 | 242 | 699060b2322e01b1349a3020 | astronomiconlibe00mani |
+| De Judiciis Astrorum (1485 incunabulum) | Haly Abenragel (Ali ibn Abi al-Rijal) | 1485 | 332 | 699060b5322e01b1349a3114 | BSG_OEXV566_2RES |
+| Astronomicorum Libri (Firmicus, Manilius, Aratus) | Firmicus Maternus; Manilius; Aratus | 1503 | 764 | 699060b8322e01b1349a3262 | gri_33125008465672 |
+
+### Highlights
+
+- **Manilius Astronomicon (1461)** — pre-Gutenberg-era incunabulum! One of the earliest printed astrological texts. Manilius wrote under Augustus/Tiberius; this is the editio princeps by Regiomontanus.
+- **Haly Abenragel (1485)** — the most influential Arabic judicial astrology text in medieval Europe. Ali ibn Abi al-Rijal's 11th-century Arabic work, translated to Latin.
+- **Firmicus+Manilius+Aratus (1503)** — Aldine-era combined edition of the three great Classical astrological poets. Extraordinarily rare.
+- **William Lilly (1647)** — the definitive English-language horary astrology textbook. Still studied by practitioners today.
+- **Bonatti (1491)** — the "prince of astrologers," Dante placed him in the Inferno. His Liber Astronomiae was the most comprehensive medieval astrology text.
+- **Saravali** — Kalyana Varma's masterwork, the "essence of all Jyotish" — a systematic treatment rivaling Brihat Jataka.
+- **Tajika Nilakanthi** — the definitive text on Tajika (Perso-Arabic annual horoscopy as adapted to Indian practice). Bridge between Arabic and Indian astrological traditions.
+
+### Acquired — Hellenistic & Arabic Astrology (Batch 4)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Libellus Isagogicus (Alcabitius) | Al-Qabisi | 1485 | 232 | 699062f5e7b7642c081dd070 | 9410575.nlm.nih.gov |
+| Alchabitius cum Commento | Al-Qabisi; Johannes de Saxonia | 1502 | 166 | 69906322ef12272ffdc8f8c0 | alchabitiuscumco00abda |
+| Compilatio de Astrorum Scientia | Leopold of Austria | 1489 | 236 | 699062f9ef12272ffdc8ec40 | compilatioleupo00leup |
+| Astronomicon Libri VIII (10+ authors) | Nicolaus Pruckner (ed.) | 1551 | 496 | 699062fbef12272ffdc8ed2e | hin-wel-all-00000663-001 |
+| Quadripartitum et Centiloquium | Ptolemy; Hali (comm.) | 1484 | 63 | 69906313e7b7642c081de828 | OEXV762_P1 |
+| Quadripartitum (with Hermes, Bethem, Mashallah, Zahel) | Ptolemy; Scotto (ed.) | 1519 | 301 | 69906317ef12272ffdc8f251 | ARes08317 |
+| Liber Nativitatum et Centiloquium Divi Hermetis | Albubather; Hermes Trismegistus | 1501 | 66 | 69906325ef12272ffdc8f968 | hin-wel-all-00000234-001 |
+| Libri de Iudiciis Astrorum | Haly Abenragel | 1551 | 435 | 69906301e7b7642c081dd5f3 | bub_gb__CPaB4xWmA8C |
+| Anthologiarum Libri | Vettius Valens (ed. Kroll) | 1908 | 442 | 6990630be7b7642c081dded0 | bub_gb_OQ_gAAAAMAAJ |
+| An Irish Astronomical Tract (based on Mashallah) | Mashallah (ed. Maura Power) | 1914 | 294 | 69906330ef12272ffdc90252 | irishastronomica14msha |
+
+### Acquired — Cardano & Divination (Batch 4)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| In Cl. Ptolemaei de Astrorum Iudiciis Commentaria | Girolamo Cardano | 1555 | 387 | 699062feef12272ffdc8ef20 | bub_gb_hvfy6BMWI90C |
+| Somniorum Synesiorum Libri IV | Girolamo Cardano | 1585 | 848 | 69906327ef12272ffdc8f9ac | bub_gb_WFSHRm25ic4C |
+| Metoposcopia Libris Tredecim | Girolamo Cardano | 1658 | 304 | 6990632bef12272ffdc8fe77 | bub_gb_KTnAy4_pdhIC |
+
+### Acquired — Indian & Islamic (Batch 4)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Prasna Marga | Nilakantha | 1926 | 347 | 69906304e7b7642c081dd7a9 | prasnamarga035823mbp |
+| Yavanajataka of Sphujidhvaja | Sphujidhvaja (ed. Pingree) | 1978 | 512 | 69906310e7b7642c081de48e | PingreeYJ |
+| Alberuni's India | Al-Biruni (trans. Sachau) | 1910 | 474 | 6990630de7b7642c081de2b2 | alberunisindiaac01biru |
+| The Chronology of Ancient Nations | Al-Biruni (trans. Sachau) | 1879 | 496 | 6990631aef12272ffdc8f4aa | chronologyofanci00biru |
+
+### Batch 4 Highlights
+
+- **Vettius Valens (Kroll 1908)** — the longest surviving astrological text from Greco-Roman antiquity. Nine books of Greek horoscopic astrology, c. 150 CE. Foundation text of Hellenistic astrology.
+- **Alcabitius 1485** — incunabulum of al-Qabisi's Introduction to Astrology. The standard medieval university textbook for judicial astrology.
+- **Pruckner 1551 anthology** — contains Firmicus Maternus, Ptolemy Centiloquium, Hermes 100 Aphorisms, Bethem Centiloquium, Mashallah, Omar, Zahel, and Manilius. 10+ authors in one volume — the Renaissance astrologer's complete library.
+- **Ptolemy Quadripartitum 1484** — incunabulum with Hali commentary. The foundational text of Western astrology in its first printed form.
+- **Cardano Somniorum (1585)** — dream interpretation through astrological and naturalistic frameworks. Contains De Secretis and De Gemmis.
+- **Cardano Metoposcopia (1658)** — 800 face illustrations for astrological physiognomy. One of the strangest books in the Western tradition.
+- **Al-Biruni** — two key works: the India (encyclopedic account of Hindu science, astrology, and cosmology) and the Chronology of Ancient Nations (comparative chronology of civilizations).
+- **Yavanajataka (Pingree 1978)** — the "Greek horoscopy" in Sanskrit, c. 269 CE. The critical nexus point where Hellenistic astrology entered Indian tradition and became Jyotish.
+
+### Acquired — Sanskrit Originals, Batch 5 (Siddhanta & Muhurta)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Siddhanta Shiromani Ganitadhyaya | Bhaskara II | 1900 | 1071 | 69906461ef12272ffdc91870 | SiddhantaShiromaniGanitadhyaya |
+| Siddhanta Shiromani Goladhyaya with Marichi Bhashya | Bhaskara II; Munishvara | 1900 | 683 | 69906464ef12272ffdc91ca1 | SiddhantaShiromaniGoladhyayaMarichiBhashya |
+| Graha Laghava | Ganesa Daivagna | 1946 | 250 | 69906467ef12272ffdc91f4e | GrahaLaghava |
+| Muhurta Ganapati | Ganapati Shastri | 1885 | 650 | 69906469ef12272ffdc9204a | MuhurtaGanapati |
+| Muhurta Martanda (manuscript) | Unknown | 1800 | 623 | 6990646bef12272ffdc922d6 | MuhurtaMartanda |
+| Tajika Sarama (DLI) | Unknown | 1900 | 40 | 6990646def12272ffdc92547 | TajikaSarama |
+
+### Acquired — Sanskrit Originals, Batch 6 (Hora & Jataka)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Hora Sara (manuscript) | Prithuyashas | 1800 | 97 | 69906478ef12272ffdc92571 | HoraSara |
+| Jataka Bharnam | Dhundiraja | 1900 | 963 | 6990647bef12272ffdc925d4 | JatakaBharnam |
+| Siddhanta Shiromani + Surya Siddhanta Tika | Bhaskara II; Ranganatha | 1900 | 3937 | 6990647eef12272ffdc92999 | SiddhantaShiromaniSuryaSiddhantaTika |
+| Graha Laghava (Devanagari manuscript) | Ganesa Daivagna | 1800 | 167 | 69906481ef12272ffdc938fc | GrahaLaghavaManuscript |
+
+### Acquired — Sanskrit Originals, Batch 7 (Major Classical Texts)
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Brahma Sphuta Siddhanta, Vol. 1 | Brahmagupta; ed. Sudhakara Dvivedi | 1902 | 1396 | 6990654d726f64800c10b230 | BrahmaSphutaSiddhantaV1 |
+| Brahma Sphuta Siddhanta, Vol. 2 | Brahmagupta; ed. Sudhakara Dvivedi | 1902 | 553 | 69906550726f64800c10b7a9 | BrahmaSphutaSiddhantaV2 |
+| Narada Samhita Jyotish | Narada | 1900 | 830 | 69906553726f64800c10b9d5 | NaradaSamhitaJyotish |
+| Jyotirvidabharanam | attributed to Kalidasa | 1900 | 352 | 69906555726f64800c10bd15 | Jyotirvidabharanam |
+| Strijataka (women's horoscopy) | Unknown | 1900 | 15 | 69906559726f64800c10be77 | Strijataka |
+| Shadangam Jyotisham (Vedanga Jyotish) | Lagadha | 1900 | 89 | 6990655b726f64800c10be8a | ShadangamJyotisham |
+
+### Batches 5-7 Highlights
+
+- **Brahma Sphuta Siddhanta (628 CE)** — Brahmagupta's masterwork: the first text to treat zero as a number, rules for negative numbers, and a comprehensive astronomical system. Foundation of Indian mathematical astronomy. The Sudhakara Dvivedi edition (1902) is the standard Sanskrit critical text.
+- **Siddhanta Shiromani (1150 CE)** — Bhaskara II's "Crown Jewel of Siddhanta" in THREE editions: Ganitadhyaya (arithmetic/algebra), Goladhyaya with Marichi Bhashya (spherics + commentary), and a massive combined volume with Surya Siddhanta commentary. Over 5,600 pages total of pure Sanskrit mathematical astronomy.
+- **Vedanga Jyotish** — the OLDEST surviving Indian astronomical text (c. 1400-1200 BCE), part of the Vedic auxiliary literature. The starting point for the entire Jyotish tradition.
+- **Muhurta Ganapati & Muhurta Martanda** — two key electional astrology texts in Devanagari manuscript form. Muhurta (auspicious timing) is the most practically applied branch of Jyotish.
+- **Jataka Bharnam** — massive 963-page natal astrology text in Devanagari, one of the most detailed treatments of planetary effects in each house and sign.
+
+### Session 029 TOTAL: 59 books, ~30,600 pages
+
+---
+
+# Session 030: 2026-02-14 — New Import Sources: Bodleian, Cambridge, Vatican
+
+## Overview
+
+First acquisitions using three newly built import routes: Bodleian Library (Oxford), Cambridge Digital Library, and Vatican Library (DigiVatLib). All three sources provide IIIF-compatible manuscripts. Focus on Western esotericism: Hermetic manuscripts, alchemical collections, Kabbalistic texts, astrological treatises, and Newtonian alchemy.
+
+## Bodleian Library (Oxford)
+
+| Title | Author | Year | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Kitab al-Bulhan (Book of Wonders) | Abd al-Hasan al-Isfahani | 1390 | 366 | 699067cc249ce014347d4087 | Bodleian 5c9da286 |
+| Astrological Treatise (MS. Digby 83) | Unknown | 1200 | 44 | 699067d0249ce014347d41f8 | Bodleian e3c68140 |
+| Experimentarius and Geomancy Texts (MS. Digby 46) | Bernardus Silvestris | 1300 | 43 | 699067d3249ce014347d422a | Bodleian 10288d68 |
+| Medical and Herbal Texts (MS. Ashmole 1462) | Unknown | 1175 | 92 | 699067d6249ce014347d425b | Bodleian 393b5bb6 |
+
+### Bodleian Highlights
+
+- **Kitab al-Bulhan** — The "Book of Wonders," a 14th-century Arabic/Persian manuscript with extraordinary illustrated content: zodiacal figures, planetary deities, geomantic diagrams, and cosmological illustrations. One of Oxford's most visually stunning esoteric manuscripts. 366 folios of illuminated astrological and divinatory content.
+- **MS. Digby 83** — 12th-century astrological treatise, one of the earliest Latin astrological codices in the Bodleian's Digby collection. The Digby manuscripts are a core resource for medieval science and magic.
+- **MS. Digby 46** — Contains the *Experimentarius*, a medieval divinatory text attributed to Bernardus Silvestris, alongside geomancy texts. Key source for understanding medieval divination practices.
+- **MS. Ashmole 1462** — 12th-century medical and herbal compendium from the Ashmole collection — the same collection that houses Elias Ashmole's alchemical papers.
+
+## Cambridge Digital Library
+
+| Title | Author | Year | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Commentary on the Emerald Tablet | Isaac Newton | 1685 | 18 | 699067d9249ce014347d42bd | CUDL MS-KINGS-KEYNES-00028 |
+| Experimental Notes in Chemistry and Alchemy | Isaac Newton | 1690 | 114 | 699067db249ce014347d42d1 | CUDL MS-ADD-03973 |
+| Collection of Alchemical Works | Various | 1420 | 569 | 699067dd249ce014347d4345 | CUDL MS-ADD-04087 |
+
+### Cambridge Highlights
+
+- **Newton's Emerald Tablet Commentary** — Newton's own translation and commentary on the Tabula Smaragdina, the foundational Hermetic text. 18 folios in Newton's hand, written c. 1680-1690. One of the most important documents for understanding Newton's alchemical thought.
+- **Newton's Chemical/Alchemical Notebooks** — 114 pages of laboratory notes from Newton's most active alchemical period (1678-1696). Experimental procedures, reagent lists, and observations from his private furnace at Trinity College.
+- **MS-ADD-04087** — Massive 569-page medieval alchemical miscellany (c. 1400-1425) containing 31 distinct alchemical works in Latin. A treasure trove of pre-Paracelsian alchemy.
+
+## Vatican Library (DigiVatLib)
+
+| Title | Author | Year | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Liber Razielis Archangeli | Unknown (attrib. Angel Raziel) | 1350 | 444 | 699067e68da6face82f779a6 | Vatican Reg.lat.1300 |
+| Alchemical Miscellany | Various | 1430 | 370 | 699067eb249ce014347d4bf2 | Vatican Pal.lat.1329 |
+| Sefer ha-Zohar (Book of Splendour) | Moses de Leon | 1310 | 655 | 699067ef249ce014347d4e4f | Vatican Vat.ebr.226 |
+| Steganographia, Picatrix, and Paracelsian Texts | Various (Trithemius, Pseudo-Maslama, Paracelsus) | 1550 | 314 | 699067f4249ce014347d51cd | Vatican Reg.lat.1344 |
+| Hermetic and Alchemical Anthology | Various (Pseudo-Hermes, Pseudo-Arnald) | 1450 | 170 | 699067f8249ce014347d530c | Vatican Pal.lat.1328 |
+
+### Vatican Highlights
+
+- **Liber Razielis Archangeli** — The "Book of the Angel Raziel," a major text of Jewish and Christian angelic magic, here in its 14th-century Latin redaction. 444 pages of magical seals, divine names, planetary conjurations, and cosmological diagrams. One of the most important medieval magical manuscripts.
+- **Sefer ha-Zohar (Vat.ebr.226)** — A 1310-1311 Hebrew manuscript of the Zohar, the central text of Jewish Kabbalah. This is one of the EARLIEST surviving Zohar manuscripts, copied within a generation of Moses de Leon's death (1305). 655 pages. Extraordinary scholarly value.
+- **Reg.lat.1344** — A remarkable composite manuscript containing three of the most notorious texts of Renaissance magic: Trithemius's *Steganographia* (cryptographic angel magic), the *Picatrix* (Arabic astral magic translated to Latin), and Paracelsian medical/alchemical texts. All in one 16th-century codex.
+- **Pal.lat.1329** — Palatine Library alchemical miscellany from c. 1430, part of the great Heidelberg collection seized during the Thirty Years' War. Hermetic philosophical alchemy.
+- **Pal.lat.1328** — Companion volume to 1329, containing pseudo-Hermetic and pseudo-Arnaldian alchemical texts. Together these two Palatine manuscripts form a comprehensive 15th-century alchemical library.
+
+## Rejected
+
+| Title | Source | Reason |
+|-------|--------|--------|
+| MS. Ashmole 972 (Theatrum Chemicum Britannicum vol. 2) | Bodleian | Only 5 selected canvases digitized — not a usable acquisition |
+| Alchemical Texts with John Dee Annotations (MS-TRINITY-COLLEGE-O-00002-00047) | Cambridge | Already imported in previous batch |
+| List of Alchemical Writers (MS-KINGS-KEYNES-00013) | Cambridge | Already imported in previous batch |
+
+## Technical Notes
+
+- All imports used the new provider-specific import routes (`/api/import/bodleian`, `/api/import/cambridge`, `/api/import/vatican`)
+- These routes use the shared `importBookFromIIIF()` utility in `src/lib/import-utils.ts`
+- IIIF v2 and v3 manifests both handled automatically
+- Europeana route not tested (requires API key in production)
+- HAB Wolfenbuttel route ready but most HAB items lack IIIF manifests
+- Split detection queued for all imports
+
+## Session 030 TOTAL: 12 books, 3,199 pages
+
+---

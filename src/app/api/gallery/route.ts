@@ -57,7 +57,7 @@ export async function GET(request: NextRequest) {
       const p = prefix ? `${prefix}.` : '';
       const conditions: Record<string, unknown>[] = [
         { [`${p}bbox`]: { $exists: true } },
-        { [`${p}detection_source`]: { $in: ['vision_model', 'manual'] } },
+        { [`${p}detection_source`]: { $in: ['vision_model', 'manual', 'ocr_tag'] } },
       ];
       if (minQuality !== null) conditions.push({ [`${p}gallery_quality`]: { $gte: minQuality } });
       if (imageType) conditions.push({ [`${p}type`]: imageType });

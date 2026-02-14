@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { logGeminiCall } from '@/lib/gemini-logger';
-import { PROMPT_VERSION, extractPageType } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType, parseDetectedImages } from '@/lib/types/prompts/defaults';
 
 export const maxDuration = 300;
 
@@ -100,6 +100,7 @@ export async function GET(request: NextRequest) {
 
             if (job.type === 'ocr') {
               const pageType = extractPageType(text);
+              const detectedImages = parseDetectedImages(text);
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {
@@ -116,6 +117,7 @@ export async function GET(request: NextRequest) {
                       output_tokens: usage?.candidatesTokenCount || 0,
                     },
                     ...(pageType && { page_type: pageType }),
+                    ...(detectedImages.length > 0 && { detected_images: detectedImages }),
                     updated_at: now,
                   },
                 }

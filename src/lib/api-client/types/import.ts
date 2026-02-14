@@ -28,6 +28,68 @@ export interface ImportFromMDZRequest {
   original_language?: string;
 }
 
+export interface ImportFromBodleianRequest {
+  uuid: string;
+  title: string;
+  author: string;
+  display_title?: string;
+  language?: string;
+  published?: string;
+  categories?: string[];
+}
+
+export interface ImportFromCambridgeRequest {
+  ms_id: string;
+  title: string;
+  author: string;
+  display_title?: string;
+  language?: string;
+  published?: string;
+  categories?: string[];
+}
+
+export interface ImportFromHABRequest {
+  hab_id: string;
+  manifest_url?: string;
+  title: string;
+  author: string;
+  display_title?: string;
+  language?: string;
+  published?: string;
+  categories?: string[];
+}
+
+export interface ImportFromVaticanRequest {
+  mss_id: string;
+  title: string;
+  author: string;
+  display_title?: string;
+  language?: string;
+  published?: string;
+  categories?: string[];
+}
+
+export interface ImportFromGoogleBooksRequest {
+  google_books_id: string;
+  title: string;
+  author: string;
+  display_title?: string;
+  language?: string;
+  published?: string;
+  categories?: string[];
+}
+
+export interface ImportFromEuropeanaRequest {
+  record_id: string;
+  title: string;
+  author: string;
+  display_title?: string;
+  language?: string;
+  published?: string;
+  categories?: string[];
+  manifest_url?: string;
+}
+
 export interface ImportResponse {
   book_id: string;
   book: Book;
