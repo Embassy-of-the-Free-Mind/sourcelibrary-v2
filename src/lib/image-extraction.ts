@@ -55,6 +55,56 @@ MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer see
 
 Return ONLY a valid JSON array. If no illustrations, return: []`;
 
+/**
+ * Build OCR-aware context to append to extraction prompt.
+ * Gives the model text layout awareness for better bounding boxes.
+ */
+function buildOcrContext(ocrData: string): string {
+  const parts: string[] = [];
+
+  // Extract page-type
+  const pageTypeMatch = ocrData.match(/<page-type>([\s\S]*?)<\/page-type>/i);
+  if (pageTypeMatch) {
+    parts.push(`Page type: ${pageTypeMatch[1].trim()}`);
+  }
+
+  // Extract preliminary image detections from OCR
+  const imgMatch = ocrData.match(/<detected-images>([\s\S]*?)<\/detected-images>/i);
+  if (imgMatch) {
+    try {
+      const preliminary = JSON.parse(imgMatch[1].trim());
+      if (Array.isArray(preliminary) && preliminary.length > 0) {
+        parts.push(`OCR detected ${preliminary.length} preliminary image(s):`);
+        for (const img of preliminary) {
+          const bbox = img.bbox ? `bbox={x:${img.bbox.x},y:${img.bbox.y},w:${img.bbox.width},h:${img.bbox.height}}` : 'no bbox';
+          parts.push(`  - "${img.description || '?'}" (${img.type || '?'}, ${bbox})`);
+        }
+        parts.push('These are rough estimates from OCR. Refine the bounding boxes to tightly enclose each illustration.');
+      }
+    } catch {
+      // malformed JSON, skip
+    }
+  }
+
+  // Summarize text layout — where text blocks are helps locate image regions
+  const textLines = ocrData
+    .replace(/<[^>]+>/g, '') // strip tags
+    .split('\n')
+    .filter(l => l.trim().length > 0);
+  const totalLines = textLines.length;
+
+  if (totalLines === 0) {
+    parts.push('This page has no transcribed text — likely a full-page illustration.');
+  } else if (totalLines < 5) {
+    parts.push(`Minimal text (${totalLines} lines) — mostly illustration with brief captions or labels.`);
+  } else {
+    parts.push(`Text-heavy page (${totalLines} lines). Illustrations are embedded between or alongside text blocks.`);
+  }
+
+  if (parts.length === 0) return '';
+  return '\n\nOCR CONTEXT (use to improve bounding box accuracy):\n' + parts.join('\n');
+}
+
 export interface ImageMetadata {
   subjects?: string[];
   figures?: string[];
@@ -113,12 +163,12 @@ export async function extractWithGemini(
 export async function extractWithGemini(
   imageUrl: string,
   model: string,
-  options: { returnUsage: true }
+  options: { returnUsage: true; ocrData?: string }
 ): Promise<ExtractionResult>;
 export async function extractWithGemini(
   imageUrl: string,
   model: string = DEFAULT_MODEL,
-  options?: { returnUsage: true }
+  options?: { returnUsage?: true; ocrData?: string }
 ): Promise<DetectedImage[] | ExtractionResult> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -131,6 +181,10 @@ export async function extractWithGemini(
     ? { base64: imageData, mimeType: getMimeType(imageUrl, null) }
     : { base64: imageData.base64, mimeType: imageData.mimeType };
 
+  // Build prompt — append OCR context if available for better bounding boxes
+  const ocrContext = options?.ocrData ? buildOcrContext(options.ocrData) : '';
+  const prompt = IMAGE_EXTRACTION_PROMPT + ocrContext;
+
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
     {
@@ -139,7 +193,7 @@ export async function extractWithGemini(
       body: JSON.stringify({
         contents: [{
           parts: [
-            { text: IMAGE_EXTRACTION_PROMPT },
+            { text: prompt },
             { inline_data: { mime_type: mimeType, data: base64Image } }
           ]
         }],

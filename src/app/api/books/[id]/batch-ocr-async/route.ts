@@ -19,6 +19,8 @@ import { PROMPT_VERSION, extractPageType, parseDetectedImages } from '@/lib/type
  * GET /api/books/[id]/batch-ocr-async?jobName=xxx - Check job status
  */
 
+export const maxDuration = 300; // 5 minutes for large books (image downloads)
+
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
 // Build image URL for a page

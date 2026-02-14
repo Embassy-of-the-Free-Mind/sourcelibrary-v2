@@ -92,8 +92,9 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   const startTime = Date.now();
 
   try {
-    // Extract images with AI vision (with usage tracking)
-    const result = await extractWithGemini(imageUrl, modelId, { returnUsage: true });
+    // Pass OCR data if available — helps model place bounding boxes accurately
+    const ocrData = (page.ocr?.data && typeof page.ocr.data === 'string') ? page.ocr.data : undefined;
+    const result = await extractWithGemini(imageUrl, modelId, { returnUsage: true, ocrData });
     const durationMs = Date.now() - startTime;
 
     // Save results to page

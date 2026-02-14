@@ -292,6 +292,13 @@ export async function importBookFromIIIF(
         : {}),
     },
     status: 'draft',
+    pipeline_auto: {
+      status: 'queued',
+      source: 'import',
+      queued_at: new Date(),
+      last_updated: new Date(),
+      retry_count: 0,
+    },
     created_at: new Date(),
     updated_at: new Date(),
   };
@@ -346,6 +353,15 @@ export async function importBookFromIIIF(
     method: 'GET',
   }).catch(() => {
     console.log(`[Import] Split check queued for ${bookIdStr}`);
+  });
+
+  // Kick off image archiving (non-blocking, first batch)
+  fetch(`${baseUrl}/api/books/${bookIdStr}/archive-images`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ limit: 50 }),
+  }).catch(() => {
+    console.log(`[Import] Archive kick-off queued for ${bookIdStr}`);
   });
 
   // Notify search engines (non-blocking)
