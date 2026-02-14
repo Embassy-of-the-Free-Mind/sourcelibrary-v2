@@ -5354,9 +5354,23 @@ Also failed: Hanuman Jyotish Kannada (PDF-only, no IIIF), Bhrigu Samhita Phalita
 - **30 completed with errors** — 3,597 OK, 2,242 failed (almost all phantom books)
 - **Real success rate: >99%** on books with actual images
 
-### Session 029 TOTAL: ~307 books, ~100,000 pages
+### Batch 35: Additional Editions and Regional Texts (10 books, ~5,448 pages)
 
-This is the largest single acquisition session in Source Library history. The collection now covers every major branch of Sanskrit jyotish shastra — siddhanta, hora, samhita, muhurta, prashna, svarodaya, samudrika, ganita — with texts by every canonical author from Parashara and Varahamihira through Bhattotpala, Bhaskaracharya, and Kamalakara. The eGangotri manuscript collection (Batches 30-33) adds ~85 handwritten manuscripts, a unique primary source corpus not available through any other digital library.
+Multi-language expansion — Tamil, Telugu, and Hindi editions alongside new Sanskrit manuscripts:
+- **Saptarishi Nadi — Kanya Lagnam (Tamil, 1,577p)** — Major Tamil nadi astrology text from Govt Oriental MSS Library Madras, C.G. Rajan edition (1961). Complements the Mesha Lagnam volume already imported.
+- **Saravali (Telugu, 1,105p)** — 1935 Vavila Ramaswamisastrulu edition. Rare Telugu rendering of Kalyanavarma's classic.
+- **Deva Keralam (Hindi, 828p)** — Hindi edition of the Chandrakala Nadi, complementing the Sanskrit 3-volume set.
+- **Muhurta Chintamani (Hindi, 472p)** — Hindi edition of Ram Daivajna's electional astrology text.
+- **Tajika Nilakanthi with Gangadhara Mishra Commentary (370p)** — 1976 Chowkhamba Sanskrit Series edition.
+- **Sarvartha Chintamani (Punjab University MS 1221, 343p)** — Manuscript copy from Punjab University Chandigarh.
+- **Saravali with Kanti Mati Hindi Commentary (286p)** — Dr. Muralidhar Chaturvedi's scholarly Hindi commentary.
+- **Phaladeepika (Telugu, 238p)** — Telugu edition of Mantreshwara's natal astrology text.
+- **Jataka Parijata (1922 Sanskrit edition, 134p)** — Early 20th century Bharatiya Vidya Bhavan edition.
+- **Satyajatakam Dhruva Nadi (95p)** — Dhruva Nadi predictive astrology text.
+
+### Session 029 TOTAL: ~317 books, ~105,000 pages
+
+The largest single acquisition session in Source Library history. The collection now covers every major branch of Sanskrit jyotish shastra — siddhanta, hora, samhita, muhurta, prashna, svarodaya, samudrika, ganita — with texts by every canonical author from Parashara and Varahamihira through Bhattotpala, Bhaskaracharya, and Kamalakara. The eGangotri manuscript collection (Batches 30-33) adds ~85 handwritten manuscripts, a unique primary source corpus. Batch 35 extends coverage to Tamil nadi traditions and Telugu jyotish literature.
 
 ---
 
