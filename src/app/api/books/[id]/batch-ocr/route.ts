@@ -54,6 +54,8 @@ export async function POST(
     const {
       limit = 25,
       dryRun = false,
+      force = false,
+      start_page = 0,
       model: modelId = DEFAULT_MODEL,
     } = await request.json().catch(() => ({}));
 
@@ -68,16 +70,22 @@ export async function POST(
     // Use book's original_language if set, otherwise auto-detect
     const language = book.original_language || '';
 
-    // Find pages that need OCR
+    // Find pages that need OCR (or all pages with photos if force=true)
+    const pageFilter: Record<string, unknown> = {
+      book_id: bookId,
+      $or: [
+        { photo: { $exists: true, $ne: null } },
+        { photo_original: { $exists: true, $ne: null } }
+      ],
+    };
+    if (!force) {
+      pageFilter['ocr.data'] = { $exists: false };
+    }
+    if (start_page > 0) {
+      pageFilter.page_number = { $gte: start_page };
+    }
     const pagesToProcess = await db.collection('pages')
-      .find({
-        book_id: bookId,
-        $or: [
-          { photo: { $exists: true, $ne: null } },
-          { photo_original: { $exists: true, $ne: null } }
-        ],
-        'ocr.data': { $exists: false }
-      })
+      .find(pageFilter)
       .sort({ page_number: 1 })
       .limit(limit)
       .toArray();
