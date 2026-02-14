@@ -6,10 +6,10 @@ export const maxDuration = 300;
 
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
 const ENROLL_LIMIT = 10;
-const ARCHIVE_LIMIT = 3;
-const OCR_SUBMIT_LIMIT = 2;
-const TRANSLATE_SUBMIT_LIMIT = 2;
-const ENRICH_LIMIT = 1;
+const ARCHIVE_LIMIT = 20; // Just DB checks now — Hetzner does actual archiving
+const OCR_SUBMIT_LIMIT = 5;
+const TRANSLATE_SUBMIT_LIMIT = 5;
+const ENRICH_LIMIT = 2;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 
@@ -110,58 +110,50 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 1: Archive images (queued -> archiving -> archive_complete) ──
+    // ── Phase 1: Archive check (queued/archiving -> archive_complete) ──
+    // Archiving is done externally by Hetzner's archive-images-fast.ts script.
+    // The cron just checks MongoDB to see if all pages are archived and advances status.
     if (hasTimeBudget(startTime)) {
-      // Start archiving for queued books
+      const ARCHIVABLE_SOURCES = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian/;
+
+      // Move queued books to archiving
       const queuedBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'queued' })
-        .project({ id: 1, title: 1 })
+        .project({ id: 1 })
         .limit(ARCHIVE_LIMIT)
         .toArray();
 
       for (const book of queuedBooks) {
         if (!hasTimeBudget(startTime)) break;
         await setPipelineStatus(db, book.id, 'archiving', { started_at: new Date() });
+        log.archived++;
       }
 
-      // Continue archiving for books in archiving state
+      // Check archiving books for completion (pages archived by Hetzner script)
       const archivingBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archiving' })
-        .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1 })
-        .limit(ARCHIVE_LIMIT)
+        .project({ id: 1 })
+        .limit(20) // Check many — this is just a DB query, not I/O
         .toArray();
 
       for (const book of archivingBooks) {
         if (!hasTimeBudget(startTime)) break;
-        try {
-          const res = await fetch(`${baseUrl}/api/books/${book.id}/archive-images`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ limit: 50 }),
-          });
 
-          if (!res.ok) {
-            const retries = book.pipeline_auto?.retry_count || 0;
-            if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Archive failed: HTTP ${res.status}`, retries);
-            } else {
-              await setPipelineStatus(db, book.id, 'archiving', { retry_count: retries + 1 });
-            }
-            log.errors.push(`Archive ${book.id}: HTTP ${res.status}`);
-            continue;
-          }
+        // Count pages still needing archiving from external sources
+        const remaining = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          archived_photo: { $exists: false },
+          $or: [
+            { photo: { $regex: ARCHIVABLE_SOURCES } },
+            { photo_original: { $regex: ARCHIVABLE_SOURCES } },
+          ],
+        });
 
-          const data = await res.json();
+        if (remaining === 0) {
+          await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
           log.archived++;
-
-          // Check if archiving is complete (no remaining pages)
-          if ((data.remaining || 0) === 0) {
-            await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
-          }
-          // Otherwise stays in 'archiving' — next invocation continues
-        } catch (err) {
-          log.errors.push(`Archive ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
         }
+        // Otherwise Hetzner is still working — check again next cycle
       }
     }
 
