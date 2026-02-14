@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
-import { POST as batchOcrPost } from '@/app/api/books/[id]/batch-ocr-async/route';
-import { POST as batchTranslatePost } from '@/app/api/books/[id]/batch-translate-async/route';
 
 export const maxDuration = 300;
 
@@ -16,8 +14,8 @@ const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 
 function getBaseUrl(): string {
-  // Use production URL for external calls (enrichment).
-  // OCR/translate use direct imports — no HTTP needed.
+  // Always use the production URL for all HTTP calls.
+  // Internal Vercel routing causes 405 errors; external calls work fine.
   return process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
 }
 
@@ -171,26 +169,30 @@ export async function GET(request: NextRequest) {
       for (const book of readyForOcr) {
         if (!hasTimeBudget(startTime)) break;
         try {
-          // Call batch-ocr-async directly (avoids internal HTTP 405 routing issues)
-          const fakeReq = new NextRequest(
-            `http://localhost/api/books/${book.id}/batch-ocr-async`,
-            {
-              method: 'POST',
-              body: JSON.stringify({ limit: book.pages_count || 500 }),
-              headers: { 'Content-Type': 'application/json' },
-            }
-          );
-          const res = await batchOcrPost(fakeReq, {
-            params: Promise.resolve({ id: book.id }),
+          // Limit to 100 pages per batch to avoid Vercel timeout
+          // (batch-ocr-async fetches all images as base64 before submitting)
+          const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
+            method: 'POST',
+            body: JSON.stringify({ limit: 100 }),
+            headers: { 'Content-Type': 'application/json' },
           });
-          const data = await res.json();
+          if (!res.ok) {
+            log.errors.push(`OCR submit ${book.id}: HTTP ${res.status}`);
+            continue;
+          }
+          const text = await res.text();
+          let data: Record<string, unknown>;
+          try { data = JSON.parse(text); } catch {
+            log.errors.push(`OCR submit ${book.id}: invalid JSON (${text.length} chars)`);
+            continue;
+          }
 
           if (data.jobName) {
             await setPipelineStatus(db, book.id, 'ocr_submitted', {
-              ocr_job_name: data.jobName,
+              ocr_job_name: data.jobName as string,
             });
             log.ocr_submitted++;
-          } else if (data.processed === 0 || data.message?.includes('No pages need OCR')) {
+          } else if (data.processed === 0 || (data.message as string)?.includes('No pages need OCR')) {
             // Already OCR'd — skip to translate
             await setPipelineStatus(db, book.id, 'ocr_complete');
             log.ocr_advanced++;
@@ -256,26 +258,28 @@ export async function GET(request: NextRequest) {
       for (const book of readyForTranslate) {
         if (!hasTimeBudget(startTime)) break;
         try {
-          // Call batch-translate-async directly (avoids internal HTTP routing issues)
-          const fakeReq = new NextRequest(
-            `http://localhost/api/books/${book.id}/batch-translate-async`,
-            {
-              method: 'POST',
-              body: JSON.stringify({ limit: book.pages_count || 500 }),
-              headers: { 'Content-Type': 'application/json' },
-            }
-          );
-          const res = await batchTranslatePost(fakeReq, {
-            params: Promise.resolve({ id: book.id }),
+          const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
+            method: 'POST',
+            body: JSON.stringify({ limit: 100 }),
+            headers: { 'Content-Type': 'application/json' },
           });
-          const data = await res.json();
+          if (!res.ok) {
+            log.errors.push(`Translate submit ${book.id}: HTTP ${res.status}`);
+            continue;
+          }
+          const text = await res.text();
+          let data: Record<string, unknown>;
+          try { data = JSON.parse(text); } catch {
+            log.errors.push(`Translate submit ${book.id}: invalid JSON (${text.length} chars)`);
+            continue;
+          }
 
           if (data.jobName) {
             await setPipelineStatus(db, book.id, 'translate_submitted', {
-              translate_job_name: data.jobName,
+              translate_job_name: data.jobName as string,
             });
             log.translate_submitted++;
-          } else if (data.processed === 0 || data.message?.includes('No pages need translation')) {
+          } else if (data.processed === 0 || (data.message as string)?.includes('No pages need translation')) {
             await setPipelineStatus(db, book.id, 'translate_complete');
             log.translate_advanced++;
           } else {

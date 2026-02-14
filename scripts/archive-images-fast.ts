@@ -48,6 +48,10 @@ const SOURCE_PATTERNS: Record<string, RegExp> = {
   wellcome: /wellcomecollection/,
   erara: /e-rara/,
   s3: /s3\.amazonaws\.com/,
+  vatican: /digi\.vatlib\.it/,
+  bodleian: /digital\.bodleian/,
+  cambridge: /cudl\.lib\.cam/,
+  hab: /diglib\.hab\.de/,
 };
 
 function detectSource(url: string): string {
