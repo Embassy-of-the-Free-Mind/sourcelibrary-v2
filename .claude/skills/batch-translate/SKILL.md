@@ -39,60 +39,47 @@ This workflow handles the full processing pipeline for historical book scans:
 |----------|---------|
 | `GET /api/books` | List all books |
 | `GET /api/books/BOOK_ID` | Get book with all pages |
-| `POST /api/jobs` | Create a processing job |
-| `POST /api/jobs/JOB_ID/process` | Process next chunk of a job |
-| `POST /api/process/batch-ocr` | OCR up to 5 pages directly |
-| `POST /api/process/batch-translate` | Translate up to 10 pages directly |
+| `POST /api/jobs/queue-books` | Queue pages for Lambda worker processing (primary path) |
+| `GET /api/jobs` | List processing jobs |
+| `POST /api/jobs/JOB_ID/retry` | Retry failed pages in a job |
+| `POST /api/jobs/JOB_ID/cancel` | Cancel a running job |
+| `POST /api/books/BOOK_ID/batch-ocr-async` | Submit Gemini Batch API OCR job (50% cheaper, ~24h) |
+| `POST /api/books/BOOK_ID/batch-translate-async` | Submit Gemini Batch API translation job |
 
-## Batch Processing Options
+## Processing Options
 
-### Option 1: Vercel Cron (Recommended for Bulk)
+### Option 1: Lambda Workers via Job System (Primary Path)
 
-Two serverless functions automate the entire batch OCR pipeline:
-
-| Endpoint | Purpose | Schedule |
-|----------|---------|----------|
-| `POST /api/cron/submit-ocr` | Creates batch jobs for all pages needing OCR | Daily midnight |
-| `POST /api/cron/batch-processor` | Downloads results, saves to DB | Every 6 hours |
+The primary processing path uses AWS Lambda workers via SQS queues. Each page is processed independently with automatic job tracking.
 
 ```bash
-# Manual trigger - submit all pending OCR
-curl -X POST https://sourcelibrary.org/api/cron/submit-ocr
+# Queue OCR for a book's pages
+curl -s -X POST "https://sourcelibrary.org/api/jobs/queue-books" \
+  -H "Content-Type: application/json" \
+  -d '{"bookIds": ["BOOK_ID"], "action": "ocr"}'
 
-# Manual trigger - process completed batches
-curl -X POST https://sourcelibrary.org/api/cron/batch-processor
+# Queue translation
+curl -s -X POST "https://sourcelibrary.org/api/jobs/queue-books" \
+  -H "Content-Type: application/json" \
+  -d '{"bookIds": ["BOOK_ID"], "action": "translation"}'
+
+# Queue image extraction
+curl -s -X POST "https://sourcelibrary.org/api/jobs/queue-books" \
+  -H "Content-Type: application/json" \
+  -d '{"bookIds": ["BOOK_ID"], "action": "image_extraction"}'
 ```
-
-**Timeline:**
-- T+0h: Submit batch jobs
-- T+2-24h: Gemini processing
-- T+24h: Batch processor saves results (runs every 6h)
-
-**Critical:** Results expire after 48h - batch-processor must run at least once every 48 hours.
-
-See `docs/BATCH-OCR-CRON-SETUP.md` for full documentation.
-
-### Option 2: Job System (for targeted processing)
-
-All batch jobs use **Gemini Batch API** for 50% cost savings.
-
-| Job Type | API | Model | Cost |
-|----------|-----|-------|------|
-| Single page | Realtime | gemini-3-flash-preview | Full price |
-| batch_ocr | Batch API | gemini-3-flash-preview | **50% off** |
-| batch_translate | Batch API | gemini-3-flash-preview | **50% off** |
 
 **IMPORTANT: Always use `gemini-3-flash-preview` for all OCR and translation tasks. Do NOT use `gemini-2.5-flash`.**
 
-See `docs/BATCH-PROCESSING.md` for full documentation.
+### Option 2: Gemini Batch API (50% Cheaper, Automated Pipeline)
 
-### How Batch Jobs Work
+The post-import-pipeline cron uses Gemini Batch API for automated processing of newly imported books. Results arrive in ~24 hours at 50% cost.
 
-1. **Create job** → `use_batch_api: true` automatically set
-2. **Call `/process` repeatedly** → Each call prepares 20 pages
-3. **When all prepared** → Submits to Gemini Batch API
-4. **Call `/process` again** → Polls for results (ready in 2-24 hours)
-5. **When done** → Results saved, job complete
+| Job Type | API | Model | Cost |
+|----------|-----|-------|------|
+| Single page | Realtime (Lambda) | gemini-3-flash-preview | Full price |
+| batch_ocr | Batch API | gemini-3-flash-preview | **50% off** |
+| batch_translate | Batch API | gemini-3-flash-preview | **50% off** |
 
 ## OCR Output Format
 
@@ -214,24 +201,21 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs" \
   }"
 ```
 
-### Option B: Using Batch API Directly (for small batches or overwrites)
+### Option B: Using Lambda Workers with Page IDs
 
 ```bash
-# OCR with overwrite (for fixing bad OCR)
-curl -s -X POST "https://sourcelibrary.org/api/process/batch-ocr" \
+# OCR specific pages (including overwrite)
+curl -s -X POST "https://sourcelibrary.org/api/jobs/queue-books" \
   -H "Content-Type: application/json" \
   -d '{
-    "pages": [
-      {"pageId": "PAGE_ID_1", "imageUrl": "", "pageNumber": 0},
-      {"pageId": "PAGE_ID_2", "imageUrl": "", "pageNumber": 0}
-    ],
-    "language": "Latin",
-    "model": "gemini-3-flash-preview",
+    "bookIds": ["BOOK_ID"],
+    "action": "ocr",
+    "pageIds": ["PAGE_ID_1", "PAGE_ID_2"],
     "overwrite": true
   }'
 ```
 
-The batch-ocr API automatically uses `cropped_photo` when available.
+Lambda workers automatically use `cropped_photo` when available.
 
 ## Step 4: Translate Pages
 
@@ -254,36 +238,26 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs" \
   }"
 ```
 
-### Option B: Using Batch API with Context
+### Option B: Using Lambda Workers (Recommended)
 
-For better continuity, translate with previous page context:
+Lambda FIFO queue automatically provides previous page context for translation continuity:
 
 ```bash
-# Get pages sorted by page number with OCR text (check for empty strings)
-PAGES=$(jq '[.pages | sort_by(.page_number) | .[] |
-  select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) |
-  {pageId: .id, ocrText: .ocr.data, pageNumber: .page_number}]' /tmp/book.json)
-
-# Translate with context (process in batches of 5-10)
-curl -s -X POST "https://sourcelibrary.org/api/process/batch-translate" \
+# Queue translation for pages that have OCR but no translation
+curl -s -X POST "https://sourcelibrary.org/api/jobs/queue-books" \
   -H "Content-Type: application/json" \
-  -d "{
-    \"pages\": $BATCH,
-    \"model\": \"gemini-3-flash-preview\",
-    \"sourceLanguage\": \"Latin\",
-    \"targetLanguage\": \"English\",
-    \"previousContext\": \"PREVIOUS_PAGE_TRANSLATION_TEXT\"
-  }"
+  -d '{"bookIds": ["BOOK_ID"], "action": "translation"}'
 ```
+
+The translation Lambda worker processes pages sequentially via FIFO queue and fetches the previous page's translation for context.
 
 ## Complete Book Processing Script
 
-Process a single book through the full pipeline:
+Process a single book through the full pipeline using Lambda workers:
 
 ```bash
 #!/bin/bash
 BOOK_ID="YOUR_BOOK_ID"
-MODEL="gemini-3-flash-preview"
 BASE_URL="https://sourcelibrary.org"
 
 # 1. Fetch book data
@@ -292,72 +266,27 @@ BOOK=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
 TITLE=$(echo "$BOOK" | jq -r '.title[0:40]')
 echo "Processing: $TITLE"
 
-# 2. Generate missing crops
-NEEDS_CROP=$(echo "$BOOK" | jq '[.pages[] | select(.crop) | select(.cropped_photo | not)] | length')
-if [ "$NEEDS_CROP" != "0" ]; then
-  echo "Generating $NEEDS_CROP cropped images..."
-  CROP_IDS=$(echo "$BOOK" | jq '[.pages[] | select(.crop) | select(.cropped_photo | not) | .id]')
-  JOB=$(curl -s -X POST "$BASE_URL/api/jobs" -H "Content-Type: application/json" \
-    -d "{\"type\":\"generate_cropped_images\",\"book_id\":\"$BOOK_ID\",\"page_ids\":$CROP_IDS}")
-  JOB_ID=$(echo "$JOB" | jq -r '.job.id')
-
-  while true; do
-    RESULT=$(curl -s -X POST "$BASE_URL/api/jobs/$JOB_ID/process")
-    [ "$(echo "$RESULT" | jq -r '.done')" = "true" ] && break
-    sleep 2
-  done
-  echo "Crops complete!"
-  BOOK=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
-fi
-
-# 3. OCR missing pages (check for empty strings, not just null)
+# 2. Queue OCR (Lambda workers handle all pages automatically)
 NEEDS_OCR=$(echo "$BOOK" | jq '[.pages[] | select((.ocr.data // "") | length == 0)] | length')
 if [ "$NEEDS_OCR" != "0" ]; then
-  echo "OCRing $NEEDS_OCR pages..."
-  OCR_IDS=$(echo "$BOOK" | jq '[.pages[] | select((.ocr.data // "") | length == 0) | .id]')
-
-  TOTAL=$(echo "$OCR_IDS" | jq 'length')
-  for ((i=0; i<TOTAL; i+=5)); do
-    BATCH=$(echo "$OCR_IDS" | jq ".[$i:$((i+5))] | [.[] | {pageId: ., imageUrl: \"\", pageNumber: 0}]")
-    curl -s -X POST "$BASE_URL/api/process/batch-ocr" -H "Content-Type: application/json" \
-      -d "{\"pages\":$BATCH,\"model\":\"$MODEL\"}" > /dev/null
-    echo -n "."
-  done
-  echo " OCR complete!"
-  BOOK=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
+  echo "Queueing OCR for $NEEDS_OCR pages..."
+  curl -s -X POST "$BASE_URL/api/jobs/queue-books" \
+    -H "Content-Type: application/json" \
+    -d "{\"bookIds\": [\"$BOOK_ID\"], \"action\": \"ocr\"}"
+  echo "OCR job queued!"
 fi
 
-# 4. Translate with context (check for empty strings)
+# 3. Queue translation (after OCR completes — check /jobs page)
 NEEDS_TRANS=$(echo "$BOOK" | jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0)] | length')
 if [ "$NEEDS_TRANS" != "0" ]; then
-  echo "Translating $NEEDS_TRANS pages..."
-  PAGES=$(echo "$BOOK" | jq '[.pages | sort_by(.page_number) | .[] |
-    select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) |
-    {pageId: .id, ocrText: .ocr.data, pageNumber: .page_number}]')
-
-  TOTAL=$(echo "$PAGES" | jq 'length')
-  PREV_CONTEXT=""
-
-  for ((i=0; i<TOTAL; i+=5)); do
-    BATCH=$(echo "$PAGES" | jq ".[$i:$((i+5))]")
-
-    if [ -n "$PREV_CONTEXT" ]; then
-      RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-translate" -H "Content-Type: application/json" \
-        -d "{\"pages\":$BATCH,\"model\":\"$MODEL\",\"previousContext\":$(echo "$PREV_CONTEXT" | jq -Rs .)}")
-    else
-      RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-translate" -H "Content-Type: application/json" \
-        -d "{\"pages\":$BATCH,\"model\":\"$MODEL\"}")
-    fi
-
-    # Get last translation for context
-    LAST_ID=$(echo "$BATCH" | jq -r '.[-1].pageId')
-    PREV_CONTEXT=$(echo "$RESP" | jq -r ".translations[\"$LAST_ID\"] // \"\"" | head -c 1500)
-    echo -n "."
-  done
-  echo " Translation complete!"
+  echo "Queueing translation for $NEEDS_TRANS pages..."
+  curl -s -X POST "$BASE_URL/api/jobs/queue-books" \
+    -H "Content-Type: application/json" \
+    -d "{\"bookIds\": [\"$BOOK_ID\"], \"action\": \"translation\"}"
+  echo "Translation job queued!"
 fi
 
-echo "Book processing complete!"
+echo "Jobs queued! Monitor progress at $BASE_URL/jobs"
 ```
 
 ## Fixing Bad OCR
@@ -371,152 +300,35 @@ When pages were OCR'd before cropped images existed, they contain text from both
 BAD_OCR_IDS=$(jq '[.pages[] | select(.crop) | select(.ocr.data) |
   select(.ocr.data | test("two-page|spread"; "i")) | .id]' /tmp/book.json)
 
-# 3. Re-OCR with overwrite
-TOTAL=$(echo "$BAD_OCR_IDS" | jq 'length')
-for ((i=0; i<TOTAL; i+=5)); do
-  BATCH=$(echo "$BAD_OCR_IDS" | jq ".[$i:$((i+5))] | [.[] | {pageId: ., imageUrl: \"\", pageNumber: 0}]")
-  curl -s -X POST "https://sourcelibrary.org/api/process/batch-ocr" \
-    -H "Content-Type: application/json" \
-    -d "{\"pages\":$BATCH,\"model\":\"gemini-3-flash-preview\",\"overwrite\":true}"
-done
+# 3. Re-OCR with overwrite via Lambda workers
+curl -s -X POST "https://sourcelibrary.org/api/jobs/queue-books" \
+  -H "Content-Type: application/json" \
+  -d "{\"bookIds\": [\"BOOK_ID\"], \"action\": \"ocr\", \"pageIds\": $BAD_OCR_IDS, \"overwrite\": true}"
 ```
 
 ## Processing All Books
 
-### Optimized Batch Script (Tier 1)
-
-This script processes all books with proper rate limiting:
+Use the Lambda worker job system for bulk processing:
 
 ```bash
 #!/bin/bash
-# Optimized for Tier 1 (300 RPM) - adjust SLEEP_TIME for other tiers
-
 BASE_URL="https://sourcelibrary.org"
-# IMPORTANT: Always use gemini-3-flash-preview, NOT gemini-2.5-flash
-MODEL="gemini-3-flash-preview"
-BATCH_SIZE=5
-SLEEP_TIME=0.4  # Tier 1: 0.4s, Tier 2: 0.12s, Tier 3: 0.06s
 
-process_book() {
-  BOOK_ID="$1"
-  BOOK_DATA=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
-  TITLE=$(echo "$BOOK_DATA" | jq -r '.title[0:30]')
+# Get all book IDs
+BOOK_IDS=$(curl -s "$BASE_URL/api/books" | jq -r '[.[].id]')
 
-  # Check what's needed (IMPORTANT: empty string detection)
-  NEEDS_CROP=$(echo "$BOOK_DATA" | jq '[.pages[] | select(.crop) | select(.cropped_photo | not)] | length')
-  NEEDS_OCR=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length == 0)] | length')
-  NEEDS_TRANSLATE=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0)] | length')
+# Queue OCR for all books (Lambda workers handle parallelism and rate limiting)
+curl -s -X POST "$BASE_URL/api/jobs/queue-books" \
+  -H "Content-Type: application/json" \
+  -d "{\"bookIds\": $BOOK_IDS, \"action\": \"ocr\"}"
 
-  if [ "$NEEDS_CROP" = "0" ] && [ "$NEEDS_OCR" = "0" ] && [ "$NEEDS_TRANSLATE" = "0" ]; then
-    echo "SKIP: $TITLE"
-    return
-  fi
-
-  echo "START: $TITLE [crop:$NEEDS_CROP ocr:$NEEDS_OCR trans:$NEEDS_TRANSLATE]"
-
-  # Step 1: Crops
-  if [ "$NEEDS_CROP" != "0" ]; then
-    CROP_IDS=$(echo "$BOOK_DATA" | jq '[.pages[] | select(.crop) | select(.cropped_photo | not) | .id]')
-    JOB_RESP=$(curl -s -X POST "$BASE_URL/api/jobs" \
-      -H 'Content-Type: application/json' \
-      -d "{\"type\": \"generate_cropped_images\", \"book_id\": \"$BOOK_ID\", \"page_ids\": $CROP_IDS}")
-    JOB_ID=$(echo "$JOB_RESP" | jq -r '.job.id')
-
-    if [ "$JOB_ID" != "null" ]; then
-      while true; do
-        RESULT=$(curl -s -X POST "$BASE_URL/api/jobs/$JOB_ID/process")
-        [ "$(echo "$RESULT" | jq -r '.done')" = "true" ] && break
-        sleep 1
-      done
-    fi
-    BOOK_DATA=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
-  fi
-
-  # Step 2: OCR
-  NEEDS_OCR=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length == 0)] | length')
-  if [ "$NEEDS_OCR" != "0" ]; then
-    OCR_IDS=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length == 0) | .id]')
-    TOTAL_OCR=$(echo "$OCR_IDS" | jq 'length')
-
-    for ((i=0; i<TOTAL_OCR; i+=BATCH_SIZE)); do
-      BATCH=$(echo "$OCR_IDS" | jq ".[$i:$((i+BATCH_SIZE))]")
-      PAGES=$(echo "$BATCH" | jq '[.[] | {pageId: ., imageUrl: "", pageNumber: 0}]')
-
-      RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-ocr" \
-        -H 'Content-Type: application/json' \
-        -d "{\"pages\": $PAGES, \"model\": \"$MODEL\"}")
-
-      if echo "$RESP" | grep -q "429\|rate"; then
-        echo "RATE_LIMIT: $TITLE - backing off 10s"
-        sleep 10
-        i=$((i-BATCH_SIZE))  # Retry this batch
-      fi
-      sleep $SLEEP_TIME
-    done
-    echo "OCR_DONE: $TITLE"
-    BOOK_DATA=$(curl -s "$BASE_URL/api/books/$BOOK_ID")
-  fi
-
-  # Step 3: Translate with context
-  NEEDS_TRANSLATE=$(echo "$BOOK_DATA" | jq '[.pages[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0)] | length')
-  if [ "$NEEDS_TRANSLATE" != "0" ]; then
-    TRANSLATE_PAGES=$(echo "$BOOK_DATA" | jq '[.pages | sort_by(.page_number) | .[] | select((.ocr.data // "") | length > 0) | select((.translation.data // "") | length == 0) | {pageId: .id, ocrText: .ocr.data, pageNumber: .page_number}]')
-    TOTAL_TRANS=$(echo "$TRANSLATE_PAGES" | jq 'length')
-    PREV_CONTEXT=""
-
-    for ((i=0; i<TOTAL_TRANS; i+=BATCH_SIZE)); do
-      BATCH=$(echo "$TRANSLATE_PAGES" | jq ".[$i:$((i+BATCH_SIZE))]")
-
-      if [ -n "$PREV_CONTEXT" ]; then
-        RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-translate" \
-          -H 'Content-Type: application/json' \
-          -d "{\"pages\": $BATCH, \"model\": \"$MODEL\", \"previousContext\": \"$PREV_CONTEXT\"}")
-      else
-        RESP=$(curl -s -X POST "$BASE_URL/api/process/batch-translate" \
-          -H 'Content-Type: application/json' \
-          -d "{\"pages\": $BATCH, \"model\": \"$MODEL\"}")
-      fi
-
-      if echo "$RESP" | grep -q "429\|rate"; then
-        echo "RATE_LIMIT: $TITLE - backing off 10s"
-        sleep 10
-        i=$((i-BATCH_SIZE))  # Retry this batch
-      else
-        LAST_ID=$(echo "$BATCH" | jq -r '.[-1].pageId')
-        PREV_CONTEXT=$(echo "$RESP" | jq -r ".translations[\"$LAST_ID\"] // \"\"" | head -c 1500)
-      fi
-      sleep $SLEEP_TIME
-    done
-    echo "TRANS_DONE: $TITLE"
-  fi
-
-  echo "COMPLETE: $TITLE"
-}
-
-export -f process_book
-export BASE_URL MODEL BATCH_SIZE SLEEP_TIME
-
-echo "=== BATCH PROCESSING ==="
-echo "Batch: $BATCH_SIZE | Sleep: ${SLEEP_TIME}s"
-
-curl -s "$BASE_URL/api/books" | jq -r '.[] | .id' > /tmp/book_ids.txt
-TOTAL=$(wc -l < /tmp/book_ids.txt | tr -d ' ')
-echo "Processing $TOTAL books..."
-
-cat /tmp/book_ids.txt | xargs -P 1 -I {} bash -c 'process_book "$@"' _ {}
-
-echo "=== ALL DONE ==="
+# After OCR completes, queue translation
+curl -s -X POST "$BASE_URL/api/jobs/queue-books" \
+  -H "Content-Type: application/json" \
+  -d "{\"bookIds\": $BOOK_IDS, \"action\": \"translation\"}"
 ```
 
-### Running the Script
-```bash
-# Save to file and run
-chmod +x batch_process.sh
-./batch_process.sh 2>&1 | tee batch.log
-
-# Or run in background
-nohup ./batch_process.sh > batch.log 2>&1 &
-```
+Monitor progress at https://sourcelibrary.org/jobs
 
 ## Monitoring Progress
 

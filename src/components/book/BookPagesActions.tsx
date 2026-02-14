@@ -8,7 +8,6 @@ interface BookPagesActionsProps {
   batchMode: boolean;
   reorderMode: boolean;
   currentJob: Job | null;
-  currentBatchJob?: any | null;
   checkingJob?: boolean;
   orderChanged: boolean;
   savingOrder: boolean;
@@ -26,7 +25,6 @@ export default function BookPagesActions({
   batchMode,
   reorderMode,
   currentJob,
-  currentBatchJob,
   checkingJob,
   orderChanged,
   savingOrder,
@@ -40,7 +38,7 @@ export default function BookPagesActions({
 }: BookPagesActionsProps) {
   return (
     <div className="flex items-center gap-2">
-      {!batchMode && !reorderMode && !currentJob && !currentBatchJob && !checkingJob ? (
+      {!batchMode && !reorderMode && !currentJob && !checkingJob ? (
         <>
           <button
             onClick={onBatchClick}

@@ -124,13 +124,6 @@ export const books = {
   },
 
   /**
-   * Batch translate book pages
-   */
-  batchTranslate: async (id: string, request: BatchTranslateRequest): Promise<BatchTranslateResponse> => {
-    return await apiClient.post(`/api/books/${id}/batch-translate`, request);
-  },
-
-  /**
    * Batch OCR book pages (async with Gemini Batch API)
    */
   batchOcrAsync: async (id: string, request: BatchOcrRequest): Promise<BatchOcrResponse> => {
@@ -166,13 +159,6 @@ export const books = {
    */
   batchTranslateAsync: async (id: string, request: BatchTranslateRequest): Promise<BatchTranslateResponse> => {
     return await apiClient.post(`/api/books/${id}/batch-translate-async`, request);
-  },
-
-  /**
-   * Batch OCR book pages
-   */
-  batchOcr: async (id: string, request: BatchOcrRequest): Promise<BatchOcrResponse> => {
-    return await apiClient.post(`/api/books/${id}/batch-ocr`, request);
   },
 
   /**

@@ -39,84 +39,12 @@ export function usePageProcessing({
 
   const stopProcessingRef = useRef(false);
 
-  // Parallel batch OCR processing (10 at a time)
-  const processBatchOCR = useCallback(async (pageIds: string[]) => {
-    if (pageIds.length === 0) return;
-
-    stopProcessingRef.current = false;
-    setProcessing({
-      active: true,
-      type: 'ocr',
-      currentPageId: null,
-      currentIndex: 0,
-      totalPages: pageIds.length,
-      completed: [],
-      failed: [],
-      stopped: false
-    });
-
-    try {
-      const batchPages = pageIds.map(pageId => {
-        const page = pages.find(p => p.id === pageId);
-        return {
-          pageId,
-          imageUrl: page?.photo || '',
-          language: book?.language || 'Latin',
-          customPrompt: prompts.ocr?.content
-        };
-      }).filter(p => p.imageUrl);
-
-      const { results } = await processingApi.batchOcr({
-        pages: batchPages,
-        autoSave: true
-      });
-
-      const completed: string[] = [];
-      const failed: string[] = [];
-
-      for (const result of results) {
-        if (result.success && result.ocr) {
-          onPageUpdate(result.pageId, {
-            ocr: {
-              data: result.ocr,
-              language: book?.language || 'unknown',
-              model: 'gemini-3-flash-preview'
-            }
-          });
-          completed.push(result.pageId);
-        } else {
-          failed.push(result.pageId);
-        }
-      }
-
-      setProcessing(prev => ({
-        ...prev,
-        active: false,
-        completed,
-        failed,
-        currentIndex: pageIds.length
-      }));
-    } catch (error) {
-      console.error('Batch OCR error:', error);
-      setProcessing(prev => ({
-        ...prev,
-        active: false,
-        failed: pageIds
-      }));
-    }
-  }, [pages, book, prompts, onPageUpdate]);
-
-  // Sequential processing for translation/summary (needs context)
+  // Sequential processing for all types
   const processPages = useCallback(async (
     type: 'ocr' | 'translation' | 'summary',
     pageIds: string[]
   ) => {
     if (pageIds.length === 0) return;
-
-    // Use parallel batch for OCR
-    if (type === 'ocr') {
-      return processBatchOCR(pageIds);
-    }
 
     stopProcessingRef.current = false;
     setProcessing({
@@ -210,7 +138,7 @@ export function usePageProcessing({
       active: false,
       currentPageId: null
     }));
-  }, [pages, book, prompts, onPageUpdate, processBatchOCR]);
+  }, [pages, book, prompts, onPageUpdate]);
 
   const stopProcessing = useCallback(() => {
     stopProcessingRef.current = true;

@@ -3,13 +3,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { Page, Prompt } from '@/lib/types';
 import type { JobType, Job } from '@/lib/types/job';
-import { prompts as promptsApi, jobs, books, batchJobs } from '@/lib/api-client';
+import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
 import BookPagesStats from './BookPagesStats';
 import BookPagesActions from './BookPagesActions';
 import JobStatusBanner from './JobStatusBanner';
-import BatchJobStatusBanner from './BatchJobStatusBanner';
-import BatchModePanel from './BatchModePanel';
+import ProcessingPanel from './ProcessingPanel';
 import ReorderModePanel from './ReorderModePanel';
 import PagesGrid from './PagesGrid';
 
@@ -103,11 +102,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [cancelling, setCancelling] = useState(false);
   const [retrying, setRetrying] = useState(false);
 
-  // Batch mode state (Gemini Batch API)
-  const [processingMode, setProcessingMode] = useState<'realtime' | 'batch'>('realtime');
-  const [currentBatchJob, setCurrentBatchJob] = useState<any>(null);
-  const [loadingBatchJob, setLoadingBatchJob] = useState(false);
-
   const lastSelectedIndexRef = useRef<number | null>(null);
 
   // Calculate stats (check updated_at since data is excluded from projection)
@@ -140,13 +134,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             // Only set if job is still active
             if (['pending', 'processing'].includes(job.status)) {
               setCurrentJob(job);
-            }
-          } else if (book.job.type === 'batch') {
-            // Fetch batch job
-            const batchJob = await batchJobs.get(book.job.job_id);
-            // Only set if batch job is still active
-            if (['pending', 'processing'].includes(batchJob.status)) {
-              setCurrentBatchJob(batchJob);
             }
           }
         }
@@ -345,59 +332,30 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
     setQueueing(true);
     try {
-      // Check if we can use batch mode (only OCR and image_extraction)
-      const canUseBatch = (action === 'ocr' || action === 'image_extraction');
-      const useBatch = canUseBatch && processingMode === 'batch';
+      const response = await queueBooks({
+        bookId,
+        pageIds: pageIdsToProcess,
+        action,
+        customPrompt
+      });
 
-      if (!useBatch) {
-        // Real-time processing (SQS workers)
-        const response = await queueBooks({
-          bookId,
-          pageIds: pageIdsToProcess,
-          action,
-          customPrompt
-        });
-
-        // Set current job to show progress UI immediately
-        setCurrentJob({
-          id: response.jobId,
-          type: action,
-          status: 'pending',
-          progress: {
-            total: pageIdsToProcess.length,
-            completed: 0,
-            failed: 0
-          },
-          book_id: bookId,
-          book_title: bookTitle || '',
-          config: {},
-          created_at: new Date(),
-          updated_at: new Date(),
-          initiated_by: 'user'
-        });
-      } else {
-        // Gemini Batch API with parent-child architecture
-        const response = await books.batchOcrMulti(bookId, {
-          pageIds: pageIdsToProcess,
-          action: action as 'ocr' | 'image_extraction',
-          overwriteMode
-        });
-
-        if (!response.success) {
-          throw new Error(response.error || 'Failed to submit batch job');
-        }
-
-        // Set batch job for UI tracking
-        setCurrentBatchJob({
-          id: response.parentJobId,
-          type: action,
-          status: 'pending',
-          total_pages: response.totalPages,
-          total_batches: response.totalBatches,
-          book_title: bookTitle || '',
-          created_at: new Date()
-        });
-      }
+      // Set current job to show progress UI immediately
+      setCurrentJob({
+        id: response.jobId,
+        type: action,
+        status: 'pending',
+        progress: {
+          total: pageIdsToProcess.length,
+          completed: 0,
+          failed: 0
+        },
+        book_id: bookId,
+        book_title: bookTitle || '',
+        config: {},
+        created_at: new Date(),
+        updated_at: new Date(),
+        initiated_by: 'user'
+      });
 
       // Clear selection and exit batch mode
       setSelectedPages(new Set());
@@ -430,28 +388,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       console.error('Failed to fetch job status:', error);
     } finally {
       setLoadingJob(false);
-    }
-  };
-
-  // Fetch batch job status (for Gemini batch jobs)
-  const fetchBatchJobStatus = async () => {
-    if (!currentBatchJob) return;
-
-    setLoadingBatchJob(true);
-    try {
-      const bj = await batchJobs.get(currentBatchJob.id);
-
-      // If batch job completed successfully (no failed pages), clear and refresh pages
-      if (bj.status === 'completed' && (bj.progress?.failed ?? 0) === 0) {
-        setCurrentBatchJob(null);
-        refreshPages();
-      } else {
-        setCurrentBatchJob(bj);
-      }
-    } catch (error) {
-      console.error('Failed to fetch batch job status:', error);
-    } finally {
-      setLoadingBatchJob(false);
     }
   };
 
@@ -559,7 +495,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             batchMode={batchMode}
             reorderMode={reorderMode}
             currentJob={currentJob}
-            currentBatchJob={currentBatchJob}
             checkingJob={checkingActiveJob}
             orderChanged={orderChanged}
             savingOrder={savingOrder}
@@ -573,16 +508,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           />
         </div>
       </div>
-
-      {/* Batch Job Status Banner */}
-      {currentBatchJob && (
-        <BatchJobStatusBanner
-          job={currentBatchJob}
-          onClose={() => setCurrentBatchJob(null)}
-          onRefresh={fetchBatchJobStatus}
-          loading={loadingBatchJob}
-        />
-      )}
 
       {/* Job Status Banner */}
       {currentJob && (
@@ -598,9 +523,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         />
       )}
 
-      {/* Batch Mode Controls */}
+      {/* Processing Controls */}
       {batchMode && (
-        <BatchModePanel
+        <ProcessingPanel
           action={action}
           overwriteMode={overwriteMode}
           selectedCount={selectedCount}
@@ -611,10 +536,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           promptsLoading={promptsLoading}
           currentJob={currentJob}
           queueing={queueing}
-          processingMode={processingMode}
           onActionChange={setAction}
           onOverwriteModeChange={setOverwriteMode}
-          onProcessingModeChange={setProcessingMode}
           onSelectAll={selectAll}
           onClearSelection={clearSelection}
           onTogglePromptSettings={() => setShowPromptSettings(!showPromptSettings)}
