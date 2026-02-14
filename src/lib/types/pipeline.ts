@@ -46,3 +46,37 @@ export interface PipelineState {
 
   config: PipelineConfig;
 }
+
+// ─── Auto Pipeline (cron-driven post-import processing) ───
+
+export type PipelineAutoStatus =
+  | 'queued'
+  | 'archiving'
+  | 'archive_complete'
+  | 'ocr_submitted'
+  | 'ocr_complete'
+  | 'translate_submitted'
+  | 'translate_complete'
+  | 'enriching'
+  | 'complete'
+  | 'failed';
+
+export interface PipelineAutoState {
+  status: PipelineAutoStatus;
+  source: 'import' | 'admin' | 'cron';
+  queued_at: Date;
+  started_at?: Date;
+  completed_at?: Date;
+  error?: string;
+  retry_count?: number;
+  /** Gemini Batch API job name for OCR */
+  ocr_job_name?: string;
+  /** Gemini Batch API job name for translation */
+  translate_job_name?: string;
+  /** batch_jobs collection ID for OCR */
+  ocr_batch_id?: string;
+  /** batch_jobs collection ID for translation */
+  translate_batch_id?: string;
+  /** Last time the cron touched this book */
+  last_updated?: Date;
+}
