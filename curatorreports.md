@@ -5123,7 +5123,51 @@ Astrology is central to both the Western esoteric tradition and Indian knowledge
 - **Pancha Pakshi Shastra** — Tamil five-bird system, a unique biorhythmic divination technique
 - **Karma Vipaka Samhita** — karmic astrology linking nakshatras to past-life karma
 
-### Session 029 TOTAL: 148 books, ~55,000 pages
+### Acquired — Graha/Nakshatra/Siddhanta, Batch 21
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Graha Shanti Paddhati | Shiv Dutta Mishra | 1900 | 649 | 69906a47d69de0e69807024f | graha-shanti-paddhati... |
+| Navagraha Vidhana Paddhati | Unknown | 1857 | 19 | 69906a4ad69de0e6980706b9 | navagraha-vidhana-paddhati |
+| Nakshatra Jyotish (Hindi) | Ragunandan Prasad Gowd | 1920 | 434 | 69906a4d1cf6ed5fbc8f4ee2 | NakshatraJyotish... |
+| Graha Gochar Jyotish (Hindi) | Shalgram Jyotishi | 1920 | 44 | 69906a50d69de0e6980709ab | graha-gochar-jyotish... |
+| Siddhanta Tattva Viveka | Kamalakara Bhatta | 1930 | 1418 | 69906a531cf6ed5fbc8f5096 | siddhantatattvaviveka... |
+| Ganita Sara Sangraha | Mahaviracharya | 1912 | 417 | 69906a571cf6ed5fbc8f5622 | ganitasarasangraha... |
+
+### Acquired — Navagraha & Planetary Rituals, Batch 22
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Navagraha Stotra | Khemraj Publishers | 1900 | 11 | 69906a601cf6ed5fbc8f57c7 | navagraha-stotra-khemraj |
+| Navagraha Shanti Vidhanamu (Telugu) | Unknown | 1916 | 197 | 69906a631cf6ed5fbc8f57d8 | in.ernet.dli.2015.495349 |
+| Gobhila Graha Sutram | Gobhila | 1906 | 127 | 69906a671cf6ed5fbc8f58a2 | in.ernet.dli.2015.406510 |
+| Graha Prayoga Graha Shanti | Vayunandan Mishra | 1900 | 534 | 69906a691cf6ed5fbc8f5924 | graha-prayoga-graha-shanti... |
+| Jyotir Ganit Kaumudi | Rajni Kant Shastri | 1920 | 391 | 69906a6c1cf6ed5fbc8f5b3c | jyotir-ganit-kaumudi... |
+| Graha Chikitsa (Hindi) | Unknown | 1905 | 90 | 69906a6f1cf6ed5fbc8f5cc5 | in.ernet.dli.2015.546683 |
+
+### Acquired — Mathematical Astronomy Classics, Batch 23
+
+| Title | Author | Year | Pages | Book ID | IA ID |
+|-------|--------|------|-------|---------|-------|
+| Lilavati of Bhaskaracharya | Bhaskara II; Khemraj 1908 | 1908 | 205 | 69906a861cf6ed5fbc8f5d21 | EtgU_lilavati... |
+| Surya Siddhanta (Popular Edition) | Anonymous | 1900 | 184 | 69906a891cf6ed5fbc8f5df0 | SuryaSiddhanta_201311 |
+| Surya Siddhanta Part 1 (Vigyan Bhashya) | comm. Mahavira Prasad | 1930 | 532 | 69906a8c1cf6ed5fbc8f5eaa | pnOi_surya-siddhanta... |
+| Surya Siddhanta Part 2 (Vigyan Bhashya) | comm. Mahavira Prasad | 1930 | 445 | 69906a8f1cf6ed5fbc8f6943 | rSAl_surya-siddhanta... |
+| Nakshatra Maheshwari | Nigrahacharya | 1920 | 51 | 69906a931cf6ed5fbc8f6e0a | nakshatra-maheshwari |
+| Ganita Kaumudi Part 1 | Narayana Pandit | 1936 | 190 | 69906a961cf6ed5fbc8f7135 | in.ernet.dli.2015.326561 |
+
+### Batches 21-23 Highlights
+
+- **Siddhanta Tattva Viveka (1,418p)** — Kamalakara Bhatta's 17th-century magnum opus reconciling Hindu and Islamic astronomical systems. The most important text for understanding the intellectual encounter between Indian and Perso-Arabic astronomy.
+- **Ganita Sara Sangraha** — Mahaviracharya's 9th-century Jain mathematical masterwork. One of the most original ancient Indian math texts.
+- **Lilavati** — Bhaskara II's famous arithmetic text (1150 CE), companion to the Siddhanta Shiromani. Written as a poem for his daughter. The Khemraj 1908 edition is the standard Sanskrit text.
+- **Surya Siddhanta** — now 5 editions in the collection: Kashi Series, Khemraj 1913, Popular Edition, and Vigyan Bhashya Parts 1-2. The foundational astronomical text of India.
+- **Ganita Kaumudi** — Narayana Pandit's 14th-century mathematics text, extending Bhaskara II's work.
+- **Graha Shanti Paddhati** — 649-page planetary pacification ritual manual. Bridges Jyotish diagnosis with ritual remedy.
+- **Navagraha Vidhana Paddhati (1857)** — pre-colonial planetary worship manual. Extremely early printing date.
+- **Gobhila Graha Sutram** — Vedic-era planetary ritual text attributed to Gobhila, connecting the oldest ritual layer to later Jyotish practice.
+
+### Session 029 TOTAL: 166 books, ~61,000 pages
 
 ---
 
