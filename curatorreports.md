@@ -5756,3 +5756,47 @@ Several English-language works (17th-18th century) would benefit from English mo
 ### Session 033 TOTAL: 39 works, ~6,878+ pages (Tier 1) + ~8,000+ pages (Tier 2)
 
 ---
+
+## 2026-02-15 — Session 033b: The Florentine Laboratory
+
+### Theme
+
+Florentine commercial culture and its contribution to economic thought — merchant manuals, double-entry bookkeeping, proto-capitalist treatises, guild records, and monetary theory from the city that invented modern banking. Supplements Session 033's broader economics collection with the specific Italian commercial tradition that preceded and motivated the School of Salamanca.
+
+### Imports (12 works, ~3,431 pages)
+
+| Title | Author | Date | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Della Mercatura et del Mercante Perfetto | Benedetto Cotrugli | 1573 | 228 | `6991e7a89d63c80e615598d0` | IA |
+| La Pratica della Mercatura | Francesco Balducci Pegolotti | 1766 | 410 | `6991e78d69de8508b1f98255` | IA |
+| Summa de Arithmetica (partial) | Luca Pacioli | 1494 | 26 | `6991e7af9d63c80e615599c2` | IA |
+| De Avaritia | Poggio Bracciolini | 1538 | 236 | `6991e7b6c91ce7d733e4f9a7` | IA |
+| Discorsi sopra la Prima Deca di Tito Livio | Niccolò Machiavelli | 1531 | 386 | `6991e7bdc91ce7d733e4fa95` | IA |
+| I Libri della Famiglia | Leon Battista Alberti | 1843 | 490 | `6991e7c5c91ce7d733e4fc19` | IA |
+| Della Ragion di Stato | Giovanni Botero | 1589 | 430 | `6991e7cbc91ce7d733e4fe05` | IA |
+| Statuto dell'Arte di Calimala | Calimala Guild | 1334 | 216 | `6991e7d1c91ce7d733e4ffb5` | IA |
+| Diario Fiorentino | Luca Landucci | 1883 | 407 | `6991e7d7c91ce7d733e5008f` | IA |
+| A Discourse upon Coins (EN) | Bernardo Davanzati | 1696 | 29 | `6991e7dec91ce7d733e50228` | IA |
+| Ancient Double-Entry Bookkeeping | Geijsbeek (ed.) | 1914 | 200 | `6991e7e6c91ce7d733e50247` | IA |
+| Della Decima e delle Monete | Giovanni Pagnini | 1765 | 373 | `6991e7ecc91ce7d733e50311` | IA |
+
+### Notes
+
+- **Pacioli partial scan**: The IA identifier `summa-de-arithmetica-geometria-proportioni-et-proportionalita` yielded only 26 pages (full text is 300+). May need reimport from alternate identifier `161Pacioli`.
+- **Davanzati**: His Italian *Lezione delle Monete* was imported in Session 033; this session adds the 1696 English translation.
+- **Geijsbeek**: Modern scholarly study (1914) reproducing Pacioli's bookkeeping chapters with commentary — bridges the primary sources to modern accounting history.
+- **Pagnini**: 18th-century compendium of Florentine monetary documents including Davanzati's work — essential secondary source.
+
+### Blog Post Updates
+
+Updated "The Invisible Hand Has a History" with:
+- New "The Florentine Laboratory" section covering all 12 imports with links
+- 3 gallery illustrations embedded (Atalanta Fugiens, Musaeum Hermeticum, Alciato Emblemata)
+- Read time updated to 20 minutes
+- SEO metadata updated to mention Florence
+
+Deployed to https://sourcelibrary.org/blog/invisible-hand
+
+### Session 033b TOTAL: 12 works, ~3,431 pages
+
+---
