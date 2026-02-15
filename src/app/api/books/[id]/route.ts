@@ -14,8 +14,13 @@ export async function GET(
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
     const db = await getDb();
 
-    // Get book
-    const book = await db.collection('books').findOne({ id });
+    // Book projection: nav mode only needs fields the reader uses
+    const bookProjection = pagesMode === 'nav' ? {
+      _id: 0, id: 1, title: 1, display_title: 1, author: 1,
+      published: 1, language: 1, doi: 1,
+    } : undefined;
+
+    const book = await db.collection('books').findOne({ id }, bookProjection ? { projection: bookProjection } : undefined);
     if (!book) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }

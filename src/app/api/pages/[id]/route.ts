@@ -33,7 +33,12 @@ export async function GET(
     const { id } = await params;
     const db = await getDb();
 
-    const page = await db.collection('pages').findOne({ id });
+    const { searchParams } = new URL(request.url);
+    const full = searchParams.get('full') === 'true';
+
+    // Default: exclude detected_images (large array unused by the reader)
+    const projection = full ? undefined : { detected_images: 0 };
+    const page = await db.collection('pages').findOne({ id }, projection ? { projection } : undefined);
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }

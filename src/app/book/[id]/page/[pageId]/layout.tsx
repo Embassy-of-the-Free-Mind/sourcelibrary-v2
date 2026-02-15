@@ -7,21 +7,31 @@ interface LayoutProps {
   params: Promise<{ id: string; pageId: string }>;
 }
 
+// Only fetch the fields needed for metadata — skip index, reading_summary, etc.
+const BOOK_META_PROJECTION = {
+  _id: 0, id: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
+};
+const PAGE_META_PROJECTION = {
+  _id: 0, id: 1, page_number: 1, photo: 1,
+  'translation.data': 1, 'ocr.data': 1,
+};
+
 async function getPageData(bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getDb();
 
-    // Fetch book and page in parallel
     const [book, page] = await Promise.all([
-      db.collection('books').findOne({ id: bookId }),
-      db.collection('pages').findOne({ id: pageId }),
+      db.collection('books').findOne({ id: bookId }, { projection: BOOK_META_PROJECTION }),
+      db.collection('pages').findOne({ id: pageId }, { projection: PAGE_META_PROJECTION }),
     ]);
 
-    // Fallback: try ObjectId lookup for book
     if (!book) {
       const { ObjectId } = await import('mongodb');
       if (ObjectId.isValid(bookId)) {
-        const bookByOid = await db.collection('books').findOne({ _id: new ObjectId(bookId) });
+        const bookByOid = await db.collection('books').findOne(
+          { _id: new ObjectId(bookId) },
+          { projection: BOOK_META_PROJECTION }
+        );
         return { book: bookByOid as unknown as Book | null, page: page as unknown as Page | null };
       }
     }

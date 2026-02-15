@@ -267,6 +267,14 @@ export const ENGLISH_MODERNIZATION_PROMPT = `You are modernizing Early Modern En
 - Quoted passages (modernize but note the original when important)
 - Latin, Greek, or other foreign phrases — translate to English with <note>original: "..."</note>
 
+**IMPORTANT - Translate ALL embedded foreign languages to English:**
+Early Modern English texts frequently contain Latin, Greek, Hebrew, and other languages inline. You MUST translate EVERYTHING to English:
+- Latin quotes and phrases → translate to English
+- Greek phrases → translate to English
+- Hebrew or Aramaic terms → translate to English
+- ANY non-English text → translate to English
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
 **Do NOT use:**
 - Code blocks or backticks — this is prose
 

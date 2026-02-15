@@ -9,21 +9,33 @@ export const size = {
 };
 export const contentType = 'image/png';
 
+const OG_BOOK_PROJECTION = {
+  _id: 0, id: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
+};
+const OG_PAGE_PROJECTION = {
+  _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1,
+  cropped_photo: 1, crop: 1, 'translation.data': 1, 'ocr.data': 1,
+};
+
 async function getPageData(bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getDb();
 
-    let book = await db.collection('books').findOne({ id: bookId });
+    const [book, page] = await Promise.all([
+      db.collection('books').findOne({ id: bookId }, { projection: OG_BOOK_PROJECTION }),
+      db.collection('pages').findOne({ id: pageId }, { projection: OG_PAGE_PROJECTION }),
+    ]);
+
     if (!book) {
       const { ObjectId } = await import('mongodb');
       if (ObjectId.isValid(bookId)) {
-        book = await db.collection('books').findOne({ _id: new ObjectId(bookId) });
+        const bookByOid = await db.collection('books').findOne(
+          { _id: new ObjectId(bookId) },
+          { projection: OG_BOOK_PROJECTION }
+        );
+        return { book: bookByOid as unknown as Book | null, page: page as unknown as Page | null };
       }
     }
-
-    if (!book) return { book: null, page: null };
-
-    const page = await db.collection('pages').findOne({ id: pageId });
 
     return {
       book: book as unknown as Book,
