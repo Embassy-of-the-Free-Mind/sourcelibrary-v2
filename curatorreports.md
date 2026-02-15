@@ -5996,3 +5996,155 @@ Three interconnected threads: (1) the Medici family as bankers, patrons, and pol
 ### Session 034 TOTAL: 34 works, ~12,445 pages (after removing Hunter)
 
 ---
+
+## Session 035: World Sacred Texts & Liturgical Traditions
+**Date:** 2026-02-16
+**Scope:** Sacred texts across 30+ world traditions + liturgical/ritual texts
+**Method:** Internet Archive imports via `/api/import/ia`, parallel agent execution
+
+### Batch 1-11: Sacred Texts Across World Traditions (~193 books, ~127,000 pages)
+
+Massive expansion across world religious traditions, imported in 11 parallel batches:
+
+**Hindu/Vedic:** Sacred Books of the East series (50 vols), Rig Veda, Upanishads, Mahabharata, Ramayana, Bhagavad Gita commentaries
+**Buddhist:** Pali Canon selections, Dhammapada, Lotus Sutra, Tibetan Book of the Dead, Milindapanha, Questions of King Milinda
+**Confucian/Taoist:** Four Books, Five Classics, Tao Te Ching, Zhuangzi, I Ching commentaries
+**Islamic:** Quran translations/commentaries, Hadith collections (Bukhari, Muslim), Sufi texts (Rumi, Ibn Arabi, Al-Ghazali)
+**Jewish:** Talmud selections, Zohar, Mishnah, Sefer Yetzirah, Guide for the Perplexed
+**Christian:** Vulgate, Septuagint, Church Fathers, Gnostic texts (Nag Hammadi), Dead Sea Scrolls studies
+**Zoroastrian:** Avesta, Bundahishn, Denkard, Pahlavi texts
+**Sikh:** Adi Granth translations, Dasam Granth
+**Baha'i:** Kitab-i-Aqdas, Kitab-i-Iqan, Some Answered Questions
+**Japanese:** Kojiki, Nihon Shoki, Bushido studies
+**Mesoamerican/Native American:** Popol Vuh, Codex Chimalpopoca, Hopi/Lakota traditions
+**Norse/Celtic:** Poetic Edda, Prose Edda, Mabinogion, Celtic mythology
+**African/Oceanian:** African traditional religion studies, Polynesian mythology
+**Ancient Egyptian:** Book of the Dead (multiple editions), Pyramid Texts, Coffin Texts
+**Sumerian/Babylonian:** Epic of Gilgamesh, Enuma Elish, creation myths
+
+### Batch 12: Ancient Greek & Roman Religion (36 books, ~17,585 pages)
+
+Greek mystery cults, Roman state religion, Orphic/Dionysian/Eleusinian traditions, philosophical theology.
+
+### Batch 13: Liturgical & Ritual Texts (68 books, 29,983 pages)
+
+Imported in 5 tiers covering the full range of liturgical traditions from ancient Egypt through medieval Christianity.
+
+#### Tier 1: Core Liturgical Texts (10 books, 4,641 pages)
+
+| Title | Author/Editor | Year | Language | Pages |
+|-------|--------------|------|----------|-------|
+| The Oldest Church Manual Called the Didache | Schaff | 1885 | Greek | 342 |
+| Liturgies Eastern and Western, Vol. I | Brightman | 1896 | Greek | 718 |
+| The Greek Liturgies | Swainson | 1884 | Greek | 464 |
+| Apostolic Tradition of St. Hippolytus | Easton | 1934 | Greek | 200 |
+| Didascalia et Constitutiones Apostolorum | Funk | 1905 | Greek | 1,034 |
+| Babylonian Liturgies | Langdon | 1913 | Sumerian | 372 |
+| Sacramentarium Leonianum | Feltoe | 1896 | Latin | 283 |
+| The Authorised Daily Prayer Book | Singer | 1890 | Hebrew | 678 |
+| Bishop Sarapion's Prayer-Book | Wordsworth | 1899 | Greek | 124 |
+| Egyptian Coffin Texts Vol. 1 | de Buck | 1935 | Egyptian | 426 |
+
+#### Tier 2: Scholarly Studies & Roman Liturgy (10 books, 5,391 pages)
+
+| Title | Author/Editor | Year | Language | Pages |
+|-------|--------------|------|----------|-------|
+| Christian Worship: Its Origin and Evolution | Duchesne | 1903 | English | 624 |
+| Liturgy and Ritual of the Ante-Nicene Church | Warren | 1912 | English | 348 |
+| The Shape of the Liturgy | Dix | 1945 | English | 792 |
+| Rituale Romanum (1903 edition) | — | 1903 | Latin | 666 |
+| Missale Romanum (1920 edition) | — | 1920 | Latin | 1,220 |
+| Sumerian and Babylonian Psalms | Langdon | 1909 | Sumerian | 394 |
+| Rituels Accadiens | Thureau-Dangin | 1921 | Akkadian | 174 |
+| Gelasian Sacramentary | Wilson | 1894 | Latin | 497 |
+| Eine Mithrasliturgie | Dieterich | 1903 | Greek | 274 |
+| Orphic Gold Tablets | Bernabé | 2008 | Greek | 402 |
+
+#### Tier 3A: Eastern Liturgies & Egyptian Funerary (15 books, 6,011 pages)
+
+| Title | Author/Editor | Year | Language | Pages |
+|-------|--------------|------|----------|-------|
+| Ante-Nicene Christian Library Vol. 17 | Roberts/Donaldson | 1870 | English | 644 |
+| Constitutiones Apostolorum | Lagarde | 1862 | Greek | 325 |
+| Liturgy of the Eighth Book of the Apostolic Constitutions | — | 1900 | Greek | 106 |
+| Liturgies Eastern and Western (Hammond) | Hammond | 1878 | English | 550 |
+| Liturgies of S. Mark, S. James, S. Clement, etc. | Neale | 1859 | English | 182 |
+| Pilgrimage of Etheria | McClure/Feltoe | 1919 | Latin | 174 |
+| Liturgiarum Orientalium Collectio Vol. 2 | Renaudot | 1716 | Latin | 689 |
+| Divine Liturgy of St. Mark | Malan | 1872 | English | 481 |
+| Ethiopic Liturgy | Mercer | 1915 | Ethiopic | 518 |
+| Teaching of the Twelve Apostles (Didache) | Harris | 1887 | Greek | 218 |
+| Ancient Egyptian Pyramid Texts (Complete) | Faulkner | 1969 | Egyptian | 442 |
+| Egyptian Coffin Texts Vol. 2 | de Buck | 1938 | Egyptian | 420 |
+| Egyptian Coffin Texts Vol. 3 | de Buck | 1947 | Egyptian | 416 |
+| Egyptian Coffin Texts Vol. 4 | de Buck | 1951 | Egyptian | 430 |
+| Egyptian Coffin Texts Vol. 5 | de Buck | 1954 | Egyptian | 416 |
+
+#### Tier 3B: Medieval & Sumerian Liturgy (15 books, 5,885 pages)
+
+| Title | Author/Editor | Year | Language | Pages |
+|-------|--------------|------|----------|-------|
+| Egyptian Coffin Texts Vol. 6 | de Buck | 1956 | Egyptian | 432 |
+| Egyptian Coffin Texts Vol. 7 | de Buck | 1961 | Egyptian | 556 |
+| Literature of the Ancient Egyptians | Erman | 1927 | English | 378 |
+| Sumerian Liturgical Texts | Langdon | 1917 | Sumerian | 234 |
+| Tammuz and Ishtar | Langdon | 1914 | Sumerian | 238 |
+| Sumerian and Semitic Religious Texts | Langdon | 1923 | Sumerian | 228 |
+| Breviarium Romanum | — | 1888 | Latin | 970 |
+| Breviarium Romanum (Quiñones reform) | — | 1535 | Latin | 276 |
+| Liturgy of the Church of Sarum | — | 1866 | Latin | 155 |
+| Church of Our Fathers Vol. 1 | Rock | 1849 | English | 498 |
+| Church of Our Fathers Vol. 2 | Rock | 1849 | English | 458 |
+| Church of Our Fathers Vol. 3 | Rock | 1849 | English | 448 |
+| Church of Our Fathers Vol. 4 | Rock | 1849 | English | 390 |
+| Liturgical Prayer: Its History and Spirit | Cabrol | 1922 | English | 412 |
+| Prayer of the Early Christians | Cabrol | 1930 | English | 212 |
+
+#### Tier 3C: Continental Scholarship, Mystery Religions & Additional Missals (18 books, 8,055 pages)
+
+| Title | Author/Editor | Year | Language | Pages |
+|-------|--------------|------|----------|-------|
+| Liturgie der drei ersten christlichen Jahrhunderte | Probst | 1870 | German | 446 |
+| Messe und Herrenmahl | Lietzmann | 1926 | German | 290 |
+| Liber Sacramentorum | Schuster | 1919 | Latin | 222 |
+| Nouvelle étude sur le Chant lémural | Edon | 1884 | French | 268 |
+| Religion und Kultus der Römer | Wissowa | 1912 | German | 638 |
+| A History of Roman Religion | Altheim | 1938 | English | 570 |
+| Abraxas: Studien zur Religionsgeschichte | Dieterich | 1891 | German | 238 |
+| The Mystery-Religions | Angus | 1928 | English | 349 |
+| Die hellenistischen Mysterienreligionen | Reitzenstein | 1927 | German | 598 |
+| Poimandres: Studien zur griechisch-ägyptischen Literatur | Reitzenstein | 1904 | German | 406 |
+| Studies in Judaism (First Series) | Schechter | 1896 | English | 408 |
+| Studies in Judaism (Second Series) | Schechter | 1908 | English | 388 |
+| A Study of Yasna I | Mills | 1910 | Avestan | 200 |
+| Pahlavi Vendidad | Sanjana | 1895 | Pahlavi | 304 |
+| Missale Romanum (1837 edition) | — | 1837 | Latin | 993 |
+| Rituale Romanum (1615, editio princeps) | Paul V | 1615 | Latin | 392 |
+| Liturgies Eastern and Western (Brightman/Hammond) | Brightman | 1896 | English | 734 |
+| Missale ad usum Sarum (1516) | — | 1516 | Latin | 611 |
+
+### Liturgical Coverage by Tradition
+
+- **Early Christian (1st-5th c.):** Didache (3 editions), Apostolic Constitutions, Apostolic Tradition, Sarapion's Prayer-Book, Etheria's Pilgrimage
+- **Eastern Orthodox:** Brightman's comprehensive collection, St. Mark liturgy, St. James liturgy, Renaudot's Oriental liturgies, Ethiopic liturgy
+- **Roman Catholic:** Missale Romanum (1516 Sarum, 1837, 1920), Rituale Romanum (1615 editio princeps, 1903), Breviarium Romanum (Quiñones 1535, 1888), Gelasian & Leonine Sacramentaries
+- **Egyptian funerary:** Complete Coffin Texts (7 vols, de Buck), Pyramid Texts (Faulkner), Literature of Ancient Egyptians (Erman)
+- **Mesopotamian:** Babylonian Liturgies, Sumerian Liturgical Texts, Sumerian/Babylonian Psalms, Tammuz and Ishtar, Rituels Accadiens
+- **Mystery religions:** Mithrasliturgie, Orphic Gold Tablets, Abraxas, Reitzenstein's Mysterienreligionen, Poimandres
+- **Jewish:** Authorised Daily Prayer Book (Singer), Studies in Judaism (Schechter, 2 vols)
+- **Zoroastrian:** Study of Yasna I, Pahlavi Vendidad
+- **Medieval English:** Sarum Missal (1516), Church of Our Fathers (Rock, 4 vols), Liturgy of Church of Sarum
+- **Scholarly studies:** Duchesne, Dix, Warren, Cabrol, Probst, Lietzmann — the foundation of modern liturgical scholarship
+
+### Notes
+
+- **Zero failures** across all 68 liturgical imports (5 parallel batches)
+- **Egyptian Coffin Texts** (7 volumes, de Buck) represent the most complete published edition — over 3,000 pages of funerary spells from the First Intermediate Period through Middle Kingdom
+- **Editio princeps** of the Rituale Romanum (1615) is a significant primary source — the first standardized ritual book after the Council of Trent
+- **Quiñones Breviary** (1535) — the controversial reformed breviary that was suppressed but influenced later reforms including Vatican II
+- **Missale ad usum Sarum** (1516) — the English medieval rite that dominated pre-Reformation England
+- **Reitzenstein's works** (Poimandres, Mysterienreligionen) are foundational for understanding Hermetic-liturgical connections
+
+### Session 035 TOTAL: ~297 books, ~174,568 pages across sacred texts and liturgical traditions
+
+---
