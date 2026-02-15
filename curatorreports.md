@@ -4,6 +4,131 @@ Session logs for Source Library acquisition work.
 
 ---
 
+## 2026-02-15 — Session 035: World Sacred Texts Expansion
+
+### Summary
+
+Massive expansion of Source Library's religious and sacred text holdings — from primarily Western esoteric traditions to a genuinely global collection spanning 30+ religious traditions. Imported ~130 new books totaling ~100,000 pages across 11 batches, covering original-language scriptures, indigenous traditions, and scholarly critical editions.
+
+This is the single largest acquisition session in Source Library's history.
+
+### Motivation
+
+Source Library held ~190 books, predominantly in the Western esoteric tradition (alchemy, Hermetica, Kabbalah). The world's foundational religious texts — Bibles, Qurans, Vedas, Buddhist canon, indigenous sacred narratives — were almost entirely absent. This session aimed to build a broad foundation of sacred literature in original languages where possible.
+
+### Acquisition Summary
+
+| Batch | Tradition(s) | Books | Pages | Notes |
+|-------|-------------|-------|-------|-------|
+| 1 | Critical texts — original languages | 13 | ~38,833 | Gutenberg Bible, Rig Veda, Papyrus of Ani, 5 Qurans, Dead Sea Scrolls, Pali Canon, Book of Kells, Diamond Sutra, Ethiopian Bible |
+| 2 | Original-language Bibles | 19 | ~14,945 | Armenian, Coptic, Ethiopic (Ge'ez), Syriac Peshitta, Gothic (Codex Argenteus), Old Church Slavonic, Georgian, Welsh, Irish, Wycliffe, Tyndale, King James, Geneva, Luther, Eliot Algonquian Bible |
+| 3 | Egyptian, Mesopotamian, Zoroastrian | 16 | ~9,624 | Book of the Dead (Budge), Pyramid Texts, Coffin Texts, Epic of Gilgamesh, Enuma Elish, I Ching, Zend-Avesta, Bundahishn |
+| 4 | Talmud, Apostolic Fathers, Epics | 11 | ~6,536 | Mishnah, Zohar, Sefer Yetzirah, Apostolic Fathers, Mahabharata, Ramayana, Dhammapada |
+| 5 | Apocrypha & Pseudepigrapha | 25 | ~12,000 | Charles (2 vols), James, Charlesworth collections; Tischendorf critical editions; individual texts (Enoch, Jubilees, Thomas, Philip, Pistis Sophia, Nag Hammadi) |
+| 6 | Bible editions + SBE vols 1–25 | 34 | ~15,000 | Complutensian Polyglot, Bomberg Talmud, Textus Receptus, Erasmus NT, Vulgate; Sacred Books of the East vols 1–25 |
+| 7 | SBE vols 26–50 | 25 | ~12,000 | Completing the full 50-volume Oxford series |
+| 8 | Mesoamerican + Native American | 12 | 3,313 | Popol Vuh (Nahuatl + English), Cantares Mexicanos, Codex Chimalpopoca, Walam Olum, Navajo chants, Cherokee formulas, Hopi, Iroquois |
+| 9 | Japanese/Shinto + Tibetan + Jain | 11 | 3,932 | Kojiki (2 eds), Nihongi, Norito, Engi-shiki, Tibetan Book of the Dead, Milarepa, Samguk Yusa, Jaina Sutras, Kalpa Sutra, Ofudesaki |
+| 10 | Norse/Celtic + Sumerian | 10 | 3,566 | Poetic Edda, Prose Edda (2 eds), Elder Edda, Mabinogion, White Book of Rhydderch, Fairy-Faith, Seven Tablets of Creation, Atrahasis |
+| 11 | Sikh + Bahá'í + African + Polynesian + more | 17 | 7,259 | Guru Granth Sahib, Dasam Granth, Kitáb-i-Íqán, Kitáb-i-Aqdas, Kebra Nagast, Ifa Divination, Kumulipo, Polynesian Mythology, Ginza Rabba, Analects, Li Ki, Druze origins, Dreamtime |
+| **Total** | **30+ traditions** | **~193** | **~127,000** | |
+
+### Traditions Now Represented
+
+**Abrahamic:** Hebrew Bible (multiple editions incl. Bomberg, Complutensian Polyglot), Greek NT (Textus Receptus, Erasmus), Latin Vulgate, Syriac Peshitta, Coptic, Ethiopic Ge'ez, Gothic, Armenian, Georgian, Slavonic, Welsh, Irish, Algonquian; Qurans (5 editions spanning 9th–19th c.); Talmud (Mishnah), Zohar, Sefer Yetzirah
+
+**Early Christian:** Apostolic Fathers, Nag Hammadi texts, Gospel of Thomas, Gospel of Philip, Pistis Sophia, Didache; Apocrypha collections (Charles, James, Charlesworth, Tischendorf)
+
+**Hindu:** Rig Veda (original Sanskrit), Mahabharata, Ramayana, Bhagavad Gita (via SBE), Upanishads (via SBE)
+
+**Buddhist:** Pali Canon (Tripitaka), Diamond Sutra, Dhammapada, Tibetan Book of the Dead, Milarepa
+
+**East Asian:** I Ching, Analects of Confucius, Li Ki (Book of Rites), Kojiki (2 editions), Nihongi, Norito prayers, Engi-shiki, Samguk Yusa (Korean), Ofudesaki (Tenrikyo)
+
+**Zoroastrian:** Zend-Avesta, Bundahishn, SBE Pahlavi texts
+
+**Mesopotamian/Egyptian:** Papyrus of Ani, Book of the Dead, Pyramid Texts, Coffin Texts, Epic of Gilgamesh, Enuma Elish, Seven Tablets of Creation, Atrahasis
+
+**Norse/Celtic:** Poetic Edda, Prose Edda (Icelandic + English), Elder Edda, Mabinogion, White Book of Rhydderch, Fairy-Faith in Celtic Countries, Lebor Gabála Érenn
+
+**Indigenous Americas:** Popol Vuh (Nahuatl facsimile + English), Cantares Mexicanos, Codex Chimalpopoca, Walam Olum (Lenape), Cherokee Sacred Formulas, Mountain Chant & Night Chant (Navajo), Hopi Traditions, Iroquois Book of Rites
+
+**Sikh:** Guru Granth Sahib, Dasam Granth
+
+**Bahá'í:** Kitáb-i-Íqán, Kitáb-i-Aqdas, Seven Valleys
+
+**African:** Kebra Nagast (Ethiopian), Ifa Divination (Yoruba)
+
+**Polynesian:** Kumulipo (Hawaiian creation chant), Polynesian Mythology, Maori Religion, Ancient History of the Maori
+
+**Mandaean/Gnostic:** Ginza Rabba, Gnostic John the Baptizer
+
+**Jain:** Jaina Sutras, Kalpa Sutra
+
+**Druze:** Origins of the Druze People
+
+**Aboriginal Australian:** Dreamtime Aboriginal Stories
+
+**Plus:** Complete Sacred Books of the East (50 vols) — Max Müller's monumental Victorian-era series covering Hinduism, Buddhism, Zoroastrianism, Islam, Confucianism, Taoism, and Jainism
+
+### Highlights
+
+- **Gutenberg Bible** (1455) — the first major printed book, ~1,286 pages
+- **Book of Kells** — Trinity College Dublin's masterpiece, 694 pages of illuminated manuscript
+- **Diamond Sutra** (868 CE) — the world's oldest dated printed book
+- **Papyrus of Ani** (1250 BCE) — most complete Egyptian Book of the Dead
+- **Popol Vuh** in Nahuatl facsimile — K'iche' Maya creation narrative
+- **Complutensian Polyglot** (1514) — first printed polyglot Bible
+- **Codex Argenteus** — 6th-century Gothic Bible, one of the most valuable manuscripts in existence
+- **Eliot Algonquian Bible** (1663) — first Bible printed in North America, in Massachusett language
+- **Cantares Mexicanos** — largest surviving collection of Nahuatl poetry
+- **Guru Granth Sahib** — the living Guru of Sikhism
+- **Ginza Rabba** — central scripture of the Mandaean religion, one of the rarest religious texts
+
+### Items Not Imported
+
+- **Florentine Codex** (3 vols) — identified but IA identifiers need verification for page images
+- **Sacred Pipe (Black Elk, 1953)** — likely still under copyright
+- **Coverdale Bible 1535, Bishops' Bible 1568** — no scanned copies found on Internet Archive
+- **Walton Polyglot** (6 vols) — identified but not yet imported
+
+### Known Issues
+
+- **Babylonian Talmud** (`CompleteBabylonianTalmudSoncino`) — only 100 pages imported; the IA item is a collection of PDFs, not scanned page images. Needs a different source.
+- **Kitáb-i-Íqán** (1882 Bombay edition) — only 30 pages; may be a partial scan
+- **~2,200 books from batch imports** have `language: 'Unknown'` — the batch import scripts sent `original_language` but the IA route stores as `language`
+- 4 items were already in the collection (Myths of Cherokee, Nihongi Google scan, Lebor Gabála Érenn, Four Books/Confucian Classics)
+
+### Collection Impact
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Total books | ~3,580 | ~3,777 |
+| Total pages | ~1,340,000 | ~1,467,000 |
+| Religious traditions | ~5 (mostly Western esoteric) | 30+ (global) |
+| Sacred Books of the East | 0 | 50 (complete) |
+| Original-language Bibles | 1–2 | 15+ |
+| Indigenous sacred texts | 0 | 20+ |
+
+### Method
+
+1. Gap analysis against MongoDB — identified existing collection was almost entirely Western esoteric
+2. Systematic research by tradition, prioritizing original-language editions and scholarly critical texts
+3. Internet Archive metadata verification for all identifiers before import
+4. Parallel batch imports (up to 4 concurrent agents) for throughput
+5. Fallback handling: PDF-only items skipped, duplicates handled gracefully, alternative editions found for unavailable texts
+
+### Next Steps
+
+- Import Walton Polyglot (6 vols) and Florentine Codex (3 vols)
+- Find better Babylonian Talmud source with page images
+- Fix `language: 'Unknown'` on batch-imported books
+- Verify Kitáb-i-Íqán completeness
+- Begin OCR pipeline on highest-priority texts (Gutenberg Bible, Book of Kells, Dead Sea Scrolls)
+- Consider categories/tags for religious traditions to enable browsing by tradition
+
+---
+
 ## 2025-12-29 05:04 CET — Session 001
 
 ### Summary
