@@ -45,6 +45,15 @@ export async function POST(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
+    // English books don't need translation
+    if (book.language === 'English') {
+      return NextResponse.json({
+        message: 'No pages need translation',
+        processed: 0,
+        reason: 'Book is already in English',
+      });
+    }
+
     // Find pages to translate
     // When force=true, include pages that already have translation (for re-processing with new prompts)
     const translationFilter = force
@@ -79,7 +88,7 @@ export async function POST(
     const batchRequests = [];
 
     // Use the canonical translation prompt (with XML tag preservation, summary, keywords)
-    const sourceLanguage = book.original_language || 'Latin';
+    const sourceLanguage = book.language || 'Latin';
     const promptResult = await getTranslationPrompt(sourceLanguage, targetLanguage);
     const basePrompt = promptResult.text;
 

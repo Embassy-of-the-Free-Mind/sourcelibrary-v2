@@ -202,11 +202,11 @@ export async function GET(request: NextRequest) {
           .limit(pageLimit)
           .toArray();
       } catch {
-        // Fallback: regex on translation text only
+        // Fallback: regex on translation and OCR text
         pages = await db.collection('pages')
           .find(
-            { 'translation.data': queryRegex, ...pageFilter },
-            { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1 } }
+            { $or: [{ 'translation.data': queryRegex }, { 'ocr.data': queryRegex }], ...pageFilter },
+            { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } }
           )
           .limit(pageLimit)
           .toArray();

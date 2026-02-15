@@ -251,12 +251,20 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyForTranslate = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
-        .project({ id: 1, title: 1, pages_count: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray();
 
       for (const book of readyForTranslate) {
         if (!hasTimeBudget(startTime)) break;
+
+        // English books don't need translation — skip straight to enrichment
+        if (book.language === 'English') {
+          await setPipelineStatus(db, book.id, 'translate_complete');
+          log.translate_advanced++;
+          continue;
+        }
+
         try {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
             method: 'POST',

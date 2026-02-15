@@ -88,9 +88,21 @@ export async function GET(request: NextRequest) {
         $addFields: {
           translation_percent: {
             $cond: {
-              if: { $gt: ['$pages_count', 0] },
-              then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
-              else: 0,
+              if: { $eq: ['$language', 'English'] },
+              then: {
+                $cond: {
+                  if: { $gt: ['$pages_count', 0] },
+                  then: { $round: [{ $multiply: [{ $divide: ['$pages_ocr', '$pages_count'] }, 100] }] },
+                  else: 0,
+                },
+              },
+              else: {
+                $cond: {
+                  if: { $gt: ['$pages_count', 0] },
+                  then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+                  else: 0,
+                },
+              },
             },
           },
           has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },

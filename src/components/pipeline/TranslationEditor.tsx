@@ -1072,6 +1072,18 @@ export default function TranslationEditor({
                       >
                         <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} />
                       </HighlightSelection>
+                    ) : (book.language === 'English' && ocrText) ? (
+                      <HighlightSelection
+                        bookId={book.id}
+                        pageId={page.id}
+                        pageNumber={page.page_number}
+                        bookTitle={book.display_title || book.title}
+                        bookAuthor={book.author}
+                        bookYear={book.published}
+                        doi={book.doi}
+                      >
+                        <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} />
+                      </HighlightSelection>
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
                         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ background: 'linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%)' }}>
@@ -1123,8 +1135,8 @@ export default function TranslationEditor({
                     )}
                   </div>
 
-                  {/* AI Assistant action bar - only show when translation exists */}
-                  {translationText && (
+                  {/* AI Assistant action bar - show when translation or English OCR text exists */}
+                  {(translationText || (book.language === 'English' && ocrText)) && (
                     <div
                       className="px-4 py-2 flex items-center justify-center gap-2 flex-shrink-0"
                       style={{ borderTop: '1px solid var(--border-light)', background: 'var(--bg-cream)' }}
