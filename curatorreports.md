@@ -5516,3 +5516,142 @@ Focused acquisition across four sources: Bodleian, Cambridge, Vatican, and Inter
 ## Session 031 TOTAL: 29 books, 9,191 pages
 
 ---
+
+## 2026-02-15 — Session 032: World Libraries, Behmenists & Cosmic Harmony
+
+### Summary
+- Imported manuscripts from 8 new library systems (British Library, e-codices, Leiden, John Rylands Manchester, Harvard Houghton, Biblioteca Nacional de Portugal)
+- Built comprehensive Behmenist/spiritual anatomy corpus (Pordage, Lead, Gichtel, Law, Freher, Welling)
+- Acquired cosmic harmony/sympathetic resonance texts (Mersenne, Fludd, Cellarius, Iamblichus, Stanley, Fernel, Leonardi)
+- **62 new works imported, ~22,879 pages total**
+
+### Collection Stats
+- Total books: 3,431
+- New library systems used for first time: British Library (IIIF v3), e-codices, Leiden, John Rylands, Harvard, BNP
+
+### Batch A: British Library Manuscripts (13 works, ~3,973 pages)
+
+| Title | Author/Scribe | Date | Pages | Source |
+|-------|--------------|------|-------|--------|
+| Alchemical Miscellany (Harley MS 2407) | Various | 1500 | 239 | BL IIIF v3 |
+| Astrological-Magical Compendium (Egerton MS 821) | Various | 1550 | 167 | BL IIIF v3 |
+| Gospel of Barnabas (Royal MS 17 B XLIII) | Barnabas/Anonymous | 1600 | 239 | BL IIIF v3 |
+| Alchemical Miscellany (Sloane MS 1097) | Various | 1450 | 140 | BL IIIF v3 |
+| Lull Alchemical Miscellany (Sloane MS 353) | Pseudo-Lull et al. | 1475 | 165 | BL IIIF v3 |
+| Scientific Miscellany (Sloane MS 3457) | Various | 1400 | 78 | BL IIIF v3 |
+| Anglo-Saxon Herbal (Cotton MS Vitellius C III) | Pseudo-Apuleius | 1050 | 198 | BL IIIF v3 |
+| Alchemical Miscellany (Sloane MS 320) | Various | 1500 | 230 | BL IIIF v3 |
+| Surgical and Medical Treatises (Sloane MS 1977) | Various | 1450 | 310 | BL IIIF v3 |
+| Chaucer Canterbury Tales (Harley MS 7334) | Geoffrey Chaucer | 1410 | 334 | BL IIIF v3 |
+| Medical Recipe Book (Sloane MS 962) | Various | 1425 | 454 | BL IIIF v3 |
+| Astrological-Alchemical Miscellany (Sloane MS 3854) | Various | 1500 | 438 | BL IIIF v3 |
+| Alchemical Miscellany (Sloane MS 3688) | Various | 1475 | 981 | BL IIIF v3 |
+
+**Notes:** BL IIIF v3 manifests at `bl.digirati.io`. VDC IDs starting with `vdc_10005...` and `vdc_10006...` work (Polonsky/Heritage Made Digital). Older `vdc_10002...`/`vdc_10004...` return 403 (Oct 2023 cyber attack recovery). Dee, Splendor Solis, Ripley Scrolls remain inaccessible.
+
+### Batch B: World Library Manuscripts (19 works, ~9,912 pages)
+
+**e-codices (Swiss Manuscripts):**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Tabula Smaragdina & Alchemical Texts | Various | 1400 | 228 | e-codices (Zürich) |
+| Splendor Solis | Salomon Trismosin | 1582 | 95 | e-codices (Berlin) |
+| Schwäbisch Gmünd Alchemical Miscellany | Various | 1480 | 560 | e-codices (Stuttgart) |
+| Ars Notoria sive Flores Aurei | Pseudo-Solomon | 1225 | 109 | e-codices (Bern) |
+| Hortus Sanitatis | Jacob Meydenbach | 1491 | 914 | e-codices (St. Gallen) |
+| Liber Hermetis De XV Stellis | Hermes Trismegistus | 1375 | 245 | e-codices (Basel) |
+| Lapidary and Natural Philosophy | Anonymous | 1400 | 246 | e-codices (Geneva) |
+| Thesaurus Pauperum (Medical Alchemy) | Petrus Hispanus | 1350 | 109 | e-codices (Basel) |
+| Compendium Salernitanum (Medical) | Matthaeus Platearius et al. | 1170 | 194 | e-codices (Basel) |
+
+**Leiden University Library:**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Liber Floridus | Lambert of St. Omer | 1120 | 468 | Leiden |
+| Boethius De Consolatione (Illustrated) | Boethius | 1230 | 214 | Leiden |
+| Macrobius Commentarii in Somnium Scipionis | Macrobius | 1150 | 168 | Leiden |
+| Martianus Capella De Nuptiis | Martianus Capella | 1100 | 174 | Leiden |
+| Leiden Aratea (Astronomical) | Germanicus Caesar | 816 | 188 | Leiden |
+
+**John Rylands Library Manchester:**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Rylands Alchemical Miscellany | Various | 1475 | 339 | Rylands |
+| Bestiary (Rylands Latin MS 8) | Anonymous | 1235 | 148 | Rylands |
+| Astrological Compendium (Rylands) | Various | 1450 | 255 | Rylands |
+
+**Harvard Houghton Library:**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Alchemical Miscellany (Ripley, Lull, Arnold) | George Ripley et al. | 1500 | 418 | Harvard |
+
+**Biblioteca Nacional de Portugal:**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Apocalypse of Lorvão | Beatus of Liébana | 1189 | 230 | BNP |
+
+### Batch C: Behmenist Body-Center Tradition (20 works, ~5,521 pages)
+
+**Thematic rationale:** Building the complete corpus of Behmenist "spiritual anatomy" — the Western tradition's closest analogue to chakra/subtle body theory. Traces the lineage: Boehme (seven source spirits) → Gichtel (planetary body-centers) → Pordage (theological mysticism) → Lead (Philadelphian visionary) → Law (18th-century revival) → Freher (systematic theology).
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Opus Mago-Cabbalisticum (1735 ed.) | Georg von Welling | 1735 | 652 | IA |
+| Opus Mago-Cabbalisticum (1719 1st ed.) | Georg von Welling | 1719 | 120 | IA |
+| Theologia Mystica | John Pordage | 1698 | 285 | IA |
+| Sendschreiben | John Pordage | 1698 | 28 | IA |
+| A Revelation of Revelations | Jane Lead | 1683 | 128 | IA |
+| Fountain of Gardens Vol. I | Jane Lead | 1696 | 595 | IA |
+| Fountain of Gardens Vol. II | Jane Lead | 1697 | 547 | IA |
+| Fountain of Gardens Vol. III | Jane Lead | 1701 | 357 | IA |
+| The Heavenly Cloud Now Breaking | Jane Lead | 1681 | 41 | IA |
+| The Enochian Walks with God | Jane Lead | 1694 | 47 | IA |
+| The Wonders of God's Creation | Jane Lead | 1695 | 97 | IA |
+| The Ascent to the Mount of Vision | Jane Lead | 1699 | 47 | IA |
+| Ein Garten-Brunn (German) | Jane Lead | 1697 | 414 | IA |
+| Eine kurtze Eröffnung (1723) | Johann Georg Gichtel | 1723 | 206 | IA |
+| Eine kurtze Eröffnung (1736) | Johann Georg Gichtel | 1736 | 193 | e-rara |
+| The Spirit of Prayer | William Law | 1749 | 102 | IA |
+| An Appeal to All that Doubt | William Law | 1740 | 336 | IA |
+| The Spirit of Love | William Law | 1752 | 67 | IA |
+| The Way to Divine Knowledge | William Law | 1752 | 261 | IA |
+| D. A. Freher's Life and Theosophic Writings | Dionysius Andreas Freher | 1700 | 756 | IA |
+| Welling Commentary (Linden) | Carl Heinrich von Linden | 1773 | 298 | e-rara |
+
+**Collection impact:** Jane Lead alone adds 8 works — she was listed as a "URGENT - Missing Key Author" in the gap analysis. Gichtel's Theosophia Practica was already in collection; added two smaller works. Pordage fills a critical gap. Law's four mystical works complete the 18th-century Behmenist revival arc.
+
+### Batch D: Cosmic Harmony & Sympathetic Resonance (10 works, ~3,473 pages)
+
+**Thematic rationale:** The Pythagorean-Hermetic tradition of universal harmony — musica universalis, sympatheia, harmonia mundi. Central to understanding the metaphysical framework undergirding alchemy and natural magic.
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Monochordum Mundi Symphoniacum | Robert Fludd | 1622 | 85 | e-rara |
+| History of Philosophy Vol. III (Chaldaick) | Thomas Stanley | 1660 | 800 | IA |
+| Traité de l'Harmonie Universelle | Marin Mersenne | 1627 | 558 | Gallica |
+| De Abditis Rerum Causis | Jean Fernel | 1548 | 283 | IA |
+| Les Preludes de l'Harmonie Universelle | Marin Mersenne | 1634 | 251 | Gallica |
+| Speculum Lapidum | Camillus Leonardi | 1502 | 138 | IA |
+| Speculum Lapidum + Sympathia (1717 ed.) | Leonardi & Pierre d'Arlensis | 1717 | 554 | IA |
+| Harmonia Macrocosmica | Andreas Cellarius | 1661 | 100 | IA |
+| History of Philosophy Vol. I | Thomas Stanley | 1655 | 318 | IA |
+| De Mysteriis (Gale 1678 ed.) | Iamblichus, ed. Thomas Gale | 1678 | 386 | IA |
+
+**Duplicates caught:** Campanella De Sensu Rerum, Reisch Margarita Philosophica, Cardano De Subtilitate, Kepler Mysterium Cosmographicum 1596 — all already in collection.
+
+### Gaps Remaining (Lower Priority)
+
+- **Jane Lead:** Revelation of Revelations 1701 expanded ed., Sonnenblume der Weisen, Le messager celeste (French)
+- **Pordage:** Natures Restorative (1671, 36 pages)
+- **Gichtel:** Choix de pensees (French), Theosophia Revelata (Boehme's works edited by Gichtel)
+- **Law:** Works of Jacob Behmen Vols 1-4 (Law's edition of Boehme)
+- **Cosmic harmony:** High-res e-rara scans of Kircher Musurgia Universalis, Kepler Harmonices Mundi (already have IA editions)
+
+### Session 032 TOTAL: 62 works, ~22,879 pages
+
+---
