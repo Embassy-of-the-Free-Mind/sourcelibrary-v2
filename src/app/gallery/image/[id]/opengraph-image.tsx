@@ -45,6 +45,8 @@ interface Detection {
   description: string;
   type?: string;
   bbox?: { x: number; y: number; width: number; height: number };
+  extracted_url?: string;
+  rotation?: number;
 }
 
 async function getImageData(id: string): Promise<{ page: PageWithBook; detection: Detection } | null> {
@@ -119,9 +121,11 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     imageUrl = imageUrl.replace(/\/full\/\d+,\//, '/full/2000,/');
   }
 
-  // Build cropped image URL if bbox exists
+  // Prefer pre-generated extracted_url, fall back to on-the-fly crop
   let displayUrl = imageUrl;
-  if (detection.bbox && imageUrl) {
+  if (detection.extracted_url) {
+    displayUrl = detection.extracted_url;
+  } else if (detection.bbox && imageUrl) {
     const params = new URLSearchParams({
       url: imageUrl,
       x: String(detection.bbox.x),
@@ -129,6 +133,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
       w: String(detection.bbox.width),
       h: String(detection.bbox.height),
     });
+    if (detection.rotation) params.set('rotation', String(detection.rotation));
     displayUrl = `https://sourcelibrary.org/api/crop-image?${params}`;
   }
 

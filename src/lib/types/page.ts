@@ -181,7 +181,9 @@ export interface DetectedImage {
     width: number;  // Width (0-1)
     height: number; // Height (0-1)
   };
-  extracted_url?: string;       // URL to extracted/cropped image (future)
+  rotation?: 0 | 90 | 180 | 270;  // Rotation in degrees (clockwise)
+  extracted_url?: string;       // Full-size cropped+rotated Vercel Blob URL
+  thumbnail_url?: string;       // 300px gallery grid thumbnail in Vercel Blob
   detected_at?: Date;
   detection_source: 'ocr_tag' | 'vision_model' | 'manual';
   model?: 'gemini' | 'mistral' | 'grounding-dino';

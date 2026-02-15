@@ -28,9 +28,20 @@ interface BookSearchResult {
   author?: string;
 }
 
+/** Downsize a IIIF URL for gallery thumbnails (400px wide instead of full) */
+function toThumbnailUrl(url: string): string {
+  if (!url) return url;
+  // IIIF Image API: .../full/full/0/default.jpg → .../full/400,/0/default.jpg
+  // Also handles /full/max/ and /full/NNN,/ patterns
+  if (url.includes('/full/')) {
+    return url.replace(/\/full\/(full|max|\d+,)\//,  '/full/400,/');
+  }
+  return url;
+}
+
 function getCroppedImageUrl(imageUrl: string, bbox: BBox): string {
   const params = new URLSearchParams({
-    url: imageUrl,
+    url: toThumbnailUrl(imageUrl),
     x: bbox.x.toString(),
     y: bbox.y.toString(),
     w: bbox.width.toString(),
@@ -462,9 +473,13 @@ export default function GalleryPage() {
 function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
   const [imageError, setImageError] = useState(false);
 
-  const displayUrl = item.bbox
-    ? getCroppedImageUrl(item.imageUrl, item.bbox)
-    : item.imageUrl;
+  // Prefer pre-generated thumbnail > extracted > on-the-fly crop
+  const displayUrl = item.thumbnailUrl
+    || item.extractedUrl
+    || (item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : toThumbnailUrl(item.imageUrl));
+
+  // Pre-generated images are already cropped — no need to mark as unoptimized
+  const isPreGenerated = !!(item.thumbnailUrl || item.extractedUrl);
 
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
 
@@ -480,7 +495,7 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
               className="object-contain group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
               onError={() => setImageError(true)}
-              unoptimized={!!item.bbox}
+              unoptimized={!isPreGenerated && !!item.bbox}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-stone-300">

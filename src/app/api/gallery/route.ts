@@ -124,6 +124,22 @@ export async function GET(request: NextRequest) {
     // Stage 5: Post-unwind filter (same conditions, prefixed with 'detected_images')
     pipeline.push({ $match: { $and: buildImageFilters('detected_images') } });
 
+    // Stage 5.5: Per-book diversity — when browsing the full gallery (no book filter),
+    // limit images per book so one book can't dominate the feed.
+    if (!bookId) {
+      const maxPerBook = parseInt(searchParams.get('maxPerBook') || '3');
+      pipeline.push({
+        $setWindowFields: {
+          partitionBy: '$book_id',
+          sortBy: { 'detected_images.gallery_quality': -1 as const },
+          output: {
+            _bookRank: { $rank: {} },
+          },
+        },
+      });
+      pipeline.push({ $match: { _bookRank: { $lte: maxPerBook } } });
+    }
+
     // Stage 6: Sort by quality, then by book/page
     pipeline.push({
       $sort: {
@@ -153,6 +169,9 @@ export async function GET(request: NextRequest) {
             description: '$detected_images.description',
             type: '$detected_images.type',
             bbox: '$detected_images.bbox',
+            rotation: '$detected_images.rotation',
+            extractedUrl: '$detected_images.extracted_url',
+            thumbnailUrl: '$detected_images.thumbnail_url',
             confidence: '$detected_images.confidence',
             galleryQuality: '$detected_images.gallery_quality',
             museumDescription: '$detected_images.museum_description',

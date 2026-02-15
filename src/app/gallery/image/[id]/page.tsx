@@ -32,7 +32,8 @@ import {
   Sparkles,
   Move,
   Crop,
-  Save
+  Save,
+  RotateCw
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -63,6 +64,8 @@ export default function ImageDetailPage({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [editingTitle, setEditingTitle] = useState(false);
   const [titleValue, setTitleValue] = useState('');
+  const [rotation, setRotation] = useState<0 | 90 | 180 | 270>(0);
+  const [savingRotation, setSavingRotation] = useState(false);
 
   useEffect(() => {
     // Normalize separator: URLs use - but internal IDs use :
@@ -104,7 +107,10 @@ export default function ImageDetailPage({
     if (data?.bbox) {
       setBboxValues(data.bbox);
     }
-  }, [data?.description, data?.galleryQuality, data?.museumDescription, data?.metadata, data?.bbox]);
+    if (data?.rotation != null) {
+      setRotation(data.rotation as 0 | 90 | 180 | 270);
+    }
+  }, [data?.description, data?.galleryQuality, data?.museumDescription, data?.metadata, data?.bbox, data?.rotation]);
 
   const saveTitle = async () => {
     if (!data) return;
@@ -166,18 +172,29 @@ export default function ImageDetailPage({
     if (!data) return;
     setSaving(true);
     try {
-      await gallery.update(data.id, { bbox: bboxValues });
-      // Rebuild the cropped image URL
-      const imageUrl = data.fullPageUrl;
-      const cropParams = new URLSearchParams({
-        url: imageUrl,
-        x: bboxValues.x.toString(),
-        y: bboxValues.y.toString(),
-        w: bboxValues.width.toString(),
-        h: bboxValues.height.toString()
-      });
-      const newCroppedUrl = `/api/crop-image?${cropParams}`;
-      setData({ ...data, bbox: bboxValues, imageUrl: newCroppedUrl });
+      const result = await gallery.update(data.id, { bbox: bboxValues });
+      if (result.extractedUrl) {
+        // Use pre-generated image
+        setData({
+          ...data,
+          bbox: bboxValues,
+          imageUrl: result.extractedUrl,
+          extractedUrl: result.extractedUrl,
+          thumbnailUrl: result.thumbnailUrl,
+        });
+      } else {
+        // Fallback to on-the-fly crop
+        const imageUrl = data.fullPageUrl;
+        const cropParams = new URLSearchParams({
+          url: imageUrl,
+          x: bboxValues.x.toString(),
+          y: bboxValues.y.toString(),
+          w: bboxValues.width.toString(),
+          h: bboxValues.height.toString()
+        });
+        const newCroppedUrl = `/api/crop-image?${cropParams}`;
+        setData({ ...data, bbox: bboxValues, imageUrl: newCroppedUrl });
+      }
       setEditingBbox(false);
     } catch (e) {
       console.error('Failed to save bbox:', e);
@@ -186,8 +203,29 @@ export default function ImageDetailPage({
     }
   };
 
+  const saveRotation = async (newRotation: 0 | 90 | 180 | 270) => {
+    if (!data) return;
+    setRotation(newRotation);
+    setSavingRotation(true);
+    try {
+      const result = await gallery.update(data.id, { rotation: newRotation });
+      // Update image URLs if pre-generated images were created
+      if (result.extractedUrl) {
+        setData({ ...data, rotation: newRotation, imageUrl: result.extractedUrl, extractedUrl: result.extractedUrl, thumbnailUrl: result.thumbnailUrl });
+      } else {
+        setData({ ...data, rotation: newRotation });
+      }
+    } catch (e) {
+      console.error('Failed to save rotation:', e);
+      setRotation(data.rotation ?? 0);
+    } finally {
+      setSavingRotation(false);
+    }
+  };
+
   const handleBboxMouseDown = (e: React.MouseEvent, action: 'move' | 'resize') => {
     e.preventDefault();
+    e.stopPropagation();
     setIsDragging(action);
     setDragStart({ x: e.clientX, y: e.clientY });
   };
@@ -316,14 +354,19 @@ export default function ImageDetailPage({
           {/* Image container with magnifier */}
           <div className="relative bg-stone-800 rounded-xl overflow-hidden my-8">
             <div className="aspect-[4/3] h-96 relative">
-              <ImageWithMagnifier
-                src={data.imageUrl}
-                alt={data.description}
-                className="w-full h-full"
-                magnifierSize={250}
-                zoomLevel={4}
-                highResSrc={data.highResUrl}
-              />
+              <div
+                className="w-full h-full transition-transform duration-300"
+                style={{ transform: rotation ? `rotate(${rotation}deg)` : undefined }}
+              >
+                <ImageWithMagnifier
+                  src={data.imageUrl}
+                  alt={data.description}
+                  className="w-full h-full"
+                  magnifierSize={250}
+                  zoomLevel={4}
+                  highResSrc={data.highResUrl}
+                />
+              </div>
             </div>
 
             {/* Type badge */}
@@ -706,6 +749,20 @@ export default function ImageDetailPage({
                       <div
                         className="relative bg-stone-900 rounded overflow-hidden cursor-crosshair select-none"
                         style={{ aspectRatio: '3/4' }}
+                        onMouseDown={(e) => {
+                          // Click outside bbox = reposition bbox centered on click
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const x = (e.clientX - rect.left) / rect.width;
+                          const y = (e.clientY - rect.top) / rect.height;
+                          setBboxValues(prev => ({
+                            ...prev,
+                            x: Math.max(0, Math.min(1 - prev.width, x - prev.width / 2)),
+                            y: Math.max(0, Math.min(1 - prev.height, y - prev.height / 2))
+                          }));
+                          setIsDragging('move');
+                          setDragStart({ x: e.clientX, y: e.clientY });
+                          e.preventDefault();
+                        }}
                         onMouseMove={(e) => {
                           const rect = e.currentTarget.getBoundingClientRect();
                           handleBboxMouseMove(e, rect);
@@ -718,7 +775,8 @@ export default function ImageDetailPage({
                           src={data.fullPageUrl}
                           alt="Full page"
                           fill
-                          className="object-contain"
+                          className="object-contain pointer-events-none"
+                          onDragStart={(e) => e.preventDefault()}
                           unoptimized
                         />
                         {/* Darkened overlay outside bbox */}
@@ -778,6 +836,33 @@ export default function ImageDetailPage({
                   )}
                 </div>
               )}
+
+              {/* Rotation Control */}
+              <div className="bg-stone-800 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm text-stone-400 flex items-center gap-2">
+                    <RotateCw className="w-4 h-4" />
+                    Rotation
+                  </p>
+                  {savingRotation && <span className="text-xs text-amber-500">Saving...</span>}
+                </div>
+                <div className="flex gap-2">
+                  {([0, 90, 180, 270] as const).map((deg) => (
+                    <button
+                      key={deg}
+                      onClick={() => saveRotation(deg)}
+                      disabled={savingRotation}
+                      className={`flex-1 py-1.5 rounded text-sm transition-colors ${
+                        rotation === deg
+                          ? 'bg-amber-600 text-white'
+                          : 'bg-stone-700 text-stone-300 hover:bg-stone-600'
+                      } disabled:opacity-50`}
+                    >
+                      {deg}°
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               {/* Citation */}
               <div className="bg-stone-800 rounded-lg p-4">

@@ -30,6 +30,9 @@ export interface GalleryItem {
   description: string;
   type?: string;
   bbox?: BBox;
+  rotation?: 0 | 90 | 180 | 270;
+  extractedUrl?: string;
+  thumbnailUrl?: string;
   galleryQuality?: number;
   museumDescription?: string;
   metadata?: ImageMetadata;
@@ -83,11 +86,15 @@ export interface GalleryImageUpdateRequest {
   galleryQuality?: number;
   type?: string;
   bbox?: BBox;
+  rotation?: 0 | 90 | 180 | 270;
 }
 
 export interface GalleryImageUpdateResponse {
   success: boolean;
-  item: GalleryItem;
+  item?: GalleryItem;
+  updated?: Record<string, unknown>;
+  extractedUrl?: string;
+  thumbnailUrl?: string;
 }
 
 export interface GalleryImageDetail {
@@ -97,6 +104,9 @@ export interface GalleryImageDetail {
   imageUrl: string;
   fullPageUrl: string;
   highResUrl?: string;
+  extractedUrl?: string;
+  thumbnailUrl?: string;
+  rotation?: 0 | 90 | 180 | 270;
   description: string;
   type?: string;
   confidence?: number;

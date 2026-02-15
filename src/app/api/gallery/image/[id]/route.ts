@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { generateGalleryImages } from '@/lib/gallery-image-gen';
 
 /**
  * Upgrade IIIF image URLs to higher resolution
@@ -100,11 +101,12 @@ export async function GET(
     const isIiif = imageUrl?.includes('/iiif/');
     const fullResUrl = isIiif ? upgradeIiifUrl(imageUrl, 'high') : imageUrl;
 
-    // Build the cropped image URL if bbox exists
-    let croppedUrl = imageUrl;
+    // Prefer pre-generated extracted_url over on-the-fly crop
+    let croppedUrl = detection.extracted_url || imageUrl;
     let highResUrl = fullResUrl;
 
-    if (detection.bbox && imageUrl) {
+    if (!detection.extracted_url && detection.bbox && imageUrl) {
+      // Fallback to on-the-fly crop if no pre-generated image
       const cropParams = new URLSearchParams({
         url: imageUrl,
         x: detection.bbox.x.toString(),
@@ -112,6 +114,7 @@ export async function GET(
         w: detection.bbox.width.toString(),
         h: detection.bbox.height.toString()
       });
+      if (detection.rotation) cropParams.set('rotation', detection.rotation.toString());
       croppedUrl = `/api/crop-image?${cropParams}`;
 
       // High-res version for magnifier
@@ -122,6 +125,18 @@ export async function GET(
         w: detection.bbox.width.toString(),
         h: detection.bbox.height.toString()
       });
+      if (detection.rotation) highResCropParams.set('rotation', detection.rotation.toString());
+      highResUrl = `/api/crop-image?${highResCropParams}`;
+    } else if (detection.bbox && imageUrl) {
+      // Still build high-res crop URL for magnifier even when extracted_url exists
+      const highResCropParams = new URLSearchParams({
+        url: fullResUrl,
+        x: detection.bbox.x.toString(),
+        y: detection.bbox.y.toString(),
+        w: detection.bbox.width.toString(),
+        h: detection.bbox.height.toString()
+      });
+      if (detection.rotation) highResCropParams.set('rotation', detection.rotation.toString());
       highResUrl = `/api/crop-image?${highResCropParams}`;
     }
 
@@ -136,6 +151,9 @@ export async function GET(
       imageUrl: croppedUrl,
       fullPageUrl: imageUrl,
       highResUrl: highResUrl, // For magnifier/high-resolution viewing
+      extractedUrl: detection.extracted_url ?? null,
+      thumbnailUrl: detection.thumbnail_url ?? null,
+      rotation: detection.rotation ?? 0,
 
       // AI-generated metadata
       description: detection.description,
@@ -252,6 +270,11 @@ export async function PATCH(
       }
     }
 
+    // Handle rotation
+    if (typeof body.rotation === 'number' && [0, 90, 180, 270].includes(body.rotation)) {
+      updateFields[`detected_images.${detectionIndex}.rotation`] = body.rotation;
+    }
+
     // Handle bbox updates
     if (body.bbox && typeof body.bbox === 'object') {
       const b = body.bbox;
@@ -280,6 +303,49 @@ export async function PATCH(
 
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    // Generate pre-cropped gallery images when bbox or rotation changes
+    const bboxChanged = !!body.bbox;
+    const rotationChanged = typeof body.rotation === 'number';
+    if (bboxChanged || rotationChanged) {
+      try {
+        // Re-read the page to get current state after update
+        const updatedPage = await db.collection('pages').findOne({ id: pageId });
+        if (updatedPage) {
+          const det = updatedPage.detected_images?.[detectionIndex];
+          const sourceUrl = updatedPage.archived_photo || updatedPage.cropped_photo || updatedPage.photo_original || updatedPage.photo;
+          if (det?.bbox && sourceUrl) {
+            const generated = await generateGalleryImages({
+              sourceImageUrl: sourceUrl,
+              bbox: det.bbox,
+              rotation: det.rotation ?? 0,
+              bookId: updatedPage.book_id,
+              pageId,
+              detectionIndex,
+            });
+            // Save generated URLs back to the detection
+            await db.collection('pages').updateOne(
+              { id: pageId },
+              {
+                $set: {
+                  [`detected_images.${detectionIndex}.extracted_url`]: generated.extractedUrl,
+                  [`detected_images.${detectionIndex}.thumbnail_url`]: generated.thumbnailUrl,
+                }
+              }
+            );
+            return NextResponse.json({
+              success: true,
+              updated: updateFields,
+              extractedUrl: generated.extractedUrl,
+              thumbnailUrl: generated.thumbnailUrl,
+            });
+          }
+        }
+      } catch (genError) {
+        // Non-fatal — crop-image fallback still works
+        console.warn('Gallery image generation failed (non-fatal):', genError);
+      }
     }
 
     return NextResponse.json({ success: true, updated: updateFields });

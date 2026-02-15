@@ -29,6 +29,7 @@ export interface SocialImageCandidate {
     width: number;
     height: number;
   };
+  extractedUrl?: string;        // Pre-generated Vercel Blob URL
 
   // Book context
   bookId: string;
@@ -211,6 +212,7 @@ export async function selectImagesForPosts(
         museumDescription: '$detected_images.museum_description',
         metadata: '$detected_images.metadata',
         bbox: '$detected_images.bbox',
+        extractedUrl: '$detected_images.extracted_url',
 
         bookId: '$book_id',
         bookTitle: { $ifNull: ['$book.display_title', '$book.title'] },
@@ -326,11 +328,17 @@ export async function getImageCandidate(
 
 /**
  * Build the cropped image URL for a candidate.
+ * Prefers pre-generated Blob URL when available (faster, already rotated).
  */
 export function buildCropUrl(
   candidate: SocialImageCandidate,
   baseUrl?: string
 ): string {
+  // Use pre-generated image if available
+  if (candidate.extractedUrl) {
+    return candidate.extractedUrl;
+  }
+
   if (!candidate.bbox) {
     return candidate.imageUrl;
   }

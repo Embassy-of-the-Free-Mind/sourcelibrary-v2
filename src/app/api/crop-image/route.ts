@@ -20,6 +20,7 @@ export async function GET(request: NextRequest) {
     const w = parseFloat(searchParams.get('w') || '1');
     const h = parseFloat(searchParams.get('h') || '1');
     const padding = parseFloat(searchParams.get('padding') || '0.02');
+    const rotation = parseInt(searchParams.get('rotation') || '0');
 
     if (!imageUrl) {
       return NextResponse.json({ error: 'url required' }, { status: 400 });
@@ -55,9 +56,12 @@ export async function GET(request: NextRequest) {
     const width = Math.min(imgWidth - left, Math.ceil(normW * imgWidth + padX * 2));
     const height = Math.min(imgHeight - top, Math.ceil(normH * imgHeight + padY * 2));
 
-    // Crop the image
-    const croppedBuffer = await sharp(imageBuffer)
-      .extract({ left, top, width, height })
+    // Crop the image (and optionally rotate)
+    let pipeline = sharp(imageBuffer).extract({ left, top, width, height });
+    if (rotation && [90, 180, 270].includes(rotation)) {
+      pipeline = pipeline.rotate(rotation);
+    }
+    const croppedBuffer = await pipeline
       .jpeg({ quality: 85 })
       .toBuffer();
 
