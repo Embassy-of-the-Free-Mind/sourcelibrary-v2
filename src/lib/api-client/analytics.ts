@@ -3,7 +3,8 @@ import type {
   AnalyticsStats,
   TrackEventRequest,
   UsageStats,
-  LoadingMetric
+  LoadingMetric,
+  ProcessingOverviewResponse
 } from './types/analytics';
 
 /**
@@ -59,6 +60,26 @@ export const analytics = {
     page_id?: string;
   }): Promise<{ success: boolean; deduplicated?: boolean }> => {
     return await apiClient.post('/api/analytics/track', data);
+  },
+
+  /**
+   * Get processing overview (all book processing steps)
+   */
+  processingOverview: async (params?: {
+    step?: string;
+    sort?: string;
+    limit?: number;
+    offset?: number;
+    search?: string;
+  }): Promise<ProcessingOverviewResponse> => {
+    const sp = new URLSearchParams();
+    if (params?.step) sp.set('step', params.step);
+    if (params?.sort) sp.set('sort', params.sort);
+    if (params?.limit) sp.set('limit', String(params.limit));
+    if (params?.offset) sp.set('offset', String(params.offset));
+    if (params?.search) sp.set('search', params.search);
+    const qs = sp.toString();
+    return await apiClient.get(`/api/admin/processing-overview${qs ? `?${qs}` : ''}`, { timeout: 60000 });
   },
 
   /**

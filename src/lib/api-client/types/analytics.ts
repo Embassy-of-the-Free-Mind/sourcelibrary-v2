@@ -85,4 +85,30 @@ export interface LoadingMetric {
   metadata?: Record<string, unknown>;
 }
 
+export interface ProcessingRow {
+  book_id: string;
+  book_title: string;
+  step: 'import' | 'ocr' | 'translate' | 'summarize' | 'extract_images' | 'index';
+  model?: string;
+  prompt_version?: string;
+  mode?: 'realtime' | 'batch';
+  date_start: string;
+  date_end?: string;
+  pages: number;
+  cost_usd: number;
+  success_count: number;
+  failed_count: number;
+}
+
+export interface ProcessingOverviewResponse {
+  rows: ProcessingRow[];
+  total: number;
+  summary: {
+    total_steps: number;
+    total_cost: number;
+    books_processed: number;
+    pages_processed: number;
+  };
+}
+
 // Note: JobLog is defined in ./jobs.ts to avoid duplication

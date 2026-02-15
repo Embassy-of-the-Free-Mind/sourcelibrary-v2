@@ -153,6 +153,23 @@ export async function logGeminiCall(params: {
   try {
     const db = await getDb();
 
+    // Look up book title if missing but book_id is provided
+    // Note: book_id is the string `id` field, not the ObjectId `_id`
+    let bookTitle = params.book_title;
+    if (!bookTitle && params.book_id) {
+      try {
+        const book = await db.collection('books').findOne(
+          { id: params.book_id },
+          { projection: { title: 1, display_title: 1 } }
+        );
+        if (book) {
+          bookTitle = book.display_title || book.title;
+        }
+      } catch {
+        // Non-critical — proceed without title
+      }
+    }
+
     const log: GeminiUsageLog = {
       id: generateId(),
       timestamp: new Date(),
@@ -160,7 +177,7 @@ export async function logGeminiCall(params: {
       mode: params.mode,
       model: params.model,
       book_id: params.book_id,
-      book_title: params.book_title,
+      book_title: bookTitle,
       page_ids: params.page_ids,
       page_count: params.page_count || params.page_ids?.length || 0,
       batch_job_id: params.batch_job_id,
