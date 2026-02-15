@@ -17,6 +17,7 @@ interface CoverImagePickerProps {
 export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, pages }: CoverImagePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
+  const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnailBlob || currentThumbnail);
 
   // Handle Escape key to close
   const handleClose = useCallback(() => setIsOpen(false), []);
@@ -69,6 +70,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
       }
 
       await books.update(bookId, updates);
+      setDisplayThumbnail((updates.thumbnail_blob || updates.thumbnail) as string);
       setIsOpen(false);
     } catch (error) {
       console.error('Error setting cover:', error);
@@ -85,9 +87,9 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
         title="Click to change cover image"
       >
-        {(currentThumbnailBlob || currentThumbnail) ? (
+        {displayThumbnail ? (
           <Image
-            src={currentThumbnailBlob || currentThumbnail!}
+            src={displayThumbnail}
             alt={bookTitle}
             fill
             className="object-cover group-hover:opacity-80 transition-opacity"
