@@ -68,19 +68,22 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => ({}));
-    const { bookId, limit = 100, clearStaleOcr = false } = body;
+    const { bookId, limit = 100, clearStaleOcr = false, force = false } = body;
 
     const db = await getDb();
 
-    // Find pages with crop data but no cropped_photo
+    // Find pages with crop data but no cropped_photo (or all cropped pages if force=true)
     const query: Record<string, unknown> = {
       'crop.xStart': { $exists: true },
-      $or: [
+    };
+
+    if (!force) {
+      query.$or = [
         { cropped_photo: { $exists: false } },
         { cropped_photo: null },
         { cropped_photo: '' }
-      ]
-    };
+      ];
+    }
 
     if (bookId) {
       query.book_id = bookId;

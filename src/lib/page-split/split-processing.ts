@@ -165,8 +165,8 @@ export async function cropAndUploadHalf(
       width: Math.min(cropWidth, imgWidth - left),
       height: imgHeight
     })
-    .resize(1200, null, { fit: 'inside', withoutEnlargement: true })
-    .jpeg({ quality: 80, progressive: true })
+    .resize(2000, null, { fit: 'inside', withoutEnlargement: true })
+    .jpeg({ quality: 90, progressive: true })
     .toBuffer();
 
   // Upload to Vercel Blob
@@ -198,7 +198,8 @@ export async function generateAndUploadThumbnail(
     {
       access: 'public',
       contentType: 'image/jpeg',
-      addRandomSuffix: false
+      addRandomSuffix: false,
+      allowOverwrite: true
     }
   );
 
