@@ -44,15 +44,22 @@ export async function generateGalleryImages(
   const imgWidth = metadata.width || 1;
   const imgHeight = metadata.height || 1;
 
+  // Normalize bbox: detect pixel-value coordinates (> 1) and convert to 0-1 range
+  const isPixels = bbox.x > 1 || bbox.y > 1 || bbox.width > 1 || bbox.height > 1;
+  const normX = isPixels ? bbox.x / imgWidth : bbox.x;
+  const normY = isPixels ? bbox.y / imgHeight : bbox.y;
+  const normW = isPixels ? bbox.width / imgWidth : bbox.width;
+  const normH = isPixels ? bbox.height / imgHeight : bbox.height;
+
   // Apply padding (2% of image size) and compute pixel coordinates
   const padding = 0.02;
   const padX = padding * imgWidth;
   const padY = padding * imgHeight;
 
-  const left = Math.max(0, Math.floor(bbox.x * imgWidth - padX));
-  const top = Math.max(0, Math.floor(bbox.y * imgHeight - padY));
-  const width = Math.min(imgWidth - left, Math.ceil(bbox.width * imgWidth + padX * 2));
-  const height = Math.min(imgHeight - top, Math.ceil(bbox.height * imgHeight + padY * 2));
+  const left = Math.max(0, Math.floor(normX * imgWidth - padX));
+  const top = Math.max(0, Math.floor(normY * imgHeight - padY));
+  const width = Math.min(imgWidth - left, Math.ceil(normW * imgWidth + padX * 2));
+  const height = Math.min(imgHeight - top, Math.ceil(normH * imgHeight + padY * 2));
 
   // Extract (crop) the region
   let pipeline = sharp(imageBuffer).extract({ left, top, width, height });
