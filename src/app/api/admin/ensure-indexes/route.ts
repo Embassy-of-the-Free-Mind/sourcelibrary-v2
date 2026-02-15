@@ -365,6 +365,50 @@ export async function POST() {
         : `error: ${err.message}`;
     }
 
+    // Gemini usage - processing overview aggregation (type + status prefix)
+    // Query: { status: { $in: ['success', 'failed'] }, type?: stepFilter }
+    try {
+      await db.collection('gemini_usage').createIndex(
+        { type: 1, status: 1, book_id: 1 },
+        { name: 'gemini_usage_type_status_book_idx', background: true }
+      );
+      results['gemini_usage.gemini_usage_type_status_book_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gemini_usage.gemini_usage_type_status_book_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Batch jobs - filter out child jobs in processing overview
+    // Query: { parent_job_id: { $exists: false } }
+    try {
+      await db.collection('batch_jobs').createIndex(
+        { parent_job_id: 1, created_at: -1 },
+        { name: 'batch_jobs_parent_created_idx', background: true, sparse: true }
+      );
+      results['batch_jobs.batch_jobs_parent_created_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['batch_jobs.batch_jobs_parent_created_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Pages - split detection aggregation (processing overview)
+    try {
+      await db.collection('pages').createIndex(
+        { 'split_detection': 1, book_id: 1 },
+        { name: 'pages_split_detection_idx', background: true, sparse: true }
+      );
+      results['pages.pages_split_detection_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_split_detection_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Analytics pageviews - timestamp for date range queries
     // Query: { timestamp: { $gte } } used by all traffic aggregations
     try {

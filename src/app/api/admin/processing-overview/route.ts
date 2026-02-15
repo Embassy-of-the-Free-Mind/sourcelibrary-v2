@@ -15,6 +15,25 @@ export async function GET(request: Request) {
 
     const db = await getDb();
 
+    // Resolve search → book IDs once, share across all queries
+    let searchBookIds: string[] | null = null;
+    if (search) {
+      const matchingBooks = await db.collection('books')
+        .find({
+          $or: [
+            { title: { $regex: search, $options: 'i' } },
+            { display_title: { $regex: search, $options: 'i' } },
+          ],
+        }, { projection: { id: 1 } })
+        .toArray();
+      searchBookIds = matchingBooks.map((b: any) => b.id);
+      if (searchBookIds.length === 0) {
+        return NextResponse.json({ rows: [], total: 0, summary: { total_steps: 0, total_cost: 0, books_processed: 0, pages_processed: 0 } }, {
+          headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120' },
+        });
+      }
+    }
+
     // Infrastructure steps scan the entire pages collection (~900k docs) —
     // only run when the user explicitly filters to that step.
     const infraSteps = ['split', 'archive', 'thumbnail'];
@@ -25,10 +44,10 @@ export async function GET(request: Request) {
 
     // Run queries in parallel — only include what's needed
     const [bookRows, aiRows, infraRows, batchRows] = await Promise.all([
-      (!stepFilter || isBookFilter) ? getBookRows(db, isBookFilter ? stepFilter : '', search) : [],
-      (!stepFilter || isAiFilter) ? getAiRows(db, isAiFilter ? stepFilter : '', search) : [],
-      isInfraFilter ? getInfraRows(db, stepFilter, search) : [],
-      (!stepFilter || stepFilter === 'batch_job') ? getBatchJobRows(db, search) : [],
+      (!stepFilter || isBookFilter) ? getBookRows(db, isBookFilter ? stepFilter : '', searchBookIds) : [],
+      (!stepFilter || isAiFilter) ? getAiRows(db, isAiFilter ? stepFilter : '', searchBookIds) : [],
+      isInfraFilter ? getInfraRows(db, stepFilter, searchBookIds) : [],
+      (!stepFilter || stepFilter === 'batch_job') ? getBatchJobRows(db, searchBookIds) : [],
     ]);
 
     // Merge all rows
@@ -95,25 +114,28 @@ function getSortFn(sort: string): (a: ProcessingRow, b: ProcessingRow) => number
 
 /**
  * Book-level rows: import, pipeline status, editions — all from the books collection.
+ * Only projects the fields needed for the active stepFilter to reduce transfer.
  */
-async function getBookRows(db: any, stepFilter: string, search: string): Promise<ProcessingRow[]> {
+async function getBookRows(db: any, stepFilter: string, searchBookIds: string[] | null): Promise<ProcessingRow[]> {
   const query: any = {};
-  if (search) {
-    query.$or = [
-      { title: { $regex: search, $options: 'i' } },
-      { display_title: { $regex: search, $options: 'i' } },
-    ];
+  if (searchBookIds) {
+    query.id = { $in: searchBookIds };
+  }
+
+  // Only project what we need based on filter
+  const projection: any = { id: 1, _id: 1, title: 1, display_title: 1, created_at: 1, pages_count: 1 };
+  if (!stepFilter || stepFilter === 'pipeline') {
+    projection['pipeline_auto.status'] = 1;
+    projection['pipeline_auto.queued_at'] = 1;
+    projection['pipeline_auto.completed_at'] = 1;
+    projection['pipeline_auto.last_updated'] = 1;
+  }
+  if (!stepFilter || stepFilter === 'edition') {
+    projection.editions = 1;
   }
 
   const books = await db.collection('books')
-    .find(query, {
-      projection: {
-        id: 1, _id: 1, title: 1, display_title: 1, created_at: 1, pages_count: 1,
-        'pipeline_auto.status': 1, 'pipeline_auto.queued_at': 1, 'pipeline_auto.completed_at': 1,
-        'pipeline_auto.last_updated': 1, 'pipeline_auto.error': 1, 'pipeline_auto.retry_count': 1,
-        editions: 1,
-      },
-    })
+    .find(query, { projection })
     .sort({ created_at: -1 })
     .toArray();
 
@@ -145,7 +167,7 @@ async function getBookRows(db: any, stepFilter: string, search: string): Promise
         book_id: bookId,
         book_title: title,
         step: 'pipeline',
-        mode: pa.status, // repurpose mode to carry the pipeline phase
+        mode: pa.status,
         date_start: pa.queued_at ? new Date(pa.queued_at).toISOString() : (book.created_at ? new Date(book.created_at).toISOString() : new Date().toISOString()),
         date_end: pa.completed_at ? new Date(pa.completed_at).toISOString() : (pa.last_updated ? new Date(pa.last_updated).toISOString() : undefined),
         pages: book.pages_count || 0,
@@ -178,7 +200,7 @@ async function getBookRows(db: any, stepFilter: string, search: string): Promise
   return rows;
 }
 
-async function getAiRows(db: any, stepFilter: string, search: string): Promise<ProcessingRow[]> {
+async function getAiRows(db: any, stepFilter: string, searchBookIds: string[] | null): Promise<ProcessingRow[]> {
   const matchStage: any = {
     status: { $in: ['success', 'failed'] },
   };
@@ -187,18 +209,8 @@ async function getAiRows(db: any, stepFilter: string, search: string): Promise<P
     matchStage.type = stepFilter;
   }
 
-  if (search) {
-    const matchingBooks = await db.collection('books')
-      .find({
-        $or: [
-          { title: { $regex: search, $options: 'i' } },
-          { display_title: { $regex: search, $options: 'i' } },
-        ],
-      }, { projection: { id: 1 } })
-      .toArray();
-    const bookIds = matchingBooks.map((b: any) => b.id);
-    if (bookIds.length === 0) return [];
-    matchStage.book_id = { $in: bookIds };
+  if (searchBookIds) {
+    matchStage.book_id = { $in: searchBookIds };
   }
 
   const pipeline = [
@@ -263,24 +275,10 @@ async function getAiRows(db: any, stepFilter: string, search: string): Promise<P
  * Infrastructure steps (split detection, archiving, thumbnailing) — aggregated from pages collection.
  * Only runs when user explicitly filters to one of these steps (too heavy for "All").
  */
-async function getInfraRows(db: any, stepFilter: string, search: string): Promise<ProcessingRow[]> {
-  let bookFilter: any = {};
-  let bookTitleMap: Record<string, string> = {};
-
-  if (search) {
-    const matchingBooks = await db.collection('books')
-      .find({
-        $or: [
-          { title: { $regex: search, $options: 'i' } },
-          { display_title: { $regex: search, $options: 'i' } },
-        ],
-      }, { projection: { id: 1, title: 1, display_title: 1 } })
-      .toArray();
-    if (matchingBooks.length === 0) return [];
-    bookFilter.book_id = { $in: matchingBooks.map((b: any) => b.id) };
-    for (const b of matchingBooks) {
-      bookTitleMap[b.id] = b.display_title || b.title || 'Untitled';
-    }
+async function getInfraRows(db: any, stepFilter: string, searchBookIds: string[] | null): Promise<ProcessingRow[]> {
+  const bookFilter: any = {};
+  if (searchBookIds) {
+    bookFilter.book_id = { $in: searchBookIds };
   }
 
   const stepDefs: { step: ProcessingRow['step']; match: any; dateField: string }[] = [
@@ -318,14 +316,12 @@ async function getInfraRows(db: any, stepFilter: string, search: string): Promis
 
   const results = await db.collection('pages').aggregate(pipeline).toArray();
 
-  // Look up missing titles
-  const needsTitleIds = results
-    .filter((r: any) => !bookTitleMap[r._id])
-    .map((r: any) => r._id);
-
-  if (needsTitleIds.length > 0) {
+  // Look up titles for all book IDs
+  const allBookIds = results.map((r: any) => r._id);
+  let bookTitleMap: Record<string, string> = {};
+  if (allBookIds.length > 0) {
     const books = await db.collection('books')
-      .find({ id: { $in: needsTitleIds } }, { projection: { id: 1, title: 1, display_title: 1 } })
+      .find({ id: { $in: allBookIds } }, { projection: { id: 1, title: 1, display_title: 1 } })
       .toArray();
     for (const b of books) {
       bookTitleMap[b.id] = b.display_title || b.title || 'Untitled';
@@ -348,25 +344,15 @@ async function getInfraRows(db: any, stepFilter: string, search: string): Promis
 /**
  * Batch API jobs — from batch_jobs collection (lightweight).
  */
-async function getBatchJobRows(db: any, search: string): Promise<ProcessingRow[]> {
-  const match: any = {};
+async function getBatchJobRows(db: any, searchBookIds: string[] | null): Promise<ProcessingRow[]> {
+  const match: any = {
+    // Only top-level jobs (exclude children that are part of a parent)
+    parent_job_id: { $exists: false },
+  };
 
-  if (search) {
-    const matchingBooks = await db.collection('books')
-      .find({
-        $or: [
-          { title: { $regex: search, $options: 'i' } },
-          { display_title: { $regex: search, $options: 'i' } },
-        ],
-      }, { projection: { id: 1 } })
-      .toArray();
-    const bookIds = matchingBooks.map((b: any) => b.id);
-    if (bookIds.length === 0) return [];
-    match.book_id = { $in: bookIds };
+  if (searchBookIds) {
+    match.book_id = { $in: searchBookIds };
   }
-
-  // Only top-level jobs (exclude children that are part of a parent)
-  match.parent_job_id = { $exists: false };
 
   const jobs = await db.collection('batch_jobs')
     .find(match, {
