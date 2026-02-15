@@ -39,6 +39,7 @@ import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
 import { gallery } from '@/lib/api-client';
 import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
+import SimilarImages from '@/components/gallery/SimilarImages';
 import { sendGAEvent } from '@/lib/ga';
 
 export default function ImageDetailPage({
@@ -925,6 +926,9 @@ export default function ImageDetailPage({
                   Explore all images
                 </Link>
               </div>
+
+              {/* Similar images */}
+              {imageId && <SimilarImages imageId={imageId} />}
             </div>
           </div>
         </div>

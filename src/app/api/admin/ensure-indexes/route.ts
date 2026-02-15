@@ -453,6 +453,90 @@ export async function POST() {
         : `error: ${err.message}`;
     }
 
+    // Gallery embeddings - unique ID lookup
+    try {
+      await db.collection('gallery_embeddings').createIndex(
+        { id: 1 },
+        { name: 'gallery_embeddings_id_idx', background: true, unique: true }
+      );
+      results['gallery_embeddings.gallery_embeddings_id_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_embeddings.gallery_embeddings_id_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery embeddings - lookup by book
+    try {
+      await db.collection('gallery_embeddings').createIndex(
+        { book_id: 1 },
+        { name: 'gallery_embeddings_book_idx', background: true }
+      );
+      results['gallery_embeddings.gallery_embeddings_book_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_embeddings.gallery_embeddings_book_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery collections - slug lookup
+    try {
+      await db.collection('gallery_collections').createIndex(
+        { slug: 1 },
+        { name: 'gallery_collections_slug_idx', background: true, unique: true }
+      );
+      results['gallery_collections.gallery_collections_slug_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_collections.gallery_collections_slug_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery collections - featured listing
+    try {
+      await db.collection('gallery_collections').createIndex(
+        { featured: 1, sort_order: 1 },
+        { name: 'gallery_collections_featured_idx', background: true }
+      );
+      results['gallery_collections.gallery_collections_featured_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_collections.gallery_collections_featured_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Bookshelves - visitor + book unique
+    try {
+      await db.collection('bookshelves').createIndex(
+        { visitor_id: 1, book_id: 1 },
+        { name: 'bookshelves_visitor_book_idx', background: true, unique: true }
+      );
+      results['bookshelves.bookshelves_visitor_book_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['bookshelves.bookshelves_visitor_book_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Bookshelves - visitor shelf listing
+    try {
+      await db.collection('bookshelves').createIndex(
+        { visitor_id: 1, status: 1, updated_at: -1 },
+        { name: 'bookshelves_visitor_status_idx', background: true }
+      );
+      results['bookshelves.bookshelves_visitor_status_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['bookshelves.bookshelves_visitor_status_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
@@ -473,7 +557,7 @@ export async function POST() {
 export async function GET() {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'bookshelves'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

@@ -3,7 +3,8 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Search, Book, Lightbulb, User, MapPin, BookOpen, Loader2, X, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import { Search, Book, Lightbulb, User, MapPin, BookOpen, Loader2, X, ChevronRight, ImageIcon } from 'lucide-react';
 import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi } from '@/lib/api-client';
 import type { UnifiedSearchResponse } from '@/lib/api-client';
@@ -17,7 +18,7 @@ const TYPE_ICONS: Record<string, typeof Lightbulb> = {
 };
 
 interface NavigableItem {
-  type: 'book' | 'index' | 'full-search';
+  type: 'book' | 'index' | 'gallery' | 'full-search';
   href: string;
   id: string;
 }
@@ -88,7 +89,8 @@ export default function UnifiedSearch() {
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
-  const hasResults = results && (results.books.total > 0 || results.index.total > 0);
+  const galleryResults = (results as any)?.gallery?.results || [];
+  const hasResults = results && (results.books.total > 0 || results.index.total > 0 || galleryResults.length > 0);
   const noResults = results && !hasResults && query.length >= 2;
 
   // Fetch suggestions on zero results
@@ -120,9 +122,12 @@ export default function UnifiedSearch() {
         : `/book/${item.book_id}`;
       items.push({ type: 'index', href, id: `index-${item.book_id}-${item.type}-${i}` });
     }
+    for (const img of galleryResults) {
+      items.push({ type: 'gallery', href: `/gallery/image/${img.id}`, id: `gallery-${img.id}` });
+    }
     items.push({ type: 'full-search', href: `/search?q=${encodeURIComponent(query)}`, id: 'full-search' });
     return items;
-  }, [results, hasResults, query]);
+  }, [results, hasResults, query, galleryResults]);
 
   // Reset active index when results change
   useEffect(() => {
@@ -345,6 +350,70 @@ export default function UnifiedSearch() {
                           }`}>
                             {item.type}
                           </span>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+
+              {/* Gallery Images */}
+              {galleryResults.length > 0 && (() => {
+                const galStartIndex = results!.books.results.length + results!.index.results.length;
+                return (
+                  <div className="p-3">
+                    <div className="flex items-center justify-between mb-2 px-2">
+                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                        Images ({galleryResults.length})
+                      </span>
+                      <Link
+                        href={`/gallery?q=${encodeURIComponent(query)}`}
+                        className="text-xs text-amber-600 hover:text-amber-700 flex items-center gap-0.5"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        See all <ChevronRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                    {galleryResults.map((img: any, idx: number) => {
+                      const itemIndex = galStartIndex + idx;
+                      return (
+                        <Link
+                          key={img.id}
+                          id={`search-item-${itemIndex}`}
+                          href={`/gallery/image/${img.id}`}
+                          onClick={() => setIsOpen(false)}
+                          role="option"
+                          aria-selected={activeIndex === itemIndex}
+                          data-search-index={itemIndex}
+                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${
+                            activeIndex === itemIndex ? 'bg-rose-50' : 'hover:bg-rose-50'
+                          }`}
+                        >
+                          {img.imageUrl ? (
+                            <div className="w-8 h-8 rounded overflow-hidden flex-shrink-0 bg-stone-100">
+                              <Image
+                                src={img.imageUrl}
+                                alt={img.description || ''}
+                                width={32}
+                                height={32}
+                                className="w-full h-full object-cover"
+                                unoptimized
+                              />
+                            </div>
+                          ) : (
+                            <ImageIcon className="w-4 h-4 text-rose-400 flex-shrink-0" />
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-gray-900 text-sm truncate">
+                              <HighlightedText text={img.description || 'Gallery image'} query={query} />
+                            </p>
+                            <p className="text-xs text-gray-500 truncate">{img.bookTitle}</p>
+                          </div>
+                          {img.type && (
+                            <span className="text-[10px] px-1.5 py-0.5 bg-rose-100 text-rose-700 rounded">
+                              {img.type}
+                            </span>
+                          )}
                         </Link>
                       );
                     })}

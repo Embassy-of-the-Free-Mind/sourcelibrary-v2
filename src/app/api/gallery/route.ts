@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
+import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
 export const maxDuration = 30;
 
@@ -36,12 +38,23 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(cached.data);
     }
 
+    // Semantic search mode — uses embeddings instead of regex
+    const semantic = searchParams.get('semantic') === 'true';
+    const searchQuery = searchParams.get('q');
+
+    if (semantic && searchQuery) {
+      const result = await semanticGallerySearch(searchParams, searchQuery);
+      // Cache semantic results too
+      if (galleryCache.size > 50) galleryCache.clear();
+      galleryCache.set(cacheKey, { data: result, timestamp: Date.now() });
+      return NextResponse.json(result);
+    }
+
     const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
     const bookId = searchParams.get('bookId') || searchParams.get('book');
     const imageType = searchParams.get('type');
     const minQuality = searchParams.get('minQuality') ? parseFloat(searchParams.get('minQuality')!) : 0.5;
-    const searchQuery = searchParams.get('q');
     const yearStart = searchParams.get('yearStart') ? parseInt(searchParams.get('yearStart')!) : null;
     const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
     const subjectFilter = searchParams.get('subject');
@@ -269,4 +282,106 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+/**
+ * Semantic gallery search: embed query, then cosine rank gallery embeddings.
+ */
+async function semanticGallerySearch(
+  searchParams: URLSearchParams,
+  query: string
+) {
+  const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
+  const offset = parseInt(searchParams.get('offset') || '0');
+  const imageType = searchParams.get('type');
+
+  const db = await getDb();
+
+  // Embed the search query
+  const queryEmbedding = await generateQueryEmbedding(query);
+
+  // Fetch candidate embeddings (optionally pre-filter by type later)
+  const candidates = await db
+    .collection('gallery_embeddings')
+    .find({}, { projection: { id: 1, page_id: 1, book_id: 1, detection_index: 1, embedding: 1 } })
+    .limit(1000)
+    .toArray();
+
+  // Score and rank
+  const scored = candidates
+    .map((c) => ({
+      id: c.id as string,
+      pageId: c.page_id as string,
+      bookId: c.book_id as string,
+      detectionIndex: c.detection_index as number,
+      similarity: cosineSimilarity(queryEmbedding, c.embedding as number[]),
+    }))
+    .sort((a, b) => b.similarity - a.similarity);
+
+  // Total before pagination
+  const total = scored.length;
+
+  // Paginate
+  const page = scored.slice(offset, offset + limit);
+  if (page.length === 0) {
+    return { items: [], total: 0, limit, offset, semantic: true, filters: { types: [], subjects: [], yearRange: {} } };
+  }
+
+  // Resolve to full gallery items
+  const pageIds = [...new Set(page.map((s) => s.pageId))];
+  const pages = await db
+    .collection('pages')
+    .aggregate([
+      { $match: { id: { $in: pageIds } } },
+      {
+        $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' },
+      },
+      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+    ])
+    .toArray();
+
+  const pageMap = new Map(pages.map((p) => [p.id as string, p]));
+
+  const items = page
+    .map((s) => {
+      const p = pageMap.get(s.pageId);
+      if (!p) return null;
+      const det = (p.detected_images as Record<string, unknown>[])?.[s.detectionIndex];
+      if (!det) return null;
+
+      // Type filter
+      if (imageType && det.type !== imageType) return null;
+
+      return {
+        pageId: s.pageId,
+        bookId: s.bookId,
+        pageNumber: p.page_number,
+        detectionIndex: s.detectionIndex,
+        imageUrl: det.extracted_url || det.thumbnail_url || p.cropped_photo || p.photo_original || p.photo,
+        bookTitle: p.book?.display_title || p.book?.title || 'Unknown',
+        author: p.book?.author,
+        year: p.book?.year,
+        description: det.description || '',
+        type: det.type,
+        bbox: det.bbox,
+        rotation: det.rotation,
+        extractedUrl: det.extracted_url,
+        thumbnailUrl: det.thumbnail_url,
+        galleryQuality: det.gallery_quality,
+        museumDescription: det.museum_description,
+        metadata: det.metadata,
+        similarity: Math.round(s.similarity * 1000) / 1000,
+      };
+    })
+    .filter(Boolean);
+
+  return {
+    items,
+    total,
+    limit,
+    offset,
+    semantic: true,
+    bookInfo: null,
+    filters: { types: [], subjects: [], yearRange: {} },
+  };
 }

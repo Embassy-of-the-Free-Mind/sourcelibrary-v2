@@ -22,6 +22,15 @@ interface IndexResult {
   pages?: number[];
 }
 
+interface GalleryResult {
+  id: string;
+  imageUrl: string;
+  description: string;
+  type?: string;
+  bookTitle: string;
+  bookId: string;
+}
+
 /**
  * GET /api/search/unified
  *
@@ -46,17 +55,18 @@ export async function GET(request: NextRequest) {
     const queryRegex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
     const queryNormalized = normalizeText(query);
 
-    // Run book and index search in parallel
-    const [booksResult, indexResult] = await Promise.all([
+    // Run book, index, and gallery search in parallel
+    const [booksResult, indexResult, galleryResult] = await Promise.all([
       searchBooks(db, query, queryRegex, limit),
-      searchIndex(db, queryNormalized, limit)
+      searchIndex(db, queryNormalized, limit),
+      searchGallery(db, queryRegex, 3)
     ]);
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total,
+      results_count: booksResult.total + indexResult.total + galleryResult.total,
       filters: { source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -66,7 +76,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       query,
       books: booksResult,
-      index: indexResult
+      index: indexResult,
+      gallery: galleryResult
     });
   } catch (error) {
     console.error('Unified search error:', error);
@@ -169,4 +180,71 @@ async function searchIndex(db: any, queryNormalized: string, limit: number) {
   results.sort((a, b) => a.term.length - b.term.length);
 
   return { results, total };
+}
+
+async function searchGallery(db: any, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+  try {
+    const pages = await db.collection('pages').aggregate([
+      {
+        $match: {
+          'detected_images.0': { $exists: true },
+          $or: [
+            { 'detected_images.description': queryRegex },
+            { 'detected_images.museum_description': queryRegex },
+            { 'detected_images.metadata.subjects': queryRegex },
+            { 'detected_images.metadata.figures': queryRegex },
+          ],
+        },
+      },
+      { $limit: 20 },
+      { $unwind: { path: '$detected_images', includeArrayIndex: 'detIdx' } },
+      {
+        $match: {
+          'detected_images.gallery_quality': { $gte: 0.5 },
+          'detected_images.bbox': { $exists: true },
+          $or: [
+            { 'detected_images.description': queryRegex },
+            { 'detected_images.museum_description': queryRegex },
+            { 'detected_images.metadata.subjects': queryRegex },
+            { 'detected_images.metadata.figures': queryRegex },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: 'books',
+          localField: 'book_id',
+          foreignField: 'id',
+          as: 'book',
+        },
+      },
+      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+      { $sort: { 'detected_images.gallery_quality': -1 } },
+      { $limit: limit },
+      {
+        $project: {
+          _id: 0,
+          id: { $concat: ['$id', '-', { $toString: '$detIdx' }] },
+          imageUrl: {
+            $ifNull: [
+              '$detected_images.thumbnail_url',
+              { $ifNull: ['$detected_images.extracted_url', '$cropped_photo'] },
+            ],
+          },
+          description: '$detected_images.description',
+          type: '$detected_images.type',
+          bookTitle: { $ifNull: ['$book.display_title', '$book.title'] },
+          bookId: '$book_id',
+        },
+      },
+    ]).toArray();
+
+    return {
+      results: pages as GalleryResult[],
+      total: pages.length,
+    };
+  } catch (err) {
+    console.error('Gallery search error:', err);
+    return { results: [], total: 0 };
+  }
 }

@@ -67,6 +67,19 @@ export const gallery = {
   },
 
   /**
+   * Find similar gallery images
+   */
+  similar: async (id: string, limit?: number): Promise<{
+    items: GalleryItem[];
+    total: number;
+    method: string;
+  }> => {
+    const params = new URLSearchParams({ id });
+    if (limit) params.append('limit', limit.toString());
+    return await apiClient.get(`/api/gallery/similar?${params}`);
+  },
+
+  /**
    * Get gallery statistics
    */
   stats: async (): Promise<{
