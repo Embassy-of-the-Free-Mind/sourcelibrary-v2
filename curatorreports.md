@@ -5655,3 +5655,104 @@ Focused acquisition across four sources: Bodleian, Cambridge, Vatican, and Inter
 ### Session 032 TOTAL: 62 works, ~22,879 pages
 
 ---
+
+## 2026-02-15 — Session 033: Esoteric Capitalism
+
+### Theme
+
+The philosophical and metaphysical underpinnings of classical liberal economics — tracing market theory from Aristotle through the School of Salamanca, Italian merchants, natural law theorists, English pamphleteers, Scottish moral philosophers, and French liberals to Bastiat. Not "economics" as modern discipline, but the centuries-long intellectual genealogy of voluntary exchange, subjective value, and spontaneous order.
+
+### Tier 1: Core Esoteric Capitalism (17 works, ~6,878 pages)
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Harmonies Économiques | Frédéric Bastiat | 1850 | 596 | IA |
+| Harmonies of Political Economy (EN) | Bastiat, tr. Stirling | 1860 | 580 | IA |
+| Ce qu'on voit et ce qu'on ne voit pas | Frédéric Bastiat | 1850 | 80 | IA |
+| The Fable of the Bees | Bernard Mandeville | 1724 | 500 | IA |
+| Essai sur la Nature du Commerce | Richard Cantillon | 1755 | 442 | IA |
+| Lectures on Justice, Police, Revenue and Arms | Adam Smith | 1896 | 298 | IA |
+| Réflexions sur la Formation des Richesses | Anne-Robert-Jacques Turgot | 1788 | 116 | IA |
+| A Treatise on Political Economy | Jean-Baptiste Say | 1821 | 508 | IA |
+| Oeuvres Économiques et Philosophiques | François Quesnay | 1888 | 824 | IA |
+| Le Commerce et le Gouvernement | Étienne Bonnot de Condillac | 1776 | 508 | IA |
+| A System of Moral Philosophy | Francis Hutcheson | 1755 | 694 | IA |
+| An Essay on the History of Civil Society | Adam Ferguson | 1767 | 476 | IA |
+| Biographical Memoirs | Dugald Stewart | 1811 | 548 | IA |
+| Essays on the Principles of Morality | Lord Kames | 1751 | 380 | IA |
+| Natural Theology | William Paley | 1802 | 442 | IA |
+| The Analogy of Religion | Joseph Butler | 1736 | 428 | IA |
+| Essays on the Active Powers of Man | Thomas Reid | 1788 | 456 | IA |
+
+**Duplicate caught:** Cudworth True Intellectual System — already in collection.
+
+### Tier 2: Pre-Smith Predecessors (22 works)
+
+**Ancient & Medieval**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Politics (Bekker ed.) | Aristotle | 1837 | 430 | IA |
+| Nicomachean Ethics (Bekker ed.) | Aristotle | 1837 | 280 | IA |
+| Oeconomicus (Marchant ed.) | Xenophon | 1900 | 552 | IA |
+| Summa Theologiae II-II (De Justitia) | Thomas Aquinas | 1895 | 608 | IA |
+| Tractatus de Origine et Natura Juris | Nicole Oresme | 1864 | 228 | IA |
+
+**School of Salamanca**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Relectiones Theologicae | Francisco de Vitoria | 1557 | 648 | IA |
+| De Justitia et Jure | Domingo de Soto | 1556 | 820 | IA |
+| De Justitia et Jure (Concordia) | Luis de Molina | 1614 | 682 | IA |
+| Comentario Resolutorio de Cambios | Martín de Azpilcueta | 1556 | 172 | IA |
+| Summa de Tratos y Contratos | Tomás de Mercado | 1571 | 446 | IA |
+| De Justitia et Jure | Leonard Lessius | 1621 | 916 | IA |
+
+**Italian Merchants & Monetary Theorists**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Discorso sopra la Moneta | Gasparo Scaruffi | 1582 | 184 | IA |
+| Lezione delle Monete | Bernardo Davanzati | 1588 | 58 | IA |
+| Tractatus de Commerciis | Sigismondo Scaccia | 1619 | 488 | IA |
+
+**Natural Law**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| De Jure Belli ac Pacis | Hugo Grotius | 1625 | 862 | IA |
+| De Jure Naturae et Gentium | Samuel von Pufendorf | 1688 | 1206 | IA |
+| De Rege et Regis Institutione | Juan de Mariana | 1599 | 492 | IA |
+
+**English 1690s Pamphleteers**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Discourses upon Trade | Dudley North | 1691 | 48 | IA |
+| A Discourse of Trade | Nicholas Barbon | 1690 | 100 | IA |
+| A Treatise of Taxes and Contributions | William Petty | 1662 | 112 | IA |
+| Some Considerations of the Lowering of Interest | John Locke | 1692 | 210 | IA |
+
+**French Pre-Liberal**
+
+| Title | Author | Date | Pages | Source |
+|-------|--------|------|-------|--------|
+| Le Détail de la France | Pierre de Boisguilbert | 1695 | 372 | IA |
+
+**Zero duplicates in Tier 2.**
+
+### Blog Post
+
+Created "The Invisible Hand Has a History" at https://sourcelibrary.org/blog/invisible-hand — a 15-minute essay tracing market theory from Aristotle to Bastiat with links to all newly imported primary sources. Deployed to production.
+
+### Modernization Candidates
+
+Several English-language works (17th-18th century) would benefit from English modernization (not translation):
+- Hutcheson, Ferguson, Kames, Stewart, Butler, Reid (Scottish moral philosophy)
+- Mandeville, North, Barbon, Petty, Locke (English pamphleteers)
+- Smith Lectures
+
+### Session 033 TOTAL: 39 works, ~6,878+ pages (Tier 1) + ~8,000+ pages (Tier 2)
+
+---
