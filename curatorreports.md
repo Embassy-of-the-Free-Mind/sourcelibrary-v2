@@ -5800,3 +5800,74 @@ Deployed to https://sourcelibrary.org/blog/invisible-hand
 ### Session 033b TOTAL: 12 works, ~3,431 pages
 
 ---
+
+## 2026-02-15 — Session 034: Medici, Pierleone & the Printing Press
+
+### Theme
+
+Three interconnected threads: (1) the Medici family as bankers, patrons, and political actors — letters, biographies, guild records, and the Cosimo-specific archive; (2) Pierleone da Spoleto, Lorenzo's physician who died the morning after his patient, and the primary sources surrounding that event; (3) the history of printing from Gutenberg to the Renaissance press houses that disseminated all these texts.
+
+### Medici Letters & Sources (7 works, ~3,322 pages)
+
+| Title | Author | Date | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Lives of the Early Medici (Correspondence) | Janet Ross (ed.) | 1910 | 416 | `6991ea56516c454324ec0210` | IA |
+| Catalogue of the Medici Archives | Christie's | 1917 | 272 | `6991ea59516c454324ec03b2` | IA |
+| The Life of Lorenzo de' Medici | William Roscoe | 1796 | 614 | `6991ea5b516c454324ec04c4` | IA |
+| The Guilds of Florence | Edgcumbe Staley | 1906 | 814 | `6991ea5e516c454324ec072d` | IA |
+| La Legge del Catasto fiorentino del 1427 | Otto Karmin (ed.) | 1427 | 92 | `6991ea602f801130a473d44e` | IA |
+| Statuti dell'Arte dei Medici e Speziali | Arte dei Medici e Speziali | 1349 | 716 | `6991ea632f801130a473d4ac` | IA |
+| The Florentine History | Machiavelli, tr. Marriott | 1525 | 398 | `6991ea652f801130a473d77a` | IA |
+
+### Cosimo de' Medici (6 works, ~2,149 pages)
+
+| Title | Author | Date | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Vite di uomini illustri del secolo XV | Vespasiano da Bisticci | 1859 | 610 | `6991f3d40d82ea4dc111d0fd` | IA |
+| Cosimo de' Medici | K. Dorothea Ewart | 1899 | 262 | `6991f3d90d82ea4dc111d361` | IA |
+| Magni Cosmi Medicei Vita | Angelo Fabroni | 1789 | 216 | `6991f3dc0d82ea4dc111d469` | IA |
+| Adnotationes et Monumenta (documents) | Angelo Fabroni | 1788 | 275 | `6991f3de0d82ea4dc111d543` | IA |
+| Historia Fiorentina (1476 incunabulum) | Poggio Bracciolini | 1476 | 242 | `6991f3e10d82ea4dc111d658` | IA |
+| History of Florence Under Cosimo/Piero/Lorenzo | F.T. Perrens | 1892 | 544 | `6991f3e30d82ea4dc111d74c` | IA |
+
+### Pierleone da Spoleto (6 works, ~1,854 pages)
+
+| Title | Author | Date | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| De urinis et pulsibus | Pierleone da Spoleto / Gilles de Corbeil | 1514 | 119 | `6991f8d4ff9de7ebcc934741` | IA |
+| Lettere di Lorenzo il Magnifico | Lorenzo de' Medici, ed. Moreni | 1830 | 268 | `6991fb0f8ffe22e92ae4e3ab` | IA |
+| A Florentine Diary (EN translation) | Luca Landucci, tr. Jervis | 1927 | 346 | `6991fb128ffe22e92ae4e4b9` | IA |
+| Laurentii Medicis Magnifici Vita | Angelo Fabroni | 1784 | 408 | `6991fb158ffe22e92ae4e615` | IA |
+| Storie Fiorentine dal 1378 al 1509 | Francesco Guicciardini | 1931 | 239 | `6991fb178ffe22e92ae4e7af` | IA |
+| The History of Italy | Francesco Guicciardini | 1763 | 474 | `6991fb198ffe22e92ae4e8a0` | IA |
+
+### History of Printing (15 works, ~5,120 pages)
+
+| Title | Author | Date | Pages | Book ID | Source |
+|-------|--------|------|-------|---------|--------|
+| Mechanick Exercises on the Art of Printing | Joseph Moxon | 1683 | 282 | `6992007c768b426600239790` | IA |
+| Prologues and Epilogues of William Caxton | William Caxton, ed. Crotch | 1928 | 302 | `6992007f768b4266002398ac` | IA |
+| Correspondance de Christophe Plantin | Christophe Plantin, ed. Rooses | 1883 | 659 | `69920081768b4266002399de` | IA |
+| Rechnungsbuch der Froben & Episcopius | Froben Press, ed. Wackernagel | 1557 | 180 | `69920084768b426600239c73` | IA |
+| Last Will and Testament of Nicolas Jenson | Nicolas Jenson, tr. Butler | 1928 | 36 | `69920092768b426600239d31` | IA |
+| The Gutenberg Bible | Johann Gutenberg | 1456 | 100 | `6992009a768b426600239d59` | IA |
+| Liber Chronicarum (Nuremberg Chronicle) | Hartmann Schedel / Koberger | 1493 | 652 | `699200a2768b426600239dc3` | IA |
+| Recuyell of the Historyes of Troye | William Caxton | 1474 | 879 | `699200b1768b42660023a051` | IA |
+| Annales de l'imprimerie des Alde | A.A. Renouard | 1825 | 317 | `699200c0768b42660023a3c2` | IA |
+| The Invention of Printing | Theodore Low De Vinne | 1876 | 576 | `699200c37c226bdd25f97afd` | IA |
+| The General History of Printing | Samuel Palmer | 1732 | 426 | `699200c67c226bdd25f97d3f` | IA |
+| Invention of Printing in China | Thomas Francis Carter | 1925 | 370 | `699200c97c226bdd25f97eeb` | IA |
+| Early Venetian Printing Illustrated | Ferdinando Ongania | 1895 | 240 | `699200cd7c226bdd25f9805f` | IA |
+| Erhard Ratdolt and His Work at Venice | Gilbert Richard Redgrave | 1894 | 101 | `699200cf7c226bdd25f983a1` | IA |
+| Paper & Paper Making, Ancient and Modern | Richard Herring | 1855 | 200 | `69920a28edefb8c8e756f325` | IA |
+
+### Notes
+
+- **Copyright audit:** Reviewed all imports for copyright status. Dard Hunter's *Papermaking* (1947) was pulled as potentially in copyright until 2042; replaced with Herring (1855). All remaining imports are pre-1928 US public domain.
+- **Poliziano Aldine duplicate:** The 1498 Aldine edition (`A335128`) was already in the collection at `690c2b8fe0787282ad593441`.
+- **Pierleone da Spoleto:** Lorenzo's physician, found dead in a well the morning after Lorenzo died (April 9, 1492). His *De urinis* (1514) is the only surviving printed work — expanded uroscopy from 20 to 42 diagnostic colors using Lullian combinatorics.
+- **Printing primary sources:** Includes Moxon's manual (how a press actually worked), Froben's account book (economics of Renaissance printing), Plantin's letters (the business from inside), and three artifacts from the dawn of printing: Gutenberg Bible, Nuremberg Chronicle, and the first book printed in English.
+
+### Session 034 TOTAL: 34 works, ~12,445 pages (after removing Hunter)
+
+---
