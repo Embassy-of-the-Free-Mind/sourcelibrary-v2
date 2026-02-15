@@ -15,34 +15,28 @@ export async function GET(request: Request) {
 
     const db = await getDb();
 
+    // Infrastructure steps scan the entire pages collection (~900k docs) —
+    // only run when the user explicitly filters to that step.
     const infraSteps = ['split', 'archive', 'thumbnail'];
     const isInfraFilter = infraSteps.includes(stepFilter);
-    const isAiFilter = stepFilter && !isInfraFilter && stepFilter !== 'import';
+    const bookSteps = ['import', 'pipeline', 'edition'];
+    const isBookFilter = bookSteps.includes(stepFilter);
+    const isAiFilter = stepFilter && !isInfraFilter && !isBookFilter && stepFilter !== 'batch_job';
 
-    // Run all queries in parallel
-    const [importRows, aiRows, infraRows] = await Promise.all([
-      // Query A: Books (import rows)
-      (!stepFilter || stepFilter === 'import') ? getImportRows(db, search) : [],
-      // Query B: AI processing from gemini_usage
+    // Run queries in parallel — only include what's needed
+    const [bookRows, aiRows, infraRows, batchRows] = await Promise.all([
+      (!stepFilter || isBookFilter) ? getBookRows(db, isBookFilter ? stepFilter : '', search) : [],
       (!stepFilter || isAiFilter) ? getAiRows(db, isAiFilter ? stepFilter : '', search) : [],
-      // Query C: Infrastructure steps (split, archive, thumbnail) from pages collection
-      (!stepFilter || isInfraFilter) ? getInfraRows(db, isInfraFilter ? stepFilter : '', search) : [],
+      isInfraFilter ? getInfraRows(db, stepFilter, search) : [],
+      (!stepFilter || stepFilter === 'batch_job') ? getBatchJobRows(db, search) : [],
     ]);
 
     // Merge all rows
-    let allRows: ProcessingRow[] = [...importRows, ...aiRows, ...infraRows];
+    let allRows: ProcessingRow[] = [...bookRows, ...aiRows, ...infraRows, ...batchRows];
 
     // Sort
-    if (sort === 'date_asc') {
-      allRows.sort((a, b) => new Date(a.date_start).getTime() - new Date(b.date_start).getTime());
-    } else if (sort === 'cost_desc') {
-      allRows.sort((a, b) => b.cost_usd - a.cost_usd);
-    } else if (sort === 'pages_desc') {
-      allRows.sort((a, b) => b.pages - a.pages);
-    } else {
-      // date_desc (default)
-      allRows.sort((a, b) => new Date(b.date_start).getTime() - new Date(a.date_start).getTime());
-    }
+    const sortFn = getSortFn(sort);
+    allRows.sort(sortFn);
 
     const total = allRows.length;
 
@@ -70,35 +64,118 @@ export async function GET(request: Request) {
   }
 }
 
-async function getImportRows(db: any, search: string): Promise<ProcessingRow[]> {
+function getSortFn(sort: string): (a: ProcessingRow, b: ProcessingRow) => number {
+  switch (sort) {
+    case 'date_asc':
+      return (a, b) => new Date(a.date_start).getTime() - new Date(b.date_start).getTime();
+    case 'cost_desc':
+      return (a, b) => b.cost_usd - a.cost_usd;
+    case 'cost_asc':
+      return (a, b) => a.cost_usd - b.cost_usd;
+    case 'pages_desc':
+      return (a, b) => b.pages - a.pages;
+    case 'pages_asc':
+      return (a, b) => a.pages - b.pages;
+    case 'book_asc':
+      return (a, b) => a.book_title.localeCompare(b.book_title);
+    case 'book_desc':
+      return (a, b) => b.book_title.localeCompare(a.book_title);
+    case 'step_asc':
+      return (a, b) => a.step.localeCompare(b.step);
+    case 'step_desc':
+      return (a, b) => b.step.localeCompare(a.step);
+    case 'status_desc':
+      return (a, b) => b.failed_count - a.failed_count;
+    case 'status_asc':
+      return (a, b) => a.failed_count - b.failed_count;
+    default: // date_desc
+      return (a, b) => new Date(b.date_start).getTime() - new Date(a.date_start).getTime();
+  }
+}
+
+/**
+ * Book-level rows: import, pipeline status, editions — all from the books collection.
+ */
+async function getBookRows(db: any, stepFilter: string, search: string): Promise<ProcessingRow[]> {
   const query: any = {};
   if (search) {
-    query.title = { $regex: search, $options: 'i' };
+    query.$or = [
+      { title: { $regex: search, $options: 'i' } },
+      { display_title: { $regex: search, $options: 'i' } },
+    ];
   }
 
   const books = await db.collection('books')
     .find(query, {
       projection: {
-        _id: 1,
-        title: 1,
-        display_title: 1,
-        created_at: 1,
-        pages_count: 1,
+        id: 1, _id: 1, title: 1, display_title: 1, created_at: 1, pages_count: 1,
+        'pipeline_auto.status': 1, 'pipeline_auto.queued_at': 1, 'pipeline_auto.completed_at': 1,
+        'pipeline_auto.last_updated': 1, 'pipeline_auto.error': 1, 'pipeline_auto.retry_count': 1,
+        editions: 1,
       },
     })
     .sort({ created_at: -1 })
     .toArray();
 
-  return books.map((book: any) => ({
-    book_id: book._id.toString(),
-    book_title: book.display_title || book.title || 'Untitled',
-    step: 'import' as const,
-    date_start: book.created_at ? new Date(book.created_at).toISOString() : new Date().toISOString(),
-    pages: book.pages_count || 0,
-    cost_usd: 0,
-    success_count: 1,
-    failed_count: 0,
-  }));
+  const rows: ProcessingRow[] = [];
+
+  for (const book of books) {
+    const bookId = book.id || book._id.toString();
+    const title = book.display_title || book.title || 'Untitled';
+
+    // Import row
+    if (!stepFilter || stepFilter === 'import') {
+      rows.push({
+        book_id: bookId,
+        book_title: title,
+        step: 'import',
+        date_start: book.created_at ? new Date(book.created_at).toISOString() : new Date().toISOString(),
+        pages: book.pages_count || 0,
+        cost_usd: 0,
+        success_count: 1,
+        failed_count: 0,
+      });
+    }
+
+    // Pipeline status row
+    if ((!stepFilter || stepFilter === 'pipeline') && book.pipeline_auto?.status) {
+      const pa = book.pipeline_auto;
+      const isFailed = pa.status === 'failed';
+      rows.push({
+        book_id: bookId,
+        book_title: title,
+        step: 'pipeline',
+        mode: pa.status, // repurpose mode to carry the pipeline phase
+        date_start: pa.queued_at ? new Date(pa.queued_at).toISOString() : (book.created_at ? new Date(book.created_at).toISOString() : new Date().toISOString()),
+        date_end: pa.completed_at ? new Date(pa.completed_at).toISOString() : (pa.last_updated ? new Date(pa.last_updated).toISOString() : undefined),
+        pages: book.pages_count || 0,
+        cost_usd: 0,
+        success_count: isFailed ? 0 : 1,
+        failed_count: isFailed ? 1 : 0,
+      });
+    }
+
+    // Edition rows
+    if ((!stepFilter || stepFilter === 'edition') && book.editions?.length) {
+      for (const ed of book.editions) {
+        if (ed.status === 'published' || ed.status === 'draft') {
+          rows.push({
+            book_id: bookId,
+            book_title: title,
+            step: 'edition',
+            mode: ed.status,
+            date_start: ed.published_at ? new Date(ed.published_at).toISOString() : (ed.created_at ? new Date(ed.created_at).toISOString() : new Date().toISOString()),
+            pages: ed.page_count || 0,
+            cost_usd: 0,
+            success_count: ed.doi ? 1 : 0,
+            failed_count: 0,
+          });
+        }
+      }
+    }
+  }
+
+  return rows;
 }
 
 async function getAiRows(db: any, stepFilter: string, search: string): Promise<ProcessingRow[]> {
@@ -110,11 +187,14 @@ async function getAiRows(db: any, stepFilter: string, search: string): Promise<P
     matchStage.type = stepFilter;
   }
 
-  // If searching, we need to get matching book IDs first
-  // Note: gemini_usage.book_id stores the string `id` field, not the ObjectId `_id`
   if (search) {
     const matchingBooks = await db.collection('books')
-      .find({ title: { $regex: search, $options: 'i' } }, { projection: { id: 1 } })
+      .find({
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { display_title: { $regex: search, $options: 'i' } },
+        ],
+      }, { projection: { id: 1 } })
       .toArray();
     const bookIds = matchingBooks.map((b: any) => b.id);
     if (bookIds.length === 0) return [];
@@ -147,8 +227,6 @@ async function getAiRows(db: any, stepFilter: string, search: string): Promise<P
 
   const results = await db.collection('gemini_usage').aggregate(pipeline).toArray();
 
-  // Collect book IDs with missing titles to look up from books collection
-  // Note: gemini_usage.book_id stores the string `id` field, not the ObjectId `_id`
   const missingTitleIds = [...new Set(
     results
       .filter((r: any) => !r.book_title)
@@ -183,16 +261,20 @@ async function getAiRows(db: any, stepFilter: string, search: string): Promise<P
 
 /**
  * Infrastructure steps (split detection, archiving, thumbnailing) — aggregated from pages collection.
- * Each row = one book that has pages with the given processing marker.
+ * Only runs when user explicitly filters to one of these steps (too heavy for "All").
  */
 async function getInfraRows(db: any, stepFilter: string, search: string): Promise<ProcessingRow[]> {
-  // Get book IDs + titles if searching
   let bookFilter: any = {};
   let bookTitleMap: Record<string, string> = {};
 
   if (search) {
     const matchingBooks = await db.collection('books')
-      .find({ title: { $regex: search, $options: 'i' } }, { projection: { id: 1, title: 1, display_title: 1 } })
+      .find({
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { display_title: { $regex: search, $options: 'i' } },
+        ],
+      }, { projection: { id: 1, title: 1, display_title: 1 } })
       .toArray();
     if (matchingBooks.length === 0) return [];
     bookFilter.book_id = { $in: matchingBooks.map((b: any) => b.id) };
@@ -201,9 +283,6 @@ async function getInfraRows(db: any, stepFilter: string, search: string): Promis
     }
   }
 
-  const rows: ProcessingRow[] = [];
-
-  // Define the three infra steps and their page-level markers
   const stepDefs: { step: ProcessingRow['step']; match: any; dateField: string }[] = [
     {
       step: 'split',
@@ -222,58 +301,111 @@ async function getInfraRows(db: any, stepFilter: string, search: string): Promis
     },
   ];
 
-  const stepsToQuery = stepFilter ? stepDefs.filter(s => s.step === stepFilter) : stepDefs;
+  const def = stepDefs.find(s => s.step === stepFilter);
+  if (!def) return [];
 
-  // Run all step aggregations in parallel
-  const allResults = await Promise.all(stepsToQuery.map(async ({ step, match, dateField }) => {
-    const pipeline = [
-      { $match: { ...match, ...bookFilter } },
-      {
-        $group: {
-          _id: '$book_id',
-          page_count: { $sum: 1 },
-          date_start: { $min: { $ifNull: [dateField, '$updated_at'] } },
-          date_end: { $max: { $ifNull: [dateField, '$updated_at'] } },
-        },
+  const pipeline = [
+    { $match: { ...def.match, ...bookFilter } },
+    {
+      $group: {
+        _id: '$book_id',
+        page_count: { $sum: 1 },
+        date_start: { $min: { $ifNull: [def.dateField, '$updated_at'] } },
+        date_end: { $max: { $ifNull: [def.dateField, '$updated_at'] } },
       },
-    ];
+    },
+  ];
 
-    const results = await db.collection('pages').aggregate(pipeline).toArray();
-    return { step, results };
-  }));
+  const results = await db.collection('pages').aggregate(pipeline).toArray();
 
-  // Collect all book IDs that need title lookups
-  const needsTitleIds = new Set<string>();
-  for (const { results } of allResults) {
-    for (const r of results) {
-      if (!bookTitleMap[r._id]) needsTitleIds.add(r._id);
-    }
-  }
+  // Look up missing titles
+  const needsTitleIds = results
+    .filter((r: any) => !bookTitleMap[r._id])
+    .map((r: any) => r._id);
 
-  if (needsTitleIds.size > 0) {
+  if (needsTitleIds.length > 0) {
     const books = await db.collection('books')
-      .find({ id: { $in: [...needsTitleIds] } }, { projection: { id: 1, title: 1, display_title: 1 } })
+      .find({ id: { $in: needsTitleIds } }, { projection: { id: 1, title: 1, display_title: 1 } })
       .toArray();
     for (const b of books) {
       bookTitleMap[b.id] = b.display_title || b.title || 'Untitled';
     }
   }
 
-  for (const { step, results } of allResults) {
-    for (const r of results) {
-      rows.push({
-        book_id: r._id,
-        book_title: bookTitleMap[r._id] || 'Unknown',
-        step,
-        date_start: r.date_start ? new Date(r.date_start).toISOString() : new Date().toISOString(),
-        date_end: r.date_end ? new Date(r.date_end).toISOString() : undefined,
-        pages: r.page_count || 0,
-        cost_usd: 0,
-        success_count: r.page_count || 0,
-        failed_count: 0,
-      });
+  return results.map((r: any) => ({
+    book_id: r._id,
+    book_title: bookTitleMap[r._id] || 'Unknown',
+    step: def.step,
+    date_start: r.date_start ? new Date(r.date_start).toISOString() : new Date().toISOString(),
+    date_end: r.date_end ? new Date(r.date_end).toISOString() : undefined,
+    pages: r.page_count || 0,
+    cost_usd: 0,
+    success_count: r.page_count || 0,
+    failed_count: 0,
+  }));
+}
+
+/**
+ * Batch API jobs — from batch_jobs collection (lightweight).
+ */
+async function getBatchJobRows(db: any, search: string): Promise<ProcessingRow[]> {
+  const match: any = {};
+
+  if (search) {
+    const matchingBooks = await db.collection('books')
+      .find({
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { display_title: { $regex: search, $options: 'i' } },
+        ],
+      }, { projection: { id: 1 } })
+      .toArray();
+    const bookIds = matchingBooks.map((b: any) => b.id);
+    if (bookIds.length === 0) return [];
+    match.book_id = { $in: bookIds };
+  }
+
+  // Only top-level jobs (exclude children that are part of a parent)
+  match.parent_job_id = { $exists: false };
+
+  const jobs = await db.collection('batch_jobs')
+    .find(match, {
+      projection: {
+        book_id: 1, book_title: 1, type: 1, model: 1, status: 1,
+        page_count: 1, total_pages: 1,
+        'progress.completed': 1, 'progress.failed': 1,
+        created_at: 1, completed_at: 1, updated_at: 1,
+      },
+    })
+    .sort({ created_at: -1 })
+    .toArray();
+
+  // Look up missing book titles
+  const missingIds = [...new Set(jobs.filter((j: any) => !j.book_title).map((j: any) => j.book_id))];
+  let titleMap: Record<string, string> = {};
+  if (missingIds.length > 0) {
+    const books = await db.collection('books')
+      .find({ id: { $in: missingIds } }, { projection: { id: 1, title: 1, display_title: 1 } })
+      .toArray();
+    for (const b of books) {
+      titleMap[b.id] = b.display_title || b.title || 'Untitled';
     }
   }
 
-  return rows;
+  const isFailed = (s: string) => ['failed', 'expired', 'cancelled'].includes(s);
+  const isDone = (s: string) => ['completed', 'saved', 'completed_with_errors', 'JOB_STATE_SUCCEEDED'].includes(s);
+
+  return jobs.map((j: any) => ({
+    book_id: j.book_id,
+    book_title: j.book_title || titleMap[j.book_id] || 'Unknown',
+    step: 'batch_job' as ProcessingRow['step'],
+    model: j.model,
+    mode: `${j.type} · ${j.status}`,
+    date_start: j.created_at ? new Date(j.created_at).toISOString() : new Date().toISOString(),
+    date_end: j.completed_at ? new Date(j.completed_at).toISOString() : (j.updated_at ? new Date(j.updated_at).toISOString() : undefined),
+    pages: j.total_pages || j.page_count || 0,
+    cost_usd: 0,
+    success_count: j.progress?.completed || (isDone(j.status) ? 1 : 0),
+    failed_count: j.progress?.failed || (isFailed(j.status) ? 1 : 0),
+  }));
 }

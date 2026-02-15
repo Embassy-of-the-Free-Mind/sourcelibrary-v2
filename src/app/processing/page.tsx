@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Loader2, Search, ChevronRight, Layers, DollarSign, BookOpen, FileText } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Loader2, Search, ChevronUp, ChevronDown, ChevronsUpDown, Layers, DollarSign, BookOpen, FileText } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 import type { ProcessingRow, ProcessingOverviewResponse } from '@/lib/api-client/types/analytics';
 
@@ -17,6 +17,9 @@ const STEPS = [
   { value: 'extract_images', label: 'Image Extraction' },
   { value: 'summarize', label: 'Summary' },
   { value: 'index', label: 'Index' },
+  { value: 'pipeline', label: 'Pipeline' },
+  { value: 'edition', label: 'Editions' },
+  { value: 'batch_job', label: 'Batch Jobs' },
 ];
 
 const STEP_COLORS: Record<string, { bg: string; text: string }> = {
@@ -29,6 +32,9 @@ const STEP_COLORS: Record<string, { bg: string; text: string }> = {
   extract_images: { bg: '#ede9fe', text: '#5b21b6' },
   summarize: { bg: '#fce7f3', text: '#9d174d' },
   index: { bg: '#ffedd5', text: '#9a3412' },
+  pipeline: { bg: '#e0f2fe', text: '#0369a1' },
+  edition: { bg: '#fef9c3', text: '#854d0e' },
+  batch_job: { bg: '#f1f5f9', text: '#475569' },
 };
 
 const STEP_LABELS: Record<string, string> = {
@@ -41,6 +47,19 @@ const STEP_LABELS: Record<string, string> = {
   extract_images: 'Images',
   summarize: 'Summary',
   index: 'Index',
+  pipeline: 'Pipeline',
+  edition: 'Edition',
+  batch_job: 'Batch',
+};
+
+// Columns that support sorting — maps column key to asc/desc sort param values
+const SORTABLE_COLUMNS: Record<string, { asc: string; desc: string }> = {
+  book: { asc: 'book_asc', desc: 'book_desc' },
+  step: { asc: 'step_asc', desc: 'step_desc' },
+  date: { asc: 'date_asc', desc: 'date_desc' },
+  pages: { asc: 'pages_asc', desc: 'pages_desc' },
+  cost: { asc: 'cost_asc', desc: 'cost_desc' },
+  status: { asc: 'status_asc', desc: 'status_desc' },
 };
 
 const PAGE_SIZE = 50;
@@ -84,6 +103,34 @@ export default function ProcessingPage() {
     setSearch(searchInput);
   };
 
+  const handleSort = (column: string) => {
+    const col = SORTABLE_COLUMNS[column];
+    if (!col) return;
+    // Toggle: if already sorting by this column desc, switch to asc; otherwise default to desc
+    if (sort === col.desc) {
+      setSort(col.asc);
+    } else if (sort === col.asc) {
+      setSort(col.desc);
+    } else {
+      setSort(col.desc);
+    }
+    setOffset(0);
+  };
+
+  const getSortColumn = (): string | null => {
+    for (const [col, vals] of Object.entries(SORTABLE_COLUMNS)) {
+      if (sort === vals.asc || sort === vals.desc) return col;
+    }
+    return null;
+  };
+
+  const getSortDir = (): 'asc' | 'desc' => {
+    for (const vals of Object.values(SORTABLE_COLUMNS)) {
+      if (sort === vals.asc) return 'asc';
+    }
+    return 'desc';
+  };
+
   const formatDate = (iso: string, endIso?: string) => {
     const d = new Date(iso);
     const formatted = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -107,6 +154,8 @@ export default function ProcessingPage() {
 
   const totalPages = data ? Math.ceil(data.total / PAGE_SIZE) : 0;
   const currentPage = Math.floor(offset / PAGE_SIZE) + 1;
+  const activeCol = getSortColumn();
+  const activeDir = getSortDir();
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
@@ -132,18 +181,6 @@ export default function ProcessingPage() {
               {STEPS.map(s => (
                 <option key={s.value} value={s.value}>{s.label}</option>
               ))}
-            </select>
-            {/* Sort */}
-            <select
-              value={sort}
-              onChange={(e) => { setSort(e.target.value); setOffset(0); }}
-              className="px-3 py-1.5 rounded-lg text-sm"
-              style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
-            >
-              <option value="date_desc">Newest First</option>
-              <option value="date_asc">Oldest First</option>
-              <option value="cost_desc">Highest Cost</option>
-              <option value="pages_desc">Most Pages</option>
             </select>
             {/* Search */}
             <form onSubmit={handleSearch} className="flex items-center gap-1">
@@ -202,14 +239,14 @@ export default function ProcessingPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr style={{ background: 'var(--bg-warm)' }}>
-                    <th className="text-left px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Book</th>
-                    <th className="text-left px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Step</th>
+                    <SortableHeader column="book" label="Book" align="left" activeCol={activeCol} activeDir={activeDir} onSort={handleSort} />
+                    <SortableHeader column="step" label="Step" align="left" activeCol={activeCol} activeDir={activeDir} onSort={handleSort} />
                     <th className="text-left px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Model</th>
                     <th className="text-left px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Prompt</th>
-                    <th className="text-left px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Date</th>
-                    <th className="text-right px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Pages</th>
-                    <th className="text-right px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Cost</th>
-                    <th className="text-right px-4 py-3 font-medium" style={{ color: 'var(--text-secondary)' }}>Status</th>
+                    <SortableHeader column="date" label="Date" align="left" activeCol={activeCol} activeDir={activeDir} onSort={handleSort} />
+                    <SortableHeader column="pages" label="Pages" align="right" activeCol={activeCol} activeDir={activeDir} onSort={handleSort} />
+                    <SortableHeader column="cost" label="Cost" align="right" activeCol={activeCol} activeDir={activeDir} onSort={handleSort} />
+                    <SortableHeader column="status" label="Status" align="right" activeCol={activeCol} activeDir={activeDir} onSort={handleSort} />
                   </tr>
                 </thead>
                 <tbody>
@@ -232,7 +269,7 @@ export default function ProcessingPage() {
                         </Link>
                       </td>
                       <td className="px-4 py-3">
-                        <StepBadge step={row.step} />
+                        <StepBadge step={row.step} mode={row.mode} />
                       </td>
                       <td className="px-4 py-3" style={{ color: 'var(--text-secondary)' }}>
                         {row.model ? truncateModel(row.model) : '-'}
@@ -301,6 +338,43 @@ export default function ProcessingPage() {
   );
 }
 
+function SortableHeader({ column, label, align, activeCol, activeDir, onSort }: {
+  column: string;
+  label: string;
+  align: 'left' | 'right';
+  activeCol: string | null;
+  activeDir: 'asc' | 'desc';
+  onSort: (col: string) => void;
+}) {
+  const isActive = activeCol === column;
+  return (
+    <th
+      className={`${align === 'right' ? 'text-right' : 'text-left'} px-4 py-3 font-medium select-none`}
+      style={{ color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)', cursor: 'pointer' }}
+      onClick={() => onSort(column)}
+    >
+      <span className="inline-flex items-center gap-1">
+        {align === 'right' && (
+          <SortIcon active={isActive} dir={activeDir} />
+        )}
+        {label}
+        {align === 'left' && (
+          <SortIcon active={isActive} dir={activeDir} />
+        )}
+      </span>
+    </th>
+  );
+}
+
+function SortIcon({ active, dir }: { active: boolean; dir: 'asc' | 'desc' }) {
+  if (!active) {
+    return <ChevronsUpDown className="w-3.5 h-3.5 opacity-30" />;
+  }
+  return dir === 'asc'
+    ? <ChevronUp className="w-3.5 h-3.5" />
+    : <ChevronDown className="w-3.5 h-3.5" />;
+}
+
 function SummaryCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="rounded-xl p-4" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
@@ -315,12 +389,21 @@ function SummaryCard({ icon, label, value }: { icon: React.ReactNode; label: str
   );
 }
 
-function StepBadge({ step }: { step: string }) {
+function StepBadge({ step, mode }: { step: string; mode?: string }) {
   const colors = STEP_COLORS[step] || { bg: '#f3f4f6', text: '#374151' };
-  const label = STEP_LABELS[step] || step;
+  let label = STEP_LABELS[step] || step;
+
+  // For pipeline and batch_job, show the sub-status in the badge
+  if (step === 'pipeline' && mode) {
+    const shortStatus = mode.replace('_complete', '').replace('_submitted', ' sub.');
+    label = `Pipeline: ${shortStatus}`;
+  } else if (step === 'batch_job' && mode) {
+    label = mode; // e.g. "ocr · completed"
+  }
+
   return (
     <span
-      className="inline-block px-2 py-0.5 rounded-full text-xs font-medium"
+      className="inline-block px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap"
       style={{ background: colors.bg, color: colors.text }}
     >
       {label}
