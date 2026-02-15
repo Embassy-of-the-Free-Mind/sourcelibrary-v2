@@ -74,6 +74,10 @@ export default function GlobalFooter() {
               About
             </Link>
             <span className="hidden sm:inline">•</span>
+            <Link href="/blog" className="text-amber-600 hover:text-amber-500 transition-colors">
+              Blog
+            </Link>
+            <span className="hidden sm:inline">•</span>
             <Link href="/support" className="text-amber-600 hover:text-amber-500 transition-colors">
               Support
             </Link>
@@ -125,6 +129,13 @@ export default function GlobalFooter() {
             className="text-amber-600 hover:text-amber-500 transition-colors"
           >
             About
+          </Link>
+          <span className="hidden sm:inline">•</span>
+          <Link
+            href="/blog"
+            className="text-amber-600 hover:text-amber-500 transition-colors"
+          >
+            Blog
           </Link>
           <span className="hidden sm:inline">•</span>
           <Link
