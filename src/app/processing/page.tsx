@@ -9,6 +9,9 @@ import type { ProcessingRow, ProcessingOverviewResponse } from '@/lib/api-client
 const STEPS = [
   { value: '', label: 'All Steps' },
   { value: 'import', label: 'Import' },
+  { value: 'split', label: 'Split Detection' },
+  { value: 'archive', label: 'Archive' },
+  { value: 'thumbnail', label: 'Thumbnails' },
   { value: 'ocr', label: 'OCR' },
   { value: 'translate', label: 'Translation' },
   { value: 'extract_images', label: 'Image Extraction' },
@@ -18,6 +21,9 @@ const STEPS = [
 
 const STEP_COLORS: Record<string, { bg: string; text: string }> = {
   import: { bg: '#dbeafe', text: '#1e40af' },
+  split: { bg: '#e0e7ff', text: '#3730a3' },
+  archive: { bg: '#ccfbf1', text: '#115e59' },
+  thumbnail: { bg: '#f0fdf4', text: '#166534' },
   ocr: { bg: '#fef3c7', text: '#92400e' },
   translate: { bg: '#d1fae5', text: '#065f46' },
   extract_images: { bg: '#ede9fe', text: '#5b21b6' },
@@ -27,6 +33,9 @@ const STEP_COLORS: Record<string, { bg: string; text: string }> = {
 
 const STEP_LABELS: Record<string, string> = {
   import: 'Import',
+  split: 'Split',
+  archive: 'Archive',
+  thumbnail: 'Thumbnail',
   ocr: 'OCR',
   translate: 'Translation',
   extract_images: 'Images',

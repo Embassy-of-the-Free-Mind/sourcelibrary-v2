@@ -15,16 +15,22 @@ export async function GET(request: Request) {
 
     const db = await getDb();
 
-    // Run both queries in parallel
-    const [importRows, aiRows] = await Promise.all([
+    const infraSteps = ['split', 'archive', 'thumbnail'];
+    const isInfraFilter = infraSteps.includes(stepFilter);
+    const isAiFilter = stepFilter && !isInfraFilter && stepFilter !== 'import';
+
+    // Run all queries in parallel
+    const [importRows, aiRows, infraRows] = await Promise.all([
       // Query A: Books (import rows)
       (!stepFilter || stepFilter === 'import') ? getImportRows(db, search) : [],
       // Query B: AI processing from gemini_usage
-      (!stepFilter || stepFilter !== 'import') ? getAiRows(db, stepFilter, search) : [],
+      (!stepFilter || isAiFilter) ? getAiRows(db, isAiFilter ? stepFilter : '', search) : [],
+      // Query C: Infrastructure steps (split, archive, thumbnail) from pages collection
+      (!stepFilter || isInfraFilter) ? getInfraRows(db, isInfraFilter ? stepFilter : '', search) : [],
     ]);
 
     // Merge all rows
-    let allRows: ProcessingRow[] = [...importRows, ...aiRows];
+    let allRows: ProcessingRow[] = [...importRows, ...aiRows, ...infraRows];
 
     // Sort
     if (sort === 'date_asc') {
@@ -173,4 +179,101 @@ async function getAiRows(db: any, stepFilter: string, search: string): Promise<P
     success_count: r.success_count || 0,
     failed_count: r.failed_count || 0,
   }));
+}
+
+/**
+ * Infrastructure steps (split detection, archiving, thumbnailing) — aggregated from pages collection.
+ * Each row = one book that has pages with the given processing marker.
+ */
+async function getInfraRows(db: any, stepFilter: string, search: string): Promise<ProcessingRow[]> {
+  // Get book IDs + titles if searching
+  let bookFilter: any = {};
+  let bookTitleMap: Record<string, string> = {};
+
+  if (search) {
+    const matchingBooks = await db.collection('books')
+      .find({ title: { $regex: search, $options: 'i' } }, { projection: { id: 1, title: 1, display_title: 1 } })
+      .toArray();
+    if (matchingBooks.length === 0) return [];
+    bookFilter.book_id = { $in: matchingBooks.map((b: any) => b.id) };
+    for (const b of matchingBooks) {
+      bookTitleMap[b.id] = b.display_title || b.title || 'Untitled';
+    }
+  }
+
+  const rows: ProcessingRow[] = [];
+
+  // Define the three infra steps and their page-level markers
+  const stepDefs: { step: ProcessingRow['step']; match: any; dateField: string }[] = [
+    {
+      step: 'split',
+      match: { 'split_detection': { $exists: true } },
+      dateField: '$updated_at',
+    },
+    {
+      step: 'archive',
+      match: { 'archived_photo': { $exists: true, $ne: null } },
+      dateField: '$archive_metadata.archived_at',
+    },
+    {
+      step: 'thumbnail',
+      match: { 'thumbnail_blob': { $exists: true, $ne: null } },
+      dateField: '$updated_at',
+    },
+  ];
+
+  const stepsToQuery = stepFilter ? stepDefs.filter(s => s.step === stepFilter) : stepDefs;
+
+  // Run all step aggregations in parallel
+  const allResults = await Promise.all(stepsToQuery.map(async ({ step, match, dateField }) => {
+    const pipeline = [
+      { $match: { ...match, ...bookFilter } },
+      {
+        $group: {
+          _id: '$book_id',
+          page_count: { $sum: 1 },
+          date_start: { $min: { $ifNull: [dateField, '$updated_at'] } },
+          date_end: { $max: { $ifNull: [dateField, '$updated_at'] } },
+        },
+      },
+    ];
+
+    const results = await db.collection('pages').aggregate(pipeline).toArray();
+    return { step, results };
+  }));
+
+  // Collect all book IDs that need title lookups
+  const needsTitleIds = new Set<string>();
+  for (const { results } of allResults) {
+    for (const r of results) {
+      if (!bookTitleMap[r._id]) needsTitleIds.add(r._id);
+    }
+  }
+
+  if (needsTitleIds.size > 0) {
+    const books = await db.collection('books')
+      .find({ id: { $in: [...needsTitleIds] } }, { projection: { id: 1, title: 1, display_title: 1 } })
+      .toArray();
+    for (const b of books) {
+      bookTitleMap[b.id] = b.display_title || b.title || 'Untitled';
+    }
+  }
+
+  for (const { step, results } of allResults) {
+    for (const r of results) {
+      rows.push({
+        book_id: r._id,
+        book_title: bookTitleMap[r._id] || 'Unknown',
+        step,
+        date_start: r.date_start ? new Date(r.date_start).toISOString() : new Date().toISOString(),
+        date_end: r.date_end ? new Date(r.date_end).toISOString() : undefined,
+        pages: r.page_count || 0,
+        cost_usd: 0,
+        success_count: r.page_count || 0,
+        failed_count: 0,
+      });
+    }
+  }
+
+  return rows;
 }

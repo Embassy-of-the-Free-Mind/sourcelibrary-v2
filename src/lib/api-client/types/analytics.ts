@@ -88,7 +88,7 @@ export interface LoadingMetric {
 export interface ProcessingRow {
   book_id: string;
   book_title: string;
-  step: 'import' | 'ocr' | 'translate' | 'summarize' | 'extract_images' | 'index';
+  step: 'import' | 'split' | 'archive' | 'thumbnail' | 'ocr' | 'translate' | 'summarize' | 'extract_images' | 'index';
   model?: string;
   prompt_version?: string;
   mode?: 'realtime' | 'batch';
