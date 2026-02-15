@@ -23,17 +23,18 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
   }
 
   try {
+    const isLambda = !!process.env.AWS_LAMBDA_FUNCTION_NAME;
+
     console.log('[MongoDB] Initializing connection...');
     const client = new MongoClient(uri, {
-      // Lambda-optimized timeouts: fail fast instead of hanging
-      serverSelectionTimeoutMS: 5000, // 5 sec to find a server
-      connectTimeoutMS: 10000, // 10 sec to establish connection
-      socketTimeoutMS: 45000, // 45 sec for queries (OCR pages are large)
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: isLambda ? 10000 : 5000,
+      socketTimeoutMS: 45000,
 
-      // CRITICAL for Lambda: Only 1 connection per instance
-      // 255 concurrent Lambdas × 1 connection = 255 total (well under Atlas limits)
-      maxPoolSize: 1,
-      minPoolSize: 0, // Don't maintain idle connections in Lambda
+      // Lambda: 1 connection per instance (255 Lambdas × 1 = 255 total)
+      // Vercel: small pool for concurrent requests within same instance
+      maxPoolSize: isLambda ? 1 : 5,
+      minPoolSize: 0,
     });
 
     console.log('[MongoDB] Attempting connection...');

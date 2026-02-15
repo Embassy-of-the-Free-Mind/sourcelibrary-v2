@@ -527,10 +527,13 @@ export default function SplitPage({ params }: PageProps) {
   };
 
   const getImageUrl = (page: Page, width: number = 300) => {
+    const bestImage = page.archived_photo || page.cropped_photo || page.photo || page.photo_original;
+    if (!bestImage) return '';
     if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=${width}&q=70&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+      const originalImage = page.photo_original || page.photo || page.archived_photo;
+      return `/api/image?url=${encodeURIComponent(originalImage || bestImage)}&w=${width}&q=70&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
     }
-    return `/api/image?url=${encodeURIComponent(page.photo)}&w=${width}&q=70`;
+    return `/api/image?url=${encodeURIComponent(bestImage)}&w=${width}&q=70`;
   };
 
   if (loading) {
@@ -945,9 +948,10 @@ export default function SplitPage({ params }: PageProps) {
             <div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)]">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {reviewingSplits.map((page) => {
+                  const reviewImage = page.archived_photo || page.cropped_photo || page.photo || page.photo_original || '';
                   const imageUrl = page.crop?.xStart !== undefined
-                    ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
-                    : `/api/image?url=${encodeURIComponent(page.photo)}&w=400&q=80`;
+                    ? `/api/image?url=${encodeURIComponent(page.photo_original || page.photo || reviewImage)}&w=400&q=80&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`
+                    : `/api/image?url=${encodeURIComponent(reviewImage)}&w=400&q=80`;
                   const isResetting = resettingPage === page.id;
 
                   return (

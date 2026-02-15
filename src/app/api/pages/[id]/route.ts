@@ -3,6 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 
+export const preferredRegion = 'fra1';
+
 // Validation schema for page updates
 const pageUpdateSchema = z.object({
   ocr: z.object({

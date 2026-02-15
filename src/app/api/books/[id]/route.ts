@@ -3,6 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 
+export const preferredRegion = 'fra1';
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

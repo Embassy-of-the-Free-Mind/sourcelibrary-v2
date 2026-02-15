@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { normalizeText } from '@/lib/utils';
 
+export const preferredRegion = 'fra1';
+
 interface BookResult {
   id: string;
   title: string;

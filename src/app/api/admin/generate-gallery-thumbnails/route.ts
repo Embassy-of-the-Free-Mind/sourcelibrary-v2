@@ -13,6 +13,7 @@ export const maxDuration = 300;
  * Query params:
  *   - limit: max detections to process (default 200, max 500)
  *   - bookId: optional, process only this book
+ *   - minQuality: minimum gallery_quality (default 0, e.g. 0.9 for best images)
  *   - dry_run: if 'true', just count how many need processing
  */
 export async function POST(request: NextRequest) {
@@ -20,6 +21,7 @@ export async function POST(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '200'), 500);
     const bookId = searchParams.get('bookId');
+    const minQuality = parseFloat(searchParams.get('minQuality') || '0');
     const dryRun = searchParams.get('dry_run') === 'true';
 
     const db = await getDb();
@@ -31,6 +33,7 @@ export async function POST(request: NextRequest) {
           bbox: { $exists: true },
           extracted_url: { $exists: false },
           detection_source: { $in: ['vision_model', 'manual', 'ocr_tag'] },
+          ...(minQuality > 0 ? { gallery_quality: { $gte: minQuality } } : {}),
         }
       },
       $or: [
@@ -66,7 +69,10 @@ export async function POST(request: NextRequest) {
 
         return (page.detected_images || [])
           .map((det: Record<string, unknown>, idx: number) => ({ det, idx }))
-          .filter(({ det }: { det: Record<string, unknown> }) => det.bbox && !det.extracted_url)
+          .filter(({ det }: { det: Record<string, unknown> }) =>
+            det.bbox && !det.extracted_url &&
+            (minQuality <= 0 || (typeof det.gallery_quality === 'number' && det.gallery_quality >= minQuality))
+          )
           .map(async ({ det, idx }: { det: Record<string, unknown>; idx: number }) => {
             try {
               const bbox = det.bbox as { x: number; y: number; width: number; height: number };

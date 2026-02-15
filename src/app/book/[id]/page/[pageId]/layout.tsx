@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { Book, Page } from '@/lib/types';
 
+export const preferredRegion = 'fra1';
+
 interface LayoutProps {
   children: React.ReactNode;
   params: Promise<{ id: string; pageId: string }>;

@@ -3,6 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 
+export const preferredRegion = 'fra1';
+
 function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
