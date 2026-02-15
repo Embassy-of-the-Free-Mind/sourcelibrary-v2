@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'The Invisible Hand Has a History - Blog - Source Library',
-  description: 'Before Adam Smith, Salamanca theologians, Italian merchants, and Cambridge Platonists built the intellectual foundations of market theory. Source Library traces the hidden lineage from Aristotle to Bastiat in original editions.',
+  description: 'Before Adam Smith, Florentine merchants, Salamanca theologians, and Cambridge Platonists built the intellectual foundations of market theory. Source Library traces the hidden lineage from Aristotle to Bastiat in original editions.',
   alternates: {
     canonical: '/blog/invisible-hand',
   },
@@ -18,7 +18,7 @@ export default function InvisibleHandPage() {
           title="The Invisible Hand Has a History"
           subtitle="Tracing Market Theory from Aristotle to Bastiat in Original Editions"
         >
-          <p className="text-stone-400 text-sm mt-4">15 February 2026 &middot; 15 min read</p>
+          <p className="text-stone-400 text-sm mt-4">15 February 2026 &middot; 20 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -39,6 +39,22 @@ export default function InvisibleHandPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           Adam Smith&apos;s &ldquo;invisible hand&rdquo; is one of the most famous metaphors in intellectual history. But the idea that markets self-organize into beneficial order &mdash; that individual actions, guided by no central plan, can produce collective harmony &mdash; did not spring fully formed from the <em>Wealth of Nations</em> in 1776. It has a lineage stretching back through Reformation theologians, Renaissance merchants, Scholastic monks, and ancient philosophers. Source Library has assembled the primary sources that make this lineage readable for the first time in a single collection.
         </p>
+
+        <figure className="my-12">
+          <Link href="/gallery/image/69520c46ab34727b1f044158-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/api/crop-image?url=https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/23.jpg&x=0.118&y=0.198&w=0.765&h=0.492"
+              alt="Mother Earth or Nature with a globe as her torso, from Atalanta Fugiens (1618)"
+              className="w-full max-w-lg mx-auto rounded-lg shadow-md"
+            />
+          </Link>
+          <figcaption className="text-center text-sm text-muted mt-3 italic">
+            Nature as provider &mdash; from Michael Maier&apos;s <em>Atalanta Fugiens</em> (1618).
+            The Physiocrats would later argue that all wealth flows from nature&apos;s bounty.{' '}
+            <Link href="/gallery/image/69520c46ab34727b1f044158-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+          </figcaption>
+        </figure>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           The Ancient Problem: How Can Exchange Be Just?
@@ -86,6 +102,53 @@ export default function InvisibleHandPage() {
             &mdash; Nicole Oresme, <em>De Moneta</em>, c. 1355
           </p>
         </div>
+
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          The Florentine Laboratory
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Before anyone wrote the theory, Florence lived it. Between the 13th and 16th centuries, the city on the Arno became the most commercially sophisticated place in Europe &mdash; and produced a body of practical economic writing that has no equivalent in the medieval world.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <Link href="/book/6991e78d69de8508b1f98255" className="text-amber-700 hover:text-amber-600 underline"><strong>Francesco Balducci Pegolotti</strong></Link>
+          {' '}was a factor for the Bardi banking house &mdash; one of the great Florentine firms that financed Edward III&apos;s wars and went spectacularly bankrupt when he defaulted. His{' '}
+          <Link href="/book/6991e78d69de8508b1f98255" className="text-amber-700 hover:text-amber-600 underline"><em>Pratica della Mercatura</em></Link>
+          {' '}(c. 1340) is an astonishing trade handbook covering exchange rates, commodity weights, tariffs, and trade routes from London to Beijing. It records commercial practice as it actually was, not as theologians thought it should be.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <Link href="/book/6991e7b6c91ce7d733e4f9a7" className="text-amber-700 hover:text-amber-600 underline"><strong>Poggio Bracciolini</strong></Link>
+          {' '}(<em>De Avaritia</em>, 1428) wrote a humanist dialogue on greed that was remarkably sympathetic to merchants. Where the Scholastics agonised over whether trade was sinful, Bracciolini&apos;s characters argue that the desire for wealth drives civilisation forward. A Florentine anticipation of Mandeville by three centuries.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <Link href="/book/6991e7c5c91ce7d733e4fc19" className="text-amber-700 hover:text-amber-600 underline"><strong>Leon Battista Alberti</strong></Link>
+          {' '}(<em>I Libri della Famiglia</em>, c. 1434) codified the Florentine merchant ethic into a treatise on household economy. Book III, on <em>masserizia</em> (thrift, prudent management), describes the ideal that every Florentine banker aspired to &mdash; rational allocation of resources, avoidance of waste, the virtuous accumulation of wealth through industry. This is the domestic counterpart to the commercial world Pegolotti documented.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <Link href="/book/6991e7a89d63c80e615598d0" className="text-amber-700 hover:text-amber-600 underline"><strong>Benedetto Cotrugli</strong></Link>
+          {' '}(<em>Della Mercatura et del Mercante Perfetto</em>, written c. 1458, published 1573) produced the earliest known description of double-entry bookkeeping &mdash; predating{' '}
+          <Link href="/book/6991e7af9d63c80e615599c2" className="text-amber-700 hover:text-amber-600 underline"><strong>Luca Pacioli</strong></Link>
+          {' '}&apos;s famous <Link href="/book/6991e7af9d63c80e615599c2" className="text-amber-700 hover:text-amber-600 underline"><em>Summa de Arithmetica</em></Link> (1494) by thirty-five years. Pacioli systematised the method, but Cotrugli&apos;s four books on mercantile life &mdash; covering trade, the merchant&apos;s character, accounting, and maritime commerce &mdash; give us the fullest portrait of the commercial mind that made the Renaissance possible.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <Link href="/book/6991e7bdc91ce7d733e4fa95" className="text-amber-700 hover:text-amber-600 underline"><strong>Machiavelli</strong></Link>
+          {' '}(<em>Istorie Fiorentine</em>, 1525) wrote the history of all this from the inside &mdash; the Medici banking empire, the factional economics of the guilds, the relationship between commercial wealth and political power.{' '}
+          <Link href="/book/6991e7d7c91ce7d733e5008f" className="text-amber-700 hover:text-amber-600 underline"><strong>Luca Landucci</strong></Link>
+          {' '}(<em>Diario Fiorentino</em>, 1450&ndash;1516) recorded it from below: an apothecary&apos;s diary tracking commodity prices, economic conditions, and daily commercial life in Medici-era Florence.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The{' '}
+          <Link href="/book/6991e7d1c91ce7d733e4ffb5" className="text-amber-700 hover:text-amber-600 underline">Calimala guild statutes</Link>
+          {' '}(1301) show the institutional infrastructure: the rules governing the cloth importers&apos; guild that was Florence&apos;s economic engine. And{' '}
+          <Link href="/book/6991e7ecc91ce7d733e50311" className="text-amber-700 hover:text-amber-600 underline"><strong>Pagnini</strong></Link>
+          {' '}(<em>Della Decima</em>, 1765) compiled the fiscal records &mdash; taxation, currency, and the trade agreements by which Florence projected its commercial power. This is where Pegolotti&apos;s <em>Pratica</em> was first published, three and a half centuries after it was written.
+        </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           The School of Salamanca: The Actual Inventors of Economics
@@ -141,6 +204,22 @@ export default function InvisibleHandPage() {
           <Link href="/book/6991e1b4339ebc850994af2e" className="text-amber-700 hover:text-amber-600 underline"><strong>Sigismondo Scaccia</strong></Link>
           {' '}(<em>Tractatus de Commerciis et Cambio</em>, 1650) bridged the theological and commercial traditions, producing a major treatise on commercial law covering exchange, usury, deposits, and bills of exchange.
         </p>
+
+        <figure className="my-12">
+          <Link href="/gallery/image/695203a6ab34727b1f041db8-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/api/crop-image?url=https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695203a5ab34727b1f041c53/357.jpg&x=0.118&y=0.279&w=0.448&h=0.433"
+              alt="Seascape with sailing ship and coastal city, from Musaeum Hermeticum (1678)"
+              className="w-full max-w-md mx-auto rounded-lg shadow-md"
+            />
+          </Link>
+          <figcaption className="text-center text-sm text-muted mt-3 italic">
+            Maritime trade &mdash; from the <em>Musaeum Hermeticum</em> (1678).
+            Atlantic commerce forced Salamanca theologians to rethink ancient doctrines on just price.{' '}
+            <Link href="/gallery/image/695203a6ab34727b1f041db8-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+          </figcaption>
+        </figure>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Natural Law and the Right to Trade
@@ -223,6 +302,22 @@ export default function InvisibleHandPage() {
           {' '}(<em>An Essay on the History of Civil Society</em>, 1767) articulated what would become the concept of spontaneous order: &ldquo;Nations stumble upon establishments, which are indeed the result of human action, but not the execution of any human design.&rdquo; This single sentence is the intellectual ancestor of Hayek&apos;s entire programme.
         </p>
 
+        <figure className="my-12">
+          <Link href="/gallery/image/695004c2f426a210d1097f34-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/api/crop-image?url=https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a0461b95-c56a-463a-beed-a6a2fb11cec2/102.jpg&x=0.06&y=0.07&w=0.88&h=0.84"
+              alt="Fortuna overcoming Virtue, emblem from Alciato's Emblemata (1621)"
+              className="w-full max-w-md mx-auto rounded-lg shadow-md"
+            />
+          </Link>
+          <figcaption className="text-center text-sm text-muted mt-3 italic">
+            Fortune triumphs over Virtue &mdash; from Alciato&apos;s <em>Emblemata</em> (1621).
+            Mandeville argued private vices produce public benefits; Hutcheson and Smith sought a deeper moral harmony.{' '}
+            <Link href="/gallery/image/695004c2f426a210d1097f34-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+          </figcaption>
+        </figure>
+
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Smith and Beyond: From Invisible Hand to Economic Harmonies
         </h2>
@@ -294,7 +389,7 @@ export default function InvisibleHandPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library now holds original editions of the complete chain &mdash; from Aristotle&apos;s <em>Ethics</em> through Aquinas and the Salamanca School to Smith and Bastiat. As these texts are processed through our OCR and translation pipeline, they become searchable and cross-referenceable for the first time. A researcher studying Molina&apos;s price theory can trace its debts to Aquinas, its parallels with Davanzati, and its echoes in Cantillon &mdash; all within a single reading environment.
+          Source Library now holds original editions of the complete chain &mdash; from Aristotle&apos;s <em>Ethics</em> through Florentine merchant manuals, Aquinas, and the Salamanca School to Smith and Bastiat. As these texts are processed through our OCR and translation pipeline, they become searchable and cross-referenceable for the first time. A researcher studying Molina&apos;s price theory can trace its debts to Aquinas, compare it with the commercial practice recorded in Pegolotti and Cotrugli, follow its parallels with Davanzati, and track its echoes in Cantillon &mdash; all within a single reading environment.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">

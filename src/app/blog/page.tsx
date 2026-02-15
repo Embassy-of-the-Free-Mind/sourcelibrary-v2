@@ -22,9 +22,9 @@ const posts: BlogPost[] = [
   {
     slug: 'invisible-hand',
     title: 'The Invisible Hand Has a History',
-    subtitle: 'Before Adam Smith, Salamanca theologians, Italian merchants, and Cambridge Platonists built the intellectual foundations of market theory. Source Library traces the hidden lineage from Aristotle to Bastiat in original editions.',
+    subtitle: 'Before Adam Smith, Florentine merchants, Salamanca theologians, and Cambridge Platonists built the intellectual foundations of market theory. Source Library traces the hidden lineage from Aristotle to Bastiat in original editions.',
     date: '15 February 2026',
-    readTime: '15 min read',
+    readTime: '20 min read',
   },
   {
     slug: 'chakra-tradition',
