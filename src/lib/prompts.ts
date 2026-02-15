@@ -1,5 +1,5 @@
 import { getDb } from './mongodb';
-import { DEFAULT_PROMPTS } from './types';
+import { DEFAULT_PROMPTS, ENGLISH_MODERNIZATION_PROMPT } from './types';
 import type { PromptType, PromptReference } from './types';
 
 /**
@@ -126,6 +126,20 @@ export async function getTranslationPrompt(
   targetLanguage: string = 'English',
   options?: { name?: string; id?: string; customText?: string }
 ): Promise<PromptLookupResult> {
+  // English books get modernized instead of translated
+  const isEnglish = sourceLanguage.toLowerCase() === 'english';
+
+  if (isEnglish && !options?.customText && !options?.name && !options?.id) {
+    return {
+      text: ENGLISH_MODERNIZATION_PROMPT,
+      reference: {
+        id: 'hardcoded',
+        name: 'English Modernization',
+        version: 0,
+      },
+    };
+  }
+
   const result = await getPrompt('translation', options);
   return {
     text: result.text

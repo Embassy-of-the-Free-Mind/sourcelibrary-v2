@@ -7,9 +7,9 @@ export const maxDuration = 300;
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
 const ENROLL_LIMIT = 10;
 const ARCHIVE_LIMIT = 20; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 5;
-const TRANSLATE_SUBMIT_LIMIT = 5;
-const ENRICH_LIMIT = 2;
+const OCR_SUBMIT_LIMIT = 20;
+const TRANSLATE_SUBMIT_LIMIT = 10;
+const ENRICH_LIMIT = 5;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 
@@ -158,7 +158,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 2: Submit OCR (archive_complete -> ocr_submitted) ──
+    // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
+    // Batch API is 50% cheaper than realtime. Jobs complete within hours.
     if (hasTimeBudget(startTime)) {
       const readyForOcr = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
@@ -169,11 +170,8 @@ export async function GET(request: NextRequest) {
       for (const book of readyForOcr) {
         if (!hasTimeBudget(startTime)) break;
         try {
-          // Limit to 100 pages per batch to avoid Vercel timeout
-          // (batch-ocr-async fetches all images as base64 before submitting)
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
-            body: JSON.stringify({ limit: 100 }),
             headers: { 'Content-Type': 'application/json' },
           });
           if (!res.ok) {
@@ -209,37 +207,48 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const ocrPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
-        .project({ id: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_batch_id': 1 })
+        .project({ id: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1 })
         .toArray();
 
       for (const book of ocrPending) {
         if (!hasTimeBudget(startTime)) break;
         const jobName = book.pipeline_auto?.ocr_job_name;
+        const jobId = book.pipeline_auto?.ocr_job_id;
 
-        // Check batch_jobs collection for completion
-        const batchJob = jobName
-          ? await db.collection('batch_jobs').findOne({
-              book_id: book.id,
-              type: 'ocr',
-              $or: [
-                { job_name: jobName },
-                { gemini_job_name: jobName },
-              ],
-            })
-          : null;
+        let isComplete = false;
 
-        // Also check for parent jobs (large books split into children)
-        const parentJob = await db.collection('batch_jobs').findOne({
-          book_id: book.id,
-          type: 'ocr',
-          child_job_ids: { $exists: true, $ne: [] },
-          status: { $in: ['completed', 'saved', 'completed_with_errors'] },
-        });
+        if (jobId) {
+          // Realtime Lambda job — check jobs collection
+          const job = await db.collection('jobs').findOne({
+            id: jobId,
+            status: { $in: ['completed', 'completed_with_errors'] },
+          });
+          if (job) isComplete = true;
+        } else if (jobName) {
+          // Batch API job — check batch_jobs collection
+          const batchJob = await db.collection('batch_jobs').findOne({
+            book_id: book.id,
+            type: 'ocr',
+            $or: [
+              { job_name: jobName },
+              { gemini_job_name: jobName },
+            ],
+            status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+          });
 
-        if (
-          batchJob && ['saved', 'completed', 'completed_with_errors'].includes(batchJob.status) ||
-          parentJob
-        ) {
+          const parentJob = !batchJob
+            ? await db.collection('batch_jobs').findOne({
+                book_id: book.id,
+                type: 'ocr',
+                child_job_ids: { $exists: true, $ne: [] },
+                status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+              })
+            : null;
+
+          if (batchJob || parentJob) isComplete = true;
+        }
+
+        if (isComplete) {
           await setPipelineStatus(db, book.id, 'ocr_complete');
           log.ocr_advanced++;
         }
@@ -247,7 +256,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 4: Submit translation (ocr_complete -> translate_submitted) ──
+    // ── Phase 4: Submit translation via Gemini Batch API (ocr_complete -> translate_submitted) ──
     if (hasTimeBudget(startTime)) {
       const readyForTranslate = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
@@ -258,17 +267,10 @@ export async function GET(request: NextRequest) {
       for (const book of readyForTranslate) {
         if (!hasTimeBudget(startTime)) break;
 
-        // English books don't need translation — skip straight to enrichment
-        if (book.language === 'English') {
-          await setPipelineStatus(db, book.id, 'translate_complete');
-          log.translate_advanced++;
-          continue;
-        }
-
+        // English books get modernized (Early Modern → Modern English) via the same batch route
         try {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
             method: 'POST',
-            body: JSON.stringify({ limit: 100 }),
             headers: { 'Content-Type': 'application/json' },
           });
           if (!res.ok) {
@@ -303,35 +305,48 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const translatePending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted' })
-        .project({ id: 1, 'pipeline_auto.translate_job_name': 1 })
+        .project({ id: 1, 'pipeline_auto.translate_job_name': 1, 'pipeline_auto.translate_job_id': 1 })
         .toArray();
 
       for (const book of translatePending) {
         if (!hasTimeBudget(startTime)) break;
         const jobName = book.pipeline_auto?.translate_job_name;
+        const jobId = book.pipeline_auto?.translate_job_id;
 
-        const batchJob = jobName
-          ? await db.collection('batch_jobs').findOne({
-              book_id: book.id,
-              type: 'translation',
-              $or: [
-                { job_name: jobName },
-                { gemini_job_name: jobName },
-              ],
-            })
-          : null;
+        let isComplete = false;
 
-        const parentJob = await db.collection('batch_jobs').findOne({
-          book_id: book.id,
-          type: 'translation',
-          child_job_ids: { $exists: true, $ne: [] },
-          status: { $in: ['completed', 'saved', 'completed_with_errors'] },
-        });
+        if (jobId) {
+          // Realtime Lambda job — check jobs collection
+          const job = await db.collection('jobs').findOne({
+            id: jobId,
+            status: { $in: ['completed', 'completed_with_errors'] },
+          });
+          if (job) isComplete = true;
+        } else if (jobName) {
+          // Batch API job — check batch_jobs collection
+          const batchJob = await db.collection('batch_jobs').findOne({
+            book_id: book.id,
+            type: 'translation',
+            $or: [
+              { job_name: jobName },
+              { gemini_job_name: jobName },
+            ],
+            status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+          });
 
-        if (
-          batchJob && ['saved', 'completed', 'completed_with_errors'].includes(batchJob.status) ||
-          parentJob
-        ) {
+          const parentJob = !batchJob
+            ? await db.collection('batch_jobs').findOne({
+                book_id: book.id,
+                type: 'translation',
+                child_job_ids: { $exists: true, $ne: [] },
+                status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+              })
+            : null;
+
+          if (batchJob || parentJob) isComplete = true;
+        }
+
+        if (isComplete) {
           await setPipelineStatus(db, book.id, 'translate_complete');
           log.translate_advanced++;
         }

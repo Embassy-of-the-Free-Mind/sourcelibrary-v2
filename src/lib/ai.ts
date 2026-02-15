@@ -1,4 +1,4 @@
-import { DEFAULT_PROMPTS, DEFAULT_MODEL } from './types';
+import { DEFAULT_PROMPTS, DEFAULT_MODEL, ENGLISH_MODERNIZATION_PROMPT } from './types';
 import { getGeminiClient } from './gemini-client';
 import { images } from './api-client/images';
 import { HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
@@ -212,14 +212,21 @@ export async function performTranslation(
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
-  let prompt = (customPrompt || DEFAULT_PROMPTS.translation)
+  // English books get modernized (Early Modern → Modern English) instead of translated
+  const isEnglish = sourceLanguage.toLowerCase() === 'english';
+  const basePrompt = customPrompt || (isEnglish ? ENGLISH_MODERNIZATION_PROMPT : DEFAULT_PROMPTS.translation);
+  let prompt = basePrompt
     .replace('{source_language}', sourceLanguage)
     .replace('{target_language}', targetLanguage);
 
-  prompt += `\n\n**Text to translate:**\n${ocrText}`;
+  prompt += isEnglish
+    ? `\n\n**Text to modernize:**\n${ocrText}`
+    : `\n\n**Text to translate:**\n${ocrText}`;
 
   if (previousPageTranslation) {
-    prompt += `\n\n**Previous page translation for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`;
+    prompt += isEnglish
+      ? `\n\n**Previous page (modernized) for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`
+      : `\n\n**Previous page translation for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`;
   }
 
   const result = await model.generateContent(prompt);

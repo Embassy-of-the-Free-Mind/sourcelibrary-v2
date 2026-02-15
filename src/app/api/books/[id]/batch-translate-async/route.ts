@@ -45,16 +45,7 @@ export async function POST(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // English books don't need translation
-    if (book.language === 'English') {
-      return NextResponse.json({
-        message: 'No pages need translation',
-        processed: 0,
-        reason: 'Book is already in English',
-      });
-    }
-
-    // Find pages to translate
+    // Find pages to translate (or modernize for English books)
     // When force=true, include pages that already have translation (for re-processing with new prompts)
     const translationFilter = force
       ? {
@@ -87,8 +78,9 @@ export async function POST(
     // Build batch requests - each page is a separate request
     const batchRequests = [];
 
-    // Use the canonical translation prompt (with XML tag preservation, summary, keywords)
+    // Use the canonical prompt — modernization for English, translation for others
     const sourceLanguage = book.language || 'Latin';
+    const isEnglish = sourceLanguage.toLowerCase() === 'english';
     const promptResult = await getTranslationPrompt(sourceLanguage, targetLanguage);
     const basePrompt = promptResult.text;
 
@@ -100,7 +92,9 @@ export async function POST(
       }
 
       // Same format as performTranslation in ai.ts
-      const prompt = basePrompt + `\n\n**Text to translate:**\n${ocrText}`;
+      const prompt = basePrompt + (isEnglish
+        ? `\n\n**Text to modernize:**\n${ocrText}`
+        : `\n\n**Text to translate:**\n${ocrText}`);
 
       batchRequests.push({
         key: page.id,
