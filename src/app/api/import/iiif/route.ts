@@ -3,37 +3,81 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 
-interface IIIFManifest {
-  '@context'?: string;
+// IIIF v2 canvas
+interface IIIFv2Canvas {
   '@id'?: string;
-  label?: string | { '@value'?: string }[];
+  label?: string;
+  width?: number;
+  height?: number;
+  images?: Array<{
+    resource?: {
+      '@id'?: string;
+      service?: {
+        '@id'?: string;
+      };
+    };
+  }>;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface IIIFManifest {
+  '@context'?: string | string[];
+  '@id'?: string;
+  id?: string;       // v3
+  type?: string;     // v3
+  label?: string | { '@value'?: string }[] | Record<string, string[]>;
   description?: string | { '@value'?: string }[];
+  summary?: Record<string, string[]>; // v3
   license?: string | string[];
+  rights?: string;   // v3
   attribution?: string | { '@value'?: string; '@language'?: string }[];
+  requiredStatement?: { label?: Record<string, string[]>; value?: Record<string, string[]> }; // v3
   logo?: string | { '@id'?: string };
   sequences?: Array<{
-    canvases?: Array<{
-      '@id'?: string;
-      label?: string;
-      width?: number;
-      height?: number;
-      images?: Array<{
-        resource?: {
-          '@id'?: string;
-          service?: {
+    canvases?: IIIFv2Canvas[];
+  }>;
+  items?: Array<{     // v3 canvases
+    id?: string;
+    type?: string;
+    label?: Record<string, string[]>;
+    width?: number;
+    height?: number;
+    thumbnail?: Array<{ id?: string }>;
+    items?: Array<{    // AnnotationPages
+      items?: Array<{  // Annotations
+        body?: {
+          id?: string;
+          type?: string;
+          format?: string;
+          service?: Array<{
+            id?: string;
             '@id'?: string;
-          };
+            type?: string;
+            profile?: string;
+          }>;
         };
       }>;
     }>;
   }>;
 }
 
-function extractLabel(label: string | { '@value'?: string }[] | undefined): string | null {
+function extractLabel(label: string | { '@value'?: string }[] | Record<string, string[]> | undefined): string | null {
   if (!label) return null;
   if (typeof label === 'string') return label;
   if (Array.isArray(label) && label[0]?.['@value']) return label[0]['@value'];
+  // v3 format: { "en": ["Label text"] }
+  if (typeof label === 'object' && !Array.isArray(label)) {
+    const vals = (label as Record<string, string[]>)['en'] || Object.values(label as Record<string, string[]>)[0];
+    if (vals?.[0]) return vals[0];
+  }
   return null;
+}
+
+function isV3Manifest(manifest: IIIFManifest): boolean {
+  const ctx = manifest['@context'];
+  if (typeof ctx === 'string') return ctx.includes('presentation/3');
+  if (Array.isArray(ctx)) return ctx.some(c => typeof c === 'string' && c.includes('presentation/3'));
+  return manifest.type === 'Manifest' && 'items' in manifest;
 }
 
 // Extract attribution text from IIIF manifest
@@ -149,11 +193,17 @@ export async function POST(request: NextRequest) {
     }
 
     const manifest: IIIFManifest = await manifestRes.json();
+    const v3 = isV3Manifest(manifest);
 
-    // Get page count from IIIF canvases
-    let canvases = manifest.sequences?.[0]?.canvases || [];
+    // Extract canvases from v2 or v3 manifest
+    let totalCanvasCount: number;
+    if (v3) {
+      totalCanvasCount = manifest.items?.length || 0;
+    } else {
+      totalCanvasCount = manifest.sequences?.[0]?.canvases?.length || 0;
+    }
 
-    if (canvases.length === 0) {
+    if (totalCanvasCount === 0) {
       return NextResponse.json(
         { error: 'No pages found in IIIF manifest' },
         { status: 400 }
@@ -162,14 +212,12 @@ export async function POST(request: NextRequest) {
 
     // Support extracting a page range from the manifest
     const startIdx = start_page ? Math.max(0, start_page - 1) : 0;
-    const endIdx = end_page ? Math.min(canvases.length, end_page) : canvases.length;
+    const endIdx = end_page ? Math.min(totalCanvasCount, end_page) : totalCanvasCount;
+    const pageCount = endIdx - startIdx;
 
-    if (startIdx > 0 || endIdx < canvases.length) {
-      canvases = canvases.slice(startIdx, endIdx);
-      console.log(`[IIIF Import] Extracting pages ${startIdx + 1}-${endIdx} (${canvases.length} pages)`);
+    if (startIdx > 0 || endIdx < totalCanvasCount) {
+      console.log(`[IIIF Import] Extracting pages ${startIdx + 1}-${endIdx} (${pageCount} pages)`);
     }
-
-    const pageCount = canvases.length;
 
     const db = await getDb();
 
@@ -178,7 +226,6 @@ export async function POST(request: NextRequest) {
       'image_source.iiif_manifest': manifest_url
     };
     if (start_page || end_page) {
-      // If extracting a page range, check for exact match
       existingQuery['image_source.page_range'] = `${startIdx + 1}-${endIdx}`;
     }
     const existing = await db.collection('books').findOne(existingQuery);
@@ -194,50 +241,80 @@ export async function POST(request: NextRequest) {
     const bookId = new ObjectId();
     const bookIdStr = bookId.toHexString();
 
-    // Build page image URLs from IIIF canvases
+    // Build page image URLs from IIIF canvases (v2 or v3)
     const pageImages: { photo: string; thumbnail: string }[] = [];
 
-    for (const canvas of canvases) {
-      const imageResource = canvas.images?.[0]?.resource;
-      let imageUrl = imageResource?.['@id'] || '';
+    if (v3) {
+      // IIIF Presentation API v3
+      const v3Canvases = (manifest.items || []).slice(startIdx, endIdx);
+      for (const canvas of v3Canvases) {
+        const annotation = canvas.items?.[0]?.items?.[0];
+        const body = annotation?.body;
+        let imageUrl = body?.id || '';
+        const service = Array.isArray(body?.service) ? body.service[0] : undefined;
+        const imageService = service?.id || service?.['@id'];
 
-      // If there's an IIIF Image API service, use it for better quality control
-      const imageService = imageResource?.service?.['@id'];
-      if (imageService) {
-        // Use IIIF Image API for consistent sizing
-        imageUrl = `${imageService}/full/1000,/0/default.jpg`;
+        if (imageService) {
+          imageUrl = `${imageService}/full/1000,/0/default.jpg`;
+        }
+
+        let thumbnailUrl = canvas.thumbnail?.[0]?.id || '';
+        if (!thumbnailUrl && imageService) {
+          thumbnailUrl = `${imageService}/full/200,/0/default.jpg`;
+        } else if (!thumbnailUrl) {
+          thumbnailUrl = imageUrl.replace(/\/full\/[^/]+\//, '/full/200,/');
+        }
+
+        pageImages.push({ photo: imageUrl, thumbnail: thumbnailUrl });
       }
+    } else {
+      // IIIF Presentation API v2
+      const v2Canvases = (manifest.sequences?.[0]?.canvases || []).slice(startIdx, endIdx);
+      for (const canvas of v2Canvases) {
+        const imageResource = canvas.images?.[0]?.resource;
+        let imageUrl = imageResource?.['@id'] || '';
+        const imageService = imageResource?.service?.['@id'];
 
-      // Generate thumbnail
-      let thumbnailUrl = imageUrl;
-      if (imageService) {
-        thumbnailUrl = `${imageService}/full/200,/0/default.jpg`;
-      } else if (imageUrl) {
-        // Try to modify URL for smaller size if it's IIIF-like
-        thumbnailUrl = imageUrl.replace(/\/full\/[^/]+\//, '/full/200,/');
+        if (imageService) {
+          imageUrl = `${imageService}/full/1000,/0/default.jpg`;
+        }
+
+        let thumbnailUrl = imageUrl;
+        if (imageService) {
+          thumbnailUrl = `${imageService}/full/200,/0/default.jpg`;
+        } else if (imageUrl) {
+          thumbnailUrl = imageUrl.replace(/\/full\/[^/]+\//, '/full/200,/');
+        }
+
+        pageImages.push({ photo: imageUrl, thumbnail: thumbnailUrl });
       }
-
-      pageImages.push({
-        photo: imageUrl,
-        thumbnail: thumbnailUrl
-      });
     }
 
-    // Extract manifest metadata
+    // Extract manifest metadata (v2 and v3)
     const manifestLabel = extractLabel(manifest.label);
-    const rawLicenseUrl = Array.isArray(manifest.license)
-      ? manifest.license[0]
-      : manifest.license || null;
-    const attributionText = extractAttribution(manifest.attribution);
+    const rawLicenseUrl = v3
+      ? (manifest.rights || null)
+      : (Array.isArray(manifest.license) ? manifest.license[0] : manifest.license || null);
+    let attributionText = extractAttribution(manifest.attribution);
+    // v3 uses requiredStatement instead of attribution
+    if (!attributionText && manifest.requiredStatement?.value) {
+      const vals = manifest.requiredStatement.value['en'] || Object.values(manifest.requiredStatement.value)[0];
+      if (vals?.[0]) attributionText = vals[0].replace(/<[^>]*>/g, '').trim();
+    }
 
     // Determine provider name
     let providerName = provider || 'IIIF Source';
-    const manifestId = manifest['@id'] || manifest_url;
+    const manifestId = manifest['@id'] || manifest.id || manifest_url;
     if (manifestId.includes('vatlib.it')) providerName = 'Vatican Library';
     else if (manifestId.includes('gallica.bnf.fr')) providerName = 'Gallica (BnF)';
     else if (manifestId.includes('bodleian.ox.ac.uk')) providerName = 'Bodleian Library';
+    else if (manifestId.includes('bl.uk') || manifestId.includes('bl.digirati.io')) providerName = 'British Library';
     else if (manifestId.includes('irht.cnrs.fr')) providerName = 'IRHT (CNRS)';
     else if (manifestId.includes('loc.gov')) providerName = 'Library of Congress';
+    else if (manifestId.includes('nli.org.il')) providerName = 'National Library of Israel';
+    else if (manifestId.includes('polona.pl')) providerName = 'National Library of Poland';
+    else if (manifestId.includes('onb.ac.at')) providerName = 'Austrian National Library';
+    else if (manifestId.includes('e-codices.unifr.ch')) providerName = 'e-codices';
 
     // Parse license from manifest data
     const { license, license_url } = parseLicense(rawLicenseUrl, attributionText, providerName);
@@ -270,13 +347,13 @@ export async function POST(request: NextRequest) {
       pages_ocr: 0,
       pages_translated: 0,
       dublin_core: {
-        dc_identifier: [`IIIF:${manifest['@id'] || manifest_url}`],
-        dc_source: manifest['@id'] || manifest_url
+        dc_identifier: [`IIIF:${manifest['@id'] || manifest.id || manifest_url}`],
+        dc_source: manifest['@id'] || manifest.id || manifest_url
       },
       image_source: {
         provider: 'iiif',
         provider_name: providerName,
-        source_url: manifest['@id'] || manifest_url,
+        source_url: manifest['@id'] || manifest.id || manifest_url,
         iiif_manifest: manifest_url,
         license,
         license_url,

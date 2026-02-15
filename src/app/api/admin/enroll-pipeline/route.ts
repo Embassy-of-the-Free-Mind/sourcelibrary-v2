@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 /**
  * GET /api/admin/enroll-pipeline
@@ -94,32 +94,28 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  let enrolled = 0;
-  const status: PipelineAutoStatus = 'queued';
+  const bookIdList = books.map(b => b.id);
+  const now = new Date();
 
-  for (const book of books) {
-    await db.collection('books').updateOne(
-      { id: book.id },
-      {
-        $set: {
-          pipeline_auto: {
-            status,
-            source: 'admin',
-            queued_at: new Date(),
-            last_updated: new Date(),
-            retry_count: 0,
-          },
-          updated_at: new Date(),
+  const result = await db.collection('books').updateMany(
+    { id: { $in: bookIdList } },
+    {
+      $set: {
+        pipeline_auto: {
+          status: 'queued' as PipelineAutoStatus,
+          source: 'admin',
+          queued_at: now,
+          last_updated: now,
+          retry_count: 0,
         },
-      }
-    );
-    enrolled++;
-  }
+        updated_at: now,
+      },
+    }
+  );
 
   return NextResponse.json({
     success: true,
-    enrolled,
-    books: books.map(b => ({ id: b.id, title: b.title })),
-    message: `Enrolled ${enrolled} books. The pipeline cron will start processing within 10 minutes.`,
+    enrolled: result.modifiedCount,
+    message: `Enrolled ${result.modifiedCount} books. The pipeline cron will start processing within 10 minutes.`,
   });
 }
