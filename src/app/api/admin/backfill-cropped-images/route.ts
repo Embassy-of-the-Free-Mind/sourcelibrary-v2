@@ -1,12 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { nanoid } from 'nanoid';
+import { images } from '@/lib/api-client';
+import { cropAndUploadHalf, generateAndUploadThumbnail } from '@/lib/page-split/split-processing';
+
+export const maxDuration = 300;
 
 /**
- * Find all pages with crop data but no cropped_photo and queue a job to generate them.
+ * Find all pages with crop data but no cropped_photo and generate them.
  *
  * GET - Preview: returns count and sample of pages needing cropped images
- * POST - Execute: creates job to generate cropped images
+ * POST - Execute: generates cropped images + thumbnails inline
  */
 
 export async function GET(request: NextRequest) {
@@ -65,7 +68,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json().catch(() => ({}));
-    const { bookId } = body;
+    const { bookId, limit = 100, clearStaleOcr = false } = body;
 
     const db = await getDb();
 
@@ -85,7 +88,7 @@ export async function POST(request: NextRequest) {
 
     const pages = await db.collection('pages')
       .find(query)
-      .project({ id: 1, book_id: 1 })
+      .limit(limit)
       .toArray();
 
     if (pages.length === 0) {
@@ -96,58 +99,97 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const pageIds = pages.map(p => p.id);
+    // Optionally clear stale OCR/translation stubs (have updated_at but no data)
+    if (clearStaleOcr && bookId) {
+      const staleResult = await db.collection('pages').updateMany(
+        {
+          book_id: bookId,
+          $or: [
+            { 'ocr.updated_at': { $exists: true }, 'ocr.data': { $exists: false } },
+            { 'translation.updated_at': { $exists: true }, 'translation.data': { $exists: false } }
+          ]
+        },
+        { $unset: { ocr: '', translation: '', summary: '' } }
+      );
+      console.log(`[backfill-cropped] Cleared ${staleResult.modifiedCount} stale OCR/translation stubs`);
+    }
 
-    // Get book info for job metadata
-    const bookIds = [...new Set(pages.map(p => p.book_id))];
-    const bookTitle = bookIds.length === 1
-      ? (await db.collection('books').findOne({ id: bookIds[0] }))?.title || 'Unknown'
-      : `${bookIds.length} books`;
+    // Process inline in batches of 5
+    let imagesGenerated = 0;
+    let thumbnailsGenerated = 0;
+    let imageErrors = 0;
+    const errors: string[] = [];
 
-    // Create the job
-    const jobId = nanoid(12);
-    await db.collection('jobs').insertOne({
-      id: jobId,
-      type: 'generate_cropped_images',
-      status: 'pending',
-      progress: {
-        total: pageIds.length,
-        completed: 0,
-        failed: 0,
-      },
-      book_id: bookIds.length === 1 ? bookIds[0] : null,
-      book_title: bookTitle,
-      created_at: new Date(),
-      updated_at: new Date(),
-      results: [],
-      config: {
-        page_ids: pageIds,
-        backfill: true,
-      },
-    });
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < pages.length; i += BATCH_SIZE) {
+      const batch = pages.slice(i, i + BATCH_SIZE);
+      await Promise.allSettled(
+        batch.map(async (page) => {
+          if (!page.crop) return;
+          const sourceUrl = page.archived_photo || page.photo_original || page.photo;
+          if (!sourceUrl) {
+            errors.push(`Page ${page.page_number}: no source URL`);
+            imageErrors++;
+            return;
+          }
 
-    // Kick off processing (non-blocking)
-    const baseUrl = process.env.NEXT_PUBLIC_URL || process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000';
+          try {
+            const buffer = await images.fetchBuffer(sourceUrl, { timeout: 30000 });
+            const { url: croppedUrl, buffer: croppedBuffer } = await cropAndUploadHalf(
+              buffer, page.crop, page.book_id, page.id
+            );
+            const { url: thumbnailUrl } = await generateAndUploadThumbnail(
+              croppedBuffer, page.book_id, page.id
+            );
 
-    fetch(`${baseUrl}/api/jobs/${jobId}/process`, {
-      method: 'POST',
-    }).catch(() => {
-      // Ignore - job will be picked up later
-    });
+            await db.collection('pages').updateOne(
+              { id: page.id },
+              {
+                $set: {
+                  cropped_photo: croppedUrl,
+                  thumbnail_blob: thumbnailUrl,
+                  updated_at: new Date()
+                }
+              }
+            );
+            imagesGenerated++;
+            thumbnailsGenerated++;
+          } catch (err) {
+            const msg = `Page ${page.page_number}: ${err instanceof Error ? err.message : 'Unknown error'}`;
+            errors.push(msg);
+            imageErrors++;
+            console.error(`[backfill-cropped] ${msg}`);
+          }
+        })
+      );
+    }
+
+    // Update book-level caches if single book
+    if (bookId) {
+      const [pagesOcr, pagesTranslated, totalPages] = await Promise.all([
+        db.collection('pages').countDocuments({ book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } }),
+        db.collection('pages').countDocuments({ book_id: bookId, 'translation.data': { $exists: true, $ne: '' } }),
+        db.collection('pages').countDocuments({ book_id: bookId })
+      ]);
+
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { pages_ocr: pagesOcr, pages_translated: pagesTranslated, pages_count: totalPages } }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      jobId,
-      pagesQueued: pageIds.length,
-      bookIds,
-      message: `Created job to generate cropped images for ${pageIds.length} pages`
+      imagesGenerated,
+      thumbnailsGenerated,
+      imageErrors,
+      errors: errors.slice(0, 20),
+      message: `Generated ${imagesGenerated} cropped images and ${thumbnailsGenerated} thumbnails. ${imageErrors} errors.`
     });
   } catch (error) {
-    console.error('Error creating backfill job:', error);
+    console.error('Error generating cropped images:', error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create job' },
+      { error: error instanceof Error ? error.message : 'Failed to generate' },
       { status: 500 }
     );
   }

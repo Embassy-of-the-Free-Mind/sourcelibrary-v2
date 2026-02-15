@@ -118,16 +118,25 @@ export const pages = {
     splitPosition: number;
     detectedPosition?: number;
     wasAdjusted?: boolean;
-  }>): Promise<{
-    success: boolean;
-    splitCount: number;
-    totalPages: number;
-    adjustmentsLogged: number;
-    cropJobId?: string;
-    cropJobPagesCount?: number;
+  }>, options?: { confirmClearOcr?: boolean }): Promise<{
+    success?: boolean;
+    warning?: boolean;
+    pagesWithOcr?: number;
+    pagesWithTranslation?: number;
+    splitCount?: number;
+    totalPages?: number;
+    adjustmentsLogged?: number;
+    ocrCleared?: number;
+    translationCleared?: number;
+    imagesGenerated?: number;
+    thumbnailsGenerated?: number;
+    imageErrors?: number;
     message: string;
   }> => {
-    return await apiClient.post('/api/pages/batch-split', { splits });
+    return await apiClient.post('/api/pages/batch-split', {
+      splits,
+      ...(options?.confirmClearOcr && { confirmClearOcr: true })
+    });
   },
 
   /**

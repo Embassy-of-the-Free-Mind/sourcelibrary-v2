@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
 import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/page-split/splitDetectionML';
 import { images } from '@/lib/api-client';
+import { cropAndUploadHalf, generateAndUploadThumbnail } from '@/lib/page-split/split-processing';
+
+export const maxDuration = 300;
 
 /**
  * POST /api/books/[id]/auto-split-ml
@@ -102,7 +106,7 @@ export async function POST(
       });
     }
 
-    // Apply splits using batch-split endpoint logic
+    // Apply splits
     const newPages: Array<{
       id: string;
       book_id: string;
@@ -121,13 +125,17 @@ export async function POST(
     const updateOps: Array<{
       updateOne: {
         filter: { id: string };
-        update: { $set: { crop: { xStart: number; xEnd: number }; photo_original: string; updated_at: Date } };
+        update: { $set: Record<string, unknown>; $unset?: Record<string, string> };
       };
     }> = [];
 
     const pages = await db.collection('pages')
       .find({ id: { $in: splits.map(s => s.pageId) } })
       .toArray();
+
+    // Count pages with existing OCR/translation that will be cleared
+    const pagesWithOcr = pages.filter(p => p.ocr?.data).length;
+    const pagesWithTranslation = pages.filter(p => p.translation?.data).length;
 
     for (const split of splits) {
       const page = pages.find(p => p.id === split.pageId);
@@ -137,6 +145,7 @@ export async function POST(
       const leftCrop = { xStart: 0, xEnd: Math.min(1000, split.splitPosition + overlap) };
       const rightCrop = { xStart: Math.max(0, split.splitPosition - overlap), xEnd: 1000 };
 
+      // Update existing page with left crop + clear stale OCR/translation
       updateOps.push({
         updateOne: {
           filter: { id: page.id },
@@ -145,12 +154,12 @@ export async function POST(
               crop: leftCrop,
               photo_original: page.photo_original,
               updated_at: new Date()
-            }
+            },
+            $unset: { ocr: '', translation: '', summary: '' }
           }
         }
       });
 
-      const { ObjectId } = await import('mongodb');
       const newPageId = new ObjectId().toHexString();
       newPages.push({
         id: newPageId,
@@ -191,16 +200,79 @@ export async function POST(
       await db.collection('pages').bulkWrite(renumberOps);
     }
 
-    // Update book page count
+    // Update book page count and OCR/translation caches
     await db.collection('books').updateOne(
       { id: bookId },
-      { $set: { pages: allPages.length } }
+      {
+        $set: {
+          pages: allPages.length,
+          pages_ocr: Math.max(0, (await db.collection('pages').countDocuments({
+            book_id: bookId,
+            'ocr.data': { $exists: true, $ne: '' }
+          }))),
+          pages_translated: Math.max(0, (await db.collection('pages').countDocuments({
+            book_id: bookId,
+            'translation.data': { $exists: true, $ne: '' }
+          })))
+        }
+      }
     );
+
+    // Generate cropped images + thumbnails inline
+    const splitPageIds = [
+      ...splits.map(s => s.pageId),
+      ...newPages.map(p => p.id),
+    ];
+
+    const splitPagesForCrop = await db.collection('pages')
+      .find({ id: { $in: splitPageIds } })
+      .toArray();
+
+    let imagesGenerated = 0;
+    let thumbnailsGenerated = 0;
+    let imageErrors = 0;
+
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < splitPagesForCrop.length; i += BATCH_SIZE) {
+      const batch = splitPagesForCrop.slice(i, i + BATCH_SIZE);
+      await Promise.allSettled(
+        batch.map(async (page) => {
+          if (!page.crop) return;
+          const sourceUrl = page.archived_photo || page.photo_original || page.photo;
+          if (!sourceUrl) return;
+
+          try {
+            const buffer = await images.fetchBuffer(sourceUrl, { timeout: 30000 });
+            const { url: croppedUrl, buffer: croppedBuffer } = await cropAndUploadHalf(
+              buffer, page.crop, bookId, page.id
+            );
+            const { url: thumbnailUrl } = await generateAndUploadThumbnail(
+              croppedBuffer, bookId, page.id
+            );
+
+            await db.collection('pages').updateOne(
+              { id: page.id },
+              { $set: { cropped_photo: croppedUrl, thumbnail_blob: thumbnailUrl, updated_at: new Date() } }
+            );
+            imagesGenerated++;
+            thumbnailsGenerated++;
+          } catch (err) {
+            console.error(`[auto-split-ml] Failed to generate cropped image for page ${page.id}:`, err);
+            imageErrors++;
+          }
+        })
+      );
+    }
 
     return NextResponse.json({
       success: true,
       splitCount: newPages.length,
       totalPages: allPages.length,
+      ocrCleared: pagesWithOcr,
+      translationCleared: pagesWithTranslation,
+      imagesGenerated,
+      thumbnailsGenerated,
+      imageErrors,
       errors,
       remainingToProcess: pagesToSplit.length - splits.length
     });
