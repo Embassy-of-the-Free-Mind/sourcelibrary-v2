@@ -135,6 +135,19 @@ export async function POST(request: NextRequest) {
 
     await db.collection('pages').aggregate(pipeline, { allowDiskUse: true }).toArray();
 
+    // Clean up gallery_images from deleted books
+    const galleryBookIds = await db.collection('gallery_images').distinct('book_id');
+    const existingBooks = await db.collection('books')
+      .find({ id: { $in: galleryBookIds } }, { projection: { id: 1 } })
+      .toArray();
+    const existingBookIds = new Set(existingBooks.map(b => b.id as string));
+    const orphanedBookIds = galleryBookIds.filter((bid: string) => !existingBookIds.has(bid));
+    let orphansRemoved = 0;
+    if (orphanedBookIds.length > 0) {
+      const delResult = await db.collection('gallery_images').deleteMany({ book_id: { $in: orphanedBookIds } });
+      orphansRemoved = delResult.deletedCount;
+    }
+
     // Count what we wrote
     const total = await db.collection('gallery_images').countDocuments();
     const duration = Date.now() - startTime;
@@ -143,6 +156,7 @@ export async function POST(request: NextRequest) {
       success: true,
       total_images: total,
       incremental: !!since,
+      orphans_removed: orphansRemoved,
       duration_ms: duration,
     });
   } catch (error) {

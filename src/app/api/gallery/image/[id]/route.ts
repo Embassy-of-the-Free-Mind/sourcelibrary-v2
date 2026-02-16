@@ -334,6 +334,20 @@ export async function PATCH(
                 }
               }
             );
+            // Sync to gallery_images
+            try {
+              const galleryImageId = `${pageId}-${detectionIndex}`;
+              const gallerySync: Record<string, unknown> = {
+                extracted_url: generated.extractedUrl,
+                thumbnail_url: generated.thumbnailUrl,
+                updated_at: new Date(),
+              };
+              if (typeof body.galleryQuality === 'number') gallerySync.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
+              if (typeof body.rotation === 'number') gallerySync.rotation = body.rotation;
+              if (body.bbox) gallerySync.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
+              await db.collection('gallery_images').updateOne({ id: galleryImageId }, { $set: gallerySync });
+            } catch { /* non-fatal */ }
+
             return NextResponse.json({
               success: true,
               updated: updateFields,
@@ -346,6 +360,31 @@ export async function PATCH(
         // Non-fatal — crop-image fallback still works
         console.warn('Gallery image generation failed (non-fatal):', genError);
       }
+    }
+
+    // Sync changes to materialized gallery_images collection
+    try {
+      const galleryImageId = `${pageId}-${detectionIndex}`;
+      const galleryUpdate: Record<string, unknown> = {};
+      if (typeof body.galleryQuality === 'number') {
+        galleryUpdate.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
+      }
+      if (typeof body.featured === 'boolean') galleryUpdate.featured = body.featured;
+      if (typeof body.museumDescription === 'string') galleryUpdate.museum_description = body.museumDescription;
+      if (typeof body.description === 'string') galleryUpdate.description = body.description;
+      if (body.metadata && typeof body.metadata === 'object') galleryUpdate.metadata = body.metadata;
+      if (typeof body.rotation === 'number') galleryUpdate.rotation = body.rotation;
+      if (body.bbox) galleryUpdate.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
+
+      if (Object.keys(galleryUpdate).length > 0) {
+        galleryUpdate.updated_at = new Date();
+        await db.collection('gallery_images').updateOne(
+          { id: galleryImageId },
+          { $set: galleryUpdate }
+        );
+      }
+    } catch {
+      // Non-fatal — gallery_images is a cache
     }
 
     return NextResponse.json({ success: true, updated: updateFields });

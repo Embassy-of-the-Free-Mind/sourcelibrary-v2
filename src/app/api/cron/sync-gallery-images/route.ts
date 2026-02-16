@@ -130,12 +130,28 @@ export async function GET() {
       }
     }
 
+    // Clean up gallery_images from deleted books
+    const galleryBookIds = await db.collection('gallery_images').distinct('book_id');
+    const existingBooks = await db.collection('books')
+      .find({ id: { $in: galleryBookIds } }, { projection: { id: 1 } })
+      .toArray();
+    const existingBookIds = new Set(existingBooks.map(b => b.id as string));
+    const orphanedBookIds = galleryBookIds.filter((bid: string) => !existingBookIds.has(bid));
+
+    let orphansRemoved = 0;
+    if (orphanedBookIds.length > 0) {
+      const deleteResult = await db.collection('gallery_images').deleteMany({ book_id: { $in: orphanedBookIds } });
+      orphansRemoved = deleteResult.deletedCount;
+    }
+
     const duration = Date.now() - startTime;
 
     return NextResponse.json({
       success: true,
       synced: stalePages.length,
       books_updated: affectedBookIds.length,
+      orphans_removed: orphansRemoved,
+      orphaned_books: orphanedBookIds.length,
       duration_ms: duration,
     });
   } catch (error) {
