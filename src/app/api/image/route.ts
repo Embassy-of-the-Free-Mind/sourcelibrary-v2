@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
     const url = searchParams.get('url');
     const width = parseInt(searchParams.get('w') || '400', 10);
     const quality = parseInt(searchParams.get('q') || '75', 10);
+    const brightness = searchParams.get('brightness') ? parseFloat(searchParams.get('brightness')!) : null;
 
     // Crop parameters (0-1000 scale, matching the split detection)
     const cropXStart = searchParams.get('cx') ? parseInt(searchParams.get('cx')!, 10) : null;
@@ -152,6 +153,11 @@ export async function GET(request: NextRequest) {
         width: Math.min(cropWidth, imgWidth - left),
         height: imgHeight,
       });
+    }
+
+    // Apply brightness adjustment if specified
+    if (brightness !== null && brightness > 0) {
+      sharpInstance = sharpInstance.modulate({ brightness });
     }
 
     // Resize with sharp

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import type { Page, Prompt } from '@/lib/types';
 import type { JobType, Job } from '@/lib/types/job';
+import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
 import BookPagesStats from './BookPagesStats';
@@ -25,7 +26,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [batchMode, setBatchMode] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
-  const [action, setAction] = useState<JobType>('ocr');
+  const [action, setAction] = useState<ActionType>('ocr');
+  const [brightness, setBrightness] = useState(1.3);
   // const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
@@ -298,6 +300,30 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
     const pageIds = Array.from(selectedPages);
 
+    // Brightness adjustment — direct API call, not SQS queue
+    if (action === 'adjust_images') {
+      setQueueing(true);
+      try {
+        const res = await fetch(`/api/books/${bookId}/adjust-images`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pageIds, brightness }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Adjustment failed');
+        alert(`Brightness adjusted on ${data.adjusted} pages${data.failed ? ` (${data.failed} failed)` : ''}`);
+        setSelectedPages(new Set());
+        setBatchMode(false);
+        refreshPages();
+      } catch (error) {
+        console.error('Failed to adjust images:', error);
+        alert(error instanceof Error ? error.message : 'Failed to adjust images');
+      } finally {
+        setQueueing(false);
+      }
+      return;
+    }
+
     // Filter pages based on overwrite mode - check actual data presence
     let pageIdsToProcess = pageIds;
 
@@ -536,14 +562,25 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
           promptsLoading={promptsLoading}
           currentJob={currentJob}
           queueing={queueing}
+          brightness={brightness}
+          previewUrl={(() => {
+            if (action !== 'adjust_images' || selectedPages.size === 0) return null;
+            const firstId = Array.from(selectedPages)[0];
+            const page = pages.find(p => p.id === firstId);
+            if (!page) return null;
+            const baseUrl = page.photo_original || page.photo;
+            if (!baseUrl) return null;
+            return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
+          })()}
           onActionChange={setAction}
           onOverwriteModeChange={setOverwriteMode}
           onSelectAll={selectAll}
           onClearSelection={clearSelection}
           onTogglePromptSettings={() => setShowPromptSettings(!showPromptSettings)}
           onSelectPrompt={handleSelectPrompt}
-          onEditPrompt={(action, value) => setEditedPrompts(prev => ({ ...prev, [action]: value }))}
+          onEditPrompt={(a, value) => setEditedPrompts(prev => ({ ...prev, [a]: value }))}
           onStartProcess={runBatchProcess}
+          onBrightnessChange={setBrightness}
         />
       )}
 

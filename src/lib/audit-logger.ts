@@ -30,7 +30,8 @@ export type AuditAction =
   | 'edition_published'
   | 'doi_minted'
   | 'page_edited'
-  | 'reset_book_ocr';
+  | 'reset_book_ocr'
+  | 'images_brightness_adjusted';
 
 export interface AuditEvent {
   timestamp: Date;

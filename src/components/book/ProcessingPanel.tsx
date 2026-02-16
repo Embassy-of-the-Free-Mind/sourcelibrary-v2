@@ -1,9 +1,11 @@
-import { Settings, Play, FileText, Languages, ImageIcon, Loader2 } from 'lucide-react';
+import { Settings, Play, FileText, Languages, ImageIcon, Sun, Loader2 } from 'lucide-react';
 import type { JobType, Job } from '@/lib/types/job';
 import type { Prompt } from '@/lib/types';
 
+export type ActionType = JobType | 'adjust_images';
+
 interface ProcessingPanelProps {
-  action: JobType;
+  action: ActionType;
   overwriteMode: boolean;
   selectedCount: number;
   showPromptSettings: boolean;
@@ -13,7 +15,9 @@ interface ProcessingPanelProps {
   promptsLoading: boolean;
   currentJob: Job | null;
   queueing: boolean;
-  onActionChange: (action: JobType) => void;
+  brightness?: number;
+  previewUrl?: string | null;
+  onActionChange: (action: ActionType) => void;
   onOverwriteModeChange: (overwrite: boolean) => void;
   onSelectAll: () => void;
   onClearSelection: () => void;
@@ -21,14 +25,18 @@ interface ProcessingPanelProps {
   onSelectPrompt: (action: JobType, promptId: string) => void;
   onEditPrompt: (action: JobType, value: string) => void;
   onStartProcess: () => void;
+  onBrightnessChange?: (value: number) => void;
 }
 
-const actionConfig: Record<JobType, { label: string; icon: any; color: string }> = {
+const actionConfig: Record<ActionType, { label: string; icon: any; color: string }> = {
   ocr: { label: 'OCR', icon: FileText, color: '#3b82f6' },
   translation: { label: 'Translation', icon: Languages, color: '#22c55e' },
   summary: { label: 'Summary', icon: FileText, color: '#a855f7' },
-  image_extraction: { label: 'Images', icon: ImageIcon, color: '#f97316' }
+  image_extraction: { label: 'Images', icon: ImageIcon, color: '#f97316' },
+  adjust_images: { label: 'Brightness', icon: Sun, color: '#d97706' },
 };
+
+const actionButtons: ActionType[] = ['ocr', 'translation', 'image_extraction', 'adjust_images'];
 
 export default function ProcessingPanel({
   action,
@@ -41,6 +49,8 @@ export default function ProcessingPanel({
   promptsLoading,
   currentJob,
   queueing,
+  brightness = 1.3,
+  previewUrl,
   onActionChange,
   onOverwriteModeChange,
   onSelectAll,
@@ -48,8 +58,11 @@ export default function ProcessingPanel({
   onTogglePromptSettings,
   onSelectPrompt,
   onEditPrompt,
-  onStartProcess
+  onStartProcess,
+  onBrightnessChange
 }: ProcessingPanelProps) {
+  const isBrightnessAction = action === 'adjust_images';
+
   return (
     <div className="bg-amber-50 rounded-xl border border-amber-200 p-4 space-y-4">
       {/* Action selector & Selection controls */}
@@ -57,7 +70,7 @@ export default function ProcessingPanel({
         <div className="flex items-center gap-2">
           <span className="text-sm text-stone-600">Action:</span>
           <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
-            {(['ocr', 'translation', 'image_extraction'] as JobType[]).map(type => {
+            {actionButtons.map(type => {
               const { label, icon: Icon, color } = actionConfig[type];
               const isSelected = action === type;
               return (
@@ -77,20 +90,24 @@ export default function ProcessingPanel({
           </div>
         </div>
 
-        <div className="h-6 w-px bg-amber-300" />
+        {!isBrightnessAction && (
+          <>
+            <div className="h-6 w-px bg-amber-300" />
 
-        {/* Mode selector */}
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-stone-600">Mode:</span>
-          <select
-            value={overwriteMode ? 'all' : 'missing'}
-            onChange={(e) => onOverwriteModeChange(e.target.value === 'all')}
-            className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
-          >
-            <option value="missing">Only Missing</option>
-            <option value="all">All (Overwrite)</option>
-          </select>
-        </div>
+            {/* Mode selector */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">Mode:</span>
+              <select
+                value={overwriteMode ? 'all' : 'missing'}
+                onChange={(e) => onOverwriteModeChange(e.target.value === 'all')}
+                className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              >
+                <option value="missing">Only Missing</option>
+                <option value="all">All (Overwrite)</option>
+              </select>
+            </div>
+          </>
+        )}
 
         <div className="h-6 w-px bg-amber-300" />
 
@@ -110,33 +127,82 @@ export default function ProcessingPanel({
 
         <div className="flex-1" />
 
-        {/* Prompt settings toggle */}
-        <button
-          onClick={onTogglePromptSettings}
-          className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
-            showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
-          }`}
-        >
-          <Settings className="w-4 h-4" />
-          Prompt Settings
-        </button>
+        {/* Prompt settings toggle — hidden for brightness */}
+        {!isBrightnessAction && (
+          <button
+            onClick={onTogglePromptSettings}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
+              showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
+            }`}
+          >
+            <Settings className="w-4 h-4" />
+            Prompt Settings
+          </button>
+        )}
       </div>
 
+      {/* Brightness controls */}
+      {isBrightnessAction && (
+        <div className="bg-white rounded-lg border border-amber-200 p-4">
+          <div className="flex items-start gap-6">
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-stone-700">Brightness: {Math.round((brightness ?? 1.3) * 100)}%</span>
+                {brightness !== 1.3 && (
+                  <button
+                    onClick={() => onBrightnessChange?.(1.3)}
+                    className="text-xs text-stone-400 hover:text-stone-600"
+                  >
+                    Reset to default
+                  </button>
+                )}
+              </div>
+              <input
+                type="range"
+                min="0.5"
+                max="2.0"
+                step="0.05"
+                value={brightness}
+                onChange={(e) => onBrightnessChange?.(parseFloat(e.target.value))}
+                className="w-full accent-amber-500"
+              />
+              <div className="flex justify-between text-[10px] text-stone-400">
+                <span>Darker (50%)</span>
+                <span>Normal (100%)</span>
+                <span>Brighter (200%)</span>
+              </div>
+            </div>
+            {/* Preview thumbnail */}
+            {previewUrl && (
+              <div className="flex-shrink-0">
+                <p className="text-xs text-stone-500 mb-1">Preview</p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}brightness=${brightness}`}
+                  alt="Brightness preview"
+                  className="w-24 h-32 object-cover rounded border border-stone-200"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Prompt Settings Panel */}
-      {showPromptSettings && (
+      {!isBrightnessAction && showPromptSettings && (
         <div className="bg-white rounded-lg border border-amber-200 p-4 space-y-3">
           <div className="flex items-center gap-4">
             <label className="text-sm text-stone-600">Template:</label>
             <select
               value={selectedPromptIds[action]}
-              onChange={(e) => onSelectPrompt(action, e.target.value)}
+              onChange={(e) => onSelectPrompt(action as JobType, e.target.value)}
               disabled={promptsLoading}
               className="flex-1 max-w-xs px-3 py-1.5 text-sm border border-stone-200 rounded-lg bg-white"
             >
               {promptsLoading ? (
                 <option>Loading...</option>
               ) : (
-                prompts[action].map(p => (
+                prompts[action]?.map(p => (
                   <option key={p.id || p._id?.toString()} value={p.id || p._id?.toString()}>
                     {p.name}{p.is_default ? ' (Default)' : ''}
                   </option>
@@ -146,7 +212,7 @@ export default function ProcessingPanel({
           </div>
           <textarea
             value={editedPrompts[action]}
-            onChange={e => onEditPrompt(action, e.target.value)}
+            onChange={e => onEditPrompt(action as JobType, e.target.value)}
             className="w-full h-32 p-3 text-sm border border-stone-200 rounded-lg resize-none font-mono text-stone-700"
             placeholder={`${actionConfig[action].label} prompt...`}
           />
@@ -167,12 +233,12 @@ export default function ProcessingPanel({
           {queueing ? (
             <>
               <Loader2 className="w-4 h-4 animate-spin" />
-              Starting...
+              {isBrightnessAction ? 'Adjusting...' : 'Starting...'}
             </>
           ) : (
             <>
               <Play className="w-4 h-4" />
-              Start Process
+              {isBrightnessAction ? 'Adjust Brightness' : 'Start Process'}
             </>
           )}
         </button>

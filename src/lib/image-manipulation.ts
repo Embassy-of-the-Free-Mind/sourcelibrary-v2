@@ -37,6 +37,23 @@ async function getOpenJPEGJS() {
 }
 
 /**
+ * Adjust brightness of an image buffer.
+ * @param buffer Source image buffer
+ * @param brightness Brightness multiplier (1 = unchanged, >1 = brighter, <1 = darker)
+ * @param quality JPEG quality (1-100, default 85)
+ * @returns Brightness-adjusted JPEG buffer
+ */
+export async function adjustBrightness(buffer: Buffer, brightness: number, quality = 85): Promise<Buffer> {
+  if (!buffer || buffer.length === 0) {
+    throw new Error('Invalid image buffer');
+  }
+  return sharp(buffer)
+    .modulate({ brightness })
+    .jpeg({ quality, progressive: true })
+    .toBuffer();
+}
+
+/**
  * Compresses a photo buffer to the specified width and quality.
  * @param imageBuffer Source image buffer
  * @param width Width to resize to.
