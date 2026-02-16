@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   description: galleryDescription,
   alternates: {
     canonical: '/gallery',
+    types: {
+      'application/atom+xml': '/api/feed/gallery',
+    },
   },
   openGraph: {
     title: galleryTitle,

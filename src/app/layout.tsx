@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
     canonical: '/',
+    types: {
+      'application/atom+xml': [
+        { url: '/api/feed/books', title: 'Source Library - New Books' },
+        { url: '/api/feed/gallery', title: 'Source Library Gallery' },
+      ],
+    },
   },
   keywords: [
     'Hermetic texts',
