@@ -49,7 +49,7 @@ export default function ProcessingPanel({
   promptsLoading,
   currentJob,
   queueing,
-  brightness = 1.3,
+  brightness = 1.0,
   previewUrl,
   onActionChange,
   onOverwriteModeChange,
@@ -147,10 +147,10 @@ export default function ProcessingPanel({
           <div className="flex items-start gap-6">
             <div className="flex-1 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-stone-700">Brightness: {Math.round((brightness ?? 1.3) * 100)}%</span>
-                {brightness !== 1.3 && (
+                <span className="text-sm font-medium text-stone-700">Brightness: {Math.round((brightness ?? 1.0) * 100)}%</span>
+                {brightness !== 1.0 && (
                   <button
-                    onClick={() => onBrightnessChange?.(1.3)}
+                    onClick={() => onBrightnessChange?.(1.0)}
                     className="text-xs text-stone-400 hover:text-stone-600"
                   >
                     Reset to default
@@ -172,15 +172,16 @@ export default function ProcessingPanel({
                 <span>Brighter (200%)</span>
               </div>
             </div>
-            {/* Preview thumbnail */}
+            {/* Preview thumbnail with CSS brightness */}
             {previewUrl && (
               <div className="flex-shrink-0">
                 <p className="text-xs text-stone-500 mb-1">Preview</p>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`${previewUrl}${previewUrl.includes('?') ? '&' : '?'}brightness=${brightness}`}
+                  src={previewUrl}
                   alt="Brightness preview"
                   className="w-24 h-32 object-cover rounded border border-stone-200"
+                  style={{ filter: `brightness(${brightness})` }}
                 />
               </div>
             )}
@@ -226,7 +227,7 @@ export default function ProcessingPanel({
       <div className="flex items-center justify-between pt-2">
         <button
           onClick={onStartProcess}
-          disabled={selectedCount === 0 || !!currentJob || queueing}
+          disabled={(selectedCount === 0 && !isBrightnessAction) || !!currentJob || queueing}
           className="flex items-center gap-2 px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
           title={currentJob ? 'Another job is already running for this book' : ''}
         >

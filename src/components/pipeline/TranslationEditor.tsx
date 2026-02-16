@@ -437,6 +437,12 @@ export default function TranslationEditor({
   onSave,
   onRefresh,
 }: TranslationEditorProps) {
+  // CSS brightness from book-level setting
+  const displayBrightness = (book as unknown as { display_brightness?: number }).display_brightness;
+  const brightnessStyle = displayBrightness && displayBrightness !== 1.0
+    ? { filter: `brightness(${displayBrightness})` }
+    : {};
+
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
@@ -923,7 +929,7 @@ export default function TranslationEditor({
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
                   </div>
                   <div className="flex-1 overflow-auto p-2 lg:p-4">
-                    <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
+                    <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...brightnessStyle }}>
                       {pageDisplayUrl ? (
                         <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
                       ) : (
@@ -1437,7 +1443,7 @@ export default function TranslationEditor({
               </button>
             </div>
             <div className="flex-1 overflow-auto p-4">
-              <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+              <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...brightnessStyle }}>
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
                 ) : (

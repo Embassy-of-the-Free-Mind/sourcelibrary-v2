@@ -29,6 +29,7 @@ interface PagesGridProps {
   visibleCount: number;
   draggedPageId: string | null;
   dragOverPageId: string | null;
+  brightness?: number;
   loadMoreRef: React.RefObject<HTMLDivElement | null>;
   onPageToggle: (pageId: string, index: number, event: React.MouseEvent) => void;
   onSetCover: (page: Page) => void;
@@ -51,6 +52,7 @@ export default function PagesGrid({
   visibleCount,
   draggedPageId,
   dragOverPageId,
+  brightness,
   loadMoreRef,
   onPageToggle,
   onSetCover,
@@ -60,6 +62,10 @@ export default function PagesGrid({
   onLoadMore,
   getImageUrl
 }: PagesGridProps) {
+  // CSS brightness filter — only apply when not default (1.0)
+  const brightnessStyle = brightness && brightness !== 1.0
+    ? { filter: `brightness(${brightness})` }
+    : undefined;
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
@@ -102,7 +108,7 @@ export default function PagesGrid({
                   className={`group relative cursor-grab active:cursor-grabbing ${isDragging ? 'opacity-50' : ''}`}
                 >
                   <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 relative ${isDragOver ? 'border-blue-500 shadow-lg scale-105' : 'border-stone-200 hover:border-blue-300'
-                    }`}>
+                    }`} style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="pointer-events-none" />
                     ) : (
@@ -131,7 +137,7 @@ export default function PagesGrid({
                   className="group relative text-left"
                 >
                   <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 relative ${isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
-                    }`}>
+                    }`} style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} />
                     ) : (
@@ -156,7 +162,7 @@ export default function PagesGrid({
             return (
               <div key={page.id} className="group relative">
                 <a href={`/book/${bookId}/page/${page.id}`}>
-                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative">
+                  <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="group-hover:scale-105 transition-transform duration-200" />
                     ) : (

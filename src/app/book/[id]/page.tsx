@@ -23,6 +23,7 @@ import AddToBookshelfButton from '@/components/bookshelf/AddToBookshelfButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 // Lightweight book fetch for metadata (no pages)
@@ -555,15 +556,22 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid with Batch Mode */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} />
+        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
         <BookHistory bookId={book.id} />
       </main>
     </>
   );
 }
 
-export default async function BookDetailPage({ params }: PageProps) {
+export default async function BookDetailPage({ params, searchParams }: PageProps) {
   const { id } = await params;
+  const query = await searchParams;
+
+  // Redirect ?page=N to the page reader
+  const pageNum = typeof query.page === 'string' ? parseInt(query.page, 10) : NaN;
+  if (!isNaN(pageNum) && pageNum > 0) {
+    redirect(`/book/${id}/page-number/${pageNum}`);
+  }
 
   // Redirect ObjectId URLs to canonical custom-id URLs at the server level
   // so Google gets a proper 301 without waiting for Suspense to resolve

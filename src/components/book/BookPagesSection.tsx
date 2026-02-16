@@ -17,17 +17,18 @@ interface BookPagesSectionProps {
   bookId: string;
   bookTitle?: string;
   pages: Page[];
+  displayBrightness?: number;
 }
 
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, displayBrightness }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
   const [batchMode, setBatchMode] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
   const [action, setAction] = useState<ActionType>('ocr');
-  const [brightness, setBrightness] = useState(1.3);
+  const [brightness, setBrightness] = useState(displayBrightness ?? 1.0);
   // const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
@@ -296,33 +297,31 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   };
 
   const runBatchProcess = async () => {
-    if (selectedPages.size === 0) return;
-
-    const pageIds = Array.from(selectedPages);
-
-    // Brightness adjustment — direct API call, not SQS queue
+    // Brightness adjustment — save CSS value to book, no image processing needed
     if (action === 'adjust_images') {
       setQueueing(true);
       try {
-        const res = await fetch(`/api/books/${bookId}/adjust-images`, {
-          method: 'POST',
+        const res = await fetch(`/api/books/${bookId}`, {
+          method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ pageIds, brightness }),
+          body: JSON.stringify({ display_brightness: brightness }),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || 'Adjustment failed');
-        alert(`Brightness adjusted on ${data.adjusted} pages${data.failed ? ` (${data.failed} failed)` : ''}`);
-        setSelectedPages(new Set());
+        if (!res.ok) {
+          const text = await res.text();
+          throw new Error(text.slice(0, 100));
+        }
         setBatchMode(false);
-        refreshPages();
       } catch (error) {
-        console.error('Failed to adjust images:', error);
-        alert(error instanceof Error ? error.message : 'Failed to adjust images');
+        console.error('Failed to save brightness:', error);
+        alert(error instanceof Error ? error.message : 'Failed to save brightness');
       } finally {
         setQueueing(false);
       }
       return;
     }
+
+    if (selectedPages.size === 0) return;
+    const pageIds = Array.from(selectedPages);
 
     // Filter pages based on overwrite mode - check actual data presence
     let pageIdsToProcess = pageIds;
@@ -598,6 +597,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         visibleCount={visibleCount}
         draggedPageId={draggedPageId}
         dragOverPageId={dragOverPageId}
+        brightness={brightness}
         loadMoreRef={loadMoreRef}
         onPageToggle={togglePage}
         onSetCover={setCoverImage}
