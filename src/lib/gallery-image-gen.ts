@@ -37,19 +37,35 @@ export async function generateGalleryImages(
   const { sourceImageUrl, bbox, rotation = 0, bookId, pageId, detectionIndex } = input;
 
   // Fetch source image
-  const imageBuffer = await images.fetchBuffer(sourceImageUrl);
+  const rawBuffer = await images.fetchBuffer(sourceImageUrl);
 
-  // Get image dimensions
-  const metadata = await sharp(imageBuffer).metadata();
-  const imgWidth = metadata.width || 1;
-  const imgHeight = metadata.height || 1;
+  // Get original dimensions for bbox normalization
+  const rawMeta = await sharp(rawBuffer).metadata();
+  const origWidth = rawMeta.width || 1;
+  const origHeight = rawMeta.height || 1;
 
   // Normalize bbox: detect pixel-value coordinates (> 1) and convert to 0-1 range
   const isPixels = bbox.x > 1 || bbox.y > 1 || bbox.width > 1 || bbox.height > 1;
-  const normX = isPixels ? bbox.x / imgWidth : bbox.x;
-  const normY = isPixels ? bbox.y / imgHeight : bbox.y;
-  const normW = isPixels ? bbox.width / imgWidth : bbox.width;
-  const normH = isPixels ? bbox.height / imgHeight : bbox.height;
+  const normX = isPixels ? bbox.x / origWidth : bbox.x;
+  const normY = isPixels ? bbox.y / origHeight : bbox.y;
+  const normW = isPixels ? bbox.width / origWidth : bbox.width;
+  const normH = isPixels ? bbox.height / origHeight : bbox.height;
+
+  // Downscale oversized images before cropping to avoid memory/timeout issues
+  // Max 3000px on longest side — plenty for gallery quality
+  const MAX_DIM = 3000;
+  let imageBuffer = rawBuffer;
+  let imgWidth = origWidth;
+  let imgHeight = origHeight;
+
+  if (origWidth > MAX_DIM || origHeight > MAX_DIM) {
+    const resized = sharp(rawBuffer)
+      .resize(MAX_DIM, MAX_DIM, { fit: 'inside', withoutEnlargement: true });
+    imageBuffer = await resized.toBuffer();
+    const resizedMeta = await sharp(imageBuffer).metadata();
+    imgWidth = resizedMeta.width || 1;
+    imgHeight = resizedMeta.height || 1;
+  }
 
   // Apply padding (2% of image size) and compute pixel coordinates
   const padding = 0.02;
