@@ -20,6 +20,13 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'indigenous-traditions',
+    title: 'The Sacred Texts That Were Never \'Texts\'',
+    subtitle: 'Source Library now holds 90+ volumes documenting indigenous spiritual traditions from every inhabited continent — Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas, and more. Most were recorded by ethnographers who knew the traditions were vanishing.',
+    date: '16 February 2026',
+    readTime: '18 min read',
+  },
+  {
     slug: 'fechner-bohme',
     title: 'The Mystic Who Invented Psychophysics',
     subtitle: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works, now in Source Library, reveal the Böhmean mysticism behind the Weber-Fechner law.',
