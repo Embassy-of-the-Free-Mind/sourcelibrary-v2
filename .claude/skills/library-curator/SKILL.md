@@ -37,6 +37,16 @@ Autonomous book acquisition agent for Source Library, focused on Western esoteri
 - **Architecture** - Vitruvius, Palladio, sacred geometry
 - **Art Theory** - Dürer, Leonardo, proportion and perspective
 
+### East Asian & Chinese Collections (Priority 2)
+| Collection | Key Texts/Genres |
+|------------|-----------------|
+| **Cosmology & Divination** | I Ching commentaries, star charts, Five Elements astrology, Hetu/Luoshu diagrams |
+| **Daoist Canon** | Tao Te Ching, Zhuangzi, Daozang texts, inner alchemy (neidan) |
+| **Buddhist Texts** | Dunhuang cave manuscripts, illustrated sutras, Diamond Sutra |
+| **Natural Philosophy** | Bencao Gangmu (materia medica), Tiangong Kaiwu (technology), Shanhai Jing (mythical geography) |
+| **Art & Symbolism** | Mustard Seed Garden Manual, emblem books, Sancai Tuhui (illustrated encyclopedia) |
+| **Military & Strategic** | Wubei Zhi, Art of War illustrated editions |
+
 ### Language Priority
 1. Latin (primary scholarly language)
 2. German (Boehme, Paracelsus, Reformation mysticism)
@@ -44,6 +54,9 @@ Autonomous book acquisition agent for Source Library, focused on Western esoteri
 4. Italian (Renaissance sources)
 5. French (18th century editions)
 6. Dutch (Amsterdam printing tradition)
+7. Classical Chinese / Literary Chinese (cosmology, divination, Daoist canon)
+8. Arabic (Islamic science, Hermetic tradition)
+9. Hebrew (Kabbalistic texts)
 
 ## Selection Rules (CRITICAL)
 
@@ -212,6 +225,32 @@ curl -s "https://sourcelibrary.org/api/books" | jq '.[] | select(.author | conta
 - Europeana aggregator (`europeana.eu`)
 - Biblissima IIIF aggregator (`iiif.biblissima.fr/collections/`)
 - Generic IIIF: British Library, NLI, Polona, Austrian National Library, Leiden, e-codices, Princeton, Harvard, Qatar Digital Library
+
+### East Asian IIIF Libraries (use generic IIIF import)
+| Library | URL | Manifest Pattern | Strengths |
+|---------|-----|-----------------|-----------|
+| Library of Congress | `loc.gov/collections/chinese-rare-books` | `https://www.loc.gov/item/{LCCN}/manifest.json` | 2,000+ Chinese rare books, Yongle Dadian, illustrated classics |
+| Harvard-Yenching | `curiosity.lib.harvard.edu/chinese-rare-books` | `https://iiif.lib.harvard.edu/manifests/drs:{ID}` | 9,600+ Chinese rare books (13th-19th c.) |
+| National Palace Museum Taipei | `digitalarchive.npm.gov.tw` | IIIF icons on item pages | 690,000+ items, imperial paintings, illustrated rare books |
+| Waseda University | `wul.waseda.ac.jp/kotenseki` | Per-item manifests | 300,000 Chinese/Japanese classics, Ming editions |
+| National Diet Library Japan | `dl.ndl.go.jp` | `https://www.dl.ndl.go.jp/api/iiif/{ID}/manifest.json` | 340,000 IIIF manifests, woodblock prints |
+| IDP / British Library | `idp.bl.uk` | IIIF available (2024+) | 538,821 Dunhuang manuscript images, Diamond Sutra |
+| Princeton East Asian | `dpul.princeton.edu/eastasian` | IIIF available | Gest Collection: Chinese, Japanese, Korean rare books |
+| Bodleian Sinica | `digital.bodleian.ox.ac.uk` | Standard Bodleian IIIF | Earliest Chinese books in Europe (17th c.) |
+| Cambridge CUDL | `cudl.lib.cam.ac.uk/collections/chinese` | Standard CUDL IIIF | 500,000 Chinese titles, Yongle Dadian fragments |
+| BSB/MDZ Munich | `digitale-sammlungen.de` | Standard MDZ IIIF | Chinese Sinica manuscripts |
+
+### High-Priority Illustrated Chinese Texts
+| Text | Period | Illustrations | Best Source |
+|------|--------|--------------|-------------|
+| **Shanhai Jing** (Classic of Mountains and Seas) | Ming (1628) | 74+ mythological creature woodcuts | LOC |
+| **Tiangong Kaiwu** (Exploitation of the Works of Nature) | 1637 | 121 technology woodcuts | LOC |
+| **Bencao Gangmu** (Compendium of Materia Medica) | 1590 | 1,109 botanical/medical illustrations | Wellcome, LOC |
+| **Mustard Seed Garden Manual** | 1679-1701 | Painting instruction throughout | IA |
+| **Diamond Sutra** | 868 CE | World's earliest dated printed woodcut | IDP |
+| **Wubei Zhi** (Treatise on Armament Technology) | 1621 | 200+ weapon/ship diagrams | LOC |
+| **Yongle Dadian** fragments | 1403-1408 | Calligraphy, illustrations | LOC, Cambridge |
+| **Sancai Tuhui** (Illustrated Encyclopedia) | 1609 | Thousands of woodcuts | Already in collection |
 
 ## Report Format
 

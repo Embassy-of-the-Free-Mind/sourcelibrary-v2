@@ -67,6 +67,16 @@ Task(subagent_type="curator", prompt="Continuous acquisition: build Paracelsus c
 | **Renaissance** | Zarlino, Vincenzo Galilei, Glarean, Gaffurius, Praetorius |
 | **Cross-Cultural** | Al-Farabi, Al-Kindi, Ikhwan al-Safa, Sufi sama traditions |
 
+### East Asian & Chinese Collections (Priority 2)
+| Collection | Key Texts/Genres |
+|------------|-----------------|
+| **Cosmology & Divination** | I Ching commentaries, star charts, Five Elements astrology, Hetu/Luoshu diagrams |
+| **Daoist Canon** | Tao Te Ching, Zhuangzi, Daozang texts, inner alchemy (neidan) |
+| **Buddhist Texts** | Dunhuang cave manuscripts, illustrated sutras, Diamond Sutra |
+| **Natural Philosophy** | Bencao Gangmu (materia medica), Tiangong Kaiwu (technology), Shanhai Jing (mythical geography) |
+| **Art & Symbolism** | Mustard Seed Garden Manual, emblem books, Sancai Tuhui (illustrated encyclopedia) |
+| **Military & Strategic** | Wubei Zhi, Art of War illustrated editions |
+
 ### Languages (priority order)
 1. Latin (primary scholarly language)
 2. German (Boehme, Paracelsus)
@@ -74,6 +84,9 @@ Task(subagent_type="curator", prompt="Continuous acquisition: build Paracelsus c
 4. Italian (Renaissance sources)
 5. French (18th century editions)
 6. Dutch (Amsterdam printing)
+7. Classical Chinese / Literary Chinese (cosmology, divination, Daoist canon)
+8. Arabic (Islamic science, Hermetic tradition)
+9. Hebrew (Kabbalistic texts)
 
 ---
 
@@ -383,10 +396,36 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs" \
 | Austrian National Library | `onb.ac.at` | 850k items, papyri |
 | Leiden University | `digitalcollections.universiteitleiden.nl` | 6,500 Islamic MSS |
 | e-codices (Swiss MSS) | `e-codices.unifr.ch` | Alchemical MSS |
-| Princeton | `dpul.princeton.edu` | 10k Islamic MSS |
+| Princeton | `dpul.princeton.edu` | 10k Islamic MSS, Gest Collection East Asian |
 | Harvard | `library.harvard.edu` | Houghton alchemy/hermeticism |
 | Qatar Digital Library | `qdl.qa` | Arabic science |
 | Biblissima | `iiif.biblissima.fr` | IIIF aggregator for pre-1800 MSS |
+
+### East Asian IIIF Libraries (use generic IIIF import)
+| Library | URL | Manifest Pattern | Strengths |
+|---------|-----|-----------------|-----------|
+| Library of Congress | `loc.gov/collections/chinese-rare-books` | `https://www.loc.gov/item/{LCCN}/manifest.json` | 2,000+ Chinese rare books (Song-Qing), Yongle Dadian (41 vols), illustrated classics |
+| Harvard-Yenching | `curiosity.lib.harvard.edu/chinese-rare-books` | `https://iiif.lib.harvard.edu/manifests/drs:{ID}` | 9,600+ Chinese rare books (13th-19th c.), illustrated Ming editions |
+| National Palace Museum Taipei | `digitalarchive.npm.gov.tw` | IIIF icons on item pages | 690,000+ items, imperial paintings, calligraphy, illustrated rare books. Open access since 2015. |
+| Waseda University | `wul.waseda.ac.jp/kotenseki` | Per-item manifests | 300,000 Chinese/Japanese classics, Ming editions, Shimomura Collection |
+| National Diet Library Japan | `dl.ndl.go.jp` | `https://www.dl.ndl.go.jp/api/iiif/{ID}/manifest.json` | 340,000 IIIF manifests, Chinese texts in Japanese collections, illustrated woodblock prints |
+| IDP / British Library | `idp.bl.uk` | IIIF available (2024+) | 538,821 images of Dunhuang manuscripts, Diamond Sutra (868 CE), Dunhuang Star Chart |
+| Princeton East Asian | `dpul.princeton.edu/eastasian` | IIIF available | Gest Collection: Chinese, Japanese, Korean, Manchu, Tangut rare books |
+| Bodleian Sinica | `digital.bodleian.ox.ac.uk` | Standard Bodleian IIIF | Sinica collection — earliest Chinese books in Europe (17th c.) |
+| Cambridge CUDL | `cudl.lib.cam.ac.uk/collections/chinese` | Standard CUDL IIIF | 500,000 Chinese titles, Yongle Dadian fragments, oracle bones, Needham Collection |
+| BSB/MDZ Munich | `digitale-sammlungen.de` | Standard MDZ IIIF | Chinese Sinica manuscripts, Manchu-Chinese items |
+
+### High-Priority Illustrated Chinese Texts
+| Text | Period | Illustrations | Best Source |
+|------|--------|--------------|-------------|
+| **Shanhai Jing** (Classic of Mountains and Seas) | Ming (1628) | 74+ mythological creature woodcuts | LOC: `https://www.loc.gov/item/2001530410/manifest.json` |
+| **Tiangong Kaiwu** (Exploitation of the Works of Nature) | 1637 | 121 technology woodcuts (mining, weaving, ceramics) | LOC: `https://www.loc.gov/item/2021666134/manifest.json` |
+| **Bencao Gangmu** (Compendium of Materia Medica) | 1590 | 1,109 botanical/medical illustrations | Wellcome: `x6pjksz3`, LOC |
+| **Mustard Seed Garden Manual** | 1679-1701 | Painting instruction throughout | IA: `brooklynmuseum-o17617-mustard-seed-garden-a-chinese` |
+| **Diamond Sutra** | 868 CE | World's earliest dated printed woodcut | IDP: `Or.8210/P.2` |
+| **Wubei Zhi** (Treatise on Armament Technology) | 1621 | 200+ weapon/ship diagrams | LOC: `https://www.loc.gov/item/2004633695/` |
+| **Yongle Dadian** fragments | 1403-1408 | Calligraphy, illustrations | LOC (41 vols), Cambridge |
+| **Sancai Tuhui** (Illustrated Encyclopedia) | 1609 | Thousands of woodcuts (heaven, earth, man) | Already in collection |
 
 ---
 
