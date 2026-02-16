@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 
 interface ImageWithMagnifierProps {
@@ -12,6 +12,7 @@ interface ImageWithMagnifierProps {
   zoomLevel?: number;
   scrollable?: boolean;
   highResSrc?: string; // For magnifier/zoom, use higher resolution version
+  fallbackSrc?: string; // Fallback if src fails to load (e.g. on-the-fly crop URL)
 }
 
 // Magnifier component for zooming into the source image
@@ -25,7 +26,8 @@ export default function ImageWithMagnifier({
   magnifierSize = 200,
   zoomLevel = 3,
   scrollable = false,
-  highResSrc
+  highResSrc,
+  fallbackSrc
 }: ImageWithMagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
@@ -33,6 +35,7 @@ export default function ImageWithMagnifier({
   const [imageDimensions, setImageDimensions] = useState({ width: 0, height: 0 });
   const [fullImageDimensions, setFullImageDimensions] = useState({ width: 0, height: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
   const [fullImageLoaded, setFullImageLoaded] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [showFullscreen, setShowFullscreen] = useState(false);
@@ -48,10 +51,11 @@ export default function ImageWithMagnifier({
     // External URLs get resized
     return `/api/image?url=${encodeURIComponent(url)}&w=${width}&q=70`;
   };
-  const isApiUrl = src.startsWith('/api/');
-  const displaySrc = thumbnail || (isApiUrl ? src : getResizedUrl(src, 400));
+  const activeSrc = useFallback && fallbackSrc ? fallbackSrc : src;
+  const isApiUrl = activeSrc.startsWith('/api/');
+  const displaySrc = thumbnail || (isApiUrl ? activeSrc : getResizedUrl(activeSrc, 400));
   // Use high-res version for magnifier if available, otherwise use standard src
-  const magnifierSrc = highResSrc || src;
+  const magnifierSrc = highResSrc || activeSrc;
 
   // Detect touch device on mount
   useEffect(() => {
@@ -206,10 +210,23 @@ export default function ImageWithMagnifier({
           loading="eager"
           className={`w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
           onLoad={() => {
+            // Detect broken/tiny images (e.g. corrupt Blob uploads < 2KB)
+            if (!useFallback && fallbackSrc && imgRef.current) {
+              const { naturalWidth, naturalHeight } = imgRef.current;
+              if (naturalWidth < 10 || naturalHeight < 10) {
+                setUseFallback(true);
+                return;
+              }
+            }
             setIsLoaded(true);
             if (imgRef.current) {
               const rect = imgRef.current.getBoundingClientRect();
               setImageDimensions({ width: rect.width, height: rect.height });
+            }
+          }}
+          onError={() => {
+            if (!useFallback && fallbackSrc) {
+              setUseFallback(true);
             }
           }}
         />

@@ -110,12 +110,14 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
     router.push(`/gallery?${params.toString()}`);
   }, [searchParams, router]);
 
-  // Fetch gallery data (skip on initial load — we have server data)
+  // Fetch gallery data (skip on initial load only if no URL filters — server data is unfiltered)
   useEffect(() => {
-    if (isInitialLoad) {
+    const hasUrlFilters = bookId || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    if (isInitialLoad && !hasUrlFilters) {
       setIsInitialLoad(false);
       return;
     }
+    if (isInitialLoad) setIsInitialLoad(false);
 
     const fetchGallery = async () => {
       setLoading(true);

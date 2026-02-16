@@ -108,6 +108,7 @@ export interface GalleryImageDetail {
   highResUrl?: string;
   extractedUrl?: string;
   thumbnailUrl?: string;
+  cropUrl?: string | null;
   rotation?: 0 | 90 | 180 | 270;
   description: string;
   type?: string;

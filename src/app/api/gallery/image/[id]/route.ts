@@ -135,12 +135,11 @@ export async function GET(
     const isIiif = imageUrl?.includes('/iiif/');
     const fullResUrl = isIiif ? upgradeIiifUrl(imageUrl, 'high') : imageUrl;
 
-    // Prefer pre-generated extracted_url over on-the-fly crop
-    let croppedUrl = detection.extracted_url || imageUrl;
+    // Build on-the-fly crop URL (always available as fallback)
+    let cropUrl: string | null = null;
     let highResUrl = fullResUrl;
 
-    if (!detection.extracted_url && detection.bbox && imageUrl) {
-      // Fallback to on-the-fly crop if no pre-generated image
+    if (detection.bbox && imageUrl) {
       const cropParams = new URLSearchParams({
         url: imageUrl,
         x: detection.bbox.x.toString(),
@@ -149,7 +148,7 @@ export async function GET(
         h: detection.bbox.height.toString()
       });
       if (detection.rotation) cropParams.set('rotation', detection.rotation.toString());
-      croppedUrl = `/api/crop-image?${cropParams}`;
+      cropUrl = `/api/crop-image?${cropParams}`;
 
       // High-res version for magnifier
       const highResCropParams = new URLSearchParams({
@@ -161,18 +160,10 @@ export async function GET(
       });
       if (detection.rotation) highResCropParams.set('rotation', detection.rotation.toString());
       highResUrl = `/api/crop-image?${highResCropParams}`;
-    } else if (detection.bbox && imageUrl) {
-      // Still build high-res crop URL for magnifier even when extracted_url exists
-      const highResCropParams = new URLSearchParams({
-        url: fullResUrl,
-        x: detection.bbox.x.toString(),
-        y: detection.bbox.y.toString(),
-        w: detection.bbox.width.toString(),
-        h: detection.bbox.height.toString()
-      });
-      if (detection.rotation) highResCropParams.set('rotation', detection.rotation.toString());
-      highResUrl = `/api/crop-image?${highResCropParams}`;
     }
+
+    // Prefer pre-generated extracted_url, fall back to on-the-fly crop, then raw page
+    const croppedUrl = detection.extracted_url || cropUrl || imageUrl;
 
     // Build the response
     const response = {
@@ -187,6 +178,7 @@ export async function GET(
       highResUrl: highResUrl, // For magnifier/high-resolution viewing
       extractedUrl: detection.extracted_url ?? null,
       thumbnailUrl: detection.thumbnail_url ?? null,
+      cropUrl, // On-the-fly crop fallback (always works even if Blob is stale/broken)
       rotation: detection.rotation ?? 0,
 
       // AI-generated metadata

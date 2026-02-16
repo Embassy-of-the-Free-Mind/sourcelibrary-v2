@@ -366,6 +366,7 @@ export default function ImageDetailPage({
                   magnifierSize={250}
                   zoomLevel={4}
                   highResSrc={data.highResUrl}
+                  fallbackSrc={data.cropUrl || undefined}
                 />
               </div>
             </div>
