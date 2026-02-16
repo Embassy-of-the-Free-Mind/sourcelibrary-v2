@@ -57,6 +57,8 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     return;
   }
 
+  const targetPageIds = job.config?.page_ids || [];
+
   // Update job status to processing (if still pending)
   if (job.status === 'pending') {
     await jobs.updateOne(
@@ -69,6 +71,11 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   const page = await pages.findOne({ id: pageId }) as Page | null;
   if (!page) {
     console.error(`[IMG-EXTRACT] Page ${pageId} not found`);
+    await jobs.updateOne(
+      { id: jobId },
+      { $addToSet: { failed_page_ids: pageId }, $inc: { 'progress.failed': 1 }, $set: { updated_at: new Date() } }
+    );
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -84,7 +91,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
         $set: { updated_at: new Date() }
       }
     );
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -164,7 +171,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   }
 
   // Always check completion — runs after both success and failure
-  await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+  await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
 }
 
 async function checkJobCompletion(

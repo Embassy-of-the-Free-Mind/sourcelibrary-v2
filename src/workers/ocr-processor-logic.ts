@@ -53,6 +53,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     return;
   }
 
+  const targetPageIds = job.config?.page_ids || [];
+
   // Update job status to processing (if still pending)
   if (job.status === 'pending') {
     await jobs.updateOne(
@@ -65,6 +67,11 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
   const page = await pages.findOne({ id: pageId }) as Page | null;
   if (!page) {
     console.error(`[OCR] Page ${pageId} not found`);
+    await jobs.updateOne(
+      { id: jobId },
+      { $addToSet: { failed_page_ids: pageId }, $inc: { 'progress.failed': 1 }, $set: { updated_at: new Date() } }
+    );
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -80,7 +87,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         $set: { updated_at: new Date() }
       }
     );
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -223,7 +230,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           }
 
           // Exit early - retry succeeded, don't mark as failed
-          await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+          await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
           return;
         } catch (retryError) {
           console.error(`[OCR] Retry with ${nextModel} also failed for page ${pageId}:`, retryError);
@@ -275,7 +282,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
   // Always check completion — runs after both success and failure
   try {
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
   } catch (completionError) {
     console.error(`[OCR] Failed to check job completion for ${jobId}:`, completionError);
     // Don't re-throw - page processing is done, this is just status tracking
@@ -290,10 +297,11 @@ async function checkJobCompletion(
   bookId: string,
   targetPageIds: string[]
 ) {
+  // Count pages where OCR has been performed (including empty results from blank pages)
   const completedCount = await pages.countDocuments({
     book_id: bookId,
     id: { $in: targetPageIds },
-    'ocr.data': { $exists: true, $nin: [null, ''] }
+    'ocr.data': { $exists: true, $ne: null }
   });
 
   await jobs.updateOne(

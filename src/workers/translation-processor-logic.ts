@@ -36,6 +36,8 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     return;
   }
 
+  const targetPageIds = job.config?.page_ids || [];
+
   // Update job status to processing (if still pending)
   if (job.status === 'pending') {
     await jobs.updateOne(
@@ -48,6 +50,11 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   const page = await pages.findOne({ id: pageId });
   if (!page) {
     console.error(`[TRANS] Page ${pageId} not found`);
+    await jobs.updateOne(
+      { id: jobId },
+      { $addToSet: { failed_page_ids: pageId }, $inc: { 'progress.failed': 1 }, $set: { updated_at: new Date() } }
+    );
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -62,7 +69,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         $set: { updated_at: new Date() }
       }
     );
-    await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
   }
 
@@ -164,7 +171,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   }
 
   // Always check completion — runs after both success and failure
-  await checkJobCompletion(db, jobs, pages, jobId, bookId, job.config.page_ids || []);
+  await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
 }
 
 async function checkJobCompletion(
@@ -175,10 +182,11 @@ async function checkJobCompletion(
   bookId: string,
   targetPageIds: string[]
 ) {
+  // Count pages where translation has been performed (including empty results)
   const completedCount = await pages.countDocuments({
     book_id: bookId,
     id: { $in: targetPageIds },
-    'translation.data': { $exists: true, $nin: [null, ''] }
+    'translation.data': { $exists: true, $ne: null }
   });
 
   await jobs.updateOne(

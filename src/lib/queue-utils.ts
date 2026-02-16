@@ -44,15 +44,21 @@ export async function enqueuePagesForJob(
 
     try {
       // For FIFO queue (translation), add messageGroupId
+      let result;
       if (action === 'translation') {
         const fifoEntries = batch.map(msg => ({
           message: msg,
           messageGroupId: jobId  // Ensures pages for same job process sequentially
         }));
-        await sendMessageBatch(queueUrl, fifoEntries);
+        result = await sendMessageBatch(queueUrl, fifoEntries);
       } else {
         // Standard queues (OCR, image extraction)
-        await sendMessageBatch(queueUrl, batch.map(msg => ({ message: msg })));
+        result = await sendMessageBatch(queueUrl, batch.map(msg => ({ message: msg })));
+      }
+
+      if (result.failed.length > 0) {
+        console.error(`[queue-utils] ${result.failed.length} messages failed in batch ${i / 10 + 1}:`, result.failed);
+        throw new Error(`SQS batch send had ${result.failed.length} failures out of ${batch.length}`);
       }      
     } catch (error) {
       console.error(`[queue-utils] Failed to send batch ${i / 10 + 1}:`, error);
