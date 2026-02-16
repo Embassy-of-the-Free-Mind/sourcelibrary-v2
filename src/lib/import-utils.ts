@@ -183,6 +183,7 @@ export interface IIIFImportConfig {
   attribution_default?: string;
   duplicate_query: Record<string, unknown>;
   identifier_field?: Record<string, string>; // e.g. { bodleian_uuid: 'xxx' }
+  work_id?: string; // WEMI work-level grouping (e.g. 'agrippa-de-occulta-philosophia')
   start_page?: number;
   end_page?: number;
 }
@@ -269,6 +270,7 @@ export async function importBookFromIIIF(
     published: config.published || 'Unknown',
     categories: config.categories || [],
     ...(config.identifier_field || {}),
+    ...(config.work_id ? { work_id: config.work_id } : {}),
     thumbnail: pageImages[0]?.thumbnail || '',
     pages_count: pageCount,
     pages_ocr: 0,

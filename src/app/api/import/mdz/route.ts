@@ -56,6 +56,7 @@ export async function POST(request: NextRequest) {
       year,
       original_language,
       categories,
+      work_id,
     } = body;
 
     if (!bsb_id || !title || !author) {
@@ -167,6 +168,7 @@ export async function POST(request: NextRequest) {
       published: year ? String(year) : 'Unknown',
       year: year || null,
       categories: categories || [],
+      ...(work_id ? { work_id } : {}),
       mdz_id: normalizedId,
       bsb_id: normalizedId,
       thumbnail: getThumbnailUrl(0),

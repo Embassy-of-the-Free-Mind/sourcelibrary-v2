@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { Calendar, Globe, FileText, BookText, BookMarked, User, MapPin, Lightbulb, Images } from 'lucide-react';
+import { Calendar, Globe, FileText, BookText, BookMarked, User, MapPin, Lightbulb, Images, Search } from 'lucide-react';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import BookHistory from '@/components/book/BookHistory';
@@ -233,6 +233,21 @@ async function BookInfo({ id }: { id: string }) {
 
   // Note: ObjectId→custom-id redirect is handled in BookDetailPage above,
   // before the Suspense boundary, so Google gets a proper 301.
+
+  // Related books: author count + work siblings (parallel, non-blocking)
+  const db = await getDb();
+  const workId = (book as unknown as { work_id?: string }).work_id;
+  const [authorCount, workSiblings] = await Promise.all([
+    book.author && book.author !== 'Unknown'
+      ? db.collection('books').countDocuments({ author: book.author, id: { $ne: book.id } })
+      : Promise.resolve(0),
+    workId
+      ? db.collection('books').find(
+          { work_id: workId, id: { $ne: book.id } },
+          { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
+        ).sort({ published: 1 }).limit(20).toArray()
+      : Promise.resolve([]),
+  ]);
 
   // Note: projection excludes .data fields, so check for object existence instead
   const ocrCount = pages.filter(p => p.ocr).length;
@@ -546,6 +561,91 @@ async function BookInfo({ id }: { id: string }) {
                         </div>
                       </div>
                     )}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Related Books — search links derived from book metadata */}
+            {(() => {
+              const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
+              const topPeople = (index?.people || []).slice(0, 3);
+              const topConcepts = (index?.concepts || []).slice(0, 3);
+              const hasLinks = authorCount > 0 || workSiblings.length > 0 || book.language || topPeople.length > 0 || topConcepts.length > 0;
+
+              if (!hasLinks) return null;
+
+              return (
+                <div className="card p-6 mt-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Search className="w-4 h-4 text-stone-400" />
+                    <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Related Books</h2>
+                  </div>
+
+                  {/* Work siblings — other editions of the same text */}
+                  {workSiblings.length > 0 && (
+                    <div className="mb-4 pb-4 border-b border-stone-100">
+                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                        {workSiblings.length + 1} editions of this text
+                      </p>
+                      <div className="space-y-1.5">
+                        {workSiblings.map((sibling: { id?: string; _id?: { toString(): string }; display_title?: string; title?: string; language?: string; published?: string }) => (
+                          <Link
+                            key={sibling.id || sibling._id?.toString()}
+                            href={`/book/${sibling.id || sibling._id?.toString()}`}
+                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                          >
+                            <span className="text-stone-800 group-hover:text-amber-800 transition-colors">
+                              {sibling.display_title || sibling.title}
+                            </span>
+                            {sibling.language && (
+                              <span className="text-xs text-stone-400">{sibling.language}</span>
+                            )}
+                            {sibling.published && (
+                              <span className="text-xs text-stone-400">{sibling.published}</span>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Search pills */}
+                  <div className="flex flex-wrap gap-2">
+                    {authorCount > 0 && (
+                      <Link
+                        href={`/search?q=${encodeURIComponent('"' + book.author + '"')}`}
+                        className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors"
+                      >
+                        More by {book.author} ({authorCount})
+                      </Link>
+                    )}
+                    {book.language && book.language !== 'Unknown' && (
+                      <Link
+                        href={`/search?language=${encodeURIComponent(book.language)}`}
+                        className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors"
+                      >
+                        {book.language} texts
+                      </Link>
+                    )}
+                    {topPeople.map((p) => (
+                      <Link
+                        key={p.term}
+                        href={`/search?q=${encodeURIComponent(p.term)}`}
+                        className="px-3 py-1.5 text-sm bg-blue-50 text-blue-700 rounded-full hover:bg-blue-100 transition-colors"
+                      >
+                        {p.term}
+                      </Link>
+                    ))}
+                    {topConcepts.map((c) => (
+                      <Link
+                        key={c.term}
+                        href={`/search?q=${encodeURIComponent(c.term)}`}
+                        className="px-3 py-1.5 text-sm bg-purple-50 text-purple-700 rounded-full hover:bg-purple-100 transition-colors"
+                      >
+                        {c.term}
+                      </Link>
+                    ))}
                   </div>
                 </div>
               );

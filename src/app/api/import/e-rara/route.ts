@@ -78,6 +78,7 @@ export async function POST(request: NextRequest) {
       language: languageOverride,
       published: publishedOverride,
       categories,
+      work_id,
     } = body;
 
     if (!erara_id) {
@@ -224,6 +225,7 @@ export async function POST(request: NextRequest) {
       language: languageFull,
       published,
       categories: categories || [],
+      ...(work_id ? { work_id } : {}),
       erara_id: numericId,
       erara_doi: doi || null,
       thumbnail: getThumbnailUrl(0),

@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories,
+      work_id,
     } = body;
 
     if (!ark || !title || !author) {
@@ -138,6 +139,7 @@ export async function POST(request: NextRequest) {
       language: language || 'Unknown',
       published: published || 'Unknown',
       categories: categories || [],
+      ...(work_id ? { work_id } : {}),
       gallica_ark: ark,
       thumbnail: getThumbnailUrl(0),
       pageCount,

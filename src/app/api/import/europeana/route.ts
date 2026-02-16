@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories,
+      work_id,
       manifest_url: providedManifest,
     } = body;
 
@@ -173,6 +174,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories,
+      work_id,
       license_default: 'unknown',
       attribution_default: sourceInstitution || undefined,
       duplicate_query: {

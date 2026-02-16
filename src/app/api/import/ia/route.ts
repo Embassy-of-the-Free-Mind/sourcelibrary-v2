@@ -29,6 +29,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories,
+      work_id,
       dublin_core
     } = body;
 
@@ -153,6 +154,7 @@ export async function POST(request: NextRequest) {
       language: language || 'Unknown',
       published: published || 'Unknown',
       categories: categories || [],
+      ...(work_id ? { work_id } : {}),
       ia_identifier,
       thumbnail: getThumbnailUrl(0),
       pages_count: pageCount,

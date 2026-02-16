@@ -204,6 +204,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories: categories || work.subjects?.map(s => s.label) || [],
+      ...(work_id ? { work_id } : {}),
       wellcome_id: work_id,
       wellcome_b_number: bNumber,
       thumbnail: getThumbnailUrl(0),

@@ -204,9 +204,10 @@ curl -s "https://sourcelibrary.org/api/books" | jq '.[] | select(.author | conta
 2. **Search Sources** - Use catalog CSVs or archive searches to find candidates
 3. **Evaluate Books** - Score each book using criteria above
 4. **Check Collection** - Verify books aren't already imported
-5. **Import Batch** - Import 5-20 books with thematic coherence
-6. **Generate Report** - Document batch with rationale and notes
-7. **Update Logs** - Add to successes log in agentcurator.md
+5. **Check for Related Editions** - Search by author to see if this is another edition of an existing work. If a matching book has a `work_id`, pass the same `work_id` in the import request (e.g., `"work_id": "agrippa-de-occulta-philosophia"`). All import routes accept `work_id` as an optional field.
+6. **Import Batch** - Import 5-20 books with thematic coherence
+7. **Generate Report** - Document batch with rationale and notes
+8. **Update Logs** - Add to successes log in agentcurator.md
 
 ## Catalog Sources
 

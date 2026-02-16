@@ -18,7 +18,7 @@ import { importBookFromIIIF } from '@/lib/import-utils';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { ms_id, title, display_title, author, language, published, categories } = body;
+    const { ms_id, title, display_title, author, language, published, categories, work_id } = body;
 
     if (!ms_id || !title || !author) {
       return NextResponse.json(
@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories,
+      work_id,
       license_default: 'CC-BY-NC-4.0',
       attribution_default: 'Cambridge University Library',
       duplicate_query: {

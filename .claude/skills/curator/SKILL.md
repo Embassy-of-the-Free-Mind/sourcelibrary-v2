@@ -50,6 +50,34 @@ Task(subagent_type="curator", prompt="Continuous acquisition: build Paracelsus c
 | **Theosophy** | Boehme, Gichtel, Pordage |
 | **Natural Magic** | Agrippa, Della Porta, Bruno |
 
+### Greek Classical Canon (Priority 1)
+Goal: match the scope of the Loeb Classical Library's Greek half (~280 volumes, ~70 authors).
+
+| Collection | Key Authors |
+|------------|------------|
+| **Epic Poetry** | Homer (Iliad, Odyssey, Hymns), Hesiod (Theogony, Works and Days), Apollonius Rhodius |
+| **Tragedy** | Aeschylus, Sophocles, Euripides |
+| **Comedy** | Aristophanes, Menander |
+| **History** | Thucydides, Herodotus, Polybius, Plutarch, Xenophon, Diodorus Siculus, Dio Cassius, Appian |
+| **Philosophy** | Plato, Aristotle, Diogenes Laertius, Marcus Aurelius, Epictetus |
+| **Oratory** | Demosthenes, Lysias, Isocrates |
+| **Science/Medicine** | Hippocrates, Galen, Ptolemy, Euclid, Theophrastus, Archimedes |
+| **Satire/Rhetoric** | Lucian, Athenaeus, Greek Anthology |
+| **Geography** | Strabo, Pausanias |
+| **Neoplatonic** | Plotinus, Proclus, Iamblichus, Porphyry, Pseudo-Dionysius |
+| **Biblical/Patristic** | Septuagint, New Testament, Apostolic Fathers, Eusebius, Basil, Chrysostom |
+
+**Edition priority for Greek:**
+1. Original manuscripts (4th-15th c.) from Vatican, Cambridge, Bodleian, BnF
+2. Greek-only critical editions: Teubner (Bibliotheca Teubneriana), OCT (Oxford Classical Texts), Bekker
+3. Loeb bilingual editions (Greek-English, pre-1929 = public domain)
+4. 19th c. scholarly editions with commentary (e.g., Jebb's Sophocles)
+
+**Key IA collections:**
+- [Teubner Edition Collection](https://archive.org/details/Teubner-Edition-Collection) — 146 Greek critical texts
+- [Loebolus project](https://ryanfb.xyz/loebolus) — ~277 PD Loeb volumes
+- Loeb identifiers follow pattern: `L{NNN}{AuthorTitle}` (e.g., `L170NHomerIliadI112`)
+
 ### Secondary Collections
 - **Early Science** - Copernicus, Kepler, Newton
 - **Neoplatonism** - Plotinus, Proclus, Florentine Academy
@@ -79,14 +107,15 @@ Task(subagent_type="curator", prompt="Continuous acquisition: build Paracelsus c
 
 ### Languages (priority order)
 1. Latin (primary scholarly language)
-2. German (Boehme, Paracelsus)
-3. English (17th century translations)
-4. Italian (Renaissance sources)
-5. French (18th century editions)
-6. Dutch (Amsterdam printing)
-7. Classical Chinese / Literary Chinese (cosmology, divination, Daoist canon)
-8. Arabic (Islamic science, Hermetic tradition)
-9. Hebrew (Kabbalistic texts)
+2. Ancient Greek (classical canon, manuscripts, Neoplatonic)
+3. German (Boehme, Paracelsus)
+4. English (17th century translations)
+5. Italian (Renaissance sources)
+6. French (18th century editions)
+7. Dutch (Amsterdam printing)
+8. Classical Chinese / Literary Chinese (cosmology, divination, Daoist canon)
+9. Arabic (Islamic science, Hermetic tradition)
+10. Hebrew (Kabbalistic texts)
 
 ---
 
@@ -279,6 +308,13 @@ curl -s "https://archive.org/advancedsearch.php?q=creator:(Paracelsus)+mediatype
 - e-codices (Swiss MSS): search at https://e-codices.unifr.ch/ (use generic IIIF import)
 - Biblissima (aggregator): search at https://iiif.biblissima.fr/collections/
 
+**Greek manuscript search patterns:**
+- Vatican DigiVatLib: browse `https://digi.vatlib.it/mss/Vat.gr` or search `site:digi.vatlib.it "Author Name"`
+- Cambridge CUDL Greek: browse `https://cudl.lib.cam.ac.uk/collections/greekmanuscripts` (425+ MSS)
+- Bodleian Greek: search `site:digital.bodleian.ox.ac.uk "Barocci"` or browse Greek MSS via advanced search
+- BnF Greek: search `Grec site:gallica.bnf.fr "Author Name"` or browse Fonds grec collection
+- Pinakes (Greek MSS catalog): `https://pinakes.irht.cnrs.fr/` — the master catalog of all Greek manuscripts worldwide, searchable by author/work/city
+
 ### Phase 2: Evaluation
 
 For each candidate:
@@ -286,14 +322,22 @@ For each candidate:
 2. Verify it's a primary source, not modern translation
 3. Score against criteria (aim for 7+/10)
 4. Note edition details, page count, image quality
+5. **Check for related editions** — search by author and title to see if this is another edition of an existing work. If a matching book has a `work_id`, use the same `work_id` for the new import. If it's a new work with no existing match, skip `work_id` (it will be detected later by the entity overlap backfill).
+
+```bash
+# Check for related editions by the same author
+curl -s "https://sourcelibrary.org/api/search?q=%22Author+Name%22&limit=20" | jq '.results[] | {id, title, author, work_id}'
+```
 
 ### Phase 3: Import
 
+Include `work_id` in the import request if this is another edition of an existing work.
+
 ```bash
-# Import and capture book ID
+# Import and capture book ID (with optional work_id for edition linking)
 RESP=$(curl -s -X POST "https://sourcelibrary.org/api/import/ia" \
   -H "Content-Type: application/json" \
-  -d '{"ia_identifier": "...", "title": "...", "author": "...", "year": ...}')
+  -d '{"ia_identifier": "...", "title": "...", "author": "...", "year": ..., "work_id": "agrippa-de-occulta-philosophia"}')
 
 BOOK_ID=$(echo "$RESP" | jq -r '.book.id // .id')
 echo "Imported: $BOOK_ID"
@@ -408,6 +452,49 @@ curl -s -X POST "https://sourcelibrary.org/api/jobs" \
 | Harvard | `library.harvard.edu` | Houghton alchemy/hermeticism |
 | Qatar Digital Library | `qdl.qa` | Arabic science |
 | Biblissima | `iiif.biblissima.fr` | IIIF aggregator for pre-1800 MSS |
+
+### Greek Manuscript Libraries
+Major repositories of digitized Greek manuscripts. These are the highest-priority sources for original Greek texts (4th-15th century).
+
+| Library | Import API | Collection | Size | Browse URL |
+|---------|-----------|------------|------|------------|
+| **Vatican DigiVatLib** | `/api/import/vatican` | Vat.gr, Pal.gr, Barb.gr, Ott.gr, Urb.gr | ~4,200 Greek MSS | `https://digi.vatlib.it/mss/Vat.gr` |
+| **Cambridge CUDL** | `/api/import/cambridge` | Greek manuscripts collection | 425+ Greek MSS | `https://cudl.lib.cam.ac.uk/collections/greekmanuscripts` |
+| **Bodleian (Oxford)** | `/api/import/bodleian` | Barocci, Auct. T, Canon. Gr., D'Orville, Laud. Gr. | 500+ Greek MSS | `https://digital.bodleian.ox.ac.uk/` |
+| **BnF/Gallica** | `/api/import/gallica` | Fonds grec (Grec 1-3300+) | 3,000+ Greek MSS | `https://gallica.bnf.fr/` |
+| **BSB/MDZ Munich** | `/api/import/mdz` | Codices graeci (Cod.graec. 1-600+) | 600+ Greek MSS | `https://digitale-sammlungen.de/` |
+| **British Library** | `/api/import/iiif` | Burney, Harley, Royal, Add. Greek MSS | 900+ Greek MSS | `https://www.bl.uk/manuscripts/` |
+| **Biblissima** | `/api/import/iiif` | IIIF aggregator for all above + more | Cross-repository | `https://iiif.biblissima.fr/collections/` |
+| **Mount Sinai / St. Catherine** | `/api/import/iiif` | Codex Sinaiticus, early biblical MSS | ~3,300 MSS | `https://www.codexsinaiticus.org/` |
+| **Austrian National Library** | `/api/import/iiif` | Phil.gr, Theol.gr, Hist.gr | 300+ Greek MSS | `https://onb.ac.at/` |
+
+**Vatican shelfmark patterns:** `Vat.gr.{N}`, `Pal.gr.{N}`, `Barb.gr.{N}`, `Ott.gr.{N}`, `Urb.gr.{N}`, `Ross.{N}`, `Reg.gr.{N}`
+**Cambridge MS ID format:** `MS-{COLLEGE}-{NUMBER}` (e.g., `MS-CCCC-00081`, `MS-ADD-01732`, `MS-GONVILLE-AND-CAIUS-00050-00027`)
+**Bodleian collections:** Barocci (242 MSS, bequeathed 1629), Auct. T (classical texts), Canon. Gr. (Canonici), D'Orville, Laud. Gr. (Archbishop Laud)
+
+**High-priority Greek manuscripts (already imported):**
+| Manuscript | Repository | Date | Content |
+|-----------|-----------|------|---------|
+| Vat.gr.1209 (Codex Vaticanus) | Vatican | 4th c. | Greek Bible — one of oldest complete NT MSS |
+| MS-ADD-06594 (Codex Macedoniensis) | Cambridge | 9th c. | Greek Gospels |
+| Vat.gr.1 | Vatican | 9th-10th c. | Plato's Laws |
+| Vat.gr.90 | Vatican | 9th-10th c. | Lucian of Samosata |
+| Urb.gr.61 | Vatican | 9th-10th c. | Theophrastus Historia Plantarum |
+| Vat.gr.370 | Vatican | 9th-10th c. | Pseudo-Dionysius the Areopagite |
+| Vat.gr.124 | Vatican | 10th c. | Polybius Histories |
+| Vat.gr.1613 | Vatican | 10th c. | Menologion of Basil II (illuminated) |
+| Vat.gr.126 | Vatican | 11th c. | Thucydides Histories |
+| Vat.gr.1319 | Vatican | 12th c. | Homer Iliad |
+| Vat.gr.244 | Vatican | 13th c. | Aristotle Organon |
+| MS-GG-00002-00033 | Cambridge | medieval | Ptolemy, Euclid (Greek mathematics) |
+| MS-GONVILLE-AND-CAIUS-00050-00027 | Cambridge | medieval | Hippocratic Corpus |
+| MS-GONVILLE-AND-CAIUS-00360-00587 | Cambridge | medieval | Galen |
+
+**Next targets (not yet imported):**
+- Bodleian: Barocci 87 (Aristotle), Barocci 131 (Plato), Auct. T.4.13 (Homer Iliad), MS. Canon. Gr. 97 (Ptolemy)
+- Vatican: Vat.gr.1 (already have), Vat.gr.218 (Plato Republic), Vat.gr.1594 (Pindar)
+- BnF: Grec 1807 (Plato, 9th c.), Grec 2771 (Homer, 10th c.), Grec 2 (Gospels, 10th c.)
+- British Library: Burney 86 (Plato, 13th c.), Add. 17210 (Thucydides), Royal 16.C.IV (Ptolemy)
 
 ### East Asian IIIF Libraries (use generic IIIF import)
 | Library | URL | Manifest Pattern | Strengths |

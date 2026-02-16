@@ -123,7 +123,7 @@ function extractAuthor(contributorNames?: string[]): string {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { lccn, title, display_title, author, language, published, categories, start_page, end_page } = body;
+    const { lccn, title, display_title, author, language, published, categories, work_id, start_page, end_page } = body;
 
     if (!lccn) {
       return NextResponse.json(
@@ -223,6 +223,7 @@ export async function POST(request: NextRequest) {
       language: bookLanguage,
       published: bookPublished,
       categories: categories || [],
+      ...(work_id ? { work_id } : {}),
       loc_lccn: lccn,
       thumbnail: selectedPages[0]?.thumbnail || '',
       pages_count: pageCount,

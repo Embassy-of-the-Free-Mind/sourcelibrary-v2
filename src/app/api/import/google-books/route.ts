@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories,
+      work_id,
     } = body;
 
     if (!google_books_id || !title || !author) {
@@ -128,6 +129,7 @@ export async function POST(request: NextRequest) {
       language: language || 'Unknown',
       published: published || 'Unknown',
       categories: categories || [],
+      ...(work_id ? { work_id } : {}),
       ia_identifier,
       google_books_id,
       thumbnail: getThumbnailUrl(0),

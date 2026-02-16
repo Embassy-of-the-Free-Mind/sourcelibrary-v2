@@ -24,7 +24,7 @@ import { importBookFromIIIF } from '@/lib/import-utils';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { hab_id, manifest_url, title, display_title, author, language, published, categories } = body;
+    const { hab_id, manifest_url, title, display_title, author, language, published, categories, work_id } = body;
 
     if (!hab_id || !title || !author) {
       return NextResponse.json(
@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
       language,
       published,
       categories,
+      work_id,
       license_default: 'CC-BY-SA-4.0',
       attribution_default: 'Herzog August Bibliothek Wolfenbüttel',
       duplicate_query: {
