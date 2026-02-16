@@ -1,6 +1,6 @@
 # Import APIs Reference
 
-Source Library supports importing from 12 digital library sources.
+Source Library supports importing from 13 digital library sources.
 
 ## Gallica (Bibliothque nationale de France)
 ```
@@ -90,5 +90,14 @@ Browse: https://www.europeana.eu/
 
 Optional: set `EUROPEANA_API_KEY` env var for higher rate limits.
 
+## Library of Congress
+```
+POST /api/import/loc
+{ "lccn": "2012402109", "title": "...", "author": "...", "language": "Chinese", "published": "1465" }
+```
+LOC doesn't expose standard IIIF Presentation API manifests. This route fetches LOC's item JSON API (`/item/{LCCN}/?fo=json`), extracts image URLs from the `resources[].files[][]` 2D array, and creates book+page records. Handles multi-volume works automatically. Supports `start_page`/`end_page` for partial imports. All LOC Chinese rare books are public domain.
+
+Browse: https://www.loc.gov/collections/chinese-rare-books/
+
 ## Common behavior
-All import routes: fetch IIIF manifests, create book+page records in MongoDB, queue split detection, return book ID and URL.
+All import routes: fetch manifests or provider APIs, create book+page records in MongoDB, queue split detection, return book ID and URL.

@@ -167,6 +167,14 @@ curl -X POST "https://sourcelibrary.org/api/import/europeana" \
   -d '{ "record_id": "/2022704/lmu_bsb00029099", "title": "...", "author": "...", "language": "Latin", "published": "1473" }'
 ```
 
+### Library of Congress
+```bash
+curl -X POST "https://sourcelibrary.org/api/import/loc" \
+  -H "Content-Type: application/json" \
+  -d '{ "lccn": "2012402109", "title": "...", "author": "...", "language": "Chinese", "published": "1465" }'
+```
+2,000+ Chinese rare books, illustrated classics, maps. All public domain. Browse: https://www.loc.gov/collections/chinese-rare-books/
+
 ### Generic IIIF (Any Library)
 ```bash
 curl -X POST "https://sourcelibrary.org/api/import/iiif" \
