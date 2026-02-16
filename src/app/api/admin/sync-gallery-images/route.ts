@@ -71,12 +71,13 @@ export async function POST(request: NextRequest) {
         },
       },
 
-      // Compute book_rank (rank within book by quality, 1 = best)
+      // Compute book_rank (position within book by quality, 1 = best)
+      // Use $documentNumber (not $rank) so tied quality scores get unique positions
       {
         $setWindowFields: {
           partitionBy: '$book_id',
           sortBy: { 'detected_images.gallery_quality': -1 as const },
-          output: { book_rank: { $rank: {} } },
+          output: { book_rank: { $documentNumber: {} } },
         },
       },
 
