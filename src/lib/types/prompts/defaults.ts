@@ -129,6 +129,8 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - <note>X</note> — interpretive notes for readers
 - <term>X</term> — technical vocabulary
 
+**Column layout:** If the page has two (or more) text columns, transcribe the left column first, then insert <column-break/> on its own line, then transcribe the right column. Do NOT use <column-break/> for single-column pages.
+
 **Critical rules:**
 1. Preserve original spelling, capitalization, punctuation
 2. Page numbers/headers/signatures go in metadata tags ONLY — NEVER duplicate as ## headings or body text. Example: "DISCURSUS IV." at top of page → <header>DISCURSUS IV.</header> and nothing else
@@ -166,6 +168,7 @@ If text-only page, omit the <detected-images> block.`,
 - **Bold** and *italic* formatting
 - Tables - recreate them in the translation
 - Centered text (->text<-)
+- <column-break/> markers — preserve exactly as-is between translated columns
 - Line breaks and paragraph structure
 
 **Inline annotations (visible to readers):**

@@ -84,6 +84,8 @@ export const LATIN_PROMPTS = {
 7. Describe any illustrations, diagrams, or charts with <image-desc>...</image-desc>.
 8. END with <vocab>...</vocab> listing key Latin terms, names, and concepts on this page.
 
+**Column layout:** If the page has two (or more) text columns, transcribe the left column first, then insert <column-break/> on its own line, then transcribe the right column. Do NOT use <column-break/> for single-column pages.
+
 **Important:** This page may have been split from a two-page spread. Focus on the MAIN text block. Ignore partial text at edges from facing pages.
 
 **Final output format:**
@@ -107,6 +109,7 @@ This is a SCHOLARLY ACCESSIBLE translation:
 - Heading levels (# ## ###)
 - **Bold** and *italic* formatting
 - Tables and centered text
+- <column-break/> markers — preserve exactly as-is between translated columns
 - All <xml> annotations - translate content, keep tags
 - <term> markers - translate and explain
 
