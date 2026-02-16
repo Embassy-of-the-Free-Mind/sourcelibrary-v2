@@ -30,6 +30,7 @@ export * from './types';
 export * from './analytics';
 export * from './annotations';
 export * from './batch-jobs';
+export * from './bookshelf';
 export * from './books';
 export * from './catalog';
 export * from './categories';

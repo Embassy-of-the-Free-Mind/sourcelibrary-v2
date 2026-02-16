@@ -19,6 +19,7 @@ import CategoryPicker from '@/components/ui/CategoryPicker';
 import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
+import AddToBookshelfButton from '@/components/bookshelf/AddToBookshelfButton';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -330,6 +331,7 @@ async function BookInfo({ id }: { id: string }) {
 
                 {/* Utility actions — grouped in a subtle container */}
                 <div className="flex flex-wrap items-center gap-1 rounded-lg bg-white/5 px-1 py-0.5">
+                  <AddToBookshelfButton bookId={book.id} />
                   <div className="px-2 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
                     <LikeButton
                       targetType="book"

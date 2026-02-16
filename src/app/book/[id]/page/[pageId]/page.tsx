@@ -7,7 +7,7 @@ import { BookLoader } from '@/components/ui/BookLoader';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
-import { books, pages as pagesApi } from '@/lib/api-client';
+import { books, pages as pagesApi, bookshelf } from '@/lib/api-client';
 import type { BookWithPages } from '@/lib/api-client';
 
 interface PageProps {
@@ -146,6 +146,12 @@ export default function PageEditorPage({ params }: PageProps) {
 
     loadPage();
   }, [currentPageId, bookId, loading, pageList, fetchPageData, prefetchAround]);
+
+  // Track reading progress for bookshelf (fire-and-forget, debounced)
+  useEffect(() => {
+    if (!bookId || !currentPageId || !currentPage?.page_number) return;
+    bookshelf.trackProgress(bookId, currentPageId, currentPage.page_number);
+  }, [bookId, currentPageId, currentPage?.page_number]);
 
   // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string) => {

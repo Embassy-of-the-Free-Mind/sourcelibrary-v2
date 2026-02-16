@@ -89,4 +89,49 @@ export const gallery = {
   }> => {
     return await apiClient.get('/api/gallery/stats');
   },
+
+  /**
+   * Collection operations
+   */
+  collections: {
+    list: async (featured?: boolean): Promise<{
+      collections: Array<{
+        id: string;
+        slug: string;
+        title: string;
+        description: string;
+        imageCount: number;
+        featured: boolean;
+        coverImage: { url: string; description: string } | null;
+      }>;
+      total: number;
+    }> => {
+      const params = featured ? '?featured=true' : '';
+      return await apiClient.get(`/api/gallery/collections${params}`);
+    },
+
+    get: async (slug: string): Promise<any> => {
+      return await apiClient.get(`/api/gallery/collections/${slug}`);
+    },
+
+    create: async (data: {
+      title: string;
+      description: string;
+      slug?: string;
+      image_ids?: string[];
+      cover_image_id?: string;
+      featured?: boolean;
+      sort_order?: number;
+    }): Promise<any> => {
+      return await apiClient.post('/api/gallery/collections', data);
+    },
+
+    update: async (slug: string, data: Record<string, unknown>): Promise<any> => {
+      return await apiClient.patch(`/api/gallery/collections/${slug}`, data);
+    },
+
+    remove: async (slug: string): Promise<any> => {
+      return await apiClient.post(`/api/gallery/collections/${slug}?action=delete`, {});
+    },
+  },
 };

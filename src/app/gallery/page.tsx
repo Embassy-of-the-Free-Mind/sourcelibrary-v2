@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
 import HighlightedText from '@/components/search/HighlightedText';
+import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import {
   gallery,
   books,
@@ -397,6 +398,11 @@ export default function GalleryPage() {
               )}
             </div>
           </div>
+        )}
+
+        {/* Featured Collections */}
+        {!bookId && !typeFilter && !subjectFilter && !imageSearchQuery && page === 0 && (
+          <FeaturedCollections />
         )}
 
         {/* Loading State */}
