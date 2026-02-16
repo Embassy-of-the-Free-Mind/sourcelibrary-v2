@@ -292,8 +292,11 @@ export default function SplitPage({ params }: PageProps) {
     fetchBook();
   }, [fetchBook]);
 
-  // Filter to only show pages that can be split (not already split)
-  const splittablePages = pages.filter(p => !p.split_from);
+  // All pages for display (including right halves)
+  const allDisplayPages = pages;
+
+  // Pages that can be selected for splitting (unsplit originals only)
+  const splittablePages = pages.filter(p => !p.split_from && !p.crop);
 
   // Get already-split page pairs (original left pages that have a crop)
   const alreadySplitPages = pages.filter(p => p.crop && !p.split_from);
@@ -603,7 +606,7 @@ export default function SplitPage({ params }: PageProps) {
                 <strong>{splittablePages.length}</strong> can be split
               </span>
               <span className="text-stone-600">
-                <strong>{pages.length - splittablePages.length}</strong> already split
+                <strong>{alreadySplitPages.length * 2}</strong> already split
               </span>
             </div>
           </div>
@@ -639,7 +642,7 @@ export default function SplitPage({ params }: PageProps) {
                 onClick={selectAll}
                 className="px-4 py-2 text-sm font-medium bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200"
               >
-                Select All ({splittablePages.filter(p => !p.crop).length})
+                Select All ({splittablePages.length})
               </button>
               {alreadySplitPages.length > 0 && (
                 <button
@@ -717,18 +720,27 @@ export default function SplitPage({ params }: PageProps) {
       {/* Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {splittablePages.map((page, index) => {
+          {allDisplayPages.map((page, index) => {
+            const isRightHalf = !!page.split_from;
+            const isLeftHalf = !!page.crop && !isRightHalf;
+            const isSplittable = !isRightHalf && !isLeftHalf;
+            const splittableIndex = isSplittable ? splittablePages.indexOf(page) : -1;
             const isSelected = selectedPages.has(page.id);
             const imageUrl = getImageUrl(page, 400);
 
             return (
               <div
                 key={page.id}
-                className={`bg-white rounded-lg border p-3 transition-all cursor-pointer ${isSelected
-                    ? 'border-amber-400 ring-2 ring-amber-200'
-                    : 'border-stone-200 hover:border-stone-300'
-                  }`}
-                onClick={(e) => togglePageSelection(page.id, index, e)}
+                className={`bg-white rounded-lg border p-3 transition-all ${
+                  isSplittable
+                    ? `cursor-pointer ${isSelected
+                        ? 'border-amber-400 ring-2 ring-amber-200'
+                        : 'border-stone-200 hover:border-stone-300'}`
+                    : isRightHalf
+                      ? 'border-green-200 bg-green-50/30'
+                      : 'border-blue-200 bg-blue-50/30'
+                }`}
+                onClick={isSplittable ? (e) => togglePageSelection(page.id, splittableIndex, e) : undefined}
               >
                 {/* Image */}
                 <div className="relative aspect-[3/4] rounded overflow-hidden mb-2 bg-stone-100">
@@ -740,10 +752,15 @@ export default function SplitPage({ params }: PageProps) {
                     data-page-id={page.id}
                     crossOrigin="anonymous"
                   />
-                  {/* Already split indicator */}
-                  {page.crop && !isSelected && (
+                  {/* Already split indicators */}
+                  {isLeftHalf && !isSelected && (
                     <div className="absolute top-2 right-2 px-2 py-1 bg-blue-500/90 text-white text-xs rounded">
-                      Split (left)
+                      Left
+                    </div>
+                  )}
+                  {isRightHalf && (
+                    <div className="absolute top-2 right-2 px-2 py-1 bg-green-500/90 text-white text-xs rounded">
+                      Right
                     </div>
                   )}
                   {/* Split overlay */}
@@ -771,7 +788,7 @@ export default function SplitPage({ params }: PageProps) {
                         {splitWarnings[page.id] ? ' ⚠️' : ' ✓'}
                       </span>
                     )
-                  ) : page.crop ? (
+                  ) : isLeftHalf ? (
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -795,9 +812,9 @@ export default function SplitPage({ params }: PageProps) {
           })}
         </div>
 
-        {splittablePages.length === 0 && (
+        {allDisplayPages.length === 0 && (
           <div className="text-center py-16 bg-white rounded-lg border border-stone-200">
-            <p className="text-stone-500">All pages have been split</p>
+            <p className="text-stone-500">No pages found</p>
             <Link
               href={`/book/${bookId}`}
               className="inline-block mt-4 text-amber-600 hover:text-amber-800"

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, Eye, Edit3, BarChart3 } from 'lucide-react';
+import { BookOpen, Eye, Edit3, BarChart3, Library } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 
 interface GlobalStats {
@@ -16,9 +16,17 @@ interface GlobalStats {
 export default function GlobalFooter() {
   const [stats, setStats] = useState<GlobalStats | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [hasBookshelf, setHasBookshelf] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    // Check if visitor has bookshelf entries
+    try {
+      const cache = localStorage.getItem('sl_bookshelf_cache');
+      if (cache && Object.keys(JSON.parse(cache)).length > 0) {
+        setHasBookshelf(true);
+      }
+    } catch { /* ignore */ }
     analytics.stats()
       .then((data: any) => {
         setStats({
@@ -69,6 +77,10 @@ export default function GlobalFooter() {
           </Link>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
             <span>CC0 Public Domain</span>
+            <span className="hidden sm:inline">•</span>
+            <Link href="/gallery" className="text-amber-600 hover:text-amber-500 transition-colors">
+              Gallery
+            </Link>
             <span className="hidden sm:inline">•</span>
             <Link href="/about" className="text-amber-600 hover:text-amber-500 transition-colors">
               About
@@ -123,6 +135,25 @@ export default function GlobalFooter() {
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
           <span>CC0 Public Domain</span>
+          <span className="hidden sm:inline">•</span>
+          <Link
+            href="/gallery"
+            className="text-amber-600 hover:text-amber-500 transition-colors"
+          >
+            Gallery
+          </Link>
+          {hasBookshelf && (
+            <>
+              <span className="hidden sm:inline">•</span>
+              <Link
+                href="/bookshelf"
+                className="flex items-center gap-1 text-amber-600 hover:text-amber-500 transition-colors"
+              >
+                <Library className="w-3 h-3" />
+                My Bookshelf
+              </Link>
+            </>
+          )}
           <span className="hidden sm:inline">•</span>
           <Link
             href="/about"
