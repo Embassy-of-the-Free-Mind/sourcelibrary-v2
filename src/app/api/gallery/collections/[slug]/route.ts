@@ -160,18 +160,35 @@ async function resolveImages(db: any, imageIds: string[]) {
       const det = page.detected_images?.[detIdx];
       if (!det) return null;
 
+      // Build on-the-fly crop URL when no pre-generated image exists
+      const baseUrl = page.archived_photo || page.cropped_photo || page.photo;
+      let cropUrl: string | null = null;
+      if (det.bbox && baseUrl) {
+        const params = new URLSearchParams({
+          url: baseUrl,
+          x: det.bbox.x.toString(),
+          y: det.bbox.y.toString(),
+          w: det.bbox.width.toString(),
+          h: det.bbox.height.toString(),
+        });
+        if (det.rotation) params.set('rotation', det.rotation.toString());
+        cropUrl = `/api/crop-image?${params}`;
+      }
+
       return {
         id,
         pageId,
         bookId: page.book_id,
         pageNumber: page.page_number,
         detectionIndex: detIdx,
-        imageUrl: det.extracted_url || det.thumbnail_url || page.cropped_photo || page.photo,
+        imageUrl: det.extracted_url || det.thumbnail_url || cropUrl || page.cropped_photo || page.photo,
         bookTitle: page.book?.display_title || page.book?.title || 'Unknown',
         author: page.book?.author,
         year: page.book?.year,
         description: det.description || '',
         type: det.type,
+        bbox: det.bbox,
+        rotation: det.rotation ?? 0,
         thumbnailUrl: det.thumbnail_url,
         extractedUrl: det.extracted_url,
         galleryQuality: det.gallery_quality,

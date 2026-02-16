@@ -123,7 +123,7 @@ async function resolveCoverImages(db: any, imageIds: string[]) {
   const pageIds = [...new Set(parsed.map((p) => p.pageId))];
   const pages = await db
     .collection('pages')
-    .find({ id: { $in: pageIds } }, { projection: { id: 1, detected_images: 1, cropped_photo: 1, photo: 1 } })
+    .find({ id: { $in: pageIds } }, { projection: { id: 1, detected_images: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } })
     .toArray();
 
   const pageMap = new Map<string, any>(pages.map((p: any) => [p.id, p]));
@@ -134,8 +134,26 @@ async function resolveCoverImages(db: any, imageIds: string[]) {
     if (!page) continue;
     const det = page.detected_images?.[detIdx];
     if (!det) continue;
+
+    // Build crop URL when no pre-generated image exists
+    let cropUrl: string | null = null;
+    if (det.bbox) {
+      const baseUrl = page.archived_photo || page.cropped_photo || page.photo;
+      if (baseUrl) {
+        const params = new URLSearchParams({
+          url: baseUrl,
+          x: det.bbox.x.toString(),
+          y: det.bbox.y.toString(),
+          w: det.bbox.width.toString(),
+          h: det.bbox.height.toString(),
+        });
+        if (det.rotation) params.set('rotation', det.rotation.toString());
+        cropUrl = `/api/crop-image?${params}`;
+      }
+    }
+
     result.set(id, {
-      url: det.thumbnail_url || det.extracted_url || page.cropped_photo || page.photo || '',
+      url: det.thumbnail_url || det.extracted_url || cropUrl || page.cropped_photo || page.photo || '',
       description: det.description || '',
     });
   }
