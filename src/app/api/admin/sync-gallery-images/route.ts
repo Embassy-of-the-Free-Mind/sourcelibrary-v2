@@ -148,6 +148,19 @@ export async function POST(request: NextRequest) {
       orphansRemoved = delResult.deletedCount;
     }
 
+    // Clean up gallery_images from deleted pages (book exists but page doesn't)
+    const galleryPageIds = await db.collection('gallery_images').distinct('page_id');
+    const existingPages = await db.collection('pages')
+      .find({ id: { $in: galleryPageIds } }, { projection: { id: 1 } })
+      .toArray();
+    const existingPageIds = new Set(existingPages.map(p => p.id as string));
+    const orphanedPageIds = galleryPageIds.filter((pid: string) => !existingPageIds.has(pid));
+    let pageOrphansRemoved = 0;
+    if (orphanedPageIds.length > 0) {
+      const delResult = await db.collection('gallery_images').deleteMany({ page_id: { $in: orphanedPageIds } });
+      pageOrphansRemoved = delResult.deletedCount;
+    }
+
     // Count what we wrote
     const total = await db.collection('gallery_images').countDocuments();
     const duration = Date.now() - startTime;
@@ -156,7 +169,8 @@ export async function POST(request: NextRequest) {
       success: true,
       total_images: total,
       incremental: !!since,
-      orphans_removed: orphansRemoved,
+      orphans_removed: orphansRemoved + pageOrphansRemoved,
+      orphan_details: { deleted_books: orphansRemoved, deleted_pages: pageOrphansRemoved },
       duration_ms: duration,
     });
   } catch (error) {

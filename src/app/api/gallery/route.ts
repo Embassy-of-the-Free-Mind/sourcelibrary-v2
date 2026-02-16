@@ -4,6 +4,23 @@ import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
 export const maxDuration = 30;
 
+/**
+ * Escape special regex characters and build a diacritics-insensitive pattern.
+ * e.g. "durer" matches "Dürer", "albrecht" matches "Albrecht".
+ */
+function escapeAndNormalizeRegex(query: string): string {
+  // Escape regex special chars
+  let escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Map ASCII chars to character classes that also match accented variants
+  const diacriticMap: Record<string, string> = {
+    'a': '[aàáâãäåæ]', 'e': '[eèéêë]', 'i': '[iìíîï]',
+    'o': '[oòóôõöø]', 'u': '[uùúûü]', 'c': '[cçč]',
+    'n': '[nñ]', 's': '[sšß]', 'z': '[zž]', 'y': '[yýÿ]',
+  };
+  escaped = escaped.split('').map(ch => diacriticMap[ch.toLowerCase()] || ch).join('');
+  return escaped;
+}
+
 // In-memory cache for filter aggregations (types, subjects, yearRange)
 const FILTER_CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 let cachedFilters: { data: { types: string[]; subjects: string[]; yearRange: { minYear: number | null; maxYear: number | null } }; timestamp: number } | null = null;
@@ -91,12 +108,15 @@ export async function GET(request: NextRequest) {
     }
 
     if (searchQuery) {
+      const pattern = escapeAndNormalizeRegex(searchQuery);
       filter.$or = [
-        { description: { $regex: searchQuery, $options: 'i' } },
-        { museum_description: { $regex: searchQuery, $options: 'i' } },
-        { 'metadata.subjects': { $regex: searchQuery, $options: 'i' } },
-        { 'metadata.figures': { $regex: searchQuery, $options: 'i' } },
-        { 'metadata.symbols': { $regex: searchQuery, $options: 'i' } },
+        { description: { $regex: pattern, $options: 'i' } },
+        { museum_description: { $regex: pattern, $options: 'i' } },
+        { 'metadata.subjects': { $regex: pattern, $options: 'i' } },
+        { 'metadata.figures': { $regex: pattern, $options: 'i' } },
+        { 'metadata.symbols': { $regex: pattern, $options: 'i' } },
+        { book_title: { $regex: pattern, $options: 'i' } },
+        { book_author: { $regex: pattern, $options: 'i' } },
       ];
     }
 
@@ -343,13 +363,14 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
     if (figureFilter) conditions.push({ [`${p}metadata.figures`]: figureFilter });
     if (symbolFilter) conditions.push({ [`${p}metadata.symbols`]: symbolFilter });
     if (searchQuery) {
+      const pattern = escapeAndNormalizeRegex(searchQuery);
       conditions.push({
         $or: [
-          { [`${p}description`]: { $regex: searchQuery, $options: 'i' } },
-          { [`${p}museum_description`]: { $regex: searchQuery, $options: 'i' } },
-          { [`${p}metadata.subjects`]: { $regex: searchQuery, $options: 'i' } },
-          { [`${p}metadata.figures`]: { $regex: searchQuery, $options: 'i' } },
-          { [`${p}metadata.symbols`]: { $regex: searchQuery, $options: 'i' } },
+          { [`${p}description`]: { $regex: pattern, $options: 'i' } },
+          { [`${p}museum_description`]: { $regex: pattern, $options: 'i' } },
+          { [`${p}metadata.subjects`]: { $regex: pattern, $options: 'i' } },
+          { [`${p}metadata.figures`]: { $regex: pattern, $options: 'i' } },
+          { [`${p}metadata.symbols`]: { $regex: pattern, $options: 'i' } },
         ],
       });
     }
@@ -378,6 +399,22 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
     if (yearStart !== null) yearMatch['book.year'] = { $gte: yearStart };
     if (yearEnd !== null) yearMatch['book.year'] = { ...(yearMatch['book.year'] as object), $lte: yearEnd };
     pipeline.push({ $match: yearMatch });
+  }
+
+  // If searching, also match on book title/author after join
+  if (searchQuery) {
+    const bookPattern = escapeAndNormalizeRegex(searchQuery);
+    pipeline.push({
+      $match: {
+        $or: [
+          { 'book.title': { $regex: bookPattern, $options: 'i' } },
+          { 'book.display_title': { $regex: bookPattern, $options: 'i' } },
+          { 'book.author': { $regex: bookPattern, $options: 'i' } },
+          // Also pass through pages that already matched on image-level fields
+          { detected_images: { $elemMatch: { $and: buildImageFilters('') } } },
+        ],
+      },
+    });
   }
 
   pipeline.push({

@@ -80,6 +80,40 @@ export async function GET(
     ]).toArray();
 
     if (!page.length) {
+      // Fallback: try gallery_images collection (handles orphaned pages gracefully)
+      const galleryImageId = `${pageId}-${detectionIndex}`;
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      if (galleryDoc) {
+        return NextResponse.json({
+          id,
+          pageId,
+          detectionIndex,
+          imageUrl: galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
+          fullPageUrl: galleryDoc.image_url,
+          highResUrl: galleryDoc.extracted_url || galleryDoc.image_url,
+          extractedUrl: galleryDoc.extracted_url ?? null,
+          thumbnailUrl: galleryDoc.thumbnail_url ?? null,
+          rotation: galleryDoc.rotation ?? 0,
+          description: galleryDoc.description,
+          type: galleryDoc.type,
+          confidence: galleryDoc.confidence,
+          galleryQuality: galleryDoc.gallery_quality ?? null,
+          museumDescription: galleryDoc.museum_description ?? null,
+          metadata: galleryDoc.metadata ?? null,
+          bbox: galleryDoc.bbox,
+          book: {
+            id: galleryDoc.book_id,
+            title: galleryDoc.book_title || 'Unknown',
+            author: galleryDoc.book_author,
+            year: galleryDoc.book_year,
+          },
+          pageNumber: galleryDoc.page_number,
+          readUrl: `/book/${galleryDoc.book_id}/page/${pageId}`,
+          galleryUrl: `/gallery?bookId=${galleryDoc.book_id}`,
+          citation: `${galleryDoc.book_author || ''}, "${galleryDoc.book_title || 'Unknown'}", p. ${galleryDoc.page_number}, Source Library`,
+          orphaned: true, // Signal to UI that source page is gone
+        });
+      }
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
