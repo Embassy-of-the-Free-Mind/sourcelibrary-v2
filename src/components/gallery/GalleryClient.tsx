@@ -590,6 +590,13 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
           </p>
         </div>
       </Link>
+      <Link
+        href={`/gallery?bookId=${item.bookId}`}
+        className="block px-2 pb-2 text-[10px] text-amber-600 hover:text-amber-800 transition-colors"
+        onClick={(e) => e.stopPropagation()}
+      >
+        More from this book
+      </Link>
 
       <div className="absolute top-1.5 left-1.5 z-10">
         <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors px-1.5 py-0.5">

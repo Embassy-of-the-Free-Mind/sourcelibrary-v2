@@ -35,7 +35,7 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
     const db = await getDb();
     const limit = 24;
     const minQuality = 0.7;
-    const maxPerBook = 2;
+    const maxPerBook = 3;
 
     // Check if materialized collection exists
     const galleryCount = await db.collection('gallery_images').estimatedDocumentCount();
