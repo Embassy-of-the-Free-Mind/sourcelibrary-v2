@@ -33,6 +33,8 @@ export const gallery = {
     if (params?.limit) queryParams.append('limit', params.limit.toString());
     if (params?.offset) queryParams.append('offset', params.offset.toString());
     if (params?.minQuality) queryParams.append('minQuality', params.minQuality.toString());
+    if (params?.includeArchive) queryParams.append('includeArchive', 'true');
+    if (params?.maxPerBook) queryParams.append('maxPerBook', params.maxPerBook.toString());
 
     const query = queryParams.toString();
     return await apiClient.get(`/api/gallery${query ? `?${query}` : ''}`);

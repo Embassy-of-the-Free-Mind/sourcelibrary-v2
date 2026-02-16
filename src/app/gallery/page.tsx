@@ -1,626 +1,181 @@
-'use client';
+import { Suspense } from 'react';
+import { getDb } from '@/lib/mongodb';
+import GalleryClient from '@/components/gallery/GalleryClient';
+import type { GalleryResponse } from '@/lib/api-client/types/gallery';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
-import Image from 'next/image';
-import {
-  Search, Image as ImageIcon, BookOpen, X, ChevronLeft, ChevronRight,
-  SlidersHorizontal, Loader2, ImagePlus, AlertCircle
-} from 'lucide-react';
-import LikeButton from '@/components/ui/LikeButton';
-import HighlightedText from '@/components/search/HighlightedText';
-import FeaturedCollections from '@/components/gallery/FeaturedCollections';
-import {
-  gallery,
-  books,
-  type GalleryResponse,
-  type GalleryItem,
-  type BookInfo,
-  type GalleryFilters,
-  type BBox,
-  type ImageMetadata
-} from '@/lib/api-client';
+export const dynamic = 'force-dynamic';
 
-interface BookSearchResult {
-  id: string;
-  title: string;
-  display_title?: string;
-  author?: string;
-}
-
-/** Downsize a IIIF URL for gallery thumbnails (400px wide instead of full) */
-function toThumbnailUrl(url: string): string {
-  if (!url) return url;
-  // IIIF Image API: .../full/full/0/default.jpg → .../full/400,/0/default.jpg
-  // Also handles /full/max/ and /full/NNN,/ patterns
-  if (url.includes('/full/')) {
-    return url.replace(/\/full\/(full|max|\d+,)\//,  '/full/400,/');
-  }
-  return url;
-}
-
-function getCroppedImageUrl(imageUrl: string, bbox: BBox): string {
-  const params = new URLSearchParams({
-    url: toThumbnailUrl(imageUrl),
-    x: bbox.x.toString(),
-    y: bbox.y.toString(),
-    w: bbox.width.toString(),
-    h: bbox.height.toString()
-  });
-  return `/api/crop-image?${params}`;
-}
-
-export default function GalleryPage() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  // State
-  const [data, setData] = useState<GalleryResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(0);
-  const [showFilters, setShowFilters] = useState(false);
-
-  // Search state
-  const [bookSearchQuery, setBookSearchQuery] = useState('');
-  const [bookSearchResults, setBookSearchResults] = useState<BookSearchResult[]>([]);
-  const [bookSearchLoading, setBookSearchLoading] = useState(false);
-  const [showBookDropdown, setShowBookDropdown] = useState(false);
-  const bookSearchRef = useRef<HTMLDivElement>(null);
-
-  // Image search state
-  const [imageSearchQuery, setImageSearchQuery] = useState(searchParams.get('q') || '');
-
-  // Filter state from URL (support both 'bookId' and 'book' params)
-  const bookId = searchParams.get('bookId') || searchParams.get('book') || '';
-  const typeFilter = searchParams.get('type') || '';
-  const subjectFilter = searchParams.get('subject') || '';
-  const yearStart = searchParams.get('yearStart') || '';
-  const yearEnd = searchParams.get('yearEnd') || '';
-
-  const limit = 24;
-
-  // Update URL params
-  const updateParams = useCallback((updates: Record<string, string>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    Object.entries(updates).forEach(([key, value]) => {
-      if (value) {
-        params.set(key, value);
-      } else {
-        params.delete(key);
-      }
-    });
-    // Reset to first page when filters change
-    params.delete('offset');
-    router.push(`/gallery?${params.toString()}`);
-  }, [searchParams, router]);
-
-  // Fetch gallery data
-  useEffect(() => {
-    const fetchGallery = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const json = await gallery.list({
-          limit,
-          offset: page * limit,
-          bookId: bookId || undefined,
-          query: imageSearchQuery || undefined,
-          type: typeFilter || undefined,
-          subject: subjectFilter || undefined,
-          yearFrom: yearStart ? parseInt(yearStart) : undefined,
-          yearTo: yearEnd ? parseInt(yearEnd) : undefined
-        });
-        // On pagination (offset > 0), API skips filter computation.
-        // Preserve filters from the initial page load.
-        if (page > 0 && data?.filters && (!json.filters?.types?.length)) {
-          json.filters = data.filters;
-        }
-        setData(json);
-      } catch (e) {
-        setError(e instanceof Error ? e.message : 'Failed to load gallery');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchGallery();
-  }, [bookId, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page]);
-
-  // Book search with debounce
-  useEffect(() => {
-    if (!bookSearchQuery.trim()) {
-      setBookSearchResults([]);
-      return;
-    }
-
-    const timer = setTimeout(async () => {
-      setBookSearchLoading(true);
-      try {
-        const data = await books.search(bookSearchQuery, { limit: '10' });
-        setBookSearchResults(data.books.map(book => ({
-          id: book.id,
-          title: book.title,
-          display_title: book.display_title,
-          author: book.author
-        })));
-      } catch {
-        // Ignore search errors
-      } finally {
-        setBookSearchLoading(false);
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, [bookSearchQuery]);
-
-  // Close dropdown on outside click
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (bookSearchRef.current && !bookSearchRef.current.contains(e.target as Node)) {
-        setShowBookDropdown(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const totalPages = data ? Math.ceil(data.total / limit) : 0;
-
-  const handleBookSelect = (book: BookSearchResult) => {
-    setBookSearchQuery('');
-    setShowBookDropdown(false);
-    updateParams({ bookId: book.id });
-  };
-
-  const clearBookFilter = () => {
-    updateParams({ bookId: '' });
-  };
-
-  const handleImageSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    updateParams({ q: imageSearchQuery });
-  };
+/**
+ * Gallery page — server component that fetches initial data from gallery_images
+ * and passes it to the client component for instant rendering.
+ */
+export default async function GalleryPage() {
+  const [initialData, initialCollections] = await Promise.all([
+    fetchInitialGalleryData(),
+    fetchFeaturedCollections(),
+  ]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      {/* Header */}
-      <header className="bg-stone-900 text-white py-4 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-4">
-            {/* Source Library Logo */}
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
-              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-                <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-                <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-              </svg>
-              <span className="text-xl uppercase tracking-wider">
-                <span className="font-semibold">Source</span>
-                <span className="font-light">Library</span>
-              </span>
-            </Link>
-
-            <div className="flex items-center gap-4">
-              <div className="text-right hidden sm:block">
-                <h1 className="text-lg font-serif">Image Gallery</h1>
-                <p className="text-stone-400 text-xs">
-                  {data?.total || 0} illustrations
-                </p>
-              </div>
-              <ImageIcon className="w-6 h-6 text-amber-500" />
-            </div>
-          </div>
-
-          {/* Search Bar */}
-          <div className="flex gap-3">
-            {/* Book Search */}
-            <div className="relative flex-1 max-w-xs" ref={bookSearchRef}>
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <input
-                type="search"
-                value={bookSearchQuery}
-                onChange={(e) => {
-                  setBookSearchQuery(e.target.value);
-                  setShowBookDropdown(true);
-                }}
-                onFocus={() => setShowBookDropdown(true)}
-                placeholder="Find a book..."
-                aria-label="Filter by book"
-                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
-              />
-              {bookSearchLoading && (
-                <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 animate-spin" />
-              )}
-
-              {/* Book Search Dropdown */}
-              {showBookDropdown && bookSearchResults.length > 0 && (
-                <div className="absolute top-full mt-1 left-0 right-0 bg-white rounded-lg shadow-lg border border-stone-200 max-h-64 overflow-y-auto z-30">
-                  {bookSearchResults.map((book) => (
-                    <button
-                      key={book.id}
-                      onClick={() => handleBookSelect(book)}
-                      className="w-full px-4 py-2 text-left text-stone-800 hover:bg-amber-50 border-b border-stone-100 last:border-0"
-                    >
-                      <div className="font-medium text-sm line-clamp-1">
-                        <HighlightedText text={book.display_title || book.title} query={bookSearchQuery} />
-                      </div>
-                      {book.author && (
-                        <div className="text-xs text-stone-500">
-                          <HighlightedText text={book.author} query={bookSearchQuery} />
-                        </div>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Image Content Search */}
-            <form onSubmit={handleImageSearch} className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <input
-                type="search"
-                value={imageSearchQuery}
-                onChange={(e) => setImageSearchQuery(e.target.value)}
-                placeholder="Search image content (serpent, Mercury, emblem...)"
-                aria-label="Search image descriptions"
-                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
-              />
-            </form>
-
-            {/* Filter Toggle */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
-                showFilters ? 'bg-amber-600 text-white' : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
-              }`}
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-              Filters
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Active Filters / Book Info */}
-        {(data?.bookInfo || typeFilter || subjectFilter || imageSearchQuery) && (
-          <div className="mb-4 flex flex-wrap items-center gap-2">
-            {data?.bookInfo && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-800 rounded-full">
-                <BookOpen className="w-4 h-4" />
-                <span className="text-sm font-medium">{data.bookInfo.title}</span>
-                {data.bookInfo.year && <span className="text-xs">({data.bookInfo.year})</span>}
-                <button onClick={clearBookFilter} className="ml-1 hover:text-amber-600">
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-            {typeFilter && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
-                Type: {typeFilter}
-                <button onClick={() => updateParams({ type: '' })} className="hover:text-stone-900">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {subjectFilter && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
-                Subject: {subjectFilter}
-                <button onClick={() => updateParams({ subject: '' })} className="hover:text-stone-900">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-            {imageSearchQuery && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full text-sm">
-                Search: &quot;{imageSearchQuery}&quot;
-                <button onClick={() => { setImageSearchQuery(''); updateParams({ q: '' }); }} className="hover:text-blue-600">
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Filter Panel */}
-        {showFilters && data?.filters && (
-          <div className="mb-6 p-4 bg-white rounded-lg shadow-sm border border-stone-200">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {/* Image Type */}
-              <div>
-                <label className="block text-xs font-medium text-stone-500 mb-2">Image Type</label>
-                <div className="flex flex-wrap gap-1">
-                  {data.filters.types.map((type) => (
-                    <button
-                      key={type}
-                      onClick={() => updateParams({ type: typeFilter === type ? '' : type })}
-                      className={`px-2 py-1 text-xs rounded-full transition-colors ${
-                        typeFilter === type
-                          ? 'bg-amber-600 text-white'
-                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                      }`}
-                    >
-                      {type}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Subjects */}
-              {data.filters.subjects.length > 0 && (
-                <div>
-                  <label className="block text-xs font-medium text-stone-500 mb-2">Subjects</label>
-                  <div className="flex flex-wrap gap-1 max-h-24 overflow-y-auto">
-                    {data.filters.subjects.slice(0, 15).map((subject) => (
-                      <button
-                        key={subject}
-                        onClick={() => updateParams({ subject: subjectFilter === subject ? '' : subject })}
-                        className={`px-2 py-1 text-xs rounded-full transition-colors ${
-                          subjectFilter === subject
-                            ? 'bg-amber-600 text-white'
-                            : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                        }`}
-                      >
-                        {subject}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Year Range */}
-              {data.filters.yearRange.minYear && (
-                <div>
-                  <label className="block text-xs font-medium text-stone-500 mb-2">
-                    Year Range ({data.filters.yearRange.minYear} - {data.filters.yearRange.maxYear})
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      placeholder="From"
-                      value={yearStart}
-                      onChange={(e) => updateParams({ yearStart: e.target.value })}
-                      className="w-20 px-2 py-1 text-sm border border-stone-300 rounded"
-                    />
-                    <span className="text-stone-400">-</span>
-                    <input
-                      type="number"
-                      placeholder="To"
-                      value={yearEnd}
-                      onChange={(e) => updateParams({ yearEnd: e.target.value })}
-                      className="w-20 px-2 py-1 text-sm border border-stone-300 rounded"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Featured Collections */}
-        {!bookId && !typeFilter && !subjectFilter && !imageSearchQuery && page === 0 && (
-          <FeaturedCollections />
-        )}
-
-        {/* Loading State */}
-        {loading && (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
-          </div>
-        )}
-
-        {/* Error State */}
-        {error && (
-          <div className="text-center py-20">
-            <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
-            <p className="text-red-600">{error}</p>
-          </div>
-        )}
-
-        {/* Empty State for Book with No Images */}
-        {!loading && data?.bookInfo && data.items.length === 0 && (
-          <BookEmptyState bookInfo={data.bookInfo} />
-        )}
-
-        {/* Empty State for Search with No Results */}
-        {!loading && !data?.bookInfo && data?.items.length === 0 && (
-          <div className="text-center py-20">
-            <ImageIcon className="w-16 h-16 text-stone-300 mx-auto mb-4" />
-            <p className="text-stone-500 mb-2">No images found</p>
-            <p className="text-stone-400 text-sm">
-              Try a different search or browse all images
-            </p>
-          </div>
-        )}
-
-        {/* Image Grid */}
-        {!loading && data && data.items.length > 0 && (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {data.items.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
-              ))}
-            </div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-4 mt-8">
-                <button
-                  onClick={() => setPage(p => Math.max(0, p - 1))}
-                  disabled={page === 0}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                  Previous
-                </button>
-                <span className="text-stone-600 text-sm">
-                  Page {page + 1} of {totalPages}
-                </span>
-                <button
-                  onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
-                  disabled={page >= totalPages - 1}
-                  className="flex items-center gap-1 px-4 py-2 rounded-lg bg-white text-stone-700 border border-stone-200 hover:bg-stone-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  Next
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      <Suspense>
+        <GalleryClient
+          initialData={initialData}
+          initialCollections={initialCollections}
+        />
+      </Suspense>
     </div>
   );
 }
 
-function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
-  const [imageError, setImageError] = useState(false);
+/**
+ * Fetch first page of gallery data directly from MongoDB (no API roundtrip).
+ */
+async function fetchInitialGalleryData(): Promise<GalleryResponse> {
+  try {
+    const db = await getDb();
+    const limit = 24;
+    const minQuality = 0.7;
+    const maxPerBook = 2;
 
-  // Prefer pre-generated thumbnail > extracted > on-the-fly crop
-  const displayUrl = item.thumbnailUrl
-    || item.extractedUrl
-    || (item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : toThumbnailUrl(item.imageUrl));
+    // Check if materialized collection exists
+    const galleryCount = await db.collection('gallery_images').estimatedDocumentCount();
 
-  // Pre-generated images are already cropped — no need to mark as unoptimized
-  const isPreGenerated = !!(item.thumbnailUrl || item.extractedUrl);
-
-  const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
-
-  return (
-    <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={`/gallery/image/${galleryImageId}`}>
-        <div className="relative aspect-square bg-stone-100">
-          {!imageError ? (
-            <Image
-              src={displayUrl}
-              alt={item.description}
-              fill
-              className="object-contain group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-              onError={() => setImageError(true)}
-              unoptimized={!isPreGenerated && !!item.bbox}
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-stone-300">
-              <ImageIcon className="w-8 h-8" />
-            </div>
-          )}
-
-          {/* Type badge */}
-          {item.type && (
-            <span className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
-              {item.type}
-            </span>
-          )}
-
-          {/* Quality indicator */}
-          {item.galleryQuality && item.galleryQuality >= 0.9 && (
-            <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-amber-500 text-white">
-              ★
-            </span>
-          )}
-        </div>
-
-        <div className="p-2">
-          <p className="text-xs text-stone-700 line-clamp-2 mb-1" title={item.description}>
-            {query ? <HighlightedText text={item.description} query={query} /> : item.description}
-          </p>
-          <p className="text-[10px] text-stone-400 line-clamp-1">
-            {item.bookTitle}
-          </p>
-        </div>
-      </Link>
-
-      {/* Like button overlay - always visible for discoverability */}
-      <div className="absolute top-1.5 left-1.5 z-10">
-        <div className="flex items-center bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors px-1.5 py-0.5">
-          <LikeButton
-            targetType="image"
-            targetId={galleryImageId}
-            size="sm"
-            showCount={true}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
-  const [extracting, setExtracting] = useState(false);
-
-  const handleExtract = async () => {
-    setExtracting(true);
-    try {
-      // Call the extraction API
-      await gallery.extractImages(bookInfo.id);
-      // Refresh the page to show new images
-      window.location.reload();
-    } catch {
-      // Ignore errors
-    } finally {
-      setExtracting(false);
+    if (galleryCount === 0) {
+      // Return empty result — client will fetch from API with legacy fallback
+      return {
+        items: [],
+        total: 0,
+        limit,
+        offset: 0,
+        bookInfo: null,
+        filters: { types: [], subjects: [], yearRange: { minYear: null, maxYear: null } },
+      };
     }
-  };
 
-  return (
-    <div className="text-center py-16 max-w-md mx-auto">
-      <div className="bg-white rounded-xl p-8 shadow-sm border border-stone-200">
-        <BookOpen className="w-12 h-12 text-stone-300 mx-auto mb-4" />
-        <h2 className="text-lg font-serif text-stone-800 mb-2">{bookInfo.title}</h2>
-        {bookInfo.author && (
-          <p className="text-stone-500 text-sm mb-4">by {bookInfo.author}</p>
-        )}
+    const filter = {
+      gallery_quality: { $gte: minQuality },
+      book_rank: { $lte: maxPerBook },
+    };
 
-        {!bookInfo.hasImages && bookInfo.hasOcr && (
-          <>
-            <div className="bg-amber-50 rounded-lg p-4 mb-4">
-              <ImagePlus className="w-8 h-8 text-amber-600 mx-auto mb-2" />
-              <p className="text-amber-800 text-sm">
-                This book has OCR data but no extracted images yet.
-              </p>
-            </div>
-            <button
-              onClick={handleExtract}
-              disabled={extracting}
-              className="px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
-            >
-              {extracting ? (
-                <span className="flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Extracting...
-                </span>
-              ) : (
-                'Extract Images'
-              )}
-            </button>
-          </>
-        )}
+    const [items, total, typesResult, subjectsResult, yearResult] = await Promise.all([
+      db.collection('gallery_images')
+        .find(filter, { projection: { _id: 0 } })
+        .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
+        .limit(limit)
+        .toArray(),
+      db.collection('gallery_images').countDocuments(filter),
+      db.collection('gallery_images').aggregate([
+        { $group: { _id: '$type' } },
+        { $match: { _id: { $ne: null } } },
+        { $sort: { _id: 1 } },
+      ]).toArray(),
+      db.collection('gallery_images').aggregate([
+        { $unwind: '$metadata.subjects' },
+        { $group: { _id: '$metadata.subjects' } },
+        { $sort: { _id: 1 } },
+        { $limit: 50 },
+      ]).toArray(),
+      db.collection('gallery_images').aggregate([
+        { $group: { _id: null, minYear: { $min: '$book_year' }, maxYear: { $max: '$book_year' } } },
+      ]).toArray(),
+    ]);
 
-        {!bookInfo.hasImages && !bookInfo.hasOcr && (
-          <div className="bg-stone-100 rounded-lg p-4">
-            <AlertCircle className="w-8 h-8 text-stone-400 mx-auto mb-2" />
-            <p className="text-stone-600 text-sm">
-              This book needs OCR processing before images can be extracted.
-            </p>
-            <Link
-              href={`/book/${bookInfo.id}`}
-              className="inline-block mt-3 text-amber-600 hover:text-amber-700 text-sm"
-            >
-              Go to book page →
-            </Link>
-          </div>
-        )}
+    const mappedItems = items.map(doc => ({
+      pageId: doc.page_id as string,
+      bookId: doc.book_id as string,
+      pageNumber: doc.page_number as number,
+      detectionIndex: doc.detection_index as number,
+      imageUrl: doc.image_url as string,
+      bookTitle: doc.book_title as string,
+      author: doc.book_author as string | undefined,
+      year: doc.book_year as number | undefined,
+      description: (doc.description || '') as string,
+      type: doc.type as string | undefined,
+      bbox: doc.bbox,
+      rotation: doc.rotation,
+      extractedUrl: doc.extracted_url as string | undefined,
+      thumbnailUrl: doc.thumbnail_url as string | undefined,
+      galleryQuality: doc.gallery_quality as number | undefined,
+      confidence: doc.confidence as number | undefined,
+      museumDescription: doc.museum_description as string | undefined,
+      metadata: doc.metadata,
+    }));
 
-        {bookInfo.hasImages && (
-          <p className="text-stone-500 text-sm">
-            No images match your current filters.
-          </p>
-        )}
-      </div>
-    </div>
-  );
+    return {
+      items: mappedItems,
+      total,
+      limit,
+      offset: 0,
+      bookInfo: null,
+      filters: {
+        types: typesResult.map(t => t._id as string).filter(Boolean),
+        subjects: subjectsResult.map(s => s._id as string).filter(Boolean),
+        yearRange: (yearResult[0] as { minYear: number | null; maxYear: number | null }) || { minYear: null, maxYear: null },
+      },
+    };
+  } catch (error) {
+    console.error('Failed to fetch initial gallery data:', error);
+    return {
+      items: [],
+      total: 0,
+      limit: 24,
+      offset: 0,
+      bookInfo: null,
+      filters: { types: [], subjects: [], yearRange: { minYear: null, maxYear: null } },
+    };
+  }
+}
+
+/**
+ * Fetch featured collections for SSR.
+ */
+async function fetchFeaturedCollections() {
+  try {
+    const db = await getDb();
+    const collections = await db.collection('gallery_collections')
+      .find({ featured: true })
+      .sort({ sort_order: 1 })
+      .limit(4)
+      .toArray();
+
+    if (collections.length === 0) return undefined;
+
+    // Resolve cover images
+    const result = await Promise.all(
+      collections.map(async (col) => {
+        let coverImage: { url: string; description: string } | null = null;
+        if (col.cover_image_id) {
+          const [pageId, detIdxStr] = (col.cover_image_id as string).split('-');
+          const detIdx = parseInt(detIdxStr || '0');
+          if (pageId) {
+            const page = await db.collection('pages').findOne(
+              { id: pageId },
+              { projection: { detected_images: 1 } }
+            );
+            if (page?.detected_images?.[detIdx]) {
+              const det = page.detected_images[detIdx];
+              coverImage = {
+                url: det.thumbnail_url || det.extracted_url || '',
+                description: det.description || col.title,
+              };
+            }
+          }
+        }
+        return {
+          id: col.id as string,
+          slug: col.slug as string,
+          title: col.title as string,
+          description: (col.description || '') as string,
+          imageCount: (col.image_ids as string[])?.length || 0,
+          featured: col.featured as boolean,
+          coverImage,
+        };
+      })
+    );
+
+    return result;
+  } catch (error) {
+    console.error('Failed to fetch featured collections:', error);
+    return undefined;
+  }
 }

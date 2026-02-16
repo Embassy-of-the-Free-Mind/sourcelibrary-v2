@@ -31,6 +31,10 @@
     {
       "path": "/api/cron/submit-ocr",
       "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/sync-gallery-images",
+      "schedule": "0 */6 * * *"
     }
   ]
 }

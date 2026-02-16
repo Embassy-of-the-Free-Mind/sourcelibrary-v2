@@ -509,6 +509,118 @@ export async function POST() {
         : `error: ${err.message}`;
     }
 
+    // Gallery images - unique ID
+    try {
+      await db.collection('gallery_images').createIndex(
+        { id: 1 },
+        { name: 'gallery_images_id_idx', background: true, unique: true }
+      );
+      results['gallery_images.gallery_images_id_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_id_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery images - default sort by quality
+    try {
+      await db.collection('gallery_images').createIndex(
+        { gallery_quality: -1 },
+        { name: 'gallery_images_quality_idx', background: true }
+      );
+      results['gallery_images.gallery_images_quality_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_quality_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery images - book filter + quality sort
+    try {
+      await db.collection('gallery_images').createIndex(
+        { book_id: 1, gallery_quality: -1 },
+        { name: 'gallery_images_book_quality_idx', background: true }
+      );
+      results['gallery_images.gallery_images_book_quality_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_book_quality_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery images - type filter
+    try {
+      await db.collection('gallery_images').createIndex(
+        { type: 1 },
+        { name: 'gallery_images_type_idx', background: true }
+      );
+      results['gallery_images.gallery_images_type_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_type_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery images - subject filter
+    try {
+      await db.collection('gallery_images').createIndex(
+        { 'metadata.subjects': 1 },
+        { name: 'gallery_images_subjects_idx', background: true }
+      );
+      results['gallery_images.gallery_images_subjects_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_subjects_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery images - year filter
+    try {
+      await db.collection('gallery_images').createIndex(
+        { book_year: 1 },
+        { name: 'gallery_images_year_idx', background: true }
+      );
+      results['gallery_images.gallery_images_year_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_year_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery images - book_rank for diversity filter
+    try {
+      await db.collection('gallery_images').createIndex(
+        { book_rank: 1 },
+        { name: 'gallery_images_rank_idx', background: true }
+      );
+      results['gallery_images.gallery_images_rank_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_rank_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gallery images - page_id lookup (for worker upserts)
+    try {
+      await db.collection('gallery_images').createIndex(
+        { page_id: 1 },
+        { name: 'gallery_images_page_idx', background: true }
+      );
+      results['gallery_images.gallery_images_page_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gallery_images.gallery_images_page_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Bookshelves - visitor + book unique
     try {
       await db.collection('bookshelves').createIndex(
@@ -557,7 +669,7 @@ export async function POST() {
 export async function GET() {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'bookshelves'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

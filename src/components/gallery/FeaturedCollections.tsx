@@ -16,17 +16,24 @@ interface CollectionListItem {
   coverImage: { url: string; description: string } | null;
 }
 
-export default function FeaturedCollections() {
-  const [collections, setCollections] = useState<CollectionListItem[]>([]);
-  const [loaded, setLoaded] = useState(false);
+interface FeaturedCollectionsProps {
+  initialCollections?: CollectionListItem[];
+}
+
+export default function FeaturedCollections({ initialCollections }: FeaturedCollectionsProps) {
+  const [collections, setCollections] = useState<CollectionListItem[]>(initialCollections || []);
+  const [loaded, setLoaded] = useState(!!initialCollections);
 
   useEffect(() => {
+    // Skip fetch if we already have server-provided data
+    if (initialCollections) return;
+
     gallery.collections
       .list(true)
       .then((data) => setCollections(data.collections))
       .catch(() => {})
       .finally(() => setLoaded(true));
-  }, []);
+  }, [initialCollections]);
 
   if (!loaded || collections.length === 0) return null;
 
@@ -73,6 +80,9 @@ export default function FeaturedCollections() {
               <h3 className="font-medium text-sm text-stone-800 group-hover:text-amber-700 transition-colors">
                 {collection.title}
               </h3>
+              <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">
+                {collection.description}
+              </p>
               <p className="text-xs text-stone-400 mt-1">
                 {collection.imageCount} {collection.imageCount === 1 ? 'image' : 'images'}
               </p>

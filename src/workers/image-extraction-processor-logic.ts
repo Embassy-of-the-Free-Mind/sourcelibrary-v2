@@ -110,6 +110,9 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
       }
     );
 
+    // Upsert into gallery_images materialized collection
+    await upsertGalleryImages(db, pageId, bookId, page, result.images as any);
+
     // Log successful AI call
     await logGeminiCall({
       type: 'extract_images',
@@ -213,5 +216,78 @@ async function checkJobCompletion(
       { id: bookId },
       { $unset: { job: '' } }
     );
+  }
+}
+
+/**
+ * Upsert detected images into the gallery_images materialized collection.
+ * Runs after each page's image extraction succeeds.
+ */
+async function upsertGalleryImages(
+  db: Awaited<ReturnType<typeof getDb>>,
+  pageId: string,
+  bookId: string,
+  page: Page,
+  images: Page['detected_images']
+) {
+  if (!images || images.length === 0) return;
+
+  try {
+    // Fetch book metadata for denormalization
+    const book = await db.collection('books').findOne(
+      { id: bookId },
+      { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1 } }
+    );
+
+    const imageUrl = page.cropped_photo || page.photo_original || page.photo || '';
+    const galleryImages = db.collection('gallery_images');
+
+    // Remove old gallery_images for this page (in case image count changed)
+    await galleryImages.deleteMany({ page_id: pageId });
+
+    // Build docs for qualifying images
+    const docs = images
+      .map((img, idx) => {
+        // Only materialize images with bbox, valid source, and quality >= 0.5
+        if (!img.bbox) return null;
+        if (!['vision_model', 'manual', 'ocr_tag'].includes(img.detection_source || '')) return null;
+        if ((img.gallery_quality || 0) < 0.5) return null;
+
+        return {
+          id: `${pageId}-${idx}`,
+          page_id: pageId,
+          book_id: bookId,
+          page_number: page.page_number,
+          detection_index: idx,
+          image_url: imageUrl,
+          thumbnail_url: img.thumbnail_url || null,
+          extracted_url: img.extracted_url || null,
+          description: img.description || '',
+          type: img.type || null,
+          bbox: img.bbox,
+          rotation: img.rotation || null,
+          gallery_quality: img.gallery_quality || 0,
+          confidence: img.confidence || null,
+          museum_description: img.museum_description || null,
+          detection_source: img.detection_source || null,
+          metadata: img.metadata || null,
+          book_title: book?.display_title || book?.title || 'Unknown',
+          book_author: book?.author || null,
+          book_year: book?.year || null,
+          book_language: book?.language || null,
+          book_rank: 0, // Will be recomputed by periodic sync
+          updated_at: new Date(),
+        };
+      })
+      .filter((d): d is NonNullable<typeof d> => d !== null);
+
+    if (docs.length > 0) {
+      await galleryImages.insertMany(docs);
+    }
+
+    console.log(`[IMG-EXTRACT] Upserted ${docs.length} gallery images for page ${pageId}`);
+  } catch (error) {
+    // Non-fatal — gallery_images is a cache that will be refreshed by cron
+    console.error(`[IMG-EXTRACT] Failed to upsert gallery images for page ${pageId}:`, error);
   }
 }
