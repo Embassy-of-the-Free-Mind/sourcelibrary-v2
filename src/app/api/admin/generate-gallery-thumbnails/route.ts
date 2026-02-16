@@ -60,7 +60,6 @@ export async function POST(request: NextRequest) {
 
     const pages = await db.collection('pages')
       .find(matchFilter)
-      .sort({ archived_photo: -1 }) // Prioritize pages with archived (Blob) images
       .limit(limit)
       .project({ id: 1, book_id: 1, detected_images: 1, archived_photo: 1, cropped_photo: 1, photo_original: 1, photo: 1 })
       .toArray();
