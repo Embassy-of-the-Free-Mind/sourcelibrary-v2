@@ -961,7 +961,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
                       <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
-                        <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} />
+                        <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} />
                       </div>
                     ) : (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
@@ -1070,7 +1070,7 @@ export default function TranslationEditor({
                         bookYear={book.published}
                         doi={book.doi}
                       >
-                        <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} />
+                        <NotesRenderer key={`trans-${showNotes}`} text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
                       </HighlightSelection>
                     ) : (book.language === 'English' && ocrText) ? (
                       <HighlightSelection
@@ -1082,7 +1082,7 @@ export default function TranslationEditor({
                         bookYear={book.published}
                         doi={book.doi}
                       >
-                        <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} />
+                        <NotesRenderer key={`ocr-en-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} columns={page.columns} />
                       </HighlightSelection>
                     ) : ocrText ? (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">

@@ -51,6 +51,7 @@ export const LATIN_PROMPTS = {
 
 **Metadata tags (hidden from readers):**
 - <meta>X</meta> for page metadata (image quality, script type)
+- <columns>N</columns> — number of text columns (omit for single-column, include for 2+)
 - <page-num>N</page-num> or <folio>12r</folio> for visible page/folio numbers
 - <header>X</header> for running headers/page headings
 - <abbrev>X → expansion</abbrev> for abbreviation expansions (collected in metadata)

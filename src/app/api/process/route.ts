@@ -4,7 +4,7 @@ import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, 
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { logGeminiCall } from '@/lib/gemini-logger';
-import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
 
@@ -348,6 +348,10 @@ export async function POST(request: NextRequest) {
         const pageType = extractPageType(results.ocr);
         if (pageType) {
           updateData['page_type'] = pageType;
+        }
+        const cols = extractColumns(results.ocr);
+        if (cols) {
+          updateData['columns'] = cols;
         }
       }
 

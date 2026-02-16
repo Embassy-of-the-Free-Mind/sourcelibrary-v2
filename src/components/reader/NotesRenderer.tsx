@@ -14,6 +14,7 @@ interface NotesRendererProps {
   showMetadata?: boolean; // Default true - show metadata section
   showNotes?: boolean; // Default true - show inline notes (margin, gloss, etc.)
   language?: string; // Optional language for RTL detection
+  columns?: number; // Number of text columns (from page.columns metadata). Used as fallback when no <column-break/> marker exists.
 }
 
 /**
@@ -638,16 +639,31 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
   );
 }
 
-export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language }: NotesRendererProps) {
+export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
   const processedText = useMemo(() => preprocessCentering(withBracketTags), [withBracketTags]);
 
-  // Split on <column-break/> for multi-column rendering
+  // Split on <column-break/> for multi-column rendering, with paragraph-midpoint fallback
   const columnSegments = useMemo(() => {
+    // Primary: explicit <column-break/> marker
     const segments = processedText.split(/<column-break\s*\/?>/i).map(s => s.trim()).filter(Boolean);
-    return segments.length > 1 ? segments : null;
-  }, [processedText]);
+    if (segments.length > 1) return segments;
+
+    // Fallback: if page has columns metadata but no marker, split at paragraph midpoint
+    if (columns && columns > 1) {
+      const paragraphs = processedText.split(/\n\n+/);
+      if (paragraphs.length >= 4) {
+        const mid = Math.ceil(paragraphs.length / 2);
+        return [
+          paragraphs.slice(0, mid).join('\n\n'),
+          paragraphs.slice(mid).join('\n\n'),
+        ];
+      }
+    }
+
+    return null;
+  }, [processedText, columns]);
 
   // Determine text direction from language prop or extracted metadata
   const effectiveLanguage = language || metadata.language;

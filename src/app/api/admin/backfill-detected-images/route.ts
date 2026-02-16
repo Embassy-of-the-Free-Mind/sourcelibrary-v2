@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { parseDetectedImages, extractPageType } from '@/lib/types/prompts/defaults';
+import { parseDetectedImages, extractPageType, extractColumns } from '@/lib/types/prompts/defaults';
 
 /**
  * POST /api/admin/backfill-detected-images
@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
       }
 
       const pageType = extractPageType(ocrText);
+      const columns = extractColumns(ocrText);
       totalImages += detectedImages.length;
 
       if (!dryRun) {
@@ -78,6 +79,7 @@ export async function POST(request: NextRequest) {
               $set: {
                 detected_images: detectedImages,
                 ...(pageType && { page_type: pageType }),
+                ...(columns && { columns }),
                 updated_at: new Date(),
               },
             },

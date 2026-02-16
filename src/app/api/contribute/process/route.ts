@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType } from '@/lib/types';
+import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
 import { getOcrPrompt } from '@/lib/prompts';
 import { images } from '@/lib/api-client';
 
@@ -176,6 +176,7 @@ export async function POST(request: NextRequest) {
 
               // Update page with OCR result
               const pageType = extractPageType(result.text);
+              const columns = extractColumns(result.text);
               await db.collection('pages').updateOne(
                 { _id: page._id },
                 {
@@ -187,6 +188,7 @@ export async function POST(request: NextRequest) {
                     'ocr.source': 'contributor',
                     'ocr.contributed_by': contributorName || 'Anonymous',
                     ...(pageType && { page_type: pageType }),
+                    ...(columns && { columns }),
                   },
                 }
               );

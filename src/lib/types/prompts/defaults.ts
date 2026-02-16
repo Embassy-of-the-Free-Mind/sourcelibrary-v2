@@ -17,6 +17,14 @@ export function extractPageType(ocrText: string): string | undefined {
   return VALID_PAGE_TYPES.has(type) ? type : undefined;
 }
 
+/** Extract <columns>N</columns> from OCR text. Returns undefined if not found or 1. */
+export function extractColumns(ocrText: string): number | undefined {
+  const match = ocrText.match(/<columns>(\d+)<\/columns>/i);
+  if (!match) return undefined;
+  const n = parseInt(match[1], 10);
+  return n > 1 ? n : undefined;
+}
+
 const VALID_IMAGE_TYPES = new Set([
   'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
   'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score', 'unknown',
@@ -114,6 +122,7 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 **Metadata tags (hidden from readers):**
 - <lang>X</lang> — the detected language of this page (REQUIRED — always identify the language)
 - <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text
+- <columns>N</columns> — number of text columns on this page (omit for single-column pages, include for 2+ columns)
 - <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
 - <header>X</header> — running headers/chapter titles at top of page (NEVER duplicate as heading in body)
 - <sig>X</sig> — printer's marks like A2, B1 (NOT in body text)

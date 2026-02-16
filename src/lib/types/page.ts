@@ -22,6 +22,9 @@ export interface Page {
   // Page classification from OCR (title-page, frontispiece, toc, etc.)
   page_type?: string;
 
+  // Number of text columns detected by OCR (2+ for multi-column pages)
+  columns?: number;
+
   // Detected illustrations/images on this page
   detected_images?: DetectedImage[];
 

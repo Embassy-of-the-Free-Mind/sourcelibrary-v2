@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
-import { PROMPT_VERSION, extractPageType, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -300,6 +300,7 @@ export async function GET(
 
           if (text) {
             const pageType = extractPageType(text);
+            const columns = extractColumns(text);
             const detectedImages = parseDetectedImages(text);
             await db.collection('pages').updateOne(
               { id: pageId },
@@ -312,6 +313,7 @@ export async function GET(
                   'ocr.source': 'batch_api',
                   'ocr.prompt_version': jobDoc.prompt_version || PROMPT_VERSION,
                   ...(pageType && { page_type: pageType }),
+                  ...(columns && { columns }),
                   ...(detectedImages.length > 0 && { detected_images: detectedImages }),
                   updated_at: new Date()
                 }

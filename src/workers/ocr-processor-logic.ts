@@ -9,7 +9,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
-import { PROMPT_VERSION, extractPageType, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 import { logGeminiCall } from '@/lib/gemini-logger';
@@ -108,6 +108,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
     // Save OCR result
     const pageType = extractPageType(ocrResult.text);
+    const columns = extractColumns(ocrResult.text);
     const detectedImages = parseDetectedImages(ocrResult.text);
     await pages.updateOne(
       { id: pageId },
@@ -122,6 +123,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
             prompt_version: PROMPT_VERSION
           },
           ...(pageType && { page_type: pageType }),
+          ...(columns && { columns }),
           ...(detectedImages.length > 0 && { detected_images: detectedImages }),
           updated_at: new Date()
         }
@@ -178,6 +180,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
           // Save retry result
           const retryPageType = extractPageType(retryResult.text);
+          const retryColumns = extractColumns(retryResult.text);
           const retryImages = parseDetectedImages(retryResult.text);
           await pages.updateOne(
             { id: pageId },
@@ -192,6 +195,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
                   prompt_version: PROMPT_VERSION
                 },
                 ...(retryPageType && { page_type: retryPageType }),
+                ...(retryColumns && { columns: retryColumns }),
                 ...(retryImages.length > 0 && { detected_images: retryImages }),
                 updated_at: new Date()
               }
