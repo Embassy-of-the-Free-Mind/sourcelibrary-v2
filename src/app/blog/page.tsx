@@ -20,6 +20,13 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'fechner-bohme',
+    title: 'The Mystic Who Invented Psychophysics',
+    subtitle: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works, now in Source Library, reveal the Böhmean mysticism behind the Weber-Fechner law.',
+    date: '16 February 2026',
+    readTime: '15 min read',
+  },
+  {
     slug: 'invisible-hand',
     title: 'The Invisible Hand Has a History',
     subtitle: 'Before Adam Smith, Florentine merchants, Salamanca theologians, and Cambridge Platonists built the intellectual foundations of market theory. Source Library traces the hidden lineage from Aristotle to Bastiat in original editions.',
