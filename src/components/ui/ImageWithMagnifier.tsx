@@ -210,10 +210,11 @@ export default function ImageWithMagnifier({
           loading="eager"
           className={`w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
           onLoad={() => {
-            // Detect broken/tiny images (e.g. corrupt Blob uploads < 2KB)
+            // Detect broken/tiny images (e.g. corrupt Blob uploads)
+            // Real gallery crops are 300px+ wide; corrupt ones come through ≤150px
             if (!useFallback && fallbackSrc && imgRef.current) {
               const { naturalWidth, naturalHeight } = imgRef.current;
-              if (naturalWidth < 10 || naturalHeight < 10) {
+              if (naturalWidth < 150 || naturalHeight < 150) {
                 setUseFallback(true);
                 return;
               }
