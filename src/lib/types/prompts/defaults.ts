@@ -2,7 +2,7 @@ import { ProcessingPrompts } from "./core";
 import type { DetectedImage } from "../page";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
-export const PROMPT_VERSION = 'v3.2026-02';
+export const PROMPT_VERSION = 'v4.2026-02';
 
 const VALID_PAGE_TYPES = new Set([
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',

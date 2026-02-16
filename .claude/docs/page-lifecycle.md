@@ -73,6 +73,8 @@ Extracts text from page images using Gemini vision models.
 
 **Result:** `page.ocr.data` (text), `page.ocr.model`, `page.ocr.language`, `page.ocr.source` (ai/batch_api/manual)
 
+**Column detection:** OCR prompts include `<columns>N</columns>` metadata tag and `<column-break/>` marker between columns. Extracted by `extractColumns()` and stored as `page.columns` (number, only set for 2+). All 7 OCR save paths persist this field.
+
 ## 5. Translation
 
 Translates OCR text to English. Requires pages to have `ocr.data` first.
@@ -124,6 +126,7 @@ summary: { data, model, updated_at }
 detected_images: [{ description, subject[], type, bbox, quality }]
 split_detection: { isTwoPageSpread, confidence, splitPosition }
 crop: { xStart, xEnd, yStart, yEnd }   // 0-1000 scale
+columns: number                         // 2+ for multi-column pages (from OCR <columns> tag)
 ```
 
 Key image fields:
