@@ -57,50 +57,56 @@ export async function POST(request: NextRequest) {
     const files = metadata.files || [];
     const iaMetadataRaw = metadata.metadata || {};
 
-    // First, try the reliable imagecount field from IA metadata
+    // Determine page count — prefer IIIF manifest (authoritative), fall back to metadata
     let pageCount = 0;
-    if (iaMetadataRaw.imagecount) {
-      pageCount = parseInt(iaMetadataRaw.imagecount, 10);
+    let pageCountSource = '';
+
+    // 1. IIIF manifest — most reliable, counts actual canvases
+    try {
+      const iiifRes = await fetch(
+        `https://iiif.archive.org/iiif/${ia_identifier}/manifest.json`,
+        { signal: AbortSignal.timeout(15000) }
+      );
+      if (iiifRes.ok) {
+        const manifest = await iiifRes.json();
+        // IIIF v3 uses 'items', v2 uses 'sequences[0].canvases'
+        if (manifest.items) {
+          pageCount = manifest.items.length;
+          pageCountSource = 'iiif_v3';
+        } else if (manifest.sequences?.[0]?.canvases) {
+          pageCount = manifest.sequences[0].canvases.length;
+          pageCountSource = 'iiif_v2';
+        }
+      }
+    } catch {
+      // IIIF fetch failed, continue to fallbacks
     }
 
-    // Fallback: Look for leaf images or calculate from PDF
+    // 2. IA metadata imagecount field
+    if (pageCount === 0 && iaMetadataRaw.imagecount) {
+      pageCount = parseInt(iaMetadataRaw.imagecount, 10);
+      pageCountSource = 'imagecount';
+    }
+
+    // 3. Count individual .jp2 files (if listed outside zip)
     if (pageCount === 0) {
       const jp2Files = files.filter((f: { name: string }) =>
         f.name.endsWith('.jp2') && !f.name.includes('thumb')
       );
-
       if (jp2Files.length > 1) {
-        // Only use jp2 count if there's more than 1 (some items list just 1 even for multi-page books)
         pageCount = jp2Files.length;
+        pageCountSource = 'jp2_files';
       }
     }
 
-    if (pageCount === 0) {
-      // Try to get from scandata.xml or estimate from file list
-      const scandata = files.find((f: { name: string }) => f.name === 'scandata.xml');
-      if (scandata) {
-        // Fetch scandata to get page count
-        const scandataRes = await fetch(`https://archive.org/download/${ia_identifier}/scandata.xml`);
-        if (scandataRes.ok) {
-          const scandataText = await scandataRes.text();
-          const leafMatches = scandataText.match(/<page /g);
-          pageCount = leafMatches ? leafMatches.length : 0;
-        }
-      }
-
-      // Fallback: look for _jp2.zip which contains all pages
-      if (pageCount === 0) {
-        const jp2Zip = files.find((f: { name: string }) => f.name.endsWith('_jp2.zip'));
-        if (jp2Zip) {
-          // Estimate based on file size (rough: ~500KB per page)
-          pageCount = Math.max(10, Math.floor((jp2Zip.size || 50000000) / 500000));
-        }
-      }
-    }
+    // 4. Cross-check: if imagecount or jp2 differs wildly from IIIF, trust IIIF
+    // (this catches the inflation bug where metadata reports 2-20x too many pages)
 
     if (pageCount === 0) {
-      // Default fallback
-      pageCount = 100; // Will be trimmed if pages don't exist
+      return NextResponse.json(
+        { error: `Could not determine page count for ${ia_identifier}. No IIIF manifest, no imagecount, no jp2 files found.` },
+        { status: 400 }
+      );
     }
 
     const db = await getDb();
@@ -166,6 +172,7 @@ export async function POST(request: NextRequest) {
         rights: rights,
         access_date: new Date(),
       },
+      page_count_source: pageCountSource,
       status: 'draft',
       created_at: new Date(),
       updated_at: new Date()

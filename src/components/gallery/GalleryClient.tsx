@@ -542,12 +542,16 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
 
 function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
   const [imageError, setImageError] = useState(false);
+  const [useCropFallback, setUseCropFallback] = useState(false);
 
-  const displayUrl = item.thumbnailUrl
-    || item.extractedUrl
-    || (item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : toThumbnailUrl(item.imageUrl));
+  const cropUrl = item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
+  const blobUrl = item.thumbnailUrl || item.extractedUrl;
 
-  const isPreGenerated = !!(item.thumbnailUrl || item.extractedUrl);
+  const displayUrl = useCropFallback
+    ? (cropUrl || toThumbnailUrl(item.imageUrl))
+    : (blobUrl || cropUrl || toThumbnailUrl(item.imageUrl));
+
+  const isPreGenerated = !useCropFallback && !!blobUrl;
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
 
   return (
@@ -561,7 +565,22 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
               fill
               className="object-contain group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-              onError={() => setImageError(true)}
+              onLoad={(e) => {
+                // Detect corrupt Blob thumbnails (real ones are 300px+)
+                if (!useCropFallback && blobUrl && cropUrl) {
+                  const img = e.target as HTMLImageElement;
+                  if (img.naturalWidth < 150 || img.naturalHeight < 150) {
+                    setUseCropFallback(true);
+                  }
+                }
+              }}
+              onError={() => {
+                if (!useCropFallback && cropUrl) {
+                  setUseCropFallback(true);
+                } else {
+                  setImageError(true);
+                }
+              }}
               unoptimized={!isPreGenerated && !!item.bbox}
             />
           ) : (

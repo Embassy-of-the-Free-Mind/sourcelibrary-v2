@@ -67,6 +67,8 @@ export default function ImageDetailPage({
   const [titleValue, setTitleValue] = useState('');
   const [rotation, setRotation] = useState<0 | 90 | 180 | 270>(0);
   const [savingRotation, setSavingRotation] = useState(false);
+  const [brightness, setBrightness] = useState(100);
+  const [contrast, setContrast] = useState(100);
 
   useEffect(() => {
     // Normalize separator: URLs use - but internal IDs use :
@@ -106,7 +108,20 @@ export default function ImageDetailPage({
       setMetadataValues(data.metadata);
     }
     if (data?.bbox) {
-      setBboxValues(data.bbox);
+      // Normalize pixel-value bboxes (older extractions used pixel coords instead of 0-1)
+      const b = data.bbox;
+      if (b.x > 1 || b.y > 1 || b.width > 10 || b.height > 10) {
+        // Assume pixel coords on a ~1000px reference — normalize to 0-1
+        const scale = Math.max(b.x + b.width, b.y + b.height, 1000);
+        setBboxValues({
+          x: Math.min(b.x / scale, 0.95),
+          y: Math.min(b.y / scale, 0.95),
+          width: Math.min(b.width / scale, 1),
+          height: Math.min(b.height / scale, 1),
+        });
+      } else {
+        setBboxValues(b);
+      }
     }
     if (data?.rotation != null) {
       setRotation(data.rotation as 0 | 90 | 180 | 270);
@@ -357,7 +372,12 @@ export default function ImageDetailPage({
             <div className="aspect-[4/3] h-96 relative">
               <div
                 className="w-full h-full transition-transform duration-300"
-                style={{ transform: rotation ? `rotate(${rotation}deg)` : undefined }}
+                style={{
+                  transform: rotation ? `rotate(${rotation}deg)` : undefined,
+                  filter: (brightness !== 100 || contrast !== 100)
+                    ? `brightness(${brightness}%) contrast(${contrast}%)`
+                    : undefined,
+                }}
               >
                 <ImageWithMagnifier
                   src={data.imageUrl}
@@ -377,6 +397,55 @@ export default function ImageDetailPage({
                 {data.type}
               </span>
             )}
+
+            {/* Brightness/contrast controls */}
+            <div className="absolute top-4 right-4 z-10 flex items-center gap-2">
+              {(brightness !== 100 || contrast !== 100) && (
+                <button
+                  onClick={() => { setBrightness(100); setContrast(100); }}
+                  className="px-2 py-1 bg-stone-900/80 rounded text-xs text-stone-400 hover:text-white transition-colors"
+                >
+                  Reset
+                </button>
+              )}
+              <div className="group relative">
+                <button className="p-1.5 bg-stone-900/80 rounded-lg text-stone-400 hover:text-white transition-colors">
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="5" /><line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" /><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" /><line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" /><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                  </svg>
+                </button>
+                <div className="invisible group-hover:visible absolute right-0 top-full mt-2 p-3 bg-stone-900/95 backdrop-blur-sm rounded-lg shadow-xl min-w-[180px] space-y-3">
+                  <div>
+                    <div className="flex justify-between text-xs text-stone-400 mb-1">
+                      <span>Brightness</span>
+                      <span>{brightness}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="50"
+                      max="200"
+                      value={brightness}
+                      onChange={(e) => setBrightness(parseInt(e.target.value))}
+                      className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-amber-500"
+                    />
+                  </div>
+                  <div>
+                    <div className="flex justify-between text-xs text-stone-400 mb-1">
+                      <span>Contrast</span>
+                      <span>{contrast}%</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="50"
+                      max="200"
+                      value={contrast}
+                      onChange={(e) => setContrast(parseInt(e.target.value))}
+                      className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-amber-500"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Hint for desktop users */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-stone-900/70 rounded-full text-xs text-stone-400 pointer-events-none">
@@ -716,12 +785,23 @@ export default function ImageDetailPage({
                       Bounding Box
                     </p>
                     {!editingBbox ? (
-                      <button
-                        onClick={() => setEditingBbox(true)}
-                        className="text-xs text-amber-500 hover:text-amber-400"
-                      >
-                        Edit Crop
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setEditingBbox(true)}
+                          className="text-xs text-amber-500 hover:text-amber-400"
+                        >
+                          Edit Crop
+                        </button>
+                        <button
+                          onClick={() => {
+                            setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 });
+                            setEditingBbox(true);
+                          }}
+                          className="text-xs text-stone-500 hover:text-stone-400"
+                        >
+                          Reset
+                        </button>
+                      </div>
                     ) : (
                       <div className="flex gap-2">
                         <button
@@ -731,6 +811,14 @@ export default function ImageDetailPage({
                         >
                           <Save className="w-3 h-3" />
                           {saving ? 'Saving...' : 'Save'}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setBboxValues({ x: 0.1, y: 0.1, width: 0.8, height: 0.8 });
+                          }}
+                          className="px-2 py-1 bg-stone-700 hover:bg-stone-600 rounded text-xs transition-colors"
+                        >
+                          Reset
                         </button>
                         <button
                           onClick={() => {

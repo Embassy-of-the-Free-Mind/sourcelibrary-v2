@@ -162,6 +162,44 @@ export async function POST(request: NextRequest) {
       pageOrphansRemoved = delResult.deletedCount;
     }
 
+    // Clean up demoted images: gallery_images with quality that no longer meets threshold
+    // The $merge only writes images with quality >= 0.5, but doesn't remove images that were
+    // previously above threshold and have since been demoted (e.g., manual quality edits).
+    // Check source pages for any gallery_images where quality has dropped below 0.5.
+    const demotedPipeline = [
+      // Get all gallery_images IDs
+      { $project: { _id: 0, id: 1, page_id: 1, detection_index: 1 } },
+      // Lookup source page
+      { $lookup: { from: 'pages', localField: 'page_id', foreignField: 'id', as: 'page' } },
+      { $unwind: { path: '$page', preserveNullAndEmptyArrays: true } },
+      // Find images where source quality has dropped below threshold
+      {
+        $addFields: {
+          source_quality: {
+            $arrayElemAt: ['$page.detected_images.gallery_quality', '$detection_index']
+          }
+        }
+      },
+      {
+        $match: {
+          $or: [
+            { source_quality: { $lt: 0.5 } },
+            { source_quality: null },
+            { page: { $exists: false } },
+          ]
+        }
+      },
+      { $project: { id: 1 } },
+    ];
+    const demotedImages = await db.collection('gallery_images')
+      .aggregate(demotedPipeline, { allowDiskUse: true }).toArray();
+    let demotedRemoved = 0;
+    if (demotedImages.length > 0) {
+      const demotedIds = demotedImages.map(d => d.id);
+      const delResult = await db.collection('gallery_images').deleteMany({ id: { $in: demotedIds } });
+      demotedRemoved = delResult.deletedCount;
+    }
+
     // Count what we wrote
     const total = await db.collection('gallery_images').countDocuments();
     const duration = Date.now() - startTime;
@@ -171,6 +209,7 @@ export async function POST(request: NextRequest) {
       total_images: total,
       incremental: !!since,
       orphans_removed: orphansRemoved + pageOrphansRemoved,
+      demoted_removed: demotedRemoved,
       orphan_details: { deleted_books: orphansRemoved, deleted_pages: pageOrphansRemoved },
       duration_ms: duration,
     });
