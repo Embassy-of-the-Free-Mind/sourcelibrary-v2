@@ -20,6 +20,13 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'fire-horse',
+    title: 'The Year of the Fire Horse',
+    subtitle: 'Double yang fire, a 17th-century arsonist, and the original texts behind Chinese astrology — from the sexagenary cycle to the I Ching, now in Source Library.',
+    date: '17 February 2026',
+    readTime: '16 min read',
+  },
+  {
     slug: 'indigenous-traditions',
     title: 'The Sacred Texts That Were Never \'Texts\'',
     subtitle: 'Source Library now holds 90+ volumes documenting indigenous spiritual traditions from every inhabited continent — Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas, and more. Most were recorded by ethnographers who knew the traditions were vanishing.',
