@@ -1,0 +1,70 @@
+Transcribe this page from a Rig Veda edition to Markdown.
+
+**Context:** This is a scholarly digitization of Max Müller's critical edition of the Rig-Veda-Sanhita with Sayana's commentary (1849-1874). Pages contain Sanskrit text in Devanagari script, with hymn verses (mantras) and extensive scholarly commentary (bhashya). All materials are public domain.
+
+{language_instruction}
+
+**CRITICAL — Sanskrit/Devanagari conventions:**
+1. **Script:** Text is in Devanagari script. Transcribe in Devanagari characters (do NOT romanize to IAST unless supplementing).
+2. **Layout:** Pages typically contain:
+   - **Hymn text (mantra):** The Rig Vedic verses, often in larger or distinct type
+   - **Commentary (bhashya):** Sayana's Sanskrit commentary, usually in smaller/denser type
+   - **Critical apparatus:** Variant readings, manuscript sigla
+   Clearly separate these sections in your transcription.
+3. **Verse numbering:** Mandala, Sukta, and verse numbers (e.g., म० १. अ० १. सू० १. = Mandala 1, Anuvaka 1, Sukta 1)
+4. **Vedic accents:** The text may include Vedic svarita/udatta accent marks (vertical lines above/below). Preserve them where visible.
+5. **Sandhi:** Words may be joined by sandhi rules. Transcribe as printed (do not break sandhi).
+
+**Structure your output as:**
+
+## Hymn Text
+[Vedic mantras in Devanagari, with verse numbers]
+
+## Commentary (Sayana)
+[Commentary text in Devanagari]
+
+## Critical Notes
+[If variant readings or editorial notes present]
+
+**Format:**
+- # ## ### for headings
+- **bold** for emphasized text
+- ->centered text<- for centered verse numbers or section markers
+- > blockquotes for quoted mantras within commentary
+- --- for dividers between hymn text and commentary
+
+**Metadata tags (hidden from readers):**
+- <lang>Sanskrit</lang> (REQUIRED)
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, preface, toc, index, blank, text, appendix
+- <page-num>N</page-num> — page number if visible
+- <header>X</header> — running header (mandala/sukta reference)
+- <meta>X</meta> — describe layout, identify which mandala/sukta/verses are on this page
+- <warning>X</warning> — quality issues
+- <vocab>X</vocab> — key Sanskrit terms, deity names, ritual terms
+
+**Inline annotations:**
+- <margin>X</margin> — marginal notes
+- <note>X</note> — editorial notes, verse identifications (e.g., "RV 1.1.1")
+- <unclear>X</unclear> — damaged or illegible text
+- <term>X</term> — significant Vedic terminology
+
+**Critical rules:**
+1. Transcribe in Devanagari characters — this is primary
+2. Preserve original formatting, ligatures, and conjunct consonants
+3. Separate hymn text from commentary clearly
+4. Include verse numbering systems as printed
+5. Page numbers/headers go in metadata tags ONLY
+6. Vedic accent marks: preserve where visible
+7. End with <vocab>key deities, concepts, ritual terms</vocab>
+
+**If image has quality issues**, start with <warning>describe issue</warning>
+
+**IMAGE DETECTION:** If the page contains illustrations, diagrams, or decorative elements, add at the END:
+
+<detected-images>
+[{"description": "Brief description", "type": "illustration|decorative|diagram", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why notable"}]
+</detected-images>
+
+**Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY.
+
+If text-only page, omit the <detected-images> block.

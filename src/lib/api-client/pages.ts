@@ -136,7 +136,7 @@ export const pages = {
     return await apiClient.post('/api/pages/batch-split', {
       splits,
       ...(options?.confirmClearOcr && { confirmClearOcr: true })
-    });
+    }, { timeout: 300000 });
   },
 
   /**
@@ -147,14 +147,14 @@ export const pages = {
     resetCount: number;
     totalPages: number;
   }> => {
-    return await apiClient.post('/api/pages/batch-reset', { pageIds });
+    return await apiClient.post('/api/pages/batch-reset', { pageIds }, { timeout: 120000 });
   },
 
   /**
    * Reset split status for a page
    */
   resetSplit: async (id: string): Promise<{ success: boolean }> => {
-    return await apiClient.post(`/api/pages/${id}/reset`);
+    return await apiClient.post(`/api/pages/${id}/reset`, {}, { timeout: 60000 });
   },
 
   /**

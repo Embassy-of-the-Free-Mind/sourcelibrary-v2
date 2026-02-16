@@ -1,0 +1,65 @@
+Transcribe this page from the Codex Sinaiticus facsimile to Markdown.
+
+**Context:** This is a scholarly digitization of the Codex Sinaiticus, one of the oldest nearly complete manuscripts of the Bible (4th century CE). The text is written in Greek uncial (majuscule) script with scriptio continua (no word spacing). Pages typically have 4 columns. All materials are public domain facsimile reproductions.
+
+{language_instruction}
+
+**CRITICAL — Greek uncial conventions:**
+1. **Scriptio continua:** The original has no spaces between words. You MUST segment into words for readability.
+2. **Nomina sacra:** Sacred names are abbreviated with an overline. Expand them with the abbreviation noted:
+   - ΘΣ → <term>ΘΣ (Θεός)</term>
+   - ΚΣ → <term>ΚΣ (Κύριος)</term>
+   - ΙΣ → <term>ΙΣ (Ἰησοῦς)</term>
+   - ΧΣ → <term>ΧΣ (Χριστός)</term>
+   - ΠΝΑ → <term>ΠΝΑ (Πνεῦμα)</term>
+   - ΠΗΡ → <term>ΠΗΡ (Πατήρ)</term>
+   - ΑΝΟΣ → <term>ΑΝΟΣ (ἄνθρωπος)</term>
+   - ΥΣ → <term>ΥΣ (Υἱός)</term>
+   - ΣΡΟΝ → <term>ΣΡΟΝ (σταυρόν)</term>
+   - ΟΥΝΟΣ → <term>ΟΥΝΟΣ (οὐρανός)</term>
+3. **Columns:** Transcribe each column separately under ## Column 1, ## Column 2, etc.
+4. **Line breaks:** Preserve line-by-line layout with hyphenation at line ends where the scribe broke words.
+5. **Later corrections:** Note additions, erasures, and corrections by later hands with <note>correction detail</note>.
+6. **Eusebian section numbers:** Note marginal section numbers with <margin>Section N</margin>.
+
+**Output Greek in standard polytonic Greek** (lowercase with accents and breathing marks), segmented into words. The original is uncial (all capitals, no accents), but modern polytonic transcription is the scholarly standard.
+
+**Format:**
+- # ## ### for headings — use ## for column headers
+- ->centered text<- for centered lines
+- --- for dividers between columns
+
+**Metadata tags (hidden from readers):**
+- <lang>Greek</lang> (REQUIRED)
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, blank, illustration, text
+- <page-num>N</page-num> — folio number if visible
+- <header>X</header> — running header (book name, e.g., ΚΑΤΑ ΜΑΘΘΑΙΟΝ)
+- <meta>X</meta> — describe: which biblical book/chapter, column count, notable features (corrections, lacunae)
+- <warning>X</warning> — quality issues
+- <vocab>X</vocab> — key verse references (e.g., Matthew 21:2-31)
+
+**Inline annotations:**
+- <margin>X</margin> — marginal section numbers, quire marks
+- <note>X</note> — corrections by later hands, erasures, textual notes
+- <unclear>X</unclear> — damaged or illegible text
+- <term>X</term> — nomina sacra (as shown above)
+
+**Critical rules:**
+1. Segment scriptio continua into words — this is essential for readability
+2. Use standard polytonic Greek (with accents/breathing) for the transcription
+3. Note ALL later corrections and additions — these are textually significant
+4. Preserve line-by-line layout within each column
+5. Page numbers/headers go in metadata tags ONLY
+6. End with <vocab>chapter:verse references covered on this page</vocab>
+
+**If image has quality issues**, start with <warning>describe issue</warning>
+
+**IMAGE DETECTION:** If the page contains ANY illustrations, decorative elements, or notable physical features, add at the END:
+
+<detected-images>
+[{"description": "Brief description", "type": "illustration|decorative|diagram", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why notable"}]
+</detected-images>
+
+**Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY.
+
+If text-only page, omit the <detected-images> block.

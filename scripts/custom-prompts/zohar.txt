@@ -1,0 +1,68 @@
+Transcribe this page from a historical Zohar edition to Markdown.
+
+**Context:** This is a scholarly digitization of an early printed edition of the Sefer ha-Zohar (Book of Splendour), the central text of Jewish Kabbalah. The text is primarily in Aramaic with some Hebrew passages, printed in Rashi script (a semi-cursive Hebrew typeface used in rabbinic printing). Pages may have main text with surrounding commentary, or single-column text. All materials are public domain from institutional archives.
+
+{language_instruction}
+
+**CRITICAL — Hebrew/Aramaic text conventions:**
+1. **Script:** The text uses Rashi script (semi-cursive), not standard Hebrew square script. Read and transcribe into standard Hebrew characters.
+2. **Direction:** Hebrew and Aramaic are read right-to-left. Transcribe the text as-is in Hebrew characters.
+3. **Language:** The Zohar is primarily in Aramaic (Zoharic Aramaic), with Hebrew interpolations. Note the language in <lang> tag.
+4. **Layout:** Pages may have:
+   - Single column of main Zohar text
+   - Main text with Rashi commentary surrounding it (smaller type)
+   - Main text with Or Yakar or other commentaries in margins
+   Transcribe main text first, then commentary sections.
+5. **Folio numbers:** Hebrew folio numbers (e.g., כד = 24) appear at page top, usually with the parasha name.
+6. **Parasha markers:** The Torah portion name (e.g., ויקרא, בראשית) often appears as a header.
+
+**Structure your output as:**
+
+## Main Text (Zohar)
+[Main Zohar text in Hebrew/Aramaic characters]
+
+## Commentary
+[If commentary present — identify which commentary if possible]
+
+**Format:**
+- # ## ### for headings
+- **bold**, *italic* for emphasis
+- ->centered text<- for centered lines
+- > blockquotes for quoted biblical verses
+- --- for dividers between text sections
+
+**Metadata tags (hidden from readers):**
+- <lang>Aramaic</lang> or <lang>Hebrew, Aramaic</lang> (REQUIRED)
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, blank, text, toc, index, colophon
+- <page-num>N</page-num> — Hebrew folio number (e.g., כד)
+- <header>X</header> — parasha name or section header
+- <meta>X</meta> — describe layout (single column, main+commentary), identify parasha and approximate Zohar section
+- <warning>X</warning> — quality issues
+- <vocab>X</vocab> — key Kabbalistic terms (e.g., Sefirot names, divine names, key Aramaic terms)
+
+**Inline annotations:**
+- <margin>X</margin> — marginal notes or cross-references
+- <note>X</note> — interpretive notes (biblical references, section identifications)
+- <unclear>X</unclear> — damaged or illegible text
+- <term>X</term> — key Kabbalistic terminology
+
+**Critical rules:**
+1. Transcribe in Hebrew characters (do NOT romanize)
+2. Preserve original spelling and abbreviations
+3. Identify biblical quotations where recognizable (note the reference)
+4. Rashi script abbreviations: expand common ones (e.g., ד"א = דבר אחר, ר"א = רבי אלעזר)
+5. Page numbers/headers go in metadata tags ONLY
+6. Note where commentary differs from main text
+7. End with <vocab>key Kabbalistic terms, divine names, sefirot</vocab>
+
+**If image has quality issues**, start with <warning>describe issue</warning>
+
+**IMAGE DETECTION:** If the page contains decorative elements, diagrams (Kabbalistic trees, sefirotic diagrams), or illustrations, add at the END:
+
+<detected-images>
+[{"description": "Brief description", "type": "diagram|decorative|illustration", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why notable"}]
+</detected-images>
+
+**Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY.
+
+If text-only page, omit the <detected-images> block.

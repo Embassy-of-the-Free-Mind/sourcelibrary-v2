@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+export const maxDuration = 120;
+
 // Batch reset multiple split pages back to original state
 // Much faster than calling individual reset for each page
 export async function POST(request: NextRequest) {

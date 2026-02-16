@@ -1,0 +1,78 @@
+Transcribe this page from a polyglot Bible (multi-language parallel text) to Markdown.
+
+**Context:** This is a scholarly digitization project transcribing the Complutensian Polyglot Bible (1514-1517), one of the earliest printed polyglot Bibles. Pages contain parallel columns of text in multiple languages: Hebrew, Aramaic (Targum), Greek (Septuagint), Latin (Vulgate), and sometimes interlinear Latin translations. All materials are public domain from institutional archives.
+
+{language_instruction}
+
+**CRITICAL — Column-by-column transcription:**
+This page has multiple parallel columns, each in a different language/script. Transcribe EACH column separately under a labeled heading:
+
+## Hebrew
+[Right-to-left Hebrew text, transcribed in Hebrew characters]
+
+## Greek (Septuagint)
+[Greek text with diacritics and breathing marks]
+
+## Latin (Vulgate)
+[Latin Vulgate text]
+
+## Aramaic (Targum)
+[Aramaic text in Hebrew characters, if present — usually in footer]
+
+## Latin Translation of Targum
+[Latin translation of the Aramaic, if present — usually in footer]
+
+**Column identification tips:**
+- Hebrew columns use Hebrew square script with vocalization marks (nikkud) and cantillation (te'amim)
+- Greek columns have lowercase with diacritics, breathing marks, and sometimes interlinear smaller Latin
+- Latin Vulgate is typically the center column in Roman type
+- Aramaic Targum (when present) appears in footer columns, also in Hebrew script but different text
+- Interlinear Latin (tiny text between Greek lines) should be noted with <gloss>interlinear: text</gloss>
+
+**Format:**
+- # ## ### for headings (bigger text = bigger heading) — NEVER combine with centering syntax
+- **bold**, *italic* for emphasis
+- ->centered text<- for centered lines (NOT for headings)
+- > blockquotes for quotes/prayers
+- --- for dividers between columns
+
+**Tables:** Use markdown tables ONLY for actual tabular data with clear rows/columns.
+
+**Metadata tags (hidden from readers):**
+- <lang>X</lang> — list ALL languages on this page, comma-separated (REQUIRED)
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text
+- <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
+- <header>X</header> — running headers/chapter titles at top of page (NEVER duplicate as heading in body)
+- <sig>X</sig> — printer's marks like A2, B1 (NOT in body text)
+- <meta>X</meta> — describe the column layout, which languages are present, chapter/verse references
+- <warning>X</warning> — quality issues (faded, damaged, blurry)
+- <vocab>X</vocab> — key terms for indexing
+
+**Inline annotations (visible to readers):**
+- <margin>X</margin> — marginal notes, citations
+- <gloss>X</gloss> — interlinear annotations (especially small Latin between Greek lines)
+- <unclear>X</unclear> — illegible readings
+- <note>X</note> — interpretive notes (e.g., chapter/verse identifications)
+- <term>X</term> — technical vocabulary
+
+**Critical rules:**
+1. Preserve original spelling, capitalization, punctuation in ALL scripts
+2. Hebrew and Aramaic: transcribe in Hebrew characters (do not romanize)
+3. Greek: preserve all diacritics, breathing marks, iota subscripts
+4. Page numbers/headers go in metadata tags ONLY
+5. Decorative initials (drop caps): merge with the following word
+6. IGNORE partial text at left/right edges from adjacent pages
+7. Identify chapter and verse numbers where visible (e.g., Cap.xvii, verse markers)
+8. End with <vocab>key terms, names, concepts</vocab>
+
+**If image has quality issues**, start with <warning>describe issue</warning>
+
+**IMAGE DETECTION:** If the page contains ANY illustrations, diagrams, emblems, woodcuts, engravings, or decorative elements, add at the END:
+
+<detected-images>
+[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
+</detected-images>
+
+**Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY.
+
+If text-only page, omit the <detected-images> block.

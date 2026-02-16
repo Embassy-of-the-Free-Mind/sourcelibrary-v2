@@ -1,0 +1,77 @@
+Transcribe this page from Athanasius Kircher's Oedipus Aegyptiacus to Markdown.
+
+**Context:** This is a scholarly digitization of Kircher's monumental encyclopedic work on Egyptian hieroglyphics and comparative religion (1652-54). Pages contain Latin text alongside hieroglyphic drawings, Greek, Hebrew, Arabic, Coptic, Chinese, and other scripts. Kircher's work is famous for its syncretic approach, attempting to connect Egyptian wisdom with all world traditions. All materials are public domain.
+
+{language_instruction}
+
+**CRITICAL — Multi-script handling:**
+This work contains an extraordinary variety of scripts and visual elements. Handle each as follows:
+
+1. **Latin:** Primary text language. Transcribe normally with original spelling and ligatures (æ, œ).
+2. **Greek:** Transcribe in Greek characters with polytonic accents.
+3. **Hebrew:** Transcribe in Hebrew characters (do not romanize).
+4. **Arabic:** Transcribe in Arabic characters if possible. If not legible enough, describe in <note>Arabic text: [description of content]</note>.
+5. **Coptic:** Transcribe in Coptic/Greek characters where possible.
+6. **Hieroglyphics:** These CANNOT be transcribed as text. Instead, describe them:
+   - Use <note>Hieroglyphic inscription: [describe the symbols, their arrangement, and Kircher's interpretation if given in surrounding text]</note>
+   - If in a table or figure, include in <detected-images> with detailed description
+7. **Chinese/Other scripts:** Describe rather than attempt transcription: <note>Chinese characters: [description]</note>
+8. **Symbolic/alchemical/astrological signs:** Describe in <note> tags.
+
+**For tables and comparative charts:**
+Kircher frequently presents comparative tables (hieroglyphs ↔ Greek ↔ Hebrew ↔ meanings). Use markdown tables:
+| Hieroglyphic | Greek | Hebrew | Latin meaning |
+|-------------|-------|--------|--------------|
+| [describe symbol] | Α | א | Processus |
+
+**Format:**
+- # ## ### for headings (bigger text = bigger heading) — NEVER combine with centering syntax
+- **bold**, *italic* for emphasis
+- ->centered text<- for centered lines (NOT for headings)
+- > blockquotes for quoted passages
+- --- for dividers
+
+**Metadata tags (hidden from readers):**
+- <lang>X</lang> — list ALL languages/scripts on this page, comma-separated (REQUIRED)
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text
+- <page-num>N</page-num> — visible page numbers (NOT in body text)
+- <header>X</header> — running headers (NEVER duplicate as heading in body)
+- <sig>X</sig> — printer's marks
+- <meta>X</meta> — describe which scripts are present, the topic (e.g., "Comparative table of hieroglyphs and Greek alphabet"), and which section of Oedipus Aegyptiacus
+- <warning>X</warning> — quality issues
+- <vocab>X</vocab> — key terms for indexing
+
+**Inline annotations (visible to readers):**
+- <margin>X</margin> — marginal notes, citations
+- <gloss>X</gloss> — interlinear annotations
+- <note>X</note> — interpretive notes, descriptions of non-transcribable scripts
+- <unclear>X</unclear> — illegible readings
+- <term>X</term> — technical vocabulary (especially Kircher's coined terms)
+
+**Critical rules:**
+1. Preserve original Latin spelling, capitalization, punctuation (including æ, œ ligatures)
+2. Transcribe Greek and Hebrew in their native scripts
+3. DESCRIBE rather than skip non-transcribable elements (hieroglyphs, symbols, diagrams)
+4. Page numbers/headers go in metadata tags ONLY
+5. Decorative initials (drop caps): merge with the following word
+6. IGNORE partial text at edges from adjacent pages
+7. Capture ALL text including margins and annotations
+8. End with <vocab>key terms, names, concepts</vocab>
+
+**If image has quality issues**, start with <warning>describe issue</warning>
+
+**IMAGE DETECTION:** This work is HEAVILY illustrated. If the page contains ANY illustrations, diagrams, hieroglyphic plates, emblems, engravings, comparative tables with visual elements, or decorative features, add at the END:
+
+<detected-images>
+[{"description": "Detailed description including what scripts/symbols are shown", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map|illustration", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy — Kircher's syncretic visual scholarship is historically significant", "museum_description": "2-3 sentence museum label describing the image, its context in Kircher's work, and its significance for the history of Egyptology", "metadata": {"subjects": ["relevant", "subjects"], "technique": "copperplate engraving"}}]
+</detected-images>
+
+**Bounding box (0.0-1.0):** x=left edge, y=top edge. Measure PRECISELY to tightly enclose each illustration.
+
+**Gallery quality for Kircher:**
+- 0.9-1.0: Full-page hieroglyphic plates, allegorical engravings, Isiac Table reproductions
+- 0.7-0.9: Comparative script tables, symbolic diagrams, Kabbalistic trees
+- 0.4-0.7: Small inline diagrams, simple symbol comparisons
+- 0.0-0.4: Decorative headers, printer's ornaments
+
+If text-only page with no visual elements, omit the <detected-images> block.

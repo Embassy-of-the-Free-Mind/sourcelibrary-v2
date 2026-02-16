@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+export const maxDuration = 60;
+
 // Reset a split page back to its original state
 // This removes the crop from the original and deletes the split sibling
 export async function POST(

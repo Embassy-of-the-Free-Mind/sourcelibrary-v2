@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
+export const maxDuration = 60;
+
 interface BoundingBox {
   xmin: number;
   xmax: number;
