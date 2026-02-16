@@ -14,6 +14,7 @@ export const maxDuration = 300;
  *   - limit: max detections to process (default 200, max 500)
  *   - bookId: optional, process only this book
  *   - minQuality: minimum gallery_quality (default 0, e.g. 0.9 for best images)
+ *   - archivedOnly: if 'true', only process pages with archived_photo (Blob URLs, much faster)
  *   - dry_run: if 'true', just count how many need processing
  */
 export async function POST(request: NextRequest) {
@@ -23,6 +24,7 @@ export async function POST(request: NextRequest) {
     const bookId = searchParams.get('bookId');
     const minQuality = parseFloat(searchParams.get('minQuality') || '0');
     const dryRun = searchParams.get('dry_run') === 'true';
+    const archivedOnly = searchParams.get('archivedOnly') === 'true';
 
     const db = await getDb();
 
@@ -36,13 +38,19 @@ export async function POST(request: NextRequest) {
           ...(minQuality > 0 ? { gallery_quality: { $gte: minQuality } } : {}),
         }
       },
-      $or: [
+    };
+
+    if (archivedOnly) {
+      // Only pages with fast Vercel Blob URLs
+      matchFilter.archived_photo = { $exists: true, $ne: '' };
+    } else {
+      matchFilter.$or = [
         { archived_photo: { $exists: true, $ne: '' } },
         { cropped_photo: { $exists: true, $ne: '' } },
         { photo_original: { $exists: true, $ne: '' } },
         { photo: { $exists: true, $ne: '' } },
-      ],
-    };
+      ];
+    }
     if (bookId) matchFilter.book_id = bookId;
 
     if (dryRun) {
@@ -52,6 +60,7 @@ export async function POST(request: NextRequest) {
 
     const pages = await db.collection('pages')
       .find(matchFilter)
+      .sort({ archived_photo: -1 }) // Prioritize pages with archived (Blob) images
       .limit(limit)
       .project({ id: 1, book_id: 1, detected_images: 1, archived_photo: 1, cropped_photo: 1, photo_original: 1, photo: 1 })
       .toArray();
