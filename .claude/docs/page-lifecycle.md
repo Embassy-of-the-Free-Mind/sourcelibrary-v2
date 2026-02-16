@@ -73,7 +73,7 @@ Extracts text from page images using Gemini vision models.
 
 **Result:** `page.ocr.data` (text), `page.ocr.model`, `page.ocr.language`, `page.ocr.source` (ai/batch_api/manual)
 
-**Column detection:** OCR prompts include `<columns>N</columns>` metadata tag and `<column-break/>` marker between columns. Extracted by `extractColumns()` and stored as `page.columns` (number, only set for 2+). All 7 OCR save paths persist this field.
+**Column detection:** OCR prompts include `<columns>N</columns>` metadata tag and `<column-break/>` marker between columns. Extracted by `extractColumns()` and stored as `page.columns` (number, only set for 2+). All 7 OCR save paths persist this field. See "Multi-Column Rendering" section below.
 
 ## 5. Translation
 
@@ -146,6 +146,65 @@ id, page_id, book_id, snapshot_type (pre_ocr|pre_translate|manual_backup),
 ocr_data, translation_data, summary_data,
 created_at, triggered_by_job_id, restored_at, restored_by
 ```
+
+## Multi-Column Rendering
+
+Many early printed books use two-column layouts (e.g. Kircher's *Ars Magna*). The system detects and renders these with a dual approach.
+
+### OCR Tags (Feb 2026, prompt v4.2026-02+)
+
+Two complementary tags in OCR output:
+- **`<columns>N</columns>`** — metadata classification. Easy for the model to produce. Extracted by `extractColumns()` in `src/lib/types/prompts/defaults.ts`, stored as `page.columns`.
+- **`<column-break/>`** — inline marker at the physical column boundary. Left column text above, right column text below. Harder for the model to place precisely, but produces accurate layouts.
+
+### Rendering (`NotesRenderer`)
+
+`src/components/reader/NotesRenderer.tsx` renders multi-column pages as a CSS grid:
+
+1. **Primary:** Split on `<column-break/>` marker. If found, each segment becomes a grid column.
+2. **Fallback:** If `page.columns >= 2` but no `<column-break/>` marker exists, split at the nearest paragraph boundary around the 50% midpoint (requires 4+ paragraphs).
+3. **Single column:** If neither condition met, render normally.
+
+`TranslationEditor` passes `page.columns` to all three `NotesRenderer` instances (OCR view, translation view, modernized English view).
+
+### Save Paths
+
+All 7 OCR save paths extract and persist `columns`:
+1. `src/workers/ocr-processor-logic.ts` — Lambda worker (success + RECITATION retry)
+2. `src/app/api/cron/process-batches/route.ts` — Batch API cron
+3. `src/app/api/books/[id]/batch-ocr-async/route.ts` — Batch OCR results collection
+4. `src/app/api/contribute/process/route.ts` — Contributor processing
+5. `src/app/api/admin/backfill-detected-images/route.ts` — Backfill route
+6. `src/app/api/process/route.ts` — Single-page realtime processing
+
+### Backfilling
+
+Existing pages with OCR data that contains `<columns>` tags can be backfilled via the `backfill-detected-images` route, which also extracts columns. Pages processed before prompt v4.2026-02 won't have column tags in their OCR output.
+
+## Prompt Versioning
+
+Prompts are stored in the `prompts` MongoDB collection with **immutable versioning**:
+- Each `{name, version}` pair is a unique, immutable document
+- Updates create new versions (auto-incrementing version number), never modify old ones
+- `is_default` flag marks which version is active for each prompt type
+- DELETE is not supported — full audit trail preserved
+
+**`PROMPT_VERSION`** constant (`src/lib/types/prompts/defaults.ts`) is a semantic tag stored on every page record. Bump it when prompts change materially. Current: `v4.2026-02`.
+
+**DB prompt families** (with version history):
+| Name | Type | Current Version | Key Features |
+|------|------|----------------|--------------|
+| Standard OCR | ocr | v5 | XML tags, page-type, image detection, columns |
+| Latin OCR (Neo-Latin) | ocr | v3 | Latin-specific abbreviations, columns |
+| German OCR (Fraktur) | ocr | v3 | Fraktur/Kurrent handling, columns |
+| Standard Translation | translation | latest | General translation |
+| Latin Translation | translation | latest | Neo-Latin conventions |
+| German Translation | translation | latest | Early Modern German |
+| Standard Summary | summary | latest | Reading summary |
+
+**Lookup:** `getOcrPrompt()`, `getTranslationPrompt()`, `getSummaryPrompt()` in `src/lib/prompts.ts`. Falls back to hardcoded defaults if DB unavailable.
+
+**API:** `GET /api/prompts?all_versions=true&type=ocr` to browse all versions.
 
 ## Stale Book-Level Fields
 
