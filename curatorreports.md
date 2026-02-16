@@ -6148,3 +6148,337 @@ Imported in 5 tiers covering the full range of liturgical traditions from ancien
 ### Session 035 TOTAL: ~297 books, ~174,568 pages across sacred texts and liturgical traditions
 
 ---
+
+## Session 036: World Religious Traditions Expansion (Indian, East Asian, African, Indigenous)
+
+**Date:** 2026-02-16
+**Curator:** Claude (13 parallel import agents)
+**Source:** Internet Archive
+**Method:** 13 specialized agents launched in waves, covering Indian religious/philosophical traditions, East Asian classics, African traditions, and indigenous traditions worldwide. 3 agents completed fully; 10 hit IA rate limits but imported significant batches before cutoff.
+
+### Wave 1: Indian Religious & Philosophical Traditions (6 agents)
+
+#### Jain Texts (Agent aa07a4a — COMPLETED)
+~26 books, ~5,100+ pages
+
+**Kundakunda corpus (complete):**
+1. Pravacanasara (406 pages)
+2. Samayasara: The Soul-Essence (246 pages)
+3. Samayasara, or The Nature of the Self (424 pages)
+4. Samayasara (Sacred Books of the Jainas, Vol. VIII) (240 pages)
+5. Niyamasara: The Essence of Soul-Adoration (226 pages)
+6. Niyamasara: The Perfect Law (86 pages)
+7. Pancastikayasara: The Building of the Cosmos (300 pages)
+
+**Canonical & philosophical:**
+8. Tattvartha Sutra (67 pages)
+9. Tattvartha Sutra: That Which Is (371 pages)
+10. Pancastikaya-samgraha: The Jaina Metaphysics (261 pages)
+11. Aptamimamsa (Devagamastotra) (112 pages)
+12. Dravyasamgraha: With Authentic Explanatory Notes (129 pages)
+13. Ratnakarandaka-Sravakachara: The Jewel-Casket (136 pages)
+14. Ratnakaranda-Sravakachara: The Householders Dharma (167 pages)
+15. The Doctrine of Karman in Jain Philosophy (146 pages)
+16. Sacred Jaina Texts (100 pages)
+
+**Hemachandra (6-volume set + Parisishtaparvan):**
+17. Sthaviravali Charita (Parisishtaparvan) (100 pages)
+18. Trisastisalakapurusacaritra, Vol. 1 (63 pages)
+19. Trisastisalakapurusacaritra, Vol. 2 (1,121 pages)
+20. Trisastisalakapurusacaritra, Vol. 3 (561 pages)
+21. Trisastisalakapurusacaritra, Vol. 4 (573 pages)
+22. Trisastisalakapurusacaritra, Vol. 5 (679 pages)
+23. Trisastisalakapurusacaritra, Vol. 6 (587 pages)
+
+**Western scholarship:**
+24. Outlines of Jainism (212 pages)
+25. The Heart of Jainism (376 pages)
+26. Jainism in Western Garb (158 pages)
+
+#### Hindu Philosophy / Six Darshanas (Agent a65ad65 — COMPLETED)
+~20 books, ~8,500+ pages
+
+**Samkhya:**
+1. The Samkhya Philosophy: Samkhya-Pravachana Sutram (210 pages)
+2. The Samkhya-Pravachana-Bhasya (281 pages)
+
+**Nyaya (4-volume set):**
+3. The Nyaya Sutras of Gautama, Vol. 1 (510 pages)
+4. The Nyaya Sutras of Gautama, Vol. 2 (1,203 pages)
+5. The Nyaya Sutras of Gautama, Vol. 3 (188 pages)
+6. The Nyaya Sutras of Gautama, Vol. 4 (259 pages)
+
+**Vaisheshika:**
+7. Vaisheshika Sutra of Kanada (43 pages)
+
+**Mimamsa:**
+8. The Mimamsa Sutra of Jaimini (1,098 pages)
+
+**Vedanta (from SBE):**
+9. Vedanta Sutras, Part 1: Shankaracharya (SBE 34) (593 pages)
+10. Vedanta Sutras, Part 2: Shankaracharya (SBE 38) (533 pages)
+11. Vedanta Sutras, Part 3: Ramanuja (SBE 48) (829 pages)
+
+**Dasgupta's History of Indian Philosophy (5 volumes):**
+12. Volume 1 (554 pages)
+13. Volume 2 (644 pages)
+14. Volume 3 (455 pages)
+15. Volume 4: Indian Pluralism (512 pages)
+16. Volume 5: Southern Schools of Saivism (230 pages)
+
+**Radhakrishnan's Indian Philosophy (2 volumes):**
+17. Volume I (754 pages)
+18. Volume II (735 pages)
+
+**Survey:**
+19. Outlines of Indian Philosophy (1,020 pages)
+
+#### Tamil & Regional Indian (Agent afe4d58 — COMPLETED)
+~12 books, ~4,250+ pages
+
+1. The Silappadikaram (972 pages)
+2. The Sacred Kurral of Tiruvalluva-Nayanar (458 pages)
+3. The Tiruvacagam: Sacred Utterances of Manikka-Vacagar (556 pages)
+4. Hymns of the Tamil Saivite Saints (164 pages)
+5. The Naladiyar: Four Hundred Quatrains in Tamil (512 pages)
+6. Poems of Ancient Tamil: Their Milieu and Sanskrit Counterparts (339 pages)
+7. Four Hundred Songs of War and Wisdom (Purananuru) (352 pages)
+8. Songs of Kabir (175 pages)
+9. One Hundred Songs of Kabir (211 pages)
+10. Gitanjali (Song Offerings) — Tagore (94 pages)
+11. Northern Indian Music (426 pages)
+12. Epic Mythology (100 pages)
+
+#### Hindu Puranas & Epics (Agent aa2220a — RATE LIMITED)
+~40+ books, ~35,000+ pages
+
+**Major Puranas imported (most complete English editions available):**
+1. The Vishnu Purana (1,708 pages)
+2. The Bhagavata Purana, Parts 1-5 (607 + 144 + 1,132 + 891 + 1,117 pages)
+3. The Markandeya Purana (Pargiter) (1,210 pages)
+4. Agni Purana, Unabridged (1,166 pages)
+5. The Siva Purana, Parts 1-4 (132 + 152 + 169 + 184 pages)
+6. The Vayu Purana, Parts 1-2 (3,457 + 1,997 pages)
+7. The Brahmanda Purana, Parts 1-5 (1,398 + 1,174 + 81 + 91 + 630 pages)
+8. The Kurma Purana (Complete) (1,517 pages)
+9. The Brahma Vaivarta Purana (Complete) (4,034 pages)
+10. The Linga Purana, Parts 1-2 (1,934 + 1,163 pages)
+11. The Garuda Purana (M.N. Dutt) (273 pages)
+12. The Garuda Purana (3 Vols in 1) (3,355 pages)
+13. The Matsya Purana (591 pages)
+14. The Skanda Purana (426 + 434 pages)
+15. The Padma Purana, Parts 3 and 5 (108 + 1,259 pages)
+16. Le Bhagavata Purana (Burnouf, 2 eds) (423 + 274 pages)
+
+**Mahabharata:**
+17. The Mahabharata: Adi Parva (BORI Critical Edition) (821 pages)
+18. The Mahabharata (Roy translation), 8 volumes (690 + 1,190 + 798 + 1,232 + 758 + 674 + 928 + 824 pages)
+
+**Bhagavad Gita:**
+19. The Song Celestial (198 pages)
+20. The Bhagavad Gita, or The Message of the Master (202 pages)
+
+**Political philosophy:**
+21. Kautilya's Arthashastra (Shamasastry) (579 pages)
+
+#### Buddhist Pali Canon (Agent ada074b — RATE LIMITED)
+~6 books confirmed (may have imported more)
+
+Note: Pali Canon texts already present from SBE volumes. Additional finds limited — "Dialogues of the Buddha" and "Majjhima Nikaya" not confirmed in search.
+
+1. Vinaya Texts, Parts 1-3 (SBE Vols. 13, 17, 20) (449 + 505 + 493 pages)
+2. The Dhammapada (SBE Vol. 10) (344 pages)
+3. The Questions of King Milinda, Parts 1-2 (SBE 35-36) (441 + 433 pages)
+
+#### Mahayana & Tibetan Buddhism (Agent a3af2e1 — RATE LIMITED)
+~17 books, ~7,100+ pages
+
+1. The Lankavatara Sutra (376 pages)
+2. Studies in the Lankavatara Sutra (718 pages)
+3. The Diamond Sutra and The Sutra of Hui-neng (186 pages)
+4. The Diamond Sutra (Chin-kang-ching) (160 pages)
+5. Buddhist Logic, Vol. I — Stcherbatsky (561 pages)
+6. Buddhist Logic, Vol. II (1,163 pages)
+7. Tibetan Book of the Dead (1927 ed.) (257 pages)
+8. The Tibetan Book of the Dead (211 pages)
+9. The Tibetan Book of the Great Liberation (358 pages)
+10. Bodhicaryavatara of Santideva (777 pages)
+11. Saddharma Pundarika Sutra (Lotus Sutra) (451 pages)
+12. The Surangama Sutra (245 pages)
+13. Awakening of Faith in the Mahayana (Asvaghosha) (196 pages)
+14. Buddhist Mahayana Texts (SBE Vol. 49) (483 pages)
+15. A Buddhist Bible (Goddard) (712 pages)
+16. Outlines of Mahayana Buddhism (444 pages)
+17. Essays in Zen Buddhism: First Series — Suzuki (326 pages)
+
+### Wave 2: East Asian Traditions (3 agents)
+
+#### Chinese Classics & Philosophy (Agent a5ff904 — RATE LIMITED)
+~11 books, ~4,400+ pages
+
+1. The Art of War: The Oldest Military Treatise — Sun Tzu (268 pages)
+2. The Platform Sutra of the Sixth Patriarch (268 pages)
+3. Monkey: A Folk Novel of China (Journey to the West) (358 pages)
+4. The Gateless Gate (Wumenguan) (98 pages)
+5. The Blue Cliff Record (Biyanlu) (698 pages)
+6. The Ethical and Political Works of Motse (Mozi) (302 pages)
+7. The Works of Hsuntze (Xunzi) (407 pages)
+8. The Complete Works of Han Fei Tzu (360 pages)
+9. The Philosophy of Wang Yang-ming (548 pages)
+10. Myths and Legends of China (1,242 pages)
+11. The I Ching or Book of Changes (Wilhelm) (816 pages)
+
+#### Japanese Classics & Religion (Agent abecb3c — RATE LIMITED)
+~13 books, ~5,100+ pages
+
+**Core texts:**
+1. Nihongi: Chronicles of Japan (893 pages)
+2. Nihongi: Chronicles of Japan, Vol. 1 (444 pages)
+3. Kojiki (Japanese edition) (618 pages)
+4. Kojiki: Records of Ancient Matters (674 pages)
+5. The Kojiki: Records of Ancient Matters (100 pages)
+6. Myths and Legends of Japan (632 pages)
+
+**Lafcadio Hearn collection:**
+7. Gleanings in Buddha-Fields (318 pages)
+8. Kotto: Being Japanese Curios (288 pages)
+9. Kwaidan: Stories and Studies of Strange Things (268 pages)
+10. Shadowings (300 pages)
+11. Some Chinese Ghosts (200 pages)
+12. In Ghostly Japan (280 pages)
+
+**Not imported (rate limited):** Bushido, Tale of Genji, Hagakure, Noh plays
+
+#### Korean, SE Asian & Mongolian (Agent a52199f — RATE LIMITED)
+~12 books, ~4,200+ pages
+
+1. Samguk Yusa: Legends and History of the Three Kingdoms (374 pages)
+2. The Secret History of the Mongols (634 pages)
+3. The Glass Palace Chronicle of the Kings of Burma (591 pages)
+4. History of Burma (360 pages)
+5. Religions of Old Korea (318 pages)
+6. The Passing of Korea (592 pages)
+7. The History of Korea, Vol. 1 (414 pages)
+8. The History of Korea, Vol. 2 (436 pages)
+9. Korea and Her Neighbours, Vol. 1 (324 pages)
+10. Korea and Her Neighbours, Vol. 2 (374 pages)
+11. RASKB Transactions, Vols. 1, 4 Pt 2, 22 (104 + 104 + 108 pages)
+
+### Wave 3: African & Indigenous Traditions (4 agents)
+
+#### African Religious Traditions (Agent a212848 — RATE LIMITED)
+~17 books, ~5,300+ pages
+
+**East African:**
+1. Kebra Nagast: The Queen of Sheba (414 pages)
+
+**Southern African:**
+2. The Religious System of the Amazulu — Callaway (100 pages)
+
+**West African (major ethnographic corpus):**
+3. Fetichism in West Africa (452 pages)
+4. Travels in West Africa — Mary Kingsley (818 pages)
+5. Wit and Wisdom from West Africa (497 pages)
+6. West African Studies (100 pages)
+7. The Tshi-Speaking Peoples of the Gold Coast — A.B. Ellis (366 pages)
+8. The Yoruba-Speaking Peoples of the Slave Coast — A.B. Ellis (271 pages)
+9. The Ewe-Speaking Peoples of the Slave Coast — A.B. Ellis (351 pages)
+10. Nigerian Studies: Religious and Political System of the Yoruba (284 pages)
+11. The Peoples of Southern Nigeria, Vols. 1 & 3 (100 + 100 pages)
+12. Life in Southern Nigeria: Magic, Beliefs and Customs of the Ibibio (450 pages)
+13. At the Back of the Black Man's Mind (362 pages)
+
+**African diaspora:**
+14. Old Rabbit, the Voodoo, and Other Sorcerers (334 pages)
+15. Voodoo Tales (344 pages)
+16. Hayti, or the Black Republic (100 pages)
+
+**Native American (cross-listed):**
+17. Black Elk Speaks (280 pages)
+
+**Not imported (rate limited):** Dogon texts, Sundiata, Bantu Philosophy
+
+#### Native American Traditions (Agent a003f54 — RATE LIMITED)
+~20 books, ~7,000+ pages
+
+**Cherokee:**
+1. Myths of the Cherokee — James Mooney (634 pages)
+2. Cherokee Sacred Formulas (Swimmer Manuscript) (370 pages)
+3. The Sacred Formulas of the Cherokees (100 pages)
+
+**Mesoamerican:**
+4. The Book of Chilam Balam of Chumayel (250 pages)
+
+**Northwest Coast:**
+5. Tsimshian Mythology — Franz Boas (1,060 pages)
+6. Tlingit Myths and Texts (476 pages)
+
+**Northeast / Algonquian:**
+7. The Algonquin Legends of New England (432 pages)
+8. Algic Researches, Vol. 2 (498 pages)
+9. Seneca Myths and Folk Tales (528 pages)
+
+**Zuni (3 books):**
+10. Zuni Fetishes (58 pages)
+11. Zuni Breadstuff — Cushing (740 pages)
+12. Zuni Folk Tales — Cushing (532 pages)
+
+**Plains:**
+13. The Pawnee Mythology, Part I (570 pages)
+14. Traditions of the Skidi Pawnee (434 pages)
+15. Pawnee Hero Stories and Folk-Tales (460 pages)
+
+**Southwest:**
+16. The Mountain Chant: A Navajo Ceremony (160 pages)
+17. Truth of a Hopi (150 pages)
+18. The Traditions of the Hopi (342 pages)
+
+**Arapaho:**
+(Confirmed imported but not found in targeted search — may be under different title)
+
+#### Oceanian & Pacific (Agent ad4fc80 — RATE LIMITED)
+~4 books, ~1,200+ pages
+
+1. Polynesian Mythology (386 pages)
+2. Maori Religion and Mythology (148 pages)
+3. Ancient History of the Maori, Vol. 1 (384 pages)
+4. The Kumulipo: A Hawaiian Creation Chant (286 pages)
+
+#### South American Indigenous (Agent a694d6f — RATE LIMITED)
+~2 books, ~500 pages
+
+1. Popol Vuh: Le livre sacre des Quiches (412 pages)
+2. The Popol Vuh: Mythic and Heroic Sagas of the Kiches (83 pages)
+
+**Not imported (rate limited):** Inca texts, Guarani, Amazonian traditions
+
+### Coverage Analysis
+
+**Strongest coverage:**
+- **Jain canon** — most complete English-language Jain library available, including complete Kundakunda corpus and Hemachandra's 6-volume epic
+- **Hindu Puranas** — extraordinary depth with nearly all 18 major Puranas represented, many in multi-volume critical editions
+- **Mahabharata** — both Protap Chandra Roy's complete 8-volume translation and BORI critical edition
+- **Indian philosophy** — Dasgupta's 5-volume and Radhakrishnan's 2-volume surveys provide comprehensive intellectual history
+- **Mahayana Buddhism** — key sutras (Lankavatara, Diamond, Lotus, Surangama, Platform) plus Stcherbatsky and Suzuki scholarship
+- **Native American** — strong representation across Cherokee, Zuni, Pawnee, Algonquian, Tsimshian, Tlingit, Hopi, Navajo traditions
+- **West African ethnography** — A.B. Ellis trilogy (Tshi, Yoruba, Ewe) plus Kingsley, Talbot, and other major field accounts
+
+**Known gaps (rate-limited, to resume):**
+- **Pali Canon:** Digha Nikaya (Dialogues of the Buddha), Majjhima Nikaya, Jataka Tales, Visuddhimagga
+- **Japanese:** Bushido (Nitobe), Tale of Genji (Waley), Hagakure, Noh plays, Book of Tea
+- **African:** Dogon cosmology (Griaule), Sundiata epic, Bantu Philosophy (Tempels)
+- **South American:** Inca religious texts, Guarani creation myths, Amazonian shamanic traditions
+- **Oceanian:** Aboriginal Dreamtime texts, Melanesian mythology, additional Pacific traditions
+
+### Notes
+
+- **IA rate limiting** hit 10 of 13 agents. The 3 that completed fully (Jain, Darshanas, Tamil) launched earliest. Rate limit resets at 3am Amsterdam time.
+- **Purana collection** is remarkably deep — the Brahma Vaivarta Purana alone is 4,034 pages. Total Purana pages exceed 30,000.
+- **Lafcadio Hearn** collection (6 books) provides invaluable late 19th-century ethnographic observations of Japanese folk religion and supernatural beliefs
+- **A.B. Ellis trilogy** (Tshi, Yoruba, Ewe speaking peoples) is a cornerstone of West African ethnography, documenting religious systems before colonial disruption
+- **Duplicate check needed** — some texts may overlap with existing SBE volumes or earlier imports
+- Library totals after session: **4,103 books, 1,625,487 pages**
+
+### Session 036 TOTAL: ~200 books, ~87,600+ pages across world religious traditions
+
+---
