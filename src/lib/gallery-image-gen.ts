@@ -112,8 +112,11 @@ export async function generateGalleryImages(
     }),
   ]);
 
+  // Append cache-busting param so CDN/browser don't serve stale crops after bbox edits
+  const cacheBust = `?v=${Date.now()}`;
+
   return {
-    extractedUrl: extractedBlob.url,
-    thumbnailUrl: thumbnailBlob.url,
+    extractedUrl: extractedBlob.url + cacheBust,
+    thumbnailUrl: thumbnailBlob.url + cacheBust,
   };
 }
