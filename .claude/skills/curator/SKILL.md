@@ -95,7 +95,31 @@ Goal: match the scope of the Loeb Classical Library's Greek half (~280 volumes, 
 | **Renaissance** | Zarlino, Vincenzo Galilei, Glarean, Gaffurius, Praetorius |
 | **Cross-Cultural** | Al-Farabi, Al-Kindi, Ikhwan al-Safa, Sufi sama traditions |
 
-### East Asian & Chinese Collections (Priority 2)
+### Syriac & Armenian Collections (Priority 2)
+| Collection | Key Authors/Texts |
+|------------|-------------------|
+| **Syriac Christianity** | Ephrem (Hymns, Carmina Nisibena), Bardaisan (Book of the Laws of Countries), Isaac of Nineveh, Philoxenus |
+| **Syriac Mysticism** | Pseudo-Dionysius (Syriac transmission), Book of the Holy Hierotheos, Odes of Solomon, Hymn of the Pearl |
+| **Syriac Apocrypha** | Cave of Treasures, Book of the Bee, Acts of Thomas, Pseudo-Methodios |
+| **Armenian Historiography** | Agathangelos (History of Armenia), Moses of Chorene (History of the Armenians), Elishe, Sebeos |
+| **Armenian Theology** | Eznik of Kolb (Refutation of Sects), Gregory of Narek (Book of Lamentations), Nerses Shnorhali |
+| **Armenian Philosophy** | David the Invincible, Philo in Armenian (Aucher ed.), Armenian Eusebius Chronicle |
+| **Armenian Liturgy** | Book of Letters (Girk T'ghtots), Koriwn (Life of Mashtots) |
+
+**Edition priority for Syriac/Armenian:**
+1. Original Syriac/Armenian (Grabar) text editions — Mechitarist/San Lazzaro Venice publications
+2. 19th c. critical editions with original text (Cureton, Wright, Budge, Bedjan, Bickell)
+3. Latin translations by early Orientalists
+4. French/German scholarly editions
+5. NEVER import English-only translations when original text editions exist
+
+**Key publishers:**
+- **Mechitarist Congregation, San Lazzaro (Venice)** — definitive Armenian Grabar editions
+- **Paul Bedjan** — Syriac text editions (Acta Martyrum et Sanctorum, etc.)
+- **William Wright** — Syriac manuscripts catalog, editions
+- **William Cureton** — Spicilegium Syriacum (Bardaisan, etc.)
+
+### East Asian & Chinese Collections (Priority 3)
 | Collection | Key Texts/Genres |
 |------------|-----------------|
 | **Cosmology & Divination** | I Ching commentaries, star charts, Five Elements astrology, Hetu/Luoshu diagrams |
@@ -113,9 +137,11 @@ Goal: match the scope of the Loeb Classical Library's Greek half (~280 volumes, 
 5. Italian (Renaissance sources)
 6. French (18th century editions)
 7. Dutch (Amsterdam printing)
-8. Classical Chinese / Literary Chinese (cosmology, divination, Daoist canon)
-9. Arabic (Islamic science, Hermetic tradition)
-10. Hebrew (Kabbalistic texts)
+8. Syriac (early Christianity, mysticism, apocrypha)
+9. Armenian / Grabar (historiography, theology, philosophy)
+10. Classical Chinese / Literary Chinese (cosmology, divination, Daoist canon)
+11. Arabic (Islamic science, Hermetic tradition)
+12. Hebrew (Kabbalistic texts)
 
 ---
 
@@ -185,14 +211,14 @@ curl -s "https://sourcelibrary.org/api/books" | jq '[.[] | {id, title, author, y
 ```bash
 curl -s -X POST "https://sourcelibrary.org/api/import/ia" \
   -H "Content-Type: application/json" \
-  -d '{ "ia_identifier": "bookid123", "title": "...", "author": "...", "year": 1617, "original_language": "Latin" }'
+  -d '{ "ia_identifier": "bookid123", "title": "...", "author": "...", "year": 1617, "language": "Latin" }'
 ```
 
 #### Gallica (BnF)
 ```bash
 curl -s -X POST "https://sourcelibrary.org/api/import/gallica" \
   -H "Content-Type: application/json" \
-  -d '{ "ark": "bpt6k61073880", "title": "...", "author": "...", "year": 1617, "original_language": "Latin" }'
+  -d '{ "ark": "bpt6k61073880", "title": "...", "author": "...", "year": 1617, "language": "Latin" }'
 ```
 
 #### MDZ (Bavarian State Library)
@@ -308,6 +334,20 @@ curl -s "https://archive.org/advancedsearch.php?q=creator:(Paracelsus)+mediatype
 - e-codices (Swiss MSS): search at https://e-codices.unifr.ch/ (use generic IIIF import)
 - Biblissima (aggregator): search at https://iiif.biblissima.fr/collections/
 
+```bash
+# Biblissima IIIF aggregator — 40+ European libraries, pre-1800 MSS
+# Returns manifest URLs ready for /api/import/iiif
+curl -s "https://sourcelibrary.org/api/search/biblissima?q=hermetica&language=Latin" | jq '.results[] | {title, manifest_url, library, date, detected_provider}'
+
+# Filter by language, collection, library, location
+curl -s "https://sourcelibrary.org/api/search/biblissima?q=plato&language=Greek&limit=40" | jq '.total, (.results[] | {title, manifest_url, library})'
+
+# Import a result via generic IIIF
+curl -s -X POST "https://sourcelibrary.org/api/import/iiif" \
+  -H "Content-Type: application/json" \
+  -d '{"manifest_url": "URL_FROM_RESULT", "title": "...", "author": "...", "language": "Latin", "provider": "Biblissima/Bodleian"}'
+```
+
 **Greek manuscript search patterns:**
 - Vatican DigiVatLib: browse `https://digi.vatlib.it/mss/Vat.gr` or search `site:digi.vatlib.it "Author Name"`
 - Cambridge CUDL Greek: browse `https://cudl.lib.cam.ac.uk/collections/greekmanuscripts` (425+ MSS)
@@ -343,7 +383,56 @@ BOOK_ID=$(echo "$RESP" | jq -r '.book.id // .id')
 echo "Imported: $BOOK_ID"
 ```
 
-### Phase 4: Queue Processing
+### Phase 4: Archive Images & Generate Thumbnails
+
+After import, archive images and generate thumbnails. The fast standalone scripts connect directly to MongoDB + Vercel Blob, bypassing the slow Vercel API. Archive does download + upload + thumbnail in one pass.
+
+**Fast archive script** (preferred — archives images AND generates thumbnails together):
+```bash
+# Single book
+secret-lover run -- npx tsx scripts/archive-images-fast.ts --book-id=$BOOK_ID
+
+# All recently imported books (last 7 days)
+secret-lover run -- npx tsx scripts/archive-images-fast.ts --days=7
+
+# Most recent N books
+secret-lover run -- npx tsx scripts/archive-images-fast.ts --recent=30
+
+# By source (ia, gallica, mdz, cambridge, vatican, bodleian, hab, erara, wellcome)
+secret-lover run -- npx tsx scripts/archive-images-fast.ts --source=ia --concurrency=15
+```
+
+**Hetzner server** (46.224.122.120) — much faster than local (~20-34 pages/sec):
+```bash
+# Deploy latest scripts to Hetzner
+scp scripts/archive-images-fast.ts root@46.224.122.120:/root/thumbnails/
+scp scripts/generate-thumbnails-fast.ts root@46.224.122.120:/root/thumbnails/
+
+# Run archiver on Hetzner (uses run-archive.sh wrapper with env vars)
+ssh root@46.224.122.120 "cd /root/thumbnails && nohup bash run-archive.sh > archive.log 2>&1 &"
+
+# Check progress
+ssh root@46.224.122.120 "tail -20 /root/thumbnails/archive.log"
+
+# Run thumbnail generator for remaining pages (already-archived only)
+ssh root@46.224.122.120 "cd /root/thumbnails && nohup bash run.sh > thumbnails.log 2>&1 &"
+ssh root@46.224.122.120 "tail -20 /root/thumbnails/thumbnails.log"
+```
+
+**Fallback API routes** (slower, limited to 50 pages per call):
+```bash
+curl -s -X POST "https://sourcelibrary.org/api/books/$BOOK_ID/archive-images" \
+  -H "Content-Type: application/json" -d '{"limit": 1000}'
+curl -s -X POST "https://sourcelibrary.org/api/books/$BOOK_ID/generate-thumbnails"
+```
+
+**Notes:**
+- The archive script does archiving + thumbnails in one pass — no need to run separately
+- Vercel Blob rate limits at ~50 concurrent uploads. Keep concurrency ≤20 for archiving (2 uploads per page)
+- Pages marked `archived_photo: "failed:..."` had permanent errors — retry with `--force` later
+- After a batch import session, always run archiving for the new books
+
+### Phase 5: Queue Processing
 
 After import, queue for OCR:
 
@@ -495,6 +584,33 @@ Major repositories of digitized Greek manuscripts. These are the highest-priorit
 - Vatican: Vat.gr.1 (already have), Vat.gr.218 (Plato Republic), Vat.gr.1594 (Pindar)
 - BnF: Grec 1807 (Plato, 9th c.), Grec 2771 (Homer, 10th c.), Grec 2 (Gospels, 10th c.)
 - British Library: Burney 86 (Plato, 13th c.), Add. 17210 (Thucydides), Royal 16.C.IV (Ptolemy)
+
+### Armenian & Syriac Libraries
+| Library | URL | Strengths |
+|---------|-----|-----------|
+| **Mechitarist San Lazzaro (via IA)** | `archive.org` | Definitive Armenian Grabar editions — search `creator:(Mechitarist) OR publisher:(San Lazzaro)` |
+| **Armenian Manuscripts Index** | `armenian-manuscripts-index.com` | 2,579 MSS from 48 digital libraries, IIIF access, Mirador viewer, genre filtering, Calfa Vision annotation — aggregator for all digitized Armenian MSS worldwide |
+| **Matenadaran (via IA/Gallica)** | Various | Armenian MSS institute, some digitized on partner sites |
+| **Cambridge CUDL Syriac** | `cudl.lib.cam.ac.uk/collections/syriac` | 300+ Syriac MSS, biblical, liturgical, scientific |
+| **British Library Syriac** | `bl.uk/manuscripts` | Rich Syriac collection (Add., Or. series), use generic IIIF |
+| **Vatican Syriac** | `digi.vatlib.it` | Vat.sir. collection — use `/api/import/vatican` with `mss_id: "Vat.sir.{N}"` |
+| **Bibliothèque nationale de France** | `gallica.bnf.fr` | Fonds syriaque — search `syriaque site:gallica.bnf.fr` |
+
+**Syriac texts already in collection:**
+- Spicilegium Syriacum (Bardaisan) — Cureton ed.
+- Hymn of the Soul/Pearl — Bevan ed.
+- Odes of Solomon — Harris/Mingana ed.
+- Cave of Treasures — Bezold ed.
+- Book of the Bee — Solomon of Basra
+- Isaac of Nineveh — De Perfectione
+- Carmina Nisibena — Ephrem, Bickell ed.
+- Apocryphal Acts of the Apostles — Wright ed.
+- Philoxenus — various editions
+
+**Armenian text search patterns:**
+- IA: `creator:(Agathangelos OR "Moses of Chorene" OR Mechitarist) mediatype:(texts)`
+- IA: `publisher:("San Lazzaro" OR "Mechitarist" OR "Venice Armenian") mediatype:(texts)`
+- Gallica: `arménien site:gallica.bnf.fr`
 
 ### East Asian IIIF Libraries (use generic IIIF import)
 | Library | URL | Manifest Pattern | Strengths |

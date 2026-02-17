@@ -18,6 +18,8 @@
  *   npx tsx scripts/archive-images-fast.ts --source=ia              # only Internet Archive
  *   npx tsx scripts/archive-images-fast.ts --source=blob            # only Vercel Blob fixup
  *   npx tsx scripts/archive-images-fast.ts --book-id=abc123         # single book
+ *   npx tsx scripts/archive-images-fast.ts --recent=50              # 50 most recent books
+ *   npx tsx scripts/archive-images-fast.ts --days=7                 # books imported in last N days
  *   npx tsx scripts/archive-images-fast.ts --skip-thumbnails        # skip thumbnail generation
  */
 
@@ -30,6 +32,8 @@ const CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--concurrency=
 const PAGE_LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 const BOOK_ID = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
 const SOURCE_FILTER = process.argv.find(a => a.startsWith('--source='))?.split('=')[1]; // ia, gallica, mdz, wellcome, erara, blob, s3
+const RECENT = parseInt(process.argv.find(a => a.startsWith('--recent='))?.split('=')[1] || '0', 10);
+const DAYS = parseInt(process.argv.find(a => a.startsWith('--days='))?.split('=')[1] || '0', 10);
 const SKIP_THUMBNAILS = process.argv.includes('--skip-thumbnails');
 const DOWNLOAD_TIMEOUT = parseInt(process.argv.find(a => a.startsWith('--timeout='))?.split('=')[1] || '30000', 10);
 
@@ -289,10 +293,34 @@ async function runPool(pages: any[], db: any) {
 
 async function main() {
   console.log(`Image archiver — concurrency: ${CONCURRENCY}, limit: ${PAGE_LIMIT || 'all'}, source: ${SOURCE_FILTER || 'all'}, timeout: ${DOWNLOAD_TIMEOUT}ms`);
+  if (BOOK_ID) console.log(`  Book: ${BOOK_ID}`);
+  if (RECENT) console.log(`  Recent: ${RECENT} books`);
+  if (DAYS) console.log(`  Days: last ${DAYS}`);
 
   const client = new MongoClient(MONGODB_URI!);
   await client.connect();
   const db = client.db('bookstore');
+
+  // If --recent or --days, resolve to book IDs first
+  let bookIdFilter: string[] | null = null;
+  if (RECENT || DAYS) {
+    const bookQuery: any = {};
+    if (DAYS) {
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - DAYS);
+      bookQuery.created_at = { $gte: cutoff };
+    }
+    const books = await db.collection('books')
+      .find(bookQuery, { projection: { id: 1, title: 1 } })
+      .sort({ created_at: -1 })
+      .limit(RECENT || 0)
+      .toArray();
+    bookIdFilter = books.map(b => b.id);
+    console.log(`  Resolved to ${bookIdFilter.length} books`);
+    if (bookIdFilter.length <= 10) {
+      books.forEach(b => console.log(`    - ${b.title?.slice(0, 60)}`));
+    }
+  }
 
   // Build query for pages needing archiving
   const query: any = {
@@ -313,6 +341,7 @@ async function main() {
   }
 
   if (BOOK_ID) query.book_id = BOOK_ID;
+  if (bookIdFilter) query.book_id = { $in: bookIdFilter };
 
   const totalNeeding = await db.collection('pages').countDocuments(query);
   console.log(`Pages needing archiving: ${totalNeeding}`);
