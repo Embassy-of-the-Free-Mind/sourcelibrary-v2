@@ -7,6 +7,7 @@ import remarkBreaks from 'remark-breaks';
 import rehypeRaw from 'rehype-raw';
 import { ChevronDown, ChevronRight, Info } from 'lucide-react';
 import { isRTLLanguage } from '@/lib/types';
+import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 
 interface NotesRendererProps {
   text: string;
@@ -335,28 +336,28 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
       case 'term':
         const termParts = content.split(/→|->/).map((s: string) => s.trim());
         parts.push(
-          <span key={key++} className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
+          <span key={key++} className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Technical term">
             <em>{termParts[0]}</em>{termParts.length > 1 ? ` (${termParts[1]})` : ''}
           </span>
         );
         break;
       case 'margin':
         parts.push(
-          <span key={key++} className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
+          <span key={key++} className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Marginal note in original">
             {content}
           </span>
         );
         break;
       case 'gloss':
         parts.push(
-          <span key={key++} className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
+          <span key={key++} className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Gloss/annotation in original">
             {content}
           </span>
         );
         break;
       case 'insert':
         parts.push(
-          <span key={key++} className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
+          <span key={key++} className={`${NOTE_TAG_STYLES.insert} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Later insertion">
             {content}
           </span>
         );
@@ -451,7 +452,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
           </span>
         )}
         {metadata.pageType && metadata.pageType !== 'text' && (
-          <span className="px-1.5 py-0.5 bg-indigo-100 rounded text-indigo-700">
+          <span className={`px-1.5 py-0.5 rounded ${NOTE_TAG_STYLES.pageType}`}>
             {metadata.pageType}
           </span>
         )}
@@ -472,7 +473,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
           {metadata.keywords.length > 0 && (
             <div>
               <span className="font-medium text-stone-500">Keywords: </span>
-              <span className="text-indigo-700">
+              <span className={NOTE_TAG_STYLES.keywords}>
                 {metadata.keywords.join(', ')}
               </span>
             </div>
@@ -480,7 +481,7 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
           {metadata.vocabulary.length > 0 && (
             <div>
               <span className="font-medium text-stone-500">Vocabulary: </span>
-              <span className="font-mono text-purple-700">
+              <span className={`font-mono ${NOTE_TAG_STYLES.keywords}`}>
                 {metadata.vocabulary.join(', ')}
               </span>
             </div>
@@ -554,7 +555,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         ol: ({ children, start }: any) => <ol className="list-decimal ml-5 my-3 space-y-1" start={start}>{children}</ol>,
         li: withNotes(({ children }: any) => <li className="leading-relaxed">{children}</li>),
         blockquote: withNotes(({ children }: any) => (
-          <blockquote className="border-l-3 border-amber-300 pl-4 my-4 italic text-stone-600 bg-amber-50/30 py-2 pr-2 rounded-r">
+          <blockquote className={`border-l-3 ${NOTE_TAG_STYLES.blockquote} pl-4 my-4 italic text-stone-600 py-2 pr-2 rounded-r`}>
             {children}
           </blockquote>
         )),
@@ -607,17 +608,17 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
           </span>
         ) : null,
         margin: ({ children }: any) => showNotes ? (
-          <span className="bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded text-sm mx-0.5 border-l-2 border-teal-400" title="Marginal note in original">
+          <span className={`${NOTE_TAG_STYLES.margin} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Marginal note in original">
             {children}
           </span>
         ) : null,
         gloss: ({ children }: any) => showNotes ? (
-          <span className="bg-purple-100 text-purple-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Gloss/annotation in original">
+          <span className={`${NOTE_TAG_STYLES.gloss} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Gloss/annotation in original">
             {children}
           </span>
         ) : null,
         insert: ({ children }: any) => showNotes ? (
-          <span className="bg-green-100 text-green-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Later insertion">
+          <span className={`${NOTE_TAG_STYLES.insert} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Later insertion">
             {children}
           </span>
         ) : null,
@@ -627,7 +628,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
           </span>
         ) : null,
         term: ({ children }: any) => (
-          <span className="bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Technical term">
+          <span className={`${NOTE_TAG_STYLES.term} px-1.5 py-0.5 rounded text-sm mx-0.5`} title="Technical term">
             <em>{children}</em>
           </span>
         ),

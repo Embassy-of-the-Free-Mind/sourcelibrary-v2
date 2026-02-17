@@ -21,6 +21,7 @@ import {
 } from '@/lib/api-client';
 import { sendGAEvent } from '@/lib/ga';
 import HighlightedText from '@/components/search/HighlightedText';
+import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -572,8 +573,8 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
       className="block bg-white rounded-xl border border-stone-200 p-4 hover:border-amber-300 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-3">
-        <div className={`p-2 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-amber-100' : 'bg-blue-100'}`}>
-          {result.type === 'book' ? <Book className="w-4 h-4 text-amber-700" /> : <FileText className="w-4 h-4 text-blue-700" />}
+        <div className={`p-2 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-amber-100' : 'bg-accent-sage/12'}`}>
+          {result.type === 'book' ? <Book className="w-4 h-4 text-amber-700" /> : <FileText className="w-4 h-4 text-accent-sage-dark" />}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
@@ -622,32 +623,14 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
         ? `/book/${result.book_id}/guide?page=${result.pages[0]}`
         : `/book/${result.book_id}`
       }
-      className="block bg-white rounded-xl border border-stone-200 p-4 hover:border-purple-300 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-stone-200 p-4 hover:border-accent-violet/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-3">
-        <div className={`p-2 rounded-lg flex-shrink-0 ${
-          result.type === 'concept' ? 'bg-purple-100' :
-          result.type === 'person' ? 'bg-blue-100' :
-          result.type === 'place' ? 'bg-green-100' :
-          result.type === 'quote' ? 'bg-amber-100' :
-          result.type === 'vocabulary' ? 'bg-rose-100' : 'bg-stone-100'
-        }`}>
-          <TypeIcon className={`w-4 h-4 ${
-            result.type === 'concept' ? 'text-purple-700' :
-            result.type === 'person' ? 'text-blue-700' :
-            result.type === 'place' ? 'text-green-700' :
-            result.type === 'quote' ? 'text-amber-700' :
-            result.type === 'vocabulary' ? 'text-rose-700' : 'text-stone-700'
-          }`} />
+        <div className={`p-2 rounded-lg flex-shrink-0 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge.split(' ')[0]}`}>
+          <TypeIcon className={`w-4 h-4 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).iconColor}`} />
         </div>
         <div className="flex-1 min-w-0">
-          <span className={`text-xs px-2 py-0.5 rounded-full ${
-            result.type === 'concept' ? 'bg-purple-100 text-purple-700' :
-            result.type === 'person' ? 'bg-blue-100 text-blue-700' :
-            result.type === 'place' ? 'bg-green-100 text-green-700' :
-            result.type === 'quote' ? 'bg-amber-100 text-amber-700' :
-            result.type === 'vocabulary' ? 'bg-rose-100 text-rose-700' : 'bg-stone-100 text-stone-700'
-          }`}>{typeLabel}</span>
+          <span className={`text-xs px-2 py-0.5 rounded-full ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge}`}>{typeLabel}</span>
 
           {isQuote ? (
             <>

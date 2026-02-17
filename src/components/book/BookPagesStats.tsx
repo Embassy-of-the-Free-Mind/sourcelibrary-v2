@@ -36,8 +36,8 @@ export default function BookPagesStats({
     <div className="flex flex-wrap items-center gap-6">
       {/* OCR stat */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#eff6ff' }}>
-          <FileText className="w-5 h-5" style={{ color: '#3b82f6' }} />
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-accent-sage/10">
+          <FileText className="w-5 h-5 text-accent-sage" />
         </div>
         <div>
           <div className="flex items-baseline gap-1.5">
@@ -50,8 +50,8 @@ export default function BookPagesStats({
 
       {/* Translation stat */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#f0fdf4' }}>
-          <Languages className="w-5 h-5" style={{ color: '#22c55e' }} />
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-accent-rust/8">
+          <Languages className="w-5 h-5 text-accent-rust" />
         </div>
         <div>
           <div className="flex items-baseline gap-1.5">

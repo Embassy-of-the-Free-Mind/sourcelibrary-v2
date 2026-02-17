@@ -9,6 +9,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi } from '@/lib/api-client';
 import type { UnifiedSearchResponse } from '@/lib/api-client';
 import HighlightedText from './HighlightedText';
+import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 
 const TYPE_ICONS: Record<string, typeof Lightbulb> = {
   concept: Lightbulb,
@@ -173,7 +174,7 @@ export default function UnifiedSearch() {
     <div ref={containerRef} className="relative w-full">
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" aria-hidden="true" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" aria-hidden="true" />
         <input
           ref={inputRef}
           type="search"
@@ -188,15 +189,15 @@ export default function UnifiedSearch() {
           aria-activedescendant={activeIndex >= 0 ? `search-item-${activeIndex}` : undefined}
           role="combobox"
           aria-controls="search-results"
-          className="w-full pl-12 pr-12 py-4 bg-white/95 backdrop-blur border border-white/20 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-lg shadow-lg"
+          className="w-full pl-12 pr-12 py-4 bg-white/95 backdrop-blur border border-white/20 rounded-2xl text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-lg shadow-lg"
         />
         {loading && (
-          <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 animate-spin" />
+          <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 animate-spin" />
         )}
         {query && !loading && (
           <button
             onClick={clearSearch}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
             aria-label="Clear search"
           >
             <X className="w-5 h-5" aria-hidden="true" />
@@ -206,11 +207,11 @@ export default function UnifiedSearch() {
 
       {/* Results Dropdown */}
       {isOpen && (hasResults || noResults) && (
-        <div id="search-results" role="listbox" className="absolute top-full mt-2 left-0 right-0 bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto">
+        <div id="search-results" role="listbox" className="absolute top-full mt-2 left-0 right-0 bg-white rounded-xl shadow-xl border border-stone-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto">
           {noResults ? (
             <div className="p-6 text-center">
-              <Search className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-              <p className="text-gray-500">No results for &ldquo;{query}&rdquo;</p>
+              <Search className="w-8 h-8 text-stone-300 mx-auto mb-2" />
+              <p className="text-stone-500">No results for &ldquo;{query}&rdquo;</p>
               {suggestion && (
                 <p className="text-sm text-stone-600 mt-2">
                   Did you mean{' '}
@@ -236,14 +237,14 @@ export default function UnifiedSearch() {
               </Link>
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-stone-100">
               {/* Books */}
               {results && results.books.total > 0 && (() => {
                 const bookStartIndex = 0;
                 return (
                   <div className="p-3">
                     <div className="flex items-center justify-between mb-2 px-2">
-                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                      <span className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
                         Books ({results.books.total})
                       </span>
                       {results.books.total > 5 && (
@@ -273,10 +274,10 @@ export default function UnifiedSearch() {
                         >
                           <Book className="w-4 h-4 text-amber-600 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-gray-900 truncate text-sm">
+                            <p className="font-medium text-stone-900 truncate text-sm">
                               <HighlightedText text={book.display_title || book.title} query={query} />
                             </p>
-                            <p className="text-xs text-gray-500 truncate">
+                            <p className="text-xs text-stone-500 truncate">
                               <HighlightedText text={book.author} query={query} />
                             </p>
                           </div>
@@ -298,7 +299,7 @@ export default function UnifiedSearch() {
                 return (
                   <div className="p-3">
                     <div className="flex items-center justify-between mb-2 px-2">
-                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                      <span className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
                         Index ({results.index.total})
                       </span>
                       {results.index.total > 5 && (
@@ -327,26 +328,20 @@ export default function UnifiedSearch() {
                           aria-selected={activeIndex === itemIndex}
                           data-search-index={itemIndex}
                           className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${
-                            activeIndex === itemIndex ? 'bg-purple-50' : 'hover:bg-purple-50'
+                            activeIndex === itemIndex ? 'bg-accent-violet/[0.06]' : 'hover:bg-accent-violet/[0.06]'
                           }`}
                         >
                           <Icon className={`w-4 h-4 flex-shrink-0 ${
-                            item.type === 'concept' ? 'text-purple-500' :
-                            item.type === 'person' ? 'text-blue-500' :
-                            item.type === 'place' ? 'text-green-500' :
-                            'text-gray-500'
+                            ENTITY_TYPE_STYLES[item.type as EntityType]?.iconColor ?? 'text-stone-500'
                           }`} />
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-gray-900 text-sm">
+                            <p className="font-medium text-stone-900 text-sm">
                               <HighlightedText text={item.term} query={query} />
                             </p>
-                            <p className="text-xs text-gray-500 truncate">{item.book_title}</p>
+                            <p className="text-xs text-stone-500 truncate">{item.book_title}</p>
                           </div>
                           <span className={`text-[10px] px-1.5 py-0.5 rounded ${
-                            item.type === 'concept' ? 'bg-purple-100 text-purple-700' :
-                            item.type === 'person' ? 'bg-blue-100 text-blue-700' :
-                            item.type === 'place' ? 'bg-green-100 text-green-700' :
-                            'bg-gray-100 text-gray-700'
+                            ENTITY_TYPE_STYLES[item.type as EntityType]?.badge ?? 'bg-stone-100 text-stone-700'
                           }`}>
                             {item.type}
                           </span>
@@ -363,7 +358,7 @@ export default function UnifiedSearch() {
                 return (
                   <div className="p-3">
                     <div className="flex items-center justify-between mb-2 px-2">
-                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+                      <span className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
                         Images ({galleryResults.length})
                       </span>
                       <Link
@@ -404,10 +399,10 @@ export default function UnifiedSearch() {
                             <ImageIcon className="w-4 h-4 text-rose-400 flex-shrink-0" />
                           )}
                           <div className="flex-1 min-w-0">
-                            <p className="font-medium text-gray-900 text-sm truncate">
+                            <p className="font-medium text-stone-900 text-sm truncate">
                               <HighlightedText text={img.description || 'Gallery image'} query={query} />
                             </p>
-                            <p className="text-xs text-gray-500 truncate">{img.bookTitle}</p>
+                            <p className="text-xs text-stone-500 truncate">{img.bookTitle}</p>
                           </div>
                           {img.type && (
                             <span className="text-[10px] px-1.5 py-0.5 bg-rose-100 text-rose-700 rounded">
@@ -435,7 +430,7 @@ export default function UnifiedSearch() {
                     className={`flex items-center justify-center gap-2 p-3 text-sm font-medium transition-colors ${
                       activeIndex === fullSearchIndex
                         ? 'bg-amber-50 text-amber-800'
-                        : 'bg-gray-50 text-gray-600 hover:text-gray-900'
+                        : 'bg-stone-50 text-stone-600 hover:text-stone-900'
                     }`}
                   >
                     <Search className="w-4 h-4" />

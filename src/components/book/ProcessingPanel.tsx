@@ -1,6 +1,7 @@
 import { Settings, Play, FileText, Languages, ImageIcon, Sun, Loader2 } from 'lucide-react';
 import type { JobType, Job } from '@/lib/types/job';
 import type { Prompt } from '@/lib/types';
+import { PROCESSING_ACTION_LABELS, PROCESSING_ACTION_CSS_COLORS, type ProcessingAction } from '@/lib/style-constants';
 
 export type ActionType = JobType | 'adjust_images';
 
@@ -28,11 +29,20 @@ interface ProcessingPanelProps {
   onBrightnessChange?: (value: number) => void;
 }
 
+const actionIcons: Record<ActionType, any> = {
+  ocr: FileText,
+  translation: Languages,
+  summary: FileText,
+  image_extraction: ImageIcon,
+  adjust_images: Sun,
+};
+
 const actionConfig: Record<ActionType, { label: string; icon: any; color: string }> = {
-  ocr: { label: 'OCR', icon: FileText, color: '#3b82f6' },
-  translation: { label: 'Translation', icon: Languages, color: '#22c55e' },
-  summary: { label: 'Summary', icon: FileText, color: '#a855f7' },
-  image_extraction: { label: 'Images', icon: ImageIcon, color: '#f97316' },
+  ...Object.fromEntries(
+    (['ocr', 'translation', 'summary', 'image_extraction'] as ProcessingAction[]).map(a => [
+      a, { label: PROCESSING_ACTION_LABELS[a], icon: actionIcons[a], color: PROCESSING_ACTION_CSS_COLORS[a] }
+    ])
+  ) as Record<ProcessingAction, { label: string; icon: any; color: string }>,
   adjust_images: { label: 'Brightness', icon: Sun, color: '#d97706' },
 };
 
@@ -227,7 +237,7 @@ export default function ProcessingPanel({
       <div className="flex items-center justify-between pt-2">
         <button
           onClick={onStartProcess}
-          disabled={(selectedCount === 0 && !isBrightnessAction) || !!currentJob || queueing}
+          disabled={selectedCount === 0 || !!currentJob || queueing}
           className="flex items-center gap-2 px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
           title={currentJob ? 'Another job is already running for this book' : ''}
         >

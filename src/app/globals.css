@@ -21,8 +21,11 @@
   --accent-rust: #9e4a3a;
   --accent-gold: #c9a86c;
   --accent-sage: #8b9a7d;
-  --accent-slate: #546b8a;
   --accent-violet: #7c5db5;
+
+  /* Dark accent variants — for text on light backgrounds (higher contrast) */
+  --accent-sage-dark: #5e6d52;
+  --accent-gold-dark: #9e7c3c;
 
   /* Borders */
   --border-light: #e8e4dc;
@@ -50,8 +53,9 @@
   --color-accent-rust: #9e4a3a;
   --color-accent-gold: #c9a86c;
   --color-accent-sage: #8b9a7d;
-  --color-accent-slate: #546b8a;
   --color-accent-violet: #7c5db5;
+  --color-accent-sage-dark: #5e6d52;
+  --color-accent-gold-dark: #9e7c3c;
   --color-border-light: #e8e4dc;
   --color-border-medium: #d4cfc4;
 
@@ -140,16 +144,18 @@ h1, h2, h3, h4 {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Links */
-a {
-  color: inherit;
-  text-decoration-color: var(--border-medium);
-  text-underline-offset: 3px;
-  transition: text-decoration-color 0.2s;
-}
+/* Links — must be in @layer base so Tailwind utilities (text-white etc.) can override */
+@layer base {
+  a {
+    color: inherit;
+    text-decoration-color: var(--border-medium);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.2s;
+  }
 
-a:hover {
-  text-decoration-color: var(--accent-rust);
+  a:hover {
+    text-decoration-color: var(--accent-rust);
+  }
 }
 
 /* Selection */

@@ -6,23 +6,12 @@ import Link from 'next/link';
 import { ArrowLeft, User, MapPin, Lightbulb, BookOpen, ExternalLink, Loader2 } from 'lucide-react';
 import { entities as entitiesApi } from '@/lib/api-client';
 import type { EntityResponse } from '@/lib/api-client';
+import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
 
 const TYPE_ICONS = {
   person: User,
   place: MapPin,
   concept: Lightbulb,
-};
-
-const TYPE_COLORS = {
-  person: 'bg-blue-100 text-blue-700 border-blue-200',
-  place: 'bg-green-100 text-green-700 border-green-200',
-  concept: 'bg-purple-100 text-purple-700 border-purple-200',
-};
-
-const TYPE_LABELS = {
-  person: 'Person',
-  place: 'Place',
-  concept: 'Concept',
 };
 
 export default function EntityDetailPage() {
@@ -97,13 +86,13 @@ export default function EntityDetailPage() {
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12">
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex items-start gap-4">
-            <div className={`p-3 rounded-xl ${TYPE_COLORS[entity.type]}`}>
+            <div className={`p-3 rounded-xl ${ENTITY_TYPE_STYLES[entity.type as EntityType].badgeBordered}`}>
               <Icon className="w-8 h-8" />
             </div>
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="px-2 py-0.5 bg-white/10 rounded text-xs text-stone-300">
-                  {TYPE_LABELS[entity.type]}
+                  {ENTITY_TYPE_LABELS[entity.type as EntityType]}
                 </span>
               </div>
               <h1 className="text-3xl font-serif font-bold">{entity.name}</h1>

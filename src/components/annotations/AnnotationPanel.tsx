@@ -25,6 +25,7 @@ import { Annotation, AnnotationType } from '@/lib/types';
 import AnnotationEditor from './AnnotationEditor';
 import { getShortUrl } from '@/lib/shortlinks';
 import { annotations as annotationsApi } from '@/lib/api-client';
+import { ANNOTATION_TYPE_STYLES } from '@/lib/style-constants';
 
 interface AnnotationPanelProps {
   bookId: string;
@@ -55,14 +56,7 @@ const TYPE_LABELS: Record<AnnotationType, string> = {
   question: 'Question',
 };
 
-const TYPE_COLORS: Record<AnnotationType, string> = {
-  comment: 'bg-stone-100 text-stone-700',
-  context: 'bg-blue-100 text-blue-700',
-  reference: 'bg-purple-100 text-purple-700',
-  correction: 'bg-red-100 text-red-700',
-  etymology: 'bg-green-100 text-green-700',
-  question: 'bg-yellow-100 text-yellow-700',
-};
+const TYPE_COLORS: Record<AnnotationType, string> = ANNOTATION_TYPE_STYLES as Record<AnnotationType, string>;
 
 export default function AnnotationPanel({
   bookId,
@@ -431,9 +425,9 @@ export default function AnnotationPanel({
           className="relative w-full max-w-md bg-white shadow-xl flex flex-col h-full"
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-[#f5f0e8] to-[#ece6db]">
             <div className="flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-blue-600" aria-hidden="true" />
+              <MessageSquare className="w-5 h-5 text-accent-rust" aria-hidden="true" />
               <h2 id="annotation-panel-title" className="font-semibold text-stone-900">Page Annotations</h2>
               {!loading && (
                 <span className="text-sm text-stone-500">({annotations.length})</span>
@@ -452,7 +446,7 @@ export default function AnnotationPanel({
           <div className="flex-1 overflow-y-auto">
             {loading ? (
               <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+                <Loader2 className="w-6 h-6 animate-spin text-accent-rust" />
               </div>
             ) : annotations.length === 0 ? (
               <div className="text-center py-12 px-4">

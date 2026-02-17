@@ -279,7 +279,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
         {/* Search Input with Button */}
         <form onSubmit={handleSearch} className="flex-1 flex gap-2">
           <div className="flex-1 relative">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <input
@@ -288,13 +288,13 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search library and external catalogs..."
-              className="w-full pl-12 pr-10 py-3 bg-white border border-gray-200 rounded-full text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-600/20 focus:border-amber-600"
+              className="w-full pl-12 pr-10 py-3 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-600/20 focus:border-amber-600"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={clearSearch}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -322,7 +322,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
           <select
             value={selectedLanguage}
             onChange={(e) => setSelectedLanguage(e.target.value)}
-            className="px-4 py-3 bg-white border border-gray-200 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat"
+            className="px-4 py-3 bg-white border border-stone-200 rounded-full text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat"
           >
             <option value="">All Languages</option>
             {languages.map(lang => (
@@ -336,7 +336,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortOption)}
-            className="px-4 py-3 bg-white border border-gray-200 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat min-w-[180px]"
+            className="px-4 py-3 bg-white border border-stone-200 rounded-full text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat min-w-[180px]"
           >
             <option value="recent-translation">Recent Translations</option>
             <option value="recent">Recently Updated</option>
@@ -345,10 +345,10 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
           </select>
 
           {/* View Toggle */}
-          <div className="flex rounded-full border border-gray-200 overflow-hidden">
+          <div className="flex rounded-full border border-stone-200 overflow-hidden">
             <button
               onClick={() => setViewMode('cards')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium ${viewMode === 'cards' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium ${viewMode === 'cards' ? 'bg-stone-900 text-white' : 'bg-white text-stone-600 hover:bg-stone-50'}`}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -360,7 +360,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium ${viewMode === 'list' ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium ${viewMode === 'list' ? 'bg-stone-900 text-white' : 'bg-white text-stone-600 hover:bg-stone-50'}`}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -379,8 +379,8 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
               onClick={() => setSelectedCategory('')}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 selectedCategory === ''
-                  ? 'bg-gray-900 text-white shadow-sm'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                  ? 'bg-stone-900 text-white shadow-sm'
+                  : 'bg-white text-stone-600 border border-stone-200 hover:border-stone-300 hover:bg-stone-50'
               }`}
             >
               All Topics
@@ -392,7 +392,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                   selectedCategory === topic.id
                     ? 'bg-amber-600 text-white shadow-sm'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:border-amber-300 hover:bg-amber-50'
+                    : 'bg-white text-stone-600 border border-stone-200 hover:border-amber-300 hover:bg-amber-50'
                 }`}
               >
                 {topic.name}
@@ -404,9 +404,9 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
       )}
 
       {/* Book Count */}
-      <div className="mb-8 text-gray-700">
+      <div className="mb-8 text-stone-700">
         {loading ? (
-          <span className="inline-flex items-center gap-2 text-gray-500">
+          <span className="inline-flex items-center gap-2 text-stone-500">
             <Loader2 className="w-4 h-4 animate-spin" />
             Searching...
           </span>
@@ -414,10 +414,10 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
           <>
             <span className="font-semibold">{currentTotal}</span>
             {' '}book{currentTotal !== 1 ? 's' : ''} in library
-            {searchQuery && <span className="text-gray-500"> matching &ldquo;{searchQuery}&rdquo;</span>}
-            {selectedLanguage && <span className="text-gray-500"> in {selectedLanguage}</span>}
+            {searchQuery && <span className="text-stone-500"> matching &ldquo;{searchQuery}&rdquo;</span>}
+            {selectedLanguage && <span className="text-stone-500"> in {selectedLanguage}</span>}
             {selectedCategory && (
-              <span className="text-gray-500">
+              <span className="text-stone-500">
                 {' '}in {featuredTopics.find(t => t.id === selectedCategory)?.name || selectedCategory}
               </span>
             )}
@@ -440,13 +440,13 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
         </div>
       ) : displayedBooks.length === 0 && !hasSearchedCatalog ? (
         <div className="text-center py-16">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-200 flex items-center justify-center">
-            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-stone-200 flex items-center justify-center">
+            <svg className="w-8 h-8 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
-          <h3 className="text-xl text-gray-700 mb-2">No books found in library</h3>
-          <p className="text-gray-500 mb-4">
+          <h3 className="text-xl text-stone-700 mb-2">No books found in library</h3>
+          <p className="text-stone-500 mb-4">
             {searchQuery
               ? 'Click Search to also check Internet Archive and Embassy of the Free Mind catalogs.'
               : 'Books will appear here once added to the library.'}
@@ -473,10 +473,10 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
             <Link
               key={book.id}
               href={`/book/${book.id}`}
-              className="flex items-center gap-4 p-4 bg-white rounded-lg border border-gray-200 hover:shadow-md transition-shadow"
+              className="flex items-center gap-4 p-4 bg-white rounded-lg border border-stone-200 hover:shadow-md transition-shadow"
             >
               {/* Thumbnail */}
-              <div className="w-16 h-20 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+              <div className="w-16 h-20 bg-stone-100 rounded overflow-hidden flex-shrink-0">
                 {book.thumbnail ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -486,7 +486,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-8 h-8 text-stone-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                     </svg>
                   </div>
@@ -495,21 +495,21 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <h3 className="font-medium text-gray-900 truncate">{book.display_title || book.title}</h3>
-                {book.author && <p className="text-sm text-gray-500 truncate">{book.author}</p>}
-                <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+                <h3 className="font-medium text-stone-900 truncate">{book.display_title || book.title}</h3>
+                {book.author && <p className="text-sm text-stone-500 truncate">{book.author}</p>}
+                <div className="flex items-center gap-3 mt-1 text-xs text-stone-400">
                   {book.language && <span>{book.language.startsWith('Multiple') ? 'Multiple' : book.language}</span>}
                   {book.pages_count && <span>{book.pages_count} pages</span>}
                   {book.pages_count && book.pages_count > 0 && (() => {
                     const ocrPercent = Math.round(((book.pages_ocr || 0) / book.pages_count) * 100);
                     return (
-                      <span className={ocrPercent === 100 ? 'text-blue-600' : ocrPercent > 0 ? 'text-blue-400' : 'text-gray-400'}>
+                      <span className={ocrPercent === 100 ? 'text-accent-sage-dark' : ocrPercent > 0 ? 'text-accent-sage' : 'text-stone-400'}>
                         {ocrPercent === 100 ? '✓ OCR' : ocrPercent > 0 ? `${ocrPercent}% OCR` : 'No OCR'}
                       </span>
                     );
                   })()}
                   {book.translation_percent !== undefined && (
-                    <span className={book.translation_percent === 100 ? 'text-green-600' : 'text-amber-600'}>
+                    <span className={book.translation_percent === 100 ? 'text-accent-rust' : 'text-amber-600'}>
                       {book.translation_percent === 100 ? '✓ Translated' : `${book.translation_percent}% translated`}
                     </span>
                   )}
@@ -517,7 +517,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
               </div>
 
               {/* Arrow */}
-              <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-stone-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>
@@ -531,7 +531,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
           <button
             onClick={loadMore}
             disabled={loadingMore}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-gray-300 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-50 hover:border-gray-400 transition-colors shadow-sm disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white border border-stone-300 text-stone-700 rounded-full text-sm font-medium hover:bg-stone-50 hover:border-stone-400 transition-colors shadow-sm disabled:opacity-50"
           >
             {loadingMore ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -547,18 +547,18 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
 
       {/* External Catalog Results */}
       {showCatalogResults && (
-        <div className="mt-12 pt-8 border-t border-gray-200">
+        <div className="mt-12 pt-8 border-t border-stone-200">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-xl font-semibold text-gray-900" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+              <h3 className="text-xl font-semibold text-stone-900" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
                 Discover More
               </h3>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-stone-500 mt-1">
                 Results from Internet Archive & Embassy of the Free Mind
               </p>
             </div>
             {catalogResults.length > 0 && (
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-stone-500">
                 {catalogResults.length} result{catalogResults.length !== 1 ? 's' : ''}
               </span>
             )}
@@ -567,22 +567,22 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
           {catalogSearching ? (
             <div className="flex items-center justify-center py-12">
               <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
-              <span className="ml-3 text-gray-500">Searching catalogs...</span>
+              <span className="ml-3 text-stone-500">Searching catalogs...</span>
             </div>
           ) : catalogResults.length === 0 ? (
-            <div className="text-center py-12 bg-gray-50 rounded-xl">
-              <BookOpen className="w-12 h-12 mx-auto text-gray-300 mb-3" />
-              <p className="text-gray-500">No matching books found in external catalogs.</p>
+            <div className="text-center py-12 bg-stone-50 rounded-xl">
+              <BookOpen className="w-12 h-12 mx-auto text-stone-300 mb-3" />
+              <p className="text-stone-500">No matching books found in external catalogs.</p>
             </div>
           ) : (
             <div className="grid gap-4">
               {catalogResults.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-start gap-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-amber-300 transition-colors"
+                  className="flex items-start gap-4 p-4 bg-white rounded-lg border border-stone-200 hover:border-amber-300 transition-colors"
                 >
                   {/* Thumbnail */}
-                  <div className="w-16 h-20 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                  <div className="w-16 h-20 bg-stone-100 rounded overflow-hidden flex-shrink-0">
                     {item.imageUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -592,33 +592,33 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <BookOpen className="w-8 h-8 text-gray-300" />
+                        <BookOpen className="w-8 h-8 text-stone-300" />
                       </div>
                     )}
                   </div>
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-gray-900 line-clamp-2">{item.title}</h4>
-                    {item.author && <p className="text-sm text-gray-500">{item.author}</p>}
+                    <h4 className="font-medium text-stone-900 line-clamp-2">{item.title}</h4>
+                    {item.author && <p className="text-sm text-stone-500">{item.author}</p>}
                     <div className="flex flex-wrap items-center gap-2 mt-2">
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
                         item.source === 'ia'
-                          ? 'bg-blue-50 text-blue-700'
-                          : 'bg-purple-50 text-purple-700'
+                          ? 'bg-accent-sage/12 text-accent-sage-dark'
+                          : 'bg-accent-violet/8 text-accent-violet'
                       }`}>
                         <ExternalLink className="w-3 h-3" />
                         {getSourceLabel(item.source)}
                       </span>
                       {item.year && item.year !== 'Unknown' && (
-                        <span className="text-xs text-gray-400">{item.year}</span>
+                        <span className="text-xs text-stone-400">{item.year}</span>
                       )}
                       {item.language && item.language !== 'Unknown' && (
-                        <span className="text-xs text-gray-400">{item.language}</span>
+                        <span className="text-xs text-stone-400">{item.language}</span>
                       )}
                     </div>
                     {item.description && (
-                      <p className="text-sm text-gray-500 mt-2 line-clamp-2">{item.description}</p>
+                      <p className="text-sm text-stone-500 mt-2 line-clamp-2">{item.description}</p>
                     )}
                   </div>
 
@@ -652,14 +652,14 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
                           href={`https://archive.org/details/${item.iaIdentifier}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-stone-500 hover:text-stone-700 hover:bg-stone-50 rounded-lg transition-colors"
                         >
                           View on IA
                           <ExternalLink className="w-3.5 h-3.5" />
                         </a>
                       </>
                     ) : (
-                      <span className="text-xs text-gray-400">Catalog entry</span>
+                      <span className="text-xs text-stone-400">Catalog entry</span>
                     )}
                   </div>
                 </div>

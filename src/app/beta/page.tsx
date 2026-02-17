@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
-// Curated gallery images
+// Curated gallery images — diverse sources
 const GALLERY_IMAGES = [
   {
     title: 'The Wind Carried Him in Its Belly',
@@ -11,22 +11,10 @@ const GALLERY_IMAGES = [
     thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044154-0-thumb.jpg',
   },
   {
-    title: 'Mother Earth Nursing Creation',
-    source: 'Atalanta Fugiens',
-    year: '1617',
-    thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044158-0-thumb.jpg',
-  },
-  {
     title: 'The First Key of Basil Valentine',
     source: 'Musaeum Hermeticum',
     year: '1678',
     thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/695203a5ab34727b1f041c53/695203a6ab34727b1f041dea-0-thumb.jpg',
-  },
-  {
-    title: 'The Ouroboros',
-    source: 'Atalanta Fugiens',
-    year: '1617',
-    thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044188-0-thumb.jpg',
   },
   {
     title: 'Perspective Drawing Machine',
@@ -35,10 +23,22 @@ const GALLERY_IMAGES = [
     image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2Fe532b010-6d2e-40ca-9f95-c67e74c5ee61%2F183.jpg&x=0.063&y=0.119&w=0.898&h=0.491',
   },
   {
-    title: 'Alchemical Geometry',
+    title: 'Fortuna Overcoming Virtue',
+    source: 'Emblemata',
+    year: '1621',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2Fa0461b95-c56a-463a-beed-a6a2fb11cec2%2F102.jpg&x=0.06&y=0.07&w=0.88&h=0.84',
+  },
+  {
+    title: 'The Ouroboros',
     source: 'Atalanta Fugiens',
     year: '1617',
-    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F69520c46ab34727b1f044141%2F99.jpg&x=0.145&y=0.216&w=0.713&h=0.472',
+    thumbnail: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/gallery/69520c46ab34727b1f044141/69520c46ab34727b1f044188-0-thumb.jpg',
+  },
+  {
+    title: 'Alchemical Distillation',
+    source: 'Musaeum Hermeticum',
+    year: '1678',
+    image: 'https://sourcelibrary.org/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F695203a5ab34727b1f041c53%2F357.jpg&x=0.118&y=0.279&w=0.448&h=0.433',
   },
 ];
 
@@ -109,6 +109,14 @@ export default function BetaLandingPage() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    setIsMobile(mobile);
+    if (!mobile) videoRef.current?.play().catch(() => {});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,7 +144,7 @@ export default function BetaLandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-dark">
       {/* ============================================ */}
       {/* HERO                                         */}
       {/* ============================================ */}
@@ -148,27 +156,39 @@ export default function BetaLandingPage() {
           className="absolute inset-0 w-full h-full object-cover"
           fetchPriority="high"
         />
-        <video
-          autoPlay loop muted playsInline preload="auto"
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm" type="video/webm" />
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
-        </video>
+        {!isMobile && (
+          <video
+            ref={videoRef}
+            autoPlay loop muted playsInline preload="auto"
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm" type="video/webm" />
+            <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
+          </video>
+        )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
 
         {/* Header */}
         <header className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
-          <div className="flex items-center gap-3">
-            <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-            </svg>
-            <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
-              <span className="font-semibold">Source</span>
-              <span className="font-light">Library</span>
-            </span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
+              <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
+                <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
+                <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
+              </svg>
+              <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
+                <span className="font-semibold">Source</span>
+                <span className="font-light">Library</span>
+              </span>
+            </div>
+            <span className="hidden md:inline text-white/30">|</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
+              alt="Embassy of the Free Mind"
+              className="hidden md:block h-8 w-auto opacity-80"
+            />
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm text-white/60" style={{ fontFamily: 'Inter, sans-serif' }}>
             <a href="#demo" className="hover:text-white transition-colors">See it work</a>
@@ -200,7 +220,7 @@ export default function BetaLandingPage() {
             >
               Source Library uses AI to translate thousands of rare historical texts —
               early science, philosophy, medicine, alchemy, theology — into modern English.
-              4,100 books. 1.6 million pages. Free and open to everyone.
+              5,000+ books. 1.6 million pages. Free to read and cite.
             </p>
 
             <EmailForm
@@ -212,7 +232,7 @@ export default function BetaLandingPage() {
               variant="dark"
             />
             <p className="text-white/30 text-xs mt-3" style={{ fontFamily: 'Inter, sans-serif' }}>
-              Free and open access. No paywall, ever.
+              An initiative of the Embassy of the Free Mind, Amsterdam
             </p>
           </div>
         </div>
@@ -344,7 +364,7 @@ export default function BetaLandingPage() {
         <div className="px-6 md:px-12 max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
             {[
-              { number: '4,100+', label: 'Rare books' },
+              { number: '5,000+', label: 'Rare books' },
               { number: '1.6M', label: 'Pages scanned' },
               { number: '81K+', label: 'Pages translated' },
               { number: '71', label: 'Languages' },
@@ -375,13 +395,13 @@ export default function BetaLandingPage() {
             className="text-3xl md:text-4xl text-white mb-6"
             style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
           >
-            Open access. Free forever.
+            Free to read and cite.
           </h2>
           <p
             className="text-lg text-white/50 mb-10 max-w-xl mx-auto"
             style={{ fontFamily: 'Newsreader, Georgia, serif' }}
           >
-            Source Library launches in 2026. Sign up for early access to
+            Source Library opens February 22, 2026. Sign up for early access to
             read, search, and cite 2,500 years of untranslated scholarship.
           </p>
 

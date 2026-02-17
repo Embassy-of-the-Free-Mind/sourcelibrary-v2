@@ -5,17 +5,12 @@ import Link from 'next/link';
 import { Search, User, MapPin, Lightbulb, BookOpen, ArrowRight, Loader2 } from 'lucide-react';
 import { entities as entitiesApi } from '@/lib/api-client';
 import type { Entity } from '@/lib/api-client';
+import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 
 const TYPE_ICONS = {
   person: User,
   place: MapPin,
   concept: Lightbulb,
-};
-
-const TYPE_COLORS = {
-  person: 'bg-blue-100 text-blue-700',
-  place: 'bg-green-100 text-green-700',
-  concept: 'bg-purple-100 text-purple-700',
 };
 
 export default function EncyclopediaPage() {
@@ -135,15 +130,15 @@ export default function EncyclopediaPage() {
             <div className="text-sm text-stone-500">Total</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600">{stats.people}</div>
+            <div className="text-2xl font-bold text-accent-rust">{stats.people}</div>
             <div className="text-sm text-stone-500">People</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-green-600">{stats.places}</div>
+            <div className="text-2xl font-bold text-accent-sage">{stats.places}</div>
             <div className="text-sm text-stone-500">Places</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600">{stats.concepts}</div>
+            <div className="text-2xl font-bold text-accent-violet">{stats.concepts}</div>
             <div className="text-sm text-stone-500">Concepts</div>
           </div>
         </div>
@@ -168,7 +163,7 @@ export default function EncyclopediaPage() {
                   className="group bg-white rounded-lg border border-stone-200 p-4 hover:border-amber-400 hover:shadow-md transition-all"
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg ${TYPE_COLORS[entity.type]}`}>
+                    <div className={`p-2 rounded-lg ${ENTITY_TYPE_STYLES[entity.type as EntityType].badge}`}>
                       <Icon className="w-5 h-5" />
                     </div>
                     <div className="flex-1 min-w-0">

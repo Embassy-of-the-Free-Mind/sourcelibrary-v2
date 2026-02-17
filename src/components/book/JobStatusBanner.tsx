@@ -1,5 +1,6 @@
-import { Loader2, RefreshCw, X, RotateCcw, Info, AlertCircle, FileText, Languages, ImageIcon } from 'lucide-react';
+import { Loader2, RefreshCw, X, RotateCcw, Info, AlertCircle } from 'lucide-react';
 import type { Job, JobType } from '@/lib/types/job';
+import { PROCESSING_ACTION_LABELS, PROCESSING_ACTION_CSS_COLORS, type ProcessingAction } from '@/lib/style-constants';
 
 interface JobStatusBannerProps {
   job: Job;
@@ -12,12 +13,11 @@ interface JobStatusBannerProps {
   onClose: () => void;
 }
 
-const actionConfig: Record<JobType, { label: string; color: string }> = {
-  ocr: { label: 'OCR', color: '#3b82f6' },
-  translation: { label: 'Translation', color: '#22c55e' },
-  summary: { label: 'Summary', color: '#a855f7' },
-  image_extraction: { label: 'Images', color: '#f97316' }
-};
+const actionConfig: Record<JobType, { label: string; color: string }> = Object.fromEntries(
+  (['ocr', 'translation', 'summary', 'image_extraction'] as ProcessingAction[]).map(a => [
+    a, { label: PROCESSING_ACTION_LABELS[a], color: PROCESSING_ACTION_CSS_COLORS[a] }
+  ])
+) as Record<JobType, { label: string; color: string }>;
 
 export default function JobStatusBanner({
   job,

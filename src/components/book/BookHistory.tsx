@@ -7,6 +7,7 @@ import {
   BookOpen, ListTree, Images, Award, RotateCcw,
 } from 'lucide-react';
 import { books } from '@/lib/api-client';
+import { HISTORY_EVENT_LABELS, HISTORY_EVENT_CSS_COLORS, type HistoryEventType } from '@/lib/style-constants';
 
 interface HistoryEvent {
   type: string;
@@ -38,17 +39,26 @@ interface BookHistoryProps {
   bookId: string;
 }
 
-const eventConfig: Record<string, { label: string; icon: typeof FileText; color: string }> = {
-  imported:           { label: 'Import',           icon: Download,   color: '#78716c' }, // stone
-  archived:           { label: 'Archive',          icon: Archive,    color: '#f59e0b' }, // amber
-  ocr:                { label: 'OCR',              icon: FileText,   color: '#3b82f6' }, // blue
-  translation:        { label: 'Translation',      icon: Languages,  color: '#22c55e' }, // green
-  summary:            { label: 'Summary',          icon: BookOpen,   color: '#a855f7' }, // purple
-  index:              { label: 'Index',            icon: ListTree,   color: '#6366f1' }, // indigo
-  image_extraction:   { label: 'Image Extraction', icon: Images,     color: '#ec4899' }, // pink
-  edition_published:  { label: 'Edition',          icon: Award,      color: '#10b981' }, // emerald
-  admin_action:       { label: 'Admin',            icon: RotateCcw,  color: '#ef4444' }, // red
+const eventIcons: Record<string, typeof FileText> = {
+  imported: Download,
+  archived: Archive,
+  ocr: FileText,
+  translation: Languages,
+  summary: BookOpen,
+  index: ListTree,
+  image_extraction: Images,
+  edition_published: Award,
+  admin_action: RotateCcw,
 };
+
+function getEventConfig(type: string) {
+  const key = type as HistoryEventType;
+  return {
+    label: HISTORY_EVENT_LABELS[key] ?? type,
+    icon: eventIcons[type] ?? FileText,
+    color: HISTORY_EVENT_CSS_COLORS[key] ?? '#78716c',
+  };
+}
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
@@ -154,7 +164,7 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
                   {/* Events in this month */}
                   <div className="relative ml-3 border-l-2 border-stone-100 pl-4 space-y-3 pb-2">
                     {group.events.map((event, idx) => {
-                      const config = eventConfig[event.type] || eventConfig.imported;
+                      const config = getEventConfig(event.type);
                       const Icon = config.icon;
 
                       return (

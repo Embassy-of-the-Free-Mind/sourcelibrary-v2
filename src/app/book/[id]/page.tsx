@@ -172,6 +172,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
         'translation.updated_at': 1,
         'summary.updated_at': 1,
         'detected_images.type': 1,
+        display_brightness: 1,
       }
     })
     .sort({ page_number: 1 })
@@ -488,7 +489,7 @@ async function BookInfo({ id }: { id: string }) {
                     {people.length > 0 && (
                       <div>
                         <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <User className="w-4 h-4 text-blue-600" />
+                          <User className="w-4 h-4 text-accent-rust" />
                           People ({people.length})
                         </div>
                         <div className="flex flex-wrap gap-1.5">
@@ -496,7 +497,7 @@ async function BookInfo({ id }: { id: string }) {
                             <Link
                               key={p.term}
                               href={`/encyclopedia/${encodeURIComponent(p.term)}`}
-                              className="px-2 py-1 text-xs bg-blue-50 text-blue-700 rounded hover:bg-blue-100 transition-colors"
+                              className="px-2 py-1 text-xs bg-accent-rust/8 text-accent-rust rounded hover:bg-accent-rust/15 transition-colors"
                             >
                               {p.term}
                             </Link>
@@ -514,7 +515,7 @@ async function BookInfo({ id }: { id: string }) {
                     {places.length > 0 && (
                       <div>
                         <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <MapPin className="w-4 h-4 text-green-600" />
+                          <MapPin className="w-4 h-4 text-accent-sage" />
                           Places ({places.length})
                         </div>
                         <div className="flex flex-wrap gap-1.5">
@@ -522,7 +523,7 @@ async function BookInfo({ id }: { id: string }) {
                             <Link
                               key={p.term}
                               href={`/encyclopedia/${encodeURIComponent(p.term)}`}
-                              className="px-2 py-1 text-xs bg-green-50 text-green-700 rounded hover:bg-green-100 transition-colors"
+                              className="px-2 py-1 text-xs bg-accent-sage/12 text-accent-sage-dark rounded hover:bg-accent-sage/20 transition-colors"
                             >
                               {p.term}
                             </Link>
@@ -540,7 +541,7 @@ async function BookInfo({ id }: { id: string }) {
                     {concepts.length > 0 && (
                       <div>
                         <div className="flex items-center gap-2 text-sm font-medium text-stone-700 mb-2">
-                          <Lightbulb className="w-4 h-4 text-purple-600" />
+                          <Lightbulb className="w-4 h-4 text-accent-violet" />
                           Concepts ({concepts.length})
                         </div>
                         <div className="flex flex-wrap gap-1.5">
@@ -548,7 +549,7 @@ async function BookInfo({ id }: { id: string }) {
                             <Link
                               key={c.term}
                               href={`/encyclopedia/${encodeURIComponent(c.term)}`}
-                              className="px-2 py-1 text-xs bg-purple-50 text-purple-700 rounded hover:bg-purple-100 transition-colors"
+                              className="px-2 py-1 text-xs bg-accent-violet/8 text-accent-violet rounded hover:bg-accent-violet/15 transition-colors"
                             >
                               {c.term}
                             </Link>
@@ -656,7 +657,7 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid with Batch Mode */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} />
         <BookHistory bookId={book.id} />
       </main>
     </>
