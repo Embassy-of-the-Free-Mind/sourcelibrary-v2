@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
+import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { getOcrPrompt } from '@/lib/prompts';
 import { images } from '@/lib/api-client';
 
@@ -210,7 +211,8 @@ export async function POST(request: NextRequest) {
                 previousText
               );
 
-              // Update page with translation result
+              // Update page with translation result + harvest metadata tags
+              const translationMeta = extractTranslationMetadata(result.text);
               await db.collection('pages').updateOne(
                 { _id: page._id },
                 {
@@ -221,6 +223,7 @@ export async function POST(request: NextRequest) {
                     'translation.processed_at': new Date(),
                     'translation.source': 'contributor',
                     'translation.contributed_by': contributorName || 'Anonymous',
+                    ...translationMeta,
                   },
                 }
               );

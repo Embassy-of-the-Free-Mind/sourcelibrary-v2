@@ -94,7 +94,7 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
       {isOpen && !isMobile && (
         <div
           ref={dropdownRef}
-          className="absolute top-full right-0 mt-1 z-50 w-80 max-h-[60vh] overflow-y-auto rounded-lg shadow-xl"
+          className="absolute top-full right-0 mt-1 z-50 w-[26rem] max-h-[60vh] overflow-y-auto rounded-lg shadow-xl"
           style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)' }}
           role="listbox"
           aria-label="Table of contents"

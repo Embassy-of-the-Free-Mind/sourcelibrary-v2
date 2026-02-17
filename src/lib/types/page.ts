@@ -19,11 +19,18 @@ export interface Page {
   read_count?: number;
   edit_count?: number;
 
+  // Metadata harvested from translation output (<summary> and <keywords> tags)
+  translation_summary?: string;    // 1-2 sentence page summary from translation
+  translation_keywords?: string[]; // Key concepts/names/themes from translation
+
   // Page classification from OCR (title-page, frontispiece, toc, etc.)
   page_type?: string;
 
   // Number of text columns detected by OCR (2+ for multi-column pages)
   columns?: number;
+
+  // CSS brightness override (1.0 = normal, <1 darker, >1 brighter)
+  display_brightness?: number;
 
   // Detected illustrations/images on this page
   detected_images?: DetectedImage[];

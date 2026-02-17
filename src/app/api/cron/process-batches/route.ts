@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { extractTranslationMetadata } from '@/lib/translation-metadata';
 
 export const maxDuration = 300;
 
@@ -131,6 +132,7 @@ export async function GET(request: NextRequest) {
                 continue;
               }
             } else {
+              const translationMeta = extractTranslationMetadata(text);
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {
@@ -147,6 +149,7 @@ export async function GET(request: NextRequest) {
                       input_tokens: usage?.promptTokenCount || 0,
                       output_tokens: usage?.candidatesTokenCount || 0,
                     },
+                    ...translationMeta,
                     updated_at: now,
                   },
                 }

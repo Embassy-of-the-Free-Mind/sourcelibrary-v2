@@ -4,6 +4,7 @@ import { performTranslation } from '@/lib/ai';
 import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
+import { extractTranslationMetadata } from '@/lib/translation-metadata';
 
 /**
  * Translation Processor - processes one page at a time
@@ -102,7 +103,8 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
     const durationMs = Date.now() - startTime;
 
-    // Save translation
+    // Save translation + harvest metadata tags
+    const translationMeta = extractTranslationMetadata(translationResult.text);
     await pages.updateOne(
       { id: pageId },
       {
@@ -115,6 +117,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
             source: 'ai',
             prompt_version: PROMPT_VERSION
           },
+          ...translationMeta,
           updated_at: new Date()
         }
       }

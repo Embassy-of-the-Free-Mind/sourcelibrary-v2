@@ -5,6 +5,7 @@ import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookup
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
+import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import sharp from 'sharp';
 import { put } from '@vercel/blob';
 
@@ -369,6 +370,9 @@ export async function POST(request: NextRequest) {
           cost_usd: metadata.translation?.costUsd,
           processing_ms: metadata.translation?.durationMs,
         };
+        // Harvest <summary> and <keywords> tags
+        const translationMeta = extractTranslationMetadata(results.translation);
+        Object.assign(updateData, translationMeta);
       }
 
       if (results.summary && promptRefs.summary) {
