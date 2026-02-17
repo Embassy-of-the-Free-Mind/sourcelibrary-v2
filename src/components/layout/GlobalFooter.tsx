@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BookOpen, Eye, Edit3, BarChart3, Library } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 interface GlobalStats {
   totalReads: number;
@@ -90,9 +91,7 @@ export default function GlobalFooter() {
               Support
             </Link>
             <span className="hidden sm:inline">•</span>
-            <a href="mailto:derek@ancientwisdomtrust.org" className="text-amber-600 hover:text-amber-500 transition-colors">
-              derek@ancientwisdomtrust.org
-            </a>
+            <span className="text-amber-600">Feedback</span>
           </div>
         </div>
       </footer>
@@ -168,12 +167,7 @@ export default function GlobalFooter() {
             Support
           </Link>
           <span className="hidden sm:inline">•</span>
-          <a
-            href="mailto:derek@ancientwisdomtrust.org"
-            className="text-amber-600 hover:text-amber-500 transition-colors"
-          >
-            derek@ancientwisdomtrust.org
-          </a>
+          <FeedbackWidget />
         </div>
       </div>
     </footer>
