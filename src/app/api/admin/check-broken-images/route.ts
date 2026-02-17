@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Check for books with broken Internet Archive images (403 errors)
@@ -13,7 +14,7 @@ import { images } from '@/lib/api-client/images';
  * Returns books with broken images that should be reviewed/deleted
  */
 
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   const searchParams = request.nextUrl.searchParams;
   const limit = parseInt(searchParams.get('limit') || '50', 10);
   const shouldTest = searchParams.get('test') === 'true';
@@ -114,4 +115,4 @@ export async function GET(request: NextRequest) {
     console.error('Error checking broken images:', error);
     return NextResponse.json({ error: 'Failed to check images' }, { status: 500 });
   }
-}
+});

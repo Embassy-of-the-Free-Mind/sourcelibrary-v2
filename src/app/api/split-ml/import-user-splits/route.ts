@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { extractFeatures } from '@/lib/page-split/splitDetectionML';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Import existing user splits as training data
@@ -33,7 +34,7 @@ async function getBookPageCount(db: Awaited<ReturnType<typeof getDb>>, bookId: s
   return count;
 }
 
-export async function GET() {
+export const GET = withAuth(async () => {
   try {
     const db = await getDb();
 
@@ -80,9 +81,9 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const { limit = 100, bookIds, clearAndReimport = false } = await request.json().catch(() => ({}));
     const db = await getDb();
@@ -232,4 +233,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

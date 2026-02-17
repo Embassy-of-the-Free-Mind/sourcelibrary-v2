@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import Anthropic from '@anthropic-ai/sdk';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300; // 5 minutes
 
@@ -85,12 +86,9 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
 }
 
 // POST /api/experiments/ocr-quality/[id]/auto-judge - Run AI judging
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // Get experiment
@@ -357,4 +355,4 @@ Which transcription is more accurate to the manuscript image? Reply with your ve
     console.error('Error in auto-judge:', error);
     return NextResponse.json({ error: 'Failed to run auto-judge' }, { status: 500 });
   }
-}
+});

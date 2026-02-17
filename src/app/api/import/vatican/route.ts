@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from the Vatican Library (DigiVatLib)
@@ -18,7 +19,7 @@ import { importBookFromIIIF } from '@/lib/import-utils';
  * The manuscript ID is normalized: dots become periods in the URL,
  * e.g. "Pal.lat.235" → "MSS_Pal.lat.235" in the IIIF manifest path.
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { mss_id, title, display_title, author, language, published, categories, work_id } = body;
@@ -62,4 +63,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

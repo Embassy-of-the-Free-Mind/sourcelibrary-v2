@@ -58,21 +58,17 @@ export default function GlobalFooter() {
             <div className="flex items-center gap-2">
               <BookOpen className="w-4 h-4 text-amber-600" />
               <span className="text-stone-300 font-medium">—</span>
-              <span>books</span>
+              <span>Books</span>
             </div>
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4 text-amber-600" />
               <span className="text-stone-300 font-medium">—</span>
-              <span>reads</span>
+              <span>Reads</span>
             </div>
             <div className="flex items-center gap-2">
               <Edit3 className="w-4 h-4 text-amber-600" />
               <span className="text-stone-300 font-medium">—</span>
-              <span>pages translated</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-amber-600 group-hover:text-amber-500">
-              <BarChart3 className="w-4 h-4" />
-              <span className="text-xs">View Analytics</span>
+              <span>Pages Translated</span>
             </div>
           </Link>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
@@ -114,21 +110,17 @@ export default function GlobalFooter() {
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-amber-600" />
             <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalBooks) : '—'}</span>
-            <span>books</span>
+            <span>Books</span>
           </div>
           <div className="flex items-center gap-2">
             <Eye className="w-4 h-4 text-amber-600" />
             <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalReads) : '—'}</span>
-            <span>reads</span>
+            <span>Reads</span>
           </div>
           <div className="flex items-center gap-2">
             <Edit3 className="w-4 h-4 text-amber-600" />
             <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.pagesTranslated) : '—'}</span>
-            <span>pages translated</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-amber-600 group-hover:text-amber-500">
-            <BarChart3 className="w-4 h-4" />
-            <span className="text-xs">View Analytics</span>
+            <span>Pages Translated</span>
           </div>
         </Link>
 

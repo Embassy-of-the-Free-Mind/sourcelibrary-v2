@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { postTweetWithMedia, isTwitterConfigured } from '@/lib/twitter';
 import { buildFullTweetText } from '@/lib/tweet-generator';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -19,12 +20,13 @@ interface RouteParams {
  *
  * Publishes the post to Twitter with media attachment.
  */
-export async function POST(
+export const POST = withAuth(async (
   request: NextRequest,
-  { params }: RouteParams
-) {
+  session,
+  context?: RouteParams
+) => {
   try {
-    const { id } = await params;
+    const { id } = await context!.params;
     const db = await getDb();
 
     // Check Twitter is configured
@@ -166,4 +168,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * List all deleted books available for restoration
  *
  * GET /api/books/deleted
  */
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -40,4 +41,4 @@ export async function GET() {
     console.error('Error listing deleted books:', error);
     return NextResponse.json({ error: 'Failed to list deleted books' }, { status: 500 });
   }
-}
+});

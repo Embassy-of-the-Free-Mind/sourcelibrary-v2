@@ -5,8 +5,9 @@
 
 import { NextResponse } from 'next/server';
 import { getTwitterClient, isTwitterConfigured, verifyCredentials } from '@/lib/twitter';
+import { withAuth } from '@/lib/auth-helpers';
 
-export async function GET() {
+export const GET = withAuth(async () => {
   try {
     // Check if configured
     const configured = isTwitterConfigured();
@@ -55,4 +56,4 @@ export async function GET() {
       stack: error instanceof Error ? error.stack : undefined,
     }, { status: 500 });
   }
-}
+});

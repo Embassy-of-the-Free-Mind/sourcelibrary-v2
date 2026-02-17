@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Validate batch results for page mapping issues.
@@ -100,12 +101,9 @@ function validatePageMapping(
  * where XXXX is start page and YYYY is end page.
  * Each result contains text with "=== PAGE N ===" markers.
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json();
     const {
       type,
@@ -270,7 +268,7 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * Parse batch text containing multiple pages into individual page texts.

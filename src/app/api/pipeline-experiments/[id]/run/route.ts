@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { MODEL_PRICING } from '@/lib/ai';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -55,12 +56,9 @@ Latin text:
 English translation:`;
 
 // POST /api/experiments/pipeline/[id]/run - Run a condition
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { condition_id }: { condition_id: string } = await request.json();
 
     if (!condition_id) {
@@ -278,4 +276,4 @@ export async function POST(
     console.error('Error running pipeline condition:', error);
     return NextResponse.json({ error: 'Failed to run condition' }, { status: 500 });
   }
-}
+});

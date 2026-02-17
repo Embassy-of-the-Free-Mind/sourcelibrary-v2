@@ -2,11 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 const geminiModel = process.env.GEMINI_MODEL || 'gemini-3-flash-preview';
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const { pageId, imageUrl } = await request.json();
 
@@ -109,4 +110,4 @@ Example output: 487`;
       { status: 500 }
     );
   }
-}
+});

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const preferredRegion = 'fra1';
 
@@ -48,12 +49,9 @@ export async function GET(
  *
  * Update collection fields.
  */
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { slug } = await params;
+    const { slug } = await context.params;
     const body = await request.json();
     const db = await getDb();
 
@@ -83,19 +81,16 @@ export async function PATCH(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/gallery/collections/[slug] with ?action=delete
  *
  * Delete a collection (POST because DELETE is globally blocked).
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { slug } = await params;
+    const { slug } = await context.params;
     const { searchParams } = new URL(request.url);
     const action = searchParams.get('action');
 
@@ -118,7 +113,7 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * Resolve gallery image IDs to full item data.

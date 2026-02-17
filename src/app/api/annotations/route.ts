@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId, Document } from 'mongodb';
 import { Annotation, AnnotationType, AnnotationStatus } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/annotations - List annotations, optionally filtered
 export async function GET(request: NextRequest) {
@@ -50,8 +51,8 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/annotations - Create a new annotation
-export async function POST(request: NextRequest) {
-  try {
+export const POST = withAuth(async (request, session) => {
+try {
     const body = await request.json();
     const {
       book_id,
@@ -151,4 +152,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

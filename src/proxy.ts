@@ -18,14 +18,6 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // TODO: Remove after authentication in place.
-  if (request.method === 'DELETE') {
-    return new NextResponse(
-      JSON.stringify({ error: 'DELETE requests are disabled' }),
-      { status: 403, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
-
   // Check if this is a Ficino Society domain
   const isSociety = SOCIETY_DOMAINS.some(domain => host.includes(domain)) ||
     request.nextUrl.searchParams.get('society') === 'true'; // Dev override via ?society=true

@@ -8,16 +8,18 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/social/tags/[handle]
  */
-export async function GET(
+export const GET = withAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ handle: string }> }
-) {
+  session,
+  context?: { params: Promise<{ handle: string }> }
+) => {
   try {
-    const { handle } = await params;
+    const { handle } = await context!.params;
     const db = await getDb();
 
     const tag = await db.collection('social_tags').findOne({ handle });
@@ -31,7 +33,7 @@ export async function GET(
     console.error('Error fetching tag:', error);
     return NextResponse.json({ error: 'Failed to fetch tag' }, { status: 500 });
   }
-}
+});
 
 /**
  * PATCH /api/social/tags/[handle]
@@ -45,12 +47,13 @@ export async function GET(
  *   - active: boolean
  *   - priority: number
  */
-export async function PATCH(
+export const PATCH = withAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ handle: string }> }
-) {
+  session,
+  context?: { params: Promise<{ handle: string }> }
+) => {
   try {
-    const { handle } = await params;
+    const { handle } = await context!.params;
     const body = await request.json();
 
     const db = await getDb();
@@ -89,17 +92,18 @@ export async function PATCH(
     console.error('Error updating tag:', error);
     return NextResponse.json({ error: 'Failed to update tag' }, { status: 500 });
   }
-}
+});
 
 /**
  * DELETE /api/social/tags/[handle]
  */
-export async function DELETE(
+export const DELETE = withAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ handle: string }> }
-) {
+  session,
+  context?: { params: Promise<{ handle: string }> }
+) => {
   try {
-    const { handle } = await params;
+    const { handle } = await context!.params;
     const db = await getDb();
 
     const result = await db.collection('social_tags').deleteOne({ handle });
@@ -113,4 +117,4 @@ export async function DELETE(
     console.error('Error deleting tag:', error);
     return NextResponse.json({ error: 'Failed to delete tag' }, { status: 500 });
   }
-}
+});

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Map old category IDs to new ones
 const CATEGORY_MIGRATIONS: Record<string, string[]> = {
@@ -27,7 +28,7 @@ const CATEGORY_MIGRATIONS: Record<string, string[]> = {
 // Categories that should be removed entirely (including ObjectIds)
 const isObjectId = (str: string) => /^[0-9a-f]{24}$/.test(str);
 
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const books = await db.collection('books').find({
@@ -89,9 +90,9 @@ export async function GET() {
     console.error('Error previewing migration:', error);
     return NextResponse.json({ error: 'Failed to preview migration' }, { status: 500 });
   }
-}
+});
 
-export async function POST() {
+export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const books = await db.collection('books').find({
@@ -148,4 +149,4 @@ export async function POST() {
     console.error('Error running migration:', error);
     return NextResponse.json({ error: 'Failed to run migration' }, { status: 500 });
   }
-}
+});

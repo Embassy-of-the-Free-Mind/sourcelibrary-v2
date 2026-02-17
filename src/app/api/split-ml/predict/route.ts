@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/page-split/splitDetectionML';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST - Predict split position using the trained ML model
@@ -12,7 +13,7 @@ import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/page-s
  *   pageId: string
  * }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const { imageUrl, pageId } = await request.json();
     const db = await getDb();
@@ -84,4 +85,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

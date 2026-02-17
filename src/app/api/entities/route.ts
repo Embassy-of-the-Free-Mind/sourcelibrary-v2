@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export interface Entity {
   _id?: string;
@@ -100,7 +101,7 @@ export async function GET(request: NextRequest) {
  * Sync entities from all books' index data.
  * This aggregates people/places/concepts from book indexes into the entities collection.
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -241,4 +242,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

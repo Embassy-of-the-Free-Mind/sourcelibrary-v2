@@ -9,6 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { isTwitterConfigured, verifyCredentials } from '@/lib/twitter';
 import { SocialConfig } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 const DEFAULT_CONFIG: Omit<SocialConfig, '_id' | 'updated_at'> = {
   platform: 'twitter',
@@ -28,7 +29,7 @@ const DEFAULT_CONFIG: Omit<SocialConfig, '_id' | 'updated_at'> = {
  * GET /api/social/config
  * Returns config, usage stats, and Twitter connection status
  */
-export async function GET() {
+export const GET = withAuth(async () => {
   try {
     const db = await getDb();
 
@@ -103,13 +104,13 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * PATCH /api/social/config
  * Update settings
  */
-export async function PATCH(request: NextRequest) {
+export const PATCH = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const { settings } = body;
@@ -173,4 +174,4 @@ export async function PATCH(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

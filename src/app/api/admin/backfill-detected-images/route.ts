@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { parseDetectedImages, extractPageType, extractColumns } from '@/lib/types/prompts/defaults';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/admin/backfill-detected-images
@@ -12,7 +13,7 @@ import { parseDetectedImages, extractPageType, extractColumns } from '@/lib/type
  */
 export const maxDuration = 300;
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const { dryRun = true, limit = 2000, bookId } = await request.json().catch(() => ({
       dryRun: true, limit: 2000,
@@ -116,4 +117,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

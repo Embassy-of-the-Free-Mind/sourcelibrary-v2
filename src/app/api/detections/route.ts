@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/detections
@@ -16,7 +17,7 @@ import { getDb } from '@/lib/mongodb';
  *   - approved: pages marked as having good images (manually_reviewed=true, manually_skipped=false)
  *   - rejected: pages marked as no good images (manually_reviewed=true, manually_skipped=true)
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status') || 'pending';
@@ -196,7 +197,7 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/detections
@@ -204,7 +205,7 @@ export async function GET(request: NextRequest) {
  * Add a manual detection to a page.
  * Body: { pageId, bbox: { x, y, width, height }, description, type? }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { pageId, bbox, description, type } = body;
@@ -246,7 +247,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * DELETE /api/detections
@@ -254,7 +255,7 @@ export async function POST(request: NextRequest) {
  * Remove a detection from a page.
  * Body: { pageId, detectionIndex }
  */
-export async function DELETE(request: NextRequest) {
+export const DELETE = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { pageId, detectionIndex } = body;
@@ -288,7 +289,7 @@ export async function DELETE(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * PATCH /api/detections
@@ -297,7 +298,7 @@ export async function DELETE(request: NextRequest) {
  * Body: { pageId, detectionIndex, status: 'approved' | 'rejected' | 'pending' }
  * Or bulk: { updates: [{ pageId, detectionIndex, status }] }
  */
-export async function PATCH(request: NextRequest) {
+export const PATCH = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const db = await getDb();
@@ -346,4 +347,4 @@ export async function PATCH(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

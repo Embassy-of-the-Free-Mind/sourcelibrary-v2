@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { SocialTag } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/social/tags
@@ -17,7 +18,7 @@ import { SocialTag } from '@/lib/types';
  *   - active: Filter by active status (optional, default: true)
  *   - forTweet: If true, returns suggested handles for tagging (optional)
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const audience = searchParams.get('audience');
@@ -75,7 +76,7 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/social/tags
@@ -89,7 +90,7 @@ export async function GET(request: NextRequest) {
  *   - relevance: string (required)
  *   - priority: number (optional, default: 5)
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const {
@@ -151,4 +152,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

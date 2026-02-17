@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import crypto from 'crypto';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface OCRComparison {
   a: string;
@@ -9,12 +10,9 @@ interface OCRComparison {
 }
 
 // GET /api/experiments/ocr-quality/[id]/judge - Get next comparison to judge
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // Get experiment
@@ -107,15 +105,12 @@ export async function GET(
     console.error('Error getting comparison:', error);
     return NextResponse.json({ error: 'Failed to get comparison' }, { status: 500 });
   }
-}
+});
 
 // POST /api/experiments/ocr-quality/[id]/judge - Submit a judgment
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const {
       page_id,
       condition_a,
@@ -186,4 +181,4 @@ export async function POST(
     console.error('Error saving judgment:', error);
     return NextResponse.json({ error: 'Failed to save judgment' }, { status: 500 });
   }
-}
+});

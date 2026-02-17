@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -14,7 +15,7 @@ export const maxDuration = 300;
  * - limit: max jobs to process (default: 50)
  * - type: only save jobs of this type ('ocr', 'translate', 'ocr_resubmit')
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '50', 10);
@@ -215,14 +216,14 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/batch-jobs/save-results
  *
  * Show how many jobs are ready to have results saved.
  */
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -261,4 +262,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

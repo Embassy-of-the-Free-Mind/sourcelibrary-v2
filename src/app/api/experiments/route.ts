@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import crypto from 'crypto';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/experiments - List all experiments
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const { searchParams } = new URL(request.url);
@@ -23,10 +24,10 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching experiments:', error);
     return NextResponse.json({ error: 'Failed to fetch experiments' }, { status: 500 });
   }
-}
+});
 
 // POST /api/experiments - Create a new A/B experiment
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const {
       name,
@@ -105,4 +106,4 @@ export async function POST(request: NextRequest) {
     console.error('Error creating experiment:', error);
     return NextResponse.json({ error: 'Failed to create experiment' }, { status: 500 });
   }
-}
+});

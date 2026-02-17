@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/books/audit-splits
@@ -22,7 +23,7 @@ import { getDb } from '@/lib/mongodb';
  *   - dryRun?: boolean - Don't update books
  */
 
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '50', 10);
@@ -96,9 +97,9 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json().catch(() => ({}));
     const {
@@ -208,4 +209,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

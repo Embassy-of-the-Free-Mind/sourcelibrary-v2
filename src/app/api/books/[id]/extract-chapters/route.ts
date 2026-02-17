@@ -5,6 +5,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
 import type { Chapter } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Extract raw markdown headings from OCR for AI context
 function extractRawHeadings(ocrText: string, pageNumber: number): Array<{ title: string; level: number; pageNumber: number }> {
@@ -101,12 +102,9 @@ If the book has no discernible chapter structure, return an empty array: []`;
   return prompt;
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     const book = await db.collection('books').findOne({ id });
@@ -259,15 +257,12 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 // GET endpoint to retrieve existing chapters
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     const book = await db.collection('books').findOne({ id });
@@ -287,4 +282,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

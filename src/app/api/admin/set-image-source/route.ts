@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { ImageSource, ImageSourceProvider } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Bulk set image_source for books
@@ -19,7 +20,7 @@ import type { ImageSource, ImageSourceProvider } from '@/lib/types';
  * Returns counts of books by image_source status
  */
 
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -74,9 +75,9 @@ export async function GET() {
     console.error('Error fetching image source stats:', error);
     return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { book_ids, filter, image_source } = body as {
@@ -153,7 +154,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * Auto-fill image_source for books based on URL patterns or ia_identifier
@@ -161,7 +162,7 @@ export async function POST(request: NextRequest) {
  * PATCH /api/admin/set-image-source
  * Body: { action: 'auto_fill_ia' | 'auto_detect' }
  */
-export async function PATCH(request: NextRequest) {
+export const PATCH = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { action } = body as { action: string };
@@ -338,4 +339,4 @@ export async function PATCH(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { Book } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 export async function GET() {
   try {
@@ -40,7 +41,7 @@ export async function GET() {
 }
 
 // Create a new book
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {
@@ -88,4 +89,4 @@ export async function POST(request: NextRequest) {
     console.error('Error creating book:', error);
     return NextResponse.json({ error: 'Failed to create book' }, { status: 500 });
   }
-}
+});

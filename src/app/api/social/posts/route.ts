@@ -11,6 +11,7 @@ import { nanoid } from 'nanoid';
 import { SocialPost, SocialPostStatus } from '@/lib/types';
 import { buildFullTweetText } from '@/lib/tweet-generator';
 import { buildCropUrl, getImageCandidate } from '@/lib/social-image-selector';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/social/posts
@@ -22,7 +23,7 @@ import { buildCropUrl, getImageCandidate } from '@/lib/social-image-selector';
  *   - sort: 'created' | 'scheduled' | 'posted' (default: created)
  *   - order: 'asc' | 'desc' (default: desc)
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
 
@@ -73,7 +74,7 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * POST /api/social/posts
@@ -85,7 +86,7 @@ export async function GET(request: NextRequest) {
  *   - status: 'draft' | 'queued' (default: draft)
  *   - scheduled_for: Date string (optional)
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const {
@@ -173,4 +174,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

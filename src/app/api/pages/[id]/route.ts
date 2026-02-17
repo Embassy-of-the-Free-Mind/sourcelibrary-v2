@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const preferredRegion = 'fra1';
 
@@ -54,12 +55,9 @@ export async function GET(
   }
 }
 
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
     const rawBody = await request.json();
 
@@ -156,14 +154,11 @@ export async function PATCH(
     console.error('Error updating page:', error);
     return NextResponse.json({ error: 'Failed to update page' }, { status: 500 });
   }
-}
+});
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // Check if page exists
@@ -203,4 +198,4 @@ export async function DELETE(
     console.error('Error deleting page:', error);
     return NextResponse.json({ error: 'Failed to delete page' }, { status: 500 });
   }
-}
+});

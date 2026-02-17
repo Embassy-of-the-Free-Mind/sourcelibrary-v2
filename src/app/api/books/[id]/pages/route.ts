@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // POST /api/books/[id]/pages - Add pages to a book
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json();
     const db = await getDb();
 
@@ -61,4 +59,4 @@ export async function POST(
     console.error('Error creating pages:', error);
     return NextResponse.json({ error: 'Failed to create pages' }, { status: 500 });
   }
-}
+});

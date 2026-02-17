@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
 // Reset a split page back to its original state
 // This removes the crop from the original and deletes the split sibling
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: pageId } = await params;
+    const { id: pageId } = await context.params;
     const db = await getDb();
 
     // Find the page (could be left or right side of split)
@@ -88,4 +86,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

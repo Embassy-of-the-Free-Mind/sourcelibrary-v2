@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { withAuth } from '@/lib/auth-helpers';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -28,12 +29,9 @@ const IDENTIFY_PROMPT = `Analyze these pages from a historical book and extract 
 
 **IMPORTANT:** Return ONLY valid JSON, no markdown or extra text.`;
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
 
     // Find the book
@@ -76,11 +74,11 @@ export async function POST(
       }, { status: 400 });
     }
 
-    const context = contextParts.join('\n\n');
+    const pageContext = contextParts.join('\n\n');
 
     // Ask AI to identify
     const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
-    const prompt = `${IDENTIFY_PROMPT}\n\n**Pages:**\n\n${context}`;
+    const prompt = `${IDENTIFY_PROMPT}\n\n**Pages:**\n\n${pageContext}`;
 
     const result = await model.generateContent(prompt);
     const responseText = result.response.text();
@@ -161,4 +159,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

@@ -5,6 +5,7 @@ import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -67,12 +68,9 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
 /**
  * POST - Submit a batch OCR job
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
     const {
       limit = 10, // Default to 10 pages per batch (research shows >10 causes quality degradation)
@@ -233,17 +231,14 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET - Check batch job status and collect results
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const jobName = searchParams.get('jobName');
 
@@ -394,4 +389,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

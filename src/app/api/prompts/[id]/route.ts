@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import type { Prompt } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Helper to extract variables from prompt text
 function extractVariables(text: string): string[] {
@@ -10,12 +11,13 @@ function extractVariables(text: string): string[] {
 }
 
 // GET /api/prompts/[id] - Get a single prompt by ID
-export async function GET(
+export const GET = withAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+  session,
+  context?: { params: Promise<{ id: string }> }
+) => {
   try {
-    const { id } = await params;
+    const { id } = await context!.params;
     const db = await getDb();
     const collection = db.collection('prompts');
 
@@ -33,16 +35,17 @@ export async function GET(
     console.error('Error fetching prompt:', error);
     return NextResponse.json({ error: 'Failed to fetch prompt' }, { status: 500 });
   }
-}
+});
 
 // PATCH /api/prompts/[id] - Create a new version of a prompt
 // Instead of updating in place, creates a new version for audit trail
-export async function PATCH(
+export const PATCH = withAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+  session,
+  context?: { params: Promise<{ id: string }> }
+) => {
   try {
-    const { id } = await params;
+    const { id } = await context!.params;
     const body = await request.json();
     const { text, description, setAsDefault } = body;
 
@@ -99,15 +102,16 @@ export async function PATCH(
     console.error('Error updating prompt:', error);
     return NextResponse.json({ error: 'Failed to update prompt' }, { status: 500 });
   }
-}
+});
 
 // POST /api/prompts/[id]/set-default - Set this prompt as the default for its type
-export async function POST(
+export const POST = withAuth(async (
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+  session,
+  context?: { params: Promise<{ id: string }> }
+) => {
   try {
-    const { id } = await params;
+    const { id } = await context!.params;
     const db = await getDb();
     const collection = db.collection('prompts');
 
@@ -136,7 +140,7 @@ export async function POST(
     console.error('Error setting default prompt:', error);
     return NextResponse.json({ error: 'Failed to set default prompt' }, { status: 500 });
   }
-}
+});
 
 // DELETE is intentionally not supported - prompts are immutable for audit trail
 // Old versions can be marked as deprecated but not deleted

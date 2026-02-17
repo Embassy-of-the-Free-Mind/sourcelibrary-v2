@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const preferredRegion = 'fra1';
 
@@ -76,12 +77,9 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { searchParams } = new URL(request.url);
     const confirmPermanent = searchParams.get('confirm') === 'PERMANENTLY_DELETE';
     const db = await getDb();
@@ -193,14 +191,11 @@ export async function DELETE(
     console.error('Error deleting book:', error);
     return NextResponse.json({ error: 'Failed to delete book' }, { status: 500 });
   }
-}
+});
 
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const body = await request.json();
     const db = await getDb();
 
@@ -252,4 +247,4 @@ export async function PATCH(
     console.error('Error updating book:', error);
     return NextResponse.json({ error: 'Failed to update book' }, { status: 500 });
   }
-}
+});

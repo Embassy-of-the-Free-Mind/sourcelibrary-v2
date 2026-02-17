@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
-export async function GET(request: NextRequest) {
-  try {
+export const GET = withAuth(async (request, session) => {
+try {
     const db = await getDb();
     const collection = db.collection('analytics_pageviews');
 
@@ -47,4 +48,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

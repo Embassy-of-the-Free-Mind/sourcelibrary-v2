@@ -24,24 +24,11 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
   }, []);
 
   if (status === 'loading') {
-    return (
-      <div className="w-8 h-8 rounded-full bg-white/20 animate-pulse" />
-    );
+    return null;
   }
 
   if (!session) {
-    const baseClasses = "px-4 py-2 rounded-full text-sm font-medium transition-colors";
-    const heroClasses = "bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 border border-white/20";
-    const defaultClasses = "text-white hover:opacity-80";
-
-    return (
-      <Link
-        href="/auth/signin"
-        className={`${baseClasses} ${variant === 'hero' ? heroClasses : defaultClasses}`}
-      >
-        Sign In
-      </Link>
-    );
+    return null;
   }
 
   const initials = session.user?.name

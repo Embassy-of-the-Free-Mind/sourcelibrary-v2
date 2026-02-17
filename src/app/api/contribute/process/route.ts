@@ -6,6 +6,7 @@ import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extrac
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { getOcrPrompt } from '@/lib/prompts';
 import { images } from '@/lib/api-client';
+import { getSession } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes max
@@ -77,6 +78,15 @@ async function performTranslationWithKey(
 }
 
 export async function POST(request: NextRequest) {
+  // Manual auth check for streaming endpoint
+  const session = await getSession();
+  if (!session) {
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({

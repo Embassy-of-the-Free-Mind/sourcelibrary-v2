@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { images } from '@/lib/api-client';
 import { cropAndUploadHalf, generateAndUploadThumbnail } from '@/lib/page-split/split-processing';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -13,7 +14,7 @@ interface SplitRequest {
   wasAdjusted?: boolean; // Whether user manually adjusted
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { splits, confirmClearOcr }: { splits: SplitRequest[]; confirmClearOcr?: boolean } = body;
@@ -273,4 +274,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

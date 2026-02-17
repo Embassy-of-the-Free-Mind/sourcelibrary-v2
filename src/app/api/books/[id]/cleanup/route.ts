@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { cleanupEmptyTags } from '@/lib/validateTranslation';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface CleanupResult {
   pageId: string;
@@ -9,12 +10,9 @@ interface CleanupResult {
   removedCount: number;
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
     const body = await request.json().catch(() => ({}));
 
@@ -82,4 +80,4 @@ export async function POST(
     console.error('Error during cleanup:', error);
     return NextResponse.json({ error: 'Cleanup failed' }, { status: 500 });
   }
-}
+});

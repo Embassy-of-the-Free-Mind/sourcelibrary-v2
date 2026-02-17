@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
 import { applyFix, validateTranslation } from '@/lib/validateTranslation';
+import { withAuth } from '@/lib/auth-helpers';
 
 const quickFixSchema = z.object({
   field: z.enum(['translation', 'ocr']),
@@ -13,12 +14,9 @@ const quickFixSchema = z.object({
   }),
 });
 
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
     const rawBody = await request.json();
 
@@ -79,4 +77,4 @@ export async function PATCH(
     console.error('Error applying quick fix:', error);
     return NextResponse.json({ error: 'Failed to apply fix' }, { status: 500 });
   }
-}
+});

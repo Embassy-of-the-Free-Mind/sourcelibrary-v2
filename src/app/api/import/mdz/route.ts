@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface IIIFCanvas {
   '@id'?: string;
@@ -45,7 +46,7 @@ interface IIIFManifest {
  *   categories?: string[]
  * }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {
@@ -269,4 +270,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

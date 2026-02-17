@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/experiments/[id] - Get experiment details and results
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     const experiment = await db.collection('experiments').findOne({ id });
@@ -27,15 +25,12 @@ export async function GET(
     console.error('Error fetching experiment:', error);
     return NextResponse.json({ error: 'Failed to fetch experiment' }, { status: 500 });
   }
-}
+});
 
 // PATCH /api/experiments/[id] - Update experiment status
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const updates = await request.json();
     const db = await getDb();
 
@@ -54,15 +49,12 @@ export async function PATCH(
     console.error('Error updating experiment:', error);
     return NextResponse.json({ error: 'Failed to update experiment' }, { status: 500 });
   }
-}
+});
 
 // DELETE /api/experiments/[id] - Delete experiment and its results
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     await db.collection('experiments').deleteOne({ id });
@@ -76,4 +68,4 @@ export async function DELETE(
     console.error('Error deleting experiment:', error);
     return NextResponse.json({ error: 'Failed to delete experiment' }, { status: 500 });
   }
-}
+});

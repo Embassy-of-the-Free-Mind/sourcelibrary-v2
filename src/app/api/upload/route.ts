@@ -10,11 +10,12 @@ import {
   updateBookAfterUpload,
   getMimeTypeFromExtension
 } from '@/lib/uploads/utils';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Maximum file size: 20MB
 const MAX_FILE_SIZE_MEGABYTES = 20 * 1024 * 1024;
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const formData = await request.formData();
     const bookId = formData.get('bookId') as string;
@@ -102,4 +103,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

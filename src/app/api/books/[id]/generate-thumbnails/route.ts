@@ -5,6 +5,7 @@ import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
 import { getPageImageUrl } from '@/lib/utils';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -14,12 +15,9 @@ export const maxDuration = 300;
  * Pre-generate 150px JPEG thumbnails and store in Vercel Blob.
  * Eliminates the need for on-the-fly sharp resizing via /api/image.
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
     const {
       limit = 100,
@@ -219,19 +217,16 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/books/[id]/generate-thumbnails
  *
  * Check thumbnail generation status for a book.
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
 
     const book = await db.collection('books').findOne({ id: bookId });
@@ -262,4 +257,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

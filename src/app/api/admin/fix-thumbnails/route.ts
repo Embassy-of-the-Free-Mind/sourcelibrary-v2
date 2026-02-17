@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // POST /api/admin/fix-thumbnails
 // Converts raw archive.org thumbnail URLs to use the image proxy
-export async function POST() {
+export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -36,4 +37,4 @@ export async function POST() {
       { status: 500 }
     );
   }
-}
+});

@@ -6,6 +6,7 @@ import { MODEL_PRICING } from '@/lib/ai';
 import { getOcrPrompt } from '@/lib/prompts';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Allow long-running OCR processing
 export const maxDuration = 300; // 5 minutes
@@ -37,12 +38,9 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
 }
 
 // POST /api/experiments/ocr-quality/[id]/run - Run a specific condition
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { condition_id }: { condition_id: string } = await request.json();
 
     if (!condition_id) {
@@ -426,4 +424,4 @@ Return each transcription clearly separated:
     console.error('Error running OCR condition:', error);
     return NextResponse.json({ error: 'Failed to run condition' }, { status: 500 });
   }
-}
+});

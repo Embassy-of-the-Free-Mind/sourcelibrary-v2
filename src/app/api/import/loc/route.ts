@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 120;
 
@@ -120,7 +121,7 @@ function extractAuthor(contributorNames?: string[]): string {
  *   end_page?: number       // 1-indexed end page (inclusive)
  * }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { lccn, title, display_title, author, language, published, categories, work_id, start_page, end_page } = body;
@@ -344,7 +345,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();

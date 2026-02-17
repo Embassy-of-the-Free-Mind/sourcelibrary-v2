@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from a local directory
@@ -19,7 +20,7 @@ import path from 'path';
  *   ia_identifier?: string
  * }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {
@@ -157,4 +158,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

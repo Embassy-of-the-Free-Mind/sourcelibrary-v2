@@ -6,6 +6,7 @@ import type { JobType, Job } from '@/lib/types/job';
 import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 import BookPagesStats from './BookPagesStats';
 import BookPagesActions from './BookPagesActions';
 import JobStatusBanner from './JobStatusBanner';
@@ -143,8 +144,8 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       } catch (error) {
         console.error('Failed to fetch current job:', error);
       }
-        // Mark initial check complete so actions can be shown if no active job
-        setCheckingActiveJob(false);
+      // Mark initial check complete so actions can be shown if no active job
+      setCheckingActiveJob(false);
     };
     fetchCurrentJob();
   }, [bookId]);
@@ -515,22 +516,24 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             lastOcrDate={lastOcrDate}
             lastTranslationDate={lastTranslationDate}
           />
-          <BookPagesActions
-            bookId={bookId}
-            batchMode={batchMode}
-            reorderMode={reorderMode}
-            currentJob={currentJob}
-            checkingJob={checkingActiveJob}
-            orderChanged={orderChanged}
-            savingOrder={savingOrder}
-            pagesWithOcr={pagesWithOcr}
-            pagesWithTranslation={pagesWithTranslation}
-            onBatchClick={() => setBatchMode(true)}
-            onReorderClick={enterReorderMode}
-            onExitBatch={exitBatchMode}
-            onExitReorder={exitReorderMode}
-            onSaveOrder={savePageOrder}
-          />
+          <AuthCheck>
+            <BookPagesActions
+              bookId={bookId}
+              batchMode={batchMode}
+              reorderMode={reorderMode}
+              currentJob={currentJob}
+              checkingJob={checkingActiveJob}
+              orderChanged={orderChanged}
+              savingOrder={savingOrder}
+              pagesWithOcr={pagesWithOcr}
+              pagesWithTranslation={pagesWithTranslation}
+              onBatchClick={() => setBatchMode(true)}
+              onReorderClick={enterReorderMode}
+              onExitBatch={exitBatchMode}
+              onExitReorder={exitReorderMode}
+              onSaveOrder={savePageOrder}
+            />
+          </AuthCheck>
         </div>
       </div>
 

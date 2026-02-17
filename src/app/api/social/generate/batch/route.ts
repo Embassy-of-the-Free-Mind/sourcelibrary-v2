@@ -11,6 +11,7 @@ import { generateTweet, buildFullTweetText } from '@/lib/tweet-generator';
 import { selectImagesForPosts, buildCropUrl, SocialImageCandidate } from '@/lib/social-image-selector';
 import { nanoid } from 'nanoid';
 import { SocialPost } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface GeneratedPost {
   tweet: string;
@@ -35,7 +36,7 @@ interface GeneratedPost {
  *
  * Returns array of generated tweets
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const {
@@ -164,4 +165,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

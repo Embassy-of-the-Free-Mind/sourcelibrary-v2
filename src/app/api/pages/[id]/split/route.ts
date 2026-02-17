@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
@@ -23,12 +24,9 @@ interface SplitRequest {
   detection?: DetectionData; // AI detection with bounding boxes
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: pageId } = await params;
+    const { id: pageId } = await context.params;
     const body: SplitRequest = await request.json();
     const { side, splitRatio = 50, detection } = body;
 
@@ -166,4 +164,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

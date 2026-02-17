@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '../../categories/route';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Mapping of keywords/terms to category IDs
 const CATEGORY_KEYWORDS: Record<string, string[]> = {
@@ -203,7 +204,7 @@ function categorizeBook(book: {
 }
 
 // POST /api/books/categorize - Auto-categorize all books
-export async function POST() {
+export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -252,10 +253,10 @@ export async function POST() {
       { status: 500 }
     );
   }
-}
+});
 
 // GET /api/books/categorize - Preview categorization without saving
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -287,4 +288,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

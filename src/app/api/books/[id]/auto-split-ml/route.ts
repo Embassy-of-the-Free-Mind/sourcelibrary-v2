@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb';
 import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/page-split/splitDetectionML';
 import { images } from '@/lib/api-client';
 import { cropAndUploadHalf, generateAndUploadThumbnail } from '@/lib/page-split/split-processing';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -13,12 +14,9 @@ export const maxDuration = 300;
  * Automatically split all two-page spreads in a book using the ML model.
  * Only processes pages that have photo_original but no crop.
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const { limit = 50, dryRun = false } = await request.json().catch(() => ({}));
 
     const db = await getDb();
@@ -284,17 +282,14 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET - Check how many pages need splitting
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
 
     const book = await db.collection('books').findOne({ id: bookId });
@@ -328,4 +323,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

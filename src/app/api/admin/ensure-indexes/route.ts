@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Ensure MongoDB indexes exist for optimal query performance
  * POST /api/admin/ensure-indexes
  */
-export async function POST() {
+export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const results: Record<string, string> = {};
@@ -660,13 +661,13 @@ export async function POST() {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * List existing indexes
  * GET /api/admin/ensure-indexes
  */
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves'];
@@ -688,4 +689,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

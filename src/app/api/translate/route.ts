@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { performTranslation } from '@/lib/ai';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 
 // Simple text translation endpoint for short texts like titles
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const { text, sourceLanguage = 'Latin', targetLanguage = 'English' } = await request.json();
 
@@ -37,4 +38,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
