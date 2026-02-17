@@ -7,7 +7,7 @@ interface AnalyticsPayload {
   metrics: LoadingMetric[];
 }
 
-export const POST = withAuth(async (request, session) => {
+export async function POST(request: NextRequest) {
   try {
     const payload: AnalyticsPayload = await request.json();
 
@@ -38,7 +38,7 @@ export const POST = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}
 
 // GET endpoint for viewing analytics summary
 export const GET = withAuth(async (request, session) => {
