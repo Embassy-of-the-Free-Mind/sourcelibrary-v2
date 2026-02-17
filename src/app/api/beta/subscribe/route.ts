@@ -4,7 +4,8 @@ import { getDb } from '@/lib/mongodb';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { email } = body;
+    const email = body.email;
+    const source = body.source;
 
     if (!email || typeof email !== 'string') {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
       email: normalizedEmail,
       ip,
       country,
-      source: 'beta_landing',
+      source: source === 'reader_gate' ? 'reader_gate' : 'beta_landing',
       subscribed_at: new Date(),
       notified: false,
     });

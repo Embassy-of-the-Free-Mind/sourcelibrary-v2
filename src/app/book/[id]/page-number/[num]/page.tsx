@@ -1,6 +1,7 @@
 import { redirect, notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { connectToDatabase } from '@/lib/mongodb';
+import { auth } from '@/lib/auth';
 
 interface Props {
   params: Promise<{ id: string; num: string }>;
@@ -39,6 +40,19 @@ export default async function PageNumberRedirect({ params }: Props) {
   }
 
   const { db } = await connectToDatabase();
+
+  // Content gate: check if this book requires authentication
+  const bookDoc = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { free_tier: 1, featured: 1 } }
+  );
+  const isFreeTier = !!bookDoc?.free_tier || !!bookDoc?.featured;
+  if (!isFreeTier) {
+    const session = await auth();
+    if (!session?.user) {
+      redirect(`/book/${bookId}`);
+    }
+  }
 
   // Find the page by book_id and page_number
   const page = await db.collection('pages').findOne(

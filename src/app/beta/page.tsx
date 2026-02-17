@@ -220,7 +220,8 @@ export default function BetaLandingPage() {
             >
               Source Library uses AI to translate thousands of rare historical texts —
               early science, philosophy, medicine, alchemy, theology — into modern English.
-              5,000+ books. 1.6 million pages. Free to read and cite.
+              5,000+ books. 1.6 million pages. 120 books free and open.
+              Register for free to access the full collection.
             </p>
 
             <EmailForm
@@ -401,8 +402,10 @@ export default function BetaLandingPage() {
             className="text-lg text-white/50 mb-10 max-w-xl mx-auto"
             style={{ fontFamily: 'Newsreader, Georgia, serif' }}
           >
-            Source Library opens February 22, 2026. Sign up for early access to
-            read, search, and cite 2,500 years of untranslated scholarship.
+            Source Library opens February 22, 2026.
+            120 books are completely open — no account needed.
+            Register for free to unlock the full collection of 5,000+ texts.
+            No payment required, ever.
           </p>
 
           <div className="flex justify-center">
@@ -416,7 +419,7 @@ export default function BetaLandingPage() {
             />
           </div>
           <p className="text-white/20 text-xs mt-4" style={{ fontFamily: 'Inter, sans-serif' }}>
-            Free and open access. No paywall.
+            Free access with registration. No paywall.
           </p>
         </div>
       </section>

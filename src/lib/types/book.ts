@@ -96,6 +96,15 @@ export interface Book {
   // Automated processing pipeline state
   pipeline?: PipelineState;
 
+  // Beta launch: featured books bypass the email gate
+  featured?: boolean;
+
+  // Free tier: most-read books accessible without registration
+  free_tier?: boolean;
+
+  // Read analytics (maintained by analytics/track)
+  read_count?: number;
+
   // Split detection for two-page spreads
   needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous
   split_check?: {

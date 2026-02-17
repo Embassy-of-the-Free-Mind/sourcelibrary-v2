@@ -21,6 +21,8 @@ import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import AddToBookshelfButton from '@/components/bookshelf/AddToBookshelfButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import RegistrationWall from '@/components/auth/RegistrationWall';
+import { auth } from '@/lib/auth';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -225,13 +227,19 @@ function PagesGridSkeleton() {
 
 // Book info component (streams in)
 async function BookInfo({ id }: { id: string }) {
-  const data = await getBook(id);
+  const [data, session] = await Promise.all([getBook(id), auth()]);
 
   if (!data) {
     notFound();
   }
 
   const { book, pages } = data;
+
+  // Content gating: free_tier and featured books are always accessible
+  // Other books require authentication
+  const isFreeTier = !!(book as any).free_tier || !!book.featured;
+  const isAuthenticated = !!session?.user;
+  const showRegistrationWall = !isFreeTier && !isAuthenticated;
 
   // Note: ObjectId→custom-id redirect is handled in BookDetailPage above,
   // before the Suspense boundary, so Google gets a proper 301.
@@ -464,7 +472,7 @@ async function BookInfo({ id }: { id: string }) {
               />
             ) : null}
 
-            {/* Entity Links - People, Places, Concepts */}
+            {/* Index — collapsed by default */}
             {(() => {
               const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; places?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
               const people = index?.people || [];
@@ -474,18 +482,28 @@ async function BookInfo({ id }: { id: string }) {
 
               if (!hasEntities) return null;
 
+              const counts = [
+                people.length > 0 ? `${people.length} people` : '',
+                places.length > 0 ? `${places.length} places` : '',
+                concepts.length > 0 ? `${concepts.length} concepts` : '',
+              ].filter(Boolean).join(', ');
+
               return (
-                <div className="card p-6 mt-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Index</h2>
+                <details className="card mt-6">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                    <div className="flex items-center gap-3">
+                      <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Index</h2>
+                      <span className="text-xs text-stone-400">{counts}</span>
+                    </div>
                     <Link
                       href="/encyclopedia"
                       className="text-sm text-amber-700 hover:text-amber-800"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      Browse all →
+                      Browse all &rarr;
                     </Link>
-                  </div>
-                  <div className="space-y-4">
+                  </summary>
+                  <div className="px-6 pb-6 space-y-4">
                     {/* People */}
                     {people.length > 0 && (
                       <div>
@@ -564,7 +582,7 @@ async function BookInfo({ id }: { id: string }) {
                       </div>
                     )}
                   </div>
-                </div>
+                </details>
               );
             })()}
 
@@ -656,13 +674,22 @@ async function BookInfo({ id }: { id: string }) {
         );
       })()}
 
-      {/* Stats + Pages Grid with Batch Mode */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
-        <AuthCheck>
-          <BookHistory bookId={book.id} />
-        </AuthCheck>
-      </main>
+      {/* Stats + Pages Grid — or Registration Wall */}
+      {showRegistrationWall ? (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <RegistrationWall
+            bookTitle={book.display_title || book.title}
+            freeBookCount={120}
+          />
+        </main>
+      ) : (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
+          <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} bookFeatured={!!book.featured} />
+          <AuthCheck>
+            <BookHistory bookId={book.id} />
+          </AuthCheck>
+        </main>
+      )}
     </>
   );
 }

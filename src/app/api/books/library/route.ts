@@ -133,6 +133,7 @@ export async function GET(request: NextRequest) {
                 translation_percent: 1,
                 last_processed: 1,
                 last_translation_at: 1,
+                featured: 1,
               },
             },
           ],

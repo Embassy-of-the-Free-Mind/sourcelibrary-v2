@@ -11,8 +11,8 @@ export async function getSession(): Promise<Session | null> {
 }
 
 /**
- * Require authentication in server components
- * Throws error and redirects if not authenticated
+ * Require any authentication in server components (admin or reader)
+ * Redirects to signin if not authenticated
  */
 export async function requireAuth(): Promise<Session> {
   const session = await getSession();
@@ -23,14 +23,31 @@ export async function requireAuth(): Promise<Session> {
 }
 
 /**
- * Wrapper for API routes requiring authentication
+ * Require admin role in server components
+ * Redirects to signin if not authenticated, or unauthorized if not admin
+ */
+export async function requireAdmin(): Promise<Session> {
+  const session = await getSession();
+  if (!session?.user) {
+    redirect('/auth/signin');
+  }
+  if ((session.user as any).role !== 'admin') {
+    redirect('/unauthorized');
+  }
+  return session;
+}
+
+/**
+ * Check if current user is an admin
+ */
+export async function isAdmin(): Promise<boolean> {
+  const session = await getSession();
+  return (session?.user as any)?.role === 'admin';
+}
+
+/**
+ * Wrapper for API routes requiring any authentication
  * Returns 401 if not authenticated
- *
- * @example
- * export const POST = withAuth(async (request, session) => {
- *   session.user is guaranteed to exist
- *   return NextResponse.json({ user: session.user.email });
- * });
  */
 export function withAuth(
   handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
@@ -41,6 +58,31 @@ export function withAuth(
       return NextResponse.json(
         { error: 'Unauthorized - Authentication required' },
         { status: 401 }
+      );
+    }
+    return handler(request, session, context);
+  };
+}
+
+/**
+ * Wrapper for API routes requiring admin role
+ * Returns 401 if not authenticated, 403 if not admin
+ */
+export function withAdminAuth(
+  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
+): (request: NextRequest, context?: any) => Promise<NextResponse> {
+  return async (request: NextRequest, context?: any) => {
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+    if ((session.user as any).role !== 'admin') {
+      return NextResponse.json(
+        { error: 'Forbidden - Admin access required' },
+        { status: 403 }
       );
     }
     return handler(request, session, context);

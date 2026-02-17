@@ -1,42 +1,77 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import GitHub from 'next-auth/providers/github';
-import { getDb } from './mongodb';
+import Email from 'next-auth/providers/email';
+import { MongoDBAdapter } from '@auth/mongodb-adapter';
+import clientPromise from './mongodb-client';
+import { Resend } from 'resend';
 
-// Helper function to check if user is admin in database
+const dbName = process.env.MONGODB_DB || 'bookstore';
+
+// Helper: check if user is in the admin whitelist
 async function isAdminUser(email: string): Promise<boolean> {
-  try {        
-    const db = await getDb();
-    const adminUser = await db.collection('users').findOne({      
+  try {
+    const client = await clientPromise;
+    const db = client.db(dbName);
+    const admin = await db.collection('admin_users').findOne({
       email: email.toLowerCase(),
-      active: true, // Only allow active admin users
+      active: true,
     });
-    return !!adminUser;
+    return !!admin;
   } catch (error) {
     console.error('[auth] Error checking admin status:', error);
     return false;
   }
 }
 
-// Build providers array based on what's configured
-// Focus on Google OAuth only for admin authentication
-const providers = [];
+// Build providers
+const providers: any[] = [];
+
 if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   providers.push(Google({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   }));
 }
-if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
-  providers.push(GitHub({
-    clientId: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+
+// Email magic link provider — requires RESEND_API_KEY
+if (process.env.RESEND_API_KEY) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  providers.push(Email({
+    from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+    sendVerificationRequest: async ({ identifier: email, url }) => {
+      try {
+        await resend.emails.send({
+          from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+          to: email,
+          subject: 'Sign in to Source Library',
+          html: `
+            <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 40px 20px;">
+              <h1 style="font-size: 24px; color: #1c1917; margin-bottom: 8px;">Source Library</h1>
+              <p style="color: #57534e; font-size: 16px; line-height: 1.6;">
+                Click the link below to sign in and access the full collection of rare texts.
+              </p>
+              <a href="${url}" style="display: inline-block; margin: 24px 0; padding: 12px 32px; background: #1c1917; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px;">
+                Sign in to Source Library
+              </a>
+              <p style="color: #a8a29e; font-size: 13px; margin-top: 32px;">
+                If you didn't request this email, you can safely ignore it.
+                This link expires in 24 hours.
+              </p>
+            </div>
+          `,
+        });
+      } catch (error) {
+        console.error('[auth] Failed to send verification email:', error);
+        throw new Error('Failed to send verification email');
+      }
+    },
   }));
 }
 
-export const { handlers, signIn, signOut, auth } = NextAuth({  
+export const { handlers, signIn, signOut, auth } = NextAuth({
   providers,
-  // AUTH_SECRET is required in production - must be set in Vercel env vars
+  adapter: MongoDBAdapter(clientPromise, { databaseName: dbName }),
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: 'jwt',
@@ -44,34 +79,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error',
+    verifyRequest: '/auth/verify',
   },
   callbacks: {
-    async signIn({ user }) {
-      // Check if user is in admin_users collection
-      const email = user.email?.toLowerCase();
-      if (!email) {
-        console.log(`[auth] Rejected login attempt: no email provided`);
-        return false;
-      }
-      
-      const isAdmin = await isAdminUser(email);
-      if (!isAdmin) {
-        console.log(`[auth] Rejected login attempt from: ${email}`);
-        return false; // Reject sign-in
-      }
-      
-      console.log(`[auth] Allowed login for admin: ${email}`);
+    // Allow all sign-ins — no admin whitelist restriction for readers
+    async signIn() {
       return true;
     },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        // Check admin status on first sign-in
+        if (user.email) {
+          token.role = (await isAdminUser(user.email)) ? 'admin' : 'reader';
+        } else {
+          token.role = 'reader';
+        }
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user && token.id) {
+      if (session.user) {
         session.user.id = token.id as string;
+        (session.user as any).role = token.role as string;
       }
       return session;
     },
