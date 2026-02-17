@@ -10,6 +10,11 @@ interface ChapterDropdownProps {
   onChapterSelect: (chapter: Chapter) => void;
 }
 
+// Display title: prefer English, fall back to original
+function displayTitle(chapter: Chapter): string {
+  return chapter.titleEn || chapter.title;
+}
+
 export default function ChapterDropdown({ chapters, currentChapterIndex, onChapterSelect }: ChapterDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -60,6 +65,9 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
   // Detect mobile via media query
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
+  // Whether any chapter has an English translation
+  const hasEnglishTitles = chapters.some(ch => ch.titleEn);
+
   return (
     <>
       {/* Trigger button */}
@@ -70,11 +78,11 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
         style={{ background: 'var(--bg-warm)', color: 'var(--text-secondary)' }}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
-        aria-label={currentChapter ? `Chapter: ${currentChapter.title}` : 'Table of contents'}
+        aria-label={currentChapter ? `Chapter: ${displayTitle(currentChapter)}` : 'Table of contents'}
       >
         <List className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
         <span className="truncate hidden sm:inline">
-          {currentChapter ? currentChapter.title : 'Contents'}
+          {currentChapter ? displayTitle(currentChapter) : 'Contents'}
         </span>
         <span className="sm:hidden">
           {currentChapter ? `Ch. ${currentChapterIndex + 1}` : 'ToC'}
@@ -115,9 +123,17 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
               }}
               role="option"
               aria-selected={i === currentChapterIndex}
+              title={hasEnglishTitles && chapter.titleEn ? chapter.title : undefined}
             >
-              <span className="truncate" style={{ fontSize: chapter.level === 1 ? '0.875rem' : '0.8125rem' }}>
-                {chapter.title}
+              <span className="min-w-0">
+                <span className="block truncate" style={{ fontSize: chapter.level === 1 ? '0.875rem' : '0.8125rem' }}>
+                  {displayTitle(chapter)}
+                </span>
+                {hasEnglishTitles && chapter.titleEn && (
+                  <span className="block truncate text-[11px] italic" style={{ color: 'var(--text-muted)', marginTop: '1px' }}>
+                    {chapter.title}
+                  </span>
+                )}
               </span>
               <span className="text-[10px] shrink-0 tabular-nums" style={{ color: 'var(--text-muted)' }}>
                 p.{'\u00A0'}{chapter.pageNumber}
@@ -181,8 +197,15 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
                   role="option"
                   aria-selected={i === currentChapterIndex}
                 >
-                  <span className="truncate" style={{ fontSize: chapter.level === 1 ? '0.9375rem' : '0.875rem' }}>
-                    {chapter.title}
+                  <span className="min-w-0">
+                    <span className="block truncate" style={{ fontSize: chapter.level === 1 ? '0.9375rem' : '0.875rem' }}>
+                      {displayTitle(chapter)}
+                    </span>
+                    {hasEnglishTitles && chapter.titleEn && (
+                      <span className="block truncate text-xs italic" style={{ color: 'var(--text-muted)', marginTop: '2px' }}>
+                        {chapter.title}
+                      </span>
+                    )}
                   </span>
                   <span className="text-xs shrink-0 tabular-nums" style={{ color: 'var(--text-muted)' }}>
                     p.{'\u00A0'}{chapter.pageNumber}

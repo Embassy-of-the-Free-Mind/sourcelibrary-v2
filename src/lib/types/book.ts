@@ -140,8 +140,9 @@ export interface Section {
 
 // Chapter/heading extracted from OCR for table of contents
 export interface Chapter {
-  title: string;
+  title: string;       // Original language title
+  titleEn?: string;    // English translation of title
   pageId: string;
   pageNumber: number;
-  level: number;  // 1 = #, 2 = ##, 3 = ###
+  level: number;  // 1 = top-level division, 2 = major chapter, 3 = sub-chapter
 }

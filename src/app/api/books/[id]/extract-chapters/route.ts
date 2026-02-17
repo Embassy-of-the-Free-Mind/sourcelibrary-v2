@@ -77,7 +77,8 @@ The OCR system marked ${rawHeadings.length} lines as headings. Most are noise (t
 ## Instructions
 
 Return ONLY the real structural chapters/sections of this book as a JSON array. Each entry needs:
-- "title": Clean chapter title (preserve original language, fix obvious OCR errors if any)
+- "title": Clean chapter title in the original language (fix obvious OCR errors if any)
+- "titleEn": English translation of the chapter title (concise, natural English — e.g., "Tractatus I: De Macrocosmi Historia" → "Treatise I: On the History of the Macrocosm"). If the book is already in English, omit this field.
 - "pageNumber": The page number where this chapter starts
 - "level": Hierarchy level (1 = top-level division like Tractatus/Part/Book, 2 = major chapter like Liber/Section, 3 = sub-chapter like Caput/Chapter)
 
@@ -90,9 +91,10 @@ Guidelines:
 - If the book has a clear hierarchy (e.g., Tractatus > Liber > Caput), preserve it with levels 1/2/3
 - If a heading appears to be a table of contents entry listing a chapter, include the chapter, not the TOC entry
 - Merge multi-line titles that were split across headings on the same page
+- For titleEn: preserve structural labels (Tractatus → Treatise, Liber → Book, Caput → Chapter, Pars → Part) and translate the descriptive part naturally
 
 Respond with ONLY a JSON array, no markdown fences, no explanation:
-[{"title": "...", "pageNumber": N, "level": N}, ...]
+[{"title": "...", "titleEn": "...", "pageNumber": N, "level": N}, ...]
 
 If the book has no discernible chapter structure, return an empty array: []`;
 
@@ -172,7 +174,7 @@ export async function POST(
     const costUsd = (inputTokens / 1_000_000) * pricing.input + (outputTokens / 1_000_000) * pricing.output;
 
     // Parse AI response
-    let aiChapters: Array<{ title: string; pageNumber: number; level: number }>;
+    let aiChapters: Array<{ title: string; titleEn?: string; pageNumber: number; level: number }>;
     try {
       // Strip markdown fences if the model included them
       const cleaned = responseText.replace(/^```json?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim();
@@ -205,12 +207,14 @@ export async function POST(
       }
       if (!pageId) continue; // Skip chapters we can't map to a page
 
-      chapters.push({
+      const chapter: Chapter = {
         title: ch.title,
         pageId,
         pageNumber: ch.pageNumber,
         level: Math.min(Math.max(ch.level || 1, 1), 3),
-      });
+      };
+      if (ch.titleEn) chapter.titleEn = ch.titleEn;
+      chapters.push(chapter);
     }
 
     // Sort by page number
