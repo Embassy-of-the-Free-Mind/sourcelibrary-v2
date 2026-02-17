@@ -7,6 +7,7 @@ import { IMAGE_LICENSES } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import { useRouter } from 'next/navigation';
 import { books } from '@/lib/api-client';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 
 interface BibliographicInfoProps {
   book: Book;
@@ -104,14 +105,16 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
           {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           Bibliographic Info
         </button>
-        <button
-          onClick={() => setShowEditModal(true)}
-          className="flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors"
-          title="Edit metadata"
-        >
-          <Pencil className="w-3.5 h-3.5" />
-          Edit
-        </button>
+        <AuthCheck>
+          <button
+            onClick={() => setShowEditModal(true)}
+            className="flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors"
+            title="Edit metadata"
+          >
+            <Pencil className="w-3.5 h-3.5" />
+            Edit
+          </button>
+        </AuthCheck>
       </div>
 
       {/* Expanded content */}
@@ -308,11 +311,10 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
             <div className="space-y-3 mb-6">
               {/* Soft Reset Option */}
               <label
-                className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
-                  resetMode === 'soft'
+                className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${resetMode === 'soft'
                     ? 'border-amber-500 bg-amber-500/10'
                     : 'border-stone-600 hover:border-stone-500'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -332,13 +334,11 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
 
               {/* Full Reset Option */}
               <label
-                className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
-                  !canFullReimport ? 'opacity-50 cursor-not-allowed' : ''
-                } ${
-                  resetMode === 'full'
+                className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${!canFullReimport ? 'opacity-50 cursor-not-allowed' : ''
+                  } ${resetMode === 'full'
                     ? 'border-red-500 bg-red-500/10'
                     : 'border-stone-600 hover:border-stone-500'
-                }`}
+                  }`}
               >
                 <input
                   type="radio"
@@ -365,9 +365,8 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
 
             {/* Result message */}
             {resetResult && (
-              <div className={`p-3 rounded-lg mb-4 ${
-                resetResult.success ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
-              }`}>
+              <div className={`p-3 rounded-lg mb-4 ${resetResult.success ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
+                }`}>
                 {resetResult.message}
               </div>
             )}
@@ -387,11 +386,10 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
               <button
                 onClick={handleReset}
                 disabled={resetting}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                  resetMode === 'full'
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${resetMode === 'full'
                     ? 'bg-red-600 hover:bg-red-700 text-white'
                     : 'bg-amber-600 hover:bg-amber-700 text-white'
-                }`}
+                  }`}
               >
                 {resetting ? (
                   <>

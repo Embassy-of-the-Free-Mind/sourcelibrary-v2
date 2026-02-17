@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { ProcessingRow } from '@/lib/api-client/types/analytics';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
-export async function GET(request: Request) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const stepFilter = searchParams.get('step') || '';
@@ -81,7 +82,7 @@ export async function GET(request: Request) {
       { status: 500 }
     );
   }
-}
+});
 
 function getSortFn(sort: string): (a: ProcessingRow, b: ProcessingRow) => number {
   switch (sort) {

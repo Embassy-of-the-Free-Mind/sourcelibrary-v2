@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import type { JobStatus, JobType } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/jobs/queue-books
@@ -32,7 +33,7 @@ import { enqueuePagesForJob } from '@/lib/queue-utils';
 
 export const maxDuration = 60; // 1 minute timeout
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const {
       bookId,
@@ -139,4 +140,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

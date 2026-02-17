@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { detectSplitWithGemini, extractFeatures } from '@/lib/page-split/splitDetectionML';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Corpus collection for ML training - samples pages across all books
@@ -9,7 +10,7 @@ import { detectSplitWithGemini, extractFeatures } from '@/lib/page-split/splitDe
  * POST - Collect more training samples
  */
 
-export async function GET() {
+export const GET = withAuth(async () => {
   try {
     const db = await getDb();
 
@@ -117,9 +118,9 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const {
       samplesPerBook = 3,
@@ -276,4 +277,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

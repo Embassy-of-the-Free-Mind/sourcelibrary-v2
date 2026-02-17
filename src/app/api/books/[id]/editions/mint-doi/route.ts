@@ -4,13 +4,14 @@ import { TranslationEdition, Book, Page } from '@/lib/types';
 import { mintDoi, isZenodoConfigured } from '@/lib/zenodo';
 import { notifyEditionPublished } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
 // POST /api/books/[id]/editions/mint-doi - Mint a DOI for an edition via Zenodo
-export async function POST(request: NextRequest, context: RouteContext) {
+export const POST = withAuth(async (request, session, context) => {
   try {
     // Check Zenodo configuration
     if (!isZenodoConfigured()) {
@@ -135,4 +136,4 @@ export async function POST(request: NextRequest, context: RouteContext) {
       { status: 500 }
     );
   }
-}
+});

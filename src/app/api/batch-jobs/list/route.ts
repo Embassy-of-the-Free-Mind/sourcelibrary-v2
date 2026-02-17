@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { BatchJob } from '@/lib/types/batch-job';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/batch-jobs/list
@@ -10,7 +11,7 @@ import type { BatchJob } from '@/lib/types/batch-job';
  * Query params:
  *   limit: number - Maximum number of jobs to return (default: 100)
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '100');
@@ -39,4 +40,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

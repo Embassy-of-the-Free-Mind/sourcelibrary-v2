@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/usage
@@ -12,7 +13,7 @@ import { getDb } from '@/lib/mongodb';
  * - book_id: Filter by book
  * - group_by: 'day' | 'type' | 'model' | 'book' (default: summary only)
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
 
@@ -151,4 +152,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

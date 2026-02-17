@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/comparisons/stats - Get win rates between experiments
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const { searchParams } = new URL(request.url);
@@ -78,4 +79,4 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching comparison stats:', error);
     return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
   }
-}
+});

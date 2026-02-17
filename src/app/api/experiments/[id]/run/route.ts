@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation } from '@/lib/ai';
 import crypto from 'crypto';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface ExperimentVariant {
   method: string;
@@ -120,12 +121,9 @@ async function processVariant(
 }
 
 // POST /api/experiments/[id]/run - Run A/B experiment on pages
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { page_ids }: { page_ids?: string[] } = await request.json();
 
     const db = await getDb();
@@ -274,4 +272,4 @@ export async function POST(
     console.error('Error running experiment:', error);
     return NextResponse.json({ error: 'Failed to run experiment' }, { status: 500 });
   }
-}
+});

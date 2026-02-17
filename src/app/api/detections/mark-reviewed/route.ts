@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/detections/mark-reviewed
@@ -9,7 +10,7 @@ import { getDb } from '@/lib/mongodb';
  *   - skipped: false = approved (has good images)
  *   - skipped: true = rejected (no good images)
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { pageId, skipped } = body;
@@ -47,4 +48,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

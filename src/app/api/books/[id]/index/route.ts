@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
@@ -968,12 +969,9 @@ export async function GET(
 }
 
 // POST /api/books/[id]/index - Force regenerate index
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // Clear cached index and summary
@@ -991,4 +989,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

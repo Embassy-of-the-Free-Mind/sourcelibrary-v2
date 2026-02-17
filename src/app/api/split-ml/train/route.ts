@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { trainModel, type TrainingExample, type SplitModel } from '@/lib/page-split/splitDetectionML';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST - Train the ML model on collected examples
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const { minExamples = 10 } = await request.json().catch(() => ({}));
     const db = await getDb();
@@ -57,12 +58,12 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET - Get current model status and training stats
  */
-export async function GET() {
+export const GET = withAuth(async () => {
   try {
     const db = await getDb();
 
@@ -115,4 +116,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

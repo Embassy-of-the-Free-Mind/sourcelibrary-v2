@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { LoadingMetric } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface AnalyticsPayload {
   metrics: LoadingMetric[];
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
 }
 
 // GET endpoint for viewing analytics summary
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const metricName = searchParams.get('name');
@@ -139,4 +140,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

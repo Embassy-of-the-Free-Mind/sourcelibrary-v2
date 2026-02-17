@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // ELO rating calculation
 function calculateELO(judgments: Array<{ condition_a: string; condition_b: string; winner: string }>) {
@@ -62,12 +63,9 @@ function normalCDF(z: number): number {
 }
 
 // GET /api/experiments/ocr-quality/[id]/results - Get experiment results
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // Get experiment (for condition labels)
@@ -241,4 +239,4 @@ export async function GET(
     console.error('Error fetching results:', error);
     return NextResponse.json({ error: 'Failed to fetch results' }, { status: 500 });
   }
-}
+});

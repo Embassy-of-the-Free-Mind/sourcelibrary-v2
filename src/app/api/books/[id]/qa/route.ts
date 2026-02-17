@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { validateTranslation, ValidationIssue } from '@/lib/validateTranslation';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface PageIssue {
   pageId: string;
@@ -9,12 +10,9 @@ interface PageIssue {
   issues: ValidationIssue[];
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // Get book to verify it exists
@@ -81,4 +79,4 @@ export async function GET(
     console.error('Error scanning book for QA issues:', error);
     return NextResponse.json({ error: 'Failed to scan book' }, { status: 500 });
   }
-}
+});

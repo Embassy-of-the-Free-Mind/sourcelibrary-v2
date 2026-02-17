@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Fix a book that was imported without proper id fields
  * POST /api/books/[id]/fix
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id } = await params;
+export const POST = withAuth(async (request, session, context) => {
+  const { id } = await context.params;
 
   try {
     const db = await getDb();
@@ -104,4 +102,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

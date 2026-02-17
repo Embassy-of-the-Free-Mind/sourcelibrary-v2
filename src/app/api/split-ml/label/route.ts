@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { detectSplitWithGemini, extractFeatures } from '@/lib/page-split/splitDetectionML';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST - Generate ground truth labels for pages using Gemini
@@ -12,7 +13,7 @@ import { detectSplitWithGemini, extractFeatures } from '@/lib/page-split/splitDe
  *   limit?: number      // Max pages to process (default 50)
  * }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const { pageIds, bookId, limit = 50 } = await request.json();
     const db = await getDb();
@@ -122,12 +123,12 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET - Get labeling status for a book
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const bookId = searchParams.get('bookId');
@@ -174,4 +175,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

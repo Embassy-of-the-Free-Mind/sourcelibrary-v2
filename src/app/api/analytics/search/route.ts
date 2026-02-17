@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '30', 10);
@@ -105,4 +106,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import crypto from 'crypto';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/comparisons - Get comparisons, optionally filtered
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const { searchParams } = new URL(request.url);
@@ -27,10 +28,10 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching comparisons:', error);
     return NextResponse.json({ error: 'Failed to fetch comparisons' }, { status: 500 });
   }
-}
+});
 
 // POST /api/comparisons - Record a comparison rating
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const {
       page_id,
@@ -99,4 +100,4 @@ export async function POST(request: NextRequest) {
     console.error('Error creating comparison:', error);
     return NextResponse.json({ error: 'Failed to create comparison' }, { status: 500 });
   }
-}
+});

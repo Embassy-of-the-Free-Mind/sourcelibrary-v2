@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from Google Books via Internet Archive mirror
@@ -22,7 +23,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
  * books are mirrored on Internet Archive with identifiers like `bub_gb_<id>`.
  * This route checks IA for the mirror and imports from there.
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {
@@ -223,4 +224,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

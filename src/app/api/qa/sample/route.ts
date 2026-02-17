@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { validateTranslation } from '@/lib/validateTranslation';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface SampleResult {
   pageId: string;
@@ -49,7 +50,7 @@ function wilsonCI(successes: number, n: number, z: number = 1.96): { lower: numb
   };
 }
 
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const sampleSize = Math.min(parseInt(searchParams.get('n') || '50'), 200);
@@ -208,4 +209,4 @@ export async function GET(request: NextRequest) {
     console.error('Error sampling pages:', error);
     return NextResponse.json({ error: 'Failed to sample pages' }, { status: 500 });
   }
-}
+});

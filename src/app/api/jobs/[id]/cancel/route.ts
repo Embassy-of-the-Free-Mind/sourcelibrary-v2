@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/jobs/[id]/cancel
@@ -10,11 +11,8 @@ import { getDb } from '@/lib/mongodb';
  * Note: Cannot stop a Lambda mid-execution. If a page is currently being
  * processed when user cancels, that page will finish. This is acceptable.
  */
-export async function POST(
-  _request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
-  const { id: jobId } = await params;
+export const POST = withAuth(async (request, session, context) => {
+  const { id: jobId } = await context.params;
   const db = await getDb();
 
   const result = await db.collection('jobs').updateOne(
@@ -41,4 +39,4 @@ export async function POST(
   }
 
   return NextResponse.json({ success: true });
-}
+});

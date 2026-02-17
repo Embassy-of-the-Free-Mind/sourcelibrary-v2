@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Clear OCR/translation data from pages of a book.
@@ -12,12 +13,9 @@ import { getDb } from '@/lib/mongodb';
  *   reason?: string  // For audit logging
  * }
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json();
     const {
       type = 'ocr',
@@ -134,4 +132,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

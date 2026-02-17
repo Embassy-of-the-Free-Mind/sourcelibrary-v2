@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     // Check for existing subscriber
     const existing = await collection.findOne({ email: normalizedEmail });
     if (existing) {
-      return NextResponse.json({ message: 'Already subscribed', alreadySubscribed: true });
+      return NextResponse.json({ message: 'Already subscribed!', alreadySubscribed: true });
     }
 
     // Get IP and country from headers (Cloudflare / Vercel)

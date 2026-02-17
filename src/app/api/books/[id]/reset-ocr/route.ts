@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/books/[id]/reset-ocr
@@ -16,12 +17,9 @@ import { getDb } from '@/lib/mongodb';
  *   dryRun?: boolean           // Preview what would be cleared
  * }
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
 
     const {
@@ -153,19 +151,16 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/books/[id]/reset-ocr
  *
  * Get info about potentially misaligned OCR in a book.
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
 
     const book = await db.collection('books').findOne({ id: bookId });
@@ -253,4 +248,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

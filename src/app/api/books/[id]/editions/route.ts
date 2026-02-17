@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { TranslationEdition, Contributor, Page, Book } from '@/lib/types';
 import crypto from 'crypto';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 // SPDX license options
 export const LICENSES = [
@@ -41,7 +42,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 }
 
 // POST /api/books/[id]/editions - Create a new edition
-export async function POST(request: NextRequest, context: RouteContext) {
+export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json();
@@ -212,10 +213,10 @@ export async function POST(request: NextRequest, context: RouteContext) {
       { status: 500 }
     );
   }
-}
+});
 
 // PATCH /api/books/[id]/editions - Update edition (add DOI after minting)
-export async function PATCH(request: NextRequest, context: RouteContext) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json();
@@ -270,4 +271,4 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
       { status: 500 }
     );
   }
-}
+});

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -8,8 +9,10 @@ export const maxDuration = 300;
  *
  * Sync pages_count, pages_ocr, and pages_translated fields on books
  * based on actual page data in the pages collection.
+ *
+ * Requires authentication.
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 0;
@@ -113,9 +116,9 @@ export async function POST(request: NextRequest) {
     console.error('[sync-page-counts] Error:', error);
     return NextResponse.json({ error: 'Failed to sync' }, { status: 500 });
   }
-}
+});
 
-export async function GET() {
+export const GET = withAuth(async () => {
   try {
     const db = await getDb();
     const pages = db.collection('pages');
@@ -162,4 +165,4 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json({ error: 'Failed to check' }, { status: 500 });
   }
-}
+});

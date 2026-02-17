@@ -6,6 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { isTwitterConfigured, getTweetMetricsBatch } from '@/lib/twitter';
+import { withAuth } from '@/lib/auth-helpers';
 
 export async function POST(request: NextRequest) {
   try {

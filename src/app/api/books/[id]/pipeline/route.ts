@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { PipelineState, PipelineStep, PipelineStepState, PipelineConfig, DEFAULT_MODEL } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Helper to create initial pipeline state
 function createInitialPipelineState(config: Partial<PipelineConfig>): PipelineState {
@@ -25,12 +26,9 @@ function createInitialPipelineState(config: Partial<PipelineConfig>): PipelineSt
 }
 
 // GET: Retrieve current pipeline state
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
 
     const book = await db.collection('books').findOne(
@@ -53,15 +51,12 @@ export async function GET(
     console.error('Error fetching pipeline:', error);
     return NextResponse.json({ error: 'Failed to fetch pipeline' }, { status: 500 });
   }
-}
+});
 
 // POST: Pipeline actions (start, pause, resume, reset)
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
     const body = await request.json();
 
@@ -127,15 +122,12 @@ export async function POST(
     console.error('Error updating pipeline:', error);
     return NextResponse.json({ error: 'Failed to update pipeline' }, { status: 500 });
   }
-}
+});
 
 // PATCH: Update individual step state
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
     const body = await request.json();
 
@@ -206,4 +198,4 @@ export async function PATCH(
     console.error('Error updating pipeline step:', error);
     return NextResponse.json({ error: 'Failed to update pipeline step' }, { status: 500 });
   }
-}
+});

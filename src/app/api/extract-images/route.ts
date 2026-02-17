@@ -7,6 +7,7 @@ import {
   extractWithGroundingDino,
   type DetectedImage
 } from '@/lib/image-extraction';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/extract-images
@@ -15,7 +16,7 @@ import {
  * Body: { limit?: number, bookId?: string, model?: 'gemini' | 'mistral' | 'grounding-dino' }
  */
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const limit = Math.min(body.limit || 5, 20); // Max 20 pages
@@ -167,10 +168,10 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 // GET - check status / get pages with images
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -205,4 +206,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

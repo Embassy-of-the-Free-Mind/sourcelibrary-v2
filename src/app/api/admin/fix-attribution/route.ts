@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Fix attribution and license data for IIIF imports
  * POST /api/admin/fix-attribution
  */
-export async function POST() {
+export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -74,4 +75,4 @@ export async function POST() {
       { status: 500 }
     );
   }
-}
+});

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { PipelineStep, PipelineState, PipelineConfig, Job } from '@/lib/types';
 import { nanoid } from 'nanoid';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Increase timeout for long-running steps
 export const maxDuration = 60;
@@ -324,12 +325,9 @@ async function executeEdition(
 }
 
 // POST: Execute a pipeline step
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
     const body = await request.json();
 
@@ -499,7 +497,7 @@ export async function POST(
 
     // Try to mark step as failed
     try {
-      const { id: bookId } = await params;
+      const { id: bookId } = await context.params;
       const db = await getDb();
       const body = await request.json().catch(() => ({}));
       const step = body.step;
@@ -522,4 +520,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

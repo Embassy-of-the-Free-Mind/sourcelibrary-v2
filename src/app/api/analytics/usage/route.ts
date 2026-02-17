@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
@@ -7,8 +8,8 @@ export const maxDuration = 60;
 let cachedResult: { data: any; timestamp: number } | null = null;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
-export async function GET(request: NextRequest) {
-  try {
+export const GET = withAuth(async (request, session) => {
+try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '30', 10);
 
@@ -241,4 +242,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

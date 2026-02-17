@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
+import { withAuth } from '@/lib/auth-helpers';
 
 // IIIF v2 canvas
 interface IIIFv2Canvas {
@@ -154,7 +155,7 @@ function parseLicense(licenseUrl: string | null, attribution: string | null, pro
  *   end_page?: number        // 1-indexed end page (inclusive)
  * }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {
@@ -421,4 +422,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

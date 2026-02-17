@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { BookOpen, X, Check, Loader2 } from 'lucide-react';
 import { books } from '@/lib/api-client';
 import type { Page } from '@/lib/types';
+import { AuthCheck } from '../auth/AuthCheck';
 
 interface CoverImagePickerProps {
   bookId: string;
@@ -81,34 +82,57 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
   return (
     <>
-      {/* Clickable Cover Image */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
-        title="Click to change cover image"
-      >
-        {displayThumbnail ? (
-          <Image
-            src={displayThumbnail}
-            alt={bookTitle}
-            fill
-            className="object-cover group-hover:opacity-80 transition-opacity"
-            sizes="(max-width: 640px) 128px, 192px"
-            priority
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center group-hover:bg-stone-600 transition-colors">
-            <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />
+      {/* Cover Image - Clickable only for authenticated users */}
+      <AuthCheck
+        fallback={
+          // Non-authenticated users see the cover image but cannot click
+          <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
+            {displayThumbnail ? (
+              <Image
+                src={displayThumbnail}
+                alt={bookTitle}
+                fill
+                className="object-cover"
+                sizes="(max-width: 640px) 128px, 192px"
+                priority
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />
+              </div>
+            )}
           </div>
-        )}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
-          <span className="text-white text-sm font-medium px-2 py-1 bg-black/50 rounded">
-            Change Cover
-          </span>
-        </div>
-      </button>
+        }
+      >
+        {/* Clickable Cover Image for authenticated users */}
+        <button
+          onClick={() => setIsOpen(true)}
+          className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
+          title="Click to change cover image"
+        >
+          {displayThumbnail ? (
+            <Image
+              src={displayThumbnail}
+              alt={bookTitle}
+              fill
+              className="object-cover group-hover:opacity-80 transition-opacity"
+              sizes="(max-width: 640px) 128px, 192px"
+              priority
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center group-hover:bg-stone-600 transition-colors">
+              <BookOpen className="w-12 sm:w-16 h-12 sm:h-16 text-stone-500" />
+            </div>
+          )}
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/30">
+            <span className="text-white text-sm font-medium px-2 py-1 bg-black/50 rounded">
+              Change Cover
+            </span>
+          </div>
+        </button>
+      </AuthCheck>
 
-      {/* Picker Modal */}
+      {/* Picker Modal - Only rendered for authenticated users */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
           <div
@@ -144,11 +168,10 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                       key={page.id}
                       onClick={() => selectCover(page)}
                       disabled={isSaving}
-                      className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-all hover:shadow-lg ${
-                        isCurrentCover
-                          ? 'border-amber-500 ring-2 ring-amber-200'
-                          : 'border-stone-200 hover:border-stone-400'
-                      }`}
+                      className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-all hover:shadow-lg ${isCurrentCover
+                        ? 'border-amber-500 ring-2 ring-amber-200'
+                        : 'border-stone-200 hover:border-stone-400'
+                        }`}
                     >
                       {imageUrl && (
                         <img

@@ -7,6 +7,7 @@ import {
   type GalleryEmbedding,
 } from '@/lib/embeddings';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 export const preferredRegion = 'fra1';
@@ -23,7 +24,7 @@ export const preferredRegion = 'fra1';
  *   - minQuality: minimum gallery_quality (default 0.5)
  *   - dry_run: if 'true', just count
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '200'), 1000);
@@ -201,14 +202,14 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/admin/generate-embeddings
  *
  * Returns embedding stats.
  */
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -236,4 +237,4 @@ export async function GET() {
       { status: 500 }
     );
   }
-}
+});

@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Async Batch Translation using Gemini Batch API
@@ -23,12 +24,9 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 /**
  * POST - Submit a batch translation job
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
@@ -172,17 +170,14 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET - Check batch job status and collect results
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const jobName = searchParams.get('jobName');
 
@@ -350,4 +345,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

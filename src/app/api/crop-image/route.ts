@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/crop-image
@@ -11,7 +12,7 @@ import { images } from '@/lib/api-client';
  *   - x, y, w, h: normalized bbox (0-1)
  *   - padding: extra padding around bbox (default 0.02)
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const imageUrl = searchParams.get('url');
@@ -79,4 +80,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

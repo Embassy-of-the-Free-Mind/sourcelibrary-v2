@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 120;
 
 // Batch reset multiple split pages back to original state
 // Much faster than calling individual reset for each page
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const { pageIds }: { pageIds: string[] } = await request.json();
 
@@ -83,4 +84,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

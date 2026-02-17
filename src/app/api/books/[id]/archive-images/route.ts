@@ -3,6 +3,7 @@ import { put } from '@vercel/blob';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
@@ -17,12 +18,9 @@ const ARCHIVABLE_SOURCES_REGEX = /archive\.org|gallica\.bnf\.fr|digitale-sammlun
  * Supports: Internet Archive, Gallica (BnF), MDZ (Bavarian State Library)
  * This makes images available even when source sites are down.
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
     const {
       limit = 50,
@@ -227,19 +225,16 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/books/[id]/archive-images
  *
  * Check archive status for a book
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
 
     const book = await db.collection('books').findOne({ id: bookId });
@@ -304,4 +299,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

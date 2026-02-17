@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 
@@ -75,12 +76,9 @@ function extractYear(text: string | undefined | null): string | undefined {
 }
 
 // GET /api/books/[id]/verify-metadata - Find matches in external catalogs
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // Get the book
@@ -242,15 +240,12 @@ export async function GET(
     console.error('Verify metadata error:', error);
     return NextResponse.json({ error: 'Verification failed' }, { status: 500 });
   }
-}
+});
 
 // POST /api/books/[id]/verify-metadata - Apply verified metadata
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const body = await request.json();
     const { year, language, place, publisher, source, confidence } = body;
 
@@ -313,4 +308,4 @@ export async function POST(
     console.error('Apply metadata error:', error);
     return NextResponse.json({ error: 'Update failed' }, { status: 500 });
   }
-}
+});

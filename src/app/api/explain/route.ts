@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
+import { withAuth } from '@/lib/auth-helpers';
 
 function calculateCost(inputTokens: number, outputTokens: number, model: string): number {
   const pricing = MODEL_PRICING[model] || MODEL_PRICING['default'];
@@ -129,7 +130,7 @@ async function fetchBookContext(bookId: string, currentPage: number): Promise<st
     : 'No surrounding context available.';
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const {
@@ -257,4 +258,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

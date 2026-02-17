@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import sharp from 'sharp';
-import { images } from '@/lib/api-client';
-
+import { images } from '@/lib/api-client';import { withAuth } from '@/lib/auth-helpers';
 /**
  * GET /api/books/[id]/check-needs-split
  *
@@ -61,12 +60,9 @@ function classifyAspectRatio(ratio: number): 'single' | 'spread' | 'ambiguous' {
   return 'ambiguous';
 }
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);
     const useAI = searchParams.get('useAI') === 'true';
     const dryRun = searchParams.get('dryRun') === 'true';
@@ -249,4 +245,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

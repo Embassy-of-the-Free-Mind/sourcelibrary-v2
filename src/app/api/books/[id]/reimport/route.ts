@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { ia } from '@/lib/api-client/images';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Re-import a book from its original source
@@ -14,12 +15,9 @@ import { logAuditEvent } from '@/lib/audit-logger';
  *   - soft: Clear all OCR/translation/summary data, keep page images
  * }
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json();
     const { mode = 'soft' } = body as { mode?: 'full' | 'soft' };
 
@@ -213,4 +211,4 @@ export async function POST(
     console.error('Reimport error:', error);
     return NextResponse.json({ error: 'Reimport failed', details: String(error) }, { status: 500 });
   }
-}
+});

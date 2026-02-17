@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import crypto from 'crypto';
+import { withAuth } from '@/lib/auth-helpers';
 
 export interface PipelineCondition {
   id: string;
@@ -11,7 +12,7 @@ export interface PipelineCondition {
 }
 
 // POST /api/experiments/pipeline - Create pipeline experiment
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const {
       book_id,
@@ -82,10 +83,10 @@ export async function POST(request: NextRequest) {
     console.error('Error creating pipeline experiment:', error);
     return NextResponse.json({ error: 'Failed to create experiment' }, { status: 500 });
   }
-}
+});
 
 // GET /api/experiments/pipeline - List experiments
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const experiments = await db
@@ -99,5 +100,5 @@ export async function GET() {
     console.error('Error fetching experiments:', error);
     return NextResponse.json({ error: 'Failed to fetch experiments' }, { status: 500 });
   }
-}
+});
 

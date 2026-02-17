@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from Europeana (aggregator)
@@ -22,7 +23,7 @@ import { importBookFromIIIF } from '@/lib/import-utils';
  * Browse: https://www.europeana.eu/
  * API docs: https://pro.europeana.eu/page/record
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {
@@ -192,4 +193,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

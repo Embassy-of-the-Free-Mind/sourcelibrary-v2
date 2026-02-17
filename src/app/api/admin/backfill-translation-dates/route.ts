@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/admin/backfill-translation-dates
@@ -9,7 +10,7 @@ import { getDb } from '@/lib/mongodb';
  */
 export const maxDuration = 60;
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   try {
     const { dryRun = true, limit = 50, skip = 0 } = await request.json().catch(() => ({ dryRun: true, limit: 50, skip: 0 }));
 
@@ -103,14 +104,14 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/admin/backfill-translation-dates
  *
  * Preview what would be backfilled (dry run)
  */
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   const db = await getDb();
 
   // Count books with and without last_translation_at
@@ -131,4 +132,4 @@ export async function GET() {
     booksNeedingBackfill,
     message: 'POST with { "dryRun": false } to apply backfill'
   });
-}
+});

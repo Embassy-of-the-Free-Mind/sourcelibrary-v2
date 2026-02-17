@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -9,7 +10,7 @@ export const maxDuration = 300;
  *
  * Pipeline status overview — counts per status.
  */
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   const db = await getDb();
 
   const statusCounts = await db.collection('books').aggregate([
@@ -44,7 +45,7 @@ export async function GET() {
       retries: b.pipeline_auto?.retry_count,
     })),
   });
-}
+});
 
 /**
  * POST /api/admin/enroll-pipeline
@@ -52,7 +53,7 @@ export async function GET() {
  * Enroll books into the auto pipeline.
  * Body: { bookIds?: string[], limit?: number, dryRun?: boolean, reEnrollFailed?: boolean }
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request, session) => {
   const db = await getDb();
   const body = await request.json().catch(() => ({}));
   const { bookIds, limit = 50, dryRun = false, reEnrollFailed = false } = body as {
@@ -118,4 +119,4 @@ export async function POST(request: NextRequest) {
     enrolled: result.modifiedCount,
     message: `Enrolled ${result.modifiedCount} books. The pipeline cron will start processing within 10 minutes.`,
   });
-}
+});

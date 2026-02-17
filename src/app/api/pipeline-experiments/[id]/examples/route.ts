@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/pipeline-experiments/[id]/examples - Get example comparisons
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { searchParams } = new URL(request.url);
     const count = parseInt(searchParams.get('count') || '3');
 
@@ -72,4 +70,4 @@ export async function GET(
     console.error('Error fetching examples:', error);
     return NextResponse.json({ error: 'Failed to fetch examples' }, { status: 500 });
   }
-}
+});

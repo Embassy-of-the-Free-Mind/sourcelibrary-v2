@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 import {
   generateTweet,
   generateTweetVariations,
@@ -131,7 +132,7 @@ async function fetchResearchContext(
  *
  * Returns available audiences, voices, and models for UI
  */
-export async function GET() {
+export const GET = withAuth(async () => {
   return NextResponse.json({
     audiences: getAvailableAudiences(),
     voices: getAvailableVoices(),
@@ -140,7 +141,7 @@ export async function GET() {
       { id: 'claude', name: 'Claude Sonnet', description: 'Higher quality, better nuance' },
     ],
   });
-}
+});
 
 /**
  * POST /api/social/generate
@@ -156,7 +157,7 @@ export async function GET() {
  *
  * Returns generated tweet variations
  */
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const {
@@ -302,4 +303,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

@@ -10,6 +10,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { SocialPostStatus } from '@/lib/types';
 import { buildFullTweetText } from '@/lib/tweet-generator';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -18,12 +19,13 @@ interface RouteParams {
 /**
  * GET /api/social/posts/[id]
  */
-export async function GET(
+export const GET = withAuth(async (
   request: NextRequest,
-  { params }: RouteParams
-) {
+  session,
+  context?: RouteParams
+) => {
   try {
-    const { id } = await params;
+    const { id } = await context!.params;
     const db = await getDb();
 
     const post = await db.collection('social_posts').findOne({ id });
@@ -43,7 +45,7 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * PATCH /api/social/posts/[id]
@@ -54,12 +56,13 @@ export async function GET(
  *   - status: 'draft' | 'queued'
  *   - scheduled_for: Date string or null
  */
-export async function PATCH(
+export const PATCH = withAuth(async (
   request: NextRequest,
-  { params }: RouteParams
-) {
+  session,
+  context?: RouteParams
+) => {
   try {
-    const { id } = await params;
+    const { id } = await context!.params;
     const body = await request.json();
     const db = await getDb();
 
@@ -142,17 +145,18 @@ export async function PATCH(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * DELETE /api/social/posts/[id]
  */
-export async function DELETE(
+export const DELETE = withAuth(async (
   request: NextRequest,
-  { params }: RouteParams
-) {
+  session,
+  context?: RouteParams
+) => {
   try {
-    const { id } = await params;
+    const { id } = await context!.params;
     const db = await getDb();
 
     const existing = await db.collection('social_posts').findOne({ id });
@@ -185,4 +189,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+});

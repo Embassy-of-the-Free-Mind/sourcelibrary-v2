@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS } from '@/lib/types';
 import type { Prompt, PromptType } from '@/lib/types';
+import { withAuth, getSession } from '@/lib/auth-helpers';
 
 // Helper to extract variables from prompt text
 function extractVariables(text: string): string[] {
@@ -13,6 +14,12 @@ function extractVariables(text: string): string[] {
 // Returns latest version of each prompt by default
 export async function GET(request: NextRequest) {
   try {
+    // Check authentication - return empty array if not authenticated
+    const session = await getSession();
+    if (!session?.user) {
+      return NextResponse.json([]);
+    }
+
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') as PromptType | null;
     const name = searchParams.get('name');
@@ -66,7 +73,7 @@ export async function GET(request: NextRequest) {
 
 // POST /api/prompts - Create a new prompt or new version
 // If a prompt with the same name exists, creates a new version
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const { name, type, text, description, setAsDefault } = body;
@@ -131,7 +138,7 @@ export async function POST(request: NextRequest) {
     console.error('Error creating prompt:', error);
     return NextResponse.json({ error: 'Failed to create prompt' }, { status: 500 });
   }
-}
+});
 
 // Helper function to seed default prompts
 async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {

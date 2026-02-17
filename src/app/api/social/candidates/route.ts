@@ -8,6 +8,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { selectImagesForPosts, buildCropUrl } from '@/lib/social-image-selector';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/social/candidates
@@ -21,7 +22,7 @@ import { selectImagesForPosts, buildCropUrl } from '@/lib/social-image-selector'
  *
  * Returns array of image candidates with shareability scores
  */
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
 
@@ -65,4 +66,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

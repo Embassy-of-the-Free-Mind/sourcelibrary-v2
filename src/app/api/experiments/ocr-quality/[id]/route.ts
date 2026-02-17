@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/experiments/ocr-quality/[id] - Get experiment status and progress
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
 
     const db = await getDb();
     const experiment = await db.collection('ocr_experiments').findOne({ id });
@@ -113,4 +111,4 @@ export async function GET(
     console.error('Error fetching experiment:', error);
     return NextResponse.json({ error: 'Failed to fetch experiment' }, { status: 500 });
   }
-}
+});

@@ -20,6 +20,7 @@ import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import AddToBookshelfButton from '@/components/bookshelf/AddToBookshelfButton';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -66,8 +67,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const publishedDate = currentEdition?.published_at
     ? new Date(currentEdition.published_at).toISOString()
     : book.created_at
-    ? new Date(book.created_at).toISOString()
-    : undefined;
+      ? new Date(book.created_at).toISOString()
+      : undefined;
   const modifiedDate = book.updated_at
     ? new Date(book.updated_at).toISOString()
     : undefined;
@@ -244,9 +245,9 @@ async function BookInfo({ id }: { id: string }) {
       : Promise.resolve(0),
     workId
       ? db.collection('books').find(
-          { work_id: workId, id: { $ne: book.id } },
-          { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
-        ).sort({ published: 1 }).limit(20).toArray()
+        { work_id: workId, id: { $ne: book.id } },
+        { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
+      ).sort({ published: 1 }).limit(20).toArray()
       : Promise.resolve([]),
   ]);
 
@@ -657,8 +658,10 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid with Batch Mode */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} />
-        <BookHistory bookId={book.id} />
+        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+        <AuthCheck>
+          <BookHistory bookId={book.id} />
+        </AuthCheck>
       </main>
     </>
   );

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -37,7 +38,7 @@ interface AuditResult {
   error?: string;
 }
 
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const report = searchParams.get('report') === 'true';
@@ -328,4 +329,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

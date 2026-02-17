@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     // 1. Delete all split pages (pages created from splits)
@@ -73,4 +71,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
@@ -13,7 +14,7 @@ export const maxDuration = 60;
  * - Errors: Top error categories (last 7 days)
  * - Velocity: Pages processed per day (last 7 days)
  */
-export async function GET(request: Request) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const provider = searchParams.get('provider'); // Optional: filter by image_source.provider
@@ -163,4 +164,4 @@ export async function GET(request: Request) {
       { status: 500 }
     );
   }
-}
+});

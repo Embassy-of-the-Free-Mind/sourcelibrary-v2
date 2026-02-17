@@ -4,6 +4,7 @@ import { getGeminiClient } from '@/lib/gemini-client';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -44,12 +45,9 @@ interface StitchResult {
   error?: string;
 }
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const {
       model: modelId = DEFAULT_MODEL,
       dryRun = false,
@@ -248,19 +246,16 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});
 
 /**
  * GET /api/books/[id]/stitch-translations
  *
  * Preview which pages might need stitching (dry run analysis)
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const db = await getDb();
 
     const pages = await db
@@ -315,4 +310,4 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});

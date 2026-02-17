@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 // GET - Get job status
-export async function GET(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const GET = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     const job = await db.collection('jobs').findOne({ id });
@@ -24,15 +22,12 @@ export async function GET(
       { status: 500 }
     );
   }
-}
+});
 
 // DELETE - Delete a job
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     const job = await db.collection('jobs').findOne({ id });
@@ -59,4 +54,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+});

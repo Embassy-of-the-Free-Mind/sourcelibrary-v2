@@ -1,9 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -80,4 +81,4 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 });
   }
-}
+});

@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
+
 
 // GET - List all jobs (with optional filters)
-export async function GET(request: NextRequest) {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const status = searchParams.get('status');
@@ -36,4 +38,4 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

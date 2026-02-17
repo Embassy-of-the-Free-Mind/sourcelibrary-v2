@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Allowed highlight colors
 const HIGHLIGHT_COLORS = ['yellow', 'green', 'blue', 'pink', 'purple', 'orange'] as const;
@@ -42,12 +43,9 @@ export async function GET(
 }
 
 // DELETE /api/highlights/[id] - Delete a highlight
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const DELETE = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const db = await getDb();
 
     const result = await db.collection('highlights').deleteOne({ id });
@@ -67,15 +65,12 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+});
 
 // PATCH /api/highlights/[id] - Update a highlight (e.g., add note)
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const rawBody = await request.json();
 
     // Validate request body
@@ -115,4 +110,4 @@ export async function PATCH(
       { status: 500 }
     );
   }
-}
+});

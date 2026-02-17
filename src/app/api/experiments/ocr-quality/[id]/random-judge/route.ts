@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import Anthropic from '@anthropic-ai/sdk';
 import crypto from 'crypto';
 import { images } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -52,12 +53,9 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
 
 // POST /api/experiments/ocr-quality/[id]/random-judge
 // Run N random pairwise comparisons for proper ELO
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const { count = 200 }: { count?: number } = await request.json();
 
     const db = await getDb();
@@ -245,4 +243,4 @@ Which is more accurate? Reply: A, B, or TIE`;
     console.error('Error in random-judge:', error);
     return NextResponse.json({ error: 'Failed' }, { status: 500 });
   }
-}
+});

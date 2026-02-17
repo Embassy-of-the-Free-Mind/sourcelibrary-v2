@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { TranslationEdition } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface RouteContext {
   params: Promise<{ id: string; editionId: string }>;
@@ -33,7 +34,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 }
 
 // PATCH /api/books/[id]/editions/[editionId] - Update an edition (e.g., front matter)
-export async function PATCH(request: NextRequest, context: RouteContext) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id: bookId, editionId } = await context.params;
     const body = await request.json();
@@ -103,4 +104,4 @@ export async function PATCH(request: NextRequest, context: RouteContext) {
     console.error('Error updating edition:', error);
     return NextResponse.json({ error: 'Failed to update edition' }, { status: 500 });
   }
-}
+});

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { withAuth } from '@/lib/auth-helpers';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -10,7 +11,7 @@ interface RouteContext {
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 // POST /api/books/[id]/editions/front-matter - Generate front matter for an edition
-export async function POST(request: NextRequest, context: RouteContext) {
+export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json();
@@ -88,7 +89,7 @@ export async function POST(request: NextRequest, context: RouteContext) {
       { status: 500 }
     );
   }
-}
+});
 
 function buildBookContext(book: Book, pages: Page[]): string {
   const parts: string[] = [];

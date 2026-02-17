@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/entities/[id]
@@ -65,12 +66,9 @@ export async function GET(
  *
  * Update entity metadata (description, aliases, wikipedia_url)
  */
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const PATCH = withAuth(async (request, session, context) => {
   try {
-    const { id } = await params;
+    const { id } = await context.params;
     const updates = await request.json();
     const db = await getDb();
 
@@ -107,4 +105,4 @@ export async function PATCH(
       { status: 500 }
     );
   }
-}
+});

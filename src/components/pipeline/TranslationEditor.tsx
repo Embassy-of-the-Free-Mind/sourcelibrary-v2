@@ -39,6 +39,7 @@ import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
+import { AuthCheck } from '../auth/AuthCheck';
 
 // Helper to format edit source info
 function EditSourceBadge({ source, editedBy, editedAt }: {
@@ -877,31 +878,33 @@ export default function TranslationEditor({
               </div>
 
               {/* Mode Toggle - always visible */}
-              <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
-                <button
-                  onClick={() => setMode('read')}
-                  className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
-                  style={{
-                    background: 'var(--bg-white)',
-                    color: 'var(--text-primary)',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-                  }}
-                >
-                  <Eye className="w-4 h-4" />
-                  <span className="hidden sm:inline">Read</span>
-                </button>
-                <button
-                  onClick={() => setMode('edit')}
-                  className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
-                  style={{
-                    background: 'transparent',
-                    color: 'var(--text-muted)',
-                  }}
-                >
-                  <Pencil className="w-4 h-4" />
-                  <span className="hidden sm:inline">Edit</span>
-                </button>
-              </div>
+              <AuthCheck>
+                <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
+                  <button
+                    onClick={() => setMode('read')}
+                    className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
+                    style={{
+                      background: 'var(--bg-white)',
+                      color: 'var(--text-primary)',
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
+                    }}
+                  >
+                    <Eye className="w-4 h-4" />
+                    <span className="hidden sm:inline">Read</span>
+                  </button>
+                  <button
+                    onClick={() => setMode('edit')}
+                    className="flex items-center justify-center gap-1 px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-all"
+                    style={{
+                      background: 'transparent',
+                      color: 'var(--text-muted)',
+                    }}
+                  >
+                    <Pencil className="w-4 h-4" />
+                    <span className="hidden sm:inline">Edit</span>
+                  </button>
+                </div>
+              </AuthCheck>
 
               {/* Like Button */}
               <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">

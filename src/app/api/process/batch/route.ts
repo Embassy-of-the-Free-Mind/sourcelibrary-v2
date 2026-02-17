@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
+import { withAuth } from '@/lib/auth-helpers';
 
 const CONCURRENCY_LIMIT = 10;
 
@@ -108,7 +109,7 @@ async function processChunk(
   return Promise.all(promises);
 }
 
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body: BatchOCRRequest = await request.json();
     const { pages, autoSave = true, model = DEFAULT_MODEL } = body;
@@ -164,4 +165,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { adjustBrightness, compress_photo } from '@/lib/image-manipulation';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -14,12 +15,9 @@ export const maxDuration = 300;
  * Downloads the current archived/original image, applies brightness adjustment
  * via sharp, and overwrites the archived image on Blob.
  */
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export const POST = withAuth(async (request, session, context) => {
   try {
-    const { id: bookId } = await params;
+    const { id: bookId } = await context.params;
     const body = await request.json();
     const { pageIds, brightness } = body as { pageIds: string[]; brightness: number };
 
@@ -160,4 +158,4 @@ export async function POST(
       { status: 500 }
     );
   }
-}
+});

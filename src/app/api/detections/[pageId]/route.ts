@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * DELETE /api/detections/[pageId]
@@ -9,12 +10,9 @@ import { getDb } from '@/lib/mongodb';
  *   - index: the array index of the detection to remove
  *   - description: (optional) match by description instead of index
  */
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ pageId: string }> }
-) {
+export const DELETE = withAuth(async (request, session, context) => {
   try {
-    const { pageId } = await params;
+    const { pageId } = await context.params;
     const { searchParams } = new URL(request.url);
     const index = searchParams.get('index');
     const description = searchParams.get('description');
@@ -76,4 +74,4 @@ export async function DELETE(
       { status: 500 }
     );
   }
-}
+});
