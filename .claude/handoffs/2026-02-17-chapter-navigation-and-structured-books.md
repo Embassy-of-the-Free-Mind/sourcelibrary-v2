@@ -127,24 +127,108 @@ Low priority since the `<summary>` tag in translations covers most of this if ha
 
 | File | Status | What changed |
 |------|--------|-------------|
-| `src/app/api/books/[id]/route.ts` | Modified | Added `chapters: 1` to nav projection; `display_brightness` removed separately |
-| `src/components/reader/ChapterDropdown.tsx` | New | Trigger + dropdown/bottom-sheet component |
+| `src/app/api/books/[id]/route.ts` | Modified | Added `chapters: 1` to nav projection |
+| `src/components/reader/ChapterDropdown.tsx` | New | Trigger + dropdown/bottom-sheet, English titles with original subtitle |
 | `src/components/pipeline/TranslationEditor.tsx` | Modified | Import + render ChapterDropdown in Row 1 |
-| `src/app/api/books/[id]/extract-chapters/route.ts` | Rewritten | AI-powered chapter extraction replacing naive heading scraper |
+| `src/app/api/books/[id]/extract-chapters/route.ts` | Rewritten | AI-powered chapter extraction with English title translation |
+| `src/lib/types/book.ts` | Modified | Added `titleEn?: string` to Chapter interface |
+| `src/lib/types/page.ts` | Modified | Added `translation_summary` and `translation_keywords` fields |
+| `src/lib/translation-metadata.ts` | New | `extractTranslationMetadata()` — parses `<summary>` and `<keywords>` tags |
+| `src/workers/translation-processor-logic.ts` | Modified | Harvests translation metadata on save |
+| `src/app/api/cron/process-batches/route.ts` | Modified | Harvests translation metadata on batch result collection |
+| `src/app/api/process/route.ts` | Modified | Harvests translation metadata on realtime processing |
+| `src/app/api/contribute/process/route.ts` | Modified | Harvests translation metadata on contributor processing |
+| `src/app/api/admin/backfill-translation-metadata/route.ts` | New | Backfill route for existing translations |
 
-## Uncommitted State
+## Committed & Deployed
 
-All changes are uncommitted and on `main`. Ready to commit.
+Three commits pushed to `main`:
+1. `a3381a5` — Chapter navigation dropdown + AI chapter extraction
+2. `adf8602` — English translations for chapter titles
+3. `759dbf3` — Harvest `<summary>` + `<keywords>` from translations
+
+Lambda translation worker rebuilt but NOT deployed (no AWS credentials in session). **Deploy with:**
+```bash
+aws lambda update-function-code --function-name sourcelibrary-translation-processor \
+  --zip-file fileb://dist/packages/translation-processor.zip --region eu-central-1
+```
+
+## Backfill Status
+
+- 81,535 pages eligible for metadata harvesting
+- ~16% hit rate (only recent translations with current prompt produce these tags)
+- Backfill route: `POST /api/admin/backfill-translation-metadata?limit=50000`
+- New translations (including Fludd re-translation in progress) will auto-harvest
+
+## In-Flight Work
+
+- **Fludd re-translation**: Batch job `batches/vzrygdfjgjv6r6r8rhxlxq3rrrmi9vgxsm5e` — 500 pages submitted, remaining 536 will be picked up by next batch-translate-async call or cron
+- Submit remaining: `curl -X POST https://sourcelibrary.org/api/books/6952dac677f38f6761bc683a/batch-translate-async -H 'Content-Type: application/json' -d '{"force": true}'`
 
 ## Test Commands
 
 ```bash
-# Extract chapters for any book
+# Extract chapters for any book (includes English titles)
 curl -X POST https://sourcelibrary.org/api/books/BOOK_ID/extract-chapters
 
 # Check chapters
 curl https://sourcelibrary.org/api/books/BOOK_ID/extract-chapters
 
+# Backfill translation metadata (dry run)
+curl -X POST "https://sourcelibrary.org/api/admin/backfill-translation-metadata?dry_run=true"
+
+# Backfill (real)
+curl -X POST "https://sourcelibrary.org/api/admin/backfill-translation-metadata?limit=50000"
+
 # Test reader with chapters
 # Open: https://sourcelibrary.org/book/6952dac677f38f6761bc683a/page/6952dac677f38f6761bc6867
 ```
+
+---
+
+## Remaining Work
+
+### Done (this session)
+- [x] Chapter dropdown in reader (English titles, mobile bottom sheet, hierarchical indentation)
+- [x] AI-powered chapter extraction (replaces noisy heading scraper)
+- [x] English chapter title translation (in same AI call)
+- [x] Harvest `<summary>` + `<keywords>` from translations (all 5 save paths + backfill route)
+- [x] Fludd re-translation submitted (batch API, 50% savings)
+
+### Next Up
+
+#### 1. Deploy Translation Lambda Worker
+The Lambda worker has the metadata harvesting code but needs AWS credentials to deploy. This is the only save path not yet live.
+
+#### 2. Finish Fludd Re-Translation
+Submit remaining 536 pages once the first batch completes. Then:
+- Re-extract chapters (will have fresh translations to work with)
+- Re-generate index with chapter awareness
+- Generate `reading_summary` (never done for this book)
+
+#### 3. Unify Sections (medium effort, high value)
+Three overlapping concepts need consolidation:
+- `book.chapters[]` — structural divisions from OCR (Tractatus/Liber/Caput)
+- `book.index.sectionSummaries[]` — AI-generated thematic groupings
+- `book.reading_sections[]` — defined in type but never populated
+
+**Proposal:** Chapters = structural truth (from author). Sections = reading-level rollups derived from chapters. Index generation should group chapters into sections rather than inventing its own groupings.
+
+#### 4. Better Index Section Grouping (low effort)
+Update the index synthesis prompt (in `src/app/api/books/[id]/index/route.ts`, line ~664) to specify: "Group chapters into 8-15 reading sections. Use top-level divisions (Tractatus, Parts) as natural section boundaries." Currently the AI guesses how many sections to create.
+
+#### 5. Use Harvested Metadata in Index Generation
+The index route currently re-reads all translation text to extract summaries. With `translation_summary` and `translation_keywords` now persisted on pages, the index route can:
+- Read page summaries directly instead of re-processing full text
+- Use keywords for entity/concept extraction
+- Reduce token usage significantly
+
+#### 6. Translation Context (deferred)
+User was unsure about injecting full chapter paths into translation prompts. Possible lighter approach: inject a brief one-line context like "This page discusses musical proportions in the context of macrocosmic harmony" derived from the page's `translation_summary` of the previous page. Lower priority — defer until section unification is done.
+
+#### 7. Surface Metadata in UI
+With `translation_summary` and `translation_keywords` now on pages, potential UI uses:
+- Chapter dropdown tooltips showing page summary on hover
+- Search result snippets using page summaries
+- Reading progress descriptions ("You stopped in the section about geometric arithmetic")
+- Tag cloud on book detail pages from aggregated keywords
