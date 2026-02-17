@@ -30,6 +30,7 @@ import HighlightsPanel from '@/components/annotations/HighlightsPanel';
 import AnnotationPanel from '@/components/annotations/AnnotationPanel';
 import HighlightedText from '@/components/search/HighlightedText';
 import HighlightSelection from '@/components/annotations/HighlightSelection';
+import ChapterDropdown from '@/components/reader/ChapterDropdown';
 import { BookShare } from '@/components/ui/ShareButton';
 import { GoogleTranslate } from '@/components/search/GoogleTranslate';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
@@ -437,12 +438,6 @@ export default function TranslationEditor({
   onSave,
   onRefresh,
 }: TranslationEditorProps) {
-  // CSS brightness from book-level setting
-  const displayBrightness = (book as unknown as { display_brightness?: number }).display_brightness;
-  const brightnessStyle = displayBrightness && displayBrightness !== 1.0
-    ? { filter: `brightness(${displayBrightness})` }
-    : {};
-
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
@@ -738,8 +733,8 @@ export default function TranslationEditor({
       <div className="h-screen flex flex-col" style={{ background: 'var(--bg-cream)' }}>
         {/* Header - Two rows on mobile, one row on desktop */}
         <header className="px-3 sm:px-4 py-2 sm:py-3" style={{ background: 'var(--bg-white)', borderBottom: '1px solid var(--border-light)' }}>
-          {/* Row 1: Back + Title ... Page Navigator */}
-          <div className="flex items-center justify-between gap-2">
+          {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
+          <div className="flex items-center justify-between gap-2 relative">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
               <a href={`/book/${book.id}`} className="p-1 rounded-md hover:bg-stone-100 transition-colors shrink-0" style={{ color: 'var(--text-muted)' }} aria-label="Back to book">
                 <BookOpen className="w-5 h-5" aria-hidden="true" />
@@ -750,6 +745,21 @@ export default function TranslationEditor({
                 </h1>
               </a>
             </div>
+
+            {/* Chapter Navigation */}
+            {book.chapters && book.chapters.length > 0 && (
+              <ChapterDropdown
+                chapters={book.chapters}
+                currentChapterIndex={
+                  book.chapters.reduce((best, ch, i) =>
+                    ch.pageNumber <= page.page_number ? i : best, -1)
+                }
+                onChapterSelect={(chapter) => {
+                  const target = pages.find(p => p.id === chapter.pageId);
+                  if (target) onNavigate(target.id);
+                }}
+              />
+            )}
 
             {/* Page Navigation */}
             <div className="flex items-center gap-1 rounded-lg p-1 shrink-0" style={{ background: 'var(--bg-warm)' }}>
@@ -929,7 +939,7 @@ export default function TranslationEditor({
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
                   </div>
                   <div className="flex-1 overflow-auto p-2 lg:p-4">
-                    <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...brightnessStyle }}>
+                    <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                       {pageDisplayUrl ? (
                         <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
                       ) : (
@@ -1443,7 +1453,7 @@ export default function TranslationEditor({
               </button>
             </div>
             <div className="flex-1 overflow-auto p-4">
-              <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...brightnessStyle }}>
+              <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
                 ) : (

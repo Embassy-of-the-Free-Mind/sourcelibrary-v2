@@ -19,7 +19,8 @@ export async function GET(
     // Book projection: nav mode only needs fields the reader uses
     const bookProjection = pagesMode === 'nav' ? {
       _id: 0, id: 1, title: 1, display_title: 1, author: 1,
-      published: 1, language: 1, doi: 1, display_brightness: 1,
+      published: 1, language: 1, doi: 1,
+      chapters: 1,
     } : undefined;
 
     const book = await db.collection('books').findOne({ id }, bookProjection ? { projection: bookProjection } : undefined);
@@ -221,8 +222,6 @@ export async function PATCH(
       'ustc_id', 'place_published', 'publisher', 'format',
       // Image source and licensing
       'image_source', 'license', 'doi',
-      // Display settings
-      'display_brightness'
     ];
 
     const updates: Record<string, unknown> = { updated_at: new Date() };
