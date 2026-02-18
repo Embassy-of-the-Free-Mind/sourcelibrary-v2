@@ -92,9 +92,11 @@ export async function GET(request: NextRequest) {
       batches: number; pages: number;
     }> = [];
     const skipped: string[] = [];
+    let booksExamined = 0;
 
     for (const book of books) {
       if (submitted.length >= limit) break;
+      booksExamined++;
 
       // Find pages with old OCR models
       const eligiblePages = await db.collection('pages').find(
@@ -138,29 +140,8 @@ export async function GET(request: NextRequest) {
       const promptResult = await getOcrPrompt(language);
       const prompt = promptResult.text;
 
-      // Create parent batch_job
+      // Submit in chunks — collect children BEFORE creating parent
       const parentJobId = nanoid();
-      await db.collection('batch_jobs').insertOne({
-        id: parentJobId,
-        type: 'ocr',
-        book_id: book.id,
-        book_title: book.title,
-        total_pages: eligiblePages.length,
-        child_job_ids: [] as string[],
-        progress: {
-          completed: 0, failed: 0,
-          pending: eligiblePages.length, total: eligiblePages.length,
-        },
-        status: 'pending',
-        model: DEFAULT_BATCH_MODEL,
-        language,
-        prompt_version: PROMPT_VERSION,
-        force: true,
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
-
-      // Submit in chunks
       const childJobIds: string[] = [];
       let bookPagesSubmitted = 0;
 
@@ -245,11 +226,32 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      // Update parent with child IDs
-      await db.collection('batch_jobs').updateOne(
-        { id: parentJobId },
-        { $set: { child_job_ids: childJobIds, updated_at: new Date() } }
-      );
+      // Only create parent job and mark book if we actually submitted pages
+      if (bookPagesSubmitted === 0) {
+        skipped.push(`${label}: all image downloads failed (${eligiblePages.length} eligible)`);
+        continue;
+      }
+
+      // Create parent batch_job with actual child IDs
+      await db.collection('batch_jobs').insertOne({
+        id: parentJobId,
+        type: 'ocr',
+        book_id: book.id,
+        book_title: book.title,
+        total_pages: bookPagesSubmitted,
+        child_job_ids: childJobIds,
+        progress: {
+          completed: 0, failed: 0,
+          pending: bookPagesSubmitted, total: bookPagesSubmitted,
+        },
+        status: 'pending',
+        model: DEFAULT_BATCH_MODEL,
+        language,
+        prompt_version: PROMPT_VERSION,
+        force: true,
+        created_at: new Date(),
+        updated_at: new Date(),
+      });
 
       // Set active batch job on book
       await db.collection('books').updateOne(
@@ -278,7 +280,8 @@ export async function GET(request: NextRequest) {
       submitted,
       skipped: skipped.length > 0 ? skipped : undefined,
       offset,
-      nextOffset: offset + submitted.length,
+      booksExamined,
+      nextOffset: offset + booksExamined,
       duration_ms: Date.now() - startTime,
     });
   } catch (error) {
