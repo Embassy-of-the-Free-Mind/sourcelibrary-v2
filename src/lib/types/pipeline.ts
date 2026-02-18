@@ -55,9 +55,15 @@ export type PipelineAutoStatus =
   | 'archive_complete'
   | 'ocr_submitted'
   | 'ocr_complete'
+  | 'metadata_enriched'
   | 'translate_submitted'
   | 'translate_complete'
   | 'enriching'
+  | 'enriched'
+  | 'chapters'
+  | 'chapters_complete'
+  | 'images_submitted'
+  | 'images_complete'
   | 'complete'
   | 'failed';
 
@@ -77,6 +83,8 @@ export interface PipelineAutoState {
   ocr_batch_id?: string;
   /** batch_jobs collection ID for translation */
   translate_batch_id?: string;
+  /** Job ID for image extraction (links to jobs collection) */
+  image_extraction_job_id?: string;
   /** Last time the cron touched this book */
   last_updated?: Date;
 }

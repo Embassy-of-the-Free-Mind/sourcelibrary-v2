@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 interface HistoryEvent {
-  type: 'imported' | 'archived' | 'ocr' | 'translation' | 'summary' | 'index' | 'image_extraction' | 'edition_published' | 'admin_action';
+  type: 'imported' | 'archived' | 'ocr' | 'translation' | 'summary' | 'index' | 'image_extraction' | 'extract_chapters' | 'metadata_enriched' | 'edition_published' | 'admin_action';
   timestamp: string;
   description: string;
   pages?: number;
@@ -43,6 +43,7 @@ export async function GET(
         'index.generatedAt': 1,
         'reading_summary.generated_at': 1, 'reading_summary.model': 1,
         editions: 1, split_check: 1, summary: 1,
+        chapters_extracted_at: 1, chapters: 1,
       }
     });
 
@@ -192,6 +193,7 @@ export async function GET(
       summarize: 'summary',
       index: 'index',
       extract_images: 'image_extraction',
+      extract_chapters: 'extract_chapters',
     };
     const typeLabels: Record<string, string> = {
       ocr: 'OCR',
@@ -199,6 +201,7 @@ export async function GET(
       summarize: 'Summary',
       index: 'Index',
       extract_images: 'Image extraction',
+      extract_chapters: 'Chapter extraction',
     };
 
     for (const group of usageGroups.values()) {
@@ -296,6 +299,19 @@ export async function GET(
           type: 'index',
           timestamp: new Date(indexGenAt).toISOString(),
           description: 'Book index generated',
+        });
+      }
+    }
+
+    // --- Chapter extraction event (from book fields) ---
+    const chaptersExtractedAt = book.chapters_extracted_at;
+    if (chaptersExtractedAt) {
+      const hasChapterUsage = [...usageGroups.values()].some(g => g.type === 'extract_chapters');
+      if (!hasChapterUsage) {
+        events.push({
+          type: 'extract_chapters',
+          timestamp: new Date(chaptersExtractedAt).toISOString(),
+          description: `Chapters extracted: ${book.chapters?.length || 0} chapters`,
         });
       }
     }

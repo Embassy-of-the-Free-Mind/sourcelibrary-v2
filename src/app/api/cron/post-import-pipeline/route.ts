@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { extractChaptersForBook } from '@/lib/chapter-extraction';
+import { enrichBookMetadata } from '@/lib/metadata-enrichment';
+import { nanoid } from 'nanoid';
+import { enqueuePagesForJob } from '@/lib/queue-utils';
 
 export const maxDuration = 300;
 
@@ -9,8 +13,13 @@ const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 
 const ENROLL_LIMIT = 10;
 const ARCHIVE_LIMIT = 20; // Just DB checks now — Hetzner does actual archiving
 const OCR_SUBMIT_LIMIT = 20;
+const METADATA_ENRICH_LIMIT = 10;
 const TRANSLATE_SUBMIT_LIMIT = 10;
 const ENRICH_LIMIT = 5;
+const CHAPTER_LIMIT = 5;
+const IMAGE_SUBMIT_LIMIT = 3;
+const FINALIZE_LIMIT = 10;
+const MAX_ACTIVE_IMAGE_JOBS = 5;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 
@@ -59,7 +68,7 @@ async function markFailed(
  *
  * Cron-driven post-import pipeline orchestrator.
  * Discovers books needing work and advances them through:
- *   archive -> OCR -> translate -> summary/index
+ *   archive -> OCR -> translate -> summary/index -> chapters -> images -> complete
  *
  * Scheduled: every 10 minutes via Vercel cron.
  */
@@ -76,9 +85,16 @@ export async function GET(request: NextRequest) {
     archived: 0,
     ocr_submitted: 0,
     ocr_advanced: 0,
+    metadata_enriched: 0,
+    metadata_skipped: 0,
     translate_submitted: 0,
     translate_advanced: 0,
     enriched: 0,
+    chapters_extracted: 0,
+    chapters_skipped: 0,
+    images_submitted: 0,
+    images_advanced: 0,
+    finalized: 0,
     errors: [] as string[],
   };
 
@@ -260,10 +276,56 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 4: Submit translation via Gemini Batch API (ocr_complete -> translate_submitted) ──
+    // ── Phase 3.5: Metadata enrichment (ocr_complete -> metadata_enriched) ──
+    // AI reads OCR text to verify/fill language, year, categories, description.
+    // Non-blocking: failure skips to metadata_enriched (don't block translation).
+    if (hasTimeBudget(startTime)) {
+      const readyForMetadata = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'ocr_complete' })
+        .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
+        .limit(METADATA_ENRICH_LIMIT)
+        .toArray();
+
+      for (const book of readyForMetadata) {
+        if (!hasTimeBudget(startTime)) break;
+        try {
+          // Skip if already enriched (e.g. by manual script)
+          if (book.ai_metadata?.enriched_at) {
+            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+            log.metadata_skipped++;
+            continue;
+          }
+
+          const result = await enrichBookMetadata(db, book.id);
+
+          if (result.success) {
+            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+            log.metadata_enriched++;
+          } else {
+            // Non-blocking: skip to metadata_enriched on failure
+            const retries = book.pipeline_auto?.retry_count || 0;
+            if (retries >= MAX_RETRIES || result.error?.includes('Only')) {
+              // Too few pages or persistent failure — skip
+              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+              log.metadata_skipped++;
+            } else {
+              await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
+            }
+            log.errors.push(`Metadata ${book.id}: ${result.error}`);
+          }
+        } catch (err) {
+          // Non-blocking: skip on unexpected errors
+          await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+          log.metadata_skipped++;
+          log.errors.push(`Metadata ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+        }
+      }
+    }
+
+    // ── Phase 4: Submit translation via Gemini Batch API (metadata_enriched -> translate_submitted) ──
     if (hasTimeBudget(startTime)) {
       const readyForTranslate = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'ocr_complete' })
+        .find({ 'pipeline_auto.status': 'metadata_enriched' })
         .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray();
@@ -357,7 +419,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 6: Enrich — generate summary + index (translate_complete -> complete) ──
+    // ── Phase 6: Enrich — generate summary + index (translate_complete -> enriched) ──
     if (hasTimeBudget(startTime)) {
       const readyForEnrich = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete' })
@@ -386,14 +448,161 @@ export async function GET(request: NextRequest) {
             continue;
           }
 
-          await setPipelineStatus(db, book.id, 'complete', {
-            completed_at: new Date(),
-            retry_count: 0,
-          });
+          await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
           log.enriched++;
         } catch (err) {
           log.errors.push(`Enrich ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
         }
+      }
+    }
+
+    // ── Phase 7: Chapter extraction (enriched -> chapters_complete) ──
+    // AI extracts chapter structure from OCR headings. Fast & cheap (~$0.02/book).
+    // Books with <10 pages skip directly — no meaningful structure to extract.
+    if (hasTimeBudget(startTime)) {
+      const readyForChapters = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'enriched' })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
+        .limit(CHAPTER_LIMIT)
+        .toArray();
+
+      for (const book of readyForChapters) {
+        if (!hasTimeBudget(startTime)) break;
+        try {
+          // Skip very short books — no meaningful chapter structure
+          if ((book.pages_count || 0) < 10) {
+            await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
+            log.chapters_skipped++;
+            continue;
+          }
+
+          await setPipelineStatus(db, book.id, 'chapters');
+
+          await extractChaptersForBook(db, book.id);
+
+          await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
+          log.chapters_extracted++;
+        } catch (err) {
+          const retries = book.pipeline_auto?.retry_count || 0;
+          if (retries >= MAX_RETRIES) {
+            // Chapter extraction is non-critical — skip to next phase on persistent failure
+            await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
+            log.chapters_skipped++;
+          } else {
+            await setPipelineStatus(db, book.id, 'enriched', { retry_count: retries + 1 });
+          }
+          log.errors.push(`Chapters ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+        }
+      }
+    }
+
+    // ── Phase 8: Image extraction (chapters_complete -> images_submitted / images_complete) ──
+    // Queue pages to Lambda for illustration detection. ~$0.15/book, takes minutes-hours.
+    if (hasTimeBudget(startTime)) {
+      // Check backpressure — don't queue more if many jobs are active
+      const activeImageJobs = await db.collection('jobs').countDocuments({
+        type: 'image_extraction',
+        status: { $in: ['pending', 'processing'] },
+      });
+
+      if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+        const readyForImages = await db.collection('books')
+          .find({ 'pipeline_auto.status': 'chapters_complete' })
+          .project({ id: 1, title: 1 })
+          .limit(IMAGE_SUBMIT_LIMIT)
+          .toArray();
+
+        for (const book of readyForImages) {
+          if (!hasTimeBudget(startTime)) break;
+          try {
+            // Get all page IDs for this book
+            const bookPages = await db.collection('pages')
+              .find(
+                { book_id: book.id },
+                { projection: { id: 1 } }
+              )
+              .toArray();
+
+            if (bookPages.length === 0) {
+              await setPipelineStatus(db, book.id, 'images_complete');
+              log.images_advanced++;
+              continue;
+            }
+
+            const pageIds = bookPages.map(p => p.id);
+            const jobId = nanoid(12);
+
+            // Create job record
+            await db.collection('jobs').insertOne({
+              id: jobId,
+              type: 'image_extraction',
+              status: 'pending',
+              book_id: book.id,
+              book_title: book.title,
+              progress: { total: pageIds.length, completed: 0, failed: 0 },
+              config: { page_ids: pageIds },
+              created_at: new Date(),
+              updated_at: new Date(),
+            });
+
+            // Set book.job for UI display
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { job: { type: 'image_extraction', job_id: jobId } } }
+            );
+
+            // Enqueue pages to SQS
+            await enqueuePagesForJob(book.id, pageIds, 'image_extraction', jobId);
+
+            await setPipelineStatus(db, book.id, 'images_submitted', {
+              image_extraction_job_id: jobId,
+            });
+            log.images_submitted++;
+          } catch (err) {
+            log.errors.push(`Images submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+          }
+        }
+      }
+
+      // Check for completed image extraction jobs
+      const imagesPending = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'images_submitted' })
+        .project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 })
+        .toArray();
+
+      for (const book of imagesPending) {
+        if (!hasTimeBudget(startTime)) break;
+        const imgJobId = book.pipeline_auto?.image_extraction_job_id;
+        if (!imgJobId) {
+          // No job ID — skip to complete
+          await setPipelineStatus(db, book.id, 'images_complete');
+          log.images_advanced++;
+          continue;
+        }
+
+        const imgJob = await db.collection('jobs').findOne({
+          id: imgJobId,
+          status: { $in: ['completed', 'completed_with_errors'] },
+        });
+
+        if (imgJob) {
+          await setPipelineStatus(db, book.id, 'images_complete');
+          log.images_advanced++;
+        }
+      }
+    }
+
+    // ── Phase 9: Finalize (images_complete -> complete) ──
+    if (hasTimeBudget(startTime)) {
+      const readyToFinalize = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'images_complete' })
+        .project({ id: 1 })
+        .limit(FINALIZE_LIMIT)
+        .toArray();
+
+      for (const book of readyToFinalize) {
+        await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
+        log.finalized++;
       }
     }
 

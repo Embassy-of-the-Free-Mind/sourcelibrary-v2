@@ -149,7 +149,7 @@ export default function UploadPage() {
       setImageSourceProvider('internet_archive');
       setImageLicense('publicdomain'); // IA items are typically public domain
     } else if (item.source === 'bph') {
-      setImageSourceProvider('biodiversity_heritage_library');
+      setImageSourceProvider('efm');
       setImageLicense('publicdomain');
     }
     setSearchResults([]);
