@@ -5,6 +5,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 
 export const maxDuration = 300;
 
@@ -75,12 +76,20 @@ export async function GET(request: NextRequest) {
           const batchResults = await getBatchJobResults(jobName);
           let successCount = 0;
           let failCount = 0;
-          const now = new Date();          
+          const now = new Date();
+
+          // Safety check: if using positional matching, response count must match page count
+          const pageIds = job.page_ids || [];
+          if (pageIds.length > 0 && batchResults.length !== pageIds.length) {
+            console.warn(`[cron] Response count (${batchResults.length}) != page count (${pageIds.length}) for job ${job.id}. Skipping to avoid mismatched data.`);
+            results.errors.push(`Job ${job.id}: response count mismatch (${batchResults.length} vs ${pageIds.length})`);
+            continue;
+          }
 
           for (let idx = 0; idx < batchResults.length; idx++) {
             const result = batchResults[idx];
-            // Match by position — Gemini doesn't echo metadata.key in responses
-            const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
+            // Match by metadata key if available, fall back to positional
+            const pageId = result.metadata?.key || (pageIds[idx]);
 
             if (!pageId) {
               console.warn(`[cron] No page ID for result idx ${idx} (job ${job.id})`);
@@ -88,40 +97,44 @@ export async function GET(request: NextRequest) {
               continue;
             }
 
-            if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {              
+            if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
               failCount++;
               continue;
             }
 
             const text = result.response.candidates[0].content.parts[0].text;
-            const usage = result.response.usageMetadata;            
+            const usage = result.response.usageMetadata;
 
             if (job.type === 'ocr') {
               const pageType = extractPageType(text);
               const columns = extractColumns(text);
               const detectedImages = parseDetectedImages(text);
+
+              // Snapshot manual edits before overwriting
+              await createSnapshotIfNeeded(pageId, 'pre_ocr', job.id);
+
+              // Use dot notation to merge fields (not replace entire ocr object)
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {
                   $set: {
-                    ocr: {
-                      data: text,
-                      updated_at: now,
-                      model: job.model,
-                      language: job.language,
-                      source: 'batch_api',
-                      prompt_version: job.prompt_version || PROMPT_VERSION,
-                      batch_job_id: job.id,
-                      input_tokens: usage?.promptTokenCount || 0,
-                      output_tokens: usage?.candidatesTokenCount || 0,
-                    },
+                    'ocr.data': text,
+                    'ocr.updated_at': now,
+                    'ocr.model': job.model,
+                    'ocr.language': job.language,
+                    'ocr.source': 'batch_api',
+                    'ocr.prompt_version': job.prompt_version || PROMPT_VERSION,
+                    'ocr.prompt_name': job.prompt_name || 'Standard OCR',
+                    'ocr.batch_job_id': job.id,
+                    'ocr.input_tokens': usage?.promptTokenCount || 0,
+                    'ocr.output_tokens': usage?.candidatesTokenCount || 0,
                     ...(pageType && { page_type: pageType }),
                     ...(columns && { columns }),
                     ...(detectedImages.length > 0 && { detected_images: detectedImages }),
                     updated_at: now,
                   },
                 }
-              );              
+              );
 
               if (updateResult.matchedCount === 0) {
                 console.warn(`[cron] Page ${pageId} not found in database!`);
@@ -130,22 +143,26 @@ export async function GET(request: NextRequest) {
               }
             } else {
               const translationMeta = extractTranslationMetadata(text);
+
+              // Snapshot manual edits before overwriting
+              await createSnapshotIfNeeded(pageId, 'pre_translate', job.id);
+
+              // Use dot notation to merge fields (not replace entire translation object)
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {
                   $set: {
-                    translation: {
-                      data: text,
-                      updated_at: now,
-                      model: job.model,
-                      source_language: job.language,
-                      target_language: 'English',
-                      source: 'batch_api',
-                      prompt_version: job.prompt_version || PROMPT_VERSION,
-                      batch_job_id: job.id,
-                      input_tokens: usage?.promptTokenCount || 0,
-                      output_tokens: usage?.candidatesTokenCount || 0,
-                    },
+                    'translation.data': text,
+                    'translation.updated_at': now,
+                    'translation.model': job.model,
+                    'translation.source_language': job.language,
+                    'translation.target_language': 'English',
+                    'translation.source': 'batch_api',
+                    'translation.prompt_version': job.prompt_version || PROMPT_VERSION,
+                    'translation.prompt_name': job.prompt_name || 'Standard Translation',
+                    'translation.batch_job_id': job.id,
+                    'translation.input_tokens': usage?.promptTokenCount || 0,
+                    'translation.output_tokens': usage?.candidatesTokenCount || 0,
                     ...translationMeta,
                     updated_at: now,
                   },
@@ -276,7 +293,45 @@ export async function GET(request: NextRequest) {
               },
             }
           );
+          if (job.parent_job_id) {
+            await updateParentJobProgress(db, job.parent_job_id);
+          }
           results.errors.push(`Job ${job.id} failed: Gemini batch job failed`);
+
+        } else if (geminiStatus.state === 'JOB_STATE_CANCELLED' || (geminiStatus.state as string) === 'BATCH_STATE_CANCELLED') {
+          // Cancelled — terminal state
+          await db.collection('batch_jobs').updateOne(
+            { id: job.id },
+            {
+              $set: {
+                status: 'cancelled',
+                gemini_state: geminiStatus.state,
+                updated_at: new Date(),
+              },
+            }
+          );
+          if (job.parent_job_id) {
+            await updateParentJobProgress(db, job.parent_job_id);
+          }
+          results.errors.push(`Job ${job.id} cancelled`);
+
+        } else if (geminiStatus.state === 'JOB_STATE_EXPIRED' || (geminiStatus.state as string) === 'BATCH_STATE_EXPIRED') {
+          // Expired (7-day Gemini limit) — terminal state
+          await db.collection('batch_jobs').updateOne(
+            { id: job.id },
+            {
+              $set: {
+                status: 'failed',
+                gemini_state: geminiStatus.state,
+                error: 'Gemini batch job expired (7-day limit)',
+                updated_at: new Date(),
+              },
+            }
+          );
+          if (job.parent_job_id) {
+            await updateParentJobProgress(db, job.parent_job_id);
+          }
+          results.errors.push(`Job ${job.id} expired: exceeded 7-day Gemini limit`);
         }
 
       } catch (e) {
@@ -336,16 +391,18 @@ async function updateParentJobProgress(
   let anyChildFailed = false;
 
   for (const child of children) {
-    // Child is done if status is saved, completed, or failed
-    const childIsDone = ['saved', 'completed', 'failed'].includes(child.status);
+    // Child is done if status is saved, completed, failed, or cancelled
+    const childIsDone = ['saved', 'completed', 'failed', 'cancelled'].includes(child.status);
 
     if (!childIsDone) {
       allChildrenDone = false;
     }
 
     if (child.status === 'saved' || child.status === 'completed') {
-      progress.completed += child.page_count || 0;
-    } else if (child.status === 'failed') {
+      // Use actual completed/failed counts when available, fall back to page_count
+      progress.completed += child.completed_pages ?? child.page_count ?? 0;
+      progress.failed += child.failed_pages ?? 0;
+    } else if (child.status === 'failed' || child.status === 'cancelled') {
       progress.failed += child.page_count || 0;
       anyChildFailed = true;
     } else {

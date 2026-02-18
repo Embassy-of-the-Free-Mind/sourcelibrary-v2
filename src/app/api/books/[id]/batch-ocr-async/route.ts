@@ -6,6 +6,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -34,7 +35,7 @@ function getPageImageUrl(page: {
   if (page.crop && page.cropped_photo) {
     return page.cropped_photo;
   }
-  if (page.archived_photo) {
+  if (page.archived_photo && !page.archived_photo.startsWith('failed:')) {
     return page.archived_photo;
   }
 
@@ -282,11 +283,22 @@ export const GET = withAuth(async (request, session, context) => {
         const pageIds = jobDoc.page_ids || [];
         const responses = batchJob.dest.inlinedResponses;
 
+        // Safety check: response count must match page count for positional matching
+        if (responses.length !== pageIds.length) {
+          console.warn(`[batch-ocr] Response count (${responses.length}) != page count (${pageIds.length}) for job ${jobName}. Skipping to avoid mismatched data.`);
+          return NextResponse.json({
+            jobName,
+            state: batchJob.state,
+            error: `Response count mismatch: ${responses.length} responses for ${pageIds.length} pages. Results NOT saved to prevent data corruption.`,
+            resultsCollected: false,
+          }, { status: 409 });
+        }
+
         let successCount = 0;
         let failCount = 0;
         const now = new Date().toISOString();
 
-        for (let i = 0; i < responses.length && i < pageIds.length; i++) {
+        for (let i = 0; i < responses.length; i++) {
           const pageId = pageIds[i];
           const response = responses[i];
 
@@ -297,7 +309,11 @@ export const GET = withAuth(async (request, session, context) => {
             const pageType = extractPageType(text);
             const columns = extractColumns(text);
             const detectedImages = parseDetectedImages(text);
-            await db.collection('pages').updateOne(
+
+            // Snapshot manual edits before overwriting
+            await createSnapshotIfNeeded(pageId, 'pre_ocr', jobName || undefined);
+
+            const updateResult = await db.collection('pages').updateOne(
               { id: pageId },
               {
                 $set: {
@@ -307,6 +323,8 @@ export const GET = withAuth(async (request, session, context) => {
                   'ocr.language': jobDoc.language,
                   'ocr.source': 'batch_api',
                   'ocr.prompt_version': jobDoc.prompt_version || PROMPT_VERSION,
+                  'ocr.prompt_name': jobDoc.prompt_name || 'Standard OCR',
+                  'ocr.batch_job_id': jobDoc.job_name,
                   ...(pageType && { page_type: pageType }),
                   ...(columns && { columns }),
                   ...(detectedImages.length > 0 && { detected_images: detectedImages }),
@@ -314,6 +332,11 @@ export const GET = withAuth(async (request, session, context) => {
                 }
               }
             );
+            if (updateResult.matchedCount === 0) {
+              console.warn(`[batch-ocr] Page ${pageId} not found in database`);
+              failCount++;
+              continue;
+            }
             successCount++;
           } else {
             failCount++;

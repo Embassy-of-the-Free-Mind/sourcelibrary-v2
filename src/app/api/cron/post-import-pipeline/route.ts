@@ -95,6 +95,8 @@ export async function GET(request: NextRequest) {
     images_submitted: 0,
     images_advanced: 0,
     finalized: 0,
+    stale_retried: 0,
+    stale_failed: 0,
     errors: [] as string[],
   };
 
@@ -193,6 +195,7 @@ export async function GET(request: NextRequest) {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ limit: 500, force: false }),
           });
           if (!res.ok) {
             log.errors.push(`OCR submit ${book.id}: HTTP ${res.status}`);
@@ -338,6 +341,7 @@ export async function GET(request: NextRequest) {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ limit: 500 }),
           });
           if (!res.ok) {
             log.errors.push(`Translate submit ${book.id}: HTTP ${res.status}`);
@@ -589,6 +593,45 @@ export async function GET(request: NextRequest) {
           await setPipelineStatus(db, book.id, 'images_complete');
           log.images_advanced++;
         }
+      }
+    }
+
+    // ── Phase 8.5: Staleness detection — unstick books in *_submitted states ──
+    // If a book has been in a submitted state for >48h, the batch job likely failed silently.
+    // Retry up to MAX_RETRIES, then mark failed.
+    if (hasTimeBudget(startTime)) {
+      const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
+      const staleBooks = await db.collection('books')
+        .find({
+          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted'] },
+          'pipeline_auto.last_updated': { $lt: staleThreshold },
+        })
+        .project({ id: 1, title: 1, 'pipeline_auto': 1 })
+        .limit(10)
+        .toArray();
+
+      for (const book of staleBooks) {
+        if (!hasTimeBudget(startTime)) break;
+        const retries = book.pipeline_auto?.retry_count || 0;
+        const status = book.pipeline_auto?.status as string;
+
+        if (retries >= MAX_RETRIES) {
+          await markFailed(db, book.id, `Stale in ${status} for >48h after ${retries} retries`, retries);
+          log.stale_failed++;
+        } else {
+          // Roll back to the previous state so it gets re-submitted next cycle
+          const rollbackMap: Record<string, PipelineAutoStatus> = {
+            'ocr_submitted': 'archive_complete',
+            'translate_submitted': 'metadata_enriched',
+            'images_submitted': 'chapters_complete',
+          };
+          const rollbackTo = rollbackMap[status];
+          if (rollbackTo) {
+            await setPipelineStatus(db, book.id, rollbackTo, { retry_count: retries + 1 });
+            log.stale_retried++;
+          }
+        }
+        log.errors.push(`Stale ${book.id} (${book.title}): stuck in ${status} since ${book.pipeline_auto?.last_updated}`);
       }
     }
 

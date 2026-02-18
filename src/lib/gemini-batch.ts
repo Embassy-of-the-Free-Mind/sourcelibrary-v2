@@ -71,7 +71,8 @@ export interface BatchResponse {
 }
 
 function getApiKey(): string {
-  const key = process.env.GEMINI_API_KEY;
+  // Prefer tier 3 key for batch work (no rate limits)
+  const key = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
   if (!key) {
     throw new Error('GEMINI_API_KEY not configured');
   }
@@ -301,22 +302,13 @@ export async function getBatchJobStatus(jobName: string): Promise<BatchJobStatus
 }
 
 /**
- * Get the results of a completed batch job
+ * Get the results of a completed batch job.
+ * Makes a single API call (not two) — checks state and extracts results from one response.
  */
 export async function getBatchJobResults(jobName: string): Promise<BatchResponse[]> {
   const apiKey = getApiKey();
 
-  // First get job status to find output file
-  const status = await getBatchJobStatus(jobName);
-
-  if (status.state !== 'JOB_STATE_SUCCEEDED') {
-    throw new Error(`Job not complete: ${status.state}`);
-  }
-
-  // For inline responses, they're included in the job status
-  // For file-based, we need to download the output file
-
-  // Try to get inline responses first
+  // Single API call — check status and get results in one request
   const jobResponse = await fetch(
     `${GEMINI_API_BASE}/${jobName}?key=${apiKey}`,
     {
@@ -334,11 +326,11 @@ export async function getBatchJobResults(jobName: string): Promise<BatchResponse
 
   const jobData = await jobResponse.json();
 
-  // Debug: log the response structure
-  console.log('[getBatchJobResults] Response keys:', Object.keys(jobData));
-  console.log('[getBatchJobResults] metadata keys:', jobData.metadata ? Object.keys(jobData.metadata) : 'no metadata');
-  if (jobData.metadata?.output) {
-    console.log('[getBatchJobResults] metadata.output keys:', Object.keys(jobData.metadata.output));
+  // Check state from the raw response
+  const rawState = jobData.metadata?.state;
+  const state = normalizeState(rawState);
+  if (state !== 'JOB_STATE_SUCCEEDED') {
+    throw new Error(`Job not complete: ${state}`);
   }
 
   // Check for file-based output (metadata.output.responsesFile - current Gemini API format)
