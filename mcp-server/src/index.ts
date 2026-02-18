@@ -13,29 +13,32 @@ import {
 // Configuration
 const API_BASE = process.env.SOURCE_LIBRARY_API || "https://sourcelibrary.org/api";
 
-// Tool definitions
+// ── Tool Definitions ──────────────────────────────────────────────────
+
 const TOOLS: Tool[] = [
+  // ── Discovery & Browse ──
   {
     name: "search_library",
-    description: "Search the Source Library collection of translated historical texts. Returns books and pages matching the query.",
+    description:
+      "Full-text search across Source Library books and page content. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets ranked by relevance.",
     inputSchema: {
       type: "object" as const,
       properties: {
         query: {
           type: "string",
-          description: "Search query (searches titles, authors, translations)",
+          description: "Search query (searches titles, authors, translations, OCR text)",
         },
         language: {
           type: "string",
-          description: "Filter by original language (e.g., 'Latin', 'German')",
+          description: "Filter by original language (e.g., 'Latin', 'German', 'Greek', 'Sanskrit')",
         },
-        date_from: {
-          type: "string",
-          description: "Filter by publication year (start)",
+        year_from: {
+          type: "number",
+          description: "Filter by publication year (start, inclusive)",
         },
-        date_to: {
-          type: "string",
-          description: "Filter by publication year (end)",
+        year_to: {
+          type: "number",
+          description: "Filter by publication year (end, inclusive)",
         },
         has_doi: {
           type: "boolean",
@@ -45,27 +48,243 @@ const TOOLS: Tool[] = [
           type: "boolean",
           description: "Only return books with translations",
         },
+        sort: {
+          type: "string",
+          enum: ["relevance", "date_asc", "date_desc", "title"],
+          description: "Sort order (default: relevance)",
+        },
         limit: {
           type: "number",
-          description: "Maximum results to return (default 10)",
+          description: "Maximum results (default 10, max 100)",
+        },
+        offset: {
+          type: "number",
+          description: "Pagination offset (default 0)",
         },
       },
       required: ["query"],
     },
   },
   {
-    name: "search_images",
-    description: "Search historical illustrations, emblems, and engravings in the Source Library gallery. Find images by subject matter, depicted figures, symbols, image type, or time period.",
+    name: "list_books",
+    description:
+      "Browse the Source Library collection with filters. Unlike search_library which does full-text search, this returns a filtered list of all books. Use for browsing by language, finding recently translated works, or getting collection statistics.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        search: {
+          type: "string",
+          description: "Filter by title or author (diacritic-insensitive, e.g., 'bohme' matches 'Böhme')",
+        },
+        language: {
+          type: "string",
+          description: "Filter by language (e.g., 'Latin', 'German', 'Greek')",
+        },
+        category: {
+          type: "string",
+          description: "Filter by category",
+        },
+        sort: {
+          type: "string",
+          enum: ["recent-translation", "recent", "title-asc", "title-desc"],
+          description: "Sort order (default: recent-translation)",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum results (default 100, max 200)",
+        },
+        skip: {
+          type: "number",
+          description: "Pagination offset (default 0)",
+        },
+      },
+    },
+  },
+
+  // ── Reading & Text ──
+  {
+    name: "get_book",
+    description:
+      "Get detailed information about a specific book including summary, index, edition info, DOI, page list, and processing status.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        book_id: {
+          type: "string",
+          description: "The book ID",
+        },
+      },
+      required: ["book_id"],
+    },
+  },
+  {
+    name: "get_book_text",
+    description:
+      "Get the full text of a book (OCR and/or translations) in a single call. Essential for reading and analyzing book content. Supports page ranges for focused reading. Returns structured text with page numbers.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        book_id: {
+          type: "string",
+          description: "The book ID",
+        },
+        content: {
+          type: "string",
+          enum: ["ocr", "translation", "both"],
+          description: "Which text to return: 'ocr' (original), 'translation' (English), or 'both' (default)",
+        },
+        from: {
+          type: "number",
+          description: "Start page number (inclusive)",
+        },
+        to: {
+          type: "number",
+          description: "End page number (inclusive)",
+        },
+        format: {
+          type: "string",
+          enum: ["json", "plain"],
+          description: "Response format: 'json' (structured, default) or 'plain' (concatenated text with page markers)",
+        },
+        include_metadata: {
+          type: "boolean",
+          description: "Include page-level metadata (model, language, page_type, columns)",
+        },
+      },
+      required: ["book_id"],
+    },
+  },
+  {
+    name: "get_quote",
+    description:
+      "Get a specific page with formatted academic citations (inline, footnote, DOI). Use after searching to retrieve and cite specific passages.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        book_id: {
+          type: "string",
+          description: "The book ID from search results",
+        },
+        page: {
+          type: "number",
+          description: "Page number to get quote from",
+        },
+        include_original: {
+          type: "boolean",
+          description: "Include original language text (default true)",
+        },
+        include_context: {
+          type: "boolean",
+          description: "Include adjacent pages for context",
+        },
+      },
+      required: ["book_id", "page"],
+    },
+  },
+
+  // ── Knowledge Graph & Entities ──
+  {
+    name: "search_index",
+    description:
+      "Search AI-generated book indexes for concepts, people, places, keywords, and quotes across the collection. Returns cross-book results showing where terms appear with page references.",
     inputSchema: {
       type: "object" as const,
       properties: {
         query: {
           type: "string",
-          description: "Text search across descriptions, subjects, figures, and symbols (e.g., 'alchemical serpent', 'Mercury')",
+          description: "Search query (e.g., 'philosopher stone', 'Hermes Trismegistus', 'prima materia')",
         },
         type: {
           type: "string",
-          enum: ["emblem", "woodcut", "engraving", "portrait", "frontispiece", "musical_score", "diagram", "symbol", "decorative", "map"],
+          enum: ["concept", "person", "place", "keyword", "vocabulary", "quote"],
+          description: "Filter by entry type",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum results (default 50, max 200)",
+        },
+      },
+      required: ["query"],
+    },
+  },
+  {
+    name: "search_entities",
+    description:
+      "Search the cross-book entity knowledge graph. Entities are people, places, and concepts that appear across multiple books. Returns entity details with book references and mention counts. Use for finding connections between books.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        query: {
+          type: "string",
+          description: "Search query (matches entity names and aliases)",
+        },
+        type: {
+          type: "string",
+          enum: ["person", "place", "concept"],
+          description: "Filter by entity type",
+        },
+        book_id: {
+          type: "string",
+          description: "Filter to entities appearing in a specific book",
+        },
+        min_books: {
+          type: "number",
+          description: "Minimum number of books entity must appear in (default 1)",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum results (default 50, max 200)",
+        },
+        offset: {
+          type: "number",
+          description: "Pagination offset (default 0)",
+        },
+      },
+    },
+  },
+  {
+    name: "get_entity",
+    description:
+      "Get detailed information about a specific entity (person, place, or concept) including all book appearances, page references, aliases, and related entities. Use entity names from search_entities or search_index results.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        entity_id: {
+          type: "string",
+          description: "Entity ID (ObjectId) or entity name (e.g., 'Hermes Trismegistus')",
+        },
+      },
+      required: ["entity_id"],
+    },
+  },
+
+  // ── Gallery & Images ──
+  {
+    name: "search_images",
+    description:
+      "Search historical illustrations, emblems, and engravings in the Source Library gallery. Find images by subject matter, depicted figures, symbols, image type, or time period.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        query: {
+          type: "string",
+          description:
+            "Text search across descriptions, subjects, figures, and symbols (e.g., 'alchemical serpent', 'Mercury')",
+        },
+        type: {
+          type: "string",
+          enum: [
+            "emblem",
+            "woodcut",
+            "engraving",
+            "portrait",
+            "frontispiece",
+            "musical_score",
+            "diagram",
+            "symbol",
+            "decorative",
+            "map",
+          ],
           description: "Filter by image type",
         },
         subject: {
@@ -105,7 +324,8 @@ const TOOLS: Tool[] = [
   },
   {
     name: "get_image",
-    description: "Get detailed information about a specific image including full metadata, museum description, and source book context.",
+    description:
+      "Get detailed information about a specific image including full metadata, museum description, and source book context.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -119,7 +339,8 @@ const TOOLS: Tool[] = [
   },
   {
     name: "get_book_images",
-    description: "Get all extracted images from a specific book. Useful for exploring the visual content of a particular text.",
+    description:
+      "Get all extracted images from a specific book. Useful for exploring the visual content of a particular text.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -139,71 +360,164 @@ const TOOLS: Tool[] = [
       required: ["book_id"],
     },
   },
-  {
-    name: "get_quote",
-    description: "Get a quote from a specific page of a book with formatted citations. Use after searching to retrieve specific passages.",
-    inputSchema: {
-      type: "object" as const,
-      properties: {
-        book_id: {
-          type: "string",
-          description: "The book ID from search results",
-        },
-        page: {
-          type: "number",
-          description: "Page number to get quote from",
-        },
-        include_original: {
-          type: "boolean",
-          description: "Include original language text (default true)",
-        },
-        include_context: {
-          type: "boolean",
-          description: "Include adjacent pages for context",
-        },
-      },
-      required: ["book_id", "page"],
-    },
-  },
-  {
-    name: "get_book",
-    description: "Get detailed information about a specific book including summary, edition info, and DOI.",
-    inputSchema: {
-      type: "object" as const,
-      properties: {
-        book_id: {
-          type: "string",
-          description: "The book ID",
-        },
-      },
-      required: ["book_id"],
-    },
-  },
 ];
 
-// API helpers
+// ── API Helpers ────────────────────────────────────────────────────────
+
+async function apiGet(path: string, params?: URLSearchParams): Promise<unknown> {
+  const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    const text = await response.text().catch(() => response.statusText);
+    throw new Error(`API ${response.status}: ${text}`);
+  }
+  return response.json();
+}
+
+async function apiGetText(path: string, params?: URLSearchParams): Promise<string> {
+  const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
+  const response = await fetch(url);
+  if (!response.ok) {
+    const text = await response.text().catch(() => response.statusText);
+    throw new Error(`API ${response.status}: ${text}`);
+  }
+  return response.text();
+}
+
+// ── Tool Implementations ──────────────────────────────────────────────
+
 async function searchLibrary(args: {
   query: string;
   language?: string;
-  date_from?: string;
-  date_to?: string;
+  year_from?: number;
+  year_to?: number;
   has_doi?: boolean;
   has_translation?: boolean;
+  sort?: string;
   limit?: number;
+  offset?: number;
 }) {
   const params = new URLSearchParams({ q: args.query });
   if (args.language) params.set("language", args.language);
-  if (args.date_from) params.set("date_from", args.date_from);
-  if (args.date_to) params.set("date_to", args.date_to);
+  if (args.year_from) params.set("year_from", String(args.year_from));
+  if (args.year_to) params.set("year_to", String(args.year_to));
   if (args.has_doi) params.set("has_doi", "true");
   if (args.has_translation) params.set("has_translation", "true");
-  if (args.limit) params.set("limit", String(args.limit));
+  if (args.sort) params.set("sort", args.sort);
+  if (args.limit) params.set("limit", String(Math.min(args.limit, 100)));
+  if (args.offset) params.set("offset", String(args.offset));
 
-  const response = await fetch(`${API_BASE}/search?${params}`);
-  if (!response.ok) {
-    throw new Error(`Search failed: ${response.statusText}`);
+  const result = await apiGet("/search", params) as Record<string, unknown>;
+
+  // Compact the response for readability
+  const results = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
+    id: r.book_id || r.id,
+    type: r.type,
+    title: r.display_title || r.title,
+    author: r.author,
+    language: r.language,
+    published: r.published,
+    has_doi: r.has_doi,
+    ...(r.page_number ? { page_number: r.page_number } : {}),
+    ...(r.snippet ? { snippet: r.snippet } : {}),
+    url: `https://sourcelibrary.org/book/${r.book_id || r.id}`,
+  }));
+
+  return {
+    query: result.query,
+    total: result.total,
+    results,
+    ...(result.nearby ? { nearby: result.nearby } : {}),
+  };
+}
+
+async function listBooks(args: {
+  search?: string;
+  language?: string;
+  category?: string;
+  sort?: string;
+  limit?: number;
+  skip?: number;
+}) {
+  const params = new URLSearchParams();
+  if (args.search) params.set("search", args.search);
+  if (args.language) params.set("language", args.language);
+  if (args.category) params.set("category", args.category);
+  if (args.sort) params.set("sort", args.sort);
+  if (args.limit) params.set("limit", String(Math.min(args.limit, 200)));
+  if (args.skip) params.set("skip", String(args.skip));
+
+  const result = await apiGet("/books/library", params) as Record<string, unknown>;
+  const books = (result.books as Array<Record<string, unknown>>)?.map((b) => ({
+    id: b.id,
+    title: b.display_title || b.title,
+    author: b.author,
+    language: b.language,
+    published: b.published,
+    pages_count: b.pages_count,
+    pages_ocr: b.pages_ocr,
+    pages_translated: b.pages_translated,
+    translation_percent: b.translation_percent,
+    categories: b.categories,
+    url: `https://sourcelibrary.org/book/${b.id}`,
+  }));
+
+  return { total: result.total, showing: books?.length || 0, books };
+}
+
+async function getBook(args: { book_id: string }) {
+  const result = await apiGet(`/books/${args.book_id}`, new URLSearchParams({ pages: "nav" })) as Record<string, unknown>;
+
+  // Extract key fields for a clean response
+  return {
+    id: result.id,
+    title: result.display_title || result.title,
+    original_title: result.title !== (result.display_title || result.title) ? result.title : undefined,
+    author: result.author,
+    language: result.language,
+    published: result.published,
+    year: result.year,
+    categories: result.categories,
+    pages_count: result.pages_count,
+    pages_ocr: result.pages_ocr,
+    pages_translated: result.pages_translated,
+    doi: result.doi,
+    reading_summary: result.reading_summary,
+    index: result.index ? {
+      has_index: true,
+      concepts: ((result.index as Record<string, unknown>).concepts as unknown[])?.length || 0,
+      people: ((result.index as Record<string, unknown>).people as unknown[])?.length || 0,
+      places: ((result.index as Record<string, unknown>).places as unknown[])?.length || 0,
+      keywords: ((result.index as Record<string, unknown>).keywords as unknown[])?.length || 0,
+    } : { has_index: false },
+    chapters: result.chapters,
+    image_source: result.image_source,
+    url: `https://sourcelibrary.org/book/${result.id}`,
+  };
+}
+
+async function getBookText(args: {
+  book_id: string;
+  content?: string;
+  from?: number;
+  to?: number;
+  format?: string;
+  include_metadata?: boolean;
+}) {
+  const params = new URLSearchParams();
+  if (args.content) params.set("content", args.content);
+  if (args.from !== undefined) params.set("from", String(args.from));
+  if (args.to !== undefined) params.set("to", String(args.to));
+  if (args.include_metadata) params.set("include_metadata", "true");
+
+  // Use plain format for plain requests, json otherwise
+  const format = args.format || "json";
+  params.set("format", format);
+
+  if (format === "plain") {
+    return apiGetText(`/books/${args.book_id}/text`, params);
   }
-  return response.json();
+  return apiGet(`/books/${args.book_id}/text`, params);
 }
 
 async function getQuote(args: {
@@ -220,19 +534,117 @@ async function getQuote(args: {
     params.set("include_context", "true");
   }
 
-  const response = await fetch(`${API_BASE}/books/${args.book_id}/quote?${params}`);
-  if (!response.ok) {
-    throw new Error(`Get quote failed: ${response.statusText}`);
-  }
-  return response.json();
+  const result = await apiGet(`/books/${args.book_id}/quote`, params) as Record<string, unknown>;
+  const quote = result.quote as Record<string, unknown>;
+  const citation = result.citation as Record<string, unknown>;
+
+  return {
+    quote: quote.translation,
+    original: quote.original,
+    page: quote.page,
+    book: {
+      title: quote.display_title || quote.book_title,
+      author: quote.author,
+      published: quote.published,
+      language: quote.language,
+    },
+    citation: {
+      inline: citation.inline,
+      footnote: citation.footnote,
+      doi_url: citation.doi_url,
+    },
+  };
 }
 
-async function getBook(args: { book_id: string }) {
-  const response = await fetch(`${API_BASE}/books/${args.book_id}`);
-  if (!response.ok) {
-    throw new Error(`Get book failed: ${response.statusText}`);
-  }
-  return response.json();
+async function searchIndex(args: {
+  query: string;
+  type?: string;
+  limit?: number;
+}) {
+  const params = new URLSearchParams({ q: args.query });
+  if (args.type) params.set("type", args.type);
+  if (args.limit) params.set("limit", String(Math.min(args.limit, 200)));
+
+  const result = await apiGet("/search/index", params) as Record<string, unknown>;
+  const results = (result.results as Array<Record<string, unknown>>)?.map((r) => ({
+    type: r.type,
+    term: r.term,
+    book_id: r.book_id,
+    book_title: r.book_title,
+    book_author: r.book_author,
+    pages: r.pages,
+    ...(r.quote_text ? { quote_text: r.quote_text, quote_page: r.quote_page, quote_significance: r.quote_significance } : {}),
+    url: `https://sourcelibrary.org/book/${r.book_id}`,
+  }));
+
+  return {
+    query: result.query,
+    total: result.total,
+    by_type: result.byType,
+    results,
+  };
+}
+
+async function searchEntities(args: {
+  query?: string;
+  type?: string;
+  book_id?: string;
+  min_books?: number;
+  limit?: number;
+  offset?: number;
+}) {
+  const params = new URLSearchParams();
+  if (args.query) params.set("q", args.query);
+  if (args.type) params.set("type", args.type);
+  if (args.book_id) params.set("book_id", args.book_id);
+  if (args.min_books) params.set("min_books", String(args.min_books));
+  if (args.limit) params.set("limit", String(Math.min(args.limit || 50, 200)));
+  if (args.offset) params.set("offset", String(args.offset));
+
+  const result = await apiGet("/entities", params) as Record<string, unknown>;
+  const entities = (result.entities as Array<Record<string, unknown>>)?.map((e) => ({
+    id: (e._id as string)?.toString(),
+    name: e.name,
+    type: e.type,
+    description: e.description,
+    aliases: e.aliases,
+    book_count: e.book_count,
+    total_mentions: e.total_mentions,
+    books: (e.books as Array<Record<string, unknown>>)?.map((b) => ({
+      book_id: b.book_id,
+      book_title: b.book_title,
+      pages: b.pages,
+    })),
+  }));
+
+  return {
+    total: result.total,
+    showing: entities?.length || 0,
+    has_more: result.hasMore,
+    entities,
+  };
+}
+
+async function getEntity(args: { entity_id: string }) {
+  const result = await apiGet(`/entities/${encodeURIComponent(args.entity_id)}`) as Record<string, unknown>;
+
+  return {
+    name: result.name,
+    type: result.type,
+    description: result.description,
+    aliases: result.aliases,
+    wikipedia_url: result.wikipedia_url,
+    book_count: result.book_count,
+    total_mentions: result.total_mentions,
+    books: (result.books as Array<Record<string, unknown>>)?.map((b) => ({
+      book_id: b.book_id,
+      book_title: b.book_title,
+      book_author: b.book_author,
+      pages: b.pages,
+      url: `https://sourcelibrary.org/book/${b.book_id}`,
+    })),
+    related: result.related,
+  };
 }
 
 async function searchImages(args: {
@@ -259,19 +671,62 @@ async function searchImages(args: {
   if (args.min_quality !== undefined) params.set("minQuality", String(args.min_quality));
   params.set("limit", String(Math.min(args.limit || 20, 50)));
 
-  const response = await fetch(`${API_BASE}/gallery?${params}`);
-  if (!response.ok) {
-    throw new Error(`Search images failed: ${response.statusText}`);
-  }
-  return response.json();
+  const result = await apiGet("/gallery", params) as Record<string, unknown>;
+
+  const formatted = {
+    total: result.total,
+    showing: (result.items as unknown[])?.length || 0,
+    images: (
+      result.items as Array<{
+        pageId: string;
+        detectionIndex: number;
+        description: string;
+        type?: string;
+        galleryQuality?: number;
+        bookTitle: string;
+        author?: string;
+        year?: number;
+        pageNumber: number;
+        metadata?: { subjects?: string[]; figures?: string[]; symbols?: string[] };
+        imageUrl: string;
+      }>
+    )?.map((item) => ({
+      id: `${item.pageId}:${item.detectionIndex}`,
+      description: item.description,
+      type: item.type,
+      quality: item.galleryQuality,
+      book: { title: item.bookTitle, author: item.author, year: item.year },
+      page: item.pageNumber,
+      subjects: item.metadata?.subjects,
+      figures: item.metadata?.figures,
+      symbols: item.metadata?.symbols,
+      url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+      image_url: item.imageUrl,
+    })),
+    available_filters: result.filters,
+  };
+  return formatted;
 }
 
 async function getImage(args: { image_id: string }) {
-  const response = await fetch(`${API_BASE}/gallery/image/${args.image_id}`);
-  if (!response.ok) {
-    throw new Error(`Get image failed: ${response.statusText}`);
-  }
-  return response.json();
+  const result = await apiGet(`/gallery/image/${args.image_id}`) as Record<string, unknown>;
+  return {
+    id: result.id,
+    description: result.description,
+    museum_description: result.museumDescription,
+    type: result.type,
+    quality: result.galleryQuality,
+    quality_rationale: result.galleryRationale,
+    metadata: result.metadata,
+    book: result.book,
+    page: result.pageNumber,
+    citation: result.citation,
+    urls: {
+      page: `https://sourcelibrary.org/gallery/image/${(result.id as string)?.replace(":", "-")}`,
+      read_in_context: `https://sourcelibrary.org${result.readUrl}`,
+      image: result.imageUrl,
+    },
+  };
 }
 
 async function getBookImages(args: {
@@ -287,18 +742,41 @@ async function getBookImages(args: {
     params.set("minQuality", String(args.min_quality));
   }
 
-  const response = await fetch(`${API_BASE}/gallery?${params}`);
-  if (!response.ok) {
-    throw new Error(`Get book images failed: ${response.statusText}`);
-  }
-  return response.json();
+  const result = await apiGet("/gallery", params) as Record<string, unknown>;
+  return {
+    book: result.bookInfo,
+    total_images: result.total,
+    showing: (result.items as unknown[])?.length || 0,
+    images: (
+      result.items as Array<{
+        pageId: string;
+        detectionIndex: number;
+        description: string;
+        type?: string;
+        galleryQuality?: number;
+        pageNumber: number;
+        metadata?: { subjects?: string[]; figures?: string[]; symbols?: string[] };
+      }>
+    )?.map((item) => ({
+      id: `${item.pageId}:${item.detectionIndex}`,
+      description: item.description,
+      type: item.type,
+      quality: item.galleryQuality,
+      page: item.pageNumber,
+      subjects: item.metadata?.subjects,
+      figures: item.metadata?.figures,
+      symbols: item.metadata?.symbols,
+      url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+    })),
+  };
 }
 
-// Create server
+// ── Server Setup ──────────────────────────────────────────────────────
+
 const server = new Server(
   {
     name: "source-library",
-    version: "1.1.0",
+    version: "2.0.0",
   },
   {
     capabilities: {
@@ -318,191 +796,57 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params;
 
   try {
+    let result: unknown;
+
     switch (name) {
-      case "search_library": {
-        const result = await searchLibrary(args as Parameters<typeof searchLibrary>[0]);
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: JSON.stringify(result, null, 2),
-            },
-          ],
-        };
-      }
-
-      case "get_quote": {
-        const result = await getQuote(args as Parameters<typeof getQuote>[0]);
-        // Format for easy reading
-        const formatted = {
-          quote: result.quote.translation,
-          original: result.quote.original,
-          page: result.quote.page,
-          book: {
-            title: result.quote.display_title || result.quote.book_title,
-            author: result.quote.author,
-            published: result.quote.published,
-            language: result.quote.language,
-          },
-          citation: {
-            inline: result.citation.inline,
-            footnote: result.citation.footnote,
-            doi_url: result.citation.doi_url,
-          },
-        };
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: JSON.stringify(formatted, null, 2),
-            },
-          ],
-        };
-      }
-
-      case "get_book": {
-        const result = await getBook(args as Parameters<typeof getBook>[0]);
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: JSON.stringify(result, null, 2),
-            },
-          ],
-        };
-      }
-
-      case "search_images": {
-        const result = await searchImages(args as Parameters<typeof searchImages>[0]);
-        // Format for easy reading
-        const formatted = {
-          total: result.total,
-          showing: result.items.length,
-          images: result.items.map((item: {
-            pageId: string;
-            detectionIndex: number;
-            description: string;
-            type?: string;
-            galleryQuality?: number;
-            bookTitle: string;
-            author?: string;
-            year?: number;
-            pageNumber: number;
-            metadata?: {
-              subjects?: string[];
-              figures?: string[];
-              symbols?: string[];
-            };
-            imageUrl: string;
-          }) => ({
-            id: `${item.pageId}:${item.detectionIndex}`,
-            description: item.description,
-            type: item.type,
-            quality: item.galleryQuality,
-            book: {
-              title: item.bookTitle,
-              author: item.author,
-              year: item.year,
-            },
-            page: item.pageNumber,
-            subjects: item.metadata?.subjects,
-            figures: item.metadata?.figures,
-            symbols: item.metadata?.symbols,
-            url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
-            image_url: item.imageUrl,
-          })),
-          available_filters: result.filters,
-        };
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: JSON.stringify(formatted, null, 2),
-            },
-          ],
-        };
-      }
-
-      case "get_image": {
-        const result = await getImage(args as Parameters<typeof getImage>[0]);
-        const formatted = {
-          id: result.id,
-          description: result.description,
-          museum_description: result.museumDescription,
-          type: result.type,
-          quality: result.galleryQuality,
-          quality_rationale: result.galleryRationale,
-          metadata: result.metadata,
-          book: result.book,
-          page: result.pageNumber,
-          citation: result.citation,
-          urls: {
-            page: `https://sourcelibrary.org/gallery/image/${result.id.replace(':', '-')}`,
-            read_in_context: `https://sourcelibrary.org${result.readUrl}`,
-            image: result.imageUrl,
-          },
-        };
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: JSON.stringify(formatted, null, 2),
-            },
-          ],
-        };
-      }
-
-      case "get_book_images": {
-        const result = await getBookImages(args as Parameters<typeof getBookImages>[0]);
-        const formatted = {
-          book: result.bookInfo,
-          total_images: result.total,
-          showing: result.items.length,
-          images: result.items.map((item: {
-            pageId: string;
-            detectionIndex: number;
-            description: string;
-            type?: string;
-            galleryQuality?: number;
-            pageNumber: number;
-            metadata?: {
-              subjects?: string[];
-              figures?: string[];
-              symbols?: string[];
-            };
-          }) => ({
-            id: `${item.pageId}:${item.detectionIndex}`,
-            description: item.description,
-            type: item.type,
-            quality: item.galleryQuality,
-            page: item.pageNumber,
-            subjects: item.metadata?.subjects,
-            figures: item.metadata?.figures,
-            symbols: item.metadata?.symbols,
-            url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
-          })),
-        };
-        return {
-          content: [
-            {
-              type: "text" as const,
-              text: JSON.stringify(formatted, null, 2),
-            },
-          ],
-        };
-      }
-
+      case "search_library":
+        result = await searchLibrary(args as Parameters<typeof searchLibrary>[0]);
+        break;
+      case "list_books":
+        result = await listBooks(args as Parameters<typeof listBooks>[0]);
+        break;
+      case "get_book":
+        result = await getBook(args as Parameters<typeof getBook>[0]);
+        break;
+      case "get_book_text":
+        result = await getBookText(args as Parameters<typeof getBookText>[0]);
+        break;
+      case "get_quote":
+        result = await getQuote(args as Parameters<typeof getQuote>[0]);
+        break;
+      case "search_index":
+        result = await searchIndex(args as Parameters<typeof searchIndex>[0]);
+        break;
+      case "search_entities":
+        result = await searchEntities(args as Parameters<typeof searchEntities>[0]);
+        break;
+      case "get_entity":
+        result = await getEntity(args as Parameters<typeof getEntity>[0]);
+        break;
+      case "search_images":
+        result = await searchImages(args as Parameters<typeof searchImages>[0]);
+        break;
+      case "get_image":
+        result = await getImage(args as Parameters<typeof getImage>[0]);
+        break;
+      case "get_book_images":
+        result = await getBookImages(args as Parameters<typeof getBookImages>[0]);
+        break;
       default:
         return {
-          content: [
-            {
-              type: "text" as const,
-              text: `Unknown tool: ${name}`,
-            },
-          ],
+          content: [{ type: "text" as const, text: `Unknown tool: ${name}` }],
           isError: true,
         };
     }
+
+    // Plain text results (from get_book_text with format=plain)
+    if (typeof result === "string") {
+      return { content: [{ type: "text" as const, text: result }] };
+    }
+
+    return {
+      content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+    };
   } catch (error) {
     return {
       content: [
@@ -518,14 +862,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 // Handle resources (book:// URIs)
 server.setRequestHandler(ListResourcesRequestSchema, async () => {
-  // For now, return empty - we could list all books here
   return { resources: [] };
 });
 
 server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
   const { uri } = request.params;
 
-  // Parse book:// URIs
   const bookMatch = uri.match(/^book:\/\/([^/]+)(?:\/page\/(\d+))?$/);
   if (!bookMatch) {
     throw new Error(`Invalid resource URI: ${uri}`);
@@ -534,28 +876,14 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
   const [, bookId, pageNum] = bookMatch;
 
   if (pageNum) {
-    // Get specific page
     const result = await getQuote({ book_id: bookId, page: parseInt(pageNum) });
     return {
-      contents: [
-        {
-          uri,
-          mimeType: "text/plain",
-          text: result.quote.translation,
-        },
-      ],
+      contents: [{ uri, mimeType: "text/plain", text: result.quote as string }],
     };
   } else {
-    // Get book info
     const result = await getBook({ book_id: bookId });
     return {
-      contents: [
-        {
-          uri,
-          mimeType: "application/json",
-          text: JSON.stringify(result, null, 2),
-        },
-      ],
+      contents: [{ uri, mimeType: "application/json", text: JSON.stringify(result, null, 2) }],
     };
   }
 });
@@ -564,7 +892,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server running");
+  console.error("Source Library MCP server v2.0.0 running (11 tools)");
 }
 
 main().catch((error) => {

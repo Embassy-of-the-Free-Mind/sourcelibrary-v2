@@ -2,16 +2,15 @@
 
 [![npm version](https://badge.fury.io/js/@source-library%2Fmcp-server.svg)](https://www.npmjs.com/package/@source-library/mcp-server)
 
-An MCP (Model Context Protocol) server for searching and citing rare historical texts from [Source Library](https://sourcelibrary.org). Access translated Latin and German manuscripts from the 15th-18th centuries with DOI-backed academic citations.
-
-## Features
-
-- **Search** translated historical texts (alchemy, Hermeticism, Renaissance philosophy)
-- **Get quotes** with properly formatted academic citations
-- **DOI support** for all published editions via Zenodo
-- **Original language** preserved alongside English translations
+An MCP (Model Context Protocol) server for researching rare historical texts from [Source Library](https://sourcelibrary.org). 5,000+ books spanning alchemy, Hermeticism, Renaissance philosophy, and early modern science — with OCR'd originals, English translations, AI-generated indexes, and 34,000+ extracted illustrations.
 
 ## Quick Start
+
+### Claude Code
+
+```bash
+claude mcp add source-library -- npx -y @source-library/mcp-server
+```
 
 ### Claude Desktop
 
@@ -31,17 +30,6 @@ Add to your Claude Desktop config:
 }
 ```
 
-Restart Claude Desktop, and you can now ask:
-
-> "Search Source Library for texts about the philosopher's stone and cite a passage"
-
-### Global Install
-
-```bash
-npm install -g @source-library/mcp-server
-source-library-mcp
-```
-
 ### From Source
 
 ```bash
@@ -51,103 +39,148 @@ npm install && npm run build
 npm start
 ```
 
-## Available Tools
+## Available Tools (11)
 
-### search_library
+### Discovery & Browse
 
-Search the Source Library collection.
+#### search_library
+
+Full-text search across books and page content. Searches titles, authors, translations, and OCR text.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `query` | string | Yes | Search query |
-| `language` | string | No | Filter: Latin, German, French, etc. |
-| `date_from` | string | No | Publication year start |
-| `date_to` | string | No | Publication year end |
+| `language` | string | No | Filter: Latin, German, Greek, Sanskrit, etc. |
+| `year_from` | number | No | Publication year start |
+| `year_to` | number | No | Publication year end |
 | `has_doi` | boolean | No | Only books with DOIs |
 | `has_translation` | boolean | No | Only translated books |
-| `limit` | number | No | Max results (default 10) |
+| `sort` | string | No | relevance, date_asc, date_desc, title |
+| `limit` | number | No | Max results (default 10, max 100) |
 
-**Example:**
-```json
-{ "query": "quinta essentia", "language": "Latin", "has_doi": true }
-```
+#### list_books
 
-### get_quote
-
-Get a passage with formatted citations.
+Browse the collection with filters. Returns all matching books with translation progress.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `book_id` | string | Yes | Book ID from search results |
-| `page` | number | Yes | Page number |
-| `include_original` | boolean | No | Include original language (default true) |
-| `include_context` | boolean | No | Include adjacent pages |
+| `search` | string | No | Filter by title/author (diacritic-insensitive) |
+| `language` | string | No | Filter by language |
+| `category` | string | No | Filter by category |
+| `sort` | string | No | recent-translation, recent, title-asc, title-desc |
+| `limit` | number | No | Max results (default 100, max 200) |
 
-**Returns:**
-```json
-{
-  "quote": "The fifth essence is that most pure...",
-  "original": "Quinta essentia est purissima illa...",
-  "page": 57,
-  "book": {
-    "title": "Two Treatises",
-    "author": "Cornelius Drebbel",
-    "published": "1628"
-  },
-  "citation": {
-    "inline": "(Drebbel 1628, p. 57)",
-    "footnote": "Cornelius Drebbel, Two Treatises, trans. Source Library (2025), 57. DOI: 10.5281/zenodo.18053504.",
-    "doi_url": "https://doi.org/10.5281/zenodo.18053504"
-  }
-}
-```
+### Reading & Text
 
-### get_book
+#### get_book
 
-Get detailed book information including summary, edition info, and DOI.
+Get detailed book metadata including summary, index stats, edition info, and DOI.
+
+#### get_book_text
+
+Get the full text of a book in a single call. Essential for reading and analyzing content.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `book_id` | string | Yes | Book ID |
+| `content` | string | No | ocr, translation, or both (default) |
+| `from` | number | No | Start page (inclusive) |
+| `to` | number | No | End page (inclusive) |
+| `format` | string | No | json (structured) or plain (concatenated text) |
 
-## Resources
+#### get_quote
 
-The server also supports `book://` URIs:
+Get a specific page with formatted academic citations (inline, footnote, DOI).
 
-- `book://[id]` - Get book metadata
-- `book://[id]/page/[n]` - Get page translation
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `book_id` | string | Yes | Book ID |
+| `page` | number | Yes | Page number |
+| `include_original` | boolean | No | Include original language (default true) |
+| `include_context` | boolean | No | Include adjacent pages |
 
-## Example Conversations
+### Knowledge Graph & Entities
 
-**Research query:**
-> "What did Paracelsus write about the quinta essentia? Give me a quote with citation."
+#### search_index
 
-**Historical investigation:**
-> "Find 16th century Latin texts about transmutation and summarize their main arguments"
+Search AI-generated book indexes for concepts, people, places, keywords, and quotes.
 
-**Academic writing:**
-> "I need a primary source quote about Renaissance alchemy for my paper, with proper DOI citation"
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | Yes | Search query |
+| `type` | string | No | concept, person, place, keyword, vocabulary, quote |
+| `limit` | number | No | Max results (default 50) |
 
-## REST API
+#### search_entities
 
-The underlying API is also available directly:
+Search the cross-book entity network. Find people, places, and concepts that connect multiple books.
 
-```
-GET https://sourcelibrary.org/api/search?q={query}
-GET https://sourcelibrary.org/api/books/{id}/quote?page={n}
-GET https://sourcelibrary.org/api/books/{id}
-```
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | No | Search by name or alias |
+| `type` | string | No | person, place, concept |
+| `book_id` | string | No | Entities in a specific book |
+| `min_books` | number | No | Min book appearances (default 1) |
+| `limit` | number | No | Max results (default 50) |
 
-Full documentation: [sourcelibrary.org/llms.txt](https://sourcelibrary.org/llms.txt)
+#### get_entity
 
-## Content
+Get full entity detail with all book appearances, page references, aliases, and related entities.
 
-The library contains translated texts from:
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `entity_id` | string | Yes | Entity ID or name (e.g., "Hermes Trismegistus") |
 
+### Gallery & Images
+
+#### search_images
+
+Search 34,000+ historical illustrations, emblems, and engravings.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | No | Text search across descriptions and metadata |
+| `type` | string | No | emblem, woodcut, engraving, portrait, etc. |
+| `subject` | string | No | Subject tag (alchemy, astronomy, medicine) |
+| `figure` | string | No | Depicted figure (Mercury, serpent, angel) |
+| `symbol` | string | No | Symbol (ouroboros, athanor) |
+| `year_from` | number | No | Publication year start |
+| `year_to` | number | No | Publication year end |
+
+#### get_image
+
+Get full image metadata including museum description and source book context.
+
+#### get_book_images
+
+Get all extracted images from a specific book.
+
+## Example Research Workflows
+
+**Cross-book conceptual analysis:**
+> "Search for references to 'prima materia' across the collection. Which authors discuss it, and how do their treatments differ?"
+
+**Entity network exploration:**
+> "Find all entities connected to Hermes Trismegistus. What books discuss this figure, and what other entities appear alongside?"
+
+**Reading a primary source:**
+> "Get the full translation of Fludd's History of Both Worlds, pages 1-50. Summarize the cosmological framework."
+
+**Historical illustration research:**
+> "Find all alchemical emblems depicting the ouroboros. What texts are they from?"
+
+**Academic citation:**
+> "I need a quote from Copernicus's De Revolutionibus about the Sun's centrality, with a proper DOI citation."
+
+## Collection
+
+5,000+ books including:
 - Latin alchemical and Hermetic manuscripts (1450-1700)
 - German mystical and Paracelsian works
-- Renaissance philosophical treatises
+- Renaissance philosophical treatises (Ficino, Bruno, Pico)
 - Rosicrucian manifestos and related texts
+- Early modern scientific works (Copernicus, Galileo, Kepler)
+- Sanskrit, Chinese, Greek, and Arabic philosophical texts
 
 All translations are AI-assisted with original language preserved for scholarly verification.
 
@@ -166,5 +199,4 @@ MIT
 ## Links
 
 - **Website:** [sourcelibrary.org](https://sourcelibrary.org)
-- **API Docs:** [sourcelibrary.org/llms.txt](https://sourcelibrary.org/llms.txt)
 - **GitHub:** [Embassy-of-the-Free-Mind/sourcelibrary-v2](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2)
