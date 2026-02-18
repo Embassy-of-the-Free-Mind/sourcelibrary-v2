@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import Google from 'next-auth/providers/google';
-import Email from 'next-auth/providers/email';
+import Email from 'next-auth/providers/nodemailer';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import clientPromise from './mongodb-client';
 import { Resend } from 'resend';

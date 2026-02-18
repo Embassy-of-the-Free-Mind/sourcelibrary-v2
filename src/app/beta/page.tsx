@@ -55,9 +55,8 @@ function EmailForm({
   if (status === 'success') {
     return (
       <div
-        className={`border rounded-xl p-6 max-w-xl ${
-          variant === 'dark' ? 'bg-white/10 border-white/20' : 'bg-amber-50 border-amber-200'
-        }`}
+        className={`border rounded-xl p-6 max-w-xl ${variant === 'dark' ? 'bg-white/10 border-white/20' : 'bg-amber-50 border-amber-200'
+          }`}
         style={{ fontFamily: 'Inter, sans-serif' }}
       >
         <p className={`text-lg font-medium mb-1 ${variant === 'dark' ? 'text-white' : 'text-stone-900'}`}>
@@ -79,11 +78,10 @@ function EmailForm({
           placeholder="your@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`flex-1 px-5 py-4 rounded-lg text-base focus:outline-none transition-colors ${
-            variant === 'dark'
+          className={`flex-1 px-5 py-4 rounded-lg text-base focus:outline-none transition-colors ${variant === 'dark'
               ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/40 focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/30'
               : 'bg-white border border-stone-300 text-stone-900 placeholder-stone-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30'
-          }`}
+            }`}
           style={{ fontFamily: 'Inter, sans-serif' }}
           disabled={status === 'loading'}
         />
@@ -115,7 +113,7 @@ export default function BetaLandingPage() {
   useEffect(() => {
     const mobile = window.matchMedia('(max-width: 768px)').matches;
     setIsMobile(mobile);
-    if (!mobile) videoRef.current?.play().catch(() => {});
+    if (!mobile) videoRef.current?.play().catch(() => { });
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -191,9 +189,9 @@ export default function BetaLandingPage() {
             />
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm text-white/60" style={{ fontFamily: 'Inter, sans-serif' }}>
-            <a href="#demo" className="hover:text-white transition-colors">See it work</a>
+            <a href="#demo" className="hover:text-white transition-colors">See It Work</a>
             <a href="#gallery" className="hover:text-white transition-colors">Gallery</a>
-            <a href="#signup" className="hover:text-white transition-colors">Get access</a>
+            <a href="#signup" className="hover:text-white transition-colors">Get Access</a>
           </div>
         </header>
 

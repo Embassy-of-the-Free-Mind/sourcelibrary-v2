@@ -495,9 +495,8 @@ async function BookInfo({ id }: { id: string }) {
                     <Link
                       href="/encyclopedia"
                       className="text-sm text-amber-700 hover:text-amber-800"
-                      onClick={(e) => e.stopPropagation()}
                     >
-                      Browse all &rarr;
+                      Browse All &rarr;
                     </Link>
                   </summary>
                   <div className="px-6 pb-6 space-y-4">
