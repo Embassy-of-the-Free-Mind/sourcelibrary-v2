@@ -6,6 +6,7 @@ import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extrac
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { getOcrPrompt } from '@/lib/prompts';
 import { images } from '@/lib/api-client';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { getSession } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
@@ -163,7 +164,7 @@ export async function POST(request: NextRequest) {
         let previousText = '';
         let limitReached = false;
 
-        for (const page of pages as Array<{ _id: ObjectId; page_number: number; archived_photo?: string; cropped_photo?: string; photo?: string; photo_original?: string; ocr?: { data?: string }; translation?: { data?: string } }>) {
+        for (const page of pages as Array<{ _id: ObjectId; id?: string; page_number: number; archived_photo?: string; cropped_photo?: string; photo?: string; photo_original?: string; ocr?: { data?: string }; translation?: { data?: string } }>) {
           // Check cost limit before processing
           if (totalCostSpent >= costLimit) {
             limitReached = true;
@@ -184,6 +185,9 @@ export async function POST(request: NextRequest) {
                 book.original_language || 'Latin',
                 previousText
               );
+
+              // Snapshot manual edits before overwriting
+              if (page.id) await createSnapshotIfNeeded(page.id, 'pre_ocr', `contribute-${bookId}`);
 
               // Update page with OCR result
               const pageType = extractPageType(result.text);
@@ -220,6 +224,9 @@ export async function POST(request: NextRequest) {
                 book.original_language || 'Latin',
                 previousText
               );
+
+              // Snapshot manual edits before overwriting
+              if (page.id) await createSnapshotIfNeeded(page.id, 'pre_translate', `contribute-${bookId}`);
 
               // Update page with translation result + harvest metadata tags
               const translationMeta = extractTranslationMetadata(result.text);

@@ -4,6 +4,7 @@ import { getGeminiClient } from '@/lib/gemini-client';
 import { MODEL_PRICING } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
@@ -163,6 +164,8 @@ export const POST = withAuth(async (request, session, context) => {
 
           // Apply the fix if not dry run
           if (!dryRun && fixedOpening.length > 10) {
+            // Snapshot manual edits before overwriting
+            await createSnapshotIfNeeded(currPage.id, 'pre_translate', `stitch-${bookId}`);
             // Find where the fixed content ends in the original
             // Replace the opening sentences with the smoothed version
             const sentences = currTranslation.split(/(?<=[.!?])\s+/);

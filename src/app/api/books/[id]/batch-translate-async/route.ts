@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { withAuth } from '@/lib/auth-helpers';
 
 /**
@@ -100,7 +101,12 @@ export const POST = withAuth(async (request, session, context) => {
           contents: [{
             parts: [{ text: prompt }],
             role: 'user'
-          }]
+          }],
+          config: {
+            temperature: 0.1,
+            maxOutputTokens: 16384,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
         }
       });
     }
@@ -112,10 +118,13 @@ export const POST = withAuth(async (request, session, context) => {
       }, { status: 400 });
     }
 
-    // Submit batch job
+    // Submit batch job — each request includes metadata.key for result matching
     const batchJob = await ai.batches.create({
       model,
-      src: batchRequests.map(r => r.request),
+      src: batchRequests.map(r => ({
+        ...r.request,
+        metadata: { key: r.key },
+      })),
       config: {
         displayName: `translate-${bookId}-${Date.now()}`,
       }
@@ -235,6 +244,9 @@ export const GET = withAuth(async (request, session, context) => {
           const text = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
 
           if (text) {
+            // Snapshot manual edits before overwriting
+            await createSnapshotIfNeeded(pageId, 'pre_translate', jobName);
+
             // Set the full translation object (not nested fields) to handle cases where translation is null
             await db.collection('pages').updateOne(
               { id: pageId },
