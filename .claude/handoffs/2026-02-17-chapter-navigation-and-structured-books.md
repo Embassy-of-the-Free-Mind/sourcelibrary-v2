@@ -188,23 +188,18 @@ curl -X POST "https://sourcelibrary.org/api/admin/backfill-translation-metadata?
 
 ## Remaining Work
 
-### Done (this session)
+### Done (this session + Feb 18 follow-up)
 - [x] Chapter dropdown in reader (English titles, mobile bottom sheet, hierarchical indentation)
 - [x] AI-powered chapter extraction (replaces noisy heading scraper)
 - [x] English chapter title translation (in same AI call)
 - [x] Harvest `<summary>` + `<keywords>` from translations (all 5 save paths + backfill route)
-- [x] Fludd re-translation submitted (batch API, 50% savings)
+- [x] Fludd re-translation — **COMPLETE** (1036/1036 via Lambda FIFO, $0.56, zero failures)
+- [x] Deploy Translation Lambda Worker (deployed by colleague Feb 17, metadata harvesting confirmed working)
+- [x] Re-extract chapters with fresh translations (25 clean chapters, down from 74 noisy ones)
+- [x] Wider dropdown (34rem) with larger fonts
+- [x] Backfill: 46,057 pages (56.5%) have translation_summary + translation_keywords
 
 ### Next Up
-
-#### 1. Deploy Translation Lambda Worker
-The Lambda worker has the metadata harvesting code but needs AWS credentials to deploy. This is the only save path not yet live.
-
-#### 2. Finish Fludd Re-Translation
-Submit remaining 536 pages once the first batch completes. Then:
-- Re-extract chapters (will have fresh translations to work with)
-- Re-generate index with chapter awareness
-- Generate `reading_summary` (never done for this book)
 
 #### 3. Unify Sections (medium effort, high value)
 Three overlapping concepts need consolidation:
