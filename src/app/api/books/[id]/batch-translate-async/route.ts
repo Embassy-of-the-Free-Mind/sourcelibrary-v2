@@ -20,7 +20,7 @@ import { withAuth } from '@/lib/auth-helpers';
  * GET /api/books/[id]/batch-translate-async?jobName=xxx - Check job status
  */
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY || '' });
 
 /**
  * POST - Submit a batch translation job

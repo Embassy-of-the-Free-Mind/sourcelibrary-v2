@@ -52,8 +52,12 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // Rate-limit API routes (except cron, which has its own auth)
-  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/cron/')) {
+  // Rate-limit API routes (except cron and internal pipeline calls)
+  const cronSecret = process.env.CRON_SECRET;
+  const authHeader = request.headers.get('authorization');
+  const isInternalCall = cronSecret && authHeader === `Bearer ${cronSecret}`;
+
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/cron/') && !isInternalCall) {
     const ip = getClientIp(request);
     const isExpensive =
       pathname.includes('/batch-ocr') ||

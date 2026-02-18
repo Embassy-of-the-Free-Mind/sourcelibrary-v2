@@ -14,7 +14,7 @@
     },
     {
       "path": "/api/cron/process-batches",
-      "schedule": "0 */2 * * *"
+      "schedule": "*/30 * * * *"
     },
     {
       "path": "/api/cron/sync-page-counts",

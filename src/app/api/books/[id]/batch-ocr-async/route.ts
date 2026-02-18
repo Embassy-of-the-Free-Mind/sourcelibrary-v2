@@ -21,7 +21,7 @@ import { createSnapshotIfNeeded } from '@/lib/snapshots';
  * GET /api/books/[id]/batch-ocr-async?jobName=xxx - Check job status
  */
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY || '' });
 
 // Build image URL for a page
 function getPageImageUrl(page: {
