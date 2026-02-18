@@ -389,6 +389,11 @@ async function main() {
                 { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
               ],
             }],
+            generationConfig: {
+              temperature: 0.1,
+              maxOutputTokens: 16384,
+              thinkingConfig: { thinkingBudget: 0 },
+            },
           },
           metadata: { key: item.pageId },
         }));

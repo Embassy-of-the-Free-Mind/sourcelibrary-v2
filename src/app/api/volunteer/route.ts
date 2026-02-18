@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,6 +32,9 @@ export async function POST(request: NextRequest) {
 
     await db.collection('volunteers').insertOne(doc);
 
+    // TODO: Send email notification to derek@ancientwisdomtrust.org on new submissions
+    // Options: Resend API, or a simple webhook to Slack/Discord
+
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error('Volunteer signup error:', error);
@@ -38,7 +42,10 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   try {
     const db = await getDb();
     const [items, total] = await Promise.all([
