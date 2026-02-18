@@ -20,6 +20,13 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'mcp-server',
+    title: 'Claude Can Now Read 5,000 Rare Books',
+    subtitle: 'We shipped an MCP server that gives Claude direct access to Source Library — 5,000+ historical texts with translations, a cross-book entity graph, and 34,000+ illustrations. One command to install, no API key.',
+    date: '18 February 2026',
+    readTime: '8 min read',
+  },
+  {
     slug: 'fire-horse',
     title: 'The Year of the Fire Horse',
     subtitle: 'Double yang fire, a 17th-century arsonist, and the original texts behind Chinese astrology — from the sexagenary cycle to the I Ching, now in Source Library.',
