@@ -6,6 +6,48 @@ import Link from 'next/link';
 // When available, replace this URL so donors see "Source Library" instead of the generic Embassy form.
 const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
 
+const CONTACT_EMAIL = 'derek@ancientwisdomtrust.org';
+
+const MEMBERSHIP_TIERS = [
+  {
+    name: 'Friend',
+    price: '$100',
+    period: '/ year',
+    description: 'Join the community and follow the work as it unfolds.',
+    benefits: [
+      'Monthly digest of newly translated texts',
+      'Name on the Source Library supporters page',
+      'Museum access at the Embassy of the Free Mind',
+      'Community event invitations',
+    ],
+  },
+  {
+    name: 'Freethinker',
+    price: '$500',
+    period: '/ year',
+    highlight: true,
+    description: 'Sustain the scholarly pipeline and shape which texts come next.',
+    benefits: [
+      'Everything in Friend',
+      'Quarterly reports on the translation pipeline',
+      'Vote on which texts are prioritized for review',
+      'Invitations to exclusive events and openings',
+    ],
+  },
+  {
+    name: 'Pioneer',
+    price: '$1,000',
+    period: '/ year',
+    description: 'Leave your mark on the collection and help build the foundation.',
+    benefits: [
+      'Everything in Freethinker',
+      'Named acknowledgment on reviewed books',
+      'Private rare book tour for you and guests',
+      'Direct updates from the project lead',
+    ],
+  },
+];
+
 export default function SupportPage() {
   return (
     <div className="min-h-screen">
@@ -83,107 +125,206 @@ export default function SupportPage() {
         </div>
       </section>
 
-      {/* Donation Pathways */}
+      {/* Why Now */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-4xl mx-auto">
+          <h2
+            className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+          >
+            Why now?
+          </h2>
+          <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
+            Foundation AI models are being trained today on datasets that will shape how artificial intelligence reasons about philosophy, ethics, consciousness, and meaning for years to come. The Hermetic tradition, Renaissance natural philosophy, and 2,500 years of esoteric thought are almost entirely absent from these datasets. Getting this material in now — verified, citable, linked to scans of original pages — means it shapes AI&apos;s understanding from the ground up.
+          </p>
+        </div>
+      </section>
+
+      {/* Become a Member */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2
             className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight"
             style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
           >
-            Ways to Give
+            Become a Member
           </h2>
-          <p className="text-lg text-stone-600 mb-12 max-w-2xl">
-            Every gift directly funds the digitization and translation of rare texts. All donations are tax-deductible for US taxpayers.
+          <p className="text-lg text-stone-600 mb-12 max-w-3xl">
+            Join an international community dedicated to making universal wisdom accessible — to humanity and to the AI systems shaping our future.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1: Donate Online (primary) */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-stone-200 flex flex-col">
-              <div className="text-2xl mb-2">
-                <svg className="w-8 h-8 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-stone-900 mb-2">Donate Online</h3>
-              <p className="text-stone-600 text-sm leading-relaxed mb-6 flex-1">
-                Secure online donation through the Netherland-America Foundation. Please write <strong>&ldquo;Source Library&rdquo;</strong> in the comments field so your gift is directed to our project.
-              </p>
-              <a
-                href={DONORPERFECT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-center bg-stone-900 hover:bg-stone-800 text-white py-3 px-6 rounded-full transition-colors text-base font-medium"
+          {/* Tier Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            {MEMBERSHIP_TIERS.map((tier) => (
+              <div
+                key={tier.name}
+                className={`rounded-2xl p-8 flex flex-col ${
+                  tier.highlight
+                    ? 'bg-stone-900 text-white ring-2 ring-stone-700'
+                    : 'bg-white border border-stone-200 shadow-sm'
+                }`}
               >
-                Donate Now
-              </a>
-              <p className="text-stone-400 text-xs mt-3 text-center">
-                Tax-deductible &middot; 501(c)(3)
-              </p>
-            </div>
+                <h3 className={`text-xl font-semibold mb-1 ${tier.highlight ? 'text-white' : 'text-stone-900'}`}>
+                  {tier.name}
+                </h3>
+                <div className="mb-4">
+                  <span className={`text-3xl font-bold ${tier.highlight ? 'text-white' : 'text-stone-900'}`}>
+                    {tier.price}
+                  </span>
+                  <span className={`text-sm ${tier.highlight ? 'text-stone-400' : 'text-stone-500'}`}>
+                    {' '}{tier.period}
+                  </span>
+                </div>
+                <p className={`text-sm leading-relaxed mb-6 ${tier.highlight ? 'text-stone-300' : 'text-stone-600'}`}>
+                  {tier.description}
+                </p>
+                <ul className={`text-sm space-y-2 mb-8 flex-1 ${tier.highlight ? 'text-stone-300' : 'text-stone-600'}`}>
+                  {tier.benefits.map((benefit) => (
+                    <li key={benefit} className="flex gap-2">
+                      <span className={`mt-1 shrink-0 ${tier.highlight ? 'text-amber-400' : 'text-stone-400'}`}>
+                        &#10003;
+                      </span>
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20Membership%20%E2%80%94%20${encodeURIComponent(tier.name)}&body=I%20would%20like%20to%20become%20a%20${encodeURIComponent(tier.name)}%20member%20of%20Source%20Library.`}
+                  className={`block w-full text-center py-3 px-6 rounded-full transition-colors text-base font-medium ${
+                    tier.highlight
+                      ? 'bg-white text-stone-900 hover:bg-stone-100'
+                      : 'bg-stone-900 text-white hover:bg-stone-800'
+                  }`}
+                >
+                  Become a {tier.name}
+                </a>
+              </div>
+            ))}
+          </div>
 
-            {/* Card 2: Wire Transfer / Large Gift */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-stone-200 flex flex-col">
-              <div className="text-2xl mb-2">
-                <svg className="w-8 h-8 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
-                </svg>
+          {/* Patron tier */}
+          <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 md:p-10 mb-10">
+            <div className="md:flex md:items-start md:justify-between md:gap-8">
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold text-stone-900 mb-1">Patrons</h3>
+                <p className="text-stone-500 text-sm mb-4">Apollo &middot; Minerva &middot; Mercury</p>
+                <p className="text-2xl font-bold text-stone-900 mb-4">
+                  $5,000 &middot; $10,000 &middot; $25,000
+                  <span className="text-sm font-normal text-stone-500"> / year</span>
+                </p>
+                <p className="text-stone-600 text-sm leading-relaxed max-w-2xl">
+                  Patrons receive all Pioneer benefits plus personalized involvement in Source Library&apos;s direction — including the annual Patrons&apos; Dinner at the Embassy of the Free Mind, venue access, and a direct role in shaping which collections, languages, and traditions are prioritized. Each patron relationship is unique.
+                </p>
               </div>
-              <h3 className="text-xl font-semibold text-stone-900 mb-2">Wire Transfer or Large Gift</h3>
-              <p className="text-stone-600 text-sm leading-relaxed mb-6 flex-1">
-                For wire transfers, stock gifts, or donations over $1,000, contact us directly. We&apos;ll provide banking details and a tax receipt.
-              </p>
-              <a
-                href="mailto:derek@ancientwisdomtrust.org?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry&body=I%20am%20interested%20in%20making%20a%20gift%20to%20Source%20Library.%20Please%20send%20me%20details."
-                className="block w-full text-center bg-white hover:bg-stone-50 text-stone-700 py-3 px-6 rounded-full transition-colors border border-stone-300 text-base font-medium"
-              >
-                Contact Us
-              </a>
-            </div>
-
-            {/* Card 3: Support the Embassy */}
-            <div className="bg-white rounded-2xl p-8 shadow-sm border border-stone-200 flex flex-col">
-              <div className="text-2xl mb-2">
-                <svg className="w-8 h-8 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
-                </svg>
+              <div className="mt-6 md:mt-0 md:shrink-0">
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Patron%20Inquiry&body=I%20am%20interested%20in%20becoming%20a%20patron%20of%20Source%20Library.`}
+                  className="inline-block bg-stone-900 text-white py-3 px-8 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
+                >
+                  Get in Touch
+                </a>
               </div>
-              <h3 className="text-xl font-semibold text-stone-900 mb-2">Support the Embassy of the Free Mind</h3>
-              <p className="text-stone-600 text-sm leading-relaxed mb-6 flex-1">
-                Source Library is based at the Embassy of the Free Mind in Amsterdam. You can also support the Embassy directly — your gift helps preserve the Bibliotheca Philosophica Hermetica collection.
-              </p>
-              <a
-                href="https://embassyofthefreemind.com/en/embassy/support-us"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-center bg-white hover:bg-stone-50 text-stone-700 py-3 px-6 rounded-full transition-colors border border-stone-300 text-base font-medium"
-              >
-                Embassy Website
-              </a>
             </div>
           </div>
 
-          {/* 501(c)(3) Disclosure */}
-          <div className="mt-12 bg-white/60 rounded-xl border border-stone-200 p-6 md:p-8">
-            <h3 className="text-lg font-semibold text-stone-800 mb-2">Tax-Deductible Giving</h3>
-            <p className="text-stone-600 text-sm leading-relaxed">
-              Donations to Source Library are tax-deductible for US taxpayers. Source Library is fiscally sponsored by the <strong>Netherland-America Foundation, Inc.</strong>, a 501(c)(3) public charity (EIN: 13-2989216). The NAF strengthens bonds between the Netherlands and the United States through educational and cultural programs. Your donation is tax-deductible to the full extent permitted by law.
-            </p>
+          <p className="text-center text-stone-500 text-sm">
+            All donations are tax-deductible for US taxpayers through the Netherland-America Foundation (501(c)(3)).
+          </p>
+        </div>
+      </section>
+
+      {/* Give Once */}
+      <section className="bg-white py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
+          <h2
+            className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+          >
+            Give Once
+          </h2>
+          <p className="text-lg text-gray-600 mb-8">
+            Not ready for a membership? A one-time gift of any size moves the work forward. Please write &ldquo;Source Library&rdquo; in the comments field.
+          </p>
+          <a
+            href={DONORPERFECT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-stone-900 text-white py-4 px-10 rounded-full hover:bg-stone-800 transition-colors text-lg font-medium"
+          >
+            Donate Now
+          </a>
+          <p className="text-stone-500 text-xs mt-4 leading-relaxed">
+            Secure donation through the Netherland-America Foundation &middot; 501(c)(3) &middot; EIN: 13-2989216<br />
+            Tax-deductible to the full extent permitted by law
+          </p>
+          <p className="text-stone-500 text-sm mt-6">
+            For wire transfers, stock gifts, or donations over $10,000,{' '}
+            <a href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry`} className="text-amber-700 hover:text-amber-800 underline">
+              contact us directly
+            </a>.
+          </p>
+        </div>
+      </section>
+
+      {/* Where Your Support Goes */}
+      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <h2
+            className="text-3xl md:text-4xl text-stone-900 mb-12 leading-tight"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+          >
+            Where Your Support Goes
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              {
+                title: 'Scholarly Review & Certification',
+                text: 'The majority of funds go directly to classical language experts — specialists in Latin, Greek, Sanskrit, Arabic, and Hebrew — who review every AI-generated translation for accuracy. This is what makes Source Library a citable, trustworthy resource rather than raw AI output.',
+              },
+              {
+                title: 'Digitization of Unscanned Texts',
+                text: 'Many rare books in the Bibliotheca Philosophica Hermetica have never been digitized. We work page by page to create high-resolution scans that preserve these fragile works for anyone with an internet connection.',
+              },
+              {
+                title: 'Open Access for Everyone',
+                text: 'Everything we produce — scans, OCR text, translations — is released under CC0 public domain. No paywalls, no restrictions. Wisdom belongs to everyone, and your support keeps it that way.',
+              },
+              {
+                title: 'Enriching AI with Ancient Knowledge',
+                text: 'By making this material available now, we ensure the next generation of AI systems understands not just modern knowledge but the full depth of human thought — from Hermetic philosophy to Neoplatonist metaphysics to Renaissance natural philosophy.',
+              },
+            ].map((item) => (
+              <div key={item.title} className="bg-white rounded-xl border border-stone-200 p-6 md:p-8">
+                <h3 className="text-lg font-semibold text-stone-900 mb-3">{item.title}</h3>
+                <p className="text-stone-600 text-sm leading-relaxed">{item.text}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* About the Mission */}
+      {/* How It All Connects */}
       <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-            Your gift helps transform 2500+ years of wisdom texts into a living archive.
+        <div className="px-6 md:px-12 max-w-4xl mx-auto">
+          <h2
+            className="text-3xl md:text-4xl text-gray-900 mb-8 leading-tight"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+          >
+            How It All Connects
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-            Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica—recognized by UNESCO&apos;s Memory of the World Register—this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
-          </p>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-            By digitizing, translating, and freely sharing these works, we aim to spark a new renaissance in the study of philosophy, mysticism, and free thought.
-          </p>
+          <div className="text-gray-600 text-lg leading-relaxed space-y-6">
+            <p>
+              Source Library is a project of the Ancient Wisdom Trust, based at the{' '}
+              <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-amber-700 hover:text-amber-800 underline">
+                Embassy of the Free Mind
+              </a>{' '}
+              in Amsterdam — home to the Bibliotheca Philosophica Hermetica (BPH). The Embassy, supported by the Worldheart Foundation, preserves and shares the physical collection. Source Library extends that mission digitally, making these texts freely accessible worldwide.
+            </p>
+            <p>
+              US tax-deductible donations are processed through the{' '}
+              <strong>Netherland-America Foundation</strong> (NAF), a 501(c)(3) public charity (EIN: 13-2989216) that strengthens bonds between the Netherlands and the United States. European donors can give directly through the Worldheart Foundation (ANBI-registered).
+            </p>
+          </div>
         </div>
       </section>
 
@@ -191,7 +332,7 @@ export default function SupportPage() {
       <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           {/* Partner Logos */}
-          <div className="flex items-center gap-8 mb-16">
+          <div className="flex items-center gap-8 mb-12">
             <img
               src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
               alt="Embassy of the Free Mind"
@@ -204,8 +345,19 @@ export default function SupportPage() {
             />
           </div>
 
+          {/* Other Ways to Help */}
+          <div className="mb-12 pb-12 border-b border-stone-300">
+            <p className="text-gray-600 text-lg">
+              Not everyone gives money — some give time and expertise.{' '}
+              <Link href="/contribute" className="text-amber-700 hover:text-amber-800 underline font-medium">
+                Participate
+              </Link>{' '}
+              as a translator, reviewer, or community volunteer.
+            </p>
+          </div>
+
           {/* Footer Links */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-stone-300">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div className="mb-4 md:mb-0 text-gray-600">
               &copy; {new Date().getFullYear()} Source Library — A project of the Ancient Wisdom Trust
             </div>
@@ -220,10 +372,10 @@ export default function SupportPage() {
               <span>CC0 Public Domain</span>
               <span className="hidden md:inline">•</span>
               <a
-                href="mailto:derek@ancientwisdomtrust.org"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="text-amber-700 hover:text-amber-800 transition-colors"
               >
-                derek@ancientwisdomtrust.org
+                {CONTACT_EMAIL}
               </a>
             </div>
           </div>
