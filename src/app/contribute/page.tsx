@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import VolunteerForm from '@/components/contribute/VolunteerForm';
 
 export const metadata: Metadata = {
   title: 'Participate - Source Library',
@@ -89,17 +90,28 @@ export default function ParticipatePage() {
           </div>
         </div>
 
+        {/* Volunteer Form */}
+        <div className="mb-16">
+          <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-3">
+            Volunteer
+          </h2>
+          <p className="text-secondary mb-6">
+            We&apos;re especially looking for readers of Latin, Greek, Arabic, Hebrew, and other classical languages to help evaluate and improve our AI translations. But all skills are welcome. Tell us about yourself and we&apos;ll find the right fit.
+          </p>
+          <VolunteerForm />
+        </div>
+
         {/* Contact */}
         <div className="bg-stone-800 text-white rounded-xl p-8 md:p-10 mb-12">
           <h2 className="text-2xl md:text-3xl mb-4">
-            Get in touch
+            Or just email
           </h2>
           <p className="text-stone-300 leading-relaxed mb-6">
-            The best way to get involved is to write to me directly. Tell me what you&apos;re interested in, what you&apos;re working on, or what you&apos;d like to see in the collection. I respond to everything.
+            Prefer to write directly? Tell me what you&apos;re interested in, what you&apos;re working on, or what you&apos;d like to see in the collection. I respond to everything.
           </p>
-          <p className="text-lg text-white font-medium">
+          <a href="mailto:derek@ancientwisdomtrust.org" className="text-lg text-white font-medium hover:text-amber-300 transition-colors">
             derek@ancientwisdomtrust.org
-          </p>
+          </a>
         </div>
 
         {/* Principles - brief */}
