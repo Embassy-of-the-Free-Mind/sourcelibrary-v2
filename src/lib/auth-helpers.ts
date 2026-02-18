@@ -46,13 +46,27 @@ export async function isAdmin(): Promise<boolean> {
 }
 
 /**
- * Wrapper for API routes requiring any authentication
- * Returns 401 if not authenticated
+ * Wrapper for API routes requiring any authentication.
+ * Accepts either a NextAuth session or a CRON_SECRET bearer token
+ * (for internal server-to-server calls from pipeline crons).
+ * Returns 401 if not authenticated.
  */
 export function withAuth(
   handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
 ): (request: NextRequest, context?: any) => Promise<NextResponse> {
   return async (request: NextRequest, context?: any) => {
+    // Check for CRON_SECRET bearer token (internal service-to-service calls)
+    const cronSecret = process.env.CRON_SECRET;
+    const authHeader = request.headers.get('authorization');
+    if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
+      // Create a synthetic admin session for cron calls
+      const cronSession: Session = {
+        user: { name: 'Pipeline Cron', email: 'cron@sourcelibrary.org', role: 'admin' } as any,
+        expires: new Date(Date.now() + 3600000).toISOString(),
+      };
+      return handler(request, cronSession, context);
+    }
+
     const session = await auth();
     if (!session?.user) {
       return NextResponse.json(

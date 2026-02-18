@@ -68,7 +68,7 @@ const MODEL_PRICING: Record<string, { input: number; output: number }> = {
 // Batch API gets 50% discount
 const BATCH_DISCOUNT = 0.5;
 
-export type GeminiCallType = 'ocr' | 'translate' | 'summarize' | 'extract_images' | 'index' | 'other';
+export type GeminiCallType = 'ocr' | 'translate' | 'summarize' | 'extract_images' | 'extract_chapters' | 'index' | 'other';
 export type GeminiMode = 'realtime' | 'batch';
 export type GeminiStatus = 'success' | 'failed' | 'pending' | 'submitted';
 

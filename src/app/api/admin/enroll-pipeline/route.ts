@@ -56,18 +56,27 @@ export const GET = withAuth(async (request, session) => {
 export const POST = withAuth(async (request, session) => {
   const db = await getDb();
   const body = await request.json().catch(() => ({}));
-  const { bookIds, limit = 50, dryRun = false, reEnrollFailed = false } = body as {
+  const { bookIds, limit = 50, dryRun = false, reEnrollFailed = false, reEnrollCompleted = false } = body as {
     bookIds?: string[];
     limit?: number;
     dryRun?: boolean;
     reEnrollFailed?: boolean;
+    reEnrollCompleted?: boolean;
   };
 
   let query: Record<string, unknown>;
+  // reEnrollCompleted targets 'enriched' since old 'complete' books went directly from
+  // enriching → complete, skipping chapters + images. Setting them to 'enriched' runs
+  // just those new phases without redoing OCR/translation/summary.
+  let enrollStatus: PipelineAutoStatus = 'queued';
 
   if (bookIds?.length) {
     // Enroll specific books
     query = { id: { $in: bookIds } };
+  } else if (reEnrollCompleted) {
+    // Backfill completed books through new pipeline phases (chapters, images)
+    query = { 'pipeline_auto.status': 'complete' };
+    enrollStatus = 'enriched';
   } else if (reEnrollFailed) {
     // Re-enroll failed books
     query = { 'pipeline_auto.status': 'failed' };
@@ -102,13 +111,11 @@ export const POST = withAuth(async (request, session) => {
     { id: { $in: bookIdList } },
     {
       $set: {
-        pipeline_auto: {
-          status: 'queued' as PipelineAutoStatus,
-          source: 'admin',
-          queued_at: now,
-          last_updated: now,
-          retry_count: 0,
-        },
+        'pipeline_auto.status': enrollStatus,
+        'pipeline_auto.source': 'admin',
+        'pipeline_auto.last_updated': now,
+        'pipeline_auto.retry_count': 0,
+        ...(enrollStatus === 'queued' ? { 'pipeline_auto.queued_at': now } : {}),
         updated_at: now,
       },
     }

@@ -105,6 +105,13 @@ export async function GET(request: NextRequest) {
             const text = result.response.candidates[0].content.parts[0].text;
             const usage = result.response.usageMetadata;
 
+            // Hallucination guard: skip pages with excessive text (space floods, repetition loops, thinking leaks)
+            if (text.length > 25000) {
+              console.warn(`[cron] Page ${pageId} has ${text.length} chars — likely hallucination, skipping`);
+              failCount++;
+              continue;
+            }
+
             if (job.type === 'ocr') {
               const pageType = extractPageType(text);
               const columns = extractColumns(text);

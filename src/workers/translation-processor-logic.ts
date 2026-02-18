@@ -5,6 +5,7 @@ import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
 
 /**
  * Translation Processor - processes one page at a time
@@ -76,6 +77,13 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
   const modelId = job.config.model || DEFAULT_MODEL;
   const startTime = Date.now();
+
+  // Snapshot manually-edited content before overwriting
+  try {
+    await createSnapshotIfNeeded(pageId, 'pre_translate', jobId);
+  } catch (snapErr) {
+    console.error(`[TRANS] Snapshot failed for page ${pageId} (non-fatal):`, snapErr);
+  }
 
   try {
     // Get context from previous page (for sequential translation)

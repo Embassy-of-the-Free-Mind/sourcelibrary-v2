@@ -29,6 +29,15 @@ function getBaseUrl(): string {
   return process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
 }
 
+/** Auth headers for internal route calls (routes use withAuth which accepts CRON_SECRET) */
+function getInternalHeaders(): Record<string, string> {
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+  if (process.env.CRON_SECRET) {
+    headers['Authorization'] = `Bearer ${process.env.CRON_SECRET}`;
+  }
+  return headers;
+}
+
 function hasTimeBudget(startTime: number): boolean {
   return Date.now() - startTime < TIME_BUDGET_MS;
 }
@@ -194,7 +203,7 @@ export async function GET(request: NextRequest) {
         try {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getInternalHeaders(),
             body: JSON.stringify({ limit: 500, force: false }),
           });
           if (!res.ok) {
@@ -340,7 +349,7 @@ export async function GET(request: NextRequest) {
         try {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getInternalHeaders(),
             body: JSON.stringify({ limit: 500 }),
           });
           if (!res.ok) {
