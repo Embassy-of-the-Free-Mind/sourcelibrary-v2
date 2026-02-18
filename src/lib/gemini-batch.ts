@@ -71,12 +71,26 @@ export interface BatchResponse {
 }
 
 function getApiKey(): string {
-  // Prefer tier 3 key for batch work (no rate limits)
-  const key = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+  // Try all available keys — batch jobs are only visible to the key that created them
+  const key = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY_2 || process.env.GEMINI_API_KEY;
   if (!key) {
     throw new Error('GEMINI_API_KEY not configured');
   }
   return key;
+}
+
+/**
+ * Get all available API keys for batch job lookups.
+ * Batch jobs are only visible to the key that created them,
+ * so we need to try multiple keys when polling for status.
+ */
+export function getAllApiKeys(): string[] {
+  const keys: string[] = [];
+  if (process.env.GEMINI_API_KEY_TIER3) keys.push(process.env.GEMINI_API_KEY_TIER3);
+  if (process.env.GEMINI_API_KEY_2) keys.push(process.env.GEMINI_API_KEY_2);
+  if (process.env.GEMINI_API_KEY) keys.push(process.env.GEMINI_API_KEY);
+  // Deduplicate (some keys may be the same)
+  return [...new Set(keys)];
 }
 
 // Normalize state names (BATCH_STATE_* -> JOB_STATE_*)
@@ -259,72 +273,98 @@ export async function createBatchJobFromFile(
 }
 
 /**
- * Get the status of a batch job
+ * Get the status of a batch job.
+ * Tries multiple API keys since batch jobs are only visible to the key that created them.
  */
 export async function getBatchJobStatus(jobName: string): Promise<BatchJobStatus> {
-  const apiKey = getApiKey();
+  const keys = getAllApiKeys();
+  let lastError = '';
 
-  const response = await fetch(
-    `${GEMINI_API_BASE}/${jobName}?key=${apiKey}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  for (const apiKey of keys) {
+    const response = await fetch(
+      `${GEMINI_API_BASE}/${jobName}?key=${apiKey}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (!response.ok) {
+      lastError = await response.text();
+      // Try next key if this one can't find the job
+      if (response.status === 404 || lastError.includes('not found')) {
+        continue;
+      }
+      throw new Error(`Failed to get batch job status: ${lastError}`);
     }
-  );
 
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Failed to get batch job status: ${error}`);
+    const data = await response.json();
+
+    // Transform response - Gemini returns { name, metadata: { state, ... } }
+    // We need to normalize to our BatchJobStatus format
+    const metadata = data.metadata || {};
+    const batchStats = metadata.batchStats || {};
+
+    return {
+      name: data.name,
+      state: normalizeState(metadata.state),
+      createTime: metadata.createTime,
+      updateTime: metadata.updateTime,
+      displayName: metadata.displayName,
+      model: metadata.model,
+      stats: {
+        totalCount: parseInt(batchStats.requestCount || '0'),
+        successCount: parseInt(batchStats.succeededCount || '0'),
+        failedCount: parseInt(batchStats.failedCount || '0'),
+      },
+    };
   }
 
-  const data = await response.json();
-
-  // Transform response - Gemini returns { name, metadata: { state, ... } }
-  // We need to normalize to our BatchJobStatus format
-  const metadata = data.metadata || {};
-  const batchStats = metadata.batchStats || {};
-
-  return {
-    name: data.name,
-    state: normalizeState(metadata.state),
-    createTime: metadata.createTime,
-    updateTime: metadata.updateTime,
-    displayName: metadata.displayName,
-    model: metadata.model,
-    stats: {
-      totalCount: parseInt(batchStats.requestCount || '0'),
-      successCount: parseInt(batchStats.succeededCount || '0'),
-      failedCount: parseInt(batchStats.failedCount || '0'),
-    },
-  };
+  throw new Error(`Failed to get batch job status (tried ${keys.length} keys): ${lastError}`);
 }
 
 /**
  * Get the results of a completed batch job.
- * Makes a single API call (not two) — checks state and extracts results from one response.
+ * Tries multiple API keys since batch jobs are only visible to the key that created them.
  */
 export async function getBatchJobResults(jobName: string): Promise<BatchResponse[]> {
-  const apiKey = getApiKey();
+  const keys = getAllApiKeys();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let jobData: any = null;
+  let workingKey = '';
 
-  // Single API call — check status and get results in one request
-  const jobResponse = await fetch(
-    `${GEMINI_API_BASE}/${jobName}?key=${apiKey}`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  // Find the key that can access this job
+  for (const apiKey of keys) {
+    const jobResponse = await fetch(
+      `${GEMINI_API_BASE}/${jobName}?key=${apiKey}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (!jobResponse.ok) {
+      const error = await jobResponse.text();
+      if (jobResponse.status === 404 || error.includes('not found')) {
+        continue; // Try next key
+      }
+      throw new Error(`Failed to get batch results: ${error}`);
     }
-  );
 
-  if (!jobResponse.ok) {
-    const error = await jobResponse.text();
-    throw new Error(`Failed to get batch results: ${error}`);
+    jobData = await jobResponse.json();
+    workingKey = apiKey;
+    break;
   }
 
-  const jobData = await jobResponse.json();
+  if (!jobData) {
+    throw new Error(`Batch job not found with any API key (tried ${keys.length})`);
+  }
+
+  const apiKey = workingKey;
 
   // Check state from the raw response
   const rawState = jobData.metadata?.state;
