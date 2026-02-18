@@ -163,7 +163,12 @@ export const POST = withAuth(async (request, session, context) => {
               }
             ],
             role: 'user'
-          }]
+          }],
+          config: {
+            temperature: 0.1,
+            maxOutputTokens: 16384,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
         }
       });
     }
@@ -175,10 +180,14 @@ export const POST = withAuth(async (request, session, context) => {
       }, { status: 400 });
     }
 
-    // Submit batch job
+    // Submit batch job — each request includes metadata.key for result matching
+    // and generationConfig to cap output tokens and disable thinking
     const batchJob = await ai.batches.create({
       model,
-      src: batchRequests.map(r => r.request),
+      src: batchRequests.map(r => ({
+        ...r.request,
+        metadata: { key: r.key },
+      })),
       config: {
         displayName: `ocr-${bookId}-${Date.now()}`,
       }
