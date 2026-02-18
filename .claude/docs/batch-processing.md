@@ -91,6 +91,69 @@ created_at, updated_at, completed_at
 { "path": "/api/cron/process-batches", "schedule": "0 */2 * * *" }
 ```
 
+## Local Bulk Processing
+
+For large-scale re-OCR operations that exceed Vercel's 60s timeout, use the local script:
+
+```bash
+secret-lover run -- node scripts/bulk-reocr-local.mjs --offset=0 --limit=10
+```
+
+**Script:** `scripts/bulk-reocr-local.mjs`
+
+Key features:
+- Runs locally (no Vercel timeout limits)
+- Processes books sorted by `read_count` desc
+- Language-specific prompt selection (Latin, German, Standard)
+- Downloads images in parallel (20 concurrent)
+- Uses **inline batch submission** (no file uploads)
+- Detects quota exhaustion and stops early
+- Records `batch_jobs` and `gemini_usage` in MongoDB
+- Results collected by the `process-batches` cron automatically
+
+Options: `--offset`, `--limit`, `--pages`, `--dry-run`, `--book-id`, `--new-only`, `--provider`
+
+See `~/.claude/skills/daily-sourcelibrary/skill.md` for full documentation.
+
+## Inline vs File-Based Submission
+
+Two ways to submit batch jobs to Gemini:
+
+| | Inline | File-based |
+|---|---|---|
+| Function | `createBatchJobInline()` | `createBatchJobFromFile()` |
+| How | Requests embedded in POST body | JSONL uploaded to File API, referenced by name |
+| Max size | ~20 pages per batch (request body limit) | Hundreds of pages (20MB JSONL limit) |
+| File storage | Not used | Counts against 20GB/project quota |
+| Best for | Local scripts, small-medium books | Vercel routes, large books |
+
+The local script uses inline submission by default to avoid the file storage quota. Vercel routes use file-based submission for larger batches.
+
+## API Key Management
+
+Three Gemini API keys with independent batch quotas:
+
+| Key | Env Var | Batch Priority |
+|-----|---------|---------------|
+| Tier 3 | `GEMINI_API_KEY_TIER3` | Realtime primary, batch fallback |
+| Key 2 | `GEMINI_API_KEY_2` | **Batch primary** (separate quota pool) |
+| Default | `GEMINI_API_KEY` | Last resort |
+
+The local script's `getBatchApiKey()` prefers KEY_2 for batch operations. Vercel routes use whichever key is configured in the environment.
+
+## Quota Limits
+
+| Quota | Limit | Symptom | Fix |
+|-------|-------|---------|-----|
+| Batch job creation | ~25k requests/day per key | HTTP 429 RESOURCE_EXHAUSTED | Wait 24h or use different key |
+| File storage | 20GB per project | Upload rejected | Use inline mode, or `cleanup-gemini-files.mjs` |
+| Requests/minute | Varies by tier | HTTP 429 | Auto-retry with backoff |
+
+```bash
+# Free file storage across all keys
+secret-lover run -- node scripts/cleanup-gemini-files.mjs
+```
+
 ## Batch vs Realtime
 
 | | Realtime (Lambda) | Batch (Gemini API) |
