@@ -21,8 +21,8 @@ import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import AddToBookshelfButton from '@/components/bookshelf/AddToBookshelfButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
-import RegistrationWall from '@/components/auth/RegistrationWall';
-import { auth } from '@/lib/auth';
+// RegistrationWall removed — gating handled client-side by BetaGateModal in BookPagesSection
+// auth import removed — gating handled client-side by useBetaGate
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -227,7 +227,7 @@ function PagesGridSkeleton() {
 
 // Book info component (streams in)
 async function BookInfo({ id }: { id: string }) {
-  const [data, session] = await Promise.all([getBook(id), auth()]);
+  const data = await getBook(id);
 
   if (!data) {
     notFound();
@@ -235,11 +235,8 @@ async function BookInfo({ id }: { id: string }) {
 
   const { book, pages } = data;
 
-  // Content gating: free_tier and featured books are always accessible
-  // Other books require authentication
-  const isFreeTier = !!(book as any).free_tier || !!book.featured;
-  const isAuthenticated = !!session?.user;
-  const showRegistrationWall = !isFreeTier && !isAuthenticated;
+  // Content gating handled client-side by useBetaGate hook in BookPagesSection
+  // Featured books bypass the gate; others show email modal on page click
 
   // Note: ObjectId→custom-id redirect is handled in BookDetailPage above,
   // before the Suspense boundary, so Google gets a proper 301.
@@ -674,22 +671,13 @@ async function BookInfo({ id }: { id: string }) {
         );
       })()}
 
-      {/* Stats + Pages Grid — or Registration Wall */}
-      {showRegistrationWall ? (
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <RegistrationWall
-            bookTitle={book.display_title || book.title}
-            freeBookCount={120}
-          />
-        </main>
-      ) : (
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-          <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} bookFeatured={!!book.featured} />
-          <AuthCheck>
-            <BookHistory bookId={book.id} />
-          </AuthCheck>
-        </main>
-      )}
+      {/* Stats + Pages Grid */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
+        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} bookFeatured={!!book.featured} />
+        <AuthCheck>
+          <BookHistory bookId={book.id} />
+        </AuthCheck>
+      </main>
     </>
   );
 }
