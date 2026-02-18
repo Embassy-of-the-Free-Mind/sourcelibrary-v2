@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 
-// Fundraising progress
-const GOAL = 100000;
-const RAISED = 55000;
+// TODO: Ask NAF for a Source Library-specific DonorPerfect form.
+// When available, replace this URL so donors see "Source Library" instead of the generic Embassy form.
+const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
 
 export default function SupportPage() {
   return (
@@ -83,50 +83,90 @@ export default function SupportPage() {
         </div>
       </section>
 
-      {/* Donation Section */}
+      {/* Donation Pathways */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <div className="max-w-xl">
-            {/* Thermometer */}
-            <div className="mb-12">
-              <div className="flex justify-between items-end mb-3">
-                <div>
-                  <span className="text-4xl md:text-5xl font-bold text-stone-800">${(RAISED / 1000).toFixed(0)}k</span>
-                  <span className="text-stone-500 ml-2">raised</span>
-                </div>
-                <div className="text-right">
-                  <span className="text-stone-400">${(GOAL / 1000).toFixed(0)}k goal</span>
-                </div>
-              </div>
-              <div className="h-3 bg-stone-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-stone-800 rounded-full transition-all duration-500"
-                  style={{ width: `${(RAISED / GOAL) * 100}%` }}
-                />
-              </div>
-            </div>
+          <h2
+            className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight"
+            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+          >
+            Ways to Give
+          </h2>
+          <p className="text-lg text-stone-600 mb-12 max-w-2xl">
+            Every gift directly funds the digitization and translation of rare texts. All donations are tax-deductible for US taxpayers.
+          </p>
 
-            {/* Donate Buttons */}
-            <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Card 1: Donate Online (primary) */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-stone-200 flex flex-col">
+              <div className="text-2xl mb-2">
+                <svg className="w-8 h-8 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a2.25 2.25 0 00-2.25-2.25H15a3 3 0 11-6 0H5.25A2.25 2.25 0 003 12m18 0v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6m18 0V9M3 12V9m18 0a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 9m18 0V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v3" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-stone-900 mb-2">Donate Online</h3>
+              <p className="text-stone-600 text-sm leading-relaxed mb-6 flex-1">
+                Secure online donation through the Netherland-America Foundation. Please write <strong>&ldquo;Source Library&rdquo;</strong> in the comments field so your gift is directed to our project.
+              </p>
               <a
-                href="https://www.ancientwisdomtrust.org/become-a-patron"
+                href={DONORPERFECT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full text-center bg-stone-900 hover:bg-stone-800 text-white text-lg py-4 px-6 rounded-full transition-colors"
+                className="block w-full text-center bg-stone-900 hover:bg-stone-800 text-white py-3 px-6 rounded-full transition-colors text-base font-medium"
               >
-                Become a Patron
+                Donate Now
               </a>
+              <p className="text-stone-400 text-xs mt-3 text-center">
+                Tax-deductible &middot; 501(c)(3)
+              </p>
+            </div>
 
+            {/* Card 2: Wire Transfer / Large Gift */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-stone-200 flex flex-col">
+              <div className="text-2xl mb-2">
+                <svg className="w-8 h-8 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-stone-900 mb-2">Wire Transfer or Large Gift</h3>
+              <p className="text-stone-600 text-sm leading-relaxed mb-6 flex-1">
+                For wire transfers, stock gifts, or donations over $1,000, contact us directly. We&apos;ll provide banking details and a tax receipt.
+              </p>
               <a
-                href="mailto:derek@ancientwisdomtrust.org?subject=Source%20Library%20Pledge&body=I%20would%20like%20to%20pledge%20%24_____%20to%20support%20Source%20Library."
-                className="block w-full text-center bg-white hover:bg-stone-50 text-stone-700 text-lg py-4 px-6 rounded-full transition-colors border border-stone-300"
+                href="mailto:derek@ancientwisdomtrust.org?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry&body=I%20am%20interested%20in%20making%20a%20gift%20to%20Source%20Library.%20Please%20send%20me%20details."
+                className="block w-full text-center bg-white hover:bg-stone-50 text-stone-700 py-3 px-6 rounded-full transition-colors border border-stone-300 text-base font-medium"
               >
-                Make a Pledge via Email
+                Contact Us
               </a>
             </div>
 
-            <p className="text-center text-stone-500 text-sm mt-8">
-              Tax-deductible via the Netherland-America Foundation (501c3)
+            {/* Card 3: Support the Embassy */}
+            <div className="bg-white rounded-2xl p-8 shadow-sm border border-stone-200 flex flex-col">
+              <div className="text-2xl mb-2">
+                <svg className="w-8 h-8 text-stone-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-stone-900 mb-2">Support the Embassy of the Free Mind</h3>
+              <p className="text-stone-600 text-sm leading-relaxed mb-6 flex-1">
+                Source Library is based at the Embassy of the Free Mind in Amsterdam. You can also support the Embassy directly — your gift helps preserve the Bibliotheca Philosophica Hermetica collection.
+              </p>
+              <a
+                href="https://embassyofthefreemind.com/en/embassy/support-us"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full text-center bg-white hover:bg-stone-50 text-stone-700 py-3 px-6 rounded-full transition-colors border border-stone-300 text-base font-medium"
+              >
+                Embassy Website
+              </a>
+            </div>
+          </div>
+
+          {/* 501(c)(3) Disclosure */}
+          <div className="mt-12 bg-white/60 rounded-xl border border-stone-200 p-6 md:p-8">
+            <h3 className="text-lg font-semibold text-stone-800 mb-2">Tax-Deductible Giving</h3>
+            <p className="text-stone-600 text-sm leading-relaxed">
+              Donations to Source Library are tax-deductible for US taxpayers. Source Library is fiscally sponsored by the <strong>Netherland-America Foundation, Inc.</strong>, a 501(c)(3) public charity (EIN: 13-2989216). The NAF strengthens bonds between the Netherlands and the United States through educational and cultural programs. Your donation is tax-deductible to the full extent permitted by law.
             </p>
           </div>
         </div>

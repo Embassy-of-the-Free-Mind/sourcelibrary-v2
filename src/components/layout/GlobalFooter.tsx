@@ -87,8 +87,12 @@ export default function GlobalFooter() {
               Blog
             </Link>
             <span className="hidden sm:inline">•</span>
-            <Link href="/support" className="text-amber-600 hover:text-amber-500 transition-colors">
-              Support
+            <Link href="/contribute" className="text-amber-600 hover:text-amber-500 transition-colors">
+              Participate
+            </Link>
+            <span className="hidden sm:inline">•</span>
+            <Link href="/support" className="inline-flex items-center gap-1 bg-amber-600/15 text-amber-500 hover:bg-amber-600/25 transition-colors px-2.5 py-0.5 rounded-full">
+              Donate
             </Link>
             <span className="hidden sm:inline">•</span>
             <span className="text-amber-600">Feedback</span>
@@ -161,10 +165,17 @@ export default function GlobalFooter() {
           </Link>
           <span className="hidden sm:inline">•</span>
           <Link
-            href="/support"
+            href="/contribute"
             className="text-amber-600 hover:text-amber-500 transition-colors"
           >
-            Support
+            Participate
+          </Link>
+          <span className="hidden sm:inline">•</span>
+          <Link
+            href="/support"
+            className="inline-flex items-center gap-1 bg-amber-600/15 text-amber-500 hover:bg-amber-600/25 transition-colors px-2.5 py-0.5 rounded-full"
+          >
+            Donate
           </Link>
           <span className="hidden sm:inline">•</span>
           <FeedbackWidget />
