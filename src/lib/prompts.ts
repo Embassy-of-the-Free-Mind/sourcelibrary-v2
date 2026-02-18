@@ -98,22 +98,19 @@ export async function getPrompt(
 }
 
 /**
- * Get OCR prompt with language instruction.
- * When language is known, provides a hint. When empty, instructs auto-detection.
- * Pages often contain multiple languages — the model always detects and reports the primary.
+ * Get OCR prompt from DB (or hardcoded fallback).
+ * Always uses auto-detect for language — Gemini 3 Flash detects reliably,
+ * and the language hint was propagating bad metadata (e.g. "Unknown").
  */
 export async function getOcrPrompt(
-  language: string,
   options?: { name?: string; id?: string; customText?: string }
 ): Promise<PromptLookupResult> {
   const result = await getPrompt('ocr', options);
-  const languageInstruction = language
-    ? `**Source language:** The primary language is likely **${language}**, but pages may contain text in multiple languages. Transcribe all languages present. Report the primary language in the <lang> tag.`
-    : `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <lang> tag.`;
+  const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <lang> tag.`;
   return {
     text: result.text
       .replace('{language_instruction}', languageInstruction)
-      .replace('{language}', language || ''), // backward compat for old prompts in DB
+      .replace('{language}', ''), // backward compat for old prompts in DB
     reference: result.reference,
   };
 }

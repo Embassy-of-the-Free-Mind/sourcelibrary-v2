@@ -26,7 +26,7 @@ async function performOCRWithKey(
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
 
-  const promptResult = await getOcrPrompt(language);
+  const promptResult = await getOcrPrompt();
   let prompt = promptResult.text;
   if (previousPageOcr) {
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;

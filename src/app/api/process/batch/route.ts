@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR } from '@/lib/ai';
+import { getOcrPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -45,11 +46,13 @@ async function processChunk(
       const dbPage = dbPageMap.get(page.pageId);
       const finalImageUrl = dbPage?.cropped_photo || dbPage?.photo || page.imageUrl;
 
+      // Resolve prompt: custom per-page prompt or DB default
+      const promptResult = await getOcrPrompt(page.customPrompt ? { customText: page.customPrompt } : undefined);
+
       const ocrResult = await performOCR(
         finalImageUrl,
-        page.language || 'Latin',
+        promptResult.text,
         page.previousOcr,
-        page.customPrompt,
         model
       );
 

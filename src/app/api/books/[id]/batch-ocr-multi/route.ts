@@ -144,7 +144,7 @@ export const POST = withAuth(async (request, session, context) => {
     const language = book.language || 'auto-detect';
 
     // Get OCR prompt
-    const promptResult = await getOcrPrompt(language);
+    const promptResult = await getOcrPrompt();
     const prompt = promptResult.text;
 
     // Submit each chunk as a Gemini batch

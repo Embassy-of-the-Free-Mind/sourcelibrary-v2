@@ -129,7 +129,7 @@ export const POST = withAuth(async (request, session, context) => {
     const language = book.original_language || '';
 
     // Get the main OCR prompt with language substituted
-    const ocrPromptResult = await getOcrPrompt(language);
+    const ocrPromptResult = await getOcrPrompt();
     const prompt = ocrPromptResult.text;
 
     for (const page of pagesToProcess) {

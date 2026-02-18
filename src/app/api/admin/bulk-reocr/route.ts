@@ -14,10 +14,12 @@ import type { Page } from '@/lib/types/page';
 export const maxDuration = 300;
 
 const TARGET_MODEL = 'gemini-3-flash-preview';
+const TARGET_PROMPT = PROMPT_VERSION; // Current: 'v4.2026-02'
 const SKIP_MODELS = ['manual', 'manual-correction'];
-const BATCH_SIZE = 10;       // Pages per Gemini batch submission
-const BOOKS_PER_RUN = 3;     // Books per invocation (image downloads are slow)
-const PAGES_PER_BOOK = 80;   // Max pages per book per run (must fit in 300s timeout)
+const BATCH_SIZE = 20;       // Pages per Gemini batch submission
+const BOOKS_PER_RUN = 3;     // Books per invocation (keep low to avoid Vercel 300s timeout)
+const PAGES_PER_BOOK = 80;   // Max pages per book per run
+const IMAGE_CONCURRENCY = 10; // Parallel image downloads per batch
 
 /**
  * GET /api/admin/bulk-reocr
@@ -54,7 +56,7 @@ export async function GET(request: NextRequest) {
       status: { $in: ['pending', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
       created_at: { $gte: recentCutoff },
     });
-    if (activeJobs >= 500 && !singleBookId) {
+    if (activeJobs >= 2000 && !singleBookId) {
       return NextResponse.json({
         success: true, skipped: true,
         reason: `${activeJobs} active batch jobs, waiting for results`,
@@ -98,16 +100,25 @@ export async function GET(request: NextRequest) {
       if (submitted.length >= limit) break;
       booksExamined++;
 
-      // Find pages with old OCR models
+      // Find pages with old OCR models OR outdated prompt versions
       const eligiblePages = await db.collection('pages').find(
         {
           book_id: book.id,
           'ocr.data': { $exists: true, $ne: '' },
-          'ocr.model': { $exists: true, $ne: TARGET_MODEL, $nin: SKIP_MODELS },
+          'ocr.model': { $nin: SKIP_MODELS },
           $or: [
-            { photo: { $exists: true, $ne: null } },
-            { photo_original: { $exists: true, $ne: null } }
-          ]
+            // Old model (not gemini-3-flash-preview)
+            { 'ocr.model': { $ne: TARGET_MODEL } },
+            // Right model but old/missing prompt version
+            { 'ocr.prompt_version': { $ne: TARGET_PROMPT } },
+          ],
+          // Must have an image to re-OCR
+          $and: [{
+            $or: [
+              { photo: { $exists: true, $ne: null } },
+              { photo_original: { $exists: true, $ne: null } }
+            ]
+          }]
         },
         {
           projection: {
@@ -137,7 +148,7 @@ export async function GET(request: NextRequest) {
 
       // Get OCR prompt for this book's language
       const language = book.original_language || book.language || '';
-      const promptResult = await getOcrPrompt(language);
+      const promptResult = await getOcrPrompt();
       const prompt = promptResult.text;
 
       // Submit in chunks — collect children BEFORE creating parent
@@ -147,31 +158,36 @@ export async function GET(request: NextRequest) {
 
       for (let j = 0; j < eligiblePages.length; j += BATCH_SIZE) {
         const chunk = eligiblePages.slice(j, j + BATCH_SIZE);
+
+        // Download images in parallel (IMAGE_CONCURRENCY at a time)
         const batchRequests: BatchRequest[] = [];
-
-        for (const page of chunk) {
-          const imageUrl = getPageImageUrl(page as unknown as Parameters<typeof getPageImageUrl>[0]);
-          if (!imageUrl) continue;
-
-          try {
-            const result = await images.fetchBase64(imageUrl, { includeMimeType: true });
-            const imageData = typeof result === 'string'
-              ? { data: result, mimeType: 'image/jpeg' }
-              : { data: result.base64, mimeType: result.mimeType };
-
-            batchRequests.push({
-              key: page.id,
-              request: {
-                contents: [{
-                  parts: [
-                    { text: prompt },
-                    { inlineData: { mimeType: imageData.mimeType, data: imageData.data } },
-                  ],
-                }],
-              },
-            });
-          } catch {
-            console.warn(`[bulk-reocr] Failed to fetch image for page ${page.page_number}`);
+        for (let k = 0; k < chunk.length; k += IMAGE_CONCURRENCY) {
+          const concurrentChunk = chunk.slice(k, k + IMAGE_CONCURRENCY);
+          const results = await Promise.allSettled(
+            concurrentChunk.map(async (page) => {
+              const imageUrl = getPageImageUrl(page as unknown as Parameters<typeof getPageImageUrl>[0]);
+              if (!imageUrl) return null;
+              const result = await images.fetchBase64(imageUrl, { includeMimeType: true });
+              const imageData = typeof result === 'string'
+                ? { data: result, mimeType: 'image/jpeg' }
+                : { data: result.base64, mimeType: result.mimeType };
+              return { pageId: page.id, imageData };
+            })
+          );
+          for (const r of results) {
+            if (r.status === 'fulfilled' && r.value) {
+              batchRequests.push({
+                key: r.value.pageId,
+                request: {
+                  contents: [{
+                    parts: [
+                      { text: prompt },
+                      { inlineData: { mimeType: r.value.imageData.mimeType, data: r.value.imageData.data } },
+                    ],
+                  }],
+                },
+              });
+            }
           }
         }
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCRWithBuffer } from '@/lib/ai';
+import { getOcrPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, parseDetectedImages } from '@/lib/types';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { notifyIndexNow } from '@/lib/indexnow';
@@ -157,13 +158,13 @@ export async function POST(
         // Fetch image buffer
         const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);
 
-        // Use the shared OCR function with rich DEFAULT_PROMPTS
+        // Use the shared OCR function with DB prompt
+        const promptResult = await getOcrPrompt();
         const ocrResult = await performOCRWithBuffer(
           buffer,
           mimeType,
-          language,
+          promptResult.text,
           previousPageOcr,
-          undefined, // no custom prompt — use DEFAULT_PROMPTS.ocr
           modelId
         );
 

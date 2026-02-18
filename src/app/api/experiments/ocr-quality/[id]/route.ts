@@ -87,17 +87,12 @@ export const GET = withAuth(async (request, session, context) => {
 
       // Resolve prompt text for each condition
       const conditions = experiment.conditions || [];
-      const book = experiment.book_id
-        ? await db.collection('books').findOne({ id: experiment.book_id }, { projection: { original_language: 1 } })
-        : null;
-      const lang = book?.original_language || '';
-
       const resolvedPrompts: Record<string, string> = {};
       for (const cond of conditions) {
         if (cond.customPrompt) {
           resolvedPrompts[cond.id] = cond.customPrompt;
         } else if (cond.promptType === 'elaborate' || cond.promptType === 'custom') {
-          const result = await getOcrPrompt(lang);
+          const result = await getOcrPrompt();
           resolvedPrompts[cond.id] = result.text;
         } else {
           resolvedPrompts[cond.id] = '(simple/unknown prompt type)';

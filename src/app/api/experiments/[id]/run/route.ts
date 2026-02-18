@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { performOCR, performTranslation } from '@/lib/ai';
+import { getOcrPrompt } from '@/lib/prompts';
 import crypto from 'crypto';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -32,14 +33,14 @@ async function processVariant(
 
   if (variant.method === 'single_ocr' || variant.method === 'batch_ocr') {
     let previousOcr = '';
+    const promptResult = await getOcrPrompt();
 
     for (const page of pages) {
       try {
         const result = await performOCR(
           page.photo,
-          'Latin',
+          promptResult.text,
           useContext ? previousOcr : undefined,
-          undefined,
           variant.model
         );
 

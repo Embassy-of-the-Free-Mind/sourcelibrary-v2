@@ -14,6 +14,8 @@ import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
+import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { getOcrPrompt } from '@/lib/prompts';
 
 /**
  * Get page image URL with priority fallbacks:
@@ -94,19 +96,39 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
   const modelId = job.config.model || DEFAULT_MODEL;
   const startTime = Date.now();
 
+  // Fetch prompt from DB (or hardcoded fallback). Custom prompt overrides DB.
+  let promptText: string;
+  try {
+    const promptResult = await getOcrPrompt(customPrompt ? { customText: customPrompt } : undefined);
+    promptText = promptResult.text;
+  } catch (promptErr) {
+    console.error(`[OCR] Failed to fetch prompt from DB (non-fatal), using custom or will fail:`, promptErr);
+    if (customPrompt) {
+      promptText = customPrompt;
+    } else {
+      throw promptErr;
+    }
+  }
+
+  // Snapshot manually-edited content before overwriting
+  try {
+    await createSnapshotIfNeeded(pageId, 'pre_ocr', jobId);
+  } catch (snapErr) {
+    console.error(`[OCR] Snapshot failed for page ${pageId} (non-fatal):`, snapErr);
+  }
+
   try {
     // Get image buffer and MIME type
     const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl);
 
     console.log(`[OCR] Downloaded image for page ${pageId}, size: ${buffer.length} bytes, type: ${mimeType}`);
 
-    // Perform OCR with custom prompt if provided
+    // Perform OCR with resolved prompt
     const ocrResult = await performOCRWithBuffer(
       buffer,
       mimeType,
-      job.config.language || '',
+      promptText,
       undefined, // no previous page context in Lambda worker (pages arrive out of order)
-      customPrompt,
       modelId
     );
 
@@ -176,9 +198,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           const retryResult = await performOCRWithBuffer(
             buffer,
             mimeType,
-            job.config.language || '',
+            promptText,
             undefined,
-            customPrompt,
             nextModel
           );
 

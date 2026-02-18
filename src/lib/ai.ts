@@ -59,36 +59,20 @@ function calculateCost(inputTokens: number, outputTokens: number, model: string)
 }
 
 /**
- * Build the OCR prompt with appropriate language instruction.
- * When language is known, provides a hint but asks the model to verify.
- * When unknown, asks the model to auto-detect.
- * Pages often contain multiple languages (Latin + Greek, German + Latin, etc.)
- * so the model always detects and reports the primary language.
- */
-function buildOcrPrompt(customPrompt: string | undefined, language: string): string {
-  const languageInstruction = language
-    ? `**Source language:** The primary language is likely **${language}**, but pages may contain text in multiple languages. Transcribe all languages present. Report the primary language in the <lang> tag.`
-    : `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <lang> tag.`;
-  return (customPrompt || DEFAULT_PROMPTS.ocr)
-    .replace('{language_instruction}', languageInstruction)
-    .replace('{language}', language || ''); // backward compat for old prompts in DB
-}
-
-/**
  * Perform OCR with a pre-loaded image buffer.
+ * Caller must provide the fully resolved prompt text (from getOcrPrompt() or custom).
  * Faster than performOCR when you already have the image data (e.g., after cropping).
  */
 export async function performOCRWithBuffer(
   imageBuffer: Buffer,
   mimeType: string,
-  language: string,
+  promptText: string,
   previousPageOcr?: string,
-  customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
-  let prompt = buildOcrPrompt(customPrompt, language);
+  let prompt = promptText;
 
   if (previousPageOcr) {
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
@@ -134,16 +118,19 @@ export async function performOCRWithBuffer(
   }
 }
 
+/**
+ * Perform OCR from an image URL.
+ * Caller must provide the fully resolved prompt text (from getOcrPrompt() or custom).
+ */
 export async function performOCR(
   imageUrl: string,
-  language: string,
+  promptText: string,
   previousPageOcr?: string,
-  customPrompt?: string,
   modelId: string = DEFAULT_MODEL
 ): Promise<AIResult> {
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
-  let prompt = buildOcrPrompt(customPrompt, language);
+  let prompt = promptText;
 
   if (previousPageOcr) {
     prompt += `\n\n**Previous page transcription for context:**\n${previousPageOcr.slice(0, 2000)}...`;
@@ -347,6 +334,7 @@ export async function performModernization(
 
 export async function processPageComplete(
   imageUrl: string,
+  ocrPromptText: string,
   language: string,
   targetLanguage: string,
   previousPage?: {
@@ -355,7 +343,6 @@ export async function processPageComplete(
     summary?: string;
   },
   customPrompts?: {
-    ocr?: string;
     translation?: string;
     summary?: string;
   },
@@ -369,9 +356,8 @@ export async function processPageComplete(
   // Step 1: OCR
   const ocrResult = await performOCR(
     imageUrl,
-    language,
+    ocrPromptText,
     previousPage?.ocr,
-    customPrompts?.ocr,
     modelId
   );
 

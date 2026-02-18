@@ -85,10 +85,6 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'No pages found' }, { status: 404 });
     }
 
-    // Fetch book language for prompt language instruction
-    const book = await db.collection('books').findOne({ id: experiment.book_id });
-    const bookLanguage = book?.original_language || '';
-
     const batchSize = condition.batchSize || 1;
     const promptType = condition.promptType;
 
@@ -136,10 +132,10 @@ export const POST = withAuth(async (request, session, context) => {
     // Select prompt — custom prompts go through getOcrPrompt for {language_instruction} substitution
     let basePrompt: string;
     if (condition.customPrompt) {
-      const promptResult = await getOcrPrompt(bookLanguage, { customText: condition.customPrompt });
+      const promptResult = await getOcrPrompt({ customText: condition.customPrompt });
       basePrompt = promptResult.text;
     } else if (promptType === 'elaborate') {
-      const promptResult = await getOcrPrompt(bookLanguage);
+      const promptResult = await getOcrPrompt();
       basePrompt = promptResult.text;
     } else {
       basePrompt = SIMPLE_OCR_PROMPT;

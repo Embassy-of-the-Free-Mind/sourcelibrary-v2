@@ -83,7 +83,7 @@ export const POST = withAuth(async (request: NextRequest) => {
     } = {};
 
     if (action === 'ocr' || action === 'all') {
-      promptRefs.ocr = await getOcrPrompt(language || 'Latin', {
+      promptRefs.ocr = await getOcrPrompt({
         name: promptInfo?.ocr,
         customText: customPrompts?.ocr,
       });
@@ -136,9 +136,8 @@ export const POST = withAuth(async (request: NextRequest) => {
           console.log(`[process] Page ${pageId}: Using cropped_photo`);
           ocrResult = await performOCR(
             finalImageUrl,
-            language || 'Latin',
+            promptRefs.ocr!.text,
             previousPage?.ocr,
-            promptRefs.ocr?.text,
             model
           );
         } else if (currentPage?.crop?.xStart !== undefined && currentPage?.crop?.xEnd !== undefined) {
@@ -174,9 +173,8 @@ export const POST = withAuth(async (request: NextRequest) => {
           ocrResult = await performOCRWithBuffer(
             croppedBuffer,
             'image/jpeg',
-            language || 'Latin',
+            promptRefs.ocr!.text,
             previousPage?.ocr,
-            promptRefs.ocr?.text,
             model
           );
 
@@ -203,9 +201,8 @@ export const POST = withAuth(async (request: NextRequest) => {
           console.log(`[process] Page ${pageId}: Using full photo (not a split page)`);
           ocrResult = await performOCR(
             finalImageUrl,
-            language || 'Latin',
+            promptRefs.ocr!.text,
             previousPage?.ocr,
-            promptRefs.ocr?.text,
             model
           );
         } else {
@@ -213,9 +210,8 @@ export const POST = withAuth(async (request: NextRequest) => {
           console.log(`[process] Page ${pageId}: Using provided imageUrl`);
           ocrResult = await performOCR(
             finalImageUrl,
-            language || 'Latin',
+            promptRefs.ocr!.text,
             previousPage?.ocr,
-            promptRefs.ocr?.text,
             model
           );
         }
@@ -223,9 +219,8 @@ export const POST = withAuth(async (request: NextRequest) => {
         // No pageId - use provided imageUrl directly
         ocrResult = await performOCR(
           finalImageUrl,
-          language || 'Latin',
+          promptRefs.ocr!.text,
           previousPage?.ocr,
-          promptRefs.ocr?.text,
           model
         );
       }

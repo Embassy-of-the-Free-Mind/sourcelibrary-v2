@@ -134,7 +134,7 @@ export async function POST(request: NextRequest) {
     const db = await getDb();
 
     // Look up prompt for this batch (with versioning)
-    const ocrPrompt: PromptLookupResult = await getOcrPrompt(language, {
+    const ocrPrompt: PromptLookupResult = await getOcrPrompt({
       name: promptName,
       customText: customPrompt,
     });
