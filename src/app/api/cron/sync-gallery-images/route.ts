@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
 
@@ -12,7 +13,10 @@ export const maxDuration = 300;
  *
  * Runs every 6 hours via vercel.json cron.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   try {
     const db = await getDb();
     const startTime = Date.now();

@@ -11,10 +11,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { postTweetWithMedia, isTwitterConfigured } from '@/lib/twitter';
 import { buildFullTweetText } from '@/lib/tweet-generator';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 60; // 1 minute timeout
 
 export async function POST(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const stats = {
     posted: 0,
     failed: 0,

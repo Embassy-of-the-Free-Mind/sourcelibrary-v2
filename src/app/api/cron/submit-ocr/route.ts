@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import type { JobStatus } from '@/lib/types/job';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
 
@@ -23,6 +24,9 @@ const PAGES_PER_BOOK = 500;     // Max pages to submit per book (Lambda handles 
  * Complements process-batches (batch path) with a realtime path.
  */
 export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const startTime = Date.now();
 
   try {

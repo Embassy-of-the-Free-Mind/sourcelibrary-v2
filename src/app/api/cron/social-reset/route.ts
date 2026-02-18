@@ -11,10 +11,14 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 30;
 
 export async function POST(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   try {
     const db = await getDb();
     const now = new Date();

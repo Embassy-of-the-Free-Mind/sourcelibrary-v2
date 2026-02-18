@@ -1,0 +1,26 @@
+# Source Library — sourcelibrary.org
+# Robots exclusion policy
+
+User-agent: *
+Allow: /
+Allow: /book/
+Allow: /gallery
+Allow: /gallery/
+Allow: /search
+Allow: /encyclopedia
+Allow: /encyclopedia/
+Allow: /press
+Allow: /about
+Allow: /blog
+Allow: /collections
+Allow: /developers
+
+Disallow: /api/
+Disallow: /admin/
+Disallow: /analytics
+Disallow: /beta
+
+Crawl-delay: 2
+
+# Sitemaps
+Sitemap: https://sourcelibrary.org/sitemap.xml

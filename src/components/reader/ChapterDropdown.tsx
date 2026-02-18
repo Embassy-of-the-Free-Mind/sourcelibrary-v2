@@ -94,17 +94,17 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
       {isOpen && !isMobile && (
         <div
           ref={dropdownRef}
-          className="absolute top-full right-0 mt-1 z-50 w-[26rem] max-h-[60vh] overflow-y-auto rounded-lg shadow-xl"
+          className="absolute top-full right-0 mt-1 z-50 w-[34rem] max-h-[60vh] overflow-y-auto rounded-lg shadow-xl"
           style={{ background: 'var(--bg-white, #fff)', border: '1px solid var(--border-light)' }}
           role="listbox"
           aria-label="Table of contents"
         >
           <div className="sticky top-0 px-3 py-2 border-b" style={{ background: 'var(--bg-white, #fff)', borderColor: 'var(--border-light)' }}>
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>
+              <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                 Contents
               </span>
-              <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                 {chapters.length} chapters
               </span>
             </div>
@@ -114,7 +114,7 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
               key={`${chapter.pageId}-${i}`}
               ref={i === currentChapterIndex ? activeItemRef : undefined}
               onClick={() => handleSelect(chapter)}
-              className="w-full text-left px-3 py-2 text-sm transition-colors hover:bg-stone-50 flex items-baseline justify-between gap-2"
+              className="w-full text-left px-3 py-2.5 transition-colors hover:bg-stone-50 flex items-baseline justify-between gap-3"
               style={{
                 paddingLeft: chapter.level === 1 ? '12px' : chapter.level === 2 ? '28px' : '44px',
                 background: i === currentChapterIndex ? 'rgba(180, 140, 60, 0.1)' : undefined,
@@ -126,16 +126,16 @@ export default function ChapterDropdown({ chapters, currentChapterIndex, onChapt
               title={hasEnglishTitles && chapter.titleEn ? chapter.title : undefined}
             >
               <span className="min-w-0">
-                <span className="block truncate" style={{ fontSize: chapter.level === 1 ? '0.875rem' : '0.8125rem' }}>
+                <span className="block truncate" style={{ fontSize: chapter.level === 1 ? '0.9375rem' : '0.875rem' }}>
                   {displayTitle(chapter)}
                 </span>
                 {hasEnglishTitles && chapter.titleEn && (
-                  <span className="block truncate text-[11px] italic" style={{ color: 'var(--text-muted)', marginTop: '1px' }}>
+                  <span className="block truncate text-xs italic" style={{ color: 'var(--text-muted)', marginTop: '2px' }}>
                     {chapter.title}
                   </span>
                 )}
               </span>
-              <span className="text-[10px] shrink-0 tabular-nums" style={{ color: 'var(--text-muted)' }}>
+              <span className="text-xs shrink-0 tabular-nums" style={{ color: 'var(--text-muted)' }}>
                 p.{'\u00A0'}{chapter.pageNumber}
               </span>
             </button>

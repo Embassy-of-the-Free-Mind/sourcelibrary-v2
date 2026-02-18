@@ -79,6 +79,7 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
             translation_percent: 1,
             last_processed: 1,
             last_translation_at: 1,
+            featured: 1,
           },
         },
       ]).toArray(),
@@ -250,7 +251,7 @@ export default async function HomePage() {
         <div className="px-6 md:px-12 mt-16">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-stone-300 max-w-5xl mx-auto">
             <div className="mb-4 md:mb-0 text-gray-600">
-              &copy; {new Date().getFullYear()} Source Library — A project of the Ancient Wisdom Trust
+              &copy; {new Date().getFullYear()} Source Library — An initiative of the Embassy of the Free Mind
             </div>
             <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
               <a
@@ -260,13 +261,18 @@ export default async function HomePage() {
                 About
               </a>
               <span className="hidden md:inline">•</span>
-              <span>CC0 Public Domain</span>
+              <a
+                href="/press"
+                className="text-amber-700 hover:text-amber-800 transition-colors"
+              >
+                Press
+              </a>
               <span className="hidden md:inline">•</span>
               <a
                 href="mailto:derek@ancientwisdomtrust.org"
                 className="text-amber-700 hover:text-amber-800 transition-colors"
               >
-                derek@ancientwisdomtrust.org
+                Contact
               </a>
             </div>
           </div>

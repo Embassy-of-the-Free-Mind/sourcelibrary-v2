@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
 
@@ -63,6 +64,9 @@ async function markFailed(
  * Scheduled: every 10 minutes via Vercel cron.
  */
 export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const startTime = Date.now();
   const baseUrl = getBaseUrl();
   const db = await getDb();

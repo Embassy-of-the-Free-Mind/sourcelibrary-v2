@@ -4,6 +4,7 @@ import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
 
@@ -18,15 +19,10 @@ export const maxDuration = 300;
  * Triggered by Vercel Cron (every 2 hours) or manual call.
  */
 export async function GET(request: NextRequest) {
-  const startTime = Date.now();
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
 
-  // Verify cron secret in production (optional security)
-  const cronSecret = request.headers.get('x-cron-secret');
-  const expectedSecret = process.env.CRON_SECRET;
-  if (expectedSecret && cronSecret !== expectedSecret) {
-    // Allow without secret for manual testing, but log it
-    console.log('[cron] Running without cron secret verification');
-  }
+  const startTime = Date.now();
 
   const results = {
     collected: [] as Array<{ job_id: string; book_title: string; pages_saved: number; pages_failed: number }>,
@@ -81,15 +77,16 @@ export async function GET(request: NextRequest) {
           let failCount = 0;
           const now = new Date();          
 
-          for (const result of batchResults) {
-            // Extract page ID from metadata
-            const pageId = result.metadata?.key;
+          for (let idx = 0; idx < batchResults.length; idx++) {
+            const result = batchResults[idx];
+            // Match by position — Gemini doesn't echo metadata.key in responses
+            const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
 
             if (!pageId) {
-              console.warn('[cron] No page ID found in result:', JSON.stringify(result, null, 2));
+              console.warn(`[cron] No page ID for result idx ${idx} (job ${job.id})`);
               failCount++;
               continue;
-            }            
+            }
 
             if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {              
               failCount++;

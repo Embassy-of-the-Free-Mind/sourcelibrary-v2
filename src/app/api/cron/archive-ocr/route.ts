@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { put } from '@vercel/blob';
 import { images } from '@/lib/api-client';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300; // 5 minute timeout
 
@@ -18,6 +19,9 @@ const DELAY_MS = 200; // Delay between batches
  * Can also be called manually via: curl https://your-domain.com/api/cron/archive-ocr
  */
 export async function POST(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   try {
     const db = await getDb();
 

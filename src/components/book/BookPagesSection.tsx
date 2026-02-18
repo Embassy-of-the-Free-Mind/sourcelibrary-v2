@@ -7,6 +7,8 @@ import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import { useBetaGate } from '@/hooks/useBetaGate';
+import BetaGateModal from '@/components/beta/BetaGateModal';
 import BookPagesStats from './BookPagesStats';
 import BookPagesActions from './BookPagesActions';
 import JobStatusBanner from './JobStatusBanner';
@@ -19,12 +21,14 @@ interface BookPagesSectionProps {
   bookTitle?: string;
   pages: Page[];
   displayBrightness?: number;
+  bookFeatured?: boolean;
 }
 
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, displayBrightness }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, displayBrightness, bookFeatured }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
+  const betaGate = useBetaGate(bookFeatured);
   const [batchMode, setBatchMode] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
@@ -609,7 +613,16 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         onDragEnd={handleDragEnd}
         onLoadMore={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
         getImageUrl={getImageUrl}
+        onPageClick={betaGate.hasAccess ? undefined : betaGate.requestAccess}
       />
+
+      {/* Beta email gate modal */}
+      {betaGate.showGate && (
+        <BetaGateModal
+          onSuccess={betaGate.grantAccess}
+          onDismiss={betaGate.dismissGate}
+        />
+      )}
     </div>
   );
 }

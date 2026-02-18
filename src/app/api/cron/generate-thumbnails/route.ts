@@ -5,6 +5,7 @@ import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
 import { getPageImageUrl } from '@/lib/utils';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
 
@@ -22,6 +23,9 @@ const MAX_DURATION_MS = 270_000; // Stop at 4.5 min to leave buffer
  * Scheduled: Every 10 minutes via Vercel cron
  */
 export async function POST(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const startTime = Date.now();
 
   try {

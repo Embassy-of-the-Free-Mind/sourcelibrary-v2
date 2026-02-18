@@ -38,6 +38,7 @@ interface PagesGridProps {
   onDragEnd: () => void;
   onLoadMore: () => void;
   getImageUrl: (page: Page) => string | null;
+  onPageClick?: () => boolean; // Beta gate interceptor: return false to block navigation
 }
 
 const PAGES_PER_LOAD = 24;
@@ -60,7 +61,8 @@ export default function PagesGrid({
   onDragOver,
   onDragEnd,
   onLoadMore,
-  getImageUrl
+  getImageUrl,
+  onPageClick
 }: PagesGridProps) {
   // CSS brightness filter — only apply when not default (1.0)
   const brightnessStyle = brightness && brightness !== 1.0
@@ -161,7 +163,13 @@ export default function PagesGrid({
 
             return (
               <div key={page.id} className="group relative">
-                <a href={`/book/${bookId}/page/${page.id}`}>
+                <a
+                  href={`/book/${bookId}/page/${page.id}`}
+                  onClick={onPageClick ? (e) => {
+                    const allowed = onPageClick();
+                    if (!allowed) e.preventDefault();
+                  } : undefined}
+                >
                   <div className="aspect-[3/4] bg-white border border-stone-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow relative" style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} className="group-hover:scale-105 transition-transform duration-200" />

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { POST as batchOcrPost } from '@/app/api/books/[id]/batch-ocr-async/route';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export const maxDuration = 300;
 
@@ -21,6 +22,9 @@ const MODEL = 'gemini-3-flash-preview';
  * Complements /api/cron/process-batches which collects results.
  */
 export async function GET(request: NextRequest) {
+  const authError = verifyCronAuth(request);
+  if (authError) return authError;
+
   const startTime = Date.now();
 
   try {
