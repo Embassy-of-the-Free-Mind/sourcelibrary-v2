@@ -136,14 +136,13 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
         <div className="px-10 pt-10 pb-8">
           {/* Brand mark + heading */}
           <div className="text-center mb-8">
-            {/* Concentric circles — brand icon */}
-            <div className="mx-auto mb-5" style={{ width: 48, height: 48 }}>
-              <svg viewBox="0 0 336 336" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', height: '100%' }}>
-                <circle cx="168" cy="168" r="158" stroke="var(--accent-rust, #9e4a3a)" strokeWidth="8" fill="none" opacity="0.3" />
-                <circle cx="168" cy="168" r="112" stroke="var(--accent-rust, #9e4a3a)" strokeWidth="6" fill="none" opacity="0.5" />
-                <circle cx="168" cy="168" r="64" stroke="var(--accent-rust, #9e4a3a)" strokeWidth="5" fill="none" opacity="0.8" />
-              </svg>
-            </div>
+            {/* Brand icon */}
+            <img
+              src="/brand/svg/icon-only--black-on-white.svg"
+              alt="Source Library"
+              className="mx-auto mb-5"
+              style={{ width: 48, height: 48 }}
+            />
             <h2
               className="text-2xl mb-2"
               style={{
