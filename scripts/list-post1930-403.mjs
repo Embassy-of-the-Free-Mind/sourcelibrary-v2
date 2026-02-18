@@ -1,0 +1,43 @@
+import { MongoClient } from 'mongodb';
+import fs from 'fs';
+const env = {};
+try { const c = fs.readFileSync('.env.local','utf8'); for (const l of c.split('\n')) { const m = l.match(/^([^=#]+)=(.*)$/); if(m) { let v=m[2].trim(); if((v.startsWith('"')&&v.endsWith('"'))||(v.startsWith("'")&&v.endsWith("'"))) v=v.slice(1,-1); env[m[1].trim()]=v; } } } catch {}
+const URI = process.env.MONGODB_URI || env.MONGODB_URI;
+const c2 = new MongoClient(URI);
+await c2.connect();
+const db = c2.db('bookstore');
+
+const results = await db.collection('pages').aggregate([
+  { $match: { archived_photo: /^failed:/ } },
+  { $group: { _id: '$book_id' } },
+  { $lookup: { from: 'books', localField: '_id', foreignField: 'id', as: 'book' } },
+  { $unwind: '$book' },
+  { $match: { 'book.ai_metadata.enriched_at': { $exists: false } } },
+  { $project: {
+    id: '$book.id', title: '$book.display_title', fallback_title: '$book.title',
+    author: '$book.author', year: '$book.year', published: '$book.published',
+    pages_count: '$book.pages_count', language: '$book.language',
+    ia_identifier: '$book.ia_identifier', _id: '$book._id'
+  }},
+  { $sort: { pages_count: -1 } }
+]).toArray();
+
+// Filter to post-1930
+const post1930 = results.filter(b => {
+  const year = b.year || parseInt(b.published) || 0;
+  return year > 1930;
+});
+
+console.log(`Total 403'd unenriched: ${results.length}`);
+console.log(`Post-1930: ${post1930.length}\n`);
+
+let totalPages = 0;
+for (const b of post1930) {
+  const t = (b.title || b.fallback_title || '?').substring(0, 65);
+  const yr = b.year || b.published || '?';
+  totalPages += b.pages_count || 0;
+  console.log(`${t} | ${b.author || '?'} | ${yr} | ${b.pages_count || '?'}pp`);
+}
+console.log(`\nTotal pages: ${totalPages}`);
+
+await c2.close();
