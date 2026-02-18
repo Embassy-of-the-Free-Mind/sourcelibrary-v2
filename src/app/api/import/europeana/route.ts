@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from Europeana (aggregator)
@@ -23,7 +23,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * Browse: https://www.europeana.eu/
  * API docs: https://pro.europeana.eu/page/record
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {

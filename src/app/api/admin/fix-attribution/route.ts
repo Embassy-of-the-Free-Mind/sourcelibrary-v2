@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Fix attribution and license data for IIIF imports
  * POST /api/admin/fix-attribution
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 

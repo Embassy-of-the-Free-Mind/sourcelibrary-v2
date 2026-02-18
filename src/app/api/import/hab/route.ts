@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from HAB Wolfenbüttel (Herzog August Bibliothek)
@@ -22,7 +22,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  *   https://diglib.hab.de/iiif/manifest/${hab_id}.json
  *   https://diglib.hab.de/mss/${hab_id}/manifest.json
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { hab_id, manifest_url, title, display_title, author, language, published, categories, work_id } = body;

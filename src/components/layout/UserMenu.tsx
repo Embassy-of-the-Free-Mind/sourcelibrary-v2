@@ -72,16 +72,14 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
             </p>
           </div>
           <div className="py-1">
-            {(session.user as any)?.role === 'admin' && (
-              <Link
-                href="/analytics"
-                className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
-                style={{ color: 'var(--text-primary)' }}
-                onClick={() => setIsOpen(false)}
-              >
-                Analytics
-              </Link>
-            )}
+            <Link
+              href="/analytics"
+              className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+              style={{ color: 'var(--text-primary)' }}
+              onClick={() => setIsOpen(false)}
+            >
+              Analytics
+            </Link>
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
               className="w-full text-left px-4 py-2 text-sm hover:opacity-70 transition-opacity"

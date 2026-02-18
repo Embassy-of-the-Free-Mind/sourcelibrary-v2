@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { parseDetectedImages, extractPageType, extractColumns } from '@/lib/types/prompts/defaults';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/admin/backfill-detected-images
@@ -13,7 +13,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  */
 export const maxDuration = 300;
 
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const { dryRun = true, limit = 2000, bookId } = await request.json().catch(() => ({
       dryRun: true, limit: 2000,

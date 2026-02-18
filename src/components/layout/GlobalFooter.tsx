@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import { BookOpen, Eye, Edit3, BarChart3, Library } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
@@ -16,8 +15,6 @@ interface GlobalStats {
 }
 
 export default function GlobalFooter() {
-  const { data: session } = useSession();
-  const isAdmin = (session?.user as any)?.role === 'admin';
   const [stats, setStats] = useState<GlobalStats | null>(null);
   const [mounted, setMounted] = useState(false);
   const [hasBookshelf, setHasBookshelf] = useState(false);
@@ -55,8 +52,9 @@ export default function GlobalFooter() {
     return (
       <footer className="bg-stone-900 text-stone-400 py-8 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div
-            className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm"
+          <Link
+            href="/analytics"
+            className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm hover:text-stone-300 transition-colors group"
           >
             <div className="flex items-center gap-2">
               <BookOpen className="w-4 h-4 text-amber-600" />
@@ -73,7 +71,7 @@ export default function GlobalFooter() {
               <span className="text-stone-300 font-medium">—</span>
               <span>Pages Translated</span>
             </div>
-          </div>
+          </Link>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">
             <span>CC0 Public Domain</span>
             <span className="hidden sm:inline">•</span>
@@ -107,47 +105,27 @@ export default function GlobalFooter() {
   return (
     <footer className="bg-stone-900 text-stone-400 py-8 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Stats row — links to analytics for admins, plain display for everyone else */}
-        {isAdmin ? (
-          <Link
-            href="/analytics"
-            className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm hover:text-stone-300 transition-colors group"
-          >
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-amber-600" />
-              <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalBooks) : '—'}</span>
-              <span>Books</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-amber-600" />
-              <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalReads) : '—'}</span>
-              <span>Reads</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Edit3 className="w-4 h-4 text-amber-600" />
-              <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.pagesTranslated) : '—'}</span>
-              <span>Pages Translated</span>
-            </div>
-          </Link>
-        ) : (
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm">
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-amber-600" />
-              <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalBooks) : '—'}</span>
-              <span>Books</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4 text-amber-600" />
-              <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalReads) : '—'}</span>
-              <span>Reads</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Edit3 className="w-4 h-4 text-amber-600" />
-              <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.pagesTranslated) : '—'}</span>
-              <span>Pages Translated</span>
-            </div>
+        {/* Stats row with link */}
+        <Link
+          href="/analytics"
+          className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mb-6 text-sm hover:text-stone-300 transition-colors group"
+        >
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-amber-600" />
+            <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalBooks) : '—'}</span>
+            <span>Books</span>
           </div>
-        )}
+          <div className="flex items-center gap-2">
+            <Eye className="w-4 h-4 text-amber-600" />
+            <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.totalReads) : '—'}</span>
+            <span>Reads</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Edit3 className="w-4 h-4 text-amber-600" />
+            <span className="text-stone-300 font-medium">{stats ? formatNumber(stats.pagesTranslated) : '—'}</span>
+            <span>Pages Translated</span>
+          </div>
+        </Link>
 
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-stone-500 border-t border-stone-800 pt-6">

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS } from '@/lib/types';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/admin/migrate-prompts
@@ -9,7 +9,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * Creates new versions of all prompts with the updated XML syntax.
  * Body: { dryRun?: boolean }
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json().catch(() => ({}));
     const { dryRun = true } = body;
@@ -150,7 +150,7 @@ export const POST = withAdminAuth(async (request, session) => {
  *
  * Check current prompt versions and compare with types.ts
  */
-export const GET = withAdminAuth(async (request, session) => {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
     const collection = db.collection('prompts');

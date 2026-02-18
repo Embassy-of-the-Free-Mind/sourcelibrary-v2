@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/jobs/[id]/cancel
@@ -11,7 +11,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * Note: Cannot stop a Lambda mid-execution. If a page is currently being
  * processed when user cancels, that page will finish. This is acceptable.
  */
-export const POST = withAdminAuth(async (request, session, context) => {
+export const POST = withAuth(async (request, session, context) => {
   const { id: jobId } = await context.params;
   const db = await getDb();
 

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -10,7 +10,7 @@ export const maxDuration = 300;
  *
  * Pipeline status overview — counts per status.
  */
-export const GET = withAdminAuth(async (request, session) => {
+export const GET = withAuth(async (request, session) => {
   const db = await getDb();
 
   const statusCounts = await db.collection('books').aggregate([
@@ -51,31 +51,23 @@ export const GET = withAdminAuth(async (request, session) => {
  * POST /api/admin/enroll-pipeline
  *
  * Enroll books into the auto pipeline.
- * Body: { bookIds?: string[], limit?: number, dryRun?: boolean, reEnrollFailed?: boolean, reEnrollCompleted?: boolean, targetStatus?: PipelineAutoStatus }
+ * Body: { bookIds?: string[], limit?: number, dryRun?: boolean, reEnrollFailed?: boolean }
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   const db = await getDb();
   const body = await request.json().catch(() => ({}));
-  const { bookIds, limit = 50, dryRun = false, reEnrollFailed = false, reEnrollCompleted = false, targetStatus } = body as {
+  const { bookIds, limit = 50, dryRun = false, reEnrollFailed = false } = body as {
     bookIds?: string[];
     limit?: number;
     dryRun?: boolean;
     reEnrollFailed?: boolean;
-    reEnrollCompleted?: boolean;
-    targetStatus?: PipelineAutoStatus;
   };
 
   let query: Record<string, unknown>;
-  // Default status to enroll at — 'queued' starts from scratch, 'enriched' skips to chapters+images
-  let enrollStatus: PipelineAutoStatus = targetStatus || 'queued';
 
   if (bookIds?.length) {
     // Enroll specific books
     query = { id: { $in: bookIds } };
-  } else if (reEnrollCompleted) {
-    // Re-enroll completed books to pick up new pipeline phases (chapters, images)
-    query = { 'pipeline_auto.status': 'complete' };
-    enrollStatus = targetStatus || 'enriched'; // Skip directly to chapters/images
   } else if (reEnrollFailed) {
     // Re-enroll failed books
     query = { 'pipeline_auto.status': 'failed' };
@@ -111,7 +103,7 @@ export const POST = withAdminAuth(async (request, session) => {
     {
       $set: {
         pipeline_auto: {
-          status: enrollStatus,
+          status: 'queued' as PipelineAutoStatus,
           source: 'admin',
           queued_at: now,
           last_updated: now,

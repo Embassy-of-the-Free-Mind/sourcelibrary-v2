@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { JobStatus, JobType } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/jobs/[id]/retry
@@ -10,7 +10,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * Retry a failed/cancelled/partial job by re-enqueueing failed pages.
  * Workers will process the failed pages again.
  */
-export const POST = withAdminAuth(async (request, session, context) => {
+export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: jobId } = await context.params;
     const db = await getDb();

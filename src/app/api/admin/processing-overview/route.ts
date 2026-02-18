@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { ProcessingRow } from '@/lib/api-client/types/analytics';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
-export const GET = withAdminAuth(async (request, session) => {
+export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const stepFilter = searchParams.get('step') || '';

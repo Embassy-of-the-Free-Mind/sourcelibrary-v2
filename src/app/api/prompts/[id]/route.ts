@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import type { Prompt } from '@/lib/types';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 // Helper to extract variables from prompt text
 function extractVariables(text: string): string[] {
@@ -11,7 +11,7 @@ function extractVariables(text: string): string[] {
 }
 
 // GET /api/prompts/[id] - Get a single prompt by ID
-export const GET = withAdminAuth(async (
+export const GET = withAuth(async (
   request: NextRequest,
   session,
   context?: { params: Promise<{ id: string }> }
@@ -39,7 +39,7 @@ export const GET = withAdminAuth(async (
 
 // PATCH /api/prompts/[id] - Create a new version of a prompt
 // Instead of updating in place, creates a new version for audit trail
-export const PATCH = withAdminAuth(async (
+export const PATCH = withAuth(async (
   request: NextRequest,
   session,
   context?: { params: Promise<{ id: string }> }
@@ -105,7 +105,7 @@ export const PATCH = withAdminAuth(async (
 });
 
 // POST /api/prompts/[id]/set-default - Set this prompt as the default for its type
-export const POST = withAdminAuth(async (
+export const POST = withAuth(async (
   request: NextRequest,
   session,
   context?: { params: Promise<{ id: string }> }

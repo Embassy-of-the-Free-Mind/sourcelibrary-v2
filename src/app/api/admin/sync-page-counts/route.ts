@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -12,7 +12,7 @@ export const maxDuration = 300;
  *
  * Requires authentication.
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 0;
@@ -118,7 +118,7 @@ export const POST = withAdminAuth(async (request, session) => {
   }
 });
 
-export const GET = withAdminAuth(async () => {
+export const GET = withAuth(async () => {
   try {
     const db = await getDb();
     const pages = db.collection('pages');

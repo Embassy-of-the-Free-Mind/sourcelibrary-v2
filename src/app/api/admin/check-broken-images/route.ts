@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Check for books with broken Internet Archive images (403 errors)
@@ -14,7 +14,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * Returns books with broken images that should be reviewed/deleted
  */
 
-export const GET = withAdminAuth(async (request, session) => {
+export const GET = withAuth(async (request, session) => {
   const searchParams = request.nextUrl.searchParams;
   const limit = parseInt(searchParams.get('limit') || '50', 10);
   const shouldTest = searchParams.get('test') === 'true';

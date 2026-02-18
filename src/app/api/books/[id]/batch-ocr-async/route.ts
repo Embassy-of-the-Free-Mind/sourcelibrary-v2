@@ -5,7 +5,7 @@ import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -68,7 +68,7 @@ async function fetchImageAsBase64(url: string): Promise<{ data: string; mimeType
 /**
  * POST - Submit a batch OCR job
  */
-export const POST = withAdminAuth(async (request, session, context) => {
+export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
@@ -236,7 +236,7 @@ export const POST = withAdminAuth(async (request, session, context) => {
 /**
  * GET - Check batch job status and collect results
  */
-export const GET = withAdminAuth(async (request, session, context) => {
+export const GET = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);

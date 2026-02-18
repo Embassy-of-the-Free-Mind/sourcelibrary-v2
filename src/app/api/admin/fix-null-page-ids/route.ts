@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Fix pages with null IDs by setting id = _id.toHexString()
@@ -8,7 +8,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * GET - Preview pages with null IDs
  * POST - Fix them
  */
-export const GET = withAdminAuth(async (request, session) => {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -27,7 +27,7 @@ export const GET = withAdminAuth(async (request, session) => {
   }
 });
 
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const deleteOrphans = searchParams.get('delete') === 'true';

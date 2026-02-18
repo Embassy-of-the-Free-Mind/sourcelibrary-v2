@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * Find and fix books with Google Books poster images
@@ -13,7 +13,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * Fixes specific book or all books with Google posters
  */
 
-export const GET = withAdminAuth(async (request, session) => {
+export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
@@ -40,7 +40,7 @@ export const GET = withAdminAuth(async (request, session) => {
   }
 });
 
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { book_id, fix_all } = body as { book_id?: string; fix_all?: boolean };

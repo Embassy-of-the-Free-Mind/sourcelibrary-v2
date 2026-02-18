@@ -6,7 +6,7 @@ import type { JobType, Job } from '@/lib/types/job';
 import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
-import { AdminCheck } from '@/components/auth/AdminCheck';
+import { AuthCheck } from '@/components/auth/AuthCheck';
 import { useBetaGate } from '@/hooks/useBetaGate';
 import BetaGateModal from '@/components/beta/BetaGateModal';
 import BookPagesStats from './BookPagesStats';
@@ -520,7 +520,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             lastOcrDate={lastOcrDate}
             lastTranslationDate={lastTranslationDate}
           />
-          <AdminCheck>
+          <AuthCheck>
             <BookPagesActions
               bookId={bookId}
               batchMode={batchMode}
@@ -537,65 +537,61 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               onExitReorder={exitReorderMode}
               onSaveOrder={savePageOrder}
             />
-          </AdminCheck>
+          </AuthCheck>
         </div>
       </div>
 
-      {/* Job Status Banner (admin only) */}
-      <AdminCheck>
-        {currentJob && (
-          <JobStatusBanner
-            job={currentJob}
-            loading={loadingJob}
-            cancelling={cancelling}
-            retrying={retrying}
-            onRefresh={fetchJobStatus}
-            onCancel={cancelJob}
-            onRetry={retryFailedPages}
-            onClose={() => setCurrentJob(null)}
-          />
-        )}
-      </AdminCheck>
+      {/* Job Status Banner */}
+      {currentJob && (
+        <JobStatusBanner
+          job={currentJob}
+          loading={loadingJob}
+          cancelling={cancelling}
+          retrying={retrying}
+          onRefresh={fetchJobStatus}
+          onCancel={cancelJob}
+          onRetry={retryFailedPages}
+          onClose={() => setCurrentJob(null)}
+        />
+      )}
 
-      {/* Processing Controls (admin only) */}
-      <AdminCheck>
-        {batchMode && (
-          <ProcessingPanel
-            action={action}
-            overwriteMode={overwriteMode}
-            selectedCount={selectedCount}
-            showPromptSettings={showPromptSettings}
-            selectedPromptIds={selectedPromptIds}
-            editedPrompts={editedPrompts}
-            prompts={prompts}
-            promptsLoading={promptsLoading}
-            currentJob={currentJob}
-            queueing={queueing}
-            brightness={brightness}
-            previewUrl={(() => {
-              if (action !== 'adjust_images' || selectedPages.size === 0) return null;
-              const firstId = Array.from(selectedPages)[0];
-              const page = pages.find(p => p.id === firstId);
-              if (!page) return null;
-              const baseUrl = page.photo_original || page.photo;
-              if (!baseUrl) return null;
-              return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
-            })()}
-            onActionChange={setAction}
-            onOverwriteModeChange={setOverwriteMode}
-            onSelectAll={selectAll}
-            onClearSelection={clearSelection}
-            onTogglePromptSettings={() => setShowPromptSettings(!showPromptSettings)}
-            onSelectPrompt={handleSelectPrompt}
-            onEditPrompt={(a, value) => setEditedPrompts(prev => ({ ...prev, [a]: value }))}
-            onStartProcess={runBatchProcess}
-            onBrightnessChange={setBrightness}
-          />
-        )}
+      {/* Processing Controls */}
+      {batchMode && (
+        <ProcessingPanel
+          action={action}
+          overwriteMode={overwriteMode}
+          selectedCount={selectedCount}
+          showPromptSettings={showPromptSettings}
+          selectedPromptIds={selectedPromptIds}
+          editedPrompts={editedPrompts}
+          prompts={prompts}
+          promptsLoading={promptsLoading}
+          currentJob={currentJob}
+          queueing={queueing}
+          brightness={brightness}
+          previewUrl={(() => {
+            if (action !== 'adjust_images' || selectedPages.size === 0) return null;
+            const firstId = Array.from(selectedPages)[0];
+            const page = pages.find(p => p.id === firstId);
+            if (!page) return null;
+            const baseUrl = page.photo_original || page.photo;
+            if (!baseUrl) return null;
+            return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
+          })()}
+          onActionChange={setAction}
+          onOverwriteModeChange={setOverwriteMode}
+          onSelectAll={selectAll}
+          onClearSelection={clearSelection}
+          onTogglePromptSettings={() => setShowPromptSettings(!showPromptSettings)}
+          onSelectPrompt={handleSelectPrompt}
+          onEditPrompt={(a, value) => setEditedPrompts(prev => ({ ...prev, [a]: value }))}
+          onStartProcess={runBatchProcess}
+          onBrightnessChange={setBrightness}
+        />
+      )}
 
-        {/* Reorder Mode Info */}
-        {reorderMode && <ReorderModePanel />}
-      </AdminCheck>
+      {/* Reorder Mode Info */}
+      {reorderMode && <ReorderModePanel />}
 
       {/* Pages Grid */}
       <PagesGrid

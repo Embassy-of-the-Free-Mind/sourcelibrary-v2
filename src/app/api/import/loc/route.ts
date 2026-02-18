@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 120;
 
@@ -121,7 +121,7 @@ function extractAuthor(contributorNames?: string[]): string {
  *   end_page?: number       // 1-indexed end page (inclusive)
  * }
  */
-export const POST = withAdminAuth(async (request, session) => {
+export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { lccn, title, display_title, author, language, published, categories, work_id, start_page, end_page } = body;

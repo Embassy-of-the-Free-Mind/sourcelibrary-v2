@@ -39,7 +39,7 @@ import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
-import { AdminCheck } from '../auth/AdminCheck';
+import { AuthCheck } from '../auth/AuthCheck';
 
 // Helper to format edit source info
 function EditSourceBadge({ source, editedBy, editedAt }: {
@@ -878,7 +878,7 @@ export default function TranslationEditor({
               </div>
 
               {/* Mode Toggle - always visible */}
-              <AdminCheck>
+              <AuthCheck>
                 <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
                   <button
                     onClick={() => setMode('read')}
@@ -904,7 +904,7 @@ export default function TranslationEditor({
                     <span className="hidden sm:inline">Edit</span>
                   </button>
                 </div>
-              </AdminCheck>
+              </AuthCheck>
 
               {/* Like Button */}
               <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">
