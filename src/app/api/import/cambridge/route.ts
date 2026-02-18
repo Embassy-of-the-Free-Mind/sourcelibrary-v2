@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from Cambridge Digital Library (CUDL)
@@ -16,7 +16,7 @@ import { withAuth } from '@/lib/auth-helpers';
  *   categories?: string[]
  * }
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { ms_id, title, display_title, author, language, published, categories, work_id } = body;

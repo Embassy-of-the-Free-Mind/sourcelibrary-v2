@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const db = await getDb();
 

@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * Import a book from a local directory
@@ -20,7 +20,7 @@ import { withAuth } from '@/lib/auth-helpers';
  *   ia_identifier?: string
  * }
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {

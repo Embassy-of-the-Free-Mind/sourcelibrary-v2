@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { generateGalleryImages } from '@/lib/gallery-image-gen';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -18,7 +18,7 @@ export const maxDuration = 300;
  *   - archivedOnly: if 'true', only process pages with archived_photo (Blob URLs, much faster)
  *   - dry_run: if 'true', just count how many need processing
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '200'), 500);

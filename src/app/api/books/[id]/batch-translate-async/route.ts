@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * Async Batch Translation using Gemini Batch API
@@ -24,7 +24,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 /**
  * POST - Submit a batch translation job
  */
-export const POST = withAuth(async (request, session, context) => {
+export const POST = withAdminAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
@@ -175,7 +175,7 @@ export const POST = withAuth(async (request, session, context) => {
 /**
  * GET - Check batch job status and collect results
  */
-export const GET = withAuth(async (request, session, context) => {
+export const GET = withAdminAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const { searchParams } = new URL(request.url);

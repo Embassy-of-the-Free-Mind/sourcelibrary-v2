@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/admin/backfill-translation-dates
@@ -10,7 +10,7 @@ import { withAuth } from '@/lib/auth-helpers';
  */
 export const maxDuration = 60;
 
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const { dryRun = true, limit = 50, skip = 0 } = await request.json().catch(() => ({ dryRun: true, limit: 50, skip: 0 }));
 
@@ -111,7 +111,7 @@ export const POST = withAuth(async (request, session) => {
  *
  * Preview what would be backfilled (dry run)
  */
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   const db = await getDb();
 
   // Count books with and without last_translation_at

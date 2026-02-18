@@ -12,7 +12,7 @@ import type { BatchJob } from '@/lib/types/batch-job';
 import type { JobType, JobStatus } from '@/lib/types/job';
 import type { Book } from '@/lib/types/book';
 import type { Page } from '@/lib/types/page';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 const BATCH_SIZE = 10; // Pages per Gemini batch (Gemini Batch API: 20MB per file, 2GB total limit)
 
@@ -33,7 +33,7 @@ const BATCH_SIZE = 10; // Pages per Gemini batch (Gemini Batch API: 20MB per fil
  *   action: 'ocr' - Type of processing (currently OCR only)
  *   overwriteMode: boolean - If true, reprocess pages with existing OCR
  */
-export const POST = withAuth(async (request, session, context) => {
+export const POST = withAdminAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json();

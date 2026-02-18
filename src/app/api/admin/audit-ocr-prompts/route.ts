@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -16,7 +16,7 @@ export const maxDuration = 300;
  *   ?provider=efm    - Filter by image source provider
  *   ?backfill=true   - Backfill prompt_version on pages that have it missing
  */
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 0;

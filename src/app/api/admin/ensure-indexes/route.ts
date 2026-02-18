@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * Ensure MongoDB indexes exist for optimal query performance
  * POST /api/admin/ensure-indexes
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const db = await getDb();
     const results: Record<string, string> = {};
@@ -667,7 +667,7 @@ export const POST = withAuth(async (request, session) => {
  * List existing indexes
  * GET /api/admin/ensure-indexes
  */
-export const GET = withAuth(async (request, session) => {
+export const GET = withAdminAuth(async (request, session) => {
   try {
     const db = await getDb();
     const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves'];

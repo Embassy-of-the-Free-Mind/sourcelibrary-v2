@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import type { JobStatus, JobType } from '@/lib/types/job';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/jobs/queue-books
@@ -33,7 +33,7 @@ import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60; // 1 minute timeout
 
-export const POST = withAuth(async (request, session) => {
+export const POST = withAdminAuth(async (request, session) => {
   try {
     const {
       bookId,
