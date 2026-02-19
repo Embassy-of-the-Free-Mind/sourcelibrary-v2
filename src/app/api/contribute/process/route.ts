@@ -6,7 +6,7 @@ import { DEFAULT_PROMPTS, DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extrac
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { getOcrPrompt } from '@/lib/prompts';
 import { images } from '@/lib/api-client';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 import { getSession } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
               );
 
               // Snapshot manual edits before overwriting
-              if (page.id) await createSnapshotIfNeeded(page.id, 'pre_ocr', `contribute-${bookId}`);
+              if (page.id) await createRevision(page.id, 'ocr', `contribute-${bookId}`);
 
               // Update page with OCR result
               const pageType = extractPageType(result.text);
@@ -226,7 +226,7 @@ export async function POST(request: NextRequest) {
               );
 
               // Snapshot manual edits before overwriting
-              if (page.id) await createSnapshotIfNeeded(page.id, 'pre_translate', `contribute-${bookId}`);
+              if (page.id) await createRevision(page.id, 'translation', `contribute-${bookId}`);
 
               // Update page with translation result + harvest metadata tags
               const translationMeta = extractTranslationMetadata(result.text);

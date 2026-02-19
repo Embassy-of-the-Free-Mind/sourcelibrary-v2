@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import RevisionHistory from '@/components/reader/RevisionHistory';
 import {
   Loader2,
   ChevronLeft,
@@ -970,11 +971,14 @@ export default function TranslationEditor({
                       )}
                     </div>
                     {ocrText && (
-                      <EditSourceBadge
-                        source={page.ocr?.source}
-                        editedBy={page.ocr?.edited_by}
-                        editedAt={page.ocr?.edited_at}
-                      />
+                      <>
+                        <EditSourceBadge
+                          source={page.ocr?.source}
+                          editedBy={page.ocr?.edited_by}
+                          editedAt={page.ocr?.edited_at}
+                        />
+                        <RevisionHistory pageId={page.id} field="ocr" currentSource={page.ocr?.source} />
+                      </>
                     )}
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
@@ -1035,11 +1039,14 @@ export default function TranslationEditor({
                         </span>
                       )}
                       {translationText && (
-                        <EditSourceBadge
-                          source={page.translation?.source}
-                          editedBy={page.translation?.edited_by}
-                          editedAt={page.translation?.edited_at}
-                        />
+                        <>
+                          <EditSourceBadge
+                            source={page.translation?.source}
+                            editedBy={page.translation?.edited_by}
+                            editedAt={page.translation?.edited_at}
+                          />
+                          <RevisionHistory pageId={page.id} field="translation" currentSource={page.translation?.source} />
+                        </>
                       )}
                     </div>
                     {translationText && (

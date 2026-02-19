@@ -14,7 +14,7 @@ import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 import { getOcrPrompt } from '@/lib/prompts';
 
 /** Check if a string is a usable HTTP(S) image URL (not a failure marker like "failed:HTTP 404") */
@@ -170,7 +170,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
   // Snapshot manually-edited content before overwriting
   try {
-    await createSnapshotIfNeeded(pageId, 'pre_ocr', jobId);
+    await createRevision(pageId, 'ocr', jobId);
   } catch (snapErr) {
     console.error(`[OCR] Snapshot failed for page ${pageId} (non-fatal):`, snapErr);
   }

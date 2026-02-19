@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { withAuth } from '@/lib/auth-helpers';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 
 export const maxDuration = 300;
 
@@ -106,7 +106,7 @@ export const POST = withAuth(async (request, session) => {
           const usage = result.response?.usageMetadata;
 
           if (job.type === 'ocr' || job.type === 'ocr_resubmit') {
-            await createSnapshotIfNeeded(pageId!, 'pre_ocr', job.id);
+            await createRevision(pageId!, 'ocr', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },
               {
@@ -127,7 +127,7 @@ export const POST = withAuth(async (request, session) => {
               }
             );
           } else {
-            await createSnapshotIfNeeded(pageId!, 'pre_translate', job.id);
+            await createRevision(pageId!, 'translation', job.id);
             await db.collection('pages').updateOne(
               { id: pageId },
               {

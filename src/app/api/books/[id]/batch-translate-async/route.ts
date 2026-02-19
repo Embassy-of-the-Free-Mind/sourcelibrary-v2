@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTranslationPrompt } from '@/lib/prompts';
 import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 import { withAuth } from '@/lib/auth-helpers';
 
 /**
@@ -247,7 +247,7 @@ export const GET = withAuth(async (request, session, context) => {
 
           if (text) {
             // Snapshot manual edits before overwriting
-            await createSnapshotIfNeeded(pageId, 'pre_translate', jobName);
+            await createRevision(pageId, 'translation', jobName);
 
             // Set the full translation object (not nested fields) to handle cases where translation is null
             await db.collection('pages').updateOne(

@@ -5,7 +5,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { verifyCronAuth } from '@/lib/cron-auth';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 
 export const maxDuration = 300;
 
@@ -176,7 +176,7 @@ export async function GET(request: NextRequest) {
               const columns = extractColumns(text);
               const detectedImages = parseDetectedImages(text);
 
-              await createSnapshotIfNeeded(pageId, 'pre_ocr', job.id || String(job._id));
+              await createRevision(pageId, 'ocr', job.id || String(job._id));
 
               // Ensure page has an ocr object (some pages have ocr: null)
               await db.collection('pages').updateOne(
@@ -215,7 +215,7 @@ export async function GET(request: NextRequest) {
             } else {
               const translationMeta = extractTranslationMetadata(text);
 
-              await createSnapshotIfNeeded(pageId, 'pre_translate', job.id || String(job._id));
+              await createRevision(pageId, 'translation', job.id || String(job._id));
 
               // Ensure page has a translation object (some pages have translation: null)
               await db.collection('pages').updateOne(
@@ -431,6 +431,20 @@ export async function GET(request: NextRequest) {
 
     const duration = Date.now() - startTime;
 
+    // Log cron run (non-blocking)
+    try {
+      const db2 = await getDb();
+      await db2.collection('cron_runs').insertOne({
+        cron: 'process-batches',
+        timestamp: new Date(),
+        duration_ms: duration,
+        actions: results.stats,
+        errors: results.errors,
+        collected: results.collected.length,
+        pages_saved: results.stats.pages_saved,
+      });
+    } catch (e) { console.error('[cron-run] write failed:', e); }
+
     return NextResponse.json({
       success: true,
       duration_ms: duration,
@@ -442,6 +456,17 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('[cron] Error:', error);
+    try {
+      const db2 = await getDb();
+      await db2.collection('cron_runs').insertOne({
+        cron: 'process-batches',
+        timestamp: new Date(),
+        duration_ms: Date.now() - startTime,
+        actions: results.stats,
+        errors: [...results.errors, error instanceof Error ? error.message : 'Unknown error'],
+        failed: true,
+      });
+    } catch { /* ignore */ }
     return NextResponse.json({
       error: 'Cron job failed',
       details: error instanceof Error ? error.message : 'Unknown error',

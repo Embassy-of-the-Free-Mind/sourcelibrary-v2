@@ -4,7 +4,7 @@ import { performOCR } from '@/lib/ai';
 import { getOcrPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 
 const CONCURRENCY_LIMIT = 10;
 
@@ -76,7 +76,7 @@ async function processChunk(
 
       // Auto-save to database
       if (autoSave && page.pageId) {
-        await createSnapshotIfNeeded(page.pageId, 'pre_ocr');
+        await createRevision(page.pageId, 'ocr');
         await db.collection('pages').updateOne(
           { id: page.pageId },
           {

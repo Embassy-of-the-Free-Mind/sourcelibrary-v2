@@ -6,7 +6,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 import { nanoid } from 'nanoid';
 
 export const maxDuration = 300;
@@ -549,7 +549,7 @@ export const GET = withAuth(async (request, session, context) => {
             const detectedImages = parseDetectedImages(text);
 
             // Snapshot manual edits before overwriting
-            await createSnapshotIfNeeded(pageId, 'pre_ocr', jobName || undefined);
+            await createRevision(pageId, 'ocr', jobName || undefined);
 
             const updateResult = await db.collection('pages').updateOne(
               { id: pageId },

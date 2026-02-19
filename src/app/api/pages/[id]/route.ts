@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { createRevision } from '@/lib/page-revisions';
 
 export const preferredRegion = 'fra1';
 
@@ -77,6 +78,14 @@ export const PATCH = withAuth(async (request, session, context) => {
 
     const now = new Date();
     const editedBy = body.edited_by || 'Unknown';
+
+    // Create revisions of existing content before manual overwrite
+    if (body.ocr) {
+      await createRevision(id, 'ocr');
+    }
+    if (body.translation) {
+      await createRevision(id, 'translation');
+    }
 
     // Update OCR if provided - mark as manual edit
     if (body.ocr) {

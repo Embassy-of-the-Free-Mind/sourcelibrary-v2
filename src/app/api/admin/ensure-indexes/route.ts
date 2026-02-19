@@ -650,6 +650,34 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Page revisions - lookup by page + field, newest first
+    try {
+      await db.collection('page_revisions').createIndex(
+        { page_id: 1, field: 1, created_at: -1 },
+        { name: 'page_revisions_page_field_idx', background: true }
+      );
+      results['page_revisions.page_revisions_page_field_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['page_revisions.page_revisions_page_field_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Page revisions - unique ID lookup
+    try {
+      await db.collection('page_revisions').createIndex(
+        { id: 1 },
+        { name: 'page_revisions_id_idx', background: true, unique: true }
+      );
+      results['page_revisions.page_revisions_id_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['page_revisions.page_revisions_id_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
@@ -670,7 +698,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

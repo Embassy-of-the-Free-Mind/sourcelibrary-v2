@@ -6,7 +6,7 @@ import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 
 /**
  * Translation Processor - processes one page at a time
@@ -110,7 +110,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
   // Snapshot manually-edited content before overwriting
   try {
-    await createSnapshotIfNeeded(pageId, 'pre_translate', jobId);
+    await createRevision(pageId, 'translation', jobId);
   } catch (snapErr) {
     console.error(`[TRANS] Snapshot failed for page ${pageId} (non-fatal):`, snapErr);
   }

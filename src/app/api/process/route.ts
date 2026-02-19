@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { withAuth } from '@/lib/auth-helpers';
-import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { createRevision } from '@/lib/page-revisions';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
@@ -101,16 +101,13 @@ export const POST = withAuth(async (request: NextRequest) => {
       });
     }
 
-    // Create snapshots of any manually-edited content before overwriting
+    // Create revisions of existing content before overwriting
     if (pageId && autoSave) {
       if (action === 'ocr' || action === 'all') {
-        await createSnapshotIfNeeded(pageId, 'pre_ocr');
+        await createRevision(pageId, 'ocr');
       }
       if (action === 'translation' || action === 'all') {
-        await createSnapshotIfNeeded(pageId, 'pre_translate');
-      }
-      if (action === 'summary' || action === 'all') {
-        await createSnapshotIfNeeded(pageId, 'pre_summary');
+        await createRevision(pageId, 'translation');
       }
     }
 
