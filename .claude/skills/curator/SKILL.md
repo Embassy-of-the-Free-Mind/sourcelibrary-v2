@@ -390,23 +390,23 @@ After import, archive images and generate thumbnails. The fast standalone script
 **Fast archive script** (preferred — archives images AND generates thumbnails together):
 ```bash
 # Single book
-secret-lover run -- npx tsx scripts/archive-images-fast.ts --book-id=$BOOK_ID
+secret-lover run -- npx tsx scripts/maintenance/archive-images-fast.ts --book-id=$BOOK_ID
 
 # All recently imported books (last 7 days)
-secret-lover run -- npx tsx scripts/archive-images-fast.ts --days=7
+secret-lover run -- npx tsx scripts/maintenance/archive-images-fast.ts --days=7
 
 # Most recent N books
-secret-lover run -- npx tsx scripts/archive-images-fast.ts --recent=30
+secret-lover run -- npx tsx scripts/maintenance/archive-images-fast.ts --recent=30
 
 # By source (ia, gallica, mdz, cambridge, vatican, bodleian, hab, erara, wellcome)
-secret-lover run -- npx tsx scripts/archive-images-fast.ts --source=ia --concurrency=15
+secret-lover run -- npx tsx scripts/maintenance/archive-images-fast.ts --source=ia --concurrency=15
 ```
 
 **Hetzner server** (46.224.122.120) — much faster than local (~20-34 pages/sec):
 ```bash
 # Deploy latest scripts to Hetzner
-scp scripts/archive-images-fast.ts root@46.224.122.120:/root/thumbnails/
-scp scripts/generate-thumbnails-fast.ts root@46.224.122.120:/root/thumbnails/
+scp scripts/maintenance/archive-images-fast.ts root@46.224.122.120:/root/thumbnails/
+scp scripts/thumbnails/generate-thumbnails-fast.ts root@46.224.122.120:/root/thumbnails/
 
 # Run archiver on Hetzner (uses run-archive.sh wrapper with env vars)
 ssh root@46.224.122.120 "cd /root/thumbnails && nohup bash run-archive.sh > archive.log 2>&1 &"

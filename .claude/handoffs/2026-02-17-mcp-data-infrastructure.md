@@ -6,14 +6,14 @@ Prepare Source Library's data for an MCP server that lets Claude Code users do c
 ## Completed (Phase 1 — metadata cleanup)
 
 ### Year backfill
-- **Script:** `scripts/backfill-year-from-published.mjs`
+- **Script:** `scripts/enrichment/backfill-year-from-published.mjs`
 - Parsed numeric `year` from `published` string for 4,203 books (regex: 2,248, Gemini: 1,955)
 - Coverage: 526 → 4,729 books with numeric year (93.1%)
 - 318 unresolved (published="Unknown" or truly ambiguous)
 - Adds `year_source` field ("regex" or "gemini") for provenance
 
 ### Language normalization
-- **Script:** `scripts/normalize-languages.mjs`
+- **Script:** `scripts/enrichment/normalize-languages.mjs`
 - Deterministic: 54 books (lat→Latin, eng→English, fre→French, spa→Spanish, latin→Latin)
 - Gemini text-based inference: 2,686 books classified from titles/authors/OCR samples
 - Coverage: 2,952 Unknown → 141 Unknown (2.8%)
@@ -21,7 +21,7 @@ Prepare Source Library's data for an MCP server that lets Claude Code users do c
 - Top languages: Latin 1,039, English 799, German 646, Chinese 559, Greek 474, Sanskrit 430
 
 ### Audit script
-- **Script:** `scripts/audit-data-infrastructure.mjs` — run anytime to check coverage
+- **Script:** `scripts/analysis/audit-data-infrastructure.mjs` — run anytime to check coverage
 
 ## Remaining Work (Priority Order)
 

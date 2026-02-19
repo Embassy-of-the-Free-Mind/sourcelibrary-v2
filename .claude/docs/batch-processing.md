@@ -96,10 +96,10 @@ created_at, updated_at, completed_at
 For large-scale re-OCR operations that exceed Vercel's 60s timeout, use the local script:
 
 ```bash
-secret-lover run -- node scripts/bulk-reocr-local.mjs --offset=0 --limit=10
+secret-lover run -- node scripts/batch/bulk-reocr-local.mjs --offset=0 --limit=10
 ```
 
-**Script:** `scripts/bulk-reocr-local.mjs`
+**Script:** `scripts/batch/bulk-reocr-local.mjs`
 
 Key features:
 - Runs locally (no Vercel timeout limits)
@@ -152,7 +152,7 @@ The `process-batches` cron runs every 2h and collects results for pending/proces
 For collecting many results beyond the cron's 270s time budget:
 
 ```bash
-secret-lover run -- node scripts/collect-batch-results.mjs --concurrency 15
+secret-lover run -- node scripts/batch/collect-batch-results.mjs --concurrency 15
 ```
 
 Features:
@@ -172,7 +172,7 @@ Features:
 
 ```bash
 # Free file storage across all keys
-secret-lover run -- node scripts/cleanup-gemini-files.mjs
+secret-lover run -- node scripts/maintenance/cleanup-gemini-files.mjs
 ```
 
 ## Batch vs Realtime
