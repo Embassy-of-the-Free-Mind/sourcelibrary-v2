@@ -104,8 +104,28 @@ export const POST = withAuth(async (request, session) => {
       if (jp2Files.length > 1) pageCount = jp2Files.length;
     }
 
+    // DjVu-based items (common for Google Books mirrors) lack imagecount and JP2 files.
+    // The scandata XML has the definitive page count.
     if (pageCount === 0) {
-      pageCount = 100; // Fallback, will be trimmed if pages don't exist
+      const scandataFile = files.find((f: { name: string }) => f.name.endsWith('_scandata.xml'));
+      if (scandataFile) {
+        try {
+          const scandataRes = await fetch(`https://archive.org/download/${ia_identifier}/${scandataFile.name}`);
+          if (scandataRes.ok) {
+            const xml = await scandataRes.text();
+            const matches = xml.match(/<page /g);
+            if (matches && matches.length > 0) {
+              pageCount = matches.length;
+            }
+          }
+        } catch {
+          // Fall through to fallback
+        }
+      }
+    }
+
+    if (pageCount === 0) {
+      pageCount = 100; // Last resort fallback
     }
 
     // Create book using IA image URLs

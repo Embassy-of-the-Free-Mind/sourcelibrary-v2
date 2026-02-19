@@ -19,21 +19,34 @@ import { classifyError } from '@/lib/errors';
  * 6. Check if job is complete
  */
 
+/** Check if a string is a usable HTTP(S) image URL (not a failure marker like "failed:HTTP 404") */
+function isUsableImageUrl(url: string | undefined | null): url is string {
+  return !!url && (url.startsWith('http://') || url.startsWith('https://'));
+}
+
+function isArchiveFailed(photo: string | undefined | null): boolean {
+  return typeof photo === 'string' && photo.startsWith('failed:');
+}
+
 /**
  * Get page image URL with priority fallbacks:
  * 1. cropped_photo (result of split detection, most refined)
  * 2. archived_photo (Vercel Blob cached version, fast & reliable)
  * 3. photo (main image URL)
  * 4. photo_original (original before any processing)
+ *
+ * Skips "failed:*" archived_photo markers from failed archiving attempts.
  */
 function getPageImageUrl(page: Page): string | null {
-  return (
-    page.cropped_photo ||
-    page.archived_photo ||
-    page.photo ||
-    page.photo_original ||
-    null
-  );
+  if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
+  if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
+  // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
+  // Don't try photo/photo_original — archiving already proved those URLs don't work.
+  if (!isArchiveFailed(page.archived_photo)) {
+    if (isUsableImageUrl(page.photo)) return page.photo;
+    if (isUsableImageUrl(page.photo_original)) return page.photo_original;
+  }
+  return null;
 }
 
 /**
@@ -100,7 +113,33 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   // Get image URL with priority fallbacks
   const imageUrl = getPageImageUrl(page);
   if (!imageUrl) {
-    console.error(`[IMG-EXTRACT] Page ${pageId} has no image URL`);
+    const reason = isArchiveFailed(page.archived_photo)
+      ? `archived_photo="${page.archived_photo}" — source URL dead`
+      : 'no image URL on page';
+    console.error(`[IMG-EXTRACT] Page ${pageId}: ${reason}`);
+
+    // Log pre-Gemini failure for dashboard visibility
+    try {
+      await logGeminiCall({
+        type: 'extract_images',
+        mode: 'realtime',
+        model: job.config?.model || DEFAULT_MODEL,
+        book_id: bookId,
+        page_ids: [pageId],
+        input_tokens: 0,
+        output_tokens: 0,
+        status: 'failed',
+        error_message: reason,
+        error_category: 'no_image',
+        job_id: jobId,
+        duration_ms: 0,
+        prompt_version: PROMPT_VERSION,
+        endpoint: 'worker/image_extraction',
+      });
+    } catch (logErr) {
+      console.error(`[IMG-EXTRACT] Failed to log no-image error for page ${pageId}:`, logErr);
+    }
+
     await jobs.updateOne(
       { id: jobId },
       {

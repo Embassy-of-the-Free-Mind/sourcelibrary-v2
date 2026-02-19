@@ -99,8 +99,8 @@ When the outage was detected:
 - [x] Lambda OCR queue self-drained
 - [x] Atlas recovered (~15 min after load reduced)
 - [x] Site verified working
-- [ ] Fix the 25 books with local image paths
-- [ ] Re-process the ~8,600 H13 pages where Gemini succeeded but DB save failed
+- [x] Fix the 25 books with local image paths → only 3 had local paths (reimported 2, updated URLs for 1)
+- [x] Re-process H13 pages → actual damage was 2,155 pages / 35 books (not 8,600). 30 at `archive_complete` auto-processing via pipeline; 5 stragglers (36 pages) reset to `archive_complete`
 
 ## The Bigger Picture
 
@@ -117,11 +117,11 @@ The specific failures are symptoms. The underlying issue: we're operating a comp
 
 ### Immediate — Patch the specific failures
 
-- [ ] Guard cron against non-HTTP image URLs — skip books without HTTP photo URLs
+- [x] Guard cron against non-HTTP image URLs — URL guard in Phase 2 + `batch-ocr-async` returns 422 for non-HTTP URLs + retry tracking with MAX_RETRIES in Phases 2/4
 - [ ] Grant IAM `sqs:PurgeQueue` + `lambda:PutFunctionConcurrency`
-- [ ] Add `maxPoolSize: 1` to all 52 local scripts (shared helper so scripts don't need to remember)
-- [ ] Fix the 25 books with local filesystem paths
-- [ ] Re-process ~8,600 pages where Gemini succeeded but DB save failed
+- [x] Add `maxPoolSize: 1` to all 52 local scripts — other dev already applied to all 51+ scripts
+- [x] Fix the 25 books with local filesystem paths — only 3 had local paths (reimported 2, updated URLs for 1)
+- [x] Re-process H13 pages — 2,155 pages / 35 books re-enrolled in pipeline
 
 ### Visibility — Know when things are broken before users do
 
@@ -131,14 +131,14 @@ The specific failures are symptoms. The underlying issue: we're operating a comp
 
 ### Flow Control — Stop failures from amplifying
 
-- [ ] Circuit breaker in pipeline cron — if a book has failed OCR 3 consecutive times, mark `needs_attention`, stop re-submitting, log for human review.
+- [x] Circuit breaker in pipeline cron — other dev added `ocr_loop_count` / `translate_loop_count` circuit breakers in Phases 3/5; we added retry tracking with MAX_RETRIES=3 in Phases 2/4 + `needs_attention` status for permanent failures
 - [ ] Backpressure check — cron checks active job count and SQS depth before submitting. If queue > N or jobs > M, skip this cycle.
 - [ ] Reduce Lambda OCR concurrency from 10 to 3-5 — lower sustained DB load.
-- [ ] Per-book retry limit — max 3 retries for any action before requiring manual intervention.
+- [x] Per-book retry limit — max 3 retries for OCR/translation submission before `needs_attention` or `failed`
 
 ### Coordination — Multiple actors sharing one resource
 
-- [ ] Kill switch route — `POST /api/admin/emergency-stop` cancels all jobs, sets flag that workers and crons check before processing. Works without AWS console.
+- [x] Kill switch route — `POST /api/admin/emergency-stop` implemented by other dev. Pipeline cron checks emergency stop flag before processing.
 - [ ] System status singleton — MongoDB doc or flag tracking current load (`{ active_ocr_jobs: N, active_scripts: [], last_updated }`). Crons and scripts check before starting.
 - [ ] Script lockfile — batch scripts write `/tmp/sourcelibrary-*.lock` with PID. Others check before starting. Stale locks auto-expire.
 
@@ -147,6 +147,25 @@ The specific failures are symptoms. The underlying issue: we're operating a comp
 - [ ] Script max-runtime timeouts (30 min) with clean exit and connection cleanup.
 - [ ] Shared `getScriptClient()` helper enforcing `maxPoolSize: 1` — all scripts import this instead of creating their own MongoClient.
 - [ ] Verify Atlas tier and evaluate upgrade if warranted.
+
+## Pipeline Status (Feb 19 evening, post-recovery)
+
+| Metric | Count |
+|--------|-------|
+| Total OCR'd pages | 323,160 |
+| New OCR (prompt v3-v5) | 247,848 (76.7%) |
+| Old OCR (no prompt version) | 75,312 (23.3%) |
+| Model: gemini-3-flash-preview | 87.5% |
+| Model: gemini-2.5-flash (old) | 12.5% (~40k pages) |
+| Total translated | 148,880 |
+| New OCR + translated | 98,397 |
+| New OCR + needs translation | 149,482 |
+| Stale translations (new OCR, old translation) | 30,015 pages / 228 books |
+
+**Priority backlog:**
+1. **30k stale translations** — OCR upgraded but translations still based on old OCR output. Highest ROI (OCR work already done).
+2. **75k old OCR pages** — still on pre-v3 prompts, need re-OCR.
+3. **149k untranslated pages** — new OCR but no translation yet. Biggest backlog.
 
 ## Lessons Learned
 

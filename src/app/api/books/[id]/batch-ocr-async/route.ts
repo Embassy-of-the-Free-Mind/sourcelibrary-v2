@@ -7,6 +7,9 @@ import { images } from '@/lib/api-client';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
+import { nanoid } from 'nanoid';
+
+export const maxDuration = 300;
 
 /**
  * Async Batch OCR using Gemini Batch API
@@ -22,6 +25,11 @@ import { createSnapshotIfNeeded } from '@/lib/snapshots';
  */
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY || '' });
+
+// Max pages per Gemini batch job (inline payload size limit ~20MB)
+const MAX_PAGES_PER_BATCH = 20;
+// Concurrent image downloads
+const IMAGE_DOWNLOAD_CONCURRENCY = 20;
 
 // Build image URL for a page
 function getPageImageUrl(page: {
@@ -134,9 +142,12 @@ export const POST = withAuth(async (request, session, context) => {
     const ocrPromptResult = await getOcrPrompt();
     const prompt = ocrPromptResult.text;
 
-    // Step 1: Validate image URLs and fetch images
+    // Step 1: Validate image URLs and fetch images (parallel with concurrency limit)
     const preparedPages: Array<{ id: string; pageNumber: number; image: { data: string; mimeType: string } }> = [];
     let skippedBadUrl = 0;
+
+    // First pass: collect valid URLs
+    const downloadTasks: Array<{ page: typeof pagesToProcess[0]; url: string }> = [];
     for (const page of pagesToProcess) {
       const typedPage = page as unknown as {
         cropped_photo?: string;
@@ -147,21 +158,32 @@ export const POST = withAuth(async (request, session, context) => {
       };
       const imageUrl = getPageImageUrl(typedPage);
 
-      // Guard: skip pages with non-HTTP image URLs (e.g. local filesystem paths)
       if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
         console.warn(`[batch-ocr] Skipping page ${page.page_number}: non-HTTP image URL: ${imageUrl.substring(0, 100)}`);
         skippedBadUrl++;
         continue;
       }
-
-      const image = await fetchImageAsBase64(imageUrl);
-
-      if (!image) {
-        console.warn(`Failed to fetch image for page ${page.page_number}`);
-        continue;
-      }
-      preparedPages.push({ id: page.id, pageNumber: page.page_number, image });
+      downloadTasks.push({ page, url: imageUrl });
     }
+
+    // Parallel download with concurrency limit
+    for (let i = 0; i < downloadTasks.length; i += IMAGE_DOWNLOAD_CONCURRENCY) {
+      const chunk = downloadTasks.slice(i, i + IMAGE_DOWNLOAD_CONCURRENCY);
+      const results = await Promise.allSettled(
+        chunk.map(async ({ page, url }) => {
+          const image = await fetchImageAsBase64(url);
+          if (!image) return null;
+          return { id: page.id, pageNumber: page.page_number, image };
+        })
+      );
+      for (const r of results) {
+        if (r.status === 'fulfilled' && r.value) {
+          preparedPages.push(r.value);
+        }
+      }
+    }
+    // Sort by page number to maintain order after parallel download
+    preparedPages.sort((a, b) => a.pageNumber - b.pageNumber);
 
     // If all pages were skipped due to bad URLs, return a distinct error
     if (preparedPages.length === 0 && skippedBadUrl > 0) {
@@ -235,25 +257,81 @@ export const POST = withAuth(async (request, session, context) => {
       }, { status: 400 });
     }
 
-    // Submit batch job — each request includes metadata.key for result matching
-    // and generationConfig to cap output tokens and disable thinking
-    const batchJob = await ai.batches.create({
-      model,
-      src: batchRequests.map(r => ({
-        ...r.request,
-        metadata: { key: r.key },
-      })),
-      config: {
-        displayName: `ocr-${bookId}-${Date.now()}`,
-      }
-    });
+    // Split into child batches if > MAX_PAGES_PER_BATCH requests
+    // Each Gemini inline batch job has a ~20MB payload limit (~20 pages with images)
+    const batches: Array<typeof batchRequests> = [];
+    for (let i = 0; i < batchRequests.length; i += MAX_PAGES_PER_BATCH) {
+      batches.push(batchRequests.slice(i, i + MAX_PAGES_PER_BATCH));
+    }
 
-    // Flat list of all page IDs across all requests
     const allPageIds = batchRequests.flatMap(r => r.pageIds);
+    const now = new Date();
+    const childJobNames: string[] = [];
+    const childJobIds: string[] = [];
 
-    // Store job info in database for tracking
+    // For single batch, submit directly (backwards compatible — no parent needed)
+    if (batches.length === 1) {
+      const batchJob = await ai.batches.create({
+        model,
+        src: batches[0].map(r => ({
+          ...r.request,
+          metadata: { key: r.key },
+        })),
+        config: {
+          displayName: `ocr-${bookId}-${Date.now()}`,
+        }
+      });
+
+      await db.collection('batch_jobs').insertOne({
+        job_name: batchJob.name,
+        book_id: bookId,
+        type: 'ocr',
+        model,
+        language,
+        force,
+        prompt_version: PROMPT_VERSION,
+        page_ids: allPageIds,
+        page_count: allPageIds.length,
+        pages_per_request: effectivePPR,
+        request_count: batchRequests.length,
+        status: batchJob.state,
+        created_at: now,
+        updated_at: now,
+      });
+
+      await logGeminiCall({
+        type: 'ocr',
+        mode: 'batch',
+        model,
+        book_id: bookId,
+        book_title: book?.title,
+        page_ids: allPageIds,
+        page_count: allPageIds.length,
+        batch_job_id: batchJob.name,
+        gemini_job_name: batchJob.name,
+        input_tokens: 0,
+        output_tokens: 0,
+        status: 'submitted',
+        endpoint: '/api/books/[id]/batch-ocr-async',
+        pages_per_request: effectivePPR,
+      });
+
+      return NextResponse.json({
+        success: true,
+        jobName: batchJob.name,
+        state: batchJob.state,
+        pagesSubmitted: allPageIds.length,
+        batchCount: 1,
+        requestCount: batchRequests.length,
+        pagesPerRequest: effectivePPR,
+        message: `Batch OCR submitted: ${allPageIds.length} pages in ${batchRequests.length} requests`
+      });
+    }
+
+    // Multiple batches: create parent-child structure (compatible with process-batches cron)
+    const parentJobId = nanoid();
     await db.collection('batch_jobs').insertOne({
-      job_name: batchJob.name,
+      id: parentJobId,
       book_id: bookId,
       type: 'ocr',
       model,
@@ -262,14 +340,61 @@ export const POST = withAuth(async (request, session, context) => {
       prompt_version: PROMPT_VERSION,
       page_ids: allPageIds,
       page_count: allPageIds.length,
+      total_pages: allPageIds.length,
       pages_per_request: effectivePPR,
-      request_count: batchRequests.length,
-      status: batchJob.state,
-      created_at: new Date(),
-      updated_at: new Date(),
+      child_job_ids: [], // filled after children are created
+      status: 'pending',
+      progress: { total: allPageIds.length, completed: 0, failed: 0, pending: allPageIds.length },
+      created_at: now,
+      updated_at: now,
     });
 
-    // Log batch job submission
+    // Submit each child batch to Gemini
+    for (let bi = 0; bi < batches.length; bi++) {
+      const batch = batches[bi];
+      const batchPageIds = batch.flatMap(r => r.pageIds);
+      const childJobId = nanoid();
+
+      const batchJob = await ai.batches.create({
+        model,
+        src: batch.map(r => ({
+          ...r.request,
+          metadata: { key: r.key },
+        })),
+        config: {
+          displayName: `ocr-${bookId}-${childJobId}-${Date.now()}`,
+        }
+      });
+
+      childJobNames.push(batchJob.name!);
+      childJobIds.push(childJobId);
+
+      await db.collection('batch_jobs').insertOne({
+        id: childJobId,
+        parent_job_id: parentJobId,
+        job_name: batchJob.name,
+        book_id: bookId,
+        type: 'ocr',
+        model,
+        language,
+        force,
+        prompt_version: PROMPT_VERSION,
+        page_ids: batchPageIds,
+        page_count: batchPageIds.length,
+        pages_per_request: effectivePPR,
+        request_count: batch.length,
+        status: batchJob.state,
+        created_at: now,
+        updated_at: now,
+      });
+    }
+
+    // Update parent with child IDs
+    await db.collection('batch_jobs').updateOne(
+      { id: parentJobId },
+      { $set: { child_job_ids: childJobIds, child_job_names: childJobNames, status: 'processing' } }
+    );
+
     await logGeminiCall({
       type: 'ocr',
       mode: 'batch',
@@ -278,9 +403,9 @@ export const POST = withAuth(async (request, session, context) => {
       book_title: book?.title,
       page_ids: allPageIds,
       page_count: allPageIds.length,
-      batch_job_id: batchJob.name,
-      gemini_job_name: batchJob.name,
-      input_tokens: 0, // Not available until job completes
+      batch_job_id: childJobNames[0],
+      gemini_job_name: childJobNames[0],
+      input_tokens: 0,
       output_tokens: 0,
       status: 'submitted',
       endpoint: '/api/books/[id]/batch-ocr-async',
@@ -289,12 +414,15 @@ export const POST = withAuth(async (request, session, context) => {
 
     return NextResponse.json({
       success: true,
-      jobName: batchJob.name,
-      state: batchJob.state,
+      jobName: childJobNames[0],
+      jobNames: childJobNames,
+      parentJobId,
+      state: 'JOB_STATE_PENDING',
       pagesSubmitted: allPageIds.length,
+      batchCount: batches.length,
       requestCount: batchRequests.length,
       pagesPerRequest: effectivePPR,
-      message: `Batch job submitted: ${allPageIds.length} pages in ${batchRequests.length} requests. Check status with GET /api/books/${bookId}/batch-ocr-async?jobName=${batchJob.name}`
+      message: `Batch OCR submitted: ${allPageIds.length} pages in ${batches.length} batches (${batchRequests.length} requests)`
     });
 
   } catch (error) {

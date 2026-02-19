@@ -13,7 +13,7 @@ export const maxDuration = 300;
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
 const ENROLL_LIMIT = 10;
 const ARCHIVE_LIMIT = 20; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 20;
+const OCR_SUBMIT_LIMIT = 5; // Full books now (up to 500pp each), so fewer per cycle
 const METADATA_ENRICH_LIMIT = 10;
 const TRANSLATE_SUBMIT_LIMIT = 10;
 const ENRICH_LIMIT = 5;
@@ -185,13 +185,19 @@ export async function GET(request: NextRequest) {
         if (!hasTimeBudget(startTime)) break;
 
         // Count pages still needing archiving from external sources
+        // Also treat "failed:*" archived_photo values as unarchived
         const remaining = await db.collection('pages').countDocuments({
           book_id: book.id,
-          archived_photo: { $exists: false },
           $or: [
-            { photo: { $regex: ARCHIVABLE_SOURCES } },
-            { photo_original: { $regex: ARCHIVABLE_SOURCES } },
+            { archived_photo: { $exists: false } },
+            { archived_photo: { $regex: /^failed:/ } },
           ],
+          $and: [{
+            $or: [
+              { photo: { $regex: ARCHIVABLE_SOURCES } },
+              { photo_original: { $regex: ARCHIVABLE_SOURCES } },
+            ],
+          }],
         });
 
         if (remaining === 0) {
@@ -204,6 +210,7 @@ export async function GET(request: NextRequest) {
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
     // Batch API is 50% cheaper than realtime. Jobs complete within hours.
+    // The route handles child-batch splitting for large books.
     if (hasTimeBudget(startTime)) {
       const readyForOcr = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
@@ -215,12 +222,17 @@ export async function GET(request: NextRequest) {
         if (!hasTimeBudget(startTime)) break;
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
-          // Guard: verify book has pages with fetchable (HTTP) image URLs
-          const httpPageCount = await db.collection('pages').countDocuments({
+          // Guard: verify book has pages with good archived images (not failed)
+          const archivedPageCount = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            archived_photo: { $regex: /^https?:\/\// },
+          });
+
+          // Fallback: check for any HTTP image URL (original source)
+          const httpPageCount = archivedPageCount > 0 ? archivedPageCount : await db.collection('pages').countDocuments({
             book_id: book.id,
             $or: [
               { photo: { $regex: /^https?:\/\// } },
-              { archived_photo: { $regex: /^https?:\/\// } },
               { photo_original: { $regex: /^https?:\/\// } },
             ],
           });
@@ -234,10 +246,11 @@ export async function GET(request: NextRequest) {
             continue;
           }
 
+          // Submit the full book — route handles parallel downloads and child-batch splitting
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
             headers: getInternalHeaders(),
-            body: JSON.stringify({ limit: 10, force: false, pagesPerRequest: 5 }),
+            body: JSON.stringify({ limit: 500, force: false }),
           });
 
           const text = await res.text();
@@ -601,6 +614,14 @@ export async function GET(request: NextRequest) {
           await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
           log.enriched++;
         } catch (err) {
+          const retries = book.pipeline_auto?.retry_count || 0;
+          if (retries >= MAX_RETRIES) {
+            // Enrichment is non-critical — skip on persistent failure
+            await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
+            log.enriched++;
+          } else {
+            await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
+          }
           log.errors.push(`Enrich ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
         }
       }
@@ -749,7 +770,7 @@ export async function GET(request: NextRequest) {
       const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
       const staleBooks = await db.collection('books')
         .find({
-          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted'] },
+          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'enriching', 'chapters'] },
           'pipeline_auto.last_updated': { $lt: staleThreshold },
         })
         .project({ id: 1, title: 1, 'pipeline_auto': 1 })
@@ -770,6 +791,8 @@ export async function GET(request: NextRequest) {
             'ocr_submitted': 'archive_complete',
             'translate_submitted': 'metadata_enriched',
             'images_submitted': 'chapters_complete',
+            'enriching': 'translate_complete',
+            'chapters': 'enriched',
           };
           const rollbackTo = rollbackMap[status];
           if (rollbackTo) {
@@ -781,15 +804,53 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 9: Finalize (images_complete -> complete) ──
+    // ── Phase 9: Finalize (images_complete -> complete) — with quality validation ──
     if (hasTimeBudget(startTime)) {
       const readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
-        .project({ id: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
 
       for (const book of readyToFinalize) {
+        // Quality gate: verify the book actually has content before marking complete
+        const totalPages = book.pages_count || await db.collection('pages').countDocuments({ book_id: book.id });
+
+        if (totalPages === 0) {
+          // Empty shell — no pages at all, mark as needs_attention
+          await setPipelineStatus(db, book.id, 'needs_attention', {
+            error: 'Empty book: 0 pages. Likely a failed import.',
+          });
+          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0 pages`);
+          continue;
+        }
+
+        // Check actual OCR count (don't trust cached pages_ocr)
+        const ocrCount = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
+        });
+
+        if (ocrCount === 0) {
+          // Has pages but zero OCR — reset to archive_complete for re-processing
+          await setPipelineStatus(db, book.id, 'archive_complete', {
+            error: 'Finalize blocked: 0 OCR pages. Resetting for re-processing.',
+            retry_count: 0,
+          });
+          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0/${totalPages} OCR pages, reset to archive_complete`);
+          continue;
+        }
+
+        // Check OCR coverage (at least 10% of pages should have OCR)
+        const ocrPercent = ocrCount / totalPages;
+        if (ocrPercent < 0.1) {
+          await setPipelineStatus(db, book.id, 'needs_attention', {
+            error: `Very low OCR coverage: ${ocrCount}/${totalPages} (${(ocrPercent * 100).toFixed(1)}%)`,
+          });
+          log.errors.push(`Finalize blocked ${book.id} (${book.title}): ${ocrCount}/${totalPages} OCR (${(ocrPercent * 100).toFixed(1)}%)`);
+          continue;
+        }
+
         await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
         log.finalized++;
       }

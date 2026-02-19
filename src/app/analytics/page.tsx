@@ -92,6 +92,18 @@ interface UsageData {
       processing: number;
       byType: Array<{ type: string; count: number }>;
     };
+    workerHealth?: {
+      ocrBlocked: number;
+      needsAttention: number;
+      failuresByCategory: Array<{ category: string; count: number }>;
+      highFailureBooks: Array<{ bookId: string; title: string; jobCount: number; totalPagesFailed: number; lastFailure: string }>;
+    };
+  };
+  pipelineFunnel?: Array<{ status: string; count: number }>;
+  backlog?: {
+    needsOcr: number;
+    needsTranslation: number;
+    oldOcrPages: number;
   };
 }
 
@@ -532,6 +544,154 @@ export default function AnalyticsPage() {
               </div>
             )}
 
+            {/* Pipeline Funnel + Backlog */}
+            {usageData && (usageData.pipelineFunnel || usageData.backlog) && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Pipeline Funnel */}
+                {usageData.pipelineFunnel && usageData.pipelineFunnel.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <ListChecks className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+                      Pipeline Funnel
+                    </h2>
+                    <div className="space-y-2">
+                      {(() => {
+                        const stageOrder = [
+                          'complete', 'images_complete', 'images_submitted',
+                          'chapters_complete', 'chapters', 'enriched', 'enriching',
+                          'translate_complete', 'translate_submitted',
+                          'metadata_enriched', 'ocr_complete', 'ocr_submitted',
+                          'archive_complete', 'archiving', 'queued', 'failed',
+                        ];
+                        const stageLabels: Record<string, string> = {
+                          complete: 'Complete',
+                          images_complete: 'Images done',
+                          images_submitted: 'Extracting images',
+                          chapters_complete: 'Chapters done',
+                          chapters: 'Extracting chapters',
+                          enriched: 'Enriched',
+                          enriching: 'Enriching',
+                          translate_complete: 'Translated',
+                          translate_submitted: 'Translating...',
+                          metadata_enriched: 'Metadata enriched',
+                          ocr_complete: 'OCR complete',
+                          ocr_submitted: 'OCR in progress...',
+                          archive_complete: 'Archived',
+                          archiving: 'Archiving...',
+                          queued: 'Queued',
+                          failed: 'Failed',
+                          not_enrolled: 'Not enrolled',
+                        };
+                        const stageColors: Record<string, string> = {
+                          complete: '#22c55e',
+                          failed: 'var(--accent-rust)',
+                          not_enrolled: 'var(--text-muted)',
+                        };
+                        const activeStages = ['ocr_submitted', 'translate_submitted', 'archiving', 'enriching', 'chapters', 'images_submitted'];
+                        const sorted = [...usageData.pipelineFunnel!].sort((a, b) => {
+                          const ai = stageOrder.indexOf(a.status);
+                          const bi = stageOrder.indexOf(b.status);
+                          return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+                        });
+                        const maxCount = Math.max(...sorted.map(s => s.count));
+                        return sorted.map(stage => (
+                          <div key={stage.status} className="flex items-center gap-3">
+                            <div className="w-[140px] text-xs text-right truncate" style={{
+                              color: stage.status === 'failed' ? 'var(--accent-rust)' : 'var(--text-muted)',
+                              fontWeight: stage.status === 'complete' || stage.status === 'failed' ? 600 : 400,
+                            }}>
+                              {stageLabels[stage.status] || stage.status}
+                              {activeStages.includes(stage.status) && (
+                                <Loader2 className="w-3 h-3 inline ml-1 animate-spin" />
+                              )}
+                            </div>
+                            <div className="flex-1 h-5 rounded overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                              <div
+                                className="h-full rounded flex items-center justify-end pr-2 text-xs font-medium text-white"
+                                style={{
+                                  width: `${Math.max(8, (stage.count / maxCount) * 100)}%`,
+                                  background: stageColors[stage.status] || 'var(--accent-violet)',
+                                  minWidth: '32px',
+                                }}
+                              >
+                                {stage.count}
+                              </div>
+                            </div>
+                          </div>
+                        ));
+                      })()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Backlog */}
+                {usageData.backlog && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <AlertTriangle className="w-5 h-5" style={{ color: 'var(--accent-gold)' }} />
+                      Processing Backlog
+                    </h2>
+                    <div className="space-y-4">
+                      {/* Needs OCR */}
+                      <div className="p-4 rounded-lg" style={{ background: 'var(--accent-sage)', color: 'white' }}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm font-medium">Needs OCR</span>
+                          <span className="text-xl font-bold">{formatNumber(usageData.backlog.needsOcr)}</span>
+                        </div>
+                        <div className="text-xs opacity-80">
+                          Pages without OCR yet. Largest segment of remaining work.
+                        </div>
+                      </div>
+
+                      {/* Needs translation */}
+                      <div className="p-4 rounded-lg" style={{ background: 'var(--accent-rust)', color: 'white' }}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm font-medium">Needs translation</span>
+                          <span className="text-xl font-bold">{formatNumber(usageData.backlog.needsTranslation)}</span>
+                        </div>
+                        <div className="text-xs opacity-80">
+                          Pages with OCR but no translation. Highest ROI — OCR work already done.
+                        </div>
+                      </div>
+
+                      {/* Old OCR (not in pipeline) */}
+                      <div className="p-4 rounded-lg" style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}>
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Old OCR (not in pipeline)</span>
+                          <span className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>{formatNumber(usageData.backlog.oldOcrPages)}</span>
+                        </div>
+                        <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                          OCR'd pages in books not enrolled in auto pipeline. May need re-OCR with current prompts.
+                        </div>
+                      </div>
+
+                      {/* Cost estimate */}
+                      <div className="pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                        <div className="text-xs space-y-1" style={{ color: 'var(--text-muted)' }}>
+                          <div className="flex justify-between">
+                            <span>OCR remaining (~$0.0011/pg batch)</span>
+                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
+                              ~${(usageData.backlog.needsOcr * 0.0011).toFixed(0)}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Translate remaining (~$0.0011/pg batch)</span>
+                            <span className="font-medium" style={{ color: 'var(--text-primary)' }}>
+                              ~${(usageData.backlog.needsTranslation * 0.0011).toFixed(0)}
+                            </span>
+                          </div>
+                          <div className="flex justify-between font-medium pt-1 border-t" style={{ borderColor: 'var(--border-light)', color: 'var(--text-primary)' }}>
+                            <span>Total to complete</span>
+                            <span>~${((usageData.backlog.needsOcr + usageData.backlog.needsTranslation) * 0.0011).toFixed(0)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Collection Overview - Processing Pipeline */}
             {usageData?.collectionStats && (
               <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
@@ -761,6 +921,72 @@ export default function AnalyticsPage() {
                     </div>
                   </div>
                 </div>
+
+                {/* Worker Health — shows problems that need attention */}
+                {usageData.pipelineHealth.workerHealth && (
+                  (usageData.pipelineHealth.workerHealth.ocrBlocked > 0 ||
+                   usageData.pipelineHealth.workerHealth.needsAttention > 0 ||
+                   usageData.pipelineHealth.workerHealth.highFailureBooks.length > 0) && (
+                  <div className="mt-6 pt-6 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                    <h3 className="text-sm font-medium mb-3 flex items-center gap-2" style={{ color: 'var(--accent-rust)' }}>
+                      <AlertTriangle className="w-4 h-4" />
+                      Worker Health
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Status counts */}
+                      <div className="space-y-2">
+                        {[
+                          { label: 'Books OCR-blocked', value: usageData.pipelineHealth.workerHealth.ocrBlocked, color: '#f59e0b' },
+                          { label: 'Needs attention', value: usageData.pipelineHealth.workerHealth.needsAttention, color: 'var(--accent-rust)' },
+                        ].filter(item => item.value > 0).map((item, i) => (
+                          <div key={i} className="flex justify-between items-center text-sm">
+                            <span style={{ color: 'var(--text-primary)' }}>{item.label}</span>
+                            <span className="font-medium px-2 py-0.5 rounded" style={{ background: 'var(--bg-warm)', color: item.color }}>
+                              {formatNumber(item.value)}
+                            </span>
+                          </div>
+                        ))}
+                        {usageData.pipelineHealth.workerHealth.failuresByCategory.length > 0 && (
+                          <div className="pt-2 mt-2 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                            <div className="text-xs font-medium mb-1" style={{ color: 'var(--text-muted)' }}>Failure categories ({days}d)</div>
+                            {usageData.pipelineHealth.workerHealth.failuresByCategory.slice(0, 5).map((f, i) => (
+                              <div key={i} className="flex justify-between items-center text-xs mt-1">
+                                <span style={{ color: 'var(--text-muted)' }}>{f.category}</span>
+                                <span style={{ color: 'var(--text-primary)' }}>{formatNumber(f.count)}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* High failure books */}
+                      {usageData.pipelineHealth.workerHealth.highFailureBooks.length > 0 && (
+                        <div className="space-y-1">
+                          <div className="text-xs font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
+                            Repeat failures (&gt;90% page failure rate)
+                          </div>
+                          {usageData.pipelineHealth.workerHealth.highFailureBooks.slice(0, 8).map((book, i) => (
+                            <div key={i} className="flex justify-between items-center text-xs gap-2">
+                              <a
+                                href={`https://sourcelibrary.org/book/${book.bookId}`}
+                                target="_blank"
+                                rel="noopener"
+                                className="truncate hover:underline"
+                                style={{ color: 'var(--accent-rust)' }}
+                              >
+                                {book.title}
+                              </a>
+                              <span className="shrink-0" style={{ color: 'var(--text-muted)' }}>
+                                {book.jobCount}x / {formatNumber(book.totalPagesFailed)} pages
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  )
+                )}
               </div>
             )}
 

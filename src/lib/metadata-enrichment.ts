@@ -263,10 +263,22 @@ export async function enrichBookMetadata(
   const changes: Array<{ field: string; previous: unknown; new_value: unknown }> = [];
   const updates: Record<string, unknown> = { updated_at: new Date() };
 
-  // Language: update if Unknown
-  if (book.language === 'Unknown' && parsed.language) {
-    updates.language = parsed.language;
-    changes.push({ field: 'language', previous: book.language, new_value: parsed.language });
+  // Language: auto-update if Unknown. If the AI disagrees with an existing value,
+  // store the AI detection but don't auto-overwrite — many "mismatches" are intentional
+  // (e.g. catalog says "Sanskrit" for a Sanskrit work held as an English translation).
+  const currentLang = (book.language as string) || 'Unknown';
+  const aiLang = parsed.language || '';
+
+  if (aiLang && currentLang === 'Unknown') {
+    updates.language = aiLang;
+    updates.language_source = 'gemini_text';
+    updates.language_confidence = confidence;
+    changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
+  } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
+    // Don't overwrite, but record the discrepancy for review
+    updates.language_source = 'gemini_text';
+    updates.language_confidence = confidence;
+    updates.ai_detected_language = aiLang;
   }
 
   // Year: set if missing

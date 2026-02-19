@@ -236,7 +236,7 @@ export const POST = withAuth(async (request, session, context) => {
       await Promise.allSettled(
         batch.map(async (page) => {
           if (!page.crop) return;
-          const sourceUrl = page.archived_photo || page.photo_original || page.photo;
+          const sourceUrl = (page.archived_photo && page.archived_photo.startsWith('http')) ? page.archived_photo : (page.photo_original || page.photo);
           if (!sourceUrl) return;
 
           try {

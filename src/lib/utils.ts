@@ -25,6 +25,11 @@ export function normalizeText(text: string): string {
  * Get the best available image URL for a page.
  * Priority: cropped_photo > archived_photo > photo_original > photo
  */
+/** Check if a string is a usable HTTP(S) image URL (not a failure marker) */
+function isUsableImageUrl(url: string | undefined | null): url is string {
+  return !!url && (url.startsWith('http://') || url.startsWith('https://'));
+}
+
 export function getPageImageUrl(page: {
   cropped_photo?: string;
   archived_photo?: string;
@@ -33,11 +38,11 @@ export function getPageImageUrl(page: {
   crop?: unknown;
 }): string {
   // If page has crop data, prefer cropped_photo
-  if (page.crop && page.cropped_photo) {
+  if (page.crop && isUsableImageUrl(page.cropped_photo)) {
     return page.cropped_photo;
   }
-  // Prefer archived copy over live IA URL
-  if (page.archived_photo) {
+  // Prefer archived copy over live IA URL (skip "failed:*" markers)
+  if (isUsableImageUrl(page.archived_photo)) {
     return page.archived_photo;
   }
   // Fall back to original URLs

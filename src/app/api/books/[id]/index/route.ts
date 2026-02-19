@@ -946,6 +946,15 @@ export async function GET(
         page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
         model: 'gemini-3-flash-preview'
       };
+      // Also save as reading_summary (expected by pipeline, docs, and downstream checks)
+      updateData.reading_summary = {
+        overview: bookSummary.abstract || bookSummary.brief,
+        detailed: bookSummary.detailed || '',
+        themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
+        quotes: batchExtractions.flatMap(b => b.quotes).slice(0, 15),
+        generated_at: new Date(),
+        model: 'gemini-3-flash-preview'
+      };
     }
 
     await db.collection('books').updateOne(

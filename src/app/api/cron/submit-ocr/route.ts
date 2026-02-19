@@ -12,6 +12,7 @@ export const maxDuration = 300;
 const MAX_ACTIVE_JOBS = 100;    // Don't submit if this many realtime jobs are active
 const BOOKS_PER_RUN = 20;       // Books to submit per cron invocation
 const PAGES_PER_BOOK = 500;     // Max pages to submit per book (Lambda handles concurrency)
+const MAX_FAILURES_BEFORE_BLOCK = 3; // After this many high-failure jobs, block the book
 
 /**
  * GET /api/cron/submit-ocr
@@ -55,7 +56,33 @@ export async function GET(request: NextRequest) {
     const booksWithBatchJobs = await db.collection('batch_jobs').distinct('book_id', {
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
-    const excludeBookIds = [...new Set([...booksWithRealtimeJobs, ...booksWithBatchJobs])];
+
+    // Circuit breaker: exclude books that are blocked due to repeated failures.
+    // Uses book-level ocr_blocked_until field (set by this cron after high-failure jobs).
+    const now = new Date();
+    const blockedBooks = await db.collection('books')
+      .find(
+        { ocr_blocked_until: { $gt: now } },
+        { projection: { id: 1 } }
+      )
+      .toArray();
+    const blockedBookIds = blockedBooks.map(b => b.id);
+
+    // Also exclude books managed by the pipeline cron (avoid double-submitting)
+    const pipelineBooks = await db.collection('books')
+      .find(
+        { 'pipeline_auto.status': { $exists: true, $nin: ['complete', 'failed', 'needs_attention'] } },
+        { projection: { id: 1 } }
+      )
+      .toArray();
+    const pipelineBookIds = pipelineBooks.map(b => b.id);
+
+    const excludeBookIds = [...new Set([
+      ...booksWithRealtimeJobs,
+      ...booksWithBatchJobs,
+      ...blockedBookIds,
+      ...pipelineBookIds,
+    ])];
 
     // Fast query using cached pages_count/pages_ocr fields
     const eligibleBooks = await db.collection('books').find({
@@ -73,17 +100,20 @@ export async function GET(request: NextRequest) {
         success: true,
         message: 'All books have OCR or are already being processed',
         activeJobs,
+        blockedBooks: blockedBookIds.length,
+        pipelineExcluded: pipelineBookIds.length,
         duration_ms: Date.now() - startTime,
       });
     }
 
     // Submit jobs
     const submitted: Array<{ bookId: string; title: string; jobId: string; pagesQueued: number }> = [];
+    const skippedNoImages: string[] = [];
     const errors: string[] = [];
 
     for (const book of eligibleBooks) {
       try {
-        // Find pages without OCR for this book
+        // Find pages without OCR that have valid image URLs
         const pagesWithoutOcr = await db.collection('pages')
           .find({
             book_id: book.id,
@@ -94,14 +124,40 @@ export async function GET(request: NextRequest) {
             ],
           })
           .limit(PAGES_PER_BOOK)
-          .project({ id: 1 })
+          .project({ id: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1 })
           .toArray();
 
         if (pagesWithoutOcr.length === 0) {
           continue; // Book already fully OCR'd (cached count was stale)
         }
 
-        const pageIds = pagesWithoutOcr.map(p => p.id);
+        // Guard: verify at least some pages have fetchable image URLs
+        // Skip books where all images are dead (failed archiving, no valid URLs)
+        const pagesWithValidImages = pagesWithoutOcr.filter(p => {
+          // Check fallback chain: cropped_photo → archived_photo → photo → photo_original
+          if (p.cropped_photo && /^https?:\/\//.test(p.cropped_photo)) return true;
+          if (p.archived_photo && /^https?:\/\//.test(p.archived_photo) && !p.archived_photo.startsWith('failed:')) return true;
+          // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
+          // Don't fall through to photo/photo_original — archiving already tried those URLs.
+          const archiveFailed = typeof p.archived_photo === 'string' && p.archived_photo.startsWith('failed:');
+          if (!archiveFailed) {
+            if (p.photo && /^https?:\/\//.test(p.photo)) return true;
+            if (p.photo_original && /^https?:\/\//.test(p.photo_original)) return true;
+          }
+          return false;
+        });
+
+        if (pagesWithValidImages.length === 0) {
+          skippedNoImages.push(book.title);
+          // Block this book — no point retrying until images are fixed
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: { ocr_blocked_until: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) } }
+          );
+          continue;
+        }
+
+        const pageIds = pagesWithValidImages.map(p => p.id);
         const jobId = nanoid(12);
 
         // Create job record
@@ -159,6 +215,9 @@ export async function GET(request: NextRequest) {
       booksSubmitted: submitted.length,
       totalPages,
       submitted,
+      blockedBooks: blockedBookIds.length,
+      pipelineExcluded: pipelineBookIds.length,
+      skippedNoImages: skippedNoImages.length > 0 ? skippedNoImages : undefined,
       errors: errors.length > 0 ? errors : undefined,
       duration_ms: Date.now() - startTime,
     });

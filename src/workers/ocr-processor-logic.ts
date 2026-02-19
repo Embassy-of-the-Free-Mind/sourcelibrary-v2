@@ -17,21 +17,34 @@ import { classifyError } from '@/lib/errors';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { getOcrPrompt } from '@/lib/prompts';
 
+/** Check if a string is a usable HTTP(S) image URL (not a failure marker like "failed:HTTP 404") */
+function isUsableImageUrl(url: string | undefined | null): url is string {
+  return !!url && (url.startsWith('http://') || url.startsWith('https://'));
+}
+
 /**
  * Get page image URL with priority fallbacks:
  * 1. cropped_photo (result of split detection, most refined)
  * 2. archived_photo (Vercel Blob cached version, fast & reliable)
  * 3. photo (main image URL)
  * 4. photo_original (original before any processing)
+ *
+ * Skips "failed:*" archived_photo markers from failed archiving attempts.
  */
+function isArchiveFailed(photo: string | undefined | null): boolean {
+  return typeof photo === 'string' && photo.startsWith('failed:');
+}
+
 function getPageImageUrl(page: Page): string | null {
-  return (
-    page.cropped_photo ||
-    page.archived_photo ||
-    page.photo ||
-    page.photo_original ||
-    null
-  );
+  if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
+  if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
+  // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
+  // Don't try photo/photo_original — archiving already proved those URLs don't work.
+  if (!isArchiveFailed(page.archived_photo)) {
+    if (isUsableImageUrl(page.photo)) return page.photo;
+    if (isUsableImageUrl(page.photo_original)) return page.photo_original;
+  }
+  return null;
 }
 
 /**
@@ -95,10 +108,38 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     return;
   }
 
+  const modelId = job.config.model || DEFAULT_MODEL;
+
   // Get image URL with priority fallbacks
   const imageUrl = getPageImageUrl(page);
   if (!imageUrl || (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://'))) {
-    console.error(`[OCR] Page ${pageId} has ${!imageUrl ? 'no image URL' : `non-HTTP image URL: ${imageUrl.substring(0, 100)}`}`);
+    const reason = isArchiveFailed(page.archived_photo)
+      ? `archived_photo="${page.archived_photo}" — source URL dead`
+      : !imageUrl ? 'no image URL on page' : `non-HTTP image URL: ${imageUrl.substring(0, 100)}`;
+    console.error(`[OCR] Page ${pageId}: ${reason}`);
+
+    // Log pre-Gemini failure so it's visible in dashboards (not just job progress)
+    try {
+      await logGeminiCall({
+        type: 'ocr',
+        mode: 'realtime',
+        model: modelId,
+        book_id: bookId,
+        page_ids: [pageId],
+        input_tokens: 0,
+        output_tokens: 0,
+        status: 'failed',
+        error_message: reason,
+        error_category: 'no_image',
+        job_id: jobId,
+        duration_ms: 0,
+        prompt_version: PROMPT_VERSION,
+        endpoint: 'worker/ocr',
+      });
+    } catch (logErr) {
+      console.error(`[OCR] Failed to log no-image error for page ${pageId}:`, logErr);
+    }
+
     await jobs.updateOne(
       { id: jobId },
       {
@@ -111,7 +152,6 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     return;
   }
 
-  const modelId = job.config.model || DEFAULT_MODEL;
   const startTime = Date.now();
 
   // Fetch prompt from DB (or hardcoded fallback). Custom prompt overrides DB.
@@ -340,7 +380,7 @@ async function checkJobCompletion(
   const completedCount = await pages.countDocuments({
     book_id: bookId,
     id: { $in: targetPageIds },
-    'ocr.data': { $exists: true, $ne: null }
+    'ocr.data': { $exists: true, $nin: [null, ''] }
   });
 
   await jobs.updateOne(
@@ -372,6 +412,21 @@ async function checkJobCompletion(
         }
       }
     );
+
+    // Circuit breaker: if >90% of pages failed, block the book with exponential backoff
+    // This prevents the submit-ocr cron from retrying books with dead image URLs
+    if (targetPageIds.length > 0 && failedCount / targetPageIds.length >= 0.9) {
+      const book = await db.collection('books').findOne({ id: bookId }, { projection: { ocr_failure_count: 1 } });
+      const failureCount = (book?.ocr_failure_count || 0) + 1;
+      // Exponential backoff: 1h, 4h, 24h, 7d, 30d
+      const backoffHours = [1, 4, 24, 168, 720][Math.min(failureCount - 1, 4)];
+      const blockedUntil = new Date(Date.now() + backoffHours * 60 * 60 * 1000);
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { ocr_failure_count: failureCount, ocr_blocked_until: blockedUntil } }
+      );
+      console.log(`[OCR] Circuit breaker: book ${bookId} blocked for ${backoffHours}h (failure #${failureCount})`);
+    }
 
     // Update book's pages_ocr count with actual count from pages collection
     const totalPagesWithOcr = await pages.countDocuments({

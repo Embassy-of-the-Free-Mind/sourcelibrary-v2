@@ -59,7 +59,7 @@ export const POST = withAuth(async (request, session, context) => {
       const batchResults = await Promise.all(
         batch.map(async (page) => {
           // Image fallback chain: archived_photo > photo_original > photo
-          const sourceUrl = page.archived_photo || page.photo_original || page.photo;
+          const sourceUrl = (page.archived_photo && page.archived_photo.startsWith('http')) ? page.archived_photo : (page.photo_original || page.photo);
           if (!sourceUrl) {
             return { pageId: page.id, pageNumber: page.page_number, success: false, error: 'No image URL' };
           }

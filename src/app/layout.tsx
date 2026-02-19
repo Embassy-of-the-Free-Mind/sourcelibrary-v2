@@ -67,7 +67,7 @@ export default async function RootLayout({
   const siteMode = await getSiteMode();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link
           rel="search"
@@ -76,7 +76,7 @@ export default async function RootLayout({
           href="/opensearch.xml"
         />
       </head>
-      <body className="antialiased min-h-screen flex flex-col">
+      <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
