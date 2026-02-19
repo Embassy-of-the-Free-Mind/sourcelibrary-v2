@@ -191,7 +191,10 @@ export async function GET(request: NextRequest) {
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
     // Batch API is 50% cheaper than realtime. Jobs complete within hours.
-    if (hasTimeBudget(startTime)) {
+    // PAUSED: Testing multi-page OCR (pagesPerRequest: 5) — waiting for first results before submitting more.
+    // To resume: remove the OCR_PAUSED check below.
+    const OCR_PAUSED = true;
+    if (!OCR_PAUSED && hasTimeBudget(startTime)) {
       const readyForOcr = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
         .project({ id: 1, title: 1, pages_count: 1 })
