@@ -204,7 +204,7 @@ export async function GET(request: NextRequest) {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
             headers: getInternalHeaders(),
-            body: JSON.stringify({ limit: 500, force: false }),
+            body: JSON.stringify({ limit: 10, force: false, pagesPerRequest: 10 }),
           });
           if (!res.ok) {
             log.errors.push(`OCR submit ${book.id}: HTTP ${res.status}`);
@@ -281,8 +281,30 @@ export async function GET(request: NextRequest) {
         }
 
         if (isComplete) {
-          await setPipelineStatus(db, book.id, 'ocr_complete');
-          log.ocr_advanced++;
+          // Check if there are still un-OCR'd pages — if so, loop back for another batch
+          const remainingOcr = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            $or: [
+              { photo: { $exists: true, $ne: null } },
+              { photo_original: { $exists: true, $ne: null } },
+            ],
+            $and: [
+              { $or: [
+                { 'ocr.data': { $exists: false } },
+                { 'ocr.data': null },
+                { 'ocr.data': '' },
+              ] },
+            ],
+          });
+
+          if (remainingOcr > 0) {
+            // More pages to OCR — loop back to archive_complete for re-submission
+            await setPipelineStatus(db, book.id, 'archive_complete');
+            log.ocr_advanced++;
+          } else {
+            await setPipelineStatus(db, book.id, 'ocr_complete');
+            log.ocr_advanced++;
+          }
         }
         // Otherwise keep waiting — process-batches cron will collect results
       }
@@ -350,7 +372,7 @@ export async function GET(request: NextRequest) {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
             method: 'POST',
             headers: getInternalHeaders(),
-            body: JSON.stringify({ limit: 500 }),
+            body: JSON.stringify({ limit: 100 }),
           });
           if (!res.ok) {
             log.errors.push(`Translate submit ${book.id}: HTTP ${res.status}`);
@@ -426,8 +448,24 @@ export async function GET(request: NextRequest) {
         }
 
         if (isComplete) {
-          await setPipelineStatus(db, book.id, 'translate_complete');
-          log.translate_advanced++;
+          // Check if there are still un-translated pages — if so, loop back
+          const remainingTranslate = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            'ocr.data': { $exists: true, $nin: [null, ''] },
+            $or: [
+              { 'translation.data': { $exists: false } },
+              { 'translation.data': null },
+              { 'translation.data': '' },
+            ],
+          });
+
+          if (remainingTranslate > 0) {
+            await setPipelineStatus(db, book.id, 'metadata_enriched');
+            log.translate_advanced++;
+          } else {
+            await setPipelineStatus(db, book.id, 'translate_complete');
+            log.translate_advanced++;
+          }
         }
       }
     }

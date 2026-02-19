@@ -95,6 +95,20 @@ export function parseDetectedImages(ocrText: string): DetectedImage[] {
   }
 }
 
+/**
+ * Parse multi-page OCR response. Expects <page id="PAGE_ID">...</page> blocks.
+ * Returns a Map of pageId → OCR text.
+ */
+export function parseMultiPageOcr(text: string): Map<string, string> {
+  const results = new Map<string, string>();
+  const regex = /<page id="([^"]+)">([\s\S]*?)<\/page>/g;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    results.set(match[1], match[2].trim());
+  }
+  return results;
+}
+
 export const DEFAULT_PROMPTS: ProcessingPrompts = {
   ocr: `Transcribe this historical manuscript page to Markdown.
 

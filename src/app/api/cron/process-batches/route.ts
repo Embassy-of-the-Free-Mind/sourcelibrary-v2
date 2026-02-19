@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
 import { logGeminiCall } from '@/lib/gemini-logger';
-import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
@@ -78,34 +78,61 @@ export async function GET(request: NextRequest) {
           let failCount = 0;
           const now = new Date();
 
-          // Safety check: if using positional matching, response count must match page count
           const pageIds = job.page_ids || [];
-          if (pageIds.length > 0 && batchResults.length !== pageIds.length) {
+          const isMultiPage = (job.pages_per_request || 1) > 1;
+
+          // Safety check for single-page mode: response count must match page count
+          if (!isMultiPage && pageIds.length > 0 && batchResults.length !== pageIds.length) {
             console.warn(`[cron] Response count (${batchResults.length}) != page count (${pageIds.length}) for job ${job.id}. Skipping to avoid mismatched data.`);
             results.errors.push(`Job ${job.id}: response count mismatch (${batchResults.length} vs ${pageIds.length})`);
             continue;
           }
 
-          for (let idx = 0; idx < batchResults.length; idx++) {
-            const result = batchResults[idx];
-            // Match by metadata key if available, fall back to positional
-            const pageId = result.metadata?.key || (pageIds[idx]);
+          // Build flat list of { pageId, text, usage } from responses
+          const pageResultsList: Array<{ pageId: string; text: string; usage?: Record<string, number> }> = [];
 
-            if (!pageId) {
-              console.warn(`[cron] No page ID for result idx ${idx} (job ${job.id})`);
-              failCount++;
-              continue;
+          if (isMultiPage && job.type === 'ocr') {
+            // Multi-page OCR: parse <page id="...">...</page> blocks from each response
+            for (const result of batchResults) {
+              if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+                failCount++;
+                continue;
+              }
+              const responseText = result.response.candidates[0].content.parts[0].text;
+              const usage = result.response.usageMetadata;
+              const parsed = parseMultiPageOcr(responseText);
+              for (const [pageId, ocrText] of parsed) {
+                pageResultsList.push({ pageId, text: ocrText, usage });
+              }
             }
+          } else {
+            // Single-page mode: match by metadata key or positional
+            for (let idx = 0; idx < batchResults.length; idx++) {
+              const result = batchResults[idx];
+              const pageId = result.metadata?.key || (pageIds[idx]);
 
-            if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
-              failCount++;
-              continue;
+              if (!pageId) {
+                console.warn(`[cron] No page ID for result idx ${idx} (job ${job.id})`);
+                failCount++;
+                continue;
+              }
+
+              if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+                failCount++;
+                continue;
+              }
+
+              pageResultsList.push({
+                pageId,
+                text: result.response.candidates[0].content.parts[0].text,
+                usage: result.response.usageMetadata,
+              });
             }
+          }
 
-            const text = result.response.candidates[0].content.parts[0].text;
-            const usage = result.response.usageMetadata;
-
-            // Hallucination guard: skip pages with excessive text (space floods, repetition loops, thinking leaks)
+          // Save each page result
+          for (const { pageId, text, usage } of pageResultsList) {
+            // Hallucination guard: skip pages with excessive text
             if (text.length > 25000) {
               console.warn(`[cron] Page ${pageId} has ${text.length} chars — likely hallucination, skipping`);
               failCount++;
@@ -117,10 +144,8 @@ export async function GET(request: NextRequest) {
               const columns = extractColumns(text);
               const detectedImages = parseDetectedImages(text);
 
-              // Snapshot manual edits before overwriting
               await createSnapshotIfNeeded(pageId, 'pre_ocr', job.id);
 
-              // Use dot notation to merge fields (not replace entire ocr object)
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {
@@ -151,10 +176,8 @@ export async function GET(request: NextRequest) {
             } else {
               const translationMeta = extractTranslationMetadata(text);
 
-              // Snapshot manual edits before overwriting
               await createSnapshotIfNeeded(pageId, 'pre_translate', job.id);
 
-              // Use dot notation to merge fields (not replace entire translation object)
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
                 {

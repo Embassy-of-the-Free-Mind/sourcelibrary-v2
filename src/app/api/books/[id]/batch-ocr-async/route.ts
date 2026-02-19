@@ -4,7 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { images } from '@/lib/api-client';
-import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { withAuth } from '@/lib/auth-helpers';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
 
@@ -74,9 +74,10 @@ export const POST = withAuth(async (request, session, context) => {
     const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
     const {
-      limit = 10, // Default to 10 pages per batch (research shows >10 causes quality degradation)
+      limit = 10,
       model = 'gemini-3-flash-preview',
       force = false, // When true, include pages that already have OCR (for re-processing)
+      pagesPerRequest = 1, // >1 enables multi-page mode: N images per Gemini request (saves quota)
     } = body;
 
     const db = await getDb();
@@ -123,8 +124,8 @@ export const POST = withAuth(async (request, session, context) => {
       });
     }
 
-    // Build batch requests - each page is a separate request
-    const batchRequests = [];
+    // Build batch requests
+    const batchRequests: Array<{ key: string; pageIds: string[]; request: Record<string, unknown> }> = [];
 
     // Use book's original_language if set, otherwise auto-detect
     const language = book.original_language || '';
@@ -133,6 +134,8 @@ export const POST = withAuth(async (request, session, context) => {
     const ocrPromptResult = await getOcrPrompt();
     const prompt = ocrPromptResult.text;
 
+    // Step 1: Fetch all images
+    const preparedPages: Array<{ id: string; pageNumber: number; image: { data: string; mimeType: string } }> = [];
     for (const page of pagesToProcess) {
       const typedPage = page as unknown as {
         cropped_photo?: string;
@@ -148,29 +151,62 @@ export const POST = withAuth(async (request, session, context) => {
         console.warn(`Failed to fetch image for page ${page.page_number}`);
         continue;
       }
+      preparedPages.push({ id: page.id, pageNumber: page.page_number, image });
+    }
 
-      batchRequests.push({
-        key: page.id, // Use page ID as key for matching results
-        request: {
-          contents: [{
-            parts: [
-              { text: prompt },
-              {
-                inlineData: {
-                  mimeType: image.mimeType,
-                  data: image.data
-                }
-              }
-            ],
-            role: 'user'
-          }],
-          config: {
-            temperature: 0.1,
-            maxOutputTokens: 16384,
-            thinkingConfig: { thinkingBudget: 0 },
-          },
+    // Step 2: Build batch requests
+    const effectivePPR = Math.max(1, Math.min(pagesPerRequest, 10)); // Clamp 1-10
+
+    if (effectivePPR > 1) {
+      // Multi-page mode: group images into single requests
+      for (let i = 0; i < preparedPages.length; i += effectivePPR) {
+        const chunk = preparedPages.slice(i, i + effectivePPR);
+        const parts: Array<Record<string, unknown>> = [];
+        const chunkPageIds: string[] = [];
+
+        parts.push({ text: `You will OCR ${chunk.length} page images. For each page, produce your complete OCR transcription wrapped in a <page id="PAGE_ID"> tag, where PAGE_ID matches the ID shown before each image.\n\nWithin each <page> block, follow these OCR instructions:\n\n${prompt}\n\nProduce one <page> block per image, in order:\n` });
+
+        for (const p of chunk) {
+          chunkPageIds.push(p.id);
+          parts.push({ text: `\nPage ID: ${p.id}` });
+          parts.push({ inlineData: { mimeType: p.image.mimeType, data: p.image.data } });
         }
-      });
+
+        batchRequests.push({
+          key: chunkPageIds[0], // First page ID as batch key
+          pageIds: chunkPageIds,
+          request: {
+            contents: [{ parts, role: 'user' }],
+            config: {
+              temperature: 0.1,
+              maxOutputTokens: Math.min(65536, 4096 * chunk.length),
+              thinkingConfig: { thinkingBudget: 0 },
+            },
+          },
+        });
+      }
+    } else {
+      // Single-page mode (original behavior)
+      for (const p of preparedPages) {
+        batchRequests.push({
+          key: p.id,
+          pageIds: [p.id],
+          request: {
+            contents: [{
+              parts: [
+                { text: prompt },
+                { inlineData: { mimeType: p.image.mimeType, data: p.image.data } },
+              ],
+              role: 'user',
+            }],
+            config: {
+              temperature: 0.1,
+              maxOutputTokens: 16384,
+              thinkingConfig: { thinkingBudget: 0 },
+            },
+          },
+        });
+      }
     }
 
     if (batchRequests.length === 0) {
@@ -193,6 +229,9 @@ export const POST = withAuth(async (request, session, context) => {
       }
     });
 
+    // Flat list of all page IDs across all requests
+    const allPageIds = batchRequests.flatMap(r => r.pageIds);
+
     // Store job info in database for tracking
     await db.collection('batch_jobs').insertOne({
       job_name: batchJob.name,
@@ -202,8 +241,10 @@ export const POST = withAuth(async (request, session, context) => {
       language,
       force,
       prompt_version: PROMPT_VERSION,
-      page_ids: batchRequests.map(r => r.key),
-      page_count: batchRequests.length,
+      page_ids: allPageIds,
+      page_count: allPageIds.length,
+      pages_per_request: effectivePPR,
+      request_count: batchRequests.length,
       status: batchJob.state,
       created_at: new Date(),
       updated_at: new Date(),
@@ -216,8 +257,8 @@ export const POST = withAuth(async (request, session, context) => {
       model,
       book_id: bookId,
       book_title: book?.title,
-      page_ids: batchRequests.map(r => r.key),
-      page_count: batchRequests.length,
+      page_ids: allPageIds,
+      page_count: allPageIds.length,
       batch_job_id: batchJob.name,
       gemini_job_name: batchJob.name,
       input_tokens: 0, // Not available until job completes
@@ -230,8 +271,10 @@ export const POST = withAuth(async (request, session, context) => {
       success: true,
       jobName: batchJob.name,
       state: batchJob.state,
-      pagesSubmitted: batchRequests.length,
-      message: `Batch job submitted. Check status with GET /api/books/${bookId}/batch-ocr-async?jobName=${batchJob.name}`
+      pagesSubmitted: allPageIds.length,
+      requestCount: batchRequests.length,
+      pagesPerRequest: effectivePPR,
+      message: `Batch job submitted: ${allPageIds.length} pages in ${batchRequests.length} requests. Check status with GET /api/books/${bookId}/batch-ocr-async?jobName=${batchJob.name}`
     });
 
   } catch (error) {
@@ -291,9 +334,10 @@ export const GET = withAuth(async (request, session, context) => {
       if (jobDoc && !jobDoc.results_collected && batchJob.dest?.inlinedResponses) {
         const pageIds = jobDoc.page_ids || [];
         const responses = batchJob.dest.inlinedResponses;
+        const isMultiPage = (jobDoc.pages_per_request || 1) > 1;
 
-        // Safety check: response count must match page count for positional matching
-        if (responses.length !== pageIds.length) {
+        // Safety check for single-page mode: response count must match page count
+        if (!isMultiPage && responses.length !== pageIds.length) {
           console.warn(`[batch-ocr] Response count (${responses.length}) != page count (${pageIds.length}) for job ${jobName}. Skipping to avoid mismatched data.`);
           return NextResponse.json({
             jobName,
@@ -307,14 +351,33 @@ export const GET = withAuth(async (request, session, context) => {
         let failCount = 0;
         const now = new Date().toISOString();
 
-        for (let i = 0; i < responses.length; i++) {
-          const pageId = pageIds[i];
-          const response = responses[i];
+        // Build flat list of { pageId, ocrText } from responses
+        const pageResults: Array<{ pageId: string; text: string }> = [];
 
-          // Extract text from nested response structure
-          const text = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (isMultiPage) {
+          // Multi-page mode: parse <page id="...">...</page> blocks
+          for (const response of responses) {
+            const responseText = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (!responseText) { failCount++; continue; }
+            const parsed = parseMultiPageOcr(responseText);
+            for (const [pageId, ocrText] of parsed) {
+              pageResults.push({ pageId, text: ocrText });
+            }
+          }
+        } else {
+          // Single-page mode: positional matching
+          for (let i = 0; i < responses.length; i++) {
+            const text = responses[i].response?.candidates?.[0]?.content?.parts?.[0]?.text;
+            if (text) {
+              pageResults.push({ pageId: pageIds[i], text });
+            } else {
+              failCount++;
+            }
+          }
+        }
 
-          if (text) {
+        // Save each page result
+        for (const { pageId, text } of pageResults) {
             const pageType = extractPageType(text);
             const columns = extractColumns(text);
             const detectedImages = parseDetectedImages(text);
@@ -347,9 +410,6 @@ export const GET = withAuth(async (request, session, context) => {
               continue;
             }
             successCount++;
-          } else {
-            failCount++;
-          }
         }
 
         // Mark results as collected
