@@ -70,7 +70,7 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
 
   // === XML syntax (new) ===
   // Extract language
-  result = result.replace(/<lang>([\s\S]*?)<\/lang>/gi, (_, lang) => {
+  result = result.replace(/<(?:lang|language)>([\s\S]*?)<\/(?:lang|language)>/gi, (_, lang) => {
     metadata.language = lang.trim();
     return '';
   });

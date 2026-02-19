@@ -55,9 +55,9 @@ function getApiKey() {
   return key;
 }
 
-// For batch jobs, try KEY_2 first (separate quota pool)
+// For batch jobs, try TIER3 first (highest quota), then KEY_2, then regular
 function getBatchApiKey() {
-  const key = process.env.GEMINI_API_KEY_2 || process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+  const key = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY_2 || process.env.GEMINI_API_KEY;
   if (!key) throw new Error('No GEMINI_API_KEY found in env');
   return key;
 }

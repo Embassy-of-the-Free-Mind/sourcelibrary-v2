@@ -74,14 +74,14 @@ export const ARABIC_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format, preserving the original text direction (RTL).
 
-**First:** Confirm the language with <lang>Arabic</lang> or <lang>Arabic with Persian/Turkish passages</lang>
+**First:** Confirm the language with <language>Arabic</language> or <language>Arabic with Persian/Turkish passages</language>
 
 **Arabic-specific conventions:**
 
 1. **Script identification:**
    - Identify script style: <meta>Naskh/Maghrebi/Nastaliq/Thuluth</meta>
    - Note if Ottoman Turkish or Persian in Arabic script
-   - Mark language switches: <lang>Persian</lang> ... <lang>Arabic</lang>
+   - Mark language switches: <language>Persian</language> ... <language>Arabic</language>
 
 2. **Vocalization (harakat):**
    - Transcribe all vowel marks (fatha, kasra, damma, sukun, shadda) when present
@@ -228,7 +228,7 @@ export const HEBREW_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format, preserving the original text direction (RTL).
 
-**First:** Confirm the language with <lang>Hebrew</lang> or <lang>Hebrew with Aramaic passages</lang>
+**First:** Confirm the language with <language>Hebrew</language> or <language>Hebrew with Aramaic passages</language>
 
 **Hebrew-specific conventions:**
 
@@ -236,7 +236,7 @@ export const HEBREW_PROMPTS = {
    - Identify script type: <meta>Square Hebrew/Rashi script/Cursive</meta>
    - Note if Ashkenazi or Sephardi orthography
    - Rashi script common for commentaries
-   - Mark language switches: <lang>Aramaic</lang> ... <lang>Hebrew</lang>
+   - Mark language switches: <language>Aramaic</language> ... <language>Hebrew</language>
 
 2. **Vocalization (nikud):**
    - Transcribe ALL vowel points when present
@@ -391,7 +391,7 @@ export const LATIN_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format that visually resembles the original.
 
-**First:** Confirm the language with <lang>Latin</lang> or <lang>Latin with {other} passages</lang>
+**First:** Confirm the language with <language>Latin</language> or <language>Latin with {other} passages</language>
 
 **Latin-specific conventions:**
 
@@ -550,7 +550,7 @@ export const GERMAN_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format that visually resembles the original.
 
-**First:** Confirm with <lang>German</lang> or <lang>German (Early New High German)</lang> as appropriate.
+**First:** Confirm with <language>German</language> or <language>German (Early New High German)</language> as appropriate.
 
 **German-specific conventions:**
 
@@ -584,7 +584,7 @@ export const GERMAN_PROMPTS = {
 
 6. **Mixed language:**
    - German texts often include Latin phrases
-   - Mark language switches: <lang>Latin</lang> ... <lang>German</lang>
+   - Mark language switches: <language>Latin</language> ... <language>German</language>
    - Keep Latin passages in their original form
 
 **Representing text styles:**
@@ -755,7 +755,7 @@ If page is blank or contains only non-text elements:
 For blank pages, output ONLY the meta tag. No transcription needed.
 
 **Metadata tags (hidden from readers):**
-- <lang>detected</lang> — actual language if different from expected
+- <language>detected</language> — actual language if different from expected
 - <page-num>1r</page-num> — original numbering (folio/page as printed)
 - <header>X</header> — running headers (NOT in body text)
 - <sig>X</sig> — printer's signatures like A2, B1v (NOT in body text)

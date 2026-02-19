@@ -5,7 +5,7 @@ export const LATIN_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format that visually resembles the original.
 
-**First:** Confirm the language with <lang>Latin</lang> or <lang>Latin with {other} passages</lang>
+**First:** Confirm the language with <language>Latin</language> or <language>Latin with {other} passages</language>
 
 **Latin-specific conventions:**
 

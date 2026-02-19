@@ -5,6 +5,7 @@ import { verifyCronAuth } from '@/lib/cron-auth';
 import { extractChaptersForBook } from '@/lib/chapter-extraction';
 import { enrichBookMetadata } from '@/lib/metadata-enrichment';
 import { nanoid } from 'nanoid';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 
 export const maxDuration = 300;
@@ -455,6 +456,7 @@ export async function GET(request: NextRequest) {
           const remainingTranslate = await db.collection('pages').countDocuments({
             book_id: book.id,
             'ocr.data': { $exists: true, $nin: [null, ''] },
+            page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
             $or: [
               { 'translation.data': { $exists: false } },
               { 'translation.data': null },

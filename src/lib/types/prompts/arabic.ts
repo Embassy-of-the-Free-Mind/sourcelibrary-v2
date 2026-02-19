@@ -5,14 +5,14 @@ export const ARABIC_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format, preserving the original text direction (RTL).
 
-**First:** Confirm the language with <lang>Arabic</lang> or <lang>Arabic with Persian/Turkish passages</lang>
+**First:** Confirm the language with <language>Arabic</language> or <language>Arabic with Persian/Turkish passages</language>
 
 **Arabic-specific conventions:**
 
 1. **Script identification:**
    - Identify script style: <meta>Naskh/Maghrebi/Nastaliq/Thuluth</meta>
    - Note if Ottoman Turkish or Persian in Arabic script
-   - Mark language switches: <lang>Persian</lang> ... <lang>Arabic</lang>
+   - Mark language switches: <language>Persian</language> ... <language>Arabic</language>
 
 2. **Vocalization (harakat):**
    - Transcribe all vowel marks (fatha, kasra, damma, sukun, shadda) when present

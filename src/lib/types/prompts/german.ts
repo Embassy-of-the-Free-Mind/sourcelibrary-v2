@@ -5,7 +5,7 @@ export const GERMAN_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format that visually resembles the original.
 
-**First:** Confirm with <lang>German</lang> or <lang>German (Early New High German)</lang> as appropriate.
+**First:** Confirm with <language>German</language> or <language>German (Early New High German)</language> as appropriate.
 
 **German-specific conventions:**
 
@@ -39,7 +39,7 @@ export const GERMAN_PROMPTS = {
 
 6. **Mixed language:**
    - German texts often include Latin phrases
-   - Mark language switches: <lang>Latin</lang> ... <lang>German</lang>
+   - Mark language switches: <language>Latin</language> ... <language>German</language>
    - Keep Latin passages in their original form
 
 **Representing text styles:**

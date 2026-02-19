@@ -3,7 +3,7 @@ import { GoogleGenAI } from '@google/genai';
 import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTranslationPrompt } from '@/lib/prompts';
-import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { createSnapshotIfNeeded } from '@/lib/snapshots';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -50,10 +50,12 @@ export const POST = withAuth(async (request, session, context) => {
       ? {
           book_id: bookId,
           'ocr.data': { $exists: true, $nin: [null, ''] },
+          page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
         }
       : {
           book_id: bookId,
           'ocr.data': { $exists: true, $nin: [null, ''] },
+          page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
           $or: [
             { 'translation.data': { $exists: false } },
             { 'translation.data': null },

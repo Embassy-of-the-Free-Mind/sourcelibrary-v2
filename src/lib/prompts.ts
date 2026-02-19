@@ -106,7 +106,7 @@ export async function getOcrPrompt(
   options?: { name?: string; id?: string; customText?: string }
 ): Promise<PromptLookupResult> {
   const result = await getPrompt('ocr', options);
-  const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <lang> tag.`;
+  const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
   return {
     text: result.text
       .replace('{language_instruction}', languageInstruction)

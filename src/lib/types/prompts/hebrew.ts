@@ -5,7 +5,7 @@ export const HEBREW_PROMPTS = {
 
 **Output:** A faithful transcription in Markdown format, preserving the original text direction (RTL).
 
-**First:** Confirm the language with <lang>Hebrew</lang> or <lang>Hebrew with Aramaic passages</lang>
+**First:** Confirm the language with <language>Hebrew</language> or <language>Hebrew with Aramaic passages</language>
 
 **Hebrew-specific conventions:**
 
@@ -13,7 +13,7 @@ export const HEBREW_PROMPTS = {
    - Identify script type: <meta>Square Hebrew/Rashi script/Cursive</meta>
    - Note if Ashkenazi or Sephardi orthography
    - Rashi script common for commentaries
-   - Mark language switches: <lang>Aramaic</lang> ... <lang>Hebrew</lang>
+   - Mark language switches: <language>Aramaic</language> ... <language>Hebrew</language>
 
 2. **Vocalization (nikud):**
    - Transcribe ALL vowel points when present

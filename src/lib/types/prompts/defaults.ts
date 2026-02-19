@@ -2,12 +2,17 @@ import { ProcessingPrompts } from "./core";
 import type { DetectedImage } from "../page";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
-export const PROMPT_VERSION = 'v4.2026-02';
+export const PROMPT_VERSION = 'v5.2026-02';
 
 const VALID_PAGE_TYPES = new Set([
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
   'errata', 'colophon', 'appendix', 'blank', 'illustration', 'diagram', 'map', 'text',
 ]);
+
+// Page types that should be skipped during translation — no meaningful text content
+export const SKIP_TRANSLATION_PAGE_TYPES = [
+  'blank', 'illustration', 'map', 'frontispiece', 'diagram',
+];
 
 /** Extract <page-type> from OCR text. Returns undefined if not found or invalid. */
 export function extractPageType(ocrText: string): string | undefined {
@@ -134,7 +139,7 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 - Any visual layout that isn't truly tabular
 
 **Metadata tags (hidden from readers):**
-- <lang>X</lang> — the detected language of this page (REQUIRED — always identify the language)
+- <language>X</language> — the detected language of this page (REQUIRED — always identify the language, e.g. Latin, German, French, English)
 - <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text
 - <columns>N</columns> — number of text columns on this page (omit for single-column pages, include for 2+ columns)
 - <page-num>N</page-num> — visible page/folio numbers (NOT in body text)

@@ -29,7 +29,7 @@ function extractMetadataFromText(text: string): {
   if (!text) return result;
 
   // XML syntax
-  const langMatch = text.match(/<lang>([\s\S]*?)<\/lang>/i);
+  const langMatch = text.match(/<(?:lang|language)>([\s\S]*?)<\/(?:lang|language)>/i);
   if (langMatch) result.language = langMatch[1].trim();
 
   const pageNumMatch = text.match(/<page-num>([\s\S]*?)<\/page-num>/i);

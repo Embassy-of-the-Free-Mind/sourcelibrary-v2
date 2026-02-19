@@ -2,6 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import { performTranslation } from '@/lib/ai';
 import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
+import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
@@ -70,6 +71,17 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         $inc: { 'progress.failed': 1 },
         $set: { updated_at: new Date() }
       }
+    );
+    await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
+    return;
+  }
+
+  // Skip pages with no meaningful text content (blank, illustration, etc.)
+  if (page.page_type && SKIP_TRANSLATION_PAGE_TYPES.includes(page.page_type)) {
+    console.log(`[TRANS] Skipping page ${pageId} (page_type: ${page.page_type})`);
+    await jobs.updateOne(
+      { id: jobId },
+      { $inc: { 'progress.completed': 1 }, $set: { updated_at: new Date() } }
     );
     await checkJobCompletion(db, jobs, pages, jobId, bookId, targetPageIds);
     return;
