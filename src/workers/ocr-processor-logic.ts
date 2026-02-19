@@ -34,6 +34,24 @@ function getPageImageUrl(page: Page): string | null {
   );
 }
 
+/**
+ * Retry a MongoDB operation with exponential backoff.
+ * Designed for saving AI results that are expensive to regenerate.
+ */
+async function retryDbWrite<T>(fn: () => Promise<T>, label: string, maxRetries = 3): Promise<T> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (attempt === maxRetries) throw err;
+      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 8000);
+      console.warn(`[OCR] ${label} failed (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms:`, (err as Error).message);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+  throw new Error('unreachable');
+}
+
 export async function processOcrPage(message: PageProcessingMessage): Promise<void> {
   const { bookId, pageId, jobId, customPrompt } = message;
 
@@ -79,8 +97,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
   // Get image URL with priority fallbacks
   const imageUrl = getPageImageUrl(page);
-  if (!imageUrl) {
-    console.error(`[OCR] Page ${pageId} has no image URL`);
+  if (!imageUrl || (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://'))) {
+    console.error(`[OCR] Page ${pageId} has ${!imageUrl ? 'no image URL' : `non-HTTP image URL: ${imageUrl.substring(0, 100)}`}`);
     await jobs.updateOne(
       { id: jobId },
       {
@@ -135,11 +153,11 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     const durationMs = Date.now() - startTime;
     console.log(`[OCR] OCR completed for page ${pageId}, text length: ${ocrResult.text.length}, ${durationMs}ms`);
 
-    // Save OCR result
+    // Save OCR result (with retry — Gemini tokens are already spent)
     const pageType = extractPageType(ocrResult.text);
     const columns = extractColumns(ocrResult.text);
     const detectedImages = parseDetectedImages(ocrResult.text);
-    await pages.updateOne(
+    await retryDbWrite(() => pages.updateOne(
       { id: pageId },
       {
         $set: {
@@ -157,7 +175,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           updated_at: new Date()
         }
       }
-    );
+    ), `save OCR for page ${pageId}`);
 
     // Log successful AI call (non-blocking - don't let logging failures crash the worker)
     try {
@@ -206,11 +224,11 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
           const retryDuration = Date.now() - startTime;
           console.log(`[OCR] Retry succeeded with ${nextModel} for page ${pageId}`);
 
-          // Save retry result
+          // Save retry result (with retry — Gemini tokens are already spent)
           const retryPageType = extractPageType(retryResult.text);
           const retryColumns = extractColumns(retryResult.text);
           const retryImages = parseDetectedImages(retryResult.text);
-          await pages.updateOne(
+          await retryDbWrite(() => pages.updateOne(
             { id: pageId },
             {
               $set: {
@@ -228,7 +246,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
                 updated_at: new Date()
               }
             }
-          );
+          ), `save OCR retry for page ${pageId}`);
 
           // Log successful retry
           try {

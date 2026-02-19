@@ -18,6 +18,24 @@ import { createSnapshotIfNeeded } from '@/lib/snapshots';
  * 4. Update progress counter
  * 5. Check if job is complete
  */
+/**
+ * Retry a MongoDB operation with exponential backoff.
+ * Designed for saving AI results that are expensive to regenerate.
+ */
+async function retryDbWrite<T>(fn: () => Promise<T>, label: string, maxRetries = 3): Promise<T> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (attempt === maxRetries) throw err;
+      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 8000);
+      console.warn(`[TRANS] ${label} failed (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms:`, (err as Error).message);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+  throw new Error('unreachable');
+}
+
 export async function processTranslationPage(message: PageProcessingMessage) {
   const { bookId, pageId, jobId, customPrompt } = message;
 
@@ -123,9 +141,9 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
     const durationMs = Date.now() - startTime;
 
-    // Save translation + harvest metadata tags
+    // Save translation + harvest metadata tags (with retry — Gemini tokens are already spent)
     const translationMeta = extractTranslationMetadata(translationResult.text);
-    await pages.updateOne(
+    await retryDbWrite(() => pages.updateOne(
       { id: pageId },
       {
         $set: {
@@ -141,7 +159,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
           updated_at: new Date()
         }
       }
-    );
+    ), `save translation for page ${pageId}`);
 
     // Log successful AI call
     await logGeminiCall({

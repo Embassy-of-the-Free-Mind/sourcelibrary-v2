@@ -144,7 +144,7 @@ async function main() {
   const archivedOnly = !process.argv.includes('--include-remote');
   console.log(`Thumbnail generator — concurrency: ${CONCURRENCY}, limit: ${PAGE_LIMIT || 'all'}, archived only: ${archivedOnly}`);
 
-  const client = new MongoClient(MONGODB_URI!);
+  const client = new MongoClient(MONGODB_URI!, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
 

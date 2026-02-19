@@ -10,7 +10,7 @@ import { writeFileSync } from 'fs';
 const TARGET = 'gemini-3-flash-preview';
 const SKIP = ['manual', 'manual-correction'];
 
-const client = new MongoClient(process.env.MONGODB_URI);
+const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
 await client.connect();
 const db = client.db('bookstore');
 

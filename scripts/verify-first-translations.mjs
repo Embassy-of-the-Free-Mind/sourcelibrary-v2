@@ -218,7 +218,7 @@ async function main() {
   console.log(`Model: ${MODEL} (text only, no images)`);
   console.log(`Limit: ${limit}\n`);
 
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db(MONGODB_DB);
 

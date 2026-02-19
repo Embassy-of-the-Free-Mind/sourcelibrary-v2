@@ -21,11 +21,11 @@ try {
     const db = await getDb();
     const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
-    // === Run ALL independent query blocks in parallel ===
+    // === Use book-level cached fields instead of scanning 1.8M pages ===
+    // Book-level pages_count, pages_ocr, pages_translated are refreshed by sync-page-counts cron (every 6h)
     const [
-      countsResult,
+      bookAggResult,
       recentBooksResult,
-      pagesWithOcrNoModelResult,
       modelUsageResult,
       promptUsageResult,
       collectionStatsResult,
@@ -34,13 +34,16 @@ try {
       costByDayResult,
       costByActionResult,
     ] = await Promise.all([
-      // 1. Book and page counts
-      Promise.all([
-        db.collection('books').estimatedDocumentCount(),
-        db.collection('pages').estimatedDocumentCount(),
-        db.collection('pages').countDocuments({ 'ocr.data': { $exists: true, $ne: '' } }),
-        db.collection('pages').countDocuments({ 'translation.data': { $exists: true, $ne: '' } }),
-      ]).catch(() => [0, 0, 0, 0] as number[]),
+      // 1. Aggregate from books (fast — only 5k docs) instead of scanning 1.8M pages
+      db.collection('books').aggregate([
+        { $group: {
+          _id: null,
+          totalBooks: { $sum: 1 },
+          totalPages: { $sum: { $ifNull: ['$pages_count', 0] } },
+          pagesWithOcr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+          pagesWithTranslation: { $sum: { $ifNull: ['$pages_translated', 0] } },
+        }}
+      ]).toArray().catch(() => [{ _id: null, totalBooks: 0, totalPages: 0, pagesWithOcr: 0, pagesWithTranslation: 0 }]),
 
       // 2. Recent books
       db.collection('books')
@@ -50,49 +53,45 @@ try {
         .project({ title: 1, author: 1, created_at: 1, pages_count: 1 })
         .toArray().catch(() => []),
 
-      // 3. Pages with OCR but no model
-      db.collection('pages').countDocuments({
-        'ocr.data': { $exists: true, $ne: '' },
-        $or: [{ 'ocr.model': { $exists: false } }, { 'ocr.model': null }, { 'ocr.model': '' }],
-      }).catch(() => 0),
-
-      // 4. Model usage
-      db.collection('pages').aggregate([
-        { $match: { 'ocr.model': { $exists: true, $ne: null, $nin: ['', null] } } },
-        { $group: { _id: '$ocr.model', count: { $sum: 1 } } },
+      // 3. Model usage from gemini_usage (indexed on timestamp) instead of scanning all pages
+      db.collection('gemini_usage').aggregate([
+        { $match: { type: 'ocr', model: { $exists: true, $ne: null } } },
+        { $group: { _id: '$model', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
       ]).toArray().catch(() => []),
 
-      // 5. Prompt usage
-      db.collection('pages').aggregate([
-        { $match: { 'ocr.prompt_name': { $exists: true, $ne: null, $nin: ['', null] } } },
-        { $group: { _id: '$ocr.prompt_name', count: { $sum: 1 } } },
+      // 4. Prompt usage from gemini_usage instead of scanning all pages
+      db.collection('gemini_usage').aggregate([
+        { $match: { type: 'ocr', endpoint: { $exists: true, $ne: null } } },
+        { $group: { _id: '$endpoint', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
       ]).toArray().catch(() => []),
 
-      // 6. Collection stats
+      // 5. Collection stats — use book-level queries (fast on 5k docs)
       Promise.all([
-        db.collection('pages').countDocuments({ cropped_photo: { $exists: true, $nin: [null, ''] } }),
-        db.collection('pages').countDocuments({ archived_photo: { $exists: true, $nin: [null, ''] } }),
-        db.collection('pages').distinct('book_id', { 'crop.xStart': { $exists: true } }),
+        // Books with split pages (has crop data)
+        db.collection('books').countDocuments({ 'split_check.needs_splitting': true }),
+        // Language breakdown
         db.collection('books').aggregate([
           { $group: { _id: '$language', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
           { $limit: 15 }
         ]).toArray(),
+        // Category breakdown
         db.collection('books').aggregate([
           { $unwind: '$categories' },
           { $group: { _id: '$categories', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
           { $limit: 15 }
         ]).toArray(),
+        // Provider breakdown
         db.collection('books').aggregate([
           { $group: { _id: '$image_source.provider', count: { $sum: 1 } } },
           { $sort: { count: -1 } }
         ]).toArray(),
-      ]).catch(() => [0, 0, [], [], [], []] as any),
+      ]).catch(() => [0, [], [], []] as any),
 
-      // 7. Pipeline health
+      // 6. Pipeline health — all book-level queries (fast)
       Promise.all([
         db.collection('books').countDocuments({ needs_splitting: true }),
         db.collection('books').countDocuments({ needs_splitting: false }),
@@ -109,25 +108,25 @@ try {
           pages_count: { $gt: 0 },
           $expr: { $gte: [{ $divide: ['$pages_translated', '$pages_count'] }, 0.95] }
         }),
-        db.collection('pages').countDocuments({ detected_images: { $exists: true, $not: { $size: 0 } } }),
-        db.collection('pages').aggregate([
-          { $match: { detected_images: { $exists: true, $not: { $size: 0 } } } },
-          { $project: { count: { $size: '$detected_images' } } },
-          { $group: { _id: null, total: { $sum: '$count' } } }
+        // Image stats from gemini_usage instead of scanning pages
+        db.collection('gemini_usage').aggregate([
+          { $match: { type: 'extract_images', status: 'success' } },
+          { $group: { _id: null, totalPages: { $sum: 1 } } }
         ]).toArray(),
+        // Active batch jobs
         db.collection('batch_jobs').aggregate([
           { $match: { status: { $in: ['pending', 'processing'] } } },
           { $group: { _id: { status: '$status', type: '$type' }, count: { $sum: 1 } } }
         ]).toArray(),
-      ]).catch(() => [0, 0, 0, 0, 0, 0, 0, 0, 0, [], []] as any),
+      ]).catch(() => [0, 0, 0, 0, 0, 0, 0, 0, [], []] as any),
 
-      // 8. Cost total
+      // 7. Cost total
       db.collection('gemini_usage').aggregate([
         { $match: { timestamp: { $gte: cutoffDate } } },
         { $group: { _id: null, totalCost: { $sum: '$cost_usd' }, totalTokens: { $sum: { $add: ['$input_tokens', '$output_tokens'] } } } },
       ]).toArray().catch(() => []),
 
-      // 9. Cost by day
+      // 8. Cost by day
       db.collection('gemini_usage').aggregate([
         { $match: { timestamp: { $gte: cutoffDate } } },
         { $group: {
@@ -138,7 +137,7 @@ try {
         { $sort: { _id: 1 } },
       ]).toArray().catch(() => []),
 
-      // 10. Cost by action
+      // 9. Cost by action
       db.collection('gemini_usage').aggregate([
         { $match: { timestamp: { $gte: cutoffDate } } },
         { $group: { _id: '$type', cost: { $sum: '$cost_usd' }, count: { $sum: 1 } } },
@@ -148,27 +147,27 @@ try {
 
     // === Process results ===
 
-    const [totalBooks, totalPages, pagesWithOcr, pagesWithTranslation] = countsResult;
+    const agg = (bookAggResult as any[])[0] || {};
+    const totalBooks = agg.totalBooks || 0;
+    const totalPages = agg.totalPages || 0;
+    const pagesWithOcr = agg.pagesWithOcr || 0;
+    const pagesWithTranslation = agg.pagesWithTranslation || 0;
 
     const recentBooks = (recentBooksResult as any[]).map(b => ({
       title: b.title, author: b.author, created_at: b.created_at, pages_count: b.pages_count,
     }));
 
     const modelUsage = (modelUsageResult as any[]).map(m => ({ _id: m._id, count: m.count }));
-    if ((pagesWithOcrNoModelResult as number) > 0) {
-      modelUsage.push({ _id: '__untracked__', count: pagesWithOcrNoModelResult as number });
-    }
-
-    const promptUsage = promptUsageResult as any[];
+    const promptUsage = (promptUsageResult as any[]).map((p: any) => ({ _id: p._id, count: p.count }));
 
     // Collection stats
-    const [croppedCount, archivedCount, splitBooks, langAgg, catAgg, providerAgg] = collectionStatsResult as any;
+    const [booksWithSplitPages, langAgg, catAgg, providerAgg] = collectionStatsResult as any;
     const collectionStats = {
       blobStorage: {
-        pagesWithCroppedPhoto: croppedCount || 0,
-        pagesWithArchivedPhoto: archivedCount || 0,
-        totalBlobPages: (croppedCount || 0) + (archivedCount || 0),
-        booksWithSplitPages: splitBooks?.length || 0,
+        pagesWithCroppedPhoto: 0, // No longer scanning pages for this
+        pagesWithArchivedPhoto: 0,
+        totalBlobPages: 0,
+        booksWithSplitPages: booksWithSplitPages || 0,
       },
       byLanguage: (langAgg || []).map((l: any) => ({ language: l._id || 'Unknown', count: l.count })),
       byCategory: (catAgg || []).map((c: any) => ({ category: c._id || 'Unknown', count: c.count })),
@@ -179,7 +178,7 @@ try {
     const [
       needsSplitting, noSplitNeeded, splitChecked,
       booksWithSummary, booksWithIndex, booksWithChapters, booksWithEditions, fullyTranslated,
-      pagesWithDetectedImages, detectedImagesAgg, batchJobsAgg,
+      imageStatsAgg, batchJobsAgg,
     ] = pipelineHealthResult as any;
 
     const alreadySplit = collectionStats.blobStorage.booksWithSplitPages;
@@ -195,6 +194,8 @@ try {
       jobsByType[type] = (jobsByType[type] || 0) + item.count;
     }
 
+    const pagesWithDetectedImages = (imageStatsAgg as any[])?.[0]?.totalPages || 0;
+
     const pipelineHealth = {
       splitting: { needsSplitting: needsSplitting || 0, alreadySplit, noSplitNeeded: noSplitNeeded || 0, unchecked: Math.max(0, unchecked) },
       enrichment: {
@@ -202,7 +203,7 @@ try {
         booksWithChapters: booksWithChapters || 0, booksWithEditions: booksWithEditions || 0,
         fullyTranslated: fullyTranslated || 0,
       },
-      images: { pagesWithDetectedImages: pagesWithDetectedImages || 0, totalDetectedImages: detectedImagesAgg?.[0]?.total || 0 },
+      images: { pagesWithDetectedImages, totalDetectedImages: 0 },
       batchJobs: { pending: pendingJobs, processing: processingJobs, byType: Object.entries(jobsByType).map(([type, count]) => ({ type, count })) },
     };
 

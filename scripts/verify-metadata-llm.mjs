@@ -164,7 +164,7 @@ async function main() {
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'APPLY CHANGES'}`);
   console.log(`Using Claude Haiku for matching\n`);
 
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db(MONGODB_DB);
 

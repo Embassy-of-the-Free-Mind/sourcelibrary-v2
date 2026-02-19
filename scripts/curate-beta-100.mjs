@@ -35,7 +35,7 @@ const removeArg = args.find(a => a.startsWith('--remove='));
 const addIds = addArg ? addArg.split('=')[1].split(',') : [];
 const removeIds = removeArg ? removeArg.split('=')[1].split(',') : [];
 
-const client = new MongoClient(MONGODB_URI);
+const client = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
 
 async function main() {
   await client.connect();

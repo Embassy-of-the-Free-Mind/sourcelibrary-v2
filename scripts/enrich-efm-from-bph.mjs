@@ -202,7 +202,7 @@ async function main() {
   if (surfaceDescriptions) console.log('Also surfacing AI descriptions');
   console.log();
 
-  const mongoClient = new MongoClient(MONGODB_URI);
+  const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await mongoClient.connect();
   const db = mongoClient.db(MONGODB_DB);
 

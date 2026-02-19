@@ -297,7 +297,7 @@ async function main() {
   if (RECENT) console.log(`  Recent: ${RECENT} books`);
   if (DAYS) console.log(`  Days: last ${DAYS}`);
 
-  const client = new MongoClient(MONGODB_URI!);
+  const client = new MongoClient(MONGODB_URI!, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
 

@@ -226,7 +226,7 @@ async function main() {
   console.log(`Concurrency: ${CONCURRENCY}`);
   console.log(`Limit: ${limit}\n`);
 
-  const mongoClient = new MongoClient(MONGODB_URI);
+  const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await mongoClient.connect();
   const db = mongoClient.db(MONGODB_DB);
 

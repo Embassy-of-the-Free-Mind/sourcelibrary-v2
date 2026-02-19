@@ -70,7 +70,7 @@ async function main() {
   if (!mongoUri) throw new Error('MONGODB_URI not set');
   if (!TRANSLATION_QUEUE_URL) throw new Error('SQS_PAGE_TRANSLATION_QUEUE_URL not set');
 
-  const client = new MongoClient(mongoUri);
+  const client = new MongoClient(mongoUri, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
 

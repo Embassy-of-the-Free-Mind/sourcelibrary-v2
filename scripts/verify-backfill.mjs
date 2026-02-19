@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 
-const client = new MongoClient(MONGODB_URI);
+const client = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
 await client.connect();
 const db = client.db('bookstore');
 const books = db.collection('books');

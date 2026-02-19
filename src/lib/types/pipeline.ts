@@ -65,6 +65,7 @@ export type PipelineAutoStatus =
   | 'images_submitted'
   | 'images_complete'
   | 'complete'
+  | 'needs_attention'
   | 'failed';
 
 export interface PipelineAutoState {
@@ -87,4 +88,8 @@ export interface PipelineAutoState {
   image_extraction_job_id?: string;
   /** Last time the cron touched this book */
   last_updated?: Date;
+  /** How many times OCR has looped back (archive_complete → ocr_submitted → archive_complete) */
+  ocr_loop_count?: number;
+  /** How many times translation has looped back */
+  translate_loop_count?: number;
 }

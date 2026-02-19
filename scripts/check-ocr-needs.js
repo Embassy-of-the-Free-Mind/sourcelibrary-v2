@@ -2,7 +2,7 @@ const { MongoClient } = require("mongodb");
 require("dotenv").config({ path: ".env.local" });
 
 async function main() {
-  const client = new MongoClient(process.env.MONGODB_URI);
+  const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db("bookstore");
 

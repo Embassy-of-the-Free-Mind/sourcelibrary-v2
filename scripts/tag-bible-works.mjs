@@ -93,7 +93,7 @@ const workAssignments = {
 };
 
 async function main() {
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
   const books = db.collection('books');

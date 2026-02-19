@@ -134,8 +134,9 @@ export const POST = withAuth(async (request, session, context) => {
     const ocrPromptResult = await getOcrPrompt();
     const prompt = ocrPromptResult.text;
 
-    // Step 1: Fetch all images
+    // Step 1: Validate image URLs and fetch images
     const preparedPages: Array<{ id: string; pageNumber: number; image: { data: string; mimeType: string } }> = [];
+    let skippedBadUrl = 0;
     for (const page of pagesToProcess) {
       const typedPage = page as unknown as {
         cropped_photo?: string;
@@ -145,6 +146,14 @@ export const POST = withAuth(async (request, session, context) => {
         crop?: { xStart: number; xEnd: number };
       };
       const imageUrl = getPageImageUrl(typedPage);
+
+      // Guard: skip pages with non-HTTP image URLs (e.g. local filesystem paths)
+      if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+        console.warn(`[batch-ocr] Skipping page ${page.page_number}: non-HTTP image URL: ${imageUrl.substring(0, 100)}`);
+        skippedBadUrl++;
+        continue;
+      }
+
       const image = await fetchImageAsBase64(imageUrl);
 
       if (!image) {
@@ -152,6 +161,16 @@ export const POST = withAuth(async (request, session, context) => {
         continue;
       }
       preparedPages.push({ id: page.id, pageNumber: page.page_number, image });
+    }
+
+    // If all pages were skipped due to bad URLs, return a distinct error
+    if (preparedPages.length === 0 && skippedBadUrl > 0) {
+      return NextResponse.json({
+        error: 'no_valid_image_urls',
+        message: `All ${skippedBadUrl} pages have non-HTTP image URLs (local filesystem paths?). Archive images first.`,
+        skippedBadUrl,
+        attempted: pagesToProcess.length,
+      }, { status: 422 });
     }
 
     // Step 2: Build batch requests

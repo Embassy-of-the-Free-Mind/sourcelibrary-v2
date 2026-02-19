@@ -333,7 +333,7 @@ async function main() {
   const mongoUri = process.env.MONGODB_URI;
   if (!mongoUri) throw new Error('MONGODB_URI not set');
 
-  const client = new MongoClient(mongoUri);
+  const client = new MongoClient(mongoUri, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
 

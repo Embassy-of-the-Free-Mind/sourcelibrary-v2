@@ -12,14 +12,36 @@ if (!dbName) {
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
+let lastValidated = 0;
+const VALIDATION_INTERVAL_MS = 30_000;
+
+function clearCache() {
+  cachedClient = null;
+  cachedDb = null;
+  lastValidated = 0;
+}
 
 export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db }> {
   if (!uri || !dbName) {
     throw new Error('MongoDB environment variables not configured');
   }
 
+  // Validate cached connection periodically to detect stale/dead connections
   if (cachedClient && cachedDb) {
-    return { client: cachedClient, db: cachedDb };
+    const now = Date.now();
+    if (now - lastValidated > VALIDATION_INTERVAL_MS) {
+      try {
+        await cachedClient.db('admin').command({ ping: 1 });
+        lastValidated = now;
+      } catch {
+        console.warn('[MongoDB] Cached connection stale, reconnecting...');
+        try { await cachedClient.close(); } catch { /* ignore close errors */ }
+        clearCache();
+      }
+    }
+    if (cachedClient && cachedDb) {
+      return { client: cachedClient, db: cachedDb };
+    }
   }
 
   try {
@@ -44,11 +66,13 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
 
     cachedClient = client;
     cachedDb = db;
+    lastValidated = Date.now();
 
     console.log('[MongoDB] ✓ Connected to:', dbName);
     return { client, db };
   } catch (error) {
     console.error('[MongoDB] ✗ Connection failed:', error);
+    clearCache();
     throw error;
   }
 }

@@ -90,6 +90,17 @@ export async function GET(request: NextRequest) {
   const baseUrl = getBaseUrl();
   const db = await getDb();
 
+  // Check emergency stop flag
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' as any });
+  if (control?.paused) {
+    return NextResponse.json({
+      success: true,
+      paused: true,
+      paused_at: control.paused_at,
+      message: 'Pipeline paused by emergency stop. POST /api/admin/emergency-stop?resume=true to re-enable.',
+    });
+  }
+
   const log = {
     enrolled: 0,
     archived: 0,
@@ -105,6 +116,7 @@ export async function GET(request: NextRequest) {
     images_submitted: 0,
     images_advanced: 0,
     finalized: 0,
+    needs_attention: 0,
     stale_retried: 0,
     stale_failed: 0,
     errors: [] as string[],
@@ -195,32 +207,69 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyForOcr = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
-        .project({ id: 1, title: 1, pages_count: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(OCR_SUBMIT_LIMIT)
         .toArray();
 
       for (const book of readyForOcr) {
         if (!hasTimeBudget(startTime)) break;
+        const retries = book.pipeline_auto?.retry_count || 0;
         try {
+          // Guard: verify book has pages with fetchable (HTTP) image URLs
+          const httpPageCount = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            $or: [
+              { photo: { $regex: /^https?:\/\// } },
+              { archived_photo: { $regex: /^https?:\/\// } },
+              { photo_original: { $regex: /^https?:\/\// } },
+            ],
+          });
+
+          if (httpPageCount === 0) {
+            await setPipelineStatus(db, book.id, 'needs_attention', {
+              error: 'No pages with HTTP image URLs — cannot OCR',
+            });
+            log.needs_attention++;
+            log.errors.push(`OCR skip ${book.id} (${book.title}): no HTTP image URLs`);
+            continue;
+          }
+
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
             headers: getInternalHeaders(),
             body: JSON.stringify({ limit: 10, force: false, pagesPerRequest: 5 }),
           });
-          if (!res.ok) {
-            log.errors.push(`OCR submit ${book.id}: HTTP ${res.status}`);
-            continue;
-          }
+
           const text = await res.text();
           let data: Record<string, unknown>;
           try { data = JSON.parse(text); } catch {
-            log.errors.push(`OCR submit ${book.id}: invalid JSON (${text.length} chars)`);
+            data = { error: `invalid JSON (${text.length} chars)` };
+          }
+
+          if (!res.ok) {
+            // Permanent failure: no valid image URLs
+            if (data.error === 'no_valid_image_urls') {
+              await setPipelineStatus(db, book.id, 'needs_attention', {
+                error: `${data.message}`,
+              });
+              log.needs_attention++;
+              log.errors.push(`OCR submit ${book.id}: no valid image URLs — needs_attention`);
+              continue;
+            }
+            // Transient failure — retry with tracking
+            if (retries >= MAX_RETRIES) {
+              await markFailed(db, book.id, `OCR submit failed after ${retries} retries: HTTP ${res.status}`, retries);
+            } else {
+              await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
+            }
+            log.errors.push(`OCR submit ${book.id}: HTTP ${res.status} (retry ${retries + 1}/${MAX_RETRIES})`);
             continue;
           }
 
           if (data.jobName) {
             await setPipelineStatus(db, book.id, 'ocr_submitted', {
               ocr_job_name: data.jobName as string,
+              retry_count: 0,
             });
             log.ocr_submitted++;
           } else if (data.processed === 0 || (data.message as string)?.includes('No pages need OCR')) {
@@ -228,9 +277,19 @@ export async function GET(request: NextRequest) {
             await setPipelineStatus(db, book.id, 'ocr_complete');
             log.ocr_advanced++;
           } else {
+            if (retries >= MAX_RETRIES) {
+              await markFailed(db, book.id, `OCR submit unexpected: ${data.error || 'unknown'}`, retries);
+            } else {
+              await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
+            }
             log.errors.push(`OCR submit ${book.id}: ${data.error || 'unexpected response'}`);
           }
         } catch (err) {
+          if (retries >= MAX_RETRIES) {
+            await markFailed(db, book.id, `OCR submit exception: ${err instanceof Error ? err.message : 'unknown'}`, retries);
+          } else {
+            await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
+          }
           log.errors.push(`OCR submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
         }
       }
@@ -240,7 +299,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const ocrPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
-        .project({ id: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1 })
+        .project({ id: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
 
       for (const book of ocrPending) {
@@ -299,8 +358,18 @@ export async function GET(request: NextRequest) {
           });
 
           if (remainingOcr > 0) {
-            // More pages to OCR — loop back to archive_complete for re-submission
-            await setPipelineStatus(db, book.id, 'archive_complete');
+            // More pages to OCR — loop back, but with circuit breaker
+            const loopCount = (book.pipeline_auto?.ocr_loop_count || 0) + 1;
+            if (loopCount > MAX_RETRIES) {
+              await setPipelineStatus(db, book.id, 'needs_attention', {
+                error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
+                ocr_loop_count: loopCount,
+              });
+              log.needs_attention++;
+              log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
+            } else {
+              await setPipelineStatus(db, book.id, 'archive_complete', { ocr_loop_count: loopCount });
+            }
             log.ocr_advanced++;
           } else {
             await setPipelineStatus(db, book.id, 'ocr_complete');
@@ -361,12 +430,13 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyForTranslate = await db.collection('books')
         .find({ 'pipeline_auto.status': 'metadata_enriched' })
-        .project({ id: 1, title: 1, pages_count: 1, language: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray();
 
       for (const book of readyForTranslate) {
         if (!hasTimeBudget(startTime)) break;
+        const retries = book.pipeline_auto?.retry_count || 0;
 
         // English books get modernized (Early Modern → Modern English) via the same batch route
         try {
@@ -375,29 +445,46 @@ export async function GET(request: NextRequest) {
             headers: getInternalHeaders(),
             body: JSON.stringify({ limit: 100 }),
           });
-          if (!res.ok) {
-            log.errors.push(`Translate submit ${book.id}: HTTP ${res.status}`);
-            continue;
-          }
+
           const text = await res.text();
           let data: Record<string, unknown>;
           try { data = JSON.parse(text); } catch {
-            log.errors.push(`Translate submit ${book.id}: invalid JSON (${text.length} chars)`);
+            data = { error: `invalid JSON (${text.length} chars)` };
+          }
+
+          if (!res.ok) {
+            if (retries >= MAX_RETRIES) {
+              await markFailed(db, book.id, `Translate submit failed after ${retries} retries: HTTP ${res.status}`, retries);
+            } else {
+              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
+            }
+            log.errors.push(`Translate submit ${book.id}: HTTP ${res.status} (retry ${retries + 1}/${MAX_RETRIES})`);
             continue;
           }
 
           if (data.jobName) {
             await setPipelineStatus(db, book.id, 'translate_submitted', {
               translate_job_name: data.jobName as string,
+              retry_count: 0,
             });
             log.translate_submitted++;
           } else if (data.processed === 0 || (data.message as string)?.includes('No pages need translation')) {
             await setPipelineStatus(db, book.id, 'translate_complete');
             log.translate_advanced++;
           } else {
+            if (retries >= MAX_RETRIES) {
+              await markFailed(db, book.id, `Translate submit unexpected: ${data.error || 'unknown'}`, retries);
+            } else {
+              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
+            }
             log.errors.push(`Translate submit ${book.id}: ${data.error || 'unexpected response'}`);
           }
         } catch (err) {
+          if (retries >= MAX_RETRIES) {
+            await markFailed(db, book.id, `Translate submit exception: ${err instanceof Error ? err.message : 'unknown'}`, retries);
+          } else {
+            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
+          }
           log.errors.push(`Translate submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
         }
       }
@@ -407,7 +494,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const translatePending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted' })
-        .project({ id: 1, 'pipeline_auto.translate_job_name': 1, 'pipeline_auto.translate_job_id': 1 })
+        .project({ id: 1, 'pipeline_auto.translate_job_name': 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_loop_count': 1 })
         .toArray();
 
       for (const book of translatePending) {
@@ -462,7 +549,17 @@ export async function GET(request: NextRequest) {
           });
 
           if (remainingTranslate > 0) {
-            await setPipelineStatus(db, book.id, 'metadata_enriched');
+            const tLoopCount = (book.pipeline_auto?.translate_loop_count || 0) + 1;
+            if (tLoopCount > MAX_RETRIES) {
+              await setPipelineStatus(db, book.id, 'needs_attention', {
+                error: `Translation looped ${tLoopCount} times with ${remainingTranslate} pages still untranslated`,
+                translate_loop_count: tLoopCount,
+              });
+              log.needs_attention++;
+              log.errors.push(`Translate circuit breaker ${book.id}: looped ${tLoopCount}x, ${remainingTranslate} pages remaining`);
+            } else {
+              await setPipelineStatus(db, book.id, 'metadata_enriched', { translate_loop_count: tLoopCount });
+            }
             log.translate_advanced++;
           } else {
             await setPipelineStatus(db, book.id, 'translate_complete');

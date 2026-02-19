@@ -36,6 +36,24 @@ function getPageImageUrl(page: Page): string | null {
   );
 }
 
+/**
+ * Retry a MongoDB operation with exponential backoff.
+ * Designed for saving AI results that are expensive to regenerate.
+ */
+async function retryDbWrite<T>(fn: () => Promise<T>, label: string, maxRetries = 3): Promise<T> {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (attempt === maxRetries) throw err;
+      const delay = Math.min(1000 * Math.pow(2, attempt - 1), 8000);
+      console.warn(`[IMG-EXTRACT] ${label} failed (attempt ${attempt}/${maxRetries}), retrying in ${delay}ms:`, (err as Error).message);
+      await new Promise(r => setTimeout(r, delay));
+    }
+  }
+  throw new Error('unreachable');
+}
+
 export async function processImageExtractionPage(message: PageProcessingMessage) {
   const { bookId, pageId, jobId } = message;
 
@@ -104,8 +122,8 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     const result = await extractWithGemini(imageUrl, modelId, { returnUsage: true, ocrData });
     const durationMs = Date.now() - startTime;
 
-    // Save results to page
-    await pages.updateOne(
+    // Save results to page (with retry — Gemini tokens are already spent)
+    await retryDbWrite(() => pages.updateOne(
       { id: pageId },
       {
         $set: {
@@ -115,7 +133,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
           updated_at: new Date()
         }
       }
-    );
+    ), `save image extraction for page ${pageId}`);
 
     // Upsert into gallery_images materialized collection
     await upsertGalleryImages(db, pageId, bookId, page, result.images as any);

@@ -343,7 +343,7 @@ async function main() {
   if (newOcrOnly) console.log(`Filter: new OCR only (v4/v5 prompt versions)`);
   console.log();
 
-  const mongoClient = new MongoClient(MONGODB_URI);
+  const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 3, serverSelectionTimeoutMS: 10000 });
   await mongoClient.connect();
   const db = mongoClient.db(MONGODB_DB);
 

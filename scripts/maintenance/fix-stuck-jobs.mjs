@@ -19,7 +19,7 @@ import { MongoClient } from 'mongodb';
 const DRY_RUN = process.argv.includes('--dry-run');
 
 async function run() {
-  const client = new MongoClient(process.env.MONGODB_URI);
+  const client = new MongoClient(process.env.MONGODB_URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
   const jobs = db.collection('jobs');

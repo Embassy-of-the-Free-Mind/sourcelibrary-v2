@@ -4,7 +4,7 @@ import fs from 'fs';
 const env = {};
 try { const c = fs.readFileSync('.env.local','utf8'); for (const l of c.split('\n')) { const m = l.match(/^([^=#]+)=(.*)$/); if(m) { let v=m[2].trim(); if((v.startsWith('"')&&v.endsWith('"'))||(v.startsWith("'")&&v.endsWith("'"))) v=v.slice(1,-1); env[m[1].trim()]=v; } } } catch {}
 const URI = process.env.MONGODB_URI || env.MONGODB_URI;
-const client = new MongoClient(URI);
+const client = new MongoClient(URI, { maxPoolSize: 1, serverSelectionTimeoutMS: 10000 });
 await client.connect();
 const db = client.db('bookstore');
 
