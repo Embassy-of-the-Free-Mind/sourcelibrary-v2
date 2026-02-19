@@ -346,15 +346,26 @@ export default async function ParticipatePage() {
             Want to help with translations? Have a text to suggest? Working on something related?
             I respond to everything.
           </p>
-          <a
-            href="mailto:derek@ancientwisdomtrust.org"
-            className="inline-flex items-center gap-2 text-lg text-primary font-medium hover:text-accent-rust transition-colors"
-          >
-            derek@ancientwisdomtrust.org
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a
+              href="mailto:derek@ancientwisdomtrust.org"
+              className="inline-flex items-center gap-2 text-lg text-primary font-medium hover:text-accent-rust transition-colors"
+            >
+              derek@ancientwisdomtrust.org
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </a>
+            <Link
+              href="/contribute/volunteer"
+              className="inline-flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+            >
+              or fill out the volunteer survey
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 

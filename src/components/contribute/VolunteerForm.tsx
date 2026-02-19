@@ -93,37 +93,6 @@ export default function VolunteerForm() {
         </div>
       </div>
 
-      {/* Languages */}
-      <div>
-        <label className="block text-base font-medium text-stone-700 mb-2">
-          Languages you read
-          <span className="font-normal text-stone-500 ml-1">(select all that apply)</span>
-        </label>
-        <div className="flex flex-wrap gap-2 mb-2">
-          {LANGUAGES.map(lang => (
-            <button
-              key={lang}
-              type="button"
-              onClick={() => toggleLanguage(lang)}
-              className={`px-3 py-1.5 rounded-full text-base transition-colors border ${
-                languages.includes(lang)
-                  ? 'bg-stone-900 text-white border-stone-900'
-                  : 'bg-white text-stone-600 border-stone-300 hover:border-stone-400'
-              }`}
-            >
-              {lang}
-            </button>
-          ))}
-        </div>
-        <input
-          type="text"
-          placeholder="Other language..."
-          value={otherLanguage}
-          onChange={e => setOtherLanguage(e.target.value)}
-          className="w-full md:w-64 px-3 py-2 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600"
-        />
-      </div>
-
       {/* Interests */}
       <div>
         <label className="block text-base font-medium text-stone-700 mb-2">
@@ -153,6 +122,37 @@ export default function VolunteerForm() {
             </label>
           ))}
         </div>
+      </div>
+
+      {/* Languages */}
+      <div>
+        <label className="block text-base font-medium text-stone-700 mb-2">
+          Languages you read
+          <span className="font-normal text-stone-500 ml-1">(select all that apply)</span>
+        </label>
+        <div className="flex flex-wrap gap-2 mb-2">
+          {LANGUAGES.map(lang => (
+            <button
+              key={lang}
+              type="button"
+              onClick={() => toggleLanguage(lang)}
+              className={`px-3 py-1.5 rounded-full text-base transition-colors border ${
+                languages.includes(lang)
+                  ? 'bg-stone-900 text-white border-stone-900'
+                  : 'bg-white text-stone-600 border-stone-300 hover:border-stone-400'
+              }`}
+            >
+              {lang}
+            </button>
+          ))}
+        </div>
+        <input
+          type="text"
+          placeholder="Other language..."
+          value={otherLanguage}
+          onChange={e => setOtherLanguage(e.target.value)}
+          className="w-full md:w-64 px-3 py-2 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600"
+        />
       </div>
 
       {/* Message */}
