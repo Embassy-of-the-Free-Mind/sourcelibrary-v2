@@ -93,14 +93,27 @@ export async function GET(request: NextRequest) {
 
           if (isMultiPage && job.type === 'ocr') {
             // Multi-page OCR: parse <page id="...">...</page> blocks from each response
-            for (const result of batchResults) {
-              if (result.error || !result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+            console.log(`[cron] Multi-page OCR: ${batchResults.length} responses for ${pageIds.length} pages (${job.pages_per_request} pages/request) — job ${job.id}`);
+            for (let ri = 0; ri < batchResults.length; ri++) {
+              const result = batchResults[ri];
+              if (result.error) {
+                console.warn(`[cron] Response ${ri}: error — ${JSON.stringify(result.error).slice(0, 200)}`);
+                failCount++;
+                continue;
+              }
+              if (!result.response?.candidates?.[0]?.content?.parts?.[0]?.text) {
+                console.warn(`[cron] Response ${ri}: empty (no text in candidate)`);
                 failCount++;
                 continue;
               }
               const responseText = result.response.candidates[0].content.parts[0].text;
               const usage = result.response.usageMetadata;
               const parsed = parseMultiPageOcr(responseText);
+              console.log(`[cron] Response ${ri}: parsed ${parsed.size} pages from ${responseText.length} chars`);
+              if (parsed.size === 0) {
+                console.warn(`[cron] Response ${ri}: no <page> tags found. First 500 chars: ${responseText.slice(0, 500)}`);
+                failCount++;
+              }
               for (const [pageId, ocrText] of parsed) {
                 pageResultsList.push({ pageId, text: ocrText, usage });
               }
@@ -128,6 +141,13 @@ export async function GET(request: NextRequest) {
                 usage: result.response.usageMetadata,
               });
             }
+          }
+
+          // Log collection summary
+          if (isMultiPage && job.type === 'ocr') {
+            const foundIds = new Set(pageResultsList.map(r => r.pageId));
+            const missingIds = pageIds.filter((id: string) => !foundIds.has(id));
+            console.log(`[cron] Collection summary for ${job.id}: ${pageResultsList.length}/${pageIds.length} pages parsed, ${missingIds.length} missing${missingIds.length > 0 ? ': ' + missingIds.join(', ') : ''}`);
           }
 
           // Save each page result
@@ -208,19 +228,30 @@ export async function GET(request: NextRequest) {
             successCount++;
           }
 
-          // Update job status
+          // Update job status with collection diagnostics
+          const collectionMeta: Record<string, unknown> = {
+            status: 'saved',
+            gemini_state: 'JOB_STATE_SUCCEEDED',
+            completed_pages: successCount,
+            failed_pages: failCount,
+            results_collected: true,
+            success_count: successCount,
+            fail_count: failCount,
+            completed_at: now,
+            updated_at: now,
+          };
+          if (isMultiPage && job.type === 'ocr') {
+            const foundIds = new Set(pageResultsList.map(r => r.pageId));
+            collectionMeta.collection_log = {
+              responses: batchResults.length,
+              pages_expected: pageIds.length,
+              pages_parsed: pageResultsList.length,
+              pages_missing: pageIds.filter((id: string) => !foundIds.has(id)),
+            };
+          }
           await db.collection('batch_jobs').updateOne(
             { id: job.id },
-            {
-              $set: {
-                status: 'saved',
-                gemini_state: 'JOB_STATE_SUCCEEDED',
-                completed_pages: successCount,
-                failed_pages: failCount,
-                completed_at: now,
-                updated_at: now,
-              },
-            }
+            { $set: collectionMeta }
           );
 
           // Update book page counts

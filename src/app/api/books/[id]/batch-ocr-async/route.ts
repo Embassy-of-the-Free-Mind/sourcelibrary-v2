@@ -356,10 +356,21 @@ export const GET = withAuth(async (request, session, context) => {
 
         if (isMultiPage) {
           // Multi-page mode: parse <page id="...">...</page> blocks
-          for (const response of responses) {
+          console.log(`[batch-ocr] Collecting multi-page results: ${responses.length} responses for ${pageIds.length} pages (${jobDoc.pages_per_request} pages/request)`);
+          for (let ri = 0; ri < responses.length; ri++) {
+            const response = responses[ri];
             const responseText = response.response?.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (!responseText) { failCount++; continue; }
+            if (!responseText) {
+              console.warn(`[batch-ocr] Response ${ri}: empty (no text in candidate)`);
+              failCount++;
+              continue;
+            }
             const parsed = parseMultiPageOcr(responseText);
+            console.log(`[batch-ocr] Response ${ri}: parsed ${parsed.size} pages from ${responseText.length} chars`);
+            if (parsed.size === 0) {
+              console.warn(`[batch-ocr] Response ${ri}: no <page> tags found. First 500 chars: ${responseText.slice(0, 500)}`);
+              failCount++;
+            }
             for (const [pageId, ocrText] of parsed) {
               pageResults.push({ pageId, text: ocrText });
             }
@@ -374,6 +385,13 @@ export const GET = withAuth(async (request, session, context) => {
               failCount++;
             }
           }
+        }
+
+        // Log collection summary
+        if (isMultiPage) {
+          const foundIds = new Set(pageResults.map(r => r.pageId));
+          const missingIds = pageIds.filter((id: string) => !foundIds.has(id));
+          console.log(`[batch-ocr] Collection summary: ${pageResults.length}/${pageIds.length} pages parsed, ${missingIds.length} missing${missingIds.length > 0 ? ': ' + missingIds.join(', ') : ''}`);
         }
 
         // Save each page result
