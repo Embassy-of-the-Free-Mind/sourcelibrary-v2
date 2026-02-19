@@ -307,7 +307,7 @@ async function BookInfo({ id }: { id: string }) {
               {/* Book metadata */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 sm:gap-6 mt-4 sm:mt-6 text-sm text-stone-400">
                 {book.language && (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2" data-testid="language-metadata">
                     <Globe className="w-4 h-4" />
                     {book.language}
                   </div>

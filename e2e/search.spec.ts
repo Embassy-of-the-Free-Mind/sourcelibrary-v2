@@ -8,7 +8,7 @@ test.describe('Search', () => {
 
     // Wait for results to load (can be slow on cold starts)
     const resultLinks = page.locator('a[href*="/book/"]');
-    await expect(resultLinks.first()).toBeVisible({ timeout: 20_000 });
+    await expect(resultLinks.first()).toBeVisible({ timeout: 20000 });
     expect(await resultLinks.count()).toBeGreaterThanOrEqual(SEARCH.minResults);
     await measurePerf(page, 'search: shows results for known query');
   });
@@ -17,7 +17,7 @@ test.describe('Search', () => {
     await page.goto(`/search?q=${SEARCH.query}`);
 
     // Wait for results to load
-    await expect(page.getByText('Searching...')).not.toBeVisible({ timeout: 15_000 });
+    await expect(page.getByText('Searching...')).not.toBeVisible({ timeout: 15000 });
 
     const firstResult = page.locator('a[href*="/book/"]').first();
     await expect(firstResult).toBeVisible();
@@ -29,13 +29,17 @@ test.describe('Search', () => {
   test('mode tabs switch between Books and Index', async ({ page }) => {
     await page.goto(`/search?q=${SEARCH.query}`);
 
-    // Click the Index tab button
-    const indexTab = page.getByRole('button', { name: /index/i });
-    await expect(indexTab).toBeVisible();
-    await indexTab.click();
+    // Wait for Index section to load (heading text is "Index (count)")
+    const indexHeading = page.getByRole('heading', { name: /index/i });
+    await expect(indexHeading).toBeVisible({ timeout: 20000 });
 
-    // URL should update to reflect mode change
-    await expect(page).toHaveURL(/mode=index|tab=index|type=index/i);
+    // Click "See all" drill-down button in Index section
+    const indexSection = indexHeading.locator('xpath=ancestor::section');
+    const seeAllButton = indexSection.getByRole('button', { name: /See all/i });
+    await seeAllButton.click();
+
+    // Verify drilled into index mode
+    await expect(page).toHaveURL(/mode=index/i);
     await measurePerf(page, 'search: mode tabs switch');
   });
 });

@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { measurePerf } from './perf';
+import { BOOK } from './fixtures';
 
 test.describe('Navigation Flow', () => {
   test('homepage -> book detail -> page reader', async ({ page }) => {
@@ -8,14 +9,12 @@ test.describe('Navigation Flow', () => {
     await expect(page).toHaveTitle(/Source Library/i);
     await measurePerf(page, 'nav-flow: homepage');
 
-    // 2. Click first book card
-    const bookLink = page.locator('a[href*="/book/"]').first();
-    await expect(bookLink).toBeVisible();
-    await bookLink.click();
+    // 2. Navigate to known featured book (instead of clicking random first book)
+    await page.goto(`/book/${BOOK.id}`);
 
     // 3. Verify book detail page
     await expect(page).toHaveURL(/\/book\//);
-    await expect(page.getByRole('heading').first()).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Musaeum hermeticum/i })).toBeVisible();
     await measurePerf(page, 'nav-flow: book detail');
 
     // 4. Click first page link (format: /book/{bookId}/page/{pageId})
