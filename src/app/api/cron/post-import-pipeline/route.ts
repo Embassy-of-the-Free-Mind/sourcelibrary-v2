@@ -204,7 +204,7 @@ export async function GET(request: NextRequest) {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
             headers: getInternalHeaders(),
-            body: JSON.stringify({ limit: 10, force: false, pagesPerRequest: 10 }),
+            body: JSON.stringify({ limit: 10, force: false, pagesPerRequest: 5 }),
           });
           if (!res.ok) {
             log.errors.push(`OCR submit ${book.id}: HTTP ${res.status}`);
