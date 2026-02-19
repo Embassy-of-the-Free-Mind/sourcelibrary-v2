@@ -13,7 +13,10 @@
     "test:e2e:ui": "npx playwright test --ui",
     "lambda:build": "./scripts/aws-lambda/build-lambda.sh",
     "lambda:package": "./scripts/aws-lambda/package-lambda.sh",
-    "lambda:all": "npm run lambda:build && npm run lambda:package"
+    "lambda:prepare": "npm run lambda:build && npm run lambda:package",
+    "lambda:deploy": "./scripts/aws-lambda/deploy-lambda.sh",
+    "lambda:deploy:all": "npm run lambda:deploy -- --all",
+    "lambda:full": "npm run lambda:prepare && npm run lambda:deploy:all"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.2",

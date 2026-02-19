@@ -3,7 +3,9 @@ set -e
 
 echo "🔨 Building Lambda functions..."
 
-# Create dist directory
+# Clean and create dist directory
+echo "🧹 Cleaning old builds..."
+rm -rf dist/lambda
 mkdir -p dist/lambda
 
 # Build OCR processor

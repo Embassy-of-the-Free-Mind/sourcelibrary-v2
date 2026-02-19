@@ -9,7 +9,9 @@ if [ ! -d "dist/lambda" ]; then
   exit 1
 fi
 
-# Create packages directory
+# Clean and create packages directory
+echo "🧹 Cleaning old packages..."
+rm -rf dist/packages
 mkdir -p dist/packages
 
 # Create temporary build directory
