@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
         // Support both job_name (new) and gemini_job_name (old)
         const jobName = job.job_name || job.gemini_job_name;
         if (!jobName) {
-          console.warn(`[cron] Job ${job.id} has no job_name or gemini_job_name`);
+          console.warn(`[cron] Job ${job.id || String(job._id)} has no job_name or gemini_job_name`);
           continue;
         }
 
@@ -80,10 +80,10 @@ export async function GET(request: NextRequest) {
 
         if (geminiStatus.state === 'JOB_STATE_SUCCEEDED') {
           // Job complete - collect results
-          console.log(`[cron] Collecting results for ${job.id} (${job.book_title})`);
+          console.log(`[cron] Collecting results for ${job.id || String(job._id)} (${job.book_title})`);
 
           if (!batchResults || batchResults.length === 0) {
-            results.errors.push(`Job ${job.id}: succeeded but no results returned`);
+            results.errors.push(`Job ${job.id || String(job._id)}: succeeded but no results returned`);
             continue;
           }
           let successCount = 0;
@@ -95,8 +95,8 @@ export async function GET(request: NextRequest) {
 
           // Safety check for single-page mode: response count must match page count
           if (!isMultiPage && pageIds.length > 0 && batchResults.length !== pageIds.length) {
-            console.warn(`[cron] Response count (${batchResults.length}) != page count (${pageIds.length}) for job ${job.id}. Skipping to avoid mismatched data.`);
-            results.errors.push(`Job ${job.id}: response count mismatch (${batchResults.length} vs ${pageIds.length})`);
+            console.warn(`[cron] Response count (${batchResults.length}) != page count (${pageIds.length}) for job ${job.id || String(job._id)}. Skipping to avoid mismatched data.`);
+            results.errors.push(`Job ${job.id || String(job._id)}: response count mismatch (${batchResults.length} vs ${pageIds.length})`);
             continue;
           }
 
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
 
           if (isMultiPage && job.type === 'ocr') {
             // Multi-page OCR: parse <page id="...">...</page> blocks from each response
-            console.log(`[cron] Multi-page OCR: ${batchResults.length} responses for ${pageIds.length} pages (${job.pages_per_request} pages/request) — job ${job.id}`);
+            console.log(`[cron] Multi-page OCR: ${batchResults.length} responses for ${pageIds.length} pages (${job.pages_per_request} pages/request) — job ${job.id || String(job._id)}`);
             for (let ri = 0; ri < batchResults.length; ri++) {
               const result = batchResults[ri];
               if (result.error) {
@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
               const pageId = result.metadata?.key || (pageIds[idx]);
 
               if (!pageId) {
-                console.warn(`[cron] No page ID for result idx ${idx} (job ${job.id})`);
+                console.warn(`[cron] No page ID for result idx ${idx} (job ${job.id || String(job._id)})`);
                 failCount++;
                 continue;
               }
@@ -159,7 +159,7 @@ export async function GET(request: NextRequest) {
           if (isMultiPage && job.type === 'ocr') {
             const foundIds = new Set(pageResultsList.map(r => r.pageId));
             const missingIds = pageIds.filter((id: string) => !foundIds.has(id));
-            console.log(`[cron] Collection summary for ${job.id}: ${pageResultsList.length}/${pageIds.length} pages parsed, ${missingIds.length} missing${missingIds.length > 0 ? ': ' + missingIds.join(', ') : ''}`);
+            console.log(`[cron] Collection summary for ${job.id || String(job._id)}: ${pageResultsList.length}/${pageIds.length} pages parsed, ${missingIds.length} missing${missingIds.length > 0 ? ': ' + missingIds.join(', ') : ''}`);
           }
 
           // Save each page result
@@ -176,7 +176,13 @@ export async function GET(request: NextRequest) {
               const columns = extractColumns(text);
               const detectedImages = parseDetectedImages(text);
 
-              await createSnapshotIfNeeded(pageId, 'pre_ocr', job.id);
+              await createSnapshotIfNeeded(pageId, 'pre_ocr', job.id || String(job._id));
+
+              // Ensure page has an ocr object (some pages have ocr: null)
+              await db.collection('pages').updateOne(
+                { id: pageId, ocr: null },
+                { $set: { ocr: {} } }
+              );
 
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
@@ -189,7 +195,7 @@ export async function GET(request: NextRequest) {
                     'ocr.source': 'batch_api',
                     'ocr.prompt_version': job.prompt_version || PROMPT_VERSION,
                     'ocr.prompt_name': job.prompt_name || 'Standard OCR',
-                    'ocr.batch_job_id': job.id,
+                    'ocr.batch_job_id': job.id || String(job._id),
                     ...((job.pages_per_request || 1) > 1 && { 'ocr.pages_per_request': job.pages_per_request }),
                     'ocr.input_tokens': usage?.promptTokenCount || 0,
                     'ocr.output_tokens': usage?.candidatesTokenCount || 0,
@@ -209,7 +215,13 @@ export async function GET(request: NextRequest) {
             } else {
               const translationMeta = extractTranslationMetadata(text);
 
-              await createSnapshotIfNeeded(pageId, 'pre_translate', job.id);
+              await createSnapshotIfNeeded(pageId, 'pre_translate', job.id || String(job._id));
+
+              // Ensure page has a translation object (some pages have translation: null)
+              await db.collection('pages').updateOne(
+                { id: pageId, translation: null },
+                { $set: { translation: {} } }
+              );
 
               const updateResult = await db.collection('pages').updateOne(
                 { id: pageId },
@@ -223,7 +235,7 @@ export async function GET(request: NextRequest) {
                     'translation.source': 'batch_api',
                     'translation.prompt_version': job.prompt_version || PROMPT_VERSION,
                     'translation.prompt_name': job.prompt_name || 'Standard Translation',
-                    'translation.batch_job_id': job.id,
+                    'translation.batch_job_id': job.id || String(job._id),
                     'translation.input_tokens': usage?.promptTokenCount || 0,
                     'translation.output_tokens': usage?.candidatesTokenCount || 0,
                     ...translationMeta,
@@ -263,7 +275,7 @@ export async function GET(request: NextRequest) {
             };
           }
           await db.collection('batch_jobs').updateOne(
-            { id: job.id },
+            { _id: job._id },
             { $set: collectionMeta }
           );
 
@@ -295,7 +307,7 @@ export async function GET(request: NextRequest) {
             book_title: job.book_title,
             page_ids: job.page_ids,
             page_count: successCount,
-            batch_job_id: job.id,
+            batch_job_id: job.id || String(job._id),
             gemini_job_name: jobName,
             input_tokens: totalInputTokens,
             output_tokens: totalOutputTokens,
@@ -305,7 +317,7 @@ export async function GET(request: NextRequest) {
           });
 
           results.collected.push({
-            job_id: job.id,
+            job_id: job.id || String(job._id),
             book_title: job.book_title,
             pages_saved: successCount,
             pages_failed: failCount,
@@ -319,7 +331,7 @@ export async function GET(request: NextRequest) {
 
           // Keep status as pending
           await db.collection('batch_jobs').updateOne(
-            { id: job.id },
+            { _id: job._id },
             {
               $set: {
                 status: 'pending',
@@ -340,7 +352,7 @@ export async function GET(request: NextRequest) {
 
           // Update status to processing
           await db.collection('batch_jobs').updateOne(
-            { id: job.id },
+            { _id: job._id },
             {
               $set: {
                 status: 'processing',
@@ -358,7 +370,7 @@ export async function GET(request: NextRequest) {
         } else if (geminiStatus.state === 'JOB_STATE_FAILED') {
           // Failed - mark it
           await db.collection('batch_jobs').updateOne(
-            { id: job.id },
+            { _id: job._id },
             {
               $set: {
                 status: 'failed',
@@ -371,12 +383,12 @@ export async function GET(request: NextRequest) {
           if (job.parent_job_id) {
             await updateParentJobProgress(db, job.parent_job_id);
           }
-          results.errors.push(`Job ${job.id} failed: Gemini batch job failed`);
+          results.errors.push(`Job ${job.id || String(job._id)} failed: Gemini batch job failed`);
 
         } else if (geminiStatus.state === 'JOB_STATE_CANCELLED' || (geminiStatus.state as string) === 'BATCH_STATE_CANCELLED') {
           // Cancelled — terminal state
           await db.collection('batch_jobs').updateOne(
-            { id: job.id },
+            { _id: job._id },
             {
               $set: {
                 status: 'cancelled',
@@ -388,12 +400,12 @@ export async function GET(request: NextRequest) {
           if (job.parent_job_id) {
             await updateParentJobProgress(db, job.parent_job_id);
           }
-          results.errors.push(`Job ${job.id} cancelled`);
+          results.errors.push(`Job ${job.id || String(job._id)} cancelled`);
 
         } else if (geminiStatus.state === 'JOB_STATE_EXPIRED' || (geminiStatus.state as string) === 'BATCH_STATE_EXPIRED') {
           // Expired (7-day Gemini limit) — terminal state
           await db.collection('batch_jobs').updateOne(
-            { id: job.id },
+            { _id: job._id },
             {
               $set: {
                 status: 'failed',
@@ -406,12 +418,12 @@ export async function GET(request: NextRequest) {
           if (job.parent_job_id) {
             await updateParentJobProgress(db, job.parent_job_id);
           }
-          results.errors.push(`Job ${job.id} expired: exceeded 7-day Gemini limit`);
+          results.errors.push(`Job ${job.id || String(job._id)} expired: exceeded 7-day Gemini limit`);
         }
 
       } catch (e) {
         const errMsg = e instanceof Error ? e.message : 'Unknown error';
-        results.errors.push(`Job ${job.id}: ${errMsg}`);
+        results.errors.push(`Job ${job.id || String(job._id)}: ${errMsg}`);
       }
     }
 
