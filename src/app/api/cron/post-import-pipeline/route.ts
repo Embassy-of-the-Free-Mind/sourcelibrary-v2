@@ -11,15 +11,16 @@ import { enqueuePagesForJob } from '@/lib/queue-utils';
 export const maxDuration = 300;
 
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
-const ENROLL_LIMIT = 10;
-const ARCHIVE_LIMIT = 20; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 5; // Full books now (up to 500pp each), so fewer per cycle
+const ENROLL_LIMIT = 20;
+const ARCHIVE_LIMIT = 40; // Just DB checks now — Hetzner does actual archiving
+const OCR_SUBMIT_LIMIT = 20; // Batch API jobs are async — no reason to throttle heavily
+const MAX_ACTIVE_BATCH_OCR = 50; // Don't submit if this many OCR batch jobs are pending/processing
 const METADATA_ENRICH_LIMIT = 10;
-const TRANSLATE_SUBMIT_LIMIT = 10;
+const TRANSLATE_SUBMIT_LIMIT = 15;
 const ENRICH_LIMIT = 5;
 const CHAPTER_LIMIT = 5;
 const IMAGE_SUBMIT_LIMIT = 3;
-const FINALIZE_LIMIT = 10;
+const FINALIZE_LIMIT = 20;
 const MAX_ACTIVE_IMAGE_JOBS = 5;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
@@ -212,11 +213,19 @@ export async function GET(request: NextRequest) {
     // Batch API is 50% cheaper than realtime. Jobs complete within hours.
     // The route handles child-batch splitting for large books.
     if (hasTimeBudget(startTime)) {
-      const readyForOcr = await db.collection('books')
+      // Backpressure: don't overwhelm the Gemini Batch API queue
+      const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
+        type: 'ocr',
+        status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+      });
+
+      const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
+
+      const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
-        .limit(OCR_SUBMIT_LIMIT)
-        .toArray();
+        .limit(ocrLimit)
+        .toArray() : [];
 
       for (const book of readyForOcr) {
         if (!hasTimeBudget(startTime)) break;
@@ -456,7 +465,7 @@ export async function GET(request: NextRequest) {
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
             method: 'POST',
             headers: getInternalHeaders(),
-            body: JSON.stringify({ limit: 100 }),
+            body: JSON.stringify({ limit: 500 }),
           });
 
           const text = await res.text();
