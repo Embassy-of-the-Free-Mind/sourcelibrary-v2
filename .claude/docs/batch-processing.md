@@ -141,6 +141,27 @@ Three Gemini API keys with independent batch quotas:
 
 The local script's `getBatchApiKey()` prefers KEY_2 for batch operations. Vercel routes use whichever key is configured in the environment.
 
+**IMPORTANT: Key visibility.** Batch jobs are ONLY visible to the API key that created them. When collecting results, you must use the same key that submitted the job. The `collect-batch-results.mjs` script tries all keys automatically. The cron route checks all configured keys.
+
+## Result Collection
+
+### Cron-based (automatic)
+The `process-batches` cron runs every 2h and collects results for pending/processing `batch_jobs`.
+
+### Local script (bulk recovery)
+For collecting many results beyond the cron's 270s time budget:
+
+```bash
+secret-lover run -- node scripts/collect-batch-results.mjs --concurrency 15
+```
+
+Features:
+- Multi-key support: tries `TIER3`, `_2`, and primary keys for each job
+- Handles both inline and file-based responses
+- Hallucination guard: rejects OCR text > 25,000 chars
+- Sets `batch_jobs` status to `saved` after successful collection
+- Tracks `completed_pages` and `failed_pages` per job
+
 ## Quota Limits
 
 | Quota | Limit | Symptom | Fix |

@@ -151,7 +151,7 @@ created_at, triggered_by_job_id, restored_at, restored_by
 
 Many early printed books use two-column layouts (e.g. Kircher's *Ars Magna*). The system detects and renders these with a dual approach.
 
-### OCR Tags (Feb 2026, prompt v4.2026-02+)
+### OCR Tags (Feb 2026, prompt v5.2026-02+)
 
 Two complementary tags in OCR output:
 - **`<columns>N</columns>`** — metadata classification. Easy for the model to produce. Extracted by `extractColumns()` in `src/lib/types/prompts/defaults.ts`, stored as `page.columns`.
@@ -179,7 +179,7 @@ All 7 OCR save paths extract and persist `columns`:
 
 ### Backfilling
 
-Existing pages with OCR data that contains `<columns>` tags can be backfilled via the `backfill-detected-images` route, which also extracts columns. Pages processed before prompt v4.2026-02 won't have column tags in their OCR output.
+Existing pages with OCR data that contains `<columns>` tags can be backfilled via the `backfill-detected-images` route, which also extracts columns. Pages processed before prompt v5.2026-02 won't have column tags in their OCR output.
 
 ## Prompt Versioning
 
@@ -189,12 +189,14 @@ Prompts are stored in the `prompts` MongoDB collection with **immutable versioni
 - `is_default` flag marks which version is active for each prompt type
 - DELETE is not supported — full audit trail preserved
 
-**`PROMPT_VERSION`** constant (`src/lib/types/prompts/defaults.ts`) is a semantic tag stored on every page record. Bump it when prompts change materially. Current: `v4.2026-02`.
+**`PROMPT_VERSION`** constant (`src/lib/types/prompts/defaults.ts`) is a semantic tag stored on every page record. Bump it when prompts change materially. Current: `v5.2026-02`.
+
+**Tag rename (v5):** The `<lang>` tag was renamed to `<language>` in v5.2026-02 for clarity. All prompts (Standard OCR v6, Latin OCR v3, German OCR v3) and scripts now use `<language>`. Pages OCR'd with v4 or earlier used `<lang>` — the field is extracted the same way but the tag name differs in the raw OCR text.
 
 **DB prompt families** (with version history):
 | Name | Type | Current Version | Key Features |
 |------|------|----------------|--------------|
-| Standard OCR | ocr | v5 | XML tags, page-type, image detection, columns |
+| Standard OCR | ocr | v6 | XML tags, page-type, image detection, columns, `<language>` tag |
 | Latin OCR (Neo-Latin) | ocr | v3 | Latin-specific abbreviations, columns |
 | German OCR (Fraktur) | ocr | v3 | Fraktur/Kurrent handling, columns |
 | Standard Translation | translation | latest | General translation |

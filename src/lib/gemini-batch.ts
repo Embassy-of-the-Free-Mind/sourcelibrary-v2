@@ -324,9 +324,9 @@ export async function getBatchJobStatus(jobName: string): Promise<BatchJobStatus
       displayName: metadata.displayName,
       model: metadata.model,
       stats: {
-        totalCount: parseInt(batchStats.requestCount || '0'),
-        successCount: parseInt(batchStats.succeededCount || '0'),
-        failedCount: parseInt(batchStats.failedCount || '0'),
+        totalCount: parseInt(batchStats.requestCount || batchStats.totalCount || '0'),
+        successCount: parseInt(batchStats.successfulRequestCount || batchStats.succeededCount || '0'),
+        failedCount: parseInt(batchStats.failedRequestCount || batchStats.failedCount || '0'),
       },
     };
   }
@@ -498,9 +498,9 @@ export async function fetchBatchJobWithResults(jobName: string): Promise<{
       displayName: metadata.displayName,
       model: metadata.model,
       stats: {
-        totalCount: parseInt(batchStats.requestCount || '0'),
-        successCount: parseInt(batchStats.succeededCount || '0'),
-        failedCount: parseInt(batchStats.failedCount || '0'),
+        totalCount: parseInt(batchStats.requestCount || batchStats.totalCount || '0'),
+        successCount: parseInt(batchStats.successfulRequestCount || batchStats.succeededCount || '0'),
+        failedCount: parseInt(batchStats.failedRequestCount || batchStats.failedCount || '0'),
       },
     };
 

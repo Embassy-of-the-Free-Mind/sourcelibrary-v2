@@ -25,7 +25,7 @@ import { nanoid } from 'nanoid';
 
 // --- Config ---
 const TARGET_MODEL = 'gemini-3-flash-preview';
-const TARGET_PROMPT = 'v4.2026-02';
+const TARGET_PROMPT = 'v5.2026-02';
 const SKIP_MODELS = ['manual', 'manual-correction'];
 const BATCH_SIZE = 20; // Pages per inline batch (keep small to stay under request size limits)
 const IMAGE_CONCURRENCY = 20; // Parallel image downloads
@@ -244,7 +244,7 @@ async function getOcrPrompt(db) {
 
   console.log(`  Using prompt: ${prompt.name} v${prompt.version}`);
 
-  const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <lang> tag.`;
+  const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
 
   return prompt.content
     .replace('{language_instruction}', languageInstruction)

@@ -35,8 +35,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
     };
   }, []);
 
-  // Use Vercel Blob CDN thumbnail if available, fall back to original
-  const thumbnailUrl = book.thumbnail_blob || book.thumbnail;
+  // Prefer full-res archived image (Next.js Image optimizes on the fly)
+  // thumbnail_blob is only 150px — too small for card display
+  const thumbnailUrl = book.thumbnail || book.thumbnail_blob;
 
   // Determine image source type for analytics
   const getImageSource = (): 'blob' | 'ia' | 'local' | 'other' => {

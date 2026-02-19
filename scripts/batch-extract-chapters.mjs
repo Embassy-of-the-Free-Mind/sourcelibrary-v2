@@ -235,7 +235,10 @@ async function processBook(db, book) {
     pages.length, cappedHeadings, tocPages.slice(0, 5)
   );
 
-  const result = await model.generateContent(prompt);
+  const result = await Promise.race([
+    model.generateContent(prompt),
+    new Promise((_, reject) => setTimeout(() => reject(new Error('Gemini timeout (120s)')), 120000))
+  ]);
   const response = result.response;
   const responseText = response.text();
   const usage = response.usageMetadata;
@@ -327,6 +330,7 @@ async function main() {
   const args = process.argv.slice(2);
   const dryRun = !args.includes('--apply');
   const force = args.includes('--force');
+  const newOcrOnly = args.includes('--new-ocr');
   const limit = args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1]) : 500;
   const specificBook = args.includes('--book') ? args[args.indexOf('--book') + 1] : null;
 
@@ -335,16 +339,31 @@ async function main() {
   console.log(`Model: ${MODEL}`);
   console.log(`API keys: ${apiKeys.length}`);
   console.log(`Concurrency: ${CONCURRENCY}`);
-  console.log(`Limit: ${limit}\n`);
+  console.log(`Limit: ${limit}`);
+  if (newOcrOnly) console.log(`Filter: new OCR only (v4/v5 prompt versions)`);
+  console.log();
 
   const mongoClient = new MongoClient(MONGODB_URI);
   await mongoClient.connect();
   const db = mongoClient.db(MONGODB_DB);
 
+  // If --new-ocr, pre-filter to books with v4/v5 OCR pages
+  let newOcrBookIds = null;
+  if (newOcrOnly) {
+    newOcrBookIds = await db.collection('pages').distinct('book_id', {
+      'ocr.prompt_version': { $in: ['v4.2026-02', 'v5.2026-02'] },
+      'ocr.data': { $exists: true, $ne: '' }
+    });
+    console.log(`Found ${newOcrBookIds.length} books with v4/v5 OCR pages`);
+  }
+
   // Find books needing chapter extraction
   const filter = { pages_ocr: { $gte: MIN_OCR_PAGES } };
   if (!force) {
     filter.chapters_extracted_at = { $exists: false };
+  }
+  if (newOcrBookIds) {
+    filter.id = { $in: newOcrBookIds };
   }
   if (specificBook) {
     filter.$or = [
@@ -355,8 +374,11 @@ async function main() {
   }
 
   const books = await db.collection('books')
-    .find(filter)
-    .sort({ pages_ocr: -1 }) // Biggest books first
+    .find(filter, { projection: {
+      id: 1, title: 1, display_title: 1, author: 1, language: 1, original_language: 1,
+      pages_ocr: 1, pages_count: 1, chapters_extracted_at: 1
+    }})
+    .sort({ pages_ocr: 1 }) // Smallest books first for faster throughput
     .limit(limit)
     .toArray();
 
