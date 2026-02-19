@@ -79,7 +79,7 @@ function getModel() {
   return client.getGenerativeModel({
     model: MODEL,
     safetySettings: SAFETY_SETTINGS,
-    generationConfig: { temperature: 0.1, maxOutputTokens: 4096 },
+    generationConfig: { temperature: 0.1, maxOutputTokens: 65536 },
   });
 }
 
@@ -225,11 +225,14 @@ async function processBook(db, book) {
     }
   }
 
+  // Cap headings to avoid massive prompts on very large books
+  const cappedHeadings = rawHeadings.length > 500 ? rawHeadings.slice(0, 500) : rawHeadings;
+
   // Call Gemini
   const model = getModel();
   const prompt = buildExtractionPrompt(
     bookTitle, bookAuthor, bookLanguage,
-    pages.length, rawHeadings, tocPages.slice(0, 5)
+    pages.length, cappedHeadings, tocPages.slice(0, 5)
   );
 
   const result = await model.generateContent(prompt);
@@ -246,7 +249,19 @@ async function processBook(db, book) {
     const cleaned = responseText.replace(/^```json?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim();
     aiChapters = JSON.parse(cleaned);
   } catch {
-    throw new Error(`Unparseable response: ${responseText.slice(0, 200)}`);
+    // Try to recover truncated JSON by finding the last complete object
+    try {
+      const cleaned = responseText.replace(/^```json?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim();
+      const lastBrace = cleaned.lastIndexOf('}');
+      if (lastBrace > 0) {
+        const truncated = cleaned.slice(0, lastBrace + 1) + ']';
+        aiChapters = JSON.parse(truncated);
+      } else {
+        throw new Error('no recoverable JSON');
+      }
+    } catch {
+      throw new Error(`Unparseable response: ${responseText.slice(0, 200)}`);
+    }
   }
 
   // Build page ID mapping

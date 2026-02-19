@@ -462,6 +462,86 @@ export async function getBatchJobResults(jobName: string): Promise<BatchResponse
 }
 
 /**
+ * Fetch batch job status AND results in a single API call.
+ * For inline batch jobs, the status response already contains the results,
+ * so this avoids the double-fetch of getBatchJobStatus() + getBatchJobResults().
+ */
+export async function fetchBatchJobWithResults(jobName: string): Promise<{
+  status: BatchJobStatus;
+  results?: BatchResponse[];
+}> {
+  const keys = getAllApiKeys();
+  let lastError = '';
+
+  for (const apiKey of keys) {
+    const response = await fetch(
+      `${GEMINI_API_BASE}/${jobName}?key=${apiKey}`,
+      { method: 'GET', headers: { 'Content-Type': 'application/json' } }
+    );
+
+    if (!response.ok) {
+      lastError = await response.text();
+      if (response.status === 404 || lastError.includes('not found')) continue;
+      throw new Error(`Failed to get batch job: ${lastError}`);
+    }
+
+    const data = await response.json();
+    const metadata = data.metadata || {};
+    const batchStats = metadata.batchStats || {};
+    const state = normalizeState(metadata.state, metadata);
+
+    const status: BatchJobStatus = {
+      name: data.name,
+      state,
+      createTime: metadata.createTime,
+      updateTime: metadata.updateTime,
+      displayName: metadata.displayName,
+      model: metadata.model,
+      stats: {
+        totalCount: parseInt(batchStats.requestCount || '0'),
+        successCount: parseInt(batchStats.succeededCount || '0'),
+        failedCount: parseInt(batchStats.failedCount || '0'),
+      },
+    };
+
+    // If not succeeded, return status only
+    if (state !== 'JOB_STATE_SUCCEEDED') {
+      return { status };
+    }
+
+    // Extract results from the same response — no second API call needed
+    let results: BatchResponse[] | undefined;
+
+    // Check for inline responses (double nested in metadata.output)
+    if (metadata.output?.inlinedResponses?.inlinedResponses) {
+      results = metadata.output.inlinedResponses.inlinedResponses;
+    } else if (data.response?.inlinedResponses) {
+      results = data.response.inlinedResponses;
+    } else if (data.dest?.inlinedResponses) {
+      results = data.dest.inlinedResponses;
+    } else {
+      // File-based output — need a second fetch
+      const fileName = metadata.output?.responsesFile || metadata.destFile || data.dest?.fileName;
+      if (fileName) {
+        const fileResponse = await fetch(
+          `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${apiKey}`
+        );
+        if (fileResponse.ok) {
+          const text = await fileResponse.text();
+          results = text.trim().split('\n').filter((l: string) => l.trim()).map((l: string) => JSON.parse(l));
+        } else {
+          console.error(`[fetchBatchJobWithResults] File download failed for ${jobName}: ${fileResponse.status} ${await fileResponse.text().catch(() => '')}`);
+        }
+      }
+    }
+
+    return { status, results };
+  }
+
+  throw new Error(`Batch job not found with any key (tried ${keys.length}): ${lastError}`);
+}
+
+/**
  * Cancel a batch job
  */
 export async function cancelBatchJob(jobName: string): Promise<void> {

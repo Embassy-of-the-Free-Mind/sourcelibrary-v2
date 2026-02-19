@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { getBatchJobStatus, getBatchJobResults } from '@/lib/gemini-batch';
+import { fetchBatchJobWithResults } from '@/lib/gemini-batch';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, parseMultiPageOcr } from '@/lib/types/prompts/defaults';
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
@@ -58,7 +58,15 @@ export async function GET(request: NextRequest) {
 
     results.stats.jobs_checked = pendingJobs.length;
 
+    // Time budget: stop collecting before Vercel kills us (leave 30s buffer)
+    const TIME_BUDGET_MS = (maxDuration - 30) * 1000;
+
     for (const job of pendingJobs) {
+      // Check time budget before starting a new job
+      if (Date.now() - startTime > TIME_BUDGET_MS) {
+        console.log(`[cron] Time budget exhausted after ${results.stats.jobs_completed} jobs collected. ${pendingJobs.length - results.stats.jobs_completed - results.stats.jobs_pending - results.stats.jobs_processing} jobs skipped.`);
+        break;
+      }
       try {
         // Support both job_name (new) and gemini_job_name (old)
         const jobName = job.job_name || job.gemini_job_name;
@@ -67,13 +75,17 @@ export async function GET(request: NextRequest) {
           continue;
         }
 
-        const geminiStatus = await getBatchJobStatus(jobName);
+        // Single API call: fetch status + results together (avoids double-fetch)
+        const { status: geminiStatus, results: batchResults } = await fetchBatchJobWithResults(jobName);
 
-        if ((geminiStatus.state as string) === 'JOB_STATE_SUCCEEDED' || (geminiStatus.state as string) === 'BATCH_STATE_SUCCEEDED') {
+        if (geminiStatus.state === 'JOB_STATE_SUCCEEDED') {
           // Job complete - collect results
           console.log(`[cron] Collecting results for ${job.id} (${job.book_title})`);
 
-          const batchResults = await getBatchJobResults(jobName);
+          if (!batchResults || batchResults.length === 0) {
+            results.errors.push(`Job ${job.id}: succeeded but no results returned`);
+            continue;
+          }
           let successCount = 0;
           let failCount = 0;
           const now = new Date();
