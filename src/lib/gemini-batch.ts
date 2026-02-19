@@ -94,8 +94,17 @@ export function getAllApiKeys(): string[] {
 }
 
 // Normalize state names (BATCH_STATE_* -> JOB_STATE_*)
-function normalizeState(state: string | undefined): BatchJobStatus['state'] {
-  if (!state) return 'JOB_STATE_PENDING';
+// Note: inline batch jobs may have no state field but have results in metadata.output
+function normalizeState(state: string | undefined, metadata?: Record<string, unknown>): BatchJobStatus['state'] {
+  if (!state) {
+    // Inline batch jobs omit `state` when complete — detect by presence of output
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const output = (metadata as any)?.output;
+    if (output?.inlinedResponses || output?.responsesFile) {
+      return 'JOB_STATE_SUCCEEDED';
+    }
+    return 'JOB_STATE_PENDING';
+  }
   // Map BATCH_STATE_* to JOB_STATE_*
   const mapping: Record<string, BatchJobStatus['state']> = {
     'BATCH_STATE_PENDING': 'JOB_STATE_PENDING',
@@ -309,7 +318,7 @@ export async function getBatchJobStatus(jobName: string): Promise<BatchJobStatus
 
     return {
       name: data.name,
-      state: normalizeState(metadata.state),
+      state: normalizeState(metadata.state, metadata),
       createTime: metadata.createTime,
       updateTime: metadata.updateTime,
       displayName: metadata.displayName,
@@ -366,9 +375,9 @@ export async function getBatchJobResults(jobName: string): Promise<BatchResponse
 
   const apiKey = workingKey;
 
-  // Check state from the raw response
+  // Check state from the raw response (pass metadata for inline job detection)
   const rawState = jobData.metadata?.state;
-  const state = normalizeState(rawState);
+  const state = normalizeState(rawState, jobData.metadata);
   if (state !== 'JOB_STATE_SUCCEEDED') {
     throw new Error(`Job not complete: ${state}`);
   }
@@ -502,7 +511,7 @@ export async function listBatchJobs(pageSize = 100): Promise<BatchJobStatus[]> {
   // Gemini returns operations with metadata, we need to normalize the state names
   return (data.operations || []).map((op: { name: string; metadata: Record<string, unknown> }) => ({
     name: op.name,
-    state: normalizeState(op.metadata?.state as string),
+    state: normalizeState(op.metadata?.state as string, op.metadata),
     createTime: op.metadata?.createTime as string,
     updateTime: op.metadata?.updateTime as string,
     displayName: op.metadata?.displayName as string,
