@@ -10,11 +10,18 @@
 import { MongoClient } from 'mongodb';
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
+// Try all available keys (batch jobs are only visible to the key that created them)
+const ALL_KEYS = [
+  process.env.GEMINI_API_KEY_TIER3,
+  process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY,
+].filter(Boolean);
+
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
-if (!GEMINI_API_KEY) { console.error('GEMINI_API_KEY not set'); process.exit(1); }
+if (ALL_KEYS.length === 0) { console.error('No GEMINI_API_KEY* set'); process.exit(1); }
+console.log(`API keys available: ${ALL_KEYS.length}`);
 
 const args = process.argv.slice(2);
 const limitIdx = args.indexOf('--limit');
@@ -36,34 +43,77 @@ function extractColumns(text) {
 }
 
 function parseDetectedImages(text) {
-  const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/i);
+  const match = text.match(/<detected-images>([\s\S]*?)<\/detected-images>/);
   if (!match) return [];
-  try {
-    const parsed = JSON.parse(match[1].trim());
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
+  const imagesText = match[1].trim();
+  const images = [];
+  const imgRegex = /<image>([\s\S]*?)<\/image>/g;
+  let imgMatch;
+  while ((imgMatch = imgRegex.exec(imagesText)) !== null) {
+    const imgContent = imgMatch[1];
+    const getTag = (tag) => {
+      const m = imgContent.match(new RegExp(`<${tag}>([\\s\\S]*?)</${tag}>`));
+      return m ? m[1].trim() : null;
+    };
+    const bbox = getTag('bbox');
+    const image = {
+      type: getTag('type') || 'illustration',
+      description: getTag('description') || '',
+      subject: getTag('subject')?.split(',').map(s => s.trim()).filter(Boolean) || [],
+    };
+    if (bbox) {
+      const coords = bbox.split(',').map(Number);
+      if (coords.length === 4) {
+        image.bbox = { x1: coords[0], y1: coords[1], x2: coords[2], y2: coords[3] };
+      }
+    }
+    images.push(image);
   }
+  return images;
+}
+
+function parseMultiPageOcr(text) {
+  const results = new Map();
+  const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    const pageId = match[1];
+    let content = match[2].trim();
+    content = content.replace(/<\/page>\s*$/, '').trim();
+    if (content) results.set(pageId, content);
+  }
+  return results;
 }
 
 // --- Gemini API ---
 async function getJobData(jobName) {
-  const url = `${GEMINI_API_BASE}/${jobName}?key=${GEMINI_API_KEY}`;
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`Gemini API error ${resp.status}: ${await resp.text()}`);
-  return resp.json();
+  let lastError = '';
+  for (const key of ALL_KEYS) {
+    try {
+      const url = `${GEMINI_API_BASE}/${jobName}?key=${key}`;
+      const resp = await fetch(url);
+      if (resp.ok) return { data: await resp.json(), key };
+      const errText = await resp.text();
+      if (resp.status === 404 || errText.includes('not found')) continue;
+      lastError = `${resp.status}: ${errText.slice(0, 100)}`;
+      // Try next key (might be a key-specific error)
+    } catch (e) {
+      lastError = e.message;
+    }
+  }
+  return null; // Not found with any key
 }
 
 function getJobState(geminiData) {
   return geminiData.metadata?.state || geminiData.state || 'UNKNOWN';
 }
 
-async function extractResults(geminiData) {
+async function extractResults(geminiData, apiKey) {
   // File-based output (current Gemini API format)
   if (geminiData.metadata?.output?.responsesFile) {
     const fileName = geminiData.metadata.output.responsesFile;
     const fileResp = await fetch(
-      `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${GEMINI_API_KEY}`
+      `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${apiKey}`
     );
     if (!fileResp.ok) throw new Error(`Failed to download results file: ${await fileResp.text()}`);
     const text = await fileResp.text();
@@ -73,7 +123,7 @@ async function extractResults(geminiData) {
   if (geminiData.metadata?.destFile) {
     const fileName = geminiData.metadata.destFile;
     const fileResp = await fetch(
-      `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${GEMINI_API_KEY}`
+      `https://generativelanguage.googleapis.com/download/v1beta/${fileName}:download?alt=media&key=${apiKey}`
     );
     if (!fileResp.ok) throw new Error(`Failed to download results file: ${await fileResp.text()}`);
     const text = await fileResp.text();
@@ -97,72 +147,102 @@ async function processOneJob(db, job) {
   const jobName = job.job_name || job.gemini_job_name;
   if (!jobName) return { status: 'skipped' };
 
-  const geminiData = await getJobData(jobName);
+  const result = await getJobData(jobName);
+  if (!result) return { status: 'not_found' };
+  const { data: geminiData, key: workingKey } = result;
   const state = getJobState(geminiData);
 
-  if (state === 'JOB_STATE_SUCCEEDED' || state === 'BATCH_STATE_SUCCEEDED') {
-    const responses = await extractResults(geminiData);
+  if (state === 'JOB_STATE_SUCCEEDED' || state === 'BATCH_STATE_SUCCEEDED' || state === 'SUCCEEDED') {
+    const responses = await extractResults(geminiData, workingKey);
     let successCount = 0;
     let failCount = 0;
     const now = new Date();
+    const jobIdStr = job.id || String(job._id);
+    const isMultiPage = (job.pages_per_request || 1) > 1;
 
-    // Batch all page updates for efficiency
+    // Build flat list of { pageId, text, usage }
+    const pageResults = [];
+
+    if (isMultiPage && job.type === 'ocr') {
+      // Multi-page OCR: parse <page id="...">...</page> blocks from each response
+      for (const result of responses) {
+        if (result.error) { failCount++; continue; }
+        const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) { failCount++; continue; }
+        const usage = result.response?.usageMetadata;
+        const parsed = parseMultiPageOcr(text);
+        for (const [pageId, ocrText] of parsed) {
+          pageResults.push({ pageId, text: ocrText, usage });
+        }
+      }
+    } else {
+      for (let idx = 0; idx < responses.length; idx++) {
+        const result = responses[idx];
+        const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
+        if (!pageId) { failCount++; continue; }
+        const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!text) { failCount++; continue; }
+        pageResults.push({ pageId, text, usage: result.response?.usageMetadata });
+      }
+    }
+
+    // First pass: fix null ocr/translation subdocuments
+    const nullFixOps = [];
+    for (const { pageId } of pageResults) {
+      if (job.type === 'ocr') {
+        nullFixOps.push({ updateOne: { filter: { id: pageId, ocr: null }, update: { $set: { ocr: {} } } } });
+      } else {
+        nullFixOps.push({ updateOne: { filter: { id: pageId, translation: null }, update: { $set: { translation: {} } } } });
+      }
+    }
+    if (nullFixOps.length > 0) {
+      await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
+    }
+
+    // Second pass: save results
     const bulkOps = [];
-
-    for (let idx = 0; idx < responses.length; idx++) {
-      const result = responses[idx];
-      const pageId = result.metadata?.key || (job.page_ids && job.page_ids[idx]);
-      if (!pageId) { failCount++; continue; }
-
-      const text = result.response?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!text) { failCount++; continue; }
-
-      const usage = result.response?.usageMetadata;
+    for (const { pageId, text, usage } of pageResults) {
+      if (text.length > 25000) { failCount++; continue; }
 
       if (job.type === 'ocr') {
         const pageType = extractPageType(text);
         const columns = extractColumns(text);
         const detectedImages = parseDetectedImages(text);
 
-        const updateObj = {
-          ocr: {
-            data: text,
-            updated_at: now,
-            model: job.model,
-            language: job.language,
-            source: 'batch_api',
-            prompt_version: job.prompt_version || 'v4.2026-02',
-            batch_job_id: job.id,
-            input_tokens: usage?.promptTokenCount || 0,
-            output_tokens: usage?.candidatesTokenCount || 0,
-          },
+        const setObj = {
+          'ocr.data': text,
+          'ocr.updated_at': now,
+          'ocr.model': job.model,
+          'ocr.language': job.language,
+          'ocr.source': 'batch_api',
+          'ocr.prompt_version': job.prompt_version || 'v4.2026-02',
+          'ocr.batch_job_id': jobIdStr,
+          'ocr.input_tokens': usage?.promptTokenCount || 0,
+          'ocr.output_tokens': usage?.candidatesTokenCount || 0,
           updated_at: now,
         };
-        if (pageType) updateObj.page_type = pageType;
-        if (columns) updateObj.columns = columns;
-        if (detectedImages.length > 0) updateObj.detected_images = detectedImages;
+        if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
+        if (pageType) setObj.page_type = pageType;
+        if (columns) setObj.columns = columns;
+        if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 
-        bulkOps.push({
-          updateOne: { filter: { id: pageId }, update: { $set: updateObj } }
-        });
+        bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
       } else {
         bulkOps.push({
           updateOne: {
             filter: { id: pageId },
             update: {
               $set: {
-                translation: {
-                  data: text,
-                  updated_at: now,
-                  model: job.model,
-                  source_language: job.language,
-                  target_language: 'English',
-                  source: 'batch_api',
-                  prompt_version: job.prompt_version || 'v4.2026-02',
-                  batch_job_id: job.id,
-                  input_tokens: usage?.promptTokenCount || 0,
-                  output_tokens: usage?.candidatesTokenCount || 0,
-                },
+                'translation.data': text,
+                'translation.updated_at': now,
+                'translation.model': job.model,
+                'translation.source_language': job.language,
+                'translation.target_language': 'English',
+                'translation.source': 'batch_api',
+                'translation.prompt_version': job.prompt_version || 'v4.2026-02',
+                'translation.batch_job_id': jobIdStr,
+                'translation.input_tokens': usage?.promptTokenCount || 0,
+                'translation.output_tokens': usage?.candidatesTokenCount || 0,
                 updated_at: now,
               },
             },
@@ -171,22 +251,22 @@ async function processOneJob(db, job) {
       }
     }
 
-    // Execute bulk write
     if (bulkOps.length > 0) {
       const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
       successCount = bulkResult.matchedCount;
       failCount += (bulkOps.length - bulkResult.matchedCount);
     }
 
-    // Update job status
+    // Update job status using _id (not id — pipeline cron creates records with only _id)
     await db.collection('batch_jobs').updateOne(
-      { id: job.id },
+      { _id: job._id },
       {
         $set: {
           status: 'saved',
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
+          results_collected: true,
           completed_at: now,
           updated_at: now,
         },
@@ -199,7 +279,7 @@ async function processOneJob(db, job) {
     return { status: 'pending' };
   } else if (['JOB_STATE_FAILED', 'JOB_STATE_CANCELLED', 'JOB_STATE_EXPIRED', 'BATCH_STATE_FAILED', 'BATCH_STATE_CANCELLED'].includes(state)) {
     await db.collection('batch_jobs').updateOne(
-      { id: job.id },
+      { _id: job._id },
       { $set: { status: 'failed', gemini_state: state, updated_at: new Date() } }
     );
     return { status: 'failed', state };
@@ -270,6 +350,8 @@ async function run() {
         if (val.parentJobId) parentIdsToUpdate.add(val.parentJobId);
       } else if (val.status === 'pending') {
         stillPending++;
+      } else if (val.status === 'not_found') {
+        errors++;
       } else if (val.status === 'failed') {
         errors++;
         if (errors <= 10) console.log(`  Job failed with state: ${val.state}`);
@@ -314,11 +396,17 @@ async function run() {
 }
 
 async function updateParentJobProgress(db, parentJobId) {
-  const parent = await db.collection('batch_jobs').findOne({ id: parentJobId });
+  // Try both id and _id since parent jobs may use either
+  const parent = await db.collection('batch_jobs').findOne({
+    $or: [{ id: parentJobId }, { _id: parentJobId }]
+  });
   if (!parent || !parent.child_job_ids) return;
 
   const children = await db.collection('batch_jobs')
-    .find({ id: { $in: parent.child_job_ids } })
+    .find({ $or: [
+      { id: { $in: parent.child_job_ids } },
+      { _id: { $in: parent.child_job_ids } }
+    ]})
     .toArray();
 
   const progress = { completed: 0, failed: 0, pending: 0, total: parent.total_pages };
@@ -348,7 +436,7 @@ async function updateParentJobProgress(db, parentJobId) {
   const update = { progress, status: parentStatus, updated_at: new Date() };
   if (allChildrenDone && !parent.completed_at) update.completed_at = new Date();
 
-  await db.collection('batch_jobs').updateOne({ id: parentJobId }, { $set: update });
+  await db.collection('batch_jobs').updateOne({ _id: parent._id }, { $set: update });
 
   if (allChildrenDone && parent.book_id) {
     await db.collection('books').updateOne(
