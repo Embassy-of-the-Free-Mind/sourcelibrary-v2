@@ -52,6 +52,14 @@ export const analytics = {
   },
 
   /**
+   * Get pipeline observability data (snapshots, velocity, cron health, stalls)
+   */
+  pipeline: async (hours?: number): Promise<any> => {
+    const url = hours ? `/api/analytics/pipeline?hours=${hours}` : '/api/analytics/pipeline';
+    return await apiClient.get(url, { timeout: 30000 });
+  },
+
+  /**
    * Track an analytics event
    */
   track: async (data: {

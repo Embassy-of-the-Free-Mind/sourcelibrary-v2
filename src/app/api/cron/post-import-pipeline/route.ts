@@ -11,17 +11,17 @@ import { enqueuePagesForJob } from '@/lib/queue-utils';
 export const maxDuration = 300;
 
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
-const ENROLL_LIMIT = 20;
-const ARCHIVE_LIMIT = 40; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 20; // Batch API jobs are async — no reason to throttle heavily
-const MAX_ACTIVE_BATCH_OCR = 50; // Don't submit if this many OCR batch jobs are pending/processing
-const METADATA_ENRICH_LIMIT = 10;
-const TRANSLATE_SUBMIT_LIMIT = 15;
-const ENRICH_LIMIT = 5;
-const CHAPTER_LIMIT = 5;
-const IMAGE_SUBMIT_LIMIT = 3;
-const FINALIZE_LIMIT = 20;
-const MAX_ACTIVE_IMAGE_JOBS = 5;
+const ENROLL_LIMIT = 50;
+const ARCHIVE_LIMIT = 100; // Just DB checks now — Hetzner does actual archiving
+const OCR_SUBMIT_LIMIT = 40; // Batch API jobs are async — submit more per cycle
+const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
+const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
+const TRANSLATE_SUBMIT_LIMIT = 30; // Batch API jobs are async
+const ENRICH_LIMIT = 10; // ~30-60s each, time budget is the real throttle
+const CHAPTER_LIMIT = 15; // Fast (~5-10s each)
+const IMAGE_SUBMIT_LIMIT = 5;
+const FINALIZE_LIMIT = 50; // Just DB updates
+const MAX_ACTIVE_IMAGE_JOBS = 10;
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 7;
 
@@ -179,7 +179,7 @@ export async function GET(request: NextRequest) {
       const archivingBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archiving' })
         .project({ id: 1 })
-        .limit(20) // Check many — this is just a DB query, not I/O
+        .limit(100) // Just DB queries per book — can handle many
         .toArray();
 
       for (const book of archivingBooks) {
@@ -867,22 +867,77 @@ export async function GET(request: NextRequest) {
 
     const duration = Date.now() - startTime;
 
-    // Summary counts
-    const statusCounts = await db.collection('books').aggregate([
-      { $match: { pipeline_auto: { $exists: true } } },
-      { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-    ]).toArray();
+    // Summary counts + page totals in one $facet scan
+    const [facetResult] = await db.collection('books').aggregate([{
+      $facet: {
+        funnel: [
+          { $match: { 'pipeline_auto.status': { $exists: true } } },
+          { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
+        ],
+        totals: [{ $group: {
+          _id: null,
+          books: { $sum: 1 },
+          pages: { $sum: { $ifNull: ['$pages_count', 0] } },
+          ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+          translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+        }}],
+      },
+    }]).toArray();
 
-    const counts = Object.fromEntries(statusCounts.map(s => [s._id, s.count]));
+    const counts = Object.fromEntries((facetResult?.funnel || []).map((s: any) => [s._id, s.count]));
+    const totals = facetResult?.totals?.[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
+
+    // Active batch jobs count
+    const activeBatch = await db.collection('batch_jobs').aggregate([
+      { $match: { status: { $in: ['pending', 'processing'] } } },
+      { $group: { _id: '$type', count: { $sum: 1 }, pages: { $sum: { $ifNull: ['$page_count', 0] } } } },
+    ]).toArray();
+    const batchByType = Object.fromEntries(activeBatch.map((b: any) => [b._id, { count: b.count, pages: b.pages }]));
+
+    // ── Persist snapshot + cron run (non-blocking) ──
+    const now = new Date();
+    const snapshotWrite = db.collection('pipeline_snapshots').insertOne({
+      timestamp: now,
+      funnel: counts,
+      pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },
+      books: totals.books,
+      active_batch: batchByType,
+      cost_period: null, // filled by dashboard queries against gemini_usage
+    }).catch(e => console.error('[pipeline-snapshot] write failed:', e));
+
+    const cronWrite = db.collection('cron_runs').insertOne({
+      cron: 'post-import-pipeline',
+      timestamp: now,
+      duration_ms: duration,
+      actions: log,
+      errors: log.errors,
+      funnel: counts,
+    }).catch(e => console.error('[cron-run] write failed:', e));
+
+    // Don't block the response on writes
+    await Promise.allSettled([snapshotWrite, cronWrite]);
 
     return NextResponse.json({
       success: true,
       duration_ms: duration,
       actions: log,
       pipeline_status: counts,
+      pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },
     });
   } catch (error) {
     console.error('[post-import-pipeline] Error:', error);
+    // Still try to log the failed cron run
+    try {
+      const db2 = await getDb();
+      await db2.collection('cron_runs').insertOne({
+        cron: 'post-import-pipeline',
+        timestamp: new Date(),
+        duration_ms: Date.now() - startTime,
+        actions: log,
+        errors: [...log.errors, error instanceof Error ? error.message : 'Unknown error'],
+        failed: true,
+      });
+    } catch { /* ignore logging failure */ }
     return NextResponse.json({
       error: 'Pipeline cron failed',
       details: error instanceof Error ? error.message : 'Unknown error',

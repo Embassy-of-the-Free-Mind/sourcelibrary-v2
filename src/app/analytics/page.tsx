@@ -121,14 +121,16 @@ export default function AnalyticsPage() {
   const [usageData, setUsageData] = useState<UsageData | null>(null);
   const [vercelData, setVercelData] = useState<VercelAnalytics | null>(null);
   const [searchData, setSearchData] = useState<any | null>(null);
+  const [pipelineData, setPipelineData] = useState<any | null>(null);
   const [jobLogs, setJobLogs] = useState<JobLog[]>([]);
   const [loading, setLoading] = useState(true);
   const [hours, setHours] = useState(24);
+  const [pipelineHours, setPipelineHours] = useState(24);
   const [days, setDays] = useState(30);
   const [jobLimit, setJobLimit] = useState(50);
   const [jobTypeFilter, setJobTypeFilter] = useState<string>('');
   const [jobStatusFilter, setJobStatusFilter] = useState<string>('');
-  const [activeTab, setActiveTab] = useState<'usage' | 'performance' | 'logs' | 'search' | 'traffic'>('usage');
+  const [activeTab, setActiveTab] = useState<'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline'>('usage');
   const [error, setError] = useState<string | null>(null);
 
   const fetchUsageData = async () => {
@@ -163,6 +165,19 @@ export default function AnalyticsPage() {
     try {
       const data = await analytics.traffic();
       setVercelData(data);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Unknown error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPipelineData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await analytics.pipeline(pipelineHours);
+      setPipelineData(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
@@ -230,6 +245,12 @@ export default function AnalyticsPage() {
       fetchTrafficData();
     }
   }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'pipeline') {
+      fetchPipelineData();
+    }
+  }, [pipelineHours, activeTab]);
 
   const formatDuration = (ms: number) => {
     if (ms < 1000) return `${Math.round(ms)}ms`;
@@ -299,6 +320,8 @@ export default function AnalyticsPage() {
       fetchSearchData();
     } else if (activeTab === 'traffic') {
       fetchTrafficData();
+    } else if (activeTab === 'pipeline') {
+      fetchPipelineData();
     }
   };
 
@@ -375,8 +398,31 @@ export default function AnalyticsPage() {
               >
                 Traffic
               </button>
+              <button
+                onClick={() => setActiveTab('pipeline')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all ${activeTab === 'pipeline' ? 'shadow-sm' : ''}`}
+                style={{
+                  background: activeTab === 'pipeline' ? 'var(--bg-white)' : 'transparent',
+                  color: activeTab === 'pipeline' ? 'var(--text-primary)' : 'var(--text-muted)',
+                }}
+              >
+                Pipeline
+              </button>
             </div>
 
+            {activeTab === 'pipeline' && (
+              <select
+                value={pipelineHours}
+                onChange={(e) => setPipelineHours(parseInt(e.target.value))}
+                className="px-3 py-1.5 rounded-lg text-sm"
+                style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
+              >
+                <option value={6}>Last 6 hours</option>
+                <option value={24}>Last 24 hours</option>
+                <option value={72}>Last 3 days</option>
+                <option value={168}>Last 7 days</option>
+              </select>
+            )}
             {(activeTab === 'usage' || activeTab === 'search') && (
               <select
                 value={days}
@@ -1878,6 +1924,263 @@ export default function AnalyticsPage() {
                 <p className="text-sm mt-1">Pageview data will appear here as the site is used</p>
               </div>
             )}
+          </div>
+        ) : activeTab === 'pipeline' ? (
+          /* Pipeline Tab */
+          <div className="space-y-8">
+            {pipelineData ? (
+              <>
+                {/* Velocity Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #f0fdf4)', border: '1px solid var(--border-light)' }}>
+                    <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>OCR Velocity</div>
+                    <div className="text-3xl font-bold" style={{ color: 'var(--accent-sage-dark)' }}>
+                      {pipelineData.velocity?.ocr_per_hour || 0}
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>pages / hour</div>
+                  </div>
+                  <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #fef2f2)', border: '1px solid var(--border-light)' }}>
+                    <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>Translation Velocity</div>
+                    <div className="text-3xl font-bold" style={{ color: 'var(--accent-rust)' }}>
+                      {pipelineData.velocity?.translate_per_hour || 0}
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>pages / hour</div>
+                  </div>
+                  <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #faf5ff)', border: '1px solid var(--border-light)' }}>
+                    <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>Books Completing</div>
+                    <div className="text-3xl font-bold" style={{ color: 'var(--accent-violet)' }}>
+                      {pipelineData.velocity?.books_completing_per_day || 0}
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>per day</div>
+                  </div>
+                  <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #fffbeb)', border: '1px solid var(--border-light)' }}>
+                    <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>Data Window</div>
+                    <div className="text-3xl font-bold" style={{ color: 'var(--accent-gold-dark)' }}>
+                      {pipelineData.velocity?.period_hours || 0}h
+                    </div>
+                    <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                      {pipelineData.snapshots?.length || 0} snapshots
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stall Detection */}
+                {pipelineData.stalls && pipelineData.stalls.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <AlertTriangle className="w-5 h-5" style={{ color: '#f59e0b' }} />
+                      Pipeline Stage Changes
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {pipelineData.stalls.map((stall: any, idx: number) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between p-3 rounded-lg"
+                          style={{
+                            background: stall.direction === 'growing' ? '#fef2f2' : stall.direction === 'shrinking' ? '#f0fdf4' : 'var(--bg-warm)',
+                            border: `1px solid ${stall.direction === 'growing' ? '#fecaca' : stall.direction === 'shrinking' ? '#bbf7d0' : 'var(--border-light)'}`,
+                          }}
+                        >
+                          <div>
+                            <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                              {stall.stage.replace(/_/g, ' ')}
+                            </div>
+                            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                              {stall.current} books
+                            </div>
+                          </div>
+                          <div
+                            className="text-sm font-bold"
+                            style={{
+                              color: stall.direction === 'growing' ? '#dc2626' : stall.direction === 'shrinking' ? '#16a34a' : 'var(--text-muted)',
+                            }}
+                          >
+                            {stall.delta > 0 ? '+' : ''}{stall.delta}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Cron Health */}
+                {pipelineData.cronHealth && Object.keys(pipelineData.cronHealth).length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <Clock className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+                      Cron Health
+                    </h2>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr style={{ borderBottom: '2px solid var(--border-light)' }}>
+                            <th className="text-left py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Cron</th>
+                            <th className="text-left py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Last Run</th>
+                            <th className="text-right py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Duration</th>
+                            <th className="text-right py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Runs</th>
+                            <th className="text-right py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Failures</th>
+                            <th className="text-right py-2 font-medium" style={{ color: 'var(--text-muted)' }}>Avg Duration</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.entries(pipelineData.cronHealth).map(([name, health]: [string, any]) => {
+                            const timeSince = health.lastRun
+                              ? Math.round((Date.now() - new Date(health.lastRun).getTime()) / 60000)
+                              : null;
+                            return (
+                              <tr key={name} style={{ borderBottom: '1px solid var(--border-light)' }}>
+                                <td className="py-2.5 pr-4 font-medium" style={{ color: 'var(--text-primary)' }}>{name}</td>
+                                <td className="py-2.5 pr-4" style={{ color: 'var(--text-muted)' }}>
+                                  {timeSince !== null ? (
+                                    <span title={new Date(health.lastRun).toLocaleString()}>
+                                      {timeSince < 60 ? `${timeSince}m ago` : `${Math.round(timeSince / 60)}h ago`}
+                                    </span>
+                                  ) : 'Never'}
+                                </td>
+                                <td className="py-2.5 pr-4 text-right" style={{ color: 'var(--text-secondary)' }}>
+                                  {formatDuration(health.lastDuration)}
+                                </td>
+                                <td className="py-2.5 pr-4 text-right" style={{ color: 'var(--text-secondary)' }}>
+                                  {health.runsInPeriod}
+                                </td>
+                                <td className="py-2.5 pr-4 text-right">
+                                  <span style={{ color: health.failures > 0 ? '#dc2626' : '#16a34a', fontWeight: health.failures > 0 ? 600 : 400 }}>
+                                    {health.failures}
+                                  </span>
+                                </td>
+                                <td className="py-2.5 text-right" style={{ color: 'var(--text-muted)' }}>
+                                  {formatDuration(health.avgDuration)}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                    {/* Show recent errors if any */}
+                    {Object.entries(pipelineData.cronHealth).some(([, h]: [string, any]) => h.recentErrors?.length > 0) && (
+                      <div className="mt-4 p-3 rounded-lg" style={{ background: '#fef2f2', border: '1px solid #fecaca' }}>
+                        <div className="text-sm font-medium mb-2" style={{ color: '#dc2626' }}>Recent Cron Errors</div>
+                        {Object.entries(pipelineData.cronHealth)
+                          .filter(([, h]: [string, any]) => h.recentErrors?.length > 0)
+                          .map(([name, h]: [string, any]) => (
+                            <div key={name} className="text-xs mb-1" style={{ color: '#7f1d1d' }}>
+                              <span className="font-medium">{name}:</span> {h.recentErrors[0]}
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Recent AI Errors */}
+                {pipelineData.recentErrors && pipelineData.recentErrors.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <XCircle className="w-5 h-5" style={{ color: '#ef4444' }} />
+                      Recent AI Errors (last 6h)
+                    </h2>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr style={{ borderBottom: '2px solid var(--border-light)' }}>
+                            <th className="text-left py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Type</th>
+                            <th className="text-left py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Category</th>
+                            <th className="text-right py-2 pr-4 font-medium" style={{ color: 'var(--text-muted)' }}>Count</th>
+                            <th className="text-left py-2 font-medium" style={{ color: 'var(--text-muted)' }}>Last Error</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {pipelineData.recentErrors.map((err: any, idx: number) => (
+                            <tr key={idx} style={{ borderBottom: '1px solid var(--border-light)' }}>
+                              <td className="py-2.5 pr-4 font-medium" style={{ color: 'var(--text-primary)' }}>{err.type}</td>
+                              <td className="py-2.5 pr-4">
+                                <span
+                                  className="px-2 py-0.5 rounded text-xs font-medium"
+                                  style={{
+                                    background: err.category === 'rate_limit' ? '#fef3c7' : err.category === 'safety_filter' ? '#fce7f3' : '#fee2e2',
+                                    color: err.category === 'rate_limit' ? '#92400e' : err.category === 'safety_filter' ? '#9d174d' : '#991b1b',
+                                  }}
+                                >
+                                  {err.category}
+                                </span>
+                              </td>
+                              <td className="py-2.5 pr-4 text-right font-bold" style={{ color: '#dc2626' }}>{err.count}</td>
+                              <td className="py-2.5 text-xs truncate max-w-xs" style={{ color: 'var(--text-muted)' }}>{err.lastError}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* Needs Attention Books */}
+                {pipelineData.needsAttention && pipelineData.needsAttention.length > 0 && (
+                  <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+                    <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                      <AlertTriangle className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+                      Books Needing Attention ({pipelineData.needsAttention.length})
+                    </h2>
+                    <div className="space-y-3">
+                      {pipelineData.needsAttention.map((book: any) => (
+                        <div
+                          key={book.id}
+                          className="flex items-start justify-between p-3 rounded-lg"
+                          style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
+                        >
+                          <div className="flex-1 min-w-0">
+                            <Link
+                              href={`https://sourcelibrary.org/book/${book.id}`}
+                              target="_blank"
+                              className="font-medium text-sm hover:underline truncate block"
+                              style={{ color: 'var(--accent-rust)' }}
+                            >
+                              {book.title}
+                            </Link>
+                            <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: 'var(--text-muted)' }}>
+                              <span>{book.language}</span>
+                              <span>{book.ocr}/{book.pages} OCR</span>
+                              <span>{book.translated}/{book.pages} translated</span>
+                              {book.provider && <span className="capitalize">{book.provider}</span>}
+                              {book.retryCount > 0 && (
+                                <span style={{ color: '#dc2626' }}>{book.retryCount} retries</span>
+                              )}
+                            </div>
+                            {book.error && (
+                              <div className="text-xs mt-1 truncate" style={{ color: '#dc2626' }}>{book.error}</div>
+                            )}
+                          </div>
+                          <span
+                            className="px-2 py-0.5 rounded text-xs font-medium ml-3 shrink-0"
+                            style={{
+                              background: book.status === 'failed' ? '#fee2e2' : '#fef3c7',
+                              color: book.status === 'failed' ? '#991b1b' : '#92400e',
+                            }}
+                          >
+                            {book.status}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* No data hints */}
+                {pipelineData.snapshots?.length === 0 && (
+                  <div className="p-4 rounded-lg text-sm" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
+                    <p>No pipeline snapshots yet for this time window. Snapshots are recorded every 10 minutes by the post-import-pipeline cron.
+                    Try expanding the time range, or wait for the next cron run.</p>
+                  </div>
+                )}
+              </>
+            ) : !loading ? (
+              <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
+                <BarChart3 className="w-12 h-12 mx-auto mb-4 opacity-30" />
+                <p>No pipeline data available</p>
+                <p className="text-sm mt-1">Pipeline observability data will appear after the post-import-pipeline cron runs</p>
+              </div>
+            ) : null}
           </div>
         ) : null}
       </main>
