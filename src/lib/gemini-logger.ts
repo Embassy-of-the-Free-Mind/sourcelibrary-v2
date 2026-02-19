@@ -106,6 +106,9 @@ export interface GeminiUsageLog {
   // Metadata
   prompt_version?: string;
   endpoint?: string;  // Which API route triggered this
+
+  // Multi-page OCR params
+  pages_per_request?: number;  // >1 means multi-page mode (N images per Gemini request)
 }
 
 function calculateCost(
@@ -149,6 +152,7 @@ export async function logGeminiCall(params: {
   error_category?: string;
   prompt_version?: string;
   endpoint?: string;
+  pages_per_request?: number;
 }): Promise<void> {
   try {
     const db = await getDb();
@@ -192,6 +196,7 @@ export async function logGeminiCall(params: {
       error_category: params.error_category,
       prompt_version: params.prompt_version,
       endpoint: params.endpoint,
+      ...(params.pages_per_request && params.pages_per_request > 1 && { pages_per_request: params.pages_per_request }),
     };
 
     await db.collection('gemini_usage').insertOne(log);

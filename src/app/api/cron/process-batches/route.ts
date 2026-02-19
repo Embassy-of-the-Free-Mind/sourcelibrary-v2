@@ -178,6 +178,7 @@ export async function GET(request: NextRequest) {
                     'ocr.prompt_version': job.prompt_version || PROMPT_VERSION,
                     'ocr.prompt_name': job.prompt_name || 'Standard OCR',
                     'ocr.batch_job_id': job.id,
+                    ...((job.pages_per_request || 1) > 1 && { 'ocr.pages_per_request': job.pages_per_request }),
                     'ocr.input_tokens': usage?.promptTokenCount || 0,
                     'ocr.output_tokens': usage?.candidatesTokenCount || 0,
                     ...(pageType && { page_type: pageType }),
@@ -288,6 +289,7 @@ export async function GET(request: NextRequest) {
             output_tokens: totalOutputTokens,
             status: successCount > 0 ? 'success' : 'failed',
             endpoint: '/api/cron/process-batches',
+            pages_per_request: job.pages_per_request,
           });
 
           results.collected.push({

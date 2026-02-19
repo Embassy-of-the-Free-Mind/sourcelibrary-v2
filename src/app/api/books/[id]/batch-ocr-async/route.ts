@@ -265,6 +265,7 @@ export const POST = withAuth(async (request, session, context) => {
       output_tokens: 0,
       status: 'submitted',
       endpoint: '/api/books/[id]/batch-ocr-async',
+      pages_per_request: effectivePPR,
     });
 
     return NextResponse.json({
@@ -415,6 +416,7 @@ export const GET = withAuth(async (request, session, context) => {
                   'ocr.prompt_version': jobDoc.prompt_version || PROMPT_VERSION,
                   'ocr.prompt_name': jobDoc.prompt_name || 'Standard OCR',
                   'ocr.batch_job_id': jobDoc.job_name,
+                  ...(jobDoc.pages_per_request > 1 && { 'ocr.pages_per_request': jobDoc.pages_per_request }),
                   ...(pageType && { page_type: pageType }),
                   ...(columns && { columns }),
                   ...(detectedImages.length > 0 && { detected_images: detectedImages }),
@@ -469,6 +471,7 @@ export const GET = withAuth(async (request, session, context) => {
           output_tokens: totalOutputTokens,
           status: successCount > 0 ? 'success' : 'failed',
           endpoint: '/api/books/[id]/batch-ocr-async',
+          pages_per_request: jobDoc.pages_per_request,
         });
 
         return NextResponse.json({
