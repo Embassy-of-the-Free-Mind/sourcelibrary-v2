@@ -158,4 +158,5 @@ export interface Chapter {
   pageId: string;
   pageNumber: number;
   level: number;  // 1 = top-level division, 2 = major chapter, 3 = sub-chapter
+  confidence?: 'high' | 'medium' | 'low'; // AI's confidence in this chapter boundary
 }

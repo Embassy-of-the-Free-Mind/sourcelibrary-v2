@@ -15,7 +15,9 @@ export const POST = withAuth(async (request, session, context) => {
       chaptersCount: result.chapters.length,
       chapters: result.chapters,
       rawHeadingsCount: result.rawHeadingsCount,
+      translationHeadingsCount: result.translationHeadingsCount,
       tocPagesFound: result.tocPagesFound,
+      sectionHintsUsed: result.sectionHintsUsed,
       usage: result.usage,
     });
   } catch (error) {
