@@ -23,6 +23,7 @@ import {
   StickyNote,
   Info
 } from 'lucide-react';
+import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import PageMetadataPanel from '@/components/reader/PageMetadataPanel';
@@ -443,6 +444,7 @@ export default function TranslationEditor({
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
+  const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize } = useReaderPreferences();
 
   // Reset split state
   const [showResetSplitConfirm, setShowResetSplitConfirm] = useState(false);
@@ -510,6 +512,8 @@ export default function TranslationEditor({
   const [showOcrPanel, setShowOcrPanel] = useState(false);
   const [showTranslationPanel, setShowTranslationPanel] = useState(true);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
+  const [showFontControls, setShowFontControls] = useState(false);
+  const fontControlsRef = useRef<HTMLDivElement>(null);
 
   // Highlights and Annotations panels
   const [showHighlights, setShowHighlights] = useState(false);
@@ -574,6 +578,37 @@ export default function TranslationEditor({
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [previousPage, nextPage, onNavigate]);
+
+  // Font size keyboard shortcuts (Cmd+=/Cmd+-/Cmd+0)
+  useEffect(() => {
+    const handleFontKey = (e: KeyboardEvent) => {
+      if (!e.metaKey && !e.ctrlKey) return;
+      if (e.key === '=' || e.key === '+') {
+        e.preventDefault();
+        increaseFontSize();
+      } else if (e.key === '-') {
+        e.preventDefault();
+        decreaseFontSize();
+      } else if (e.key === '0') {
+        e.preventDefault();
+        resetFontSize();
+      }
+    };
+    window.addEventListener('keydown', handleFontKey);
+    return () => window.removeEventListener('keydown', handleFontKey);
+  }, [increaseFontSize, decreaseFontSize, resetFontSize]);
+
+  // Close font controls popover on click outside
+  useEffect(() => {
+    if (!showFontControls) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (fontControlsRef.current && !fontControlsRef.current.contains(e.target as Node)) {
+        setShowFontControls(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showFontControls]);
 
   // Track page view
   useEffect(() => {
@@ -875,6 +910,51 @@ export default function TranslationEditor({
                 >
                   <StickyNote className="w-4 h-4" aria-hidden="true" />
                 </button>
+                <div className="relative" ref={fontControlsRef}>
+                  <button
+                    onClick={() => setShowFontControls(prev => !prev)}
+                    className={`flex items-center gap-0.5 p-1.5 rounded-md text-xs font-medium transition-all hover:bg-stone-100 ${showFontControls ? 'bg-stone-200' : ''}`}
+                    style={{ color: showFontControls ? 'var(--text-primary)' : 'var(--text-muted)' }}
+                    aria-label="Font size"
+                    title="Font size"
+                  >
+                    <span className="text-xs">A</span><span className="text-base font-semibold leading-none">A</span>
+                  </button>
+                  {showFontControls && (
+                    <div className="absolute right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-lg border p-4" style={{ borderColor: 'var(--border-light)', minWidth: '200px' }}>
+                      <div className="text-[10px] uppercase tracking-widest text-center mb-3" style={{ color: 'var(--text-muted)' }}>Font Size</div>
+                      <div className="flex items-center justify-between gap-4">
+                        <button
+                          onClick={decreaseFontSize}
+                          disabled={isMinSize}
+                          className="w-10 h-10 flex items-center justify-center rounded-lg text-base transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100"
+                          style={{ color: 'var(--text-primary)' }}
+                          title="Smaller (Cmd+-)"
+                        >
+                          A
+                        </button>
+                        <button
+                          onClick={resetFontSize}
+                          disabled={isDefaultSize}
+                          className={`text-base tabular-nums font-semibold transition-colors ${isDefaultSize ? '' : 'hover:text-accent-rust cursor-pointer'}`}
+                          style={{ color: 'var(--text-primary)' }}
+                          title="Reset to default (Cmd+0)"
+                        >
+                          {fontSize}
+                        </button>
+                        <button
+                          onClick={increaseFontSize}
+                          disabled={isMaxSize}
+                          className="w-10 h-10 flex items-center justify-center rounded-lg text-xl font-semibold transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100"
+                          style={{ color: 'var(--text-primary)' }}
+                          title="Larger (Cmd+=)"
+                        >
+                          A
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <GoogleTranslate />
               </div>
 
@@ -935,7 +1015,9 @@ export default function TranslationEditor({
               style={{
                 transform: isSwiping ? `translateX(${swipeOffset}px)` : 'none',
                 transition: isSwiping ? 'none' : 'transform 0.2s ease-out',
-              }}
+                '--reader-font-size': `${fontSize}px`,
+                '--reader-line-height': lineHeight,
+              } as React.CSSProperties}
             >
               {/* Source Image Panel */}
               {showImagePanel && (
@@ -984,7 +1066,7 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
-                      <div className="prose-manuscript text-sm leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
+                      <div className="prose-manuscript leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} />
                       </div>
                     ) : (
@@ -1518,7 +1600,7 @@ export default function TranslationEditor({
                 onChange={(e) => setOcrText(e.target.value)}
                 onBlur={handleSave}
                 className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
+                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }}
                 placeholder="OCR text will appear here..."
               />
             </div>
@@ -1570,7 +1652,7 @@ export default function TranslationEditor({
                 onChange={(e) => setTranslationText(e.target.value)}
                 onBlur={handleSave}
                 className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.75' }}
+                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }}
                 placeholder="Translation will appear here..."
               />
             </div>

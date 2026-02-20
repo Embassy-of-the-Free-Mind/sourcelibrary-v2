@@ -172,8 +172,8 @@ h1, h2, h3, h4 {
 /* Prose styling for manuscripts */
 .prose-manuscript {
   font-family: 'Newsreader', Georgia, serif;
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: var(--reader-font-size, 18px);
+  line-height: var(--reader-line-height, 1.8);
   color: var(--text-secondary);
 }
 
@@ -184,8 +184,8 @@ h1, h2, h3, h4 {
 /* Prose styling for content/document pages */
 .prose-content {
   font-family: 'Newsreader', Georgia, serif;
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: var(--reader-font-size, 18px);
+  line-height: var(--reader-line-height, 1.8);
   color: var(--text-secondary);
 }
 
