@@ -9,7 +9,7 @@ export const likes = {
   /**
    * Toggle like on a target (like if not liked, unlike if already liked)
    */
-  toggle: async (targetType: LikeTargetType, targetId: string, visitorId: string): Promise<{ success: boolean; liked: boolean; count: number }> => {
+  toggle: async (targetType: LikeTargetType, targetId: string, visitorId: string): Promise<{ success: boolean; liked: boolean; count: number; cascade?: { book_id: string; book_liked: boolean; book_count: number } }> => {
     return await apiClient.post('/api/likes', {
       target_type: targetType,
       target_id: targetId,

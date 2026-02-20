@@ -54,5 +54,6 @@ export * from './research'; // Client-safe API wrappers only
 export * from './search';
 export * from './social';
 export * from './split-detection';
+export * from './timeline';
 export * from './upload';
 export * from './utils';

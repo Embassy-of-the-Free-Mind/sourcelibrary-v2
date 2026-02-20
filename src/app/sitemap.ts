@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getDb } from '@/lib/mongodb';
 
+// Cache sitemap for 24 hours — book list changes rarely
+export const revalidate = 86400;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://sourcelibrary.org';
 
@@ -26,6 +29,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/highlights`,
+      lastModified: new Date(),
+      changeFrequency: 'daily',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/favorites`,
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 0.7,

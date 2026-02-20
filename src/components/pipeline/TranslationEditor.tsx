@@ -912,6 +912,7 @@ export default function TranslationEditor({
                 <LikeButton
                   targetType="page"
                   targetId={page.id}
+                  bookId={book.id}
                   size="sm"
                   showCount={false}
                 />
@@ -1431,6 +1432,7 @@ export default function TranslationEditor({
               <LikeButton
                 targetType="page"
                 targetId={page.id}
+                bookId={book.id}
                 size="sm"
                 showCount={false}
               />

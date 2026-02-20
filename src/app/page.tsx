@@ -9,9 +9,8 @@ import { Book } from '@/lib/types';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 import { getSiteMode } from '@/lib/site-mode.server';
 
-// Force dynamic rendering (no static generation)
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// ISR: rebuild at most every 2 minutes
+export const revalidate = 120;
 
 // Featured topics to show on home page (curated order)
 const FEATURED_TOPIC_IDS = [
@@ -55,11 +54,44 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
                 else: 0,
               },
             },
+            is_efm_translated: {
+              $cond: {
+                if: {
+                  $and: [
+                    { $eq: ['$image_source.provider', 'efm'] },
+                    { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+                    { $gte: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 1] }] }, 100] }, 90] },
+                  ],
+                },
+                then: 1,
+                else: 0,
+              },
+            },
+            // Category priority: alchemy/astrology/hermeticism first, christian-mysticism/theology last
+            category_score: {
+              $sum: {
+                $map: {
+                  input: { $ifNull: ['$categories', []] },
+                  as: 'cat',
+                  in: {
+                    $switch: {
+                      branches: [
+                        { case: { $in: ['$$cat', ['alchemy', 'astrology', 'hermeticism', 'jewish-kabbalah', 'natural-magic', 'ritual-magic']] }, then: 3 },
+                        { case: { $in: ['$$cat', ['neoplatonism', 'rosicrucianism', 'theosophy', 'divination', 'florentine-platonism', 'prisca-theologia', 'spiritual-alchemy']] }, then: 2 },
+                        { case: { $in: ['$$cat', ['mysticism', 'natural-philosophy', 'philosophy', 'medicine', 'paracelsian']] }, then: 1 },
+                        { case: { $in: ['$$cat', ['christian-mysticism', 'theology', 'biblical-studies']] }, then: -1 },
+                      ],
+                      default: 0,
+                    },
+                  },
+                },
+              },
+            },
           },
         },
-        // Descending sort: nulls go last, so translated books surface first
+        // EFM translated first, then by category priority, then by most recent translation
         {
-          $sort: { last_translation_at: -1, last_processed: -1, title: 1 },
+          $sort: { is_efm_translated: -1, category_score: -1, last_translation_at: -1, last_processed: -1, title: 1 },
         },
         { $limit: INITIAL_SERVER_LIMIT },
         {

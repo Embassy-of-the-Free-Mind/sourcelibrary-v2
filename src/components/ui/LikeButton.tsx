@@ -11,6 +11,7 @@ const LIKES_CACHE_KEY = 'sl_likes_cache';
 interface LikeButtonProps {
   targetType: LikeTargetType;
   targetId: string;
+  bookId?: string; // For page likes: cascade updates the book like cache
   initialCount?: number;
   initialLiked?: boolean;
   size?: 'sm' | 'md' | 'lg';
@@ -58,6 +59,7 @@ function setLikeInCache(key: string, liked: boolean) {
 export default function LikeButton({
   targetType,
   targetId,
+  bookId,
   initialCount = 0,
   initialLiked = false,
   size = 'md',
@@ -102,6 +104,11 @@ export default function LikeButton({
       setLiked(data.liked);
       setCount(data.count);
       setLikeInCache(cacheKey, data.liked);
+
+      // Cascade: when liking a page, server also likes the book — sync cache
+      if (data.cascade?.book_id) {
+        setLikeInCache(`book:${data.cascade.book_id}`, data.cascade.book_liked);
+      }
     } catch {
       // Revert optimistic update on error
       setLiked(!newLiked);

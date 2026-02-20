@@ -30,3 +30,4 @@ export * from './search';
 export * from './social';
 export * from './collections';
 export * from './split-detection';
+export * from './timeline';

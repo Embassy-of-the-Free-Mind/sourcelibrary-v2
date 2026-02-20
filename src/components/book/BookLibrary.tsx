@@ -477,11 +477,15 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
             >
               {/* Thumbnail */}
               <div className="w-16 h-20 bg-stone-100 rounded overflow-hidden flex-shrink-0">
-                {book.thumbnail ? (
+                {(book.thumbnail_blob || book.thumbnail) ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={book.thumbnail}
+                    src={book.thumbnail_blob || book.thumbnail}
                     alt={book.title || ''}
+                    loading="lazy"
+                    decoding="async"
+                    width={64}
+                    height={80}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -588,6 +592,10 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
                       <img
                         src={item.imageUrl}
                         alt={item.title}
+                        loading="lazy"
+                        decoding="async"
+                        width={64}
+                        height={80}
                         className="w-full h-full object-cover"
                       />
                     ) : (

@@ -18,7 +18,7 @@ function buildSortStage(sort: SortOption) {
       return { $sort: { sort_title: -1 } as Record<string, 1 | -1> };
     case 'recent-translation':
     default:
-      return { $sort: { has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
+      return { $sort: { is_efm_translated: -1, category_score: -1, has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
   }
 }
 
@@ -108,6 +108,38 @@ export async function GET(request: NextRequest) {
             },
           },
           has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },
+          is_efm_translated: {
+            $cond: {
+              if: {
+                $and: [
+                  { $eq: ['$image_source.provider', 'efm'] },
+                  { $gt: ['$pages_count', 0] },
+                  { $gte: [{ $multiply: [{ $divide: ['$pages_translated', { $max: ['$pages_count', 1] }] }, 100] }, 90] },
+                ],
+              },
+              then: 1,
+              else: 0,
+            },
+          },
+          category_score: {
+            $sum: {
+              $map: {
+                input: { $ifNull: ['$categories', []] },
+                as: 'cat',
+                in: {
+                  $switch: {
+                    branches: [
+                      { case: { $in: ['$$cat', ['alchemy', 'astrology', 'hermeticism', 'jewish-kabbalah', 'natural-magic', 'ritual-magic']] }, then: 3 },
+                      { case: { $in: ['$$cat', ['neoplatonism', 'rosicrucianism', 'theosophy', 'divination', 'florentine-platonism', 'prisca-theologia', 'spiritual-alchemy']] }, then: 2 },
+                      { case: { $in: ['$$cat', ['mysticism', 'natural-philosophy', 'philosophy', 'medicine', 'paracelsian']] }, then: 1 },
+                      { case: { $in: ['$$cat', ['christian-mysticism', 'theology', 'biblical-studies']] }, then: -1 },
+                    ],
+                    default: 0,
+                  },
+                },
+              },
+            },
+          },
           sort_title: { $toLower: { $ifNull: ['$display_title', '$title'] } },
         },
       },

@@ -410,6 +410,37 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Gemini usage - time-range scans (analytics usage route, cost-by-day)
+    // Query: { timestamp: { $gte } } with group by type/action/day
+    // CRITICAL: Without this, 1.4M doc collection scan causes 504 timeouts
+    try {
+      await db.collection('gemini_usage').createIndex(
+        { timestamp: -1 },
+        { name: 'gemini_usage_ts_idx', background: true }
+      );
+      results['gemini_usage.gemini_usage_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gemini_usage.gemini_usage_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Gemini usage - failed calls in time range (pipeline error aggregation)
+    // Query: { status: 'failed', timestamp: { $gte } }
+    try {
+      await db.collection('gemini_usage').createIndex(
+        { status: 1, timestamp: -1 },
+        { name: 'gemini_usage_status_ts_idx', background: true }
+      );
+      results['gemini_usage.gemini_usage_status_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['gemini_usage.gemini_usage_status_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Batch jobs - filter out child jobs in processing overview
     // Query: { parent_job_id: { $exists: false } }
     try {

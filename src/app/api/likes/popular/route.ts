@@ -75,59 +75,46 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ items: [], total: 0 });
     }
 
-    // For images, enrich with full data
+    // For images, enrich with full data (batch queries to avoid N+1)
     if (targetType === 'image') {
-      const enrichedImages: PopularImage[] = [];
-
-      for (const item of popularItems) {
+      // Parse gallery image IDs to extract page IDs
+      const parsedItems = popularItems.map(item => {
         const galleryImageId = item._id as string;
         const [pageId, indexStr] = galleryImageId.split(':');
-        const detectionIndex = parseInt(indexStr) || 0;
+        return { galleryImageId, pageId, detectionIndex: parseInt(indexStr) || 0, count: item.count };
+      });
 
-        // Get page data with detected image
-        const page = await db.collection('pages').findOne(
-          { id: pageId },
-          {
-            projection: {
-              id: 1,
-              book_id: 1,
-              page_number: 1,
-              photo_original: 1,
-              cropped_photo: 1,
-              archived_photo: 1,
-              detected_images: 1,
-            },
-          }
-        );
+      // Batch fetch all pages
+      const pageIds = [...new Set(parsedItems.map(p => p.pageId))];
+      const pagesData = await db.collection('pages').find(
+        { id: { $in: pageIds } },
+        { projection: { id: 1, book_id: 1, page_number: 1, photo_original: 1, cropped_photo: 1, archived_photo: 1, detected_images: 1 } }
+      ).toArray();
+      const pagesMap = new Map(pagesData.map(p => [p.id, p]));
 
-        if (!page || !page.detected_images?.[detectionIndex]) {
-          continue;
-        }
+      // Batch fetch all books
+      const bookIds = [...new Set(pagesData.map(p => p.book_id))];
+      const booksData = await db.collection('books').find(
+        { id: { $in: bookIds } },
+        { projection: { id: 1, title: 1, author: 1, year: 1 } }
+      ).toArray();
+      const booksMap = new Map(booksData.map(b => [b.id, b]));
 
-        const detection = page.detected_images[detectionIndex];
+      const enrichedImages: PopularImage[] = [];
 
-        // Get book data
-        const book = await db.collection('books').findOne(
-          { id: page.book_id },
-          {
-            projection: {
-              id: 1,
-              title: 1,
-              author: 1,
-              year: 1,
-            },
-          }
-        );
+      for (const item of parsedItems) {
+        const page = pagesMap.get(item.pageId);
+        if (!page || !page.detected_images?.[item.detectionIndex]) continue;
 
-        if (!book) {
-          continue;
-        }
+        const detection = page.detected_images[item.detectionIndex];
+        const book = booksMap.get(page.book_id);
+        if (!book) continue;
 
         const croppedUrl = buildCropUrl(
           {
-            pageId,
-            detectionIndex,
-            galleryImageId,
+            pageId: item.pageId,
+            detectionIndex: item.detectionIndex,
+            galleryImageId: item.galleryImageId,
             galleryQuality: detection.gallery_quality || 0,
             shareabilityScore: 0,
             description: detection.description || '',
@@ -144,9 +131,9 @@ export async function GET(request: NextRequest) {
         );
 
         enrichedImages.push({
-          galleryImageId,
-          pageId,
-          detectionIndex,
+          galleryImageId: item.galleryImageId,
+          pageId: item.pageId,
+          detectionIndex: item.detectionIndex,
           likeCount: item.count,
           description: detection.description || '',
           type: detection.type || 'illustration',
@@ -165,7 +152,103 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // For pages and books, return basic info
+    // For books, enrich with title/author/year + top 3 extracted illustrations
+    if (targetType === 'book') {
+      const bookIds = popularItems.map(item => item._id as string);
+      const booksData = await db.collection('books').find(
+        { id: { $in: bookIds } },
+        { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, thumbnail_blob: 1, cover_image: 1 } }
+      ).toArray();
+      const booksMap = new Map(booksData.map(b => [b.id, b]));
+
+      // Get top 3 extracted illustrations per book from gallery_images
+      const galleryImages = await db.collection('gallery_images').aggregate([
+        { $match: { book_id: { $in: bookIds }, gallery_quality: { $gte: 0.6 }, extracted_url: { $exists: true, $ne: null } } },
+        { $sort: { gallery_quality: -1 } },
+        { $group: { _id: '$book_id', images: { $push: { url: '$extracted_url', description: '$description', type: '$type' } } } },
+        { $project: { images: { $slice: ['$images', 3] } } },
+      ]).toArray();
+      const galleryMap = new Map(galleryImages.map(g => [g._id, g.images]));
+
+      // Fallback: first-page thumbnail for books without gallery images
+      const booksWithoutGallery = bookIds.filter(id => !galleryMap.has(id));
+      let thumbMap = new Map<string, string>();
+      if (booksWithoutGallery.length > 0) {
+        const thumbnailPages = await db.collection('pages').find(
+          { book_id: { $in: booksWithoutGallery }, page_number: 1 },
+          { projection: { book_id: 1, thumbnail_blob: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
+        ).toArray();
+        thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.thumbnail_blob || p.archived_photo || p.cropped_photo || p.photo]));
+      }
+
+      const enrichedBooks = popularItems
+        .map(item => {
+          const book = booksMap.get(item._id as string);
+          if (!book) return null;
+          const gallery = galleryMap.get(book.id) || [];
+          return {
+            id: book.id,
+            title: book.display_title || book.title,
+            author: book.author,
+            year: book.year,
+            published: book.published,
+            language: book.language,
+            pages_count: book.pages_count,
+            pages_ocr: book.pages_ocr,
+            pages_translated: book.pages_translated,
+            thumbnail: book.thumbnail_blob || book.cover_image || thumbMap.get(book.id),
+            featured_images: gallery,
+            likeCount: item.count,
+          };
+        })
+        .filter(Boolean);
+
+      return NextResponse.json({ items: enrichedBooks, total: enrichedBooks.length });
+    }
+
+    // For pages, enrich with page content and book info
+    if (targetType === 'page') {
+      const pageIds = popularItems.map(item => item._id as string);
+      const pagesData = await db.collection('pages').find(
+        { id: { $in: pageIds } },
+        { projection: { id: 1, book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1, thumbnail_blob: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
+      ).toArray();
+      const pagesMap = new Map(pagesData.map(p => [p.id, p]));
+
+      // Get book info for all pages
+      const bookIds = [...new Set(pagesData.map(p => p.book_id))];
+      const booksData = await db.collection('books').find(
+        { id: { $in: bookIds } },
+        { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1 } }
+      ).toArray();
+      const booksMap = new Map(booksData.map(b => [b.id, b]));
+
+      const enrichedPages = popularItems
+        .map(item => {
+          const page = pagesMap.get(item._id as string);
+          if (!page) return null;
+          const book = booksMap.get(page.book_id);
+          const rawText = page.translation?.data || page.ocr?.data || '';
+          // Strip XML tags (e.g. <meta>, <page-type>, <columns>) for clean excerpts
+          const text = rawText.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+          return {
+            id: page.id,
+            pageNumber: page.page_number,
+            bookId: page.book_id,
+            bookTitle: book ? (book.display_title || book.title) : 'Unknown',
+            bookAuthor: book?.author,
+            bookYear: book?.year,
+            thumbnail: page.thumbnail_blob || page.archived_photo || page.cropped_photo || page.photo,
+            excerpt: text.slice(0, 200) + (text.length > 200 ? '...' : ''),
+            likeCount: item.count,
+          };
+        })
+        .filter(Boolean);
+
+      return NextResponse.json({ items: enrichedPages, total: enrichedPages.length });
+    }
+
+    // Fallback for unknown types
     return NextResponse.json({
       items: popularItems.map(item => ({
         id: item._id,

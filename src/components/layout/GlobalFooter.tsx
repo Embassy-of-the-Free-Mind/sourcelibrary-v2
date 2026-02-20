@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { BookOpen, Eye, Edit3, BarChart3, Library } from 'lucide-react';
+import { BookOpen, Eye, Edit3, BarChart3, Library, Heart } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
@@ -79,6 +79,10 @@ export default function GlobalFooter() {
               Gallery
             </Link>
             <span className="hidden sm:inline">•</span>
+            <Link href="/favorites" className="text-amber-600 hover:text-amber-500 transition-colors">
+              Favorites
+            </Link>
+            <span className="hidden sm:inline">•</span>
             <Link href="/about" className="text-amber-600 hover:text-amber-500 transition-colors">
               About
             </Link>
@@ -149,6 +153,14 @@ export default function GlobalFooter() {
               </Link>
             </>
           )}
+          <span className="hidden sm:inline">•</span>
+          <Link
+            href="/favorites"
+            className="flex items-center gap-1 text-amber-600 hover:text-amber-500 transition-colors"
+          >
+            <Heart className="w-3 h-3" />
+            Favorites
+          </Link>
           <span className="hidden sm:inline">•</span>
           <Link
             href="/about"

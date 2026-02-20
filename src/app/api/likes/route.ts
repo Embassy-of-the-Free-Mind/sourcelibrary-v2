@@ -54,10 +54,44 @@ export async function POST(request: NextRequest) {
       target_id,
     });
 
+    // Cascade: liking a page also likes the parent book
+    let cascade: { book_id: string; book_liked: boolean; book_count: number } | undefined;
+    if (target_type === 'page' && liked) {
+      try {
+        const page = await db.collection('pages').findOne(
+          { id: target_id },
+          { projection: { book_id: 1 } }
+        );
+        if (page?.book_id) {
+          // Idempotent: unique index prevents duplicates
+          try {
+            await db.collection('likes').insertOne({
+              target_type: 'book',
+              target_id: page.book_id,
+              visitor_id,
+              created_at: new Date(),
+            });
+          } catch (e: unknown) {
+            // Duplicate key = already liked, which is fine
+            if (!(e instanceof Error) || !e.message.includes('duplicate key')) throw e;
+          }
+          const bookCount = await db.collection('likes').countDocuments({
+            target_type: 'book',
+            target_id: page.book_id,
+          });
+          cascade = { book_id: page.book_id, book_liked: true, book_count: bookCount };
+        }
+      } catch (e) {
+        // Non-critical — don't fail the page like
+        console.error('Cascade book like failed:', e);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       liked,
       count,
+      ...(cascade && { cascade }),
     });
   } catch (error) {
     console.error('Error toggling like:', error);

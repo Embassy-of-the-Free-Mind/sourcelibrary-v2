@@ -161,9 +161,16 @@ async function archivePage(page: any, db: any): Promise<boolean> {
         }
 
         if (buffer) {
-          // Apply crop if needed
+          // Use cropped version if available, otherwise apply crop manually
           let thumbInput = buffer;
-          if (page.crop && !page.cropped_photo) {
+          if (page.cropped_photo) {
+            // Cropped photo already exists on Blob — fetch it for the thumbnail
+            const croppedRes = await fetch(page.cropped_photo);
+            if (croppedRes.ok) {
+              thumbInput = Buffer.from(await croppedRes.arrayBuffer());
+            }
+          } else if (page.crop) {
+            // No pre-cropped image — apply crop to the spread buffer
             const metadata = await sharp(buffer).metadata();
             const w = metadata.width || 1000;
             const h = metadata.height || 1000;

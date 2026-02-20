@@ -35,9 +35,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
     };
   }, []);
 
-  // Prefer full-res archived image (Next.js Image optimizes on the fly)
-  // thumbnail_blob is only 150px — too small for card display
-  const thumbnailUrl = book.thumbnail || book.thumbnail_blob;
+  // Prefer fast Blob CDN thumbnail over slow IA IIIF URL
+  // thumbnail_blob is 150px — fine for card display, loads instantly from CDN
+  const thumbnailUrl = book.thumbnail_blob || book.thumbnail;
 
   // Determine image source type for analytics
   const getImageSource = (): 'blob' | 'ia' | 'local' | 'other' => {

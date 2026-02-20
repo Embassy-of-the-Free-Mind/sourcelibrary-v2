@@ -94,6 +94,7 @@ export const GET = withAuth(async (request, session) => {
         .toArray().catch(() => []),
 
       // 3. SINGLE gemini_usage $facet — one scan with timestamp filter for all cost/model/prompt stats
+      // maxTimeMS prevents 504 on missing timestamp index (1.4M+ docs); returns empty on timeout
       db.collection('gemini_usage').aggregate([
         { $match: { timestamp: { $gte: cutoffDate } } },
         { $facet: {
@@ -136,7 +137,10 @@ export const GET = withAuth(async (request, session) => {
             { $sort: { count: -1 } },
           ],
         }}
-      ]).toArray().catch(() => [{}]),
+      ], { maxTimeMS: 45000 }).toArray().catch((err) => {
+        console.warn('gemini_usage aggregate timed out or failed:', err.message?.substring(0, 100));
+        return [{}];
+      }),
 
       // 4. Active batch jobs (small collection, fast)
       db.collection('batch_jobs').aggregate([

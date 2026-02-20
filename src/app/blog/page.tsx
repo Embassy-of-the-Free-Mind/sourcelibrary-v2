@@ -20,6 +20,13 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'first-translations',
+    title: '314 First English Translations',
+    subtitle: 'Roughly a quarter of Source Library\'s 1,234 books appear to be first-ever English translations — alchemical lab manuals, radical theology, women alchemists, and founding texts of biblical criticism, all trapped in Latin, German, and French until now.',
+    date: '20 February 2026',
+    readTime: '12 min read',
+  },
+  {
     slug: 'mcp-server',
     title: 'Claude Can Now Read 5,000 Rare Books',
     subtitle: 'We shipped an MCP server that gives Claude direct access to Source Library — 5,000+ historical texts with translations, a cross-book entity graph, and 34,000+ illustrations. One command to install, no API key.',

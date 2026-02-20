@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
+// In-memory cache for global stats (called on every page load via footer)
+let globalStatsCache: { data: Record<string, unknown>; timestamp: number } | null = null;
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
 /**
  * Get analytics stats
  *
@@ -30,6 +34,11 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    // Return cached global stats if fresh
+    if (globalStatsCache && (Date.now() - globalStatsCache.timestamp) < CACHE_TTL_MS) {
+      return NextResponse.json(globalStatsCache.data);
+    }
+
     // Get global stats - fast queries only (called on every page load via footer)
     // Uses cached pages_translated from books instead of scanning 916k pages
     const [bookStats, totalBooks, totalPages] = await Promise.all([
@@ -47,14 +56,18 @@ export async function GET(request: NextRequest) {
     ]);
     const pagesTranslated = bookStats[0]?.pagesTranslated || 0;
 
-    return NextResponse.json({
+    const data = {
       global: true,
       totalReads: bookStats[0]?.totalReads || 0,
       totalEdits: bookStats[0]?.totalEdits || 0,
       totalBooks,
       totalPages,
       pagesTranslated,
-    });
+    };
+
+    globalStatsCache = { data, timestamp: Date.now() };
+
+    return NextResponse.json(data);
   } catch (error) {
     console.error('Analytics stats error:', error);
     return NextResponse.json(
