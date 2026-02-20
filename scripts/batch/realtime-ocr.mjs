@@ -373,7 +373,7 @@ async function main() {
     if (SINGLE_BOOK) {
       bookIds = [SINGLE_BOOK];
     } else {
-      const bookFilter = {};
+      const bookFilter = { hidden: { $ne: true } }; // Only visible (launch set) books
       if (PIPELINE_STATUS) bookFilter['pipeline_auto.status'] = PIPELINE_STATUS;
       if (PROVIDER) bookFilter['image_source.provider'] = PROVIDER;
 
