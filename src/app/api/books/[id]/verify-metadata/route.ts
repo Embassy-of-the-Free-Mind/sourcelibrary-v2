@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 export const dynamic = 'force-dynamic';
 
@@ -288,6 +289,18 @@ export const POST = withAuth(async (request, session, context) => {
       changes,
     };
 
+    // Set field_provenance for each changed field
+    const verifiedSource = {
+      source: 'metadata_verification',
+      verified_source: source || 'catalog',
+      confidence: confidence || 0,
+      date: new Date(),
+    };
+    if (updates.published) updates['field_provenance.published'] = { ...verifiedSource, previous_value: book.published };
+    if (updates.language) updates['field_provenance.language'] = { ...verifiedSource, previous_value: book.language };
+    if (updates.place_of_publication) updates['field_provenance.place_of_publication'] = { ...verifiedSource, previous_value: book.place_of_publication };
+    if (updates.publisher) updates['field_provenance.publisher'] = { ...verifiedSource, previous_value: book.publisher };
+
     if (changes.length === 0) {
       return NextResponse.json({
         message: 'No changes to apply',
@@ -296,6 +309,14 @@ export const POST = withAuth(async (request, session, context) => {
     }
 
     await db.collection('books').updateOne({ id }, { $set: updates });
+
+    // Audit trail
+    logAuditEvent({
+      action: 'book_metadata_verified',
+      book_id: id,
+      book_title: book.title,
+      metadata: { changes, source: source || 'catalog', confidence: confidence || 0 },
+    });
 
     return NextResponse.json({
       message: 'Metadata updated',

@@ -161,12 +161,18 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     const result = await extractWithGemini(imageUrl, modelId, { returnUsage: true, ocrData });
     const durationMs = Date.now() - startTime;
 
+    // Attach job_id to each detection for provenance
+    const imagesWithJob = (result.images as unknown as Array<Record<string, unknown>>).map((img) => ({
+      ...img,
+      job_id: jobId,
+    }));
+
     // Save results to page (with retry — Gemini tokens are already spent)
     await retryDbWrite(() => pages.updateOne(
       { id: pageId },
       {
         $set: {
-          detected_images: result.images,
+          detected_images: imagesWithJob,
           image_extraction_updated_at: new Date(),
           image_extraction_prompt_version: PROMPT_VERSION,
           updated_at: new Date()
@@ -175,7 +181,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     ), `save image extraction for page ${pageId}`);
 
     // Upsert into gallery_images materialized collection
-    await upsertGalleryImages(db, pageId, bookId, page, result.images as any);
+    await upsertGalleryImages(db, pageId, bookId, page, imagesWithJob as any);
 
     // Log successful AI call
     await logGeminiCall({

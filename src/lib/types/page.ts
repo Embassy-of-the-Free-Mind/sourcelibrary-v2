@@ -210,4 +210,5 @@ export interface DetectedImage {
   // Rich metadata for indexing and display
   metadata?: ImageMetadata;     // Structured tags for search/filtering
   museum_description?: string;  // 2-3 sentence museum-style label
+  job_id?: string;              // Processing job that produced this detection
 }

@@ -8,6 +8,7 @@ import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { createCronLogger } from '@/lib/cron-logger';
+import { logAuditEvent } from '@/lib/audit-logger';
 
 export const maxDuration = 300;
 
@@ -51,6 +52,13 @@ async function setPipelineStatus(
   status: PipelineAutoStatus,
   extra: Record<string, unknown> = {},
 ) {
+  // Read previous status for audit trail
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { 'pipeline_auto.status': 1, title: 1 } }
+  );
+  const prevStatus = book?.pipeline_auto?.status;
+
   await db.collection('books').updateOne(
     { id: bookId },
     {
@@ -64,6 +72,16 @@ async function setPipelineStatus(
       },
     }
   );
+
+  // Log transition to audit trail (fire-and-forget)
+  if (prevStatus !== status) {
+    logAuditEvent({
+      action: 'pipeline_status_changed',
+      book_id: bookId,
+      book_title: book?.title,
+      metadata: { from: prevStatus || 'none', to: status, ...extra },
+    });
+  }
 }
 
 async function markFailed(
