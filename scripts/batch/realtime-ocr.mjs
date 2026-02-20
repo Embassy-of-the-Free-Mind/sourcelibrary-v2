@@ -75,12 +75,36 @@ function getAllApiKeys() {
 
 let currentKeyIndex = 0;
 const apiKeys = getAllApiKeys();
+const rateLimitedKeys = new Map(); // keyName -> unblock timestamp
+const RATE_LIMIT_COOLDOWN = 5 * 60 * 1000; // 5 min cooldown for rate-limited keys
 console.log(`API keys: ${apiKeys.map(k => k.name).join(', ')}`);
 
 function getNextKey() {
-  const k = apiKeys[currentKeyIndex % apiKeys.length];
-  currentKeyIndex++;
-  return k;
+  const now = Date.now();
+  // Try up to apiKeys.length times to find a non-rate-limited key
+  for (let attempt = 0; attempt < apiKeys.length; attempt++) {
+    const k = apiKeys[currentKeyIndex % apiKeys.length];
+    currentKeyIndex++;
+    const blockedUntil = rateLimitedKeys.get(k.name);
+    if (!blockedUntil || now >= blockedUntil) {
+      rateLimitedKeys.delete(k.name);
+      return k;
+    }
+  }
+  // All keys rate-limited — return the one that unblocks soonest
+  let soonest = apiKeys[0];
+  let soonestTime = Infinity;
+  for (const k of apiKeys) {
+    const t = rateLimitedKeys.get(k.name) || 0;
+    if (t < soonestTime) { soonestTime = t; soonest = k; }
+  }
+  return soonest;
+}
+
+function markKeyRateLimited(keyName) {
+  rateLimitedKeys.set(keyName, Date.now() + RATE_LIMIT_COOLDOWN);
+  const active = apiKeys.filter(k => !rateLimitedKeys.has(k.name)).map(k => k.name);
+  console.log(`\n  Key ${keyName} rate-limited (5min cooldown). Active keys: ${active.join(', ') || 'NONE — will wait'}`);
 }
 
 // --- Image helpers ---
@@ -325,9 +349,13 @@ async function processBatch(pages, promptText, db, runId) {
           bookPages[bid].failed++;
         }
         if (result.httpStatus === 429) {
-          consecutiveErrors++;
-          console.log(`\n  Rate limited (${result.key}). Waiting 30s...`);
-          await new Promise(r => setTimeout(r, 30000));
+          markKeyRateLimited(result.key);
+          const activeKeys = apiKeys.filter(k => !rateLimitedKeys.has(k.name));
+          if (activeKeys.length === 0) {
+            consecutiveErrors++;
+            console.log(`\n  All keys rate-limited. Waiting 60s...`);
+            await new Promise(r => setTimeout(r, 60000));
+          }
         } else {
           consecutiveErrors++;
         }
