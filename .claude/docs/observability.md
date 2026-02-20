@@ -53,6 +53,7 @@ The `cost_tracking` collection is fully deprecated — zero active writers or re
 | `gemini_usage` | AI call logging (tokens, cost, model, status) | `book_id + timestamp` |
 | `jobs` | Processing job tracking (progress, status) | `book_id + type + status` |
 | `batch_jobs` | Gemini Batch API job tracking | — |
+| `cron_runs` | Cron execution logging (actions, decisions, errors) | `cron + timestamp`, `timestamp`, `status + timestamp` |
 | `audit_log` | Admin/system actions (imports, deletes, edits, resets, editions, DOIs) | `book_id` |
 | `analytics_pageviews` | Web traffic (path, referrer, country) | `timestamp`, `path + timestamp` |
 | `analytics_events` | Deduplication index + search query logging | `event + book_id + ip + timestamp` |
@@ -63,6 +64,90 @@ The `cost_tracking` collection is fully deprecated — zero active writers or re
 | `social_posts` | Tweet scheduling and metrics | — |
 | `split_adjustments` | ML split detection feedback | — |
 | `cost_tracking` | **DEPRECATED** — no active writers/readers, use `gemini_usage` | — |
+
+---
+
+## Cron Run Logging
+
+**Utility:** `src/lib/cron-logger.ts` — `createCronLogger(cronName)`
+**Collection:** `cron_runs`
+
+All 9 Vercel crons write structured run records via a shared builder-pattern logger. Each cron creates a logger at the start, accumulates state during execution, then calls `flush()` to write one document.
+
+### Usage
+
+```typescript
+import { createCronLogger } from '@/lib/cron-logger';
+
+const logger = createCronLogger('submit-ocr');
+
+logger.action('books_submitted', 5);
+logger.backpressure('ocr_batch_limit', { active: 200, max: 200 });
+logger.skip('no valid images', { book_id: 'abc' });
+logger.timeBudgetExhausted('Phase 4');
+logger.error('Batch submit failed', { phase: 'ocr', book_id: 'abc' });
+
+logger.setActions({ total_pages: 500, errors: 2 });
+logger.addErrors(['Book X: timeout', 'Book Y: 404']);
+
+await logger.flush(); // writes one document to cron_runs
+```
+
+### CronRunRecord Schema
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cron` | CronName | One of 9 cron identifiers |
+| `timestamp` | Date | When the run completed |
+| `duration_ms` | number | Wall-clock time |
+| `status` | `success` \| `partial` \| `failed` | Auto-detected from errors unless overridden |
+| `failed` | boolean | `status === 'failed'` (backwards compat with analytics/pipeline reads) |
+| `actions` | Record<string, number> | Flexible per-cron counters |
+| `decisions` | CronDecision[] | **Key innovation** — captures WHY work was skipped (capped at 100) |
+| `errors` | CronError[] | Structured error records |
+| `error_count` | number | `errors.length` |
+| `summary` | string | Human-readable auto-built from actions |
+
+### Decision Types
+
+| Type | Meaning | Example |
+|------|---------|---------|
+| `skip` | Work skipped (nothing to do) | "all books have OCR" |
+| `backpressure` | Rate/capacity limit hit | "200 active batch jobs (max 200)" |
+| `time_budget` | Time budget exhausted | "Exhausted at Phase 4" |
+| `circuit_breaker` | Safety mechanism triggered | "3 books blocked due to repeated failures" |
+| `early_return` | Config-based early exit | "Not a posting hour (14 UTC)" |
+| `rollback` | State rolled back | "Stale book reset to archive_complete" |
+
+### Instrumented Crons
+
+| Cron | Key decisions captured |
+|------|----------------------|
+| `post-import-pipeline` | Emergency stop, OCR/image backpressure, staleness rollback/circuit breaker, time budget per phase |
+| `process-batches` | Time budget, hallucination guard skips, response count mismatches |
+| `submit-ocr` | Backpressure (active jobs), circuit breaker (blocked books), pipeline exclusions, no-image skips |
+| `submit-batch-ocr` | Backpressure (active batch jobs), estimated cost |
+| `social-post` | 7 early return points (config, posting hours, daily limit, empty queue, etc.) |
+| `social-reset` | Daily/monthly reset counts |
+| `sync-page-counts` | Books updated, stale count mismatches |
+| `sync-gallery-images` | Pages synced, orphans removed |
+| `archive-ocr` | Pages archived/failed, bytes transferred |
+
+### Indexes (cron_runs)
+
+| Name | Fields | Purpose |
+|------|--------|---------|
+| `cron_runs_cron_ts_idx` | `{ cron: 1, timestamp: -1 }` | Per-cron history |
+| `cron_runs_ts_idx` | `{ timestamp: -1 }` | Time-range scans |
+| `cron_runs_status_ts_idx` | `{ status: 1, timestamp: -1 }` | Failed run queries |
+
+### Pipeline Analytics Integration
+
+`GET /api/analytics/pipeline` surfaces cron decisions alongside existing velocity, stalls, and cron health data:
+
+- `cronHealth` — per-cron summary (last run, failures, avg duration, recent errors)
+- `recentDecisions` — latest 50 decisions unwound from `cron_runs` where `decisions` is non-empty
+- `stalls` — funnel stages growing/shrinking over time
 
 ---
 
