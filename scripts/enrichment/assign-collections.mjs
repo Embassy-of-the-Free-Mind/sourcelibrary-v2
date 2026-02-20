@@ -291,7 +291,7 @@ async function main() {
   const query = { status: { $ne: 'deleted' } };
   const projection = {
     id: 1, title: 1, author: 1, year: 1, language: 1,
-    categories: 1, pages_count: 1, photo: 1, display_title: 1,
+    categories: 1, pages_count: 1, photo: 1, thumbnail: 1, thumbnail_blob: 1, display_title: 1,
   };
   let cursor = db.collection('books').find(query, { projection }).sort({ created_at: 1 });
   if (limit) cursor = cursor.limit(limit);
@@ -389,18 +389,23 @@ async function main() {
   const collectionsColl = db.collection('collections');
   for (const col of COLLECTIONS) {
     const bookList = collectionBooks[col.slug];
-    // Pick sample books (most notable — prefer those with year, high page count)
-    const sampleBooks = bookList
-      .filter(b => b.year && b.title)
-      .sort((a, b) => (a.year || 9999) - (b.year || 9999))
-      .slice(0, 6)
-      .map(b => ({
-        id: b.id,
-        title: (b.display_title || b.title || '').substring(0, 100),
-        author: (b.author || '').substring(0, 80),
-        year: b.year,
-        photo: b.photo,
-      }));
+    // Pick sample books — prefer those with thumbnails, spread across years
+    const withThumbs = bookList.filter(b => b.thumbnail_blob || b.thumbnail || b.photo);
+    const pool = withThumbs.length >= 8 ? withThumbs : bookList.filter(b => b.year && b.title);
+    // Sort by year to get a spread, then pick every Nth to get diversity
+    pool.sort((a, b) => (a.year || 9999) - (b.year || 9999));
+    const step = Math.max(1, Math.floor(pool.length / 8));
+    const picked = [];
+    for (let i = 0; i < pool.length && picked.length < 8; i += step) {
+      picked.push(pool[i]);
+    }
+    const sampleBooks = picked.map(b => ({
+      id: b.id,
+      title: (b.display_title || b.title || '').substring(0, 100),
+      author: (b.author || '').substring(0, 80),
+      year: b.year,
+      thumbnail: b.thumbnail_blob || b.thumbnail || b.photo || null,
+    }));
 
     // Top languages for this collection
     const langCounts = {};
@@ -434,6 +439,61 @@ async function main() {
     );
   }
   console.log(`  Collections metadata: ${COLLECTIONS.length} upserted`);
+
+  // 3. Populate featured_images from gallery_images
+  console.log('\nPopulating featured images from gallery...');
+  const galleryImages = db.collection('gallery_images');
+
+  for (const col of COLLECTIONS) {
+    const bookIds = collectionBooks[col.slug].map(b => b.id);
+    if (bookIds.length === 0) continue;
+
+    // Find the best extracted illustrations for this collection
+    const images = await galleryImages.aggregate([
+      { $match: {
+        book_id: { $in: bookIds },
+        gallery_quality: { $gte: 0.7 },
+        thumbnail_url: { $exists: true, $ne: null },
+      }},
+      // Score: quality base + metadata bonuses
+      { $addFields: {
+        _score: { $add: [
+          { $multiply: ['$gallery_quality', 50] },
+          { $cond: [{ $gt: [{ $size: { $ifNull: ['$metadata.subjects', []] } }, 0] }, 5, 0] },
+          { $cond: [{ $and: [
+            { $ne: ['$museum_description', null] },
+            { $gt: [{ $strLenCP: { $ifNull: ['$museum_description', ''] } }, 50] },
+          ]}, 10, 0] },
+          { $cond: [{ $in: ['$type', ['emblem', 'engraving', 'frontispiece', 'diagram', 'portrait']] }, 10, 0] },
+        ]},
+      }},
+      { $sort: { _score: -1 } },
+      // Diversify by book — group by book_id, take top 1 per book, then pick top 6
+      { $group: {
+        _id: '$book_id',
+        top: { $first: '$$ROOT' },
+      }},
+      { $replaceRoot: { newRoot: '$top' } },
+      { $sort: { _score: -1 } },
+      { $limit: 6 },
+      { $project: {
+        id: 1, page_id: 1, detection_index: 1,
+        thumbnail_url: 1, extracted_url: 1, image_url: 1,
+        description: 1, type: 1, gallery_quality: 1,
+        book_id: 1, book_title: 1, book_author: 1, book_year: 1,
+      }},
+    ]).toArray();
+
+    if (images.length > 0) {
+      await collectionsColl.updateOne(
+        { slug: col.slug },
+        { $set: { featured_images: images } }
+      );
+      console.log(`  ${col.name}: ${images.length} featured images`);
+    } else {
+      console.log(`  ${col.name}: no gallery images found`);
+    }
+  }
 
   await client.close();
   console.log('\nDone.');
