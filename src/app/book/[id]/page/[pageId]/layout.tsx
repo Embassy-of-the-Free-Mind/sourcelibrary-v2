@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
-import { redirect } from 'next/navigation';
-import { auth } from '@/lib/auth';
 import { Book, Page } from '@/lib/types';
 
 export const preferredRegion = 'fra1';
@@ -107,24 +105,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
   };
 }
 
-export default async function PageLayout({ children, params }: LayoutProps) {
-  const { id: bookId } = await params;
-
-  // Content gate: check if this book requires authentication
-  const db = await getDb();
-  const book = await db.collection('books').findOne(
-    { id: bookId },
-    { projection: { free_tier: 1, featured: 1 } }
-  );
-
-  const isFreeTier = !!book?.free_tier || !!book?.featured;
-  if (!isFreeTier) {
-    const session = await auth();
-    if (!session?.user) {
-      // Redirect unauthenticated users to the book page (shows registration wall)
-      redirect(`/book/${bookId}`);
-    }
-  }
-
+export default async function PageLayout({ children }: LayoutProps) {
+  // Content gating is handled client-side by useBetaGate (lead generation, not security).
+  // No server-side redirect — localStorage email grants access via the beta gate modal.
   return children;
 }
