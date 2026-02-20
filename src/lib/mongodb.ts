@@ -53,9 +53,12 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
       connectTimeoutMS: isLambda ? 10000 : 5000,
       socketTimeoutMS: 45000,
 
+      // Close idle connections after 1 minute to prevent pool exhaustion
+      maxIdleTimeMS: 60000,
+
       // Lambda: 1 connection per instance (255 Lambdas × 1 = 255 total)
-      // Vercel: small pool for concurrent requests within same instance
-      maxPoolSize: isLambda ? 1 : 5,
+      // Vercel: reduced pool for cron jobs (3 instead of 5 to prevent exhaustion)
+      maxPoolSize: isLambda ? 1 : 3,
       minPoolSize: 0,
     });
 

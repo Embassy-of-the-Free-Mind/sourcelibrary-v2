@@ -167,7 +167,12 @@ export async function GET(request: NextRequest) {
             console.log(`[cron] Collection summary for ${job.id || String(job._id)}: ${pageResultsList.length}/${pageIds.length} pages parsed, ${missingIds.length} missing${missingIds.length > 0 ? ': ' + missingIds.join(', ') : ''}`);
           }
 
-          // Save each page result
+          // Prepare bulk operations for efficient DB writes
+          const bulkOps: any[] = [];
+          const revisionPromises: Promise<any>[] = [];
+          const validPageIds: string[] = [];
+
+          // First pass: validate and prepare operations
           for (const { pageId, text, usage } of pageResultsList) {
             // Hallucination guard: skip pages with excessive text
             if (text.length > 25000) {
@@ -177,86 +182,123 @@ export async function GET(request: NextRequest) {
               continue;
             }
 
+            validPageIds.push(pageId);
+
             if (job.type === 'ocr') {
               const pageType = extractPageType(text);
               const columns = extractColumns(text);
               const detectedImages = parseDetectedImages(text);
 
-              await createRevision(pageId, 'ocr', job.id || String(job._id));
+              // Queue revision creation (run in parallel later)
+              revisionPromises.push(createRevision(pageId, 'ocr', job.id || String(job._id)));
 
               // Ensure page has an ocr object (some pages have ocr: null)
-              await db.collection('pages').updateOne(
-                { id: pageId, ocr: null },
-                { $set: { ocr: {} } }
-              );
-
-              const updateResult = await db.collection('pages').updateOne(
-                { id: pageId },
-                {
-                  $set: {
-                    'ocr.data': text,
-                    'ocr.updated_at': now,
-                    'ocr.model': job.model,
-                    'ocr.language': job.language,
-                    'ocr.source': 'batch_api',
-                    'ocr.prompt_version': job.prompt_version || PROMPT_VERSION,
-                    'ocr.prompt_name': job.prompt_name || 'Standard OCR',
-                    'ocr.batch_job_id': job.id || String(job._id),
-                    ...((job.pages_per_request || 1) > 1 && { 'ocr.pages_per_request': job.pages_per_request }),
-                    'ocr.input_tokens': usage?.promptTokenCount || 0,
-                    'ocr.output_tokens': usage?.candidatesTokenCount || 0,
-                    ...(pageType && { page_type: pageType }),
-                    ...(columns && { columns }),
-                    ...(detectedImages.length > 0 && { detected_images: detectedImages }),
-                    updated_at: now,
-                  },
+              bulkOps.push({
+                updateOne: {
+                  filter: { id: pageId, ocr: null },
+                  update: { $set: { ocr: {} } }
                 }
-              );
+              });
 
-              if (updateResult.matchedCount === 0) {
-                console.warn(`[cron] Page ${pageId} not found in database!`);
-                failCount++;
-                continue;
-              }
+              // Main OCR update
+              bulkOps.push({
+                updateOne: {
+                  filter: { id: pageId },
+                  update: {
+                    $set: {
+                      'ocr.data': text,
+                      'ocr.updated_at': now,
+                      'ocr.model': job.model,
+                      'ocr.language': job.language,
+                      'ocr.source': 'batch_api',
+                      'ocr.prompt_version': job.prompt_version || PROMPT_VERSION,
+                      'ocr.prompt_name': job.prompt_name || 'Standard OCR',
+                      'ocr.batch_job_id': job.id || String(job._id),
+                      ...((job.pages_per_request || 1) > 1 && { 'ocr.pages_per_request': job.pages_per_request }),
+                      'ocr.input_tokens': usage?.promptTokenCount || 0,
+                      'ocr.output_tokens': usage?.candidatesTokenCount || 0,
+                      ...(pageType && { page_type: pageType }),
+                      ...(columns && { columns }),
+                      ...(detectedImages.length > 0 && { detected_images: detectedImages }),
+                      updated_at: now,
+                    },
+                  }
+                }
+              });
             } else {
               const translationMeta = extractTranslationMetadata(text);
 
-              await createRevision(pageId, 'translation', job.id || String(job._id));
+              // Queue revision creation
+              revisionPromises.push(createRevision(pageId, 'translation', job.id || String(job._id)));
 
               // Ensure page has a translation object (some pages have translation: null)
-              await db.collection('pages').updateOne(
-                { id: pageId, translation: null },
-                { $set: { translation: {} } }
-              );
-
-              const updateResult = await db.collection('pages').updateOne(
-                { id: pageId },
-                {
-                  $set: {
-                    'translation.data': text,
-                    'translation.updated_at': now,
-                    'translation.model': job.model,
-                    'translation.source_language': job.language,
-                    'translation.target_language': 'English',
-                    'translation.source': 'batch_api',
-                    'translation.prompt_version': job.prompt_version || PROMPT_VERSION,
-                    'translation.prompt_name': job.prompt_name || 'Standard Translation',
-                    'translation.batch_job_id': job.id || String(job._id),
-                    'translation.input_tokens': usage?.promptTokenCount || 0,
-                    'translation.output_tokens': usage?.candidatesTokenCount || 0,
-                    ...translationMeta,
-                    updated_at: now,
-                  },
+              bulkOps.push({
+                updateOne: {
+                  filter: { id: pageId, translation: null },
+                  update: { $set: { translation: {} } }
                 }
-              );
+              });
 
-              if (updateResult.matchedCount === 0) {
-                console.warn(`[cron] Page ${pageId} not found in database!`);
-                failCount++;
-                continue;
+              // Main translation update
+              bulkOps.push({
+                updateOne: {
+                  filter: { id: pageId },
+                  update: {
+                    $set: {
+                      'translation.data': text,
+                      'translation.updated_at': now,
+                      'translation.model': job.model,
+                      'translation.source_language': job.language,
+                      'translation.target_language': 'English',
+                      'translation.source': 'batch_api',
+                      'translation.prompt_version': job.prompt_version || PROMPT_VERSION,
+                      'translation.prompt_name': job.prompt_name || 'Standard Translation',
+                      'translation.batch_job_id': job.id || String(job._id),
+                      'translation.input_tokens': usage?.promptTokenCount || 0,
+                      'translation.output_tokens': usage?.candidatesTokenCount || 0,
+                      ...translationMeta,
+                      updated_at: now,
+                    },
+                  }
+                }
+              });
+            }
+          }
+
+          // Execute all operations efficiently
+          if (bulkOps.length > 0) {
+            console.log(`[cron] Executing bulk write with ${bulkOps.length} operations for ${validPageIds.length} pages`);
+
+            // Create revisions in parallel (audit trail)
+            await Promise.all(revisionPromises).catch(err => {
+              console.warn('[cron] Some revisions failed:', err);
+            });
+
+            // Execute bulk write (unordered = faster, continues on errors)
+            try {
+              const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
+              successCount = bulkResult.modifiedCount;
+              
+              // Check for any pages that weren't found
+              if (bulkResult.matchedCount < validPageIds.length) {
+                const notMatched = validPageIds.length - bulkResult.matchedCount;
+                console.warn(`[cron] ${notMatched} pages not found in database`);
+                failCount += notMatched;
+              }
+
+              console.log(`[cron] Bulk write complete: ${successCount} pages updated, ${failCount} failed`);
+            } catch (bulkError: any) {
+              // Bulk write partial failure - count what succeeded
+              if (bulkError.result) {
+                successCount = bulkError.result.nModified || 0;
+                failCount += validPageIds.length - successCount;
+                console.warn(`[cron] Bulk write partial failure: ${successCount} succeeded, ${failCount} failed`);
+              } else {
+                // Complete failure
+                failCount += validPageIds.length;
+                console.error('[cron] Bulk write failed completely:', bulkError);
               }
             }
-            successCount++;
           }
 
           // Update job status with collection diagnostics
