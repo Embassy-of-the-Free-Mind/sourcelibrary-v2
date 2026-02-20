@@ -350,28 +350,19 @@ export const POST = withAuth(async (request, session, context) => {
       });
     }
 
-    // Multiple batches: create parent-child structure (compatible with process-batches cron)
+    // Multiple batches: submit ALL children to Gemini first, then create DB records.
+    // This prevents orphan parent records if Gemini submission fails (e.g. quota exhaustion).
     const parentJobId = nanoid();
-    await db.collection('batch_jobs').insertOne({
-      id: parentJobId,
-      book_id: bookId,
-      type: 'ocr',
-      model,
-      language,
-      force,
-      prompt_version: PROMPT_VERSION,
-      page_ids: allPageIds,
-      page_count: allPageIds.length,
-      total_pages: allPageIds.length,
-      pages_per_request: effectivePPR,
-      child_job_ids: [], // filled after children are created
-      status: 'pending',
-      progress: { total: allPageIds.length, completed: 0, failed: 0, pending: allPageIds.length },
-      created_at: now,
-      updated_at: now,
-    });
 
-    // Submit each child batch to Gemini
+    // Phase 1: Submit all child batches to Gemini (no DB writes yet)
+    const submittedChildren: Array<{
+      childJobId: string;
+      batchJobName: string;
+      batchJobState: string;
+      batchPageIds: string[];
+      requestCount: number;
+    }> = [];
+
     for (let bi = 0; bi < batches.length; bi++) {
       const batch = batches[bi];
       const batchPageIds = batch.flatMap(r => r.pageIds);
@@ -388,34 +379,60 @@ export const POST = withAuth(async (request, session, context) => {
         }
       });
 
-      childJobNames.push(batchJob.name!);
-      childJobIds.push(childJobId);
+      submittedChildren.push({
+        childJobId,
+        batchJobName: batchJob.name!,
+        batchJobState: batchJob.state || 'JOB_STATE_PENDING',
+        batchPageIds,
+        requestCount: batch.length,
+      });
+    }
+
+    // Phase 2: All children submitted successfully — now create DB records
+    for (const child of submittedChildren) {
+      childJobNames.push(child.batchJobName);
+      childJobIds.push(child.childJobId);
 
       await db.collection('batch_jobs').insertOne({
-        id: childJobId,
+        id: child.childJobId,
         parent_job_id: parentJobId,
-        job_name: batchJob.name,
+        job_name: child.batchJobName,
         book_id: bookId,
         type: 'ocr',
         model,
         language,
         force,
         prompt_version: PROMPT_VERSION,
-        page_ids: batchPageIds,
-        page_count: batchPageIds.length,
+        page_ids: child.batchPageIds,
+        page_count: child.batchPageIds.length,
         pages_per_request: effectivePPR,
-        request_count: batch.length,
-        status: batchJob.state,
+        request_count: child.requestCount,
+        status: child.batchJobState,
         created_at: now,
         updated_at: now,
       });
     }
 
-    // Update parent with child IDs
-    await db.collection('batch_jobs').updateOne(
-      { id: parentJobId },
-      { $set: { child_job_ids: childJobIds, child_job_names: childJobNames, status: 'processing' } }
-    );
+    // Create parent record last (all children already exist)
+    await db.collection('batch_jobs').insertOne({
+      id: parentJobId,
+      book_id: bookId,
+      type: 'ocr',
+      model,
+      language,
+      force,
+      prompt_version: PROMPT_VERSION,
+      page_ids: allPageIds,
+      page_count: allPageIds.length,
+      total_pages: allPageIds.length,
+      pages_per_request: effectivePPR,
+      child_job_ids: childJobIds,
+      child_job_names: childJobNames,
+      status: 'processing',
+      progress: { total: allPageIds.length, completed: 0, failed: 0, pending: allPageIds.length },
+      created_at: now,
+      updated_at: now,
+    });
 
     await logGeminiCall({
       type: 'ocr',

@@ -4,10 +4,16 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/submit-batch-ocr.mjs [--count=20] [--max-pages=500] [--delay=5] [--dry-run]
+ *   node scripts/submit-batch-ocr.mjs [--count=20] [--max-pages=500] [--delay=5] [--dry-run] [--key=1]
  *
  * The route handles image download, prompt selection, and child-batch splitting.
  * This script just picks books and calls the route.
+ *
+ * API key rotation:
+ *   --key=0  GEMINI_API_KEY_TIER3 (default)
+ *   --key=1  GEMINI_API_KEY_2
+ *   --key=2  GEMINI_API_KEY
+ *   --key=auto  Round-robin across all keys
  */
 import { MongoClient } from 'mongodb';
 
@@ -24,16 +30,34 @@ const BOOK_COUNT = parseInt(getArg('count') || '20', 10);
 const MAX_PAGES = parseInt(getArg('max-pages') || '500', 10);
 const DELAY_SEC = parseInt(getArg('delay') || '5', 10);
 const DRY_RUN = hasFlag('dry-run');
+const KEY_ARG = getArg('key'); // 0, 1, 2, or 'auto'
 
-async function submitBatchOcr(bookId, cronSecret) {
+// Count unique keys available
+const uniqueKeys = [...new Set([
+  process.env.GEMINI_API_KEY_TIER3,
+  process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY,
+].filter(Boolean))];
+const NUM_KEYS = uniqueKeys.length;
+
+function getKeyIndex(bookIndex) {
+  if (KEY_ARG === 'auto') return bookIndex % NUM_KEYS;
+  if (KEY_ARG !== null && KEY_ARG !== undefined) return parseInt(KEY_ARG, 10);
+  return undefined; // use route default
+}
+
+async function submitBatchOcr(bookId, cronSecret, apiKeyIndex) {
   const url = `${BASE_URL}/api/books/${bookId}/batch-ocr-async`;
+  const body = { limit: 500, model: 'gemini-3-flash-preview' };
+  if (apiKeyIndex !== undefined) body.apiKeyIndex = apiKeyIndex;
+
   const res = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${cronSecret}`,
     },
-    body: JSON.stringify({ limit: 500, model: 'gemini-3-flash-preview' }),
+    body: JSON.stringify(body),
   });
   const text = await res.text();
   let data;
@@ -51,6 +75,11 @@ async function main() {
     console.error('CRON_SECRET not set');
     process.exit(1);
   }
+
+  console.log(`API keys available: ${NUM_KEYS}`);
+  if (KEY_ARG === 'auto') console.log(`Key rotation: auto (round-robin across ${NUM_KEYS} keys)`);
+  else if (KEY_ARG !== null) console.log(`Key rotation: fixed key index ${KEY_ARG}`);
+  else console.log(`Key rotation: default (TIER3)`);
 
   // Find books ready for OCR with archived images
   const candidates = await db.collection('books').aggregate([
@@ -101,14 +130,18 @@ async function main() {
   let submitted = 0;
   let failed = 0;
   let pagesSubmitted = 0;
+  let quotaExhaustedKey = null;
 
-  for (const book of candidates) {
+  for (let i = 0; i < candidates.length; i++) {
+    const book = candidates[i];
     const id = book.id || String(book._id);
-    const label = `${(book.language || '?').padEnd(10)} | ${String(book.pages_count).padStart(4)}pp | ${(book.title || '').slice(0, 55)}`;
+    const keyIndex = getKeyIndex(i);
+    const keyLabel = keyIndex !== undefined ? ` [key${keyIndex}]` : '';
+    const label = `${(book.language || '?').padEnd(10)} | ${String(book.pages_count).padStart(4)}pp | ${(book.title || '').slice(0, 50)}`;
 
-    process.stdout.write(`[${submitted + failed + 1}/${candidates.length}] ${label} ... `);
+    process.stdout.write(`[${submitted + failed + 1}/${candidates.length}]${keyLabel} ${label} ... `);
 
-    const result = await submitBatchOcr(id, cronSecret);
+    const result = await submitBatchOcr(id, cronSecret, keyIndex);
 
     if (result.status === 200) {
       const d = result.data;
@@ -131,6 +164,20 @@ async function main() {
       const msg = result.data?.message || result.data?.error || JSON.stringify(result.data).slice(0, 150);
 
       if (result.status === 500 && JSON.stringify(result.data).includes('RESOURCE_EXHAUSTED')) {
+        if (KEY_ARG === 'auto') {
+          // In auto mode, mark this key as exhausted but try others
+          if (quotaExhaustedKey === null) quotaExhaustedKey = keyIndex;
+          console.log(`QUOTA EXHAUSTED (key${keyIndex})`);
+
+          // If all keys are exhausted, stop
+          if (quotaExhaustedKey !== null && keyIndex !== quotaExhaustedKey) {
+            // We've seen exhaustion on a different key now — all keys hit
+            console.log(`\nAll keys exhausted. Stopping after ${submitted} books, ${pagesSubmitted} pages.`);
+            break;
+          }
+          failed++;
+          continue;
+        }
         console.log(`QUOTA EXHAUSTED`);
         console.log(`\nStopping — Gemini quota hit after ${submitted} books, ${pagesSubmitted} pages.`);
         break;

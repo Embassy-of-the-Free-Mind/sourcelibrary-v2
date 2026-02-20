@@ -197,9 +197,10 @@ export async function uploadBatchFile(
 export async function createBatchJobInline(
   model: string,
   requests: BatchRequest[],
-  displayName: string
+  displayName: string,
+  overrideApiKey?: string
 ): Promise<{ name: string; state: string }> {
-  const apiKey = getApiKey();
+  const apiKey = overrideApiKey || getApiKey();
 
   // Format requests for Gemini Batch API
   const formattedRequests = requests.map(r => ({
@@ -247,9 +248,10 @@ export async function createBatchJobInline(
 export async function createBatchJobFromFile(
   model: string,
   fileName: string,
-  displayName: string
+  displayName: string,
+  overrideApiKey?: string
 ): Promise<{ name: string; state: string }> {
-  const apiKey = getApiKey();
+  const apiKey = overrideApiKey || getApiKey();
 
   const response = await fetch(
     `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
