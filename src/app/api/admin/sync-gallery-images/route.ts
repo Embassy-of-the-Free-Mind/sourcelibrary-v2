@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
       // Lookup book info
       { $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } },
       { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+      { $match: { 'book.hidden': { $ne: true } } },
 
       // Strip to needed fields before unwind
       {

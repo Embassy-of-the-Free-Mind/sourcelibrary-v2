@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
       { $match: { id: { $in: pageIds } } },
       { $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } },
       { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+      { $match: { 'book.hidden': { $ne: true } } },
       {
         $project: {
           id: 1, book_id: 1, page_number: 1,
