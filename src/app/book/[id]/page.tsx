@@ -54,9 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const book = await getBookForMetadata(id);
 
   if (!book) {
-    return {
-      title: 'Book Not Found - Source Library',
-    };
+    notFound();
   }
 
   const title = book.display_title || book.title;
