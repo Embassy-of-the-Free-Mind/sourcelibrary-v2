@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 300;
 
@@ -17,9 +18,10 @@ export async function GET(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
 
+  const logger = createCronLogger('sync-gallery-images');
+
   try {
     const db = await getDb();
-    const startTime = Date.now();
 
     // Find the latest sync timestamp
     const latestDoc = await db.collection('gallery_images')
@@ -40,11 +42,14 @@ export async function GET(request: NextRequest) {
       .toArray();
 
     if (stalePages.length === 0) {
+      logger.action('synced', 0);
+      logger.skip('no stale pages found');
+      await logger.flush();
       return NextResponse.json({
         success: true,
         synced: 0,
         message: 'No stale pages found',
-        duration_ms: Date.now() - startTime,
+        duration_ms: logger.durationMs,
       });
     }
 
@@ -95,6 +100,7 @@ export async function GET(request: NextRequest) {
           book_author: '$book.author',
           book_year: '$book.year',
           book_language: '$book.language',
+          book_hidden: '$book.hidden',
           book_rank: 0, // placeholder, recomputed below
           updated_at: new Date(),
         },
@@ -148,7 +154,14 @@ export async function GET(request: NextRequest) {
       orphansRemoved = deleteResult.deletedCount;
     }
 
-    const duration = Date.now() - startTime;
+    logger.setActions({
+      synced: stalePages.length,
+      books_updated: affectedBookIds.length,
+      orphans_removed: orphansRemoved,
+      orphaned_books: orphanedBookIds.length,
+    });
+
+    await logger.flush();
 
     return NextResponse.json({
       success: true,
@@ -156,10 +169,13 @@ export async function GET(request: NextRequest) {
       books_updated: affectedBookIds.length,
       orphans_removed: orphansRemoved,
       orphaned_books: orphanedBookIds.length,
-      duration_ms: duration,
+      duration_ms: logger.durationMs,
     });
   } catch (error) {
     console.error('Cron sync-gallery-images error:', error);
+    logger.error(error instanceof Error ? error.message : 'Failed to sync gallery images');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Failed to sync gallery images' },
       { status: 500 }

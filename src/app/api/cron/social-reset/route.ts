@@ -12,12 +12,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 30;
 
 export async function POST(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
+
+  const logger = createCronLogger('social-reset');
 
   try {
     const db = await getDb();
@@ -39,6 +42,16 @@ export async function POST(request: NextRequest) {
       { $set: update }
     );
 
+    logger.action('daily_reset', 1);
+    if (isFirstOfMonth) logger.action('monthly_reset', 1);
+    logger.action('modified', result.modifiedCount);
+
+    if (result.modifiedCount === 0) {
+      logger.skip('no config document found or already reset');
+    }
+
+    await logger.flush();
+
     return NextResponse.json({
       success: true,
       reset: {
@@ -50,6 +63,9 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Social reset cron error:', error);
+    logger.error(error instanceof Error ? error.message : 'Reset failed');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Reset failed' },
       { status: 500 }

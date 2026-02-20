@@ -4,6 +4,10 @@ import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
+// In-memory cache (3 minutes) — pipeline data is expensive to compute
+let pipelineCache: { data: any; key: string; ts: number } | null = null;
+const CACHE_TTL_MS = 3 * 60 * 1000;
+
 /**
  * GET /api/analytics/pipeline
  *
@@ -20,11 +24,18 @@ export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 168); // max 7 days
+
+    // Check cache
+    const cacheKey = `pipeline-${hours}`;
+    if (pipelineCache && pipelineCache.key === cacheKey && Date.now() - pipelineCache.ts < CACHE_TTL_MS) {
+      return NextResponse.json(pipelineCache.data);
+    }
+
     const cutoff = new Date(Date.now() - hours * 60 * 60 * 1000);
 
     const db = await getDb();
 
-    const [snapshots, cronRuns, needsAttention, recentErrors] = await Promise.all([
+    const [snapshots, cronRuns, needsAttention, recentErrors, recentDecisions] = await Promise.all([
       // 1. Pipeline snapshots for velocity + trends
       db.collection('pipeline_snapshots')
         .find({ timestamp: { $gte: cutoff } })
@@ -66,6 +77,15 @@ export const GET = withAuth(async (request, session) => {
         { $sort: { count: -1 } },
         { $limit: 20 },
       ]).toArray(),
+
+      // 5. Recent decisions from cron_runs (skip, backpressure, time_budget)
+      db.collection('cron_runs').aggregate([
+        { $match: { timestamp: { $gte: cutoff }, 'decisions.0': { $exists: true } } },
+        { $unwind: '$decisions' },
+        { $sort: { timestamp: -1 } },
+        { $limit: 50 },
+        { $project: { _id: 0, cron: 1, timestamp: 1, decision: '$decisions' } },
+      ]).toArray(),
     ]);
 
     // Compute velocity from snapshots (deltas between consecutive points)
@@ -77,7 +97,7 @@ export const GET = withAuth(async (request, session) => {
     // Detect stalls (funnel stages that are growing without corresponding outflow)
     const stalls = detectStalls(snapshots);
 
-    return NextResponse.json({
+    const responseData = {
       snapshots: snapshots.length > 200
         ? downsample(snapshots, 200)
         : snapshots,
@@ -104,8 +124,20 @@ export const GET = withAuth(async (request, session) => {
         lastError: e.lastError?.substring(0, 200),
         lastAt: e.lastAt,
       })),
+      recentDecisions: recentDecisions.map((d: any) => ({
+        cron: d.cron,
+        timestamp: d.timestamp,
+        type: d.decision?.type,
+        reason: d.decision?.reason,
+        data: d.decision?.data,
+      })),
       query: { hours },
-    });
+    };
+
+    // Update cache
+    pipelineCache = { data: responseData, key: cacheKey, ts: Date.now() };
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error('Pipeline analytics error:', error);
     return NextResponse.json(

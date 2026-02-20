@@ -6,6 +6,7 @@ import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages, p
 import { extractTranslationMetadata } from '@/lib/translation-metadata';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { createRevision } from '@/lib/page-revisions';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 300;
 
@@ -23,6 +24,7 @@ export async function GET(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
 
+  const logger = createCronLogger('process-batches');
   const startTime = Date.now();
 
   const results = {
@@ -64,7 +66,9 @@ export async function GET(request: NextRequest) {
     for (const job of pendingJobs) {
       // Check time budget before starting a new job
       if (Date.now() - startTime > TIME_BUDGET_MS) {
-        console.log(`[cron] Time budget exhausted after ${results.stats.jobs_completed} jobs collected. ${pendingJobs.length - results.stats.jobs_completed - results.stats.jobs_pending - results.stats.jobs_processing} jobs skipped.`);
+        const skipped = pendingJobs.length - results.stats.jobs_completed - results.stats.jobs_pending - results.stats.jobs_processing;
+        logger.timeBudgetExhausted(`after ${results.stats.jobs_completed} jobs collected, ${skipped} skipped`);
+        console.log(`[cron] Time budget exhausted after ${results.stats.jobs_completed} jobs collected. ${skipped} jobs skipped.`);
         break;
       }
       try {
@@ -96,6 +100,7 @@ export async function GET(request: NextRequest) {
           // Safety check for single-page mode: response count must match page count
           if (!isMultiPage && pageIds.length > 0 && batchResults.length !== pageIds.length) {
             console.warn(`[cron] Response count (${batchResults.length}) != page count (${pageIds.length}) for job ${job.id || String(job._id)}. Skipping to avoid mismatched data.`);
+            logger.decision('skip', `Response count mismatch for job ${job.id || String(job._id)}`, { responses: batchResults.length, pages: pageIds.length });
             results.errors.push(`Job ${job.id || String(job._id)}: response count mismatch (${batchResults.length} vs ${pageIds.length})`);
             continue;
           }
@@ -167,6 +172,7 @@ export async function GET(request: NextRequest) {
             // Hallucination guard: skip pages with excessive text
             if (text.length > 25000) {
               console.warn(`[cron] Page ${pageId} has ${text.length} chars — likely hallucination, skipping`);
+              logger.decision('skip', `Hallucination guard: page ${pageId} has ${text.length} chars`, { page_id: pageId, chars: text.length });
               failCount++;
               continue;
             }
@@ -431,19 +437,9 @@ export async function GET(request: NextRequest) {
 
     const duration = Date.now() - startTime;
 
-    // Log cron run (non-blocking)
-    try {
-      const db2 = await getDb();
-      await db2.collection('cron_runs').insertOne({
-        cron: 'process-batches',
-        timestamp: new Date(),
-        duration_ms: duration,
-        actions: results.stats,
-        errors: results.errors,
-        collected: results.collected.length,
-        pages_saved: results.stats.pages_saved,
-      });
-    } catch (e) { console.error('[cron-run] write failed:', e); }
+    logger.setActions(results.stats);
+    logger.addErrors(results.errors);
+    await logger.flush();
 
     return NextResponse.json({
       success: true,
@@ -456,17 +452,11 @@ export async function GET(request: NextRequest) {
 
   } catch (error) {
     console.error('[cron] Error:', error);
-    try {
-      const db2 = await getDb();
-      await db2.collection('cron_runs').insertOne({
-        cron: 'process-batches',
-        timestamp: new Date(),
-        duration_ms: Date.now() - startTime,
-        actions: results.stats,
-        errors: [...results.errors, error instanceof Error ? error.message : 'Unknown error'],
-        failed: true,
-      });
-    } catch { /* ignore */ }
+    logger.setActions(results.stats);
+    logger.addErrors(results.errors);
+    logger.error(error instanceof Error ? error.message : 'Unknown error');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json({
       error: 'Cron job failed',
       details: error instanceof Error ? error.message : 'Unknown error',

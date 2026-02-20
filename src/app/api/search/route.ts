@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
 
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
-      const filters: Record<string, unknown> = {};
+      const filters: Record<string, unknown> = { hidden: { $ne: true } };
       if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
@@ -172,7 +172,7 @@ export async function GET(request: NextRequest) {
 
       // Pre-fetch allowed book IDs if book-level filters are active
       if (!bookId && (language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true')) {
-        const bookIdFilter: Record<string, unknown> = {};
+        const bookIdFilter: Record<string, unknown> = { hidden: { $ne: true } };
         if (language) bookIdFilter.language = language;
         if (category) bookIdFilter.categories = category;
         if (dateFrom || dateTo) {
@@ -230,6 +230,9 @@ export async function GET(request: NextRequest) {
       for (const page of pages) {
         const book = bookMap.get(page.book_id as string);
         if (!book) continue;
+
+        // Skip hidden books
+        if ((book as any).hidden === true) continue;
 
         // Skip if we already have this book in results
         if (seenBooks.has(book.id)) continue;

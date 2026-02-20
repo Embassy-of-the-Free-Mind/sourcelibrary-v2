@@ -97,11 +97,11 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       score: { $meta: 'textScore' },
     };
     books = await db.collection('books')
-      .find({ $text: { $search: query } }, { projection })
+      .find({ $text: { $search: query }, hidden: { $ne: true } }, { projection })
       .sort({ score: { $meta: 'textScore' } })
       .limit(limit)
       .toArray();
-    total = await db.collection('books').countDocuments({ $text: { $search: query } });
+    total = await db.collection('books').countDocuments({ $text: { $search: query }, hidden: { $ne: true } });
   } catch {
     // Fallback to regex
     const filter = {
@@ -110,6 +110,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
         { display_title: queryRegex },
         { author: queryRegex },
       ],
+      hidden: { $ne: true },
     };
     books = await db.collection('books')
       .find(filter)
@@ -135,7 +136,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
 
 async function searchIndex(db: any, queryNormalized: string, limit: number) {
   const books = await db.collection('books')
-    .find({ 'index.generatedAt': { $exists: true } })
+    .find({ 'index.generatedAt': { $exists: true }, hidden: { $ne: true } })
     .project({
       id: 1,
       display_title: 1,
@@ -219,6 +220,7 @@ async function searchGallery(db: any, queryRegex: RegExp, limit: number): Promis
         },
       },
       { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+      { $match: { 'book.hidden': { $ne: true } } },
       { $sort: { 'detected_images.gallery_quality': -1 } },
       { $limit: limit },
       {

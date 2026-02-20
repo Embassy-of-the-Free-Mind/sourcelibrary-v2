@@ -106,6 +106,7 @@ export async function POST(request: NextRequest) {
           book_author: '$book.author',
           book_year: '$book.year',
           book_language: '$book.language',
+          book_hidden: '$book.hidden',
           book_rank: '$book_rank',
           updated_at: new Date(),
         },

@@ -7,6 +7,7 @@ import { enrichBookMetadata } from '@/lib/metadata-enrichment';
 import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 300;
 
@@ -87,6 +88,7 @@ export async function GET(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
 
+  const logger = createCronLogger('post-import-pipeline');
   const startTime = Date.now();
   const baseUrl = getBaseUrl();
   const db = await getDb();
@@ -94,6 +96,8 @@ export async function GET(request: NextRequest) {
   // Check emergency stop flag
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' as any });
   if (control?.paused) {
+    logger.decision('early_return', 'Pipeline paused by emergency stop');
+    await logger.flush();
     return NextResponse.json({
       success: true,
       paused: true,
@@ -220,6 +224,10 @@ export async function GET(request: NextRequest) {
       });
 
       const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
+
+      if (activeBatchOcr >= MAX_ACTIVE_BATCH_OCR) {
+        logger.backpressure('ocr_batch_limit', { active: activeBatchOcr, max: MAX_ACTIVE_BATCH_OCR });
+      }
 
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
@@ -685,6 +693,10 @@ export async function GET(request: NextRequest) {
         status: { $in: ['pending', 'processing'] },
       });
 
+      if (activeImageJobs >= MAX_ACTIVE_IMAGE_JOBS) {
+        logger.backpressure('image_jobs_limit', { active: activeImageJobs, max: MAX_ACTIVE_IMAGE_JOBS });
+      }
+
       if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
         const readyForImages = await db.collection('books')
           .find({ 'pipeline_auto.status': 'chapters_complete' })
@@ -794,6 +806,7 @@ export async function GET(request: NextRequest) {
         if (retries >= MAX_RETRIES) {
           await markFailed(db, book.id, `Stale in ${status} for >48h after ${retries} retries`, retries);
           log.stale_failed++;
+          logger.decision('circuit_breaker', `Stale ${book.id} in ${status} after ${retries} retries`, { book_id: book.id, status });
         } else {
           // Roll back to the previous state so it gets re-submitted next cycle
           const rollbackMap: Record<string, PipelineAutoStatus> = {
@@ -807,6 +820,7 @@ export async function GET(request: NextRequest) {
           if (rollbackTo) {
             await setPipelineStatus(db, book.id, rollbackTo, { retry_count: retries + 1 });
             log.stale_retried++;
+            logger.decision('rollback', `Stale ${book.id}: ${status} → ${rollbackTo} (retry ${retries + 1})`, { book_id: book.id, from: status, to: rollbackTo });
           }
         }
         log.errors.push(`Stale ${book.id} (${book.title}): stuck in ${status} since ${book.pipeline_auto?.last_updated}`);
@@ -905,14 +919,33 @@ export async function GET(request: NextRequest) {
       cost_period: null, // filled by dashboard queries against gemini_usage
     }).catch(e => console.error('[pipeline-snapshot] write failed:', e));
 
-    const cronWrite = db.collection('cron_runs').insertOne({
-      cron: 'post-import-pipeline',
-      timestamp: now,
-      duration_ms: duration,
-      actions: log,
-      errors: log.errors,
-      funnel: counts,
-    }).catch(e => console.error('[cron-run] write failed:', e));
+    // Log time budget decision if budget was exhausted
+    if (!hasTimeBudget(startTime)) {
+      logger.timeBudgetExhausted(`after ${duration}ms`);
+    }
+
+    logger.setActions({
+      enrolled: log.enrolled,
+      archived: log.archived,
+      ocr_submitted: log.ocr_submitted,
+      ocr_advanced: log.ocr_advanced,
+      metadata_enriched: log.metadata_enriched,
+      metadata_skipped: log.metadata_skipped,
+      translate_submitted: log.translate_submitted,
+      translate_advanced: log.translate_advanced,
+      enriched: log.enriched,
+      chapters_extracted: log.chapters_extracted,
+      chapters_skipped: log.chapters_skipped,
+      images_submitted: log.images_submitted,
+      images_advanced: log.images_advanced,
+      finalized: log.finalized,
+      needs_attention: log.needs_attention,
+      stale_retried: log.stale_retried,
+      stale_failed: log.stale_failed,
+    });
+    logger.addErrors(log.errors);
+
+    const cronWrite = logger.flush();
 
     // Don't block the response on writes
     await Promise.allSettled([snapshotWrite, cronWrite]);
@@ -926,18 +959,26 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('[post-import-pipeline] Error:', error);
-    // Still try to log the failed cron run
-    try {
-      const db2 = await getDb();
-      await db2.collection('cron_runs').insertOne({
-        cron: 'post-import-pipeline',
-        timestamp: new Date(),
-        duration_ms: Date.now() - startTime,
-        actions: log,
-        errors: [...log.errors, error instanceof Error ? error.message : 'Unknown error'],
-        failed: true,
-      });
-    } catch { /* ignore logging failure */ }
+    logger.setActions({
+      enrolled: log.enrolled,
+      archived: log.archived,
+      ocr_submitted: log.ocr_submitted,
+      ocr_advanced: log.ocr_advanced,
+      metadata_enriched: log.metadata_enriched,
+      translate_submitted: log.translate_submitted,
+      translate_advanced: log.translate_advanced,
+      enriched: log.enriched,
+      chapters_extracted: log.chapters_extracted,
+      images_submitted: log.images_submitted,
+      finalized: log.finalized,
+      needs_attention: log.needs_attention,
+      stale_retried: log.stale_retried,
+      stale_failed: log.stale_failed,
+    });
+    logger.addErrors(log.errors);
+    logger.error(error instanceof Error ? error.message : 'Unknown error');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json({
       error: 'Pipeline cron failed',
       details: error instanceof Error ? error.message : 'Unknown error',

@@ -87,6 +87,7 @@ export async function GET(request: NextRequest) {
     // Build query filter
     const filter: Record<string, unknown> = {
       gallery_quality: { $gte: minQuality },
+      book_hidden: { $ne: true },
     };
 
     // Book diversity: limit to top N images per book (unless filtering by book)
@@ -300,6 +301,7 @@ async function semanticGallerySearch(searchParams: URLSearchParams, query: strin
     .map(s => {
       const doc = docMap.get(`${s.pageId}-${s.detectionIndex}`);
       if (!doc) return null;
+      if (doc.book_hidden === true) return null;
       if (imageType && doc.type !== imageType) return null;
       return {
         pageId: doc.page_id,
@@ -393,6 +395,7 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
 
   pipeline.push({ $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } });
   pipeline.push({ $unwind: { path: '$book', preserveNullAndEmptyArrays: true } });
+  pipeline.push({ $match: { 'book.hidden': { $ne: true } } });
 
   if (yearStart !== null || yearEnd !== null) {
     const yearMatch: Record<string, unknown> = {};

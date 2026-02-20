@@ -255,6 +255,11 @@ async function archivePage(page: any, db: any): Promise<boolean> {
   }
 }
 
+// Circuit breaker: stop after this many consecutive failures (e.g. rate limits)
+const MAX_CONSECUTIVE_FAILURES = 50;
+let consecutiveFailures = 0;
+let circuitBroken = false;
+
 async function runPool(pages: any[], db: any) {
   let idx = 0;
   let success = 0;
@@ -263,10 +268,22 @@ async function runPool(pages: any[], db: any) {
 
   async function worker() {
     while (true) {
+      if (circuitBroken) break;
       const i = idx++;
       if (i >= pages.length) break;
       const ok = await archivePage(pages[i], db);
-      if (ok) success++; else failed++;
+      if (ok) {
+        success++;
+        consecutiveFailures = 0;
+      } else {
+        failed++;
+        consecutiveFailures++;
+        if (consecutiveFailures >= MAX_CONSECUTIVE_FAILURES) {
+          circuitBroken = true;
+          process.stdout.write(`\n  CIRCUIT BREAKER: ${MAX_CONSECUTIVE_FAILURES} consecutive failures — stopping.\n`);
+          break;
+        }
+      }
 
       // Progress every 100 pages
       const done = success + failed;
@@ -382,6 +399,11 @@ async function main() {
     totalSuccess += success;
     totalFailed += failed;
     processed += pages.length;
+
+    if (circuitBroken) {
+      console.log(`\nStopping early — circuit breaker tripped. ${totalSuccess} archived, ${totalFailed} failed.`);
+      break;
+    }
   }
 
   const elapsed = (Date.now() - startTime) / 1000;

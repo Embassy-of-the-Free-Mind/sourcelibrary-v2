@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 120;
 
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
 
-  const startTime = Date.now();
+  const logger = createCronLogger('sync-page-counts');
 
   try {
     const db = await getDb();
@@ -107,39 +108,24 @@ export async function GET(request: NextRequest) {
       updated = result.modifiedCount;
     }
 
-    const duration = Date.now() - startTime;
-    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches) in ${duration}ms`);
+    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches) in ${logger.durationMs}ms`);
 
-    // Log cron run (non-blocking)
-    try {
-      await db.collection('cron_runs').insertOne({
-        cron: 'sync-page-counts',
-        timestamp: new Date(),
-        duration_ms: duration,
-        actions: { books_checked: books.length, mismatches: mismatchCount, updated },
-        errors: [],
-      });
-    } catch (e) { console.error('[cron-run] write failed:', e); }
+    logger.setActions({ books_checked: books.length, mismatches: mismatchCount, updated });
+
+    await logger.flush();
 
     return NextResponse.json({
       success: true,
       books_checked: books.length,
       mismatches: mismatchCount,
       updated,
-      duration_ms: duration,
+      duration_ms: logger.durationMs,
     });
   } catch (error) {
     console.error('[sync-page-counts] Error:', error);
-    try {
-      const db2 = await getDb();
-      await db2.collection('cron_runs').insertOne({
-        cron: 'sync-page-counts',
-        timestamp: new Date(),
-        duration_ms: Date.now() - startTime,
-        errors: [error instanceof Error ? error.message : 'Unknown error'],
-        failed: true,
-      });
-    } catch { /* ignore */ }
+    logger.error(error instanceof Error ? error.message : 'Unknown error');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json({ error: 'Failed to sync page counts' }, { status: 500 });
   }
 }

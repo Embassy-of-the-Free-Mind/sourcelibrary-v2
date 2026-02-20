@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 
     // Get all books with indexes
     const books = await db.collection('books')
-      .find({ 'index.generatedAt': { $exists: true } })
+      .find({ 'index.generatedAt': { $exists: true }, hidden: { $ne: true } })
       .project({
         id: 1,
         display_title: 1,

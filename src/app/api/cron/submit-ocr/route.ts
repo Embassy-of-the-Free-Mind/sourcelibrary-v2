@@ -5,6 +5,7 @@ import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import type { JobStatus } from '@/lib/types/job';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 300;
 
@@ -28,7 +29,7 @@ export async function GET(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
 
-  const startTime = Date.now();
+  const logger = createCronLogger('submit-ocr');
 
   try {
     const db = await getDb();
@@ -39,12 +40,16 @@ export async function GET(request: NextRequest) {
       status: { $in: ['pending', 'processing'] as JobStatus[] },
     });
 
+    logger.action('active_jobs_before', activeJobs);
+
     if (activeJobs >= MAX_ACTIVE_JOBS) {
+      logger.backpressure('realtime_job_limit', { active: activeJobs, max: MAX_ACTIVE_JOBS });
+      await logger.flush();
       return NextResponse.json({
         success: true,
         skipped: true,
         reason: `${activeJobs} active realtime OCR jobs (max ${MAX_ACTIVE_JOBS})`,
-        duration_ms: Date.now() - startTime,
+        duration_ms: logger.durationMs,
       });
     }
 
@@ -68,6 +73,10 @@ export async function GET(request: NextRequest) {
       .toArray();
     const blockedBookIds = blockedBooks.map(b => b.id);
 
+    if (blockedBookIds.length > 0) {
+      logger.decision('circuit_breaker', `${blockedBookIds.length} books blocked`, { count: blockedBookIds.length });
+    }
+
     // Also exclude books managed by the pipeline cron (avoid double-submitting)
     const pipelineBooks = await db.collection('books')
       .find(
@@ -76,6 +85,10 @@ export async function GET(request: NextRequest) {
       )
       .toArray();
     const pipelineBookIds = pipelineBooks.map(b => b.id);
+
+    if (pipelineBookIds.length > 0) {
+      logger.skip(`${pipelineBookIds.length} books excluded (pipeline-managed)`);
+    }
 
     const excludeBookIds = [...new Set([
       ...booksWithRealtimeJobs,
@@ -96,13 +109,15 @@ export async function GET(request: NextRequest) {
       .toArray();
 
     if (eligibleBooks.length === 0) {
+      logger.skip('all books have OCR or are already being processed');
+      await logger.flush();
       return NextResponse.json({
         success: true,
         message: 'All books have OCR or are already being processed',
         activeJobs,
         blockedBooks: blockedBookIds.length,
         pipelineExcluded: pipelineBookIds.length,
-        duration_ms: Date.now() - startTime,
+        duration_ms: logger.durationMs,
       });
     }
 
@@ -149,6 +164,7 @@ export async function GET(request: NextRequest) {
 
         if (pagesWithValidImages.length === 0) {
           skippedNoImages.push(book.title);
+          logger.skip(`no valid images: ${book.title}`, { book_id: book.id });
           // Block this book — no point retrying until images are fixed
           await db.collection('books').updateOne(
             { id: book.id },
@@ -209,6 +225,18 @@ export async function GET(request: NextRequest) {
 
     const totalPages = submitted.reduce((sum, s) => sum + s.pagesQueued, 0);
 
+    logger.setActions({
+      active_jobs_before: activeJobs,
+      books_submitted: submitted.length,
+      total_pages: totalPages,
+      blocked_books: blockedBookIds.length,
+      pipeline_excluded: pipelineBookIds.length,
+      skipped_no_images: skippedNoImages.length,
+    });
+    logger.addErrors(errors);
+
+    await logger.flush();
+
     return NextResponse.json({
       success: true,
       activeJobsBefore: activeJobs,
@@ -219,10 +247,13 @@ export async function GET(request: NextRequest) {
       pipelineExcluded: pipelineBookIds.length,
       skippedNoImages: skippedNoImages.length > 0 ? skippedNoImages : undefined,
       errors: errors.length > 0 ? errors : undefined,
-      duration_ms: Date.now() - startTime,
+      duration_ms: logger.durationMs,
     });
   } catch (error) {
     console.error('[cron/submit-ocr] Error:', error);
+    logger.error(error instanceof Error ? error.message : 'Submit cron failed');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Submit cron failed' },
       { status: 500 }

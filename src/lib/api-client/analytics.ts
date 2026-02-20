@@ -4,7 +4,11 @@ import type {
   TrackEventRequest,
   UsageStats,
   LoadingMetric,
-  ProcessingOverviewResponse
+  ProcessingOverviewResponse,
+  PerformanceData,
+  PipelineData,
+  SearchAnalyticsData,
+  TrafficData,
 } from './types/analytics';
 
 /**
@@ -31,7 +35,7 @@ export const analytics = {
   /**
    * Get loading/performance metrics (extended timeout for aggregation queries)
    */
-  loading: async (hours?: number): Promise<any> => {
+  loading: async (hours?: number): Promise<PerformanceData> => {
     const url = hours ? `/api/analytics/loading?hours=${hours}` : '/api/analytics/loading';
     return await apiClient.get(url, { timeout: 90000 });
   },
@@ -39,14 +43,14 @@ export const analytics = {
   /**
    * Get traffic data (pageviews, referrers, countries)
    */
-  traffic: async (): Promise<any> => {
+  traffic: async (): Promise<TrafficData> => {
     return await apiClient.get('/api/analytics');
   },
 
   /**
    * Get search query analytics
    */
-  search: async (days?: number): Promise<any> => {
+  search: async (days?: number): Promise<SearchAnalyticsData> => {
     const url = days ? `/api/analytics/search?days=${days}` : '/api/analytics/search';
     return await apiClient.get(url);
   },
@@ -54,7 +58,7 @@ export const analytics = {
   /**
    * Get pipeline observability data (snapshots, velocity, cron health, stalls)
    */
-  pipeline: async (hours?: number): Promise<any> => {
+  pipeline: async (hours?: number): Promise<PipelineData> => {
     const url = hours ? `/api/analytics/pipeline?hours=${hours}` : '/api/analytics/pipeline';
     return await apiClient.get(url, { timeout: 30000 });
   },

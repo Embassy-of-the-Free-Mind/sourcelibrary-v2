@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useState, useEffect } from 'react';
 
 interface BookLoaderProps {
   className?: string;
@@ -9,73 +8,102 @@ interface BookLoaderProps {
   label?: string;
 }
 
-const VERBS = ['Opening', 'Gathering', 'Seeking', 'Consulting', 'Retrieving'];
+/*
+ * Pythagorean Tetractys as overlapping concentric circles.
+ * 10 points in the 1-2-3-4 triangle. Each point emanates
+ * many concentric rings outward — large enough to overlap
+ * with neighbors, creating interference patterns like
+ * stones dropped in still water.
+ */
+
+const TETRACTYS: { row: number; col: number }[] = [
+  { row: 0, col: 0 },
+  { row: 1, col: 0 }, { row: 1, col: 1 },
+  { row: 2, col: 0 }, { row: 2, col: 1 }, { row: 2, col: 2 },
+  { row: 3, col: 0 }, { row: 3, col: 1 }, { row: 3, col: 2 }, { row: 3, col: 3 },
+];
+
+const GAP = 100;          // distance between centers
+const RINGS = 8;          // concentric rings per point
+const RING_SPACING = 14;  // distance between rings
+const ROWS = 4;
+
+const pad = RINGS * RING_SPACING + 10;
+const vbW = (ROWS - 1) * GAP + pad * 2;
+const vbH = (ROWS - 1) * GAP + pad * 2;
+const cx0 = vbW / 2;
+const cy0 = pad;
+
+function getPos(row: number, col: number) {
+  return {
+    x: cx0 - (row * GAP) / 2 + col * GAP,
+    y: cy0 + row * GAP,
+  };
+}
 
 export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
-  const [verbIndex, setVerbIndex] = useState(0); // Always starts with "Opening"
-  const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        // Pick a random verb (excluding current one)
-        setVerbIndex((prev) => {
-          const availableIndices = VERBS.map((_, i) => i).filter(i => i !== prev);
-          return availableIndices[Math.floor(Math.random() * availableIndices.length)];
-        });
-        setIsAnimating(false);
-      }, 300);
-    }, 2500);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const sizeClasses = {
-    sm: { container: 'w-10 h-10', logo: 'w-10 h-10', text: 'text-sm', gap: 'gap-4' },
-    md: { container: 'w-16 h-16', logo: 'w-16 h-16', text: 'text-lg', gap: 'gap-8' },
-    lg: { container: 'w-24 h-24', logo: 'w-24 h-24', text: 'text-xl', gap: 'gap-10' },
-  };
-
-  const s = sizeClasses[size];
+  const svgClass = size === 'sm' ? 'w-64 h-64'
+    : size === 'md' ? 'w-[28rem] h-[28rem]'
+    : 'w-[36rem] h-[36rem]';
 
   return (
-    <div className={cn('flex flex-col items-center justify-center', s.gap, className)}>
-      {/* Animated Source Library logo with emanating rings */}
-      <div className={cn('relative', s.container)}>
-        {/* Emanating rings that expand outward */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '0ms' }} />
-          <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '700ms' }} />
-          <div className="absolute w-[67%] h-[67%] rounded-full border border-stone-400/50 animate-emanate" style={{ animationDelay: '1400ms' }} />
-        </div>
-
-        {/* Core logo - concentric circles */}
-        <svg
-          viewBox="0 0 24 24"
-          className={cn('relative z-10 text-stone-700', s.logo)}
-        >
-          <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1" />
-          <circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" strokeWidth="1" />
-          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1" />
-        </svg>
-      </div>
-
-      {/* Label with cycling verb */}
-      <p
-        className={cn('text-stone-500 tracking-wide', s.text)}
-        style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+    <div className={cn('flex items-center justify-center', className)}>
+      <svg
+        viewBox={`0 0 ${vbW} ${vbH}`}
+        className={cn(svgClass, 'animate-[tetractys-fade-in_2s_ease-out_both]')}
+        aria-hidden="true"
       >
-        <span
-          className={cn(
-            'inline-block transition-all duration-300 ease-out',
-            isAnimating ? 'opacity-0 translate-y-2 blur-sm' : 'opacity-100 translate-y-0 blur-0'
-          )}
-        >
-          {VERBS[verbIndex]}
-        </span>
-        {' the Source'}
-      </p>
+        <defs>
+          <style>{`
+            @keyframes tetractys-fade-in {
+              from { opacity: 0; }
+              to   { opacity: 1; }
+            }
+            @keyframes t-expand {
+              0%   { transform: scale(0); opacity: 0; }
+              40%  { opacity: 1; }
+              100% { transform: scale(1); opacity: 1; }
+            }
+          `}</style>
+        </defs>
+
+        {TETRACTYS.map(({ row, col }, i) => {
+          const { x, y } = getPos(row, col);
+          // Cascade: Monad appears first, each row ~500ms later
+          const groupDelay = 800 + row * 500 + col * 150;
+
+          return (
+            <g
+              key={i}
+              style={{
+                transformOrigin: `${x}px ${y}px`,
+                animation: `t-expand 1.2s ease-out ${groupDelay}ms both`,
+              }}
+            >
+              {/* Concentric rings emanating outward — many, thin, overlapping */}
+              {Array.from({ length: RINGS }).map((_, r) => {
+                const radius = (r + 1) * RING_SPACING;
+                // Outer rings fade more
+                const opacity = 0.35 - r * 0.03;
+                return (
+                  <circle
+                    key={r}
+                    cx={x}
+                    cy={y}
+                    r={radius}
+                    fill="none"
+                    stroke="var(--accent-rust)"
+                    strokeWidth={r === 0 ? 0.8 : 0.5}
+                    opacity={Math.max(opacity, 0.08)}
+                  />
+                );
+              })}
+              {/* Center dot */}
+              <circle cx={x} cy={y} r={2.5} fill="var(--accent-rust)" opacity="0.6" />
+            </g>
+          );
+        })}
+      </svg>
     </div>
   );
 }
@@ -83,13 +111,10 @@ export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
 export function PageTurnLoader({ label = 'Loading page...', className }: BookLoaderProps) {
   return (
     <div className={cn('flex flex-col items-center justify-center gap-4', className)}>
-      {/* Animated pages */}
       <div className="relative w-16 h-20">
-        {/* Stack of pages */}
         <div className="absolute inset-0 bg-stone-200 rounded shadow-sm" />
         <div className="absolute inset-0 bg-stone-100 rounded shadow-sm -translate-x-0.5 -translate-y-0.5" />
         <div className="absolute inset-0 bg-white rounded shadow-md -translate-x-1 -translate-y-1 animate-page-turn origin-left">
-          {/* Page content lines */}
           <div className="p-2 space-y-1.5">
             <div className="h-1 bg-stone-200 rounded animate-shimmer bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%]" />
             <div className="h-1 bg-stone-200 rounded animate-shimmer bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%]" style={{ animationDelay: '100ms' }} />
@@ -99,8 +124,6 @@ export function PageTurnLoader({ label = 'Loading page...', className }: BookLoa
           </div>
         </div>
       </div>
-
-      {/* Label */}
       <p className="text-stone-600 text-sm">{label}</p>
     </div>
   );

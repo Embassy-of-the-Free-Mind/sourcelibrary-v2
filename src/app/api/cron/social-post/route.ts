@@ -12,6 +12,7 @@ import { getDb } from '@/lib/mongodb';
 import { postTweetWithMedia, isTwitterConfigured } from '@/lib/twitter';
 import { buildFullTweetText } from '@/lib/tweet-generator';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 60; // 1 minute timeout
 
@@ -19,19 +20,26 @@ export async function POST(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
 
+  const logger = createCronLogger('social-post');
+
   const stats = {
     posted: 0,
     failed: 0,
     skipped: 0,
   };
 
+  let response: NextResponse;
+
   try {
     // Check Twitter is configured
     if (!isTwitterConfigured()) {
-      return NextResponse.json({
+      logger.skip('Twitter not configured');
+      response = NextResponse.json({
         message: 'Twitter not configured',
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     }
 
     const db = await getDb();
@@ -41,10 +49,13 @@ export async function POST(request: NextRequest) {
 
     // Check if auto-posting is enabled
     if (!config?.settings?.auto_post_enabled) {
-      return NextResponse.json({
+      logger.skip('Auto-posting is disabled');
+      response = NextResponse.json({
         message: 'Auto-posting is disabled',
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     }
 
     // Check if current hour is in posting hours
@@ -52,10 +63,13 @@ export async function POST(request: NextRequest) {
     const postingHours = config.settings.posting_hours || [];
 
     if (!postingHours.includes(currentHour)) {
-      return NextResponse.json({
+      logger.decision('early_return', `Not a posting hour (${currentHour} UTC)`, { currentHour, postingHours });
+      response = NextResponse.json({
         message: `Not a posting hour (current: ${currentHour} UTC, configured: ${postingHours.join(', ')})`,
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     }
 
     // Check daily limit
@@ -63,10 +77,13 @@ export async function POST(request: NextRequest) {
     const tweetsToday = config.usage?.tweets_today || 0;
 
     if (tweetsToday >= dailyLimit) {
-      return NextResponse.json({
+      logger.decision('backpressure', `Daily limit reached (${tweetsToday}/${dailyLimit})`, { tweetsToday, dailyLimit });
+      response = NextResponse.json({
         message: `Daily limit reached (${tweetsToday}/${dailyLimit})`,
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     }
 
     // Find next queued post
@@ -88,10 +105,13 @@ export async function POST(request: NextRequest) {
     );
 
     if (!post) {
-      return NextResponse.json({
+      logger.skip('No posts in queue');
+      response = NextResponse.json({
         message: 'No posts in queue',
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     }
 
     // Check if tweet text exists
@@ -108,12 +128,15 @@ export async function POST(request: NextRequest) {
         }
       );
       stats.skipped++;
+      logger.skip('Skipped post with empty tweet text', { post_id: post.id });
 
-      return NextResponse.json({
+      response = NextResponse.json({
         message: 'Skipped post with empty tweet text',
         postId: post.id,
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     }
 
     // Build full tweet
@@ -163,14 +186,17 @@ export async function POST(request: NextRequest) {
       );
 
       stats.posted++;
+      logger.action('posted', 1);
 
-      return NextResponse.json({
+      response = NextResponse.json({
         success: true,
         message: 'Posted successfully',
         postId: post.id,
         tweetUrl: result.tweetUrl,
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     } catch (twitterError) {
       console.error('Twitter API error in cron:', twitterError);
 
@@ -187,24 +213,35 @@ export async function POST(request: NextRequest) {
       );
 
       stats.failed++;
+      logger.action('failed', 1);
+      logger.error(twitterError instanceof Error ? twitterError.message : 'Twitter API error');
 
-      return NextResponse.json({
+      response = NextResponse.json({
         success: false,
         message: 'Failed to post',
         postId: post.id,
         error: twitterError instanceof Error ? twitterError.message : 'Unknown error',
         stats,
+        duration_ms: logger.durationMs,
       });
+      return response;
     }
   } catch (error) {
     console.error('Social post cron error:', error);
-    return NextResponse.json(
+    logger.error(error instanceof Error ? error.message : 'Cron job failed');
+    logger.setFailed();
+    response = NextResponse.json(
       {
         error: error instanceof Error ? error.message : 'Cron job failed',
         stats,
+        duration_ms: logger.durationMs,
       },
       { status: 500 }
     );
+    return response;
+  } finally {
+    logger.setActions(stats);
+    await logger.flush();
   }
 }
 

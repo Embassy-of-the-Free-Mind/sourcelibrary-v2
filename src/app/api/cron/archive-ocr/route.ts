@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { put } from '@vercel/blob';
 import { images } from '@/lib/api-client';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 300; // 5 minute timeout
 
@@ -21,6 +22,8 @@ const DELAY_MS = 200; // Delay between batches
 export async function POST(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
+
+  const logger = createCronLogger('archive-ocr');
 
   try {
     const db = await getDb();
@@ -42,6 +45,9 @@ export async function POST(request: NextRequest) {
     const totalCount = await db.collection('pages').countDocuments(query);
 
     if (totalCount === 0) {
+      logger.action('needs_archiving', 0);
+      logger.skip('no pages need archiving');
+      await logger.flush();
       return NextResponse.json({
         success: true,
         message: 'No pages need archiving',
@@ -51,10 +57,11 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    logger.action('needs_archiving', totalCount);
+
     let archived = 0;
     let failed = 0;
     let totalBytes = 0;
-    let startTime = Date.now();
     const batchResults = [];
 
     // Process in batches
@@ -133,8 +140,12 @@ export async function POST(request: NextRequest) {
       await new Promise(r => setTimeout(r, DELAY_MS));
     }
 
-    const duration = ((Date.now() - startTime) / 1000).toFixed(1);
     const mb = (totalBytes / (1024 * 1024)).toFixed(1);
+
+    logger.setActions({ archived, failed, bytes: totalBytes, batches: batchResults.length });
+    if (failed > 0) logger.setPartial();
+
+    await logger.flush();
 
     return NextResponse.json({
       success: true,
@@ -142,11 +153,14 @@ export async function POST(request: NextRequest) {
       archived,
       failed,
       totalSize: `${mb}MB`,
-      duration: `${duration}s`,
+      duration: `${(logger.durationMs / 1000).toFixed(1)}s`,
       batchCount: batchResults.length,
     });
   } catch (error) {
     console.error('Archive OCR error:', error);
+    logger.error(error instanceof Error ? error.message : 'Archive OCR failed');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json(
       { error: 'Archive OCR failed', details: String(error) },
       { status: 500 }

@@ -10,6 +10,7 @@ export async function GET() {
 
     // Get all books with page counts
     const books = await db.collection('books').aggregate([
+      { $match: { hidden: { $ne: true } } },
       {
         $lookup: {
           from: 'pages',

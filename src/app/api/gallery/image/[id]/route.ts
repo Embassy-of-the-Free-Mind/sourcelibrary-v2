@@ -118,6 +118,12 @@ export async function GET(
     }
 
     const pageData = page[0];
+
+    // Hide gallery images from hidden books
+    if (pageData.book?.hidden === true) {
+      return NextResponse.json({ error: 'Image not found' }, { status: 404 });
+    }
+
     const detections = pageData.detected_images || [];
 
     if (detectionIndex < 0 || detectionIndex >= detections.length) {

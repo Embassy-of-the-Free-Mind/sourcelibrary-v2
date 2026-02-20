@@ -96,6 +96,10 @@ export interface Book {
   // Automated processing pipeline state
   pipeline?: PipelineState;
 
+  // Curation: hide from library, search, gallery, sitemap (still accessible via direct URL)
+  hidden?: boolean;
+  hidden_reason?: string;  // 'efm_duplicate' | 'launch_curation' | 'quality'
+
   // Beta launch: featured books bypass the email gate
   featured?: boolean;
 

@@ -40,6 +40,7 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
 
     const [books, totalBooks, translatedCount] = await Promise.all([
       db.collection('books').aggregate([
+        { $match: { hidden: { $ne: true } } },
         {
           $addFields: {
             id: { $ifNull: ['$id', { $toString: '$_id' }] },
@@ -83,8 +84,8 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
           },
         },
       ]).toArray(),
-      db.collection('books').countDocuments(),
-      db.collection('books').countDocuments({ pages_translated: { $gt: 0 } }),
+      db.collection('books').countDocuments({ hidden: { $ne: true } }),
+      db.collection('books').countDocuments({ hidden: { $ne: true }, pages_translated: { $gt: 0 } }),
     ]);
 
     return {
@@ -103,6 +104,7 @@ async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
     const db = await getDb();
 
     const categoryCounts = await db.collection('books').aggregate([
+      { $match: { hidden: { $ne: true } } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
     ]).toArray();

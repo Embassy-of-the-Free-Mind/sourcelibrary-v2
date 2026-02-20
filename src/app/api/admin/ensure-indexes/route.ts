@@ -720,6 +720,48 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Pipeline snapshots - time-range scans for velocity charts
+    try {
+      await db.collection('pipeline_snapshots').createIndex(
+        { timestamp: -1 },
+        { name: 'pipeline_snapshots_ts_idx', background: true }
+      );
+      results['pipeline_snapshots.pipeline_snapshots_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pipeline_snapshots.pipeline_snapshots_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Loading metrics - time-range scans for performance dashboard
+    try {
+      await db.collection('loading_metrics').createIndex(
+        { received_at: -1 },
+        { name: 'loading_metrics_received_at_idx', background: true }
+      );
+      results['loading_metrics.loading_metrics_received_at_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['loading_metrics.loading_metrics_received_at_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Loading metrics - metric name + time for filtered queries
+    try {
+      await db.collection('loading_metrics').createIndex(
+        { name: 1, received_at: -1 },
+        { name: 'loading_metrics_name_ts_idx', background: true }
+      );
+      results['loading_metrics.loading_metrics_name_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['loading_metrics.loading_metrics_name_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Cron runs - per-cron history (cron name + time desc)
     try {
       await db.collection('cron_runs').createIndex(
@@ -782,7 +824,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'cron_runs'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'cron_runs', 'pipeline_snapshots', 'loading_metrics'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

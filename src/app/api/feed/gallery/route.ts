@@ -35,12 +35,13 @@ export async function GET() {
         let: { bookId: '$book_id' },
         pipeline: [
           { $match: { $expr: { $eq: ['$id', '$$bookId'] } } },
-          { $project: { title: 1, display_title: 1, author: 1, year: 1 } },
+          { $project: { title: 1, display_title: 1, author: 1, year: 1, hidden: 1 } },
         ],
         as: 'book',
       },
     },
     { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
+    { $match: { 'book.hidden': { $ne: true } } },
     { $sort: { updated_at: -1 as const } },
     { $limit: 50 },
     {

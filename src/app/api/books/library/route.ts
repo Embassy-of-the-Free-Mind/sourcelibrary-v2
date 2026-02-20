@@ -35,7 +35,9 @@ export async function GET(request: NextRequest) {
     const db = await getDb();
 
     // Build match conditions
-    const matchConditions: Record<string, unknown>[] = [];
+    const matchConditions: Record<string, unknown>[] = [
+      { hidden: { $ne: true } },
+    ];
 
     if (search.trim()) {
       // Build diacritic-insensitive regex: "bohme" matches "Böhme"

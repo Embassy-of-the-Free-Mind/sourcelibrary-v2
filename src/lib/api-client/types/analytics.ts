@@ -74,6 +74,24 @@ export interface UsageStats {
       processing: number;
       byType: Array<{ type: string; count: number }>;
     };
+    workerHealth?: {
+      ocrBlocked: number;
+      needsAttention: number;
+      failuresByCategory: Array<{ category: string; count: number }>;
+      highFailureBooks: Array<{
+        bookId: string;
+        title: string;
+        jobCount: number;
+        totalPagesFailed: number;
+        lastFailure: string;
+      }>;
+    };
+  };
+  pipelineFunnel?: Array<{ status: string; count: number }>;
+  backlog?: {
+    needsOcr: number;
+    needsTranslation: number;
+    oldOcrPages: number;
   };
   query: { days: number };
 }
@@ -109,6 +127,144 @@ export interface ProcessingOverviewResponse {
     books_processed: number;
     pages_processed: number;
   };
+}
+
+// --- Performance ---
+
+export interface MetricStat {
+  name: string;
+  count: number;
+  avg: number;
+  min: number;
+  max: number;
+  p50: number | null;
+  p95: number | null;
+}
+
+export interface SourceStat {
+  source: string;
+  count: number;
+  avg: number;
+  min: number;
+  max: number;
+  p50: number | null;
+  p95: number | null;
+}
+
+export interface RecentSample {
+  name: string;
+  duration: number;
+  timestamp: number;
+  metadata?: Record<string, unknown>;
+}
+
+export interface PerformanceData {
+  stats: MetricStat[];
+  sourceStats: SourceStat[];
+  recentSamples: RecentSample[];
+  query: { hours: number; metricName: string | null };
+}
+
+// --- Pipeline ---
+
+export interface PipelineVelocity {
+  ocr_per_hour: number;
+  translate_per_hour: number;
+  books_completing_per_day: number;
+  period_hours: number;
+}
+
+export interface PipelineSnapshot {
+  timestamp: string;
+  funnel?: Record<string, number>;
+  pages?: { ocr?: number; translated?: number };
+  books?: Record<string, number>;
+  active_batch?: Record<string, number>;
+}
+
+export interface PipelineStall {
+  stage: string;
+  direction: 'growing' | 'shrinking' | 'stalled';
+  delta: number;
+  current: number;
+}
+
+export interface CronHealthEntry {
+  lastRun: string | null;
+  lastDuration: number;
+  runsInPeriod: number;
+  failures: number;
+  avgDuration: number;
+  recentErrors: string[];
+}
+
+export interface PipelineError {
+  type: string;
+  category: string;
+  count: number;
+  lastError?: string;
+  lastAt?: string;
+}
+
+export interface PipelineAttentionBook {
+  id: string;
+  title: string;
+  language?: string;
+  pages: number;
+  ocr: number;
+  translated: number;
+  status?: string;
+  error?: string;
+  lastUpdated?: string;
+  retryCount: number;
+  provider?: string;
+}
+
+export interface PipelineDecision {
+  cron: string;
+  timestamp: string;
+  type?: string;
+  reason?: string;
+  data?: unknown;
+}
+
+export interface PipelineData {
+  snapshots: PipelineSnapshot[];
+  velocity: PipelineVelocity;
+  cronHealth: Record<string, CronHealthEntry>;
+  stalls: PipelineStall[];
+  needsAttention: PipelineAttentionBook[];
+  recentErrors: PipelineError[];
+  recentDecisions: PipelineDecision[];
+  query: { hours: number };
+}
+
+// --- Search Analytics ---
+
+export interface SearchQuery {
+  query: string;
+  count: number;
+  avg_results?: number;
+  last_searched?: string;
+}
+
+export interface SearchAnalyticsData {
+  totalSearches: number;
+  topQueries: SearchQuery[];
+  zeroResultQueries: SearchQuery[];
+  searchesBySource: Array<{ source: string; count: number }>;
+  searchesByDay?: Array<{ date: string; count: number; uniqueQueries?: number }>;
+}
+
+// --- Traffic ---
+
+export interface TrafficData {
+  topPages?: Array<{ path: string; count: number }>;
+  topReferrers?: Array<{ referrer: string; count: number }>;
+  topCountries?: Array<{ country: string; count: number }>;
+  totalVisitors?: number;
+  totalPageviews?: number;
+  error?: string;
 }
 
 // Note: JobLog is defined in ./jobs.ts to avoid duplication

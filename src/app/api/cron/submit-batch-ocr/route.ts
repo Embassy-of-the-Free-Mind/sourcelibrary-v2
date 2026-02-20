@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { POST as batchOcrPost } from '@/app/api/books/[id]/batch-ocr-async/route';
 import { verifyCronAuth } from '@/lib/cron-auth';
+import { createCronLogger } from '@/lib/cron-logger';
 
 export const maxDuration = 300;
 
@@ -25,7 +26,7 @@ export async function GET(request: NextRequest) {
   const authError = verifyCronAuth(request);
   if (authError) return authError;
 
-  const startTime = Date.now();
+  const logger = createCronLogger('submit-batch-ocr');
 
   try {
     const db = await getDb();
@@ -35,12 +36,16 @@ export async function GET(request: NextRequest) {
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
 
+    logger.action('active_jobs_before', activeJobs);
+
     if (activeJobs >= MAX_ACTIVE_JOBS) {
+      logger.backpressure('batch_job_limit', { active: activeJobs, max: MAX_ACTIVE_JOBS });
+      await logger.flush();
       return NextResponse.json({
         success: true,
         skipped: true,
         reason: `${activeJobs} active jobs (max ${MAX_ACTIVE_JOBS}), waiting for results`,
-        duration_ms: Date.now() - startTime,
+        duration_ms: logger.durationMs,
       });
     }
 
@@ -62,11 +67,13 @@ export async function GET(request: NextRequest) {
       .toArray();
 
     if (eligibleBooks.length === 0) {
+      logger.skip('all books have OCR or are already being processed');
+      await logger.flush();
       return NextResponse.json({
         success: true,
         message: 'All books have OCR or are already being processed',
         activeJobs,
-        duration_ms: Date.now() - startTime,
+        duration_ms: logger.durationMs,
       });
     }
 
@@ -106,6 +113,15 @@ export async function GET(request: NextRequest) {
 
     const totalPages = submitted.reduce((sum, s) => sum + s.pagesSubmitted, 0);
 
+    logger.setActions({
+      active_jobs_before: activeJobs,
+      books_submitted: submitted.length,
+      total_pages: totalPages,
+    });
+    logger.addErrors(errors);
+
+    await logger.flush();
+
     return NextResponse.json({
       success: true,
       activeJobsBefore: activeJobs,
@@ -114,10 +130,13 @@ export async function GET(request: NextRequest) {
       estimatedCost: `$${(totalPages * 0.0003).toFixed(2)}`,
       submitted,
       errors: errors.length > 0 ? errors : undefined,
-      duration_ms: Date.now() - startTime,
+      duration_ms: logger.durationMs,
     });
   } catch (error) {
     console.error('[cron/submit-batch-ocr] Error:', error);
+    logger.error(error instanceof Error ? error.message : 'Submit cron failed');
+    logger.setFailed();
+    await logger.flush();
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Submit cron failed' },
       { status: 500 }

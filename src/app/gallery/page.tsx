@@ -55,6 +55,7 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
     const filter = {
       gallery_quality: { $gte: minQuality },
       book_rank: { $lte: maxPerBook },
+      book_hidden: { $ne: true },
     };
 
     const [items, total, typesResult, subjectsResult, yearResult] = await Promise.all([

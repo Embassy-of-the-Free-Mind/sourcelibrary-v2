@@ -56,7 +56,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Get books with page info for translated pages
     const books = await db.collection('books').find(
-      {},
+      { hidden: { $ne: true } },
       { projection: { id: 1, updated_at: 1, translation_percent: 1, pages_count: 1, pages_translated: 1 } }
     ).toArray();
 
