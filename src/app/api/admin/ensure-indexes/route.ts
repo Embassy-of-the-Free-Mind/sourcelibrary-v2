@@ -112,6 +112,35 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Books - collection membership (collection browse pages)
+    // Query: { collections: slug, status: { $ne: 'deleted' } }
+    try {
+      await db.collection('books').createIndex(
+        { collections: 1 },
+        { name: 'books_collections_idx', background: true }
+      );
+      results['books.books_collections_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_collections_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Collections - slug lookup
+    try {
+      await db.collection('collections').createIndex(
+        { slug: 1 },
+        { name: 'collections_slug_idx', background: true, unique: true }
+      );
+      results['collections.collections_slug_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['collections.collections_slug_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Gemini usage - lookup by book_id for history/cost queries
     // Query: { book_id }
     try {
@@ -824,7 +853,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'cron_runs', 'pipeline_snapshots', 'loading_metrics'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

@@ -1,21 +1,29 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-static';
-export const revalidate = 3600; // Revalidate every hour
+export const maxDuration = 15;
 
+/**
+ * GET /api/collections
+ *
+ * List all book collections from MongoDB, ordered by display order.
+ */
 export async function GET() {
   try {
-    const indexPath = path.join(process.cwd(), 'curator-data', 'index.json');
-    const indexData = await fs.readFile(indexPath, 'utf-8');
-    const index = JSON.parse(indexData);
+    const db = await getDb();
+    const collections = await db
+      .collection('collections')
+      .find({})
+      .sort({ order: 1 })
+      .toArray();
 
-    return NextResponse.json(index);
+    const cleaned = collections.map(({ _id, ...rest }) => rest);
+
+    return NextResponse.json({ collections: cleaned });
   } catch (error) {
-    console.error('Error loading collections index:', error);
+    console.error('Collections list error:', error);
     return NextResponse.json(
-      { error: 'Failed to load collections' },
+      { error: 'Failed to fetch collections' },
       { status: 500 }
     );
   }

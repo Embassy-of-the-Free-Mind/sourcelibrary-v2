@@ -14,6 +14,8 @@ interface CollectionBook {
   year: number;
   pages?: number;
   pages_count?: number;
+  pages_ocr?: number;
+  pages_translated?: number;
   thumbnail?: string;
   language?: string;
   has_doi?: boolean;

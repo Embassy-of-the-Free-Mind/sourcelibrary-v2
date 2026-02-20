@@ -34,6 +34,7 @@ export * from './bookshelf';
 export * from './books';
 export * from './catalog';
 export * from './categories';
+export * from './collections';
 export * from './contribute';
 export * from './detections';
 export * from './entities';

@@ -1,33 +1,85 @@
-import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-static';
-export const revalidate = 3600;
+export const maxDuration = 15;
 
+/**
+ * GET /api/collections/[id]
+ *
+ * Get collection metadata and its books with pagination/sorting.
+ *
+ * Query params:
+ *   - sort: 'year_asc' (default), 'year_desc', 'title', 'recent'
+ *   - language: filter by language
+ *   - limit: max results (default 60, max 200)
+ *   - offset: pagination offset
+ */
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
-
   try {
-    const collectionPath = path.join(
-      process.cwd(),
-      'curator-data',
-      'collections',
-      `${id}.json`
-    );
+    const { id } = await params;
+    const { searchParams } = new URL(request.url);
+    const sort = searchParams.get('sort') || 'year_asc';
+    const language = searchParams.get('language');
+    const limit = Math.min(parseInt(searchParams.get('limit') || '60'), 200);
+    const offset = parseInt(searchParams.get('offset') || '0');
 
-    const collectionData = await fs.readFile(collectionPath, 'utf-8');
-    const collection = JSON.parse(collectionData);
+    const db = await getDb();
 
-    return NextResponse.json(collection);
+    // Get collection metadata (slug stored as "slug" field)
+    const collection = await db.collection('collections').findOne({ slug: id });
+    if (!collection) {
+      return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
+    }
+
+    // Build book filter
+    const filter: Record<string, unknown> = {
+      collections: id,
+      status: { $ne: 'deleted' },
+    };
+    if (language) filter.language = language;
+
+    // Sort
+    const sortMap: Record<string, Record<string, 1 | -1>> = {
+      year_asc: { year: 1, title: 1 },
+      year_desc: { year: -1, title: 1 },
+      title: { title: 1 },
+      recent: { created_at: -1 },
+    };
+    const sortObj = sortMap[sort] || sortMap.year_asc;
+
+    const projection = {
+      _id: 0, id: 1, title: 1, display_title: 1, author: 1, year: 1,
+      language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+      photo: 1, categories: 1, thumbnail: 1, published: 1,
+    };
+
+    const [books, total] = await Promise.all([
+      db.collection('books')
+        .find(filter, { projection })
+        .sort(sortObj)
+        .skip(offset)
+        .limit(limit)
+        .toArray(),
+      db.collection('books').countDocuments(filter),
+    ]);
+
+    const { _id, ...collectionClean } = collection;
+
+    return NextResponse.json({
+      collection: collectionClean,
+      books,
+      total,
+      limit,
+      offset,
+    });
   } catch (error) {
-    console.error(`Error loading collection ${id}:`, error);
+    console.error('Collection detail error:', error);
     return NextResponse.json(
-      { error: 'Collection not found' },
-      { status: 404 }
+      { error: 'Failed to fetch collection' },
+      { status: 500 }
     );
   }
 }
