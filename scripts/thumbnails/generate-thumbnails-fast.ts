@@ -31,7 +31,7 @@ if (!BLOB_TOKEN) { console.error('Missing BLOB_READ_WRITE_TOKEN'); process.exit(
 
 function getImageUrl(page: any): string | null {
   if (page.crop && page.cropped_photo) return page.cropped_photo;
-  if (page.archived_photo) return page.archived_photo;
+  if (page.archived_photo && page.archived_photo.startsWith('https://')) return page.archived_photo;
   const url = page.photo_original || page.photo;
   return url || null;
 }
@@ -156,7 +156,7 @@ async function main() {
     photo: { $exists: true, $nin: [null, ''] },
   };
   if (ARCHIVED_ONLY) {
-    query.archived_photo = { $exists: true, $ne: null };
+    query.archived_photo = { $regex: /^https:\/\// };
   }
   if (BOOK_ID) query.book_id = BOOK_ID;
 
