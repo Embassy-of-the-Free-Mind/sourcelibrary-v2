@@ -20,7 +20,10 @@ Dublin Core: `dublin_core.dc_source`, `dublin_core.dc_identifier`.
 ## Image Extraction
 Extract illustrations with AI metadata (bounding boxes, quality scores, museum descriptions).
 ```bash
-node scripts/evaluate-extraction.mjs BOOK_ID
+# Via Lambda workers (production)
+curl -X POST https://sourcelibrary.org/api/jobs/queue-books \
+  -H "Content-Type: application/json" \
+  -d '{"bookIds":["BOOK_ID"], "action":"image_extraction"}'
 ```
 - Gallery: https://sourcelibrary.org/gallery?book=BOOK_ID
 - Cost: ~$0.0003/page, ~$0.10-0.25 for a 300-800 page book

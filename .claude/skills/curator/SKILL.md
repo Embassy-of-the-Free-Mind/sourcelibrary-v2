@@ -332,21 +332,7 @@ curl -s "https://archive.org/advancedsearch.php?q=creator:(Paracelsus)+mediatype
 - National Library of Israel: search at https://www.nli.org.il/ (use generic IIIF import)
 - Polona (Poland): search at https://polona.pl/ (use generic IIIF import)
 - e-codices (Swiss MSS): search at https://e-codices.unifr.ch/ (use generic IIIF import)
-- Biblissima (aggregator): search at https://iiif.biblissima.fr/collections/
-
-```bash
-# Biblissima IIIF aggregator — 40+ European libraries, pre-1800 MSS
-# Returns manifest URLs ready for /api/import/iiif
-curl -s "https://sourcelibrary.org/api/search/biblissima?q=hermetica&language=Latin" | jq '.results[] | {title, manifest_url, library, date, detected_provider}'
-
-# Filter by language, collection, library, location
-curl -s "https://sourcelibrary.org/api/search/biblissima?q=plato&language=Greek&limit=40" | jq '.total, (.results[] | {title, manifest_url, library})'
-
-# Import a result via generic IIIF
-curl -s -X POST "https://sourcelibrary.org/api/import/iiif" \
-  -H "Content-Type: application/json" \
-  -d '{"manifest_url": "URL_FROM_RESULT", "title": "...", "author": "...", "language": "Latin", "provider": "Biblissima/Bodleian"}'
-```
+- Biblissima (aggregator): browse at https://iiif.biblissima.fr/collections/ — find IIIF manifests, then import via `/api/import/iiif`
 
 **Greek manuscript search patterns:**
 - Vatican DigiVatLib: browse `https://digi.vatlib.it/mss/Vat.gr` or search `site:digi.vatlib.it "Author Name"`

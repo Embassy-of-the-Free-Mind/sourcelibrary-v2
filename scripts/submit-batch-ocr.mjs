@@ -117,6 +117,16 @@ async function main() {
       console.log(`OK (${pages}pp, ${batches} batch${batches > 1 ? 'es' : ''})`);
       submitted++;
       pagesSubmitted += (typeof pages === 'number' ? pages : book.pages_count || 0);
+
+      // Advance pipeline status so we don't re-submit this book
+      await db.collection('books').updateOne(
+        { id },
+        { $set: {
+          'pipeline_auto.status': 'ocr_submitted',
+          'pipeline_auto.last_updated': new Date(),
+          'pipeline_auto.ocr_job_name': d.jobName || d.parentJobId || null,
+        }},
+      );
     } else {
       const msg = result.data?.message || result.data?.error || JSON.stringify(result.data).slice(0, 150);
 
