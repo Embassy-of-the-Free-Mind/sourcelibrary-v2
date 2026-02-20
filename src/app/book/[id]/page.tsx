@@ -386,7 +386,7 @@ async function BookInfo({ id }: { id: string }) {
                     className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
                   >
                     <Images className="w-4 h-4" />
-                    Gallery
+                    {imageCount > 0 ? `${imageCount} images` : 'Gallery'}
                   </Link>
                   <DownloadButton
                     bookId={book.id}

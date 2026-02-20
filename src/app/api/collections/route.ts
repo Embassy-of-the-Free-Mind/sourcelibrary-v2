@@ -46,13 +46,34 @@ export async function GET() {
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json();
-    const { slug, ...updates } = body;
+    const { slug, addBookIds, ...updates } = body;
 
     if (!slug) {
       return NextResponse.json({ error: 'slug is required' }, { status: 400 });
     }
 
     const db = await getDb();
+
+    // Tag new books with this collection slug
+    let booksTagged = 0;
+    if (addBookIds?.length) {
+      const bookObjectIds = addBookIds.map((id: string) => {
+        try { return new ObjectId(id); } catch { return null; }
+      }).filter(Boolean);
+
+      const tagResult = await db.collection('books').updateMany(
+        { $or: [{ _id: { $in: bookObjectIds } }, { id: { $in: addBookIds } }] },
+        { $addToSet: { collections: slug } }
+      );
+      booksTagged = tagResult.modifiedCount;
+
+      // Update book_count on collection
+      const bookCount = await db.collection('books').countDocuments({
+        collections: slug, status: { $ne: 'deleted' }
+      });
+      updates.book_count = bookCount;
+    }
+
     const result = await db.collection('collections').findOneAndUpdate(
       { slug },
       { $set: { ...updates, updated_at: new Date() } },
@@ -63,7 +84,7 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: `Collection "${slug}" not found` }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, collection: result });
+    return NextResponse.json({ success: true, collection: result, books_tagged: booksTagged });
   } catch (error) {
     console.error('Collection update error:', error);
     return NextResponse.json(

@@ -33,7 +33,8 @@ import {
   Move,
   Crop,
   Save,
-  RotateCw
+  RotateCw,
+  Images
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -328,7 +329,7 @@ export default function ImageDetailPage({
             className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            <span className="hidden sm:inline">Gallery</span>
+            <span className="hidden sm:inline">All images</span>
           </Link>
 
           <div className="flex items-center gap-2">
@@ -1010,9 +1011,10 @@ export default function ImageDetailPage({
                 </Link>
                 <Link
                   href="/gallery"
-                  className="block text-center py-2 px-4 bg-stone-800 hover:bg-stone-700 rounded-lg text-sm transition-colors"
+                  className="flex items-center justify-center gap-2 py-2 px-4 bg-amber-900/30 hover:bg-amber-900/50 text-amber-200 rounded-lg text-sm transition-colors border border-amber-800/30"
                 >
-                  Explore all images
+                  <Images className="w-4 h-4" />
+                  Browse full gallery
                 </Link>
               </div>
 

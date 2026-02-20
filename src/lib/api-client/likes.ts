@@ -34,6 +34,19 @@ export const likes = {
   },
 
   /**
+   * Get all likes for a visitor, optionally filtered by type
+   */
+  getMine: async <T = unknown>(params: {
+    type?: LikeTargetType;
+    visitorId: string;
+  }): Promise<{ items: T[] }> => {
+    const queryParams = new URLSearchParams();
+    queryParams.append('visitor_id', params.visitorId);
+    if (params.type) queryParams.append('type', params.type);
+    return await apiClient.get(`/api/likes/mine?${queryParams.toString()}`);
+  },
+
+  /**
    * Get like status for multiple targets (batch)
    */
   getStatus: async (targetsKey: string, visitorId?: string): Promise<{

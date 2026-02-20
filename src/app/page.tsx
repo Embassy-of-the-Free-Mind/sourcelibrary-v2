@@ -1,35 +1,15 @@
 import { Suspense } from 'react';
 import { getDb } from '@/lib/mongodb';
 import HeroSection from '@/components/layout/HeroSection';
-import BookLibrary from '@/components/book/BookLibrary';
+import BookLibrary, { type CollectionForGrid } from '@/components/book/BookLibrary';
 import BookLibrarySkeleton from '@/components/book/BookLibrarySkeleton';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import SocietyLandingPage from '@/components/layout/SocietyLandingPage';
 import { Book } from '@/lib/types';
-import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 import { getSiteMode } from '@/lib/site-mode.server';
 
 // ISR: rebuild at most every 2 minutes
 export const revalidate = 120;
-
-// Featured topics to show on home page (curated order)
-const FEATURED_TOPIC_IDS = [
-  'alchemy',
-  'hermeticism',
-  'neoplatonism',
-  'natural-philosophy',
-  'renaissance',
-  'florentine-platonism',
-  'mysticism',
-  'theology',
-  'theosophy',
-  'christian-mysticism',
-  'natural-magic',
-  'jewish-kabbalah',
-  'rosicrucianism',
-  'astrology',
-  'medicine',
-];
 
 const INITIAL_SERVER_LIMIT = 100;
 
@@ -131,41 +111,29 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
   }
 }
 
-async function getFeaturedTopics(): Promise<CategoryWithCount[]> {
+async function getCollections(): Promise<CollectionForGrid[]> {
   try {
     const db = await getDb();
-
-    const categoryCounts = await db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true } } },
-      { $unwind: '$categories' },
-      { $group: { _id: '$categories', count: { $sum: 1 } } },
-    ]).toArray();
-
-    const countMap = new Map<string, number>();
-    for (const item of categoryCounts) {
-      countMap.set(item._id as string, item.count as number);
-    }
-
-    return FEATURED_TOPIC_IDS
-      .map(id => {
-        const cat = LIBRARY_CATEGORIES.find(c => c.id === id);
-        if (!cat) return null;
-        return {
-          ...cat,
-          book_count: countMap.get(id) || 0,
-        };
-      })
-      .filter((cat): cat is CategoryWithCount => cat !== null && cat.book_count > 0);
+    const docs = await db.collection('collections').find({}).sort({ order: 1 }).toArray();
+    return JSON.parse(JSON.stringify(docs.map(({ _id, ...rest }) => ({
+      slug: rest.slug,
+      name: rest.name,
+      subtitle: rest.subtitle || '',
+      description: rest.description || '',
+      book_count: rest.book_count || 0,
+      featured_images: rest.featured_images || [],
+      languages: rest.languages || [],
+    })))) as CollectionForGrid[];
   } catch (error) {
-    console.error('Error fetching topics:', error);
+    console.error('Error fetching collections:', error);
     return [];
   }
 }
 
 async function LibrarySection() {
-  const [{ books, totalBooks, translatedCount }, featuredTopics] = await Promise.all([
+  const [{ books, totalBooks, translatedCount }, collections] = await Promise.all([
     getBooks(),
-    getFeaturedTopics(),
+    getCollections(),
   ]);
 
   const languages = [...new Set(books.map(b => b.language))].filter(Boolean) as string[];
@@ -177,7 +145,7 @@ async function LibrarySection() {
         initialBooks={books}
         totalBooks={totalBooks}
         languages={languages}
-        featuredTopics={featuredTopics}
+        collections={collections}
       />
     </>
   );
@@ -198,14 +166,6 @@ export default async function HomePage() {
       {/* Library Section */}
       <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
-          {/* Section Header */}
-          <div className="mb-8">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
-              Freshly Digitised & Translated Texts
-            </h2>
-          </div>
-
-          {/* Search, Filter & Book Grid */}
           <Suspense fallback={<BookLibrarySkeleton />}>
             <LibrarySection />
           </Suspense>

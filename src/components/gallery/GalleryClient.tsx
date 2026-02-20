@@ -321,14 +321,22 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
         {(data?.bookInfo || typeFilter || subjectFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {data?.bookInfo && (
-              <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-800 rounded-full">
-                <BookOpen className="w-4 h-4" />
-                <span className="text-sm font-medium">{data.bookInfo.title}</span>
-                {data.bookInfo.year && <span className="text-xs">({data.bookInfo.year})</span>}
-                <button onClick={clearBookFilter} className="ml-1 hover:text-amber-600">
-                  <X className="w-4 h-4" />
+              <>
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-800 rounded-full">
+                  <BookOpen className="w-4 h-4" />
+                  <span className="text-sm font-medium">{data.bookInfo.title}</span>
+                  {data.bookInfo.year && <span className="text-xs">({data.bookInfo.year})</span>}
+                  <button onClick={clearBookFilter} className="ml-1 hover:text-amber-600" title="Clear filter">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <button
+                  onClick={clearBookFilter}
+                  className="text-sm text-stone-500 hover:text-stone-700 underline underline-offset-2 transition-colors"
+                >
+                  View all images
                 </button>
-              </div>
+              </>
             )}
             {typeFilter && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">

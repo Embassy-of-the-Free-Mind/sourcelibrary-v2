@@ -2,25 +2,36 @@
 
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
 
-import { Search, Loader2, ExternalLink, BookOpen, Plus, Check } from 'lucide-react';
+import { Search, Loader2, ExternalLink, BookOpen, Plus, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
 
-interface FeaturedTopic {
-  id: string;
+interface CollectionInfo {
+  slug: string;
   name: string;
-  icon: string;
+  subtitle: string;
+  description: string;
   book_count: number;
+}
+
+export interface CollectionForGrid {
+  slug: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  book_count: number;
+  featured_images?: Array<{ thumbnail_url?: string; extracted_url?: string; image_url?: string }>;
+  languages?: Array<{ lang: string; count: number }>;
 }
 
 interface BookLibraryProps {
   initialBooks: Book[];
   totalBooks: number;
   languages: string[];
-  featuredTopics?: FeaturedTopic[];
+  collections?: CollectionForGrid[];
 }
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
@@ -28,14 +39,19 @@ type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 const DISPLAY_INCREMENT = 50;
 const API_PAGE_SIZE = 100;
 
-export default function BookLibrary({ initialBooks, totalBooks, languages, featuredTopics = [] }: BookLibraryProps) {
+export default function BookLibrary({ initialBooks, totalBooks, languages, collections = [] }: BookLibraryProps) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCollection, setSelectedCollection] = useState('');
+  const [collectionInfo, setCollectionInfo] = useState<CollectionInfo | null>(null);
+  const [introExpanded, setIntroExpanded] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
   const [displayLimit, setDisplayLimit] = useState(DISPLAY_INCREMENT);
+  const [browseAll, setBrowseAll] = useState(false);
 
   // API-fetched books state
   const [apiBooks, setApiBooks] = useState<Book[] | null>(null); // null = using initialBooks
@@ -43,8 +59,29 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
 
+  // Read collection from URL params on mount
+  useEffect(() => {
+    const col = searchParams.get('collection');
+    if (col && col !== selectedCollection) {
+      setSelectedCollection(col);
+      setIntroExpanded(false);
+      fetch(`/api/collections`)
+        .then(r => r.json())
+        .then(data => {
+          const match = data.collections?.find((c: { slug: string }) => c.slug === col);
+          if (match) setCollectionInfo({ slug: match.slug, name: match.name, subtitle: match.subtitle, description: match.description, book_count: match.book_count });
+          else setCollectionInfo({ slug: col, name: col.replace(/-/g, ' ').replace(/\b\w/g, (ch: string) => ch.toUpperCase()), subtitle: '', description: '', book_count: 0 });
+        })
+        .catch(() => setCollectionInfo(null));
+    } else if (!col && selectedCollection) {
+      setSelectedCollection('');
+      setCollectionInfo(null);
+    }
+  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
+
   // Track whether we're in "browse" mode (no filters) or "search/filter" mode
-  const isFiltered = searchQuery.trim() !== '' || selectedLanguage !== '' || selectedCategory !== '' || sortBy !== 'recent-translation';
+  const isFiltered = searchQuery.trim() !== '' || selectedLanguage !== '' || selectedCategory !== '' || selectedCollection !== '' || sortBy !== 'recent-translation';
+  const showCollections = !isFiltered && !selectedCollection && !browseAll && collections.length > 0;
 
   // The books we're working with
   const allLoadedBooks = apiBooks ?? initialBooks;
@@ -69,11 +106,12 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
     search?: string;
     language?: string;
     category?: string;
+    collection?: string;
     sort?: SortOption;
     skip?: number;
     append?: boolean;
   }) => {
-    const { search = '', language = '', category = '', sort = 'recent-translation', skip = 0, append = false } = params;
+    const { search = '', language = '', category = '', collection = '', sort = 'recent-translation', skip = 0, append = false } = params;
 
     // Cancel previous request
     abortRef.current?.abort();
@@ -93,6 +131,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
       if (search) qs.set('search', search);
       if (language) qs.set('language', language);
       if (category) qs.set('category', category);
+      if (collection) qs.set('collection', collection);
       qs.set('sort', sort);
 
       const res = await fetch(`/api/books/library?${qs}`, { signal: controller.signal });
@@ -138,6 +177,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
         search: searchQuery.trim(),
         language: selectedLanguage,
         category: selectedCategory,
+        collection: selectedCollection,
         sort: sortBy,
       });
     }, 300);
@@ -145,7 +185,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [searchQuery, selectedLanguage, selectedCategory, sortBy, isFiltered, totalBooks, fetchBooks]);
+  }, [searchQuery, selectedLanguage, selectedCategory, selectedCollection, sortBy, isFiltered, totalBooks, fetchBooks]);
 
   // For default browse, do client-side filtering on initialBooks (instant)
   const filteredBrowseBooks = useMemo(() => {
@@ -176,6 +216,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
         search: searchQuery.trim(),
         language: selectedLanguage,
         category: selectedCategory,
+        collection: selectedCollection,
         sort: sortBy,
         skip: allLoadedBooks.length,
         append: true,
@@ -274,6 +315,41 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
 
   return (
     <>
+      {/* Back to collections */}
+      {(browseAll || selectedCollection) && collections.length > 0 && (
+        <button
+          onClick={() => {
+            if (selectedCollection) {
+              setSelectedCollection('');
+              setCollectionInfo(null);
+              setIntroExpanded(false);
+              const url = new URL(window.location.href);
+              url.searchParams.delete('collection');
+              router.replace(url.pathname + url.search, { scroll: false });
+            }
+            setBrowseAll(false);
+          }}
+          className="inline-flex items-center gap-1.5 text-sm text-stone-500 hover:text-stone-700 transition-colors mb-4"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          All collections
+        </button>
+      )}
+
+      {/* Section Heading */}
+      <div className="mb-8">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+          {showCollections ? 'Explore the Library' : 'Library'}
+        </h2>
+        {showCollections && (
+          <p className="text-stone-500 mt-2">
+            {totalBooks.toLocaleString()} texts across {collections.length} collections
+          </p>
+        )}
+      </div>
+
       {/* Search & Filter Bar */}
       <div className="flex flex-col lg:flex-row gap-4 mb-8">
         {/* Search Input with Button */}
@@ -371,37 +447,133 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
         </div>
       </div>
 
-      {/* Topic Chips */}
-      {featuredTopics.length > 0 && (
-        <div className="mb-6">
-          <div className="flex flex-wrap gap-2">
+      {showCollections ? (
+        <>
+          {/* Collections Grid */}
+          <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {collections.map((col) => {
+              const hero = col.featured_images?.find(
+                img => img.thumbnail_url || img.extracted_url || img.image_url
+              );
+              const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
+              const topLangs = (col.languages || []).slice(0, 3).map(l => l.lang).join(', ');
+              return (
+                <button
+                  key={col.slug}
+                  onClick={() => {
+                    setSelectedCollection(col.slug);
+                    setCollectionInfo({
+                      slug: col.slug,
+                      name: col.name,
+                      subtitle: col.subtitle,
+                      description: col.description,
+                      book_count: col.book_count,
+                    });
+                    setIntroExpanded(false);
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('collection', col.slug);
+                    if (!url.hash) url.hash = 'library';
+                    router.replace(url.pathname + url.search + url.hash, { scroll: false });
+                  }}
+                  className="group relative block overflow-hidden rounded-lg aspect-[4/3] text-left"
+                >
+                  {heroUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={heroUrl}
+                      alt={`Illustration from ${col.name}`}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-warm" />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.4)] to-transparent" />
+                  <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
+                        {col.book_count.toLocaleString()} books
+                      </span>
+                      {topLangs && (
+                        <span className="text-xs text-white/50">{topLangs}</span>
+                      )}
+                    </div>
+                    <h3 className="font-serif text-xl sm:text-2xl text-white font-semibold leading-tight">
+                      {col.name}
+                    </h3>
+                    {col.subtitle && (
+                      <p className="mt-1 text-sm text-white/70 line-clamp-2 leading-snug">
+                        {col.subtitle}
+                      </p>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Browse all link */}
+          <div className="mt-8 text-center">
             <button
-              onClick={() => setSelectedCategory('')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                selectedCategory === ''
-                  ? 'bg-stone-900 text-white shadow-sm'
-                  : 'bg-white text-stone-600 border border-stone-200 hover:border-stone-300 hover:bg-stone-50'
-              }`}
+              onClick={() => setBrowseAll(true)}
+              className="inline-flex items-center gap-2 text-sm text-stone-500 hover:text-stone-700 transition-colors"
             >
-              All Topics
+              Browse all {totalBooks.toLocaleString()} books
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
             </button>
-            {featuredTopics.map(topic => (
-              <button
-                key={topic.id}
-                onClick={() => setSelectedCategory(selectedCategory === topic.id ? '' : topic.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  selectedCategory === topic.id
-                    ? 'bg-amber-600 text-white shadow-sm'
-                    : 'bg-white text-stone-600 border border-stone-200 hover:border-amber-300 hover:bg-amber-50'
-                }`}
-              >
-                {topic.name}
-                <span className="ml-1.5 text-xs opacity-70">({topic.book_count})</span>
-              </button>
-            ))}
+          </div>
+        </>
+      ) : (
+        <>
+      {/* Active Collection Intro */}
+      {selectedCollection && collectionInfo && (
+        <div className="mb-8 bg-white border border-stone-200 rounded-xl p-5 sm:p-6">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3 mb-1">
+                <h3 className="text-xl sm:text-2xl font-serif font-semibold text-stone-900">
+                  {collectionInfo.name}
+                </h3>
+                <button
+                  onClick={() => {
+                    setSelectedCollection('');
+                    setCollectionInfo(null);
+                    setIntroExpanded(false);
+                    setBrowseAll(false);
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('collection');
+                    router.replace(url.pathname + url.search, { scroll: false });
+                  }}
+                  className="shrink-0 p-1 rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-100 transition-colors"
+                  title="Clear collection filter"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              {collectionInfo.subtitle && (
+                <p className="text-sm text-stone-500 mb-2">{collectionInfo.subtitle}</p>
+              )}
+              {collectionInfo.description && (
+                <div>
+                  <p className={`text-sm text-stone-600 leading-relaxed ${!introExpanded ? 'line-clamp-2' : ''}`}>
+                    {collectionInfo.description}
+                  </p>
+                  {collectionInfo.description.length > 150 && (
+                    <button
+                      onClick={() => setIntroExpanded(!introExpanded)}
+                      className="mt-1 flex items-center gap-1 text-xs text-stone-400 hover:text-stone-600 transition-colors"
+                    >
+                      {introExpanded ? (<>Less <ChevronUp className="w-3 h-3" /></>) : (<>More <ChevronDown className="w-3 h-3" /></>)}
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
+
 
       {/* Book Count */}
       <div className="mb-8 text-stone-700">
@@ -418,7 +590,12 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
             {selectedLanguage && <span className="text-stone-500"> in {selectedLanguage}</span>}
             {selectedCategory && (
               <span className="text-stone-500">
-                {' '}in {featuredTopics.find(t => t.id === selectedCategory)?.name || selectedCategory}
+                {' '}in {selectedCategory}
+              </span>
+            )}
+            {selectedCollection && (
+              <span className="text-stone-500">
+                {' '}in {collectionInfo?.name || selectedCollection}
               </span>
             )}
           </>
@@ -675,6 +852,8 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, featu
             </div>
           )}
         </div>
+      )}
+        </>
       )}
     </>
   );

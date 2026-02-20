@@ -62,7 +62,7 @@ export default async function CollectionsPage() {
           return (
             <Link
               key={col.slug}
-              href={`/collections/${col.slug}`}
+              href={`/?collection=${col.slug}#library`}
               className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
             >
               {/* Hero image */}

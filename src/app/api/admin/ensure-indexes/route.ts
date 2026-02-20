@@ -214,6 +214,36 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Books - recently translated sort (homepage, library default sort)
+    // Query: { hidden: { $ne: true }, pages_translated: { $gt: 0 }, last_translation_at: { $exists: true } }
+    try {
+      await db.collection('books').createIndex(
+        { last_translation_at: -1 },
+        { name: 'books_last_translation_idx', background: true, sparse: true }
+      );
+      results['books.books_last_translation_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_last_translation_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - translated book count (homepage stat)
+    // Query: { hidden: { $ne: true }, pages_translated: { $gt: 0 } }
+    try {
+      await db.collection('books').createIndex(
+        { pages_translated: 1, hidden: 1 },
+        { name: 'books_translated_hidden_idx', background: true }
+      );
+      results['books.books_translated_hidden_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_translated_hidden_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Books - year filtering (gallery year range queries)
     try {
       await db.collection('books').createIndex(

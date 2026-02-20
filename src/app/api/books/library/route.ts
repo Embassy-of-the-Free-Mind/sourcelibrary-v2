@@ -6,6 +6,36 @@ export const dynamic = 'force-dynamic';
 const MAX_LIMIT = 200;
 const DEFAULT_LIMIT = 100;
 
+// Cache for the default (unfiltered, first page) library request
+let defaultViewCache: { data: string; timestamp: number } | null = null;
+const DEFAULT_CACHE_TTL = 60_000; // 1 minute
+
+// LRU cache for diacritics regex patterns (avoids rebuilding on every search)
+const diacriticCache = new Map<string, string>();
+const DIACRITICS_CACHE_MAX = 200;
+
+function buildDiacriticPattern(search: string): string {
+  const cached = diacriticCache.get(search);
+  if (cached) return cached;
+
+  const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = escaped.replace(/[a-zA-Z]/g, (ch) => {
+    const map: Record<string, string> = {
+      a: '[aàáâãäåæ]', e: '[eèéêë]', i: '[iìíîï]', o: '[oòóôõöø]',
+      u: '[uùúûü]', n: '[nñ]', c: '[cç]', y: '[yýÿ]', s: '[sß]',
+    };
+    return map[ch.toLowerCase()] || ch;
+  });
+
+  // Evict oldest entry if cache is full
+  if (diacriticCache.size >= DIACRITICS_CACHE_MAX) {
+    const first = diacriticCache.keys().next().value;
+    if (first) diacriticCache.delete(first);
+  }
+  diacriticCache.set(search, pattern);
+  return pattern;
+}
+
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
 function buildSortStage(sort: SortOption) {
@@ -30,7 +60,16 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get('search') || '';
     const language = searchParams.get('language') || '';
     const category = searchParams.get('category') || '';
+    const collection = searchParams.get('collection') || '';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
+
+    // Serve cached response for the default (unfiltered, first page) request
+    const isDefaultView = !search.trim() && !language && !category && !collection && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
+    if (isDefaultView && defaultViewCache && (Date.now() - defaultViewCache.timestamp) < DEFAULT_CACHE_TTL) {
+      return new NextResponse(defaultViewCache.data, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
     const db = await getDb();
 
@@ -41,16 +80,7 @@ export async function GET(request: NextRequest) {
 
     if (search.trim()) {
       // Build diacritic-insensitive regex: "bohme" matches "Böhme"
-      // Replace each base letter with a character class including accented variants
-      const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const diacriticPattern = escaped.replace(/[a-zA-Z]/g, (ch) => {
-        const map: Record<string, string> = {
-          a: '[aàáâãäåæ]', e: '[eèéêë]', i: '[iìíîï]', o: '[oòóôõöø]',
-          u: '[uùúûü]', n: '[nñ]', c: '[cç]', y: '[yýÿ]', s: '[sß]',
-        };
-        return map[ch.toLowerCase()] || ch;
-      });
-      const searchRegex = { $regex: diacriticPattern, $options: 'i' };
+      const searchRegex = { $regex: buildDiacriticPattern(search), $options: 'i' };
       matchConditions.push({
         $or: [
           { title: searchRegex },
@@ -68,6 +98,10 @@ export async function GET(request: NextRequest) {
 
     if (category) {
       matchConditions.push({ categories: category });
+    }
+
+    if (collection) {
+      matchConditions.push({ collections: collection });
     }
 
     const matchStage = matchConditions.length > 0
@@ -183,7 +217,16 @@ export async function GET(request: NextRequest) {
     const books = result.books || [];
     const total = result.total[0]?.count || 0;
 
-    return NextResponse.json({ books, total });
+    const responseData = JSON.stringify({ books, total });
+
+    // Cache the default view
+    if (isDefaultView) {
+      defaultViewCache = { data: responseData, timestamp: Date.now() };
+    }
+
+    return new NextResponse(responseData, {
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Error in /api/books/library:', error);
     return NextResponse.json(
