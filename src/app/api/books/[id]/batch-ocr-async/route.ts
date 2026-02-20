@@ -24,7 +24,25 @@ export const maxDuration = 300;
  * GET /api/books/[id]/batch-ocr-async?jobName=xxx - Check job status
  */
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY || '' });
+const DEFAULT_API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY || '';
+
+// All available batch API keys for rotation
+const BATCH_API_KEYS = [
+  process.env.GEMINI_API_KEY_TIER3,
+  process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY,
+].filter((k): k is string => !!k);
+// Deduplicate
+const UNIQUE_BATCH_KEYS = [...new Set(BATCH_API_KEYS)];
+
+function getAiClient(keyIndex?: number): GoogleGenAI {
+  if (keyIndex !== undefined && keyIndex >= 0 && keyIndex < UNIQUE_BATCH_KEYS.length) {
+    return new GoogleGenAI({ apiKey: UNIQUE_BATCH_KEYS[keyIndex] });
+  }
+  return new GoogleGenAI({ apiKey: DEFAULT_API_KEY });
+}
+
+const ai = new GoogleGenAI({ apiKey: DEFAULT_API_KEY });
 
 // Max pages per Gemini batch job (inline payload size limit ~20MB)
 const MAX_PAGES_PER_BATCH = 20;
@@ -82,11 +100,15 @@ export const POST = withAuth(async (request, session, context) => {
     const { id: bookId } = await context.params;
     const body = await request.json().catch(() => ({}));
     const {
-      limit = 10,
+      limit = 500,
       model = 'gemini-3-flash-preview',
       force = false, // When true, include pages that already have OCR (for re-processing)
       pagesPerRequest = 1, // >1 enables multi-page mode: N images per Gemini request (saves quota)
+      apiKeyIndex, // Optional: rotate between available API keys (0, 1, 2)
     } = body;
+
+    // Use key-specific client if requested (for quota rotation)
+    const batchAi = apiKeyIndex !== undefined ? getAiClient(apiKeyIndex) : ai;
 
     const db = await getDb();
 
@@ -271,7 +293,7 @@ export const POST = withAuth(async (request, session, context) => {
 
     // For single batch, submit directly (backwards compatible — no parent needed)
     if (batches.length === 1) {
-      const batchJob = await ai.batches.create({
+      const batchJob = await batchAi.batches.create({
         model,
         src: batches[0].map(r => ({
           ...r.request,
@@ -355,7 +377,7 @@ export const POST = withAuth(async (request, session, context) => {
       const batchPageIds = batch.flatMap(r => r.pageIds);
       const childJobId = nanoid();
 
-      const batchJob = await ai.batches.create({
+      const batchJob = await batchAi.batches.create({
         model,
         src: batch.map(r => ({
           ...r.request,

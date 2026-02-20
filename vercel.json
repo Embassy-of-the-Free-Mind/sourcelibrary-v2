@@ -1,40 +1,12 @@
 {
   "crons": [
     {
-      "path": "/api/cron/archive-ocr",
-      "schedule": "0 */4 * * *"
-    },
-    {
       "path": "/api/cron/social-post",
       "schedule": "0 * * * *"
     },
     {
       "path": "/api/cron/social-reset",
       "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/cron/process-batches",
-      "schedule": "*/30 * * * *"
-    },
-    {
-      "path": "/api/cron/sync-page-counts",
-      "schedule": "0 */6 * * *"
-    },
-    {
-      "path": "/api/cron/post-import-pipeline",
-      "schedule": "*/10 * * * *"
-    },
-    {
-      "path": "/api/cron/submit-batch-ocr",
-      "schedule": "0 3 * * *"
-    },
-    {
-      "path": "/api/cron/submit-ocr",
-      "schedule": "*/10 * * * *"
-    },
-    {
-      "path": "/api/cron/sync-gallery-images",
-      "schedule": "0 */6 * * *"
     }
   ]
 }

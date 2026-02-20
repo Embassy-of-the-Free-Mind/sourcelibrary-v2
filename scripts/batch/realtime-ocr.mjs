@@ -282,12 +282,16 @@ async function processPage(page, promptText, db) {
 }
 
 // --- Concurrent processor ---
-async function processBatch(pages, promptText, db) {
+async function processBatch(pages, promptText, db, runId) {
   let completed = 0, failed = 0, skipped = 0;
   let totalTokens = 0;
   let consecutiveErrors = 0;
   const startTime = Date.now();
-  const bookPages = {};
+  const bookPages = {}; // bookId -> { success: N, failed: N }
+
+  // Build page-to-book mapping for accurate tracking
+  const pageBookMap = {};
+  for (const p of pages) pageBookMap[p.id] = p.book_id;
 
   for (let i = 0; i < pages.length; i += CONCURRENCY) {
     if (consecutiveErrors >= 20) {
@@ -300,17 +304,26 @@ async function processBatch(pages, promptText, db) {
       chunk.map(page => processPage(page, promptText, db))
     );
 
-    for (const r of results) {
+    for (let j = 0; j < results.length; j++) {
+      const r = results[j];
+      const pageId = chunk[j]?.id;
+      const bid = pageBookMap[pageId];
+
       if (r.status === 'rejected') { failed++; consecutiveErrors++; continue; }
       const result = r.value;
       if (result.status === 'success') {
         completed++; consecutiveErrors = 0;
         totalTokens += result.tokens || 0;
-        // Track per-book counts for final update
-        const bid = pages[i]?.book_id;
-        if (bid) bookPages[bid] = (bookPages[bid] || 0) + 1;
+        if (bid) {
+          if (!bookPages[bid]) bookPages[bid] = { success: 0, failed: 0 };
+          bookPages[bid].success++;
+        }
       } else if (result.status === 'error') {
         failed++;
+        if (bid) {
+          if (!bookPages[bid]) bookPages[bid] = { success: 0, failed: 0 };
+          bookPages[bid].failed++;
+        }
         if (result.httpStatus === 429) {
           consecutiveErrors++;
           console.log(`\n  Rate limited (${result.key}). Waiting 30s...`);
@@ -330,24 +343,48 @@ async function processBatch(pages, promptText, db) {
     process.stdout.write(
       `\r  ${completed + failed + skipped}/${pages.length} | ${completed} ok ${failed} err ${skipped} skip | ${pagesPerMin} p/min | ETA ${eta}min`
     );
+
+    // Periodic run record update (every 500 pages)
+    if (runId && (completed + failed + skipped) % 500 < CONCURRENCY) {
+      db.collection('jobs').updateOne(
+        { id: runId },
+        { $set: { progress: { completed, failed, skipped, total: pages.length }, updated_at: new Date() } }
+      ).catch(() => {});
+    }
   }
 
   console.log('');
 
-  // Update book page counts
-  for (const [bookId, count] of Object.entries(bookPages)) {
+  // Update book page counts and advance pipeline status
+  let booksCompleted = 0;
+  for (const [bookId, counts] of Object.entries(bookPages)) {
     try {
       const ocrCount = await db.collection('pages').countDocuments({
         book_id: bookId, 'ocr.data': { $exists: true, $ne: '' }
       });
-      await db.collection('books').updateOne(
-        { id: bookId },
-        { $set: { pages_ocr: ocrCount, updated_at: new Date() } }
-      );
-    } catch (e) { /* non-critical */ }
+      const totalPages = await db.collection('pages').countDocuments({ book_id: bookId });
+      const ocrPercent = totalPages > 0 ? Math.round(ocrCount / totalPages * 100) : 0;
+
+      const bookUpdate = { pages_ocr: ocrCount, updated_at: new Date() };
+
+      // If book is fully OCR'd (>= 95%), advance pipeline to ocr_complete
+      if (ocrPercent >= 95) {
+        bookUpdate['pipeline_auto.status'] = 'ocr_complete';
+        bookUpdate['pipeline_auto.last_updated'] = new Date();
+        booksCompleted++;
+      }
+
+      await db.collection('books').updateOne({ id: bookId }, { $set: bookUpdate });
+    } catch (e) {
+      console.error(`  Failed to update book ${bookId}:`, e.message);
+    }
   }
 
-  return { completed, failed, skipped, totalTokens, elapsed: Date.now() - startTime, booksUpdated: Object.keys(bookPages).length };
+  if (booksCompleted > 0) {
+    console.log(`  Advanced ${booksCompleted} books to ocr_complete`);
+  }
+
+  return { completed, failed, skipped, totalTokens, elapsed: Date.now() - startTime, booksUpdated: Object.keys(bookPages).length, booksCompleted };
 }
 
 // --- Main ---
@@ -469,15 +506,57 @@ async function main() {
       return;
     }
 
+    // --- Create run tracking record ---
+    const { nanoid } = await import('nanoid');
+    const runId = nanoid();
+    const uniqueBookIds = [...new Set(pages.map(p => p.book_id))];
+    await db.collection('jobs').insertOne({
+      id: runId,
+      type: 'realtime_ocr',
+      status: 'processing',
+      source: 'scripts/realtime-ocr.mjs',
+      config: {
+        mode: targetMode,
+        concurrency: CONCURRENCY,
+        pipeline_status: PIPELINE_STATUS,
+        provider: PROVIDER,
+        total_eligible: totalEligible,
+      },
+      book_ids: uniqueBookIds,
+      progress: { completed: 0, failed: 0, skipped: 0, total: pages.length },
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+    console.log(`Run ID: ${runId}\n`);
+
     const promptText = await getOcrPrompt(db);
-    const result = await processBatch(pages, promptText, db);
+    const result = await processBatch(pages, promptText, db, runId);
+
+    // --- Finalize run record ---
+    await db.collection('jobs').updateOne(
+      { id: runId },
+      {
+        $set: {
+          status: result.failed > result.completed ? 'completed_with_errors' : 'completed',
+          progress: { completed: result.completed, failed: result.failed, skipped: result.skipped, total: pages.length },
+          total_tokens: result.totalTokens,
+          books_updated: result.booksUpdated,
+          books_completed: result.booksCompleted,
+          elapsed_ms: result.elapsed,
+          completed_at: new Date(),
+          updated_at: new Date(),
+        },
+      }
+    );
 
     console.log(`\n=== Summary ===`);
+    console.log(`Run ID: ${runId}`);
     console.log(`Completed: ${result.completed}`);
     console.log(`Failed: ${result.failed}`);
     console.log(`Skipped: ${result.skipped}`);
     console.log(`Tokens: ${result.totalTokens.toLocaleString()}`);
     console.log(`Books updated: ${result.booksUpdated}`);
+    console.log(`Books advanced to ocr_complete: ${result.booksCompleted}`);
     console.log(`Elapsed: ${(result.elapsed / 1000).toFixed(0)}s`);
     console.log(`Remaining: ${totalEligible - OFFSET - pages.length} pages`);
   } finally {
