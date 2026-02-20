@@ -187,6 +187,7 @@ export async function GET(request: NextRequest) {
       // Move queued books to archiving
       const queuedBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'queued' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1 })
         .limit(ARCHIVE_LIMIT)
         .toArray();
@@ -200,6 +201,7 @@ export async function GET(request: NextRequest) {
       // Check archiving books for completion (pages archived by Hetzner script)
       const archivingBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archiving' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1 })
         .limit(100) // Just DB queries per book — can handle many
         .toArray();
@@ -249,6 +251,7 @@ export async function GET(request: NextRequest) {
 
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(ocrLimit)
         .toArray() : [];
@@ -434,6 +437,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyForMetadata = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
@@ -478,6 +482,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyForTranslate = await db.collection('books')
         .find({ 'pipeline_auto.status': 'metadata_enriched' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray();
@@ -621,6 +626,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyForEnrich = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1 })
         .limit(ENRICH_LIMIT)
         .toArray();
@@ -668,6 +674,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyForChapters = await db.collection('books')
         .find({ 'pipeline_auto.status': 'enriched' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(CHAPTER_LIMIT)
         .toArray();
@@ -718,6 +725,7 @@ export async function GET(request: NextRequest) {
       if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
         const readyForImages = await db.collection('books')
           .find({ 'pipeline_auto.status': 'chapters_complete' })
+          .sort({ hidden: 1 }) // Visible books first
           .project({ id: 1, title: 1 })
           .limit(IMAGE_SUBMIT_LIMIT)
           .toArray();
@@ -849,6 +857,7 @@ export async function GET(request: NextRequest) {
     if (hasTimeBudget(startTime)) {
       const readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
+        .sort({ hidden: 1 }) // Visible books first
         .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
