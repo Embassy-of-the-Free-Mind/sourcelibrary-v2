@@ -678,6 +678,90 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Curator sessions - unique ID
+    try {
+      await db.collection('curator_sessions').createIndex(
+        { id: 1 },
+        { name: 'curator_sessions_id_idx', background: true, unique: true }
+      );
+      results['curator_sessions.curator_sessions_id_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['curator_sessions.curator_sessions_id_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Curator sessions - date sort
+    try {
+      await db.collection('curator_sessions').createIndex(
+        { date: -1 },
+        { name: 'curator_sessions_date_idx', background: true }
+      );
+      results['curator_sessions.curator_sessions_date_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['curator_sessions.curator_sessions_date_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Curator sessions - theme filter
+    try {
+      await db.collection('curator_sessions').createIndex(
+        { themes: 1 },
+        { name: 'curator_sessions_themes_idx', background: true }
+      );
+      results['curator_sessions.curator_sessions_themes_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['curator_sessions.curator_sessions_themes_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Cron runs - per-cron history (cron name + time desc)
+    try {
+      await db.collection('cron_runs').createIndex(
+        { cron: 1, timestamp: -1 },
+        { name: 'cron_runs_cron_ts_idx', background: true }
+      );
+      results['cron_runs.cron_runs_cron_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['cron_runs.cron_runs_cron_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Cron runs - time-range scans (existing query pattern in analytics/pipeline)
+    try {
+      await db.collection('cron_runs').createIndex(
+        { timestamp: -1 },
+        { name: 'cron_runs_ts_idx', background: true }
+      );
+      results['cron_runs.cron_runs_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['cron_runs.cron_runs_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Cron runs - failed run queries
+    try {
+      await db.collection('cron_runs').createIndex(
+        { status: 1, timestamp: -1 },
+        { name: 'cron_runs_status_ts_idx', background: true }
+      );
+      results['cron_runs.cron_runs_status_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['cron_runs.cron_runs_status_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     return NextResponse.json({
       success: true,
       indexes: results
@@ -698,7 +782,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'cron_runs'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {
