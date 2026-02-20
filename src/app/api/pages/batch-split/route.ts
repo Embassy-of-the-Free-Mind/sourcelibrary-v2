@@ -124,7 +124,7 @@ export const POST = withAuth(async (request, session) => {
     // Renumber all pages once at the end
     const allPages = await db.collection('pages')
       .find({ book_id: bookId })
-      .sort({ page_number: 1 })
+      .sort({ page_number: 1, _id: 1 })
       .toArray();
 
     const renumberOps = allPages.map((p, i) => ({

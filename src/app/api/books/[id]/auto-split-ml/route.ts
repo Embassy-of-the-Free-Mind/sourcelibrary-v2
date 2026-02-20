@@ -181,10 +181,11 @@ export const POST = withAuth(async (request, session, context) => {
       newPages.length > 0 ? db.collection('pages').insertMany(newPages) : Promise.resolve()
     ]);
 
-    // Renumber all pages
+    // Renumber all pages - sort by page_number first, then _id to break ties deterministically
+    // (new right-half pages get page_number + 0.5, so they sort after the left half)
     const allPages = await db.collection('pages')
       .find({ book_id: bookId })
-      .sort({ page_number: 1 })
+      .sort({ page_number: 1, _id: 1 })
       .toArray();
 
     const renumberOps = allPages.map((p, i) => ({

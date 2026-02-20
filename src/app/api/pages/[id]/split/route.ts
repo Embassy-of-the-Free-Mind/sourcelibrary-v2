@@ -51,7 +51,7 @@ export const POST = withAuth(async (request, session, context) => {
     // Get all pages for this book to find max page number
     const allPages = await db.collection('pages')
       .find({ book_id: currentPage.book_id })
-      .sort({ page_number: 1 })
+      .sort({ page_number: 1, _id: 1 })
       .toArray();
 
     const currentPageNumber = currentPage.page_number;
@@ -124,7 +124,7 @@ export const POST = withAuth(async (request, session, context) => {
     // Renumber all pages - use bulkWrite for speed
     const updatedPages = await db.collection('pages')
       .find({ book_id: currentPage.book_id })
-      .sort({ page_number: 1 })
+      .sort({ page_number: 1, _id: 1 })
       .toArray();
 
     // Bulk update all page numbers in one operation
