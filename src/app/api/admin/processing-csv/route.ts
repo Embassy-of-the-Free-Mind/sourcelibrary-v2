@@ -4,12 +4,47 @@ import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
+export interface ProcessingRow {
+  book_id: string;
+  title: string;
+  author: string;
+  year: number | string;
+  language: string;
+  source: string;
+  pages: number;
+  ocr_pages: number;
+  translated_pages: number;
+  ocr_pct: number;
+  translate_pct: number;
+  pipeline_status: string;
+  ocr_model: string;
+  ocr_prompt: string;
+  ocr_batch_size: number | string;
+  ocr_batch_status: string;
+  last_ocr_date: string;
+  trans_model: string;
+  trans_prompt: string;
+  trans_source_lang: string;
+  trans_batch_size: number | string;
+  trans_batch_status: string;
+  last_trans_date: string;
+  has_summary: boolean;
+  has_index: boolean;
+  has_chapters: boolean;
+  pipeline_queued: string;
+  pipeline_completed: string;
+  pipeline_last_updated: string;
+  pipeline_error: string;
+  imported_at: string;
+  url: string;
+}
+
 /**
  * GET /api/admin/processing-csv
- * Downloads a CSV spreadsheet of all books with processing status.
- * Open directly in browser or import to Google Sheets.
+ * Returns all books with processing status.
  *
  * Query params:
+ *   ?format=json         — return JSON (default: csv)
  *   ?status=complete     — filter by pipeline_auto.status
  *   ?language=Latin       — filter by language
  *   ?sort=ocr_pct_asc    — sort order (default: title_asc)
@@ -17,6 +52,7 @@ export const maxDuration = 30;
 export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
+    const format = searchParams.get('format') || 'csv';
     const statusFilter = searchParams.get('status') || '';
     const languageFilter = searchParams.get('language') || '';
     const sortParam = searchParams.get('sort') || 'title_asc';
@@ -55,7 +91,6 @@ export const GET = withAuth(async (request, session) => {
         .sort({ created_at: -1 })
         .toArray(),
 
-      // Latest OCR batch job per book (model, prompt, batch size)
       db.collection('batch_jobs').aggregate([
         { $match: { type: 'ocr' } },
         { $sort: { created_at: -1 } },
@@ -70,7 +105,6 @@ export const GET = withAuth(async (request, session) => {
         }},
       ]).toArray(),
 
-      // Latest translation batch job per book
       db.collection('batch_jobs').aggregate([
         { $match: { type: 'translation' } },
         { $sort: { created_at: -1 } },
@@ -87,12 +121,64 @@ export const GET = withAuth(async (request, session) => {
       ]).toArray(),
     ]);
 
-    // Index batch job data by book_id for fast lookup
     const ocrJobs = new Map(ocrJobsByBook.map((j: any) => [j._id, j]));
     const transJobs = new Map(transJobsByBook.map((j: any) => [j._id, j]));
 
-    // Build CSV
-    const headers = [
+    // Build row data
+    const rows: ProcessingRow[] = books.map((b: any) => {
+      const id = b.id || b._id?.toString();
+      const pages = b.pages_count || 0;
+      const ocr = b.pages_ocr || 0;
+      const translated = b.pages_translated || 0;
+      const pa = b.pipeline_auto || {};
+      const oj = ocrJobs.get(id) || {} as any;
+      const tj = transJobs.get(id) || {} as any;
+
+      return {
+        book_id: id,
+        title: b.display_title || b.title || '',
+        author: b.author || '',
+        year: b.year || '',
+        language: b.language || '',
+        source: b.image_source?.provider || '',
+        pages,
+        ocr_pages: ocr,
+        translated_pages: translated,
+        ocr_pct: pages > 0 ? Math.round((ocr / pages) * 100) : 0,
+        translate_pct: pages > 0 ? Math.round((translated / pages) * 100) : 0,
+        pipeline_status: pa.status || 'not_enrolled',
+        ocr_model: oj.model || '',
+        ocr_prompt: oj.prompt_version || '',
+        ocr_batch_size: oj.page_count || '',
+        ocr_batch_status: oj.status || '',
+        last_ocr_date: oj.created_at ? new Date(oj.created_at).toISOString() : '',
+        trans_model: tj.model || '',
+        trans_prompt: tj.prompt_version || '',
+        trans_source_lang: tj.source_language || '',
+        trans_batch_size: tj.page_count || '',
+        trans_batch_status: tj.status || '',
+        last_trans_date: tj.created_at ? new Date(tj.created_at).toISOString() : '',
+        has_summary: !!b.reading_summary?.overview,
+        has_index: !!b.index?.bookSummary,
+        has_chapters: !!(b.chapters && b.chapters.length > 0),
+        pipeline_queued: pa.queued_at ? new Date(pa.queued_at).toISOString() : '',
+        pipeline_completed: pa.completed_at ? new Date(pa.completed_at).toISOString() : '',
+        pipeline_last_updated: pa.last_updated ? new Date(pa.last_updated).toISOString() : '',
+        pipeline_error: pa.error || '',
+        imported_at: b.created_at ? new Date(b.created_at).toISOString() : '',
+        url: `https://sourcelibrary.org/book/${id}`,
+      };
+    });
+
+    // Sort
+    sortRows(rows, sortParam);
+
+    if (format === 'json') {
+      return NextResponse.json({ rows, total: rows.length });
+    }
+
+    // CSV output
+    const csvHeaders = [
       'book_id', 'title', 'author', 'year', 'language', 'source',
       'pages', 'ocr_pages', 'translated_pages', 'ocr_pct', 'translate_pct',
       'pipeline_status',
@@ -103,57 +189,15 @@ export const GET = withAuth(async (request, session) => {
       'imported_at', 'url',
     ];
 
-    const rows = books.map((b: any) => {
-      const id = b.id || b._id?.toString();
-      const pages = b.pages_count || 0;
-      const ocr = b.pages_ocr || 0;
-      const translated = b.pages_translated || 0;
-      const ocrPct = pages > 0 ? Math.round((ocr / pages) * 100) : 0;
-      const transPct = pages > 0 ? Math.round((translated / pages) * 100) : 0;
-      const pa = b.pipeline_auto || {};
-      const oj = ocrJobs.get(id) || {};
-      const tj = transJobs.get(id) || {};
+    const csvRows = rows.map(r =>
+      csvHeaders.map(h => {
+        const val = r[h as keyof ProcessingRow];
+        if (typeof val === 'boolean') return val ? 'yes' : 'no';
+        return csvEscape(String(val ?? ''));
+      }).join(',')
+    );
 
-      return [
-        id,
-        csvEscape(b.display_title || b.title || ''),
-        csvEscape(b.author || ''),
-        b.year || '',
-        b.language || '',
-        b.image_source?.provider || '',
-        pages,
-        ocr,
-        translated,
-        ocrPct,
-        transPct,
-        pa.status || 'not_enrolled',
-        oj.model || '',
-        oj.prompt_version || '',
-        oj.page_count || '',
-        oj.status || '',
-        oj.created_at ? new Date(oj.created_at).toISOString() : '',
-        tj.model || '',
-        tj.prompt_version || '',
-        tj.source_language || '',
-        tj.page_count || '',
-        tj.status || '',
-        tj.created_at ? new Date(tj.created_at).toISOString() : '',
-        b.reading_summary?.overview ? 'yes' : 'no',
-        b.index?.bookSummary ? 'yes' : 'no',
-        (b.chapters && b.chapters.length > 0) ? 'yes' : 'no',
-        pa.queued_at ? new Date(pa.queued_at).toISOString() : '',
-        pa.completed_at ? new Date(pa.completed_at).toISOString() : '',
-        pa.last_updated ? new Date(pa.last_updated).toISOString() : '',
-        csvEscape(pa.error || ''),
-        b.created_at ? new Date(b.created_at).toISOString() : '',
-        `https://sourcelibrary.org/book/${id}`,
-      ].join(',');
-    });
-
-    // Sort
-    const sortedRows = sortRows(rows, books, sortParam);
-
-    const csv = [headers.join(','), ...sortedRows].join('\n');
+    const csv = [csvHeaders.join(','), ...csvRows].join('\n');
 
     return new NextResponse(csv, {
       headers: {
@@ -179,49 +223,26 @@ function csvEscape(val: string): string {
   return val;
 }
 
-function sortRows(rows: string[], books: any[], sort: string): string[] {
-  // Create index array and sort based on original book data
-  const indices = books.map((_, i) => i);
-
+function sortRows(rows: ProcessingRow[], sort: string): void {
   switch (sort) {
     case 'ocr_pct_asc':
-      indices.sort((a, b) => {
-        const pa = books[a].pages_count || 0;
-        const pb = books[b].pages_count || 0;
-        const oa = pa > 0 ? (books[a].pages_ocr || 0) / pa : 0;
-        const ob = pb > 0 ? (books[b].pages_ocr || 0) / pb : 0;
-        return oa - ob;
-      });
+      rows.sort((a, b) => a.ocr_pct - b.ocr_pct);
       break;
     case 'ocr_pct_desc':
-      indices.sort((a, b) => {
-        const pa = books[a].pages_count || 0;
-        const pb = books[b].pages_count || 0;
-        const oa = pa > 0 ? (books[a].pages_ocr || 0) / pa : 0;
-        const ob = pb > 0 ? (books[b].pages_ocr || 0) / pb : 0;
-        return ob - oa;
-      });
+      rows.sort((a, b) => b.ocr_pct - a.ocr_pct);
       break;
     case 'pages_desc':
-      indices.sort((a, b) => (books[b].pages_count || 0) - (books[a].pages_count || 0));
+      rows.sort((a, b) => b.pages - a.pages);
       break;
     case 'translate_pct_asc':
-      indices.sort((a, b) => {
-        const pa = books[a].pages_count || 0;
-        const pb = books[b].pages_count || 0;
-        const ta = pa > 0 ? (books[a].pages_translated || 0) / pa : 0;
-        const tb = pb > 0 ? (books[b].pages_translated || 0) / pb : 0;
-        return ta - tb;
-      });
+      rows.sort((a, b) => a.translate_pct - b.translate_pct);
+      break;
+    case 'translate_pct_desc':
+      rows.sort((a, b) => b.translate_pct - a.translate_pct);
       break;
     case 'title_asc':
     default:
-      indices.sort((a, b) =>
-        ((books[a].display_title || books[a].title || '') as string)
-          .localeCompare((books[b].display_title || books[b].title || '') as string)
-      );
+      rows.sort((a, b) => a.title.localeCompare(b.title));
       break;
   }
-
-  return indices.map(i => rows[i]);
 }
