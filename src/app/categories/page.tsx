@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Loader2, BookOpen, ChevronRight } from 'lucide-react';
+import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { categories as categoriesApi } from '@/lib/api-client';
 import { Category } from '@/lib/api-client/types';
 
@@ -60,7 +61,7 @@ export default function CategoriesPage() {
       <main className="max-w-5xl mx-auto px-4 py-8">
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+            <BookLoader size="sm" />
           </div>
         ) : (
           <>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, RefreshCw, Loader2, CheckCircle, AlertTriangle, Wrench, RotateCcw, Trash2 } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { ValidationIssue } from '@/lib/validateTranslation';
 import { books, pages as pagesApi, processing } from '@/lib/api-client';
 
@@ -140,7 +141,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader />
       </div>
     );
   }

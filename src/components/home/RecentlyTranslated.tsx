@@ -9,7 +9,7 @@ export default function RecentlyTranslated({ books }: { books: Book[] }) {
       <div className="flex overflow-x-auto gap-4 sm:gap-5 pb-4 -mx-6 px-6 md:-mx-12 md:px-12 scrollbar-thin">
         {books.map((book) => {
           const title = book.display_title || book.title;
-          const thumbnail = book.thumbnail_blob || book.thumbnail;
+          const thumbnail = book.thumbnail || book.thumbnail_blob;
           const translationPercent = book.pages_count && book.pages_count > 0
             ? Math.round(((book.pages_translated || 0) / book.pages_count) * 100)
             : 0;

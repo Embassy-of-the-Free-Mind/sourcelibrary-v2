@@ -32,6 +32,7 @@ interface BookLibraryProps {
   totalBooks: number;
   languages: string[];
   collections?: CollectionForGrid[];
+  recentlyTranslated?: Book[];
 }
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
@@ -39,14 +40,23 @@ type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 const DISPLAY_INCREMENT = 50;
 const API_PAGE_SIZE = 100;
 
-export default function BookLibrary({ initialBooks, totalBooks, languages, collections = [] }: BookLibraryProps) {
+export default function BookLibrary({ initialBooks, totalBooks, languages, collections = [], recentlyTranslated = [] }: BookLibraryProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedCollection, setSelectedCollection] = useState('');
-  const [collectionInfo, setCollectionInfo] = useState<CollectionInfo | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState(() => {
+    return searchParams.get('collection') || '';
+  });
+  const [collectionInfo, setCollectionInfo] = useState<CollectionInfo | null>(() => {
+    const col = searchParams.get('collection');
+    if (col) {
+      const match = collections.find(c => c.slug === col);
+      if (match) return { slug: match.slug, name: match.name, subtitle: match.subtitle, description: match.description, book_count: match.book_count };
+    }
+    return null;
+  });
   const [introExpanded, setIntroExpanded] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards');
@@ -59,25 +69,29 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  // Read collection from URL params on mount
+  // Sync collection from URL on back/forward navigation (popstate)
   useEffect(() => {
-    const col = searchParams.get('collection');
-    if (col && col !== selectedCollection) {
-      setSelectedCollection(col);
-      setIntroExpanded(false);
-      fetch(`/api/collections`)
-        .then(r => r.json())
-        .then(data => {
-          const match = data.collections?.find((c: { slug: string }) => c.slug === col);
+    const handlePopState = () => {
+      const col = new URLSearchParams(window.location.search).get('collection') || '';
+      setSelectedCollection(prev => {
+        if (prev === col) return prev;
+        setIntroExpanded(false);
+        if (col) {
+          const match = collections.find(c => c.slug === col);
           if (match) setCollectionInfo({ slug: match.slug, name: match.name, subtitle: match.subtitle, description: match.description, book_count: match.book_count });
           else setCollectionInfo({ slug: col, name: col.replace(/-/g, ' ').replace(/\b\w/g, (ch: string) => ch.toUpperCase()), subtitle: '', description: '', book_count: 0 });
-        })
-        .catch(() => setCollectionInfo(null));
-    } else if (!col && selectedCollection) {
-      setSelectedCollection('');
-      setCollectionInfo(null);
-    }
-  }, [searchParams]); // eslint-disable-line react-hooks/exhaustive-deps
+          // Show skeleton while loading collection books
+          setApiBooks([]);
+          setLoading(true);
+        } else {
+          setCollectionInfo(null);
+        }
+        return col;
+      });
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [collections]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Track whether we're in "browse" mode (no filters) or "search/filter" mode
   const isFiltered = searchQuery.trim() !== '' || selectedLanguage !== '' || selectedCategory !== '' || selectedCollection !== '' || sortBy !== 'recent-translation';
@@ -170,17 +184,20 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       return;
     }
 
-    // Debounce the API call
+    // Debounce only for search typing — discrete filter changes (collection, language, category, sort) fetch immediately
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      fetchBooks({
-        search: searchQuery.trim(),
-        language: selectedLanguage,
-        category: selectedCategory,
-        collection: selectedCollection,
-        sort: sortBy,
-      });
-    }, 300);
+    const doFetch = () => fetchBooks({
+      search: searchQuery.trim(),
+      language: selectedLanguage,
+      category: selectedCategory,
+      collection: selectedCollection,
+      sort: sortBy,
+    });
+    if (searchQuery.trim()) {
+      debounceRef.current = setTimeout(doFetch, 300);
+    } else {
+      doFetch();
+    }
 
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -325,7 +342,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
               setIntroExpanded(false);
               const url = new URL(window.location.href);
               url.searchParams.delete('collection');
-              router.replace(url.pathname + url.search, { scroll: false });
+              window.history.pushState({}, '', url.pathname + url.search);
             }
             setBrowseAll(false);
           }}
@@ -350,166 +367,101 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
         )}
       </div>
 
-      {/* Search & Filter Bar */}
-      <div className="flex flex-col lg:flex-row gap-4 mb-8">
-        {/* Search Input with Button */}
-        <form onSubmit={handleSearch} className="flex-1 flex gap-2">
-          <div className="flex-1 relative">
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Search library and external catalogs..."
-              className="w-full pl-12 pr-10 py-3 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-600/20 focus:border-amber-600"
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={clearSearch}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            )}
-          </div>
-          <button
-            type="submit"
-            disabled={searchQuery.length < 2 || catalogSearching}
-            className="flex items-center gap-2 px-5 py-3 bg-amber-600 text-white rounded-full text-sm font-medium hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {catalogSearching ? (
-              <Loader2 className="w-4 h-4 animate-spin" />
-            ) : (
-              <Search className="w-4 h-4" />
-            )}
-            <span className="hidden sm:inline">Search</span>
-          </button>
-        </form>
-
-        {/* Filters */}
-        <div className="flex flex-wrap gap-3">
-          {/* Language Filter */}
-          <select
-            value={selectedLanguage}
-            onChange={(e) => setSelectedLanguage(e.target.value)}
-            className="px-4 py-3 bg-white border border-stone-200 rounded-full text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat"
-          >
-            <option value="">All Languages</option>
-            {languages.map(lang => (
-              <option key={lang} value={lang}>
-                {lang.startsWith('Multiple') ? 'Multiple' : lang}
-              </option>
-            ))}
-          </select>
-
-          {/* Sort */}
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as SortOption)}
-            className="px-4 py-3 bg-white border border-stone-200 rounded-full text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-600/20 appearance-none pr-10 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%236b7280%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-[length:20px] bg-[right_12px_center] bg-no-repeat min-w-[180px]"
-          >
-            <option value="recent-translation">Recent Translations</option>
-            <option value="recent">Recently Updated</option>
-            <option value="title-asc">Title (A-Z)</option>
-            <option value="title-desc">Title (Z-A)</option>
-          </select>
-
-          {/* View Toggle */}
-          <div className="flex rounded-full border border-stone-200 overflow-hidden">
-            <button
-              onClick={() => setViewMode('cards')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium ${viewMode === 'cards' ? 'bg-stone-900 text-white' : 'bg-white text-stone-600 hover:bg-stone-50'}`}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <rect x="3" y="3" width="7" height="7" rx="1" />
-                <rect x="14" y="3" width="7" height="7" rx="1" />
-                <rect x="3" y="14" width="7" height="7" rx="1" />
-                <rect x="14" y="14" width="7" height="7" rx="1" />
-              </svg>
-              Cards
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium ${viewMode === 'list' ? 'bg-stone-900 text-white' : 'bg-white text-stone-600 hover:bg-stone-50'}`}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-              List
-            </button>
-          </div>
-        </div>
-      </div>
 
       {showCollections ? (
         <>
-          {/* Collections Grid */}
-          <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {collections.map((col) => {
-              const hero = col.featured_images?.find(
-                img => img.thumbnail_url || img.extracted_url || img.image_url
-              );
-              const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
-              const topLangs = (col.languages || []).slice(0, 3).map(l => l.lang).join(', ');
-              return (
-                <button
-                  key={col.slug}
-                  onClick={() => {
-                    setSelectedCollection(col.slug);
-                    setCollectionInfo({
-                      slug: col.slug,
-                      name: col.name,
-                      subtitle: col.subtitle,
-                      description: col.description,
-                      book_count: col.book_count,
-                    });
-                    setIntroExpanded(false);
-                    const url = new URL(window.location.href);
-                    url.searchParams.set('collection', col.slug);
-                    if (!url.hash) url.hash = 'library';
-                    router.replace(url.pathname + url.search + url.hash, { scroll: false });
-                  }}
-                  className="group relative block overflow-hidden rounded-lg aspect-[4/3] text-left"
-                >
-                  {heroUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={heroUrl}
-                      alt={`Illustration from ${col.name}`}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-warm" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.4)] to-transparent" />
-                  <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
-                        {col.book_count.toLocaleString()} books
-                      </span>
-                      {topLangs && (
-                        <span className="text-xs text-white/50">{topLangs}</span>
+          {/* Collections Grid — 3 rows of 4, last slot is "see all" link */}
+          {(() => {
+            const MAX_SHOWN = 11; // 3 rows × 4 cols - 1 for "see all"
+            const shown = collections.slice(0, MAX_SHOWN);
+            const remaining = collections.length - shown.length;
+            return (
+              <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {shown.map((col, i) => {
+                  const hero = col.featured_images?.find(
+                    img => img.thumbnail_url || img.extracted_url || img.image_url
+                  );
+                  const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
+                  const topLangs = (col.languages || []).slice(0, 3).map(l => l.lang).join(', ');
+                  return (
+                    <Link
+                      key={col.slug}
+                      href={`/collections/${col.slug}`}
+                      className="group relative block overflow-hidden rounded-lg aspect-[4/3] text-left"
+                    >
+                      {heroUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={heroUrl}
+                          alt={`Illustration from ${col.name}`}
+                          loading={i < 8 ? 'eager' : 'lazy'}
+                          decoding="async"
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-warm" />
                       )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.4)] to-transparent" />
+                      <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
+                            {col.book_count.toLocaleString()} books
+                          </span>
+                          {topLangs && (
+                            <span className="text-xs text-white/50">{topLangs}</span>
+                          )}
+                        </div>
+                        <h3 className="font-serif text-xl sm:text-2xl text-white font-semibold leading-tight">
+                          {col.name}
+                        </h3>
+                        {col.subtitle && (
+                          <p className="mt-1 text-sm text-white/70 line-clamp-2 leading-snug">
+                            {col.subtitle}
+                          </p>
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
+
+                {/* "See all collections" card */}
+                {remaining > 0 && (
+                  <Link
+                    href="/collections"
+                    className="group relative block overflow-hidden rounded-lg aspect-[4/3] bg-gradient-to-br from-stone-800 to-stone-900 hover:from-stone-700 hover:to-stone-800 transition-all duration-300"
+                  >
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+                      <div className="w-12 h-12 rounded-full border-2 border-white/20 flex items-center justify-center mb-4 group-hover:border-white/40 transition-colors">
+                        <svg className="w-5 h-5 text-white/60 group-hover:text-white/90 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                      </div>
+                      <span className="font-serif text-lg text-white/90 font-semibold leading-tight">
+                        See all {collections.length} collections
+                      </span>
+                      <span className="mt-2 text-sm text-white/50">
+                        {remaining} more to explore
+                      </span>
                     </div>
-                    <h3 className="font-serif text-xl sm:text-2xl text-white font-semibold leading-tight">
-                      {col.name}
-                    </h3>
-                    {col.subtitle && (
-                      <p className="mt-1 text-sm text-white/70 line-clamp-2 leading-snug">
-                        {col.subtitle}
-                      </p>
-                    )}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+                  </Link>
+                )}
+              </div>
+            );
+          })()}
+
+          {/* Recently Translated */}
+          {recentlyTranslated.length > 0 && (
+            <div className="mt-12">
+              <h3 className="text-xl md:text-2xl text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                Recently Translated
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
+                {recentlyTranslated.map((book, i) => (
+                  <BookCard key={book.id} book={book} priority={false} />
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Browse all link */}
           <div className="mt-8 text-center">
@@ -543,7 +495,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                     setBrowseAll(false);
                     const url = new URL(window.location.href);
                     url.searchParams.delete('collection');
-                    router.replace(url.pathname + url.search, { scroll: false });
+                    window.history.pushState({}, '', url.pathname + url.search);
                   }}
                   className="shrink-0 p-1 rounded-full text-stone-400 hover:text-stone-600 hover:bg-stone-100 transition-colors"
                   title="Clear collection filter"
@@ -654,10 +606,10 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
             >
               {/* Thumbnail */}
               <div className="w-16 h-20 bg-stone-100 rounded overflow-hidden flex-shrink-0">
-                {(book.thumbnail_blob || book.thumbnail) ? (
+                {(book.thumbnail || book.thumbnail_blob) ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={book.thumbnail_blob || book.thumbnail}
+                    src={book.thumbnail || book.thumbnail_blob}
                     alt={book.title || ''}
                     loading="lazy"
                     decoding="async"

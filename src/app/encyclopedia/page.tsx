@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, User, MapPin, Lightbulb, BookOpen, ArrowRight, Loader2 } from 'lucide-react';
+import { Search, User, MapPin, Lightbulb, BookOpen, ArrowRight } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { entities as entitiesApi } from '@/lib/api-client';
 import type { Entity } from '@/lib/api-client';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
@@ -146,7 +147,7 @@ export default function EncyclopediaPage() {
         {/* Entity List */}
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+            <BookLoader size="sm" />
           </div>
         ) : filteredEntities.length === 0 ? (
           <div className="text-center py-16">

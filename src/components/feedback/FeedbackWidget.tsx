@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function FeedbackWidget() {
+export default function FeedbackWidget({ className }: { className?: string }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
@@ -35,7 +35,7 @@ export default function FeedbackWidget() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="text-amber-600 hover:text-amber-500 transition-colors"
+        className={className || "text-amber-600 hover:text-amber-500 transition-colors"}
       >
         Feedback
       </button>

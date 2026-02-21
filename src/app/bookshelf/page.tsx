@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, Library, Loader2, BookMarked, CheckCircle2, ArrowRight } from 'lucide-react';
+import { BookOpen, Library, BookMarked, CheckCircle2, ArrowRight } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { bookshelf, type BookshelfEntryWithBook } from '@/lib/api-client';
 import type { BookshelfStatus } from '@/lib/types/bookshelf';
 
@@ -63,7 +64,7 @@ export default function BookshelfPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
+            <BookLoader size="sm" />
           </div>
         )}
 

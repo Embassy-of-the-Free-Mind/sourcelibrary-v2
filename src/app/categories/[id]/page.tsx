@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Loader2, BookOpen, Book as BookIcon } from 'lucide-react';
+import { ArrowLeft, BookOpen, Book as BookIcon } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { categories } from '@/lib/api-client';
 
 interface Book {
@@ -61,7 +62,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader />
       </div>
     );
   }

@@ -29,7 +29,6 @@ const NAV_COLUMNS = [
       { label: 'About', href: '/about' },
       { label: 'Blog', href: '/blog' },
       { label: 'Press', href: '/press' },
-      { label: 'Roadmap', href: '/roadmap' },
     ],
   },
   {
@@ -97,7 +96,7 @@ export default function GlobalFooter() {
               width={300}
               height={96}
               sizes="auto"
-              className="h-10 sm:h-12 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+              className="h-12 sm:h-16 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
               unoptimized
             />
           </Link>
@@ -205,6 +204,7 @@ export default function GlobalFooter() {
             <span>&copy; 2026 Source Library &mdash; An initiative of the Embassy of the Free Mind</span>
             <span className="hidden sm:inline">&middot;</span>
             <div className="flex items-center gap-3">
+              <a href="mailto:Derek@ancientwisdomtrust.org" className="hover:text-white/50 transition-colors">Derek@ancientwisdomtrust.org</a>
               <Link href="/privacy" className="hover:text-white/50 transition-colors">Privacy</Link>
               <Link href="/terms" className="hover:text-white/50 transition-colors">Terms</Link>
             </div>

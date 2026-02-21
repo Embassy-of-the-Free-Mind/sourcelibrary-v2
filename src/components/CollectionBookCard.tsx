@@ -25,11 +25,10 @@ interface CollectionBook {
 
 interface CollectionBookCardProps {
   book: CollectionBook;
-  index: number;
   priority?: boolean;
 }
 
-export default function CollectionBookCard({ book, index, priority = false }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false }: CollectionBookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
@@ -40,12 +39,12 @@ export default function CollectionBookCard({ book, index, priority = false }: Co
       href={`/book/${book.id || book.bookId}`}
       className="group block"
     >
-      <div className="h-full rounded-xl border-2 border-stone-200 hover:border-amber-400 hover:shadow-xl transition-all overflow-hidden bg-white">
+      <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-all overflow-hidden bg-white">
         {/* Book Poster with Shimmer Loading */}
-        <div className="relative aspect-[3/4] bg-stone-100 overflow-hidden">
+        <div className="relative aspect-[3/4] bg-warm overflow-hidden">
           {/* Shimmer placeholder - only for images, shows until loaded */}
           {!imageLoaded && !imageError && book.thumbnail && (
-            <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
+            <div className="absolute inset-0 bg-gradient-to-r from-border-light via-warm to-border-light bg-[length:200%_100%] animate-shimmer" />
           )}
 
           {book.thumbnail && !imageError ? (
@@ -65,41 +64,31 @@ export default function CollectionBookCard({ book, index, priority = false }: Co
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <BookOpen className="w-16 h-16 text-stone-300" />
+              <BookOpen className="w-16 h-16 text-muted" />
             </div>
           )}
 
-          {/* Number badge */}
-          <div className="absolute top-3 left-3 w-8 h-8 rounded-full bg-amber-500 text-white font-bold text-sm flex items-center justify-center shadow-lg z-10">
-            {index + 1}
-          </div>
-
           {/* Status badges */}
-          <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
-            {book.translation_percent === 100 && (
-              <div className="bg-green-500 text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
-                Translated
-              </div>
-            )}
-            {book.has_doi && (
+          {book.has_doi && (
+            <div className="absolute top-3 right-3 z-10">
               <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
                 DOI
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Book Info */}
         <div className="p-4">
           <h3
-            className="text-base font-bold text-stone-900 group-hover:text-amber-700 transition-colors mb-2 leading-tight line-clamp-2"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-base font-bold text-primary group-hover:text-accent-rust transition-colors mb-2 leading-tight line-clamp-2"
+            style={{ fontFamily: 'var(--font-serif)' }}
           >
             {book.title}
           </h3>
-          <p className="text-sm text-stone-600 mb-3 line-clamp-1">{book.author}</p>
+          <p className="text-sm text-secondary mb-3 line-clamp-1">{book.author}</p>
 
-          <div className="flex flex-wrap gap-2 text-xs text-stone-500">
+          <div className="flex flex-wrap gap-2 text-xs text-muted">
             <span className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               {book.year}

@@ -2,7 +2,8 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import Link from 'next/link';
 import CameraCapture from '@/components/camera/CameraCapture';
 import { books } from '@/lib/api-client';
@@ -44,7 +45,7 @@ export default function CapturePage() {
   if (loading) {
     return (
       <div className="fixed inset-0 bg-black flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-white animate-spin" />
+        <BookLoader />
       </div>
     );
   }

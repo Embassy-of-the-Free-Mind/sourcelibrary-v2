@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { RefreshCw, Loader2, ExternalLink, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
+import { RefreshCw, ExternalLink, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { qa } from '@/lib/api-client';
 import type { QASampleResponse } from '@/lib/api-client';
 
@@ -69,7 +70,7 @@ export default function QASamplingPage() {
       <main className="max-w-6xl mx-auto px-4 py-8">
         {loading && !data ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+            <BookLoader size="sm" />
           </div>
         ) : data ? (
           <>

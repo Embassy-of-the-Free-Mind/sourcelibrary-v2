@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink, BookOpen, Scroll, Compass, FlaskConical, Calculator, Star, Loader2 } from 'lucide-react';
+import { ArrowLeft, ExternalLink, BookOpen, Scroll, Compass, FlaskConical, Calculator, Star } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { books } from '@/lib/api-client';
 
 interface RoadmapBook {
@@ -99,15 +100,33 @@ export default function RoadmapPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <div className="text-red-600">{error}</div>
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center px-4">
+        <div className="max-w-md w-full text-center">
+          <h1 className="text-5xl font-bold text-stone-900 mb-3">Oops</h1>
+          <p className="text-stone-600 mb-6">{error}</p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              onClick={() => window.location.reload()}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl transition-colors font-medium"
+            >
+              Try Again
+            </button>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-xl transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Library
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

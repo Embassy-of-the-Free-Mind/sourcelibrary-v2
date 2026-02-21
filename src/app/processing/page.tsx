@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, RefreshCw, Loader2, Search, ChevronUp, ChevronDown, ChevronsUpDown, Layers, DollarSign, BookOpen, FileText } from 'lucide-react';
+import { ChevronLeft, RefreshCw, Search, ChevronUp, ChevronDown, ChevronsUpDown, Layers, DollarSign, BookOpen, FileText } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { analytics } from '@/lib/api-client';
 import type { ProcessingRow, ProcessingOverviewResponse } from '@/lib/api-client/types/analytics';
 
@@ -228,7 +229,7 @@ export default function ProcessingPage() {
         {/* Loading */}
         {loading && !data && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--text-muted)' }} />
+            <BookLoader size="sm" />
           </div>
         )}
 

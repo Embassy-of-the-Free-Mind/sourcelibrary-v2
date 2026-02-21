@@ -226,7 +226,7 @@ function BookCard({
   isOriginal: boolean;
 }) {
   const id = book._id.toString();
-  const thumb = book.thumbnail_blob || book.thumbnail;
+  const thumb = book.thumbnail || book.thumbnail_blob;
   const rawLang = book.original_language || book.language || '';
   const lang = rawLang === 'Unknown' ? '' : rawLang;
   const parsedYear = book.published ? parseInt(book.published) : NaN;

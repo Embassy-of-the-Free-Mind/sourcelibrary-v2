@@ -42,9 +42,9 @@ function getPos(row: number, col: number) {
 }
 
 export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
-  const svgClass = size === 'sm' ? 'w-64 h-64'
-    : size === 'md' ? 'w-[28rem] h-[28rem]'
-    : 'w-[36rem] h-[36rem]';
+  const svgClass = size === 'sm' ? 'w-32 h-32'
+    : size === 'md' ? 'w-64 h-64'
+    : 'w-[28rem] h-[28rem]';
 
   return (
     <div className={cn('flex items-center justify-center', className)}>

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Play, Pause, RotateCcw, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Play, Pause, RotateCcw, CheckCircle, AlertCircle } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { usePipeline } from '@/hooks/usePipeline';
 import PipelineProgress from '@/components/pipeline/PipelineProgress';
 import PipelineConfigForm, { PipelineConfigDisplay } from '@/components/pipeline/PipelineConfig';
@@ -21,7 +22,7 @@ export default function PipelinePage({ params }: PipelinePageProps) {
   if (!bookId) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader />
       </div>
     );
   }
@@ -35,7 +36,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader />
       </div>
     );
   }

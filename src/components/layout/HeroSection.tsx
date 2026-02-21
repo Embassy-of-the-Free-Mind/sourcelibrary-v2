@@ -36,7 +36,7 @@ export default function HeroSection() {
         loop
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         onCanPlay={handleVideoLoad}
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
@@ -72,8 +72,8 @@ export default function HeroSection() {
           >
             Unlock a New Renaissance of Ancient Knowledge
           </h1>
-          <p className="text-lg md:text-xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            Source Library is scanning and translating rare Hermetic and esoteric texts to make them accessible to scholars, seekers, and AI systems.
+          <p className="text-xl md:text-2xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
+            The Source Library is scanning and translating thousands of rare, ancient texts to make them accessible to scholars, seekers, and AI.
           </p>
 
           {/* Unified Search */}
@@ -84,11 +84,18 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20" aria-hidden="true">
-        <svg className="w-6 h-6 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <a
+        href="#library"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 group"
+        aria-label="Scroll to library"
+      >
+        <span className="text-xs uppercase tracking-[0.2em] text-white/70 group-hover:text-white transition-colors">
+          Explore the collection
+        </span>
+        <svg className="w-5 h-5 text-white/70 group-hover:text-white animate-bounce transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </div>
+      </a>
     </section>
   );
 }

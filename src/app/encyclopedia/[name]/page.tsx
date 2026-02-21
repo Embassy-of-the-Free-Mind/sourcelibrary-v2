@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, User, MapPin, Lightbulb, BookOpen, ExternalLink, Loader2 } from 'lucide-react';
+import { ArrowLeft, User, MapPin, Lightbulb, BookOpen, ExternalLink } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { entities as entitiesApi } from '@/lib/api-client';
 import type { EntityResponse } from '@/lib/api-client';
 import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
@@ -47,7 +48,7 @@ export default function EntityDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader />
       </div>
     );
   }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Highlighter, Trash2, ExternalLink, Loader2, BookOpen, User, Clock } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { formatDistanceToNow } from 'date-fns';
 import { highlights as highlightsApi } from '@/lib/api-client';
 import type { Highlight } from '@/lib/api-client/types/highlights';
@@ -92,7 +93,7 @@ export default function HighlightsPage() {
       <main className="max-w-4xl mx-auto px-4 py-8">
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+            <BookLoader size="sm" />
           </div>
         ) : highlights.length === 0 ? (
           <div className="text-center py-16">
