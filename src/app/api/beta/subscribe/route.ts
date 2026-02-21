@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const email = body.email;
     const source = body.source;
+    const comment = body.comment;
 
     if (!email || typeof email !== 'string') {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
@@ -116,7 +117,7 @@ export async function POST(request: NextRequest) {
       || request.headers.get('cf-ipcountry')
       || null;
 
-    await collection.insertOne({
+    const doc: Record<string, unknown> = {
       email: normalizedEmail,
       ip,
       country,
@@ -125,7 +126,11 @@ export async function POST(request: NextRequest) {
         : 'beta_landing',
       subscribed_at: new Date(),
       notified: false,
-    });
+    };
+    if (comment && typeof comment === 'string' && comment.trim()) {
+      doc.comment = comment.trim().slice(0, 1000);
+    }
+    await collection.insertOne(doc);
 
     // Send welcome email (non-blocking — don't await)
     sendWelcomeEmail(normalizedEmail).catch(() => {});

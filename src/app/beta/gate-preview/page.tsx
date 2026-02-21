@@ -47,6 +47,7 @@ export default function GatePreviewPage() {
             setShowModal(false);
           }}
           onDismiss={() => setShowModal(false)}
+          bookCount={1247}
         />
       )}
     </div>

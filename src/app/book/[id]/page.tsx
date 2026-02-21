@@ -122,7 +122,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null> {
+async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number } | null> {
   const db = await getDb();
 
   // Try to find by custom id field first, then by _id
@@ -183,7 +183,9 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[] } | null
   const serializedBook = JSON.parse(JSON.stringify(book));
   const serializedPages = JSON.parse(JSON.stringify(pages));
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[] };
+  const totalBooks = await db.collection('books').estimatedDocumentCount();
+
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks };
 }
 
 // Skeleton for book info while loading
@@ -231,7 +233,7 @@ async function BookInfo({ id }: { id: string }) {
     notFound();
   }
 
-  const { book, pages } = data;
+  const { book, pages, totalBooks } = data;
 
   // Content gating handled client-side by useBetaGate hook in BookPagesSection
   // Featured books bypass the gate; others show email modal on page click
@@ -670,7 +672,7 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
-        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} bookFeatured={!!book.featured} />
+        <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} bookFeatured={!!book.featured} totalBooks={totalBooks} />
         <AuthCheck>
           <BookHistory bookId={book.id} />
         </AuthCheck>
