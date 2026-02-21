@@ -20,11 +20,18 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
-    slug: 'astrological-diagrams',
-    title: 'Reading the Stars: Astrological Diagrams from Nine Centuries',
-    subtitle: 'A visual tour of Source Library\'s astrological collection — from the 10th-century Dunhuang Star Chart and Ptolemy\'s horoscope diagrams to Copernicus\'s heliocentric revolution and Kircher\'s constellation maps.',
+    slug: 'demonology',
+    title: 'What Are Demons? Five Answers from the Primary Sources',
+    subtitle: 'The word "demon" names two almost opposite things. The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel trying to damn your soul. Source Library holds the texts that document this extraordinary reversal — from the Hermetica to the Malleus Maleficarum, the Goetia, and the Kitab al-Bulhan.',
     date: '21 February 2026',
-    readTime: '20 min read',
+    readTime: '18 min read',
+  },
+  {
+    slug: 'history-of-astrology',
+    title: 'A History of Astrology Across Traditions',
+    subtitle: 'From Babylonian omen tablets to Kepler\'s geometrical cosmos, astrology was one of the longest-running intellectual projects in human history — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions. A history built from the primary sources.',
+    date: '21 February 2026',
+    readTime: '22 min read',
   },
   {
     slug: 'first-translations',
