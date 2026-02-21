@@ -66,8 +66,9 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         updates.thumbnail_blob = page.thumbnail_blob;
       }
 
-      // For the main thumbnail, use archived_photo (full-size Blob) or /api/image fallback
-      const blobUrl = typedPage.archived_photo;
+      // For the main thumbnail, prefer cropped_photo (split pages) > archived_photo > /api/image
+      const typedPageWithCrop = page as Page & { archived_photo?: string; cropped_photo?: string };
+      const blobUrl = typedPageWithCrop.cropped_photo || typedPage.archived_photo;
       if (blobUrl) {
         updates.thumbnail = blobUrl;
       } else {

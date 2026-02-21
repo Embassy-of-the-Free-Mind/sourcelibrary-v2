@@ -142,7 +142,8 @@ for (let i = 0; i < books.length; i += BATCH) {
       continue;
     }
 
-    const updates = { thumbnail: matchedPage.archived_photo };
+    // Prefer cropped_photo for split pages, fall back to archived_photo
+    const updates = { thumbnail: matchedPage.cropped_photo || matchedPage.archived_photo };
     if (matchedPage.thumbnail_blob && !book.thumbnail_blob) {
       updates.thumbnail_blob = matchedPage.thumbnail_blob;
     }
