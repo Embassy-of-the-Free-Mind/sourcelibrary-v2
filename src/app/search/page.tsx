@@ -229,18 +229,22 @@ export default function SearchPage() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header */}
-      <header className="bg-white border-b border-border-light">
+      <header className="bg-dark">
         <div className="max-w-5xl mx-auto px-6 py-4">
           <Link
             href="/"
-            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+            className="flex items-center gap-3"
+            aria-label="Source Library home"
           >
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
+            <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
+              <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
+              <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
             </svg>
-            <span className="font-medium">Source Library</span>
+            <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
+              <span className="font-semibold text-white">Source</span>
+              <span className="font-light text-white">Library</span>
+            </span>
           </Link>
         </div>
       </header>
@@ -392,8 +396,8 @@ export default function SearchPage() {
         {!query && (
           <div className="text-center py-16">
             <Book className="w-16 h-16 text-border-medium mx-auto mb-4" />
-            <h2 className="text-xl font-serif font-medium text-primary mb-2">Search the Library</h2>
-            <p className="text-muted max-w-md mx-auto">
+            <h2 className="text-2xl font-serif font-medium text-primary mb-2">Search the Library</h2>
+            <p className="text-base text-muted max-w-md mx-auto">
               Search across translated historical texts, concepts, people, and illustrations.
             </p>
           </div>
@@ -408,7 +412,7 @@ export default function SearchPage() {
         {noResults && (
           <div className="text-center py-16">
             <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
-            <h2 className="text-xl font-serif font-medium text-primary mb-2">No results found</h2>
+            <h2 className="text-2xl font-serif font-medium text-primary mb-2">No results found</h2>
             {suggestion ? (
               <p className="text-secondary">
                 Did you mean{' '}
@@ -426,18 +430,41 @@ export default function SearchPage() {
         {/* ==================== UNIFIED VIEW ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && totalResults > 0 && (
           <div className="space-y-10">
+            {/* Images Section (first for visual impact) */}
+            {imageTotal > 0 && (
+              <section>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="flex items-center gap-2 text-xl font-semibold text-primary">
+                    <ImageIcon className="w-6 h-6 text-accent-gold" />
+                    Images
+                    <span className="text-base font-normal text-muted">({imageTotal})</span>
+                  </h2>
+                  {imageTotal > PREVIEW_IMAGES && (
+                    <button onClick={() => drillInto('images')} className="px-4 py-2 bg-accent-gold/10 text-accent-gold-dark font-medium rounded-lg hover:bg-accent-gold/20 transition-colors flex items-center gap-1.5">
+                      See all {imageTotal} images <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
+                    <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
+                  ))}
+                </div>
+              </section>
+            )}
+
             {/* Books Section */}
             {bookTotal > 0 && (
               <section>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                    <Book className="w-5 h-5 text-accent-rust" />
+                  <h2 className="flex items-center gap-2 text-xl font-semibold text-primary">
+                    <Book className="w-6 h-6 text-accent-rust" />
                     Books & Pages
-                    <span className="text-sm font-normal text-muted">({bookTotal})</span>
+                    <span className="text-base font-normal text-muted">({bookTotal})</span>
                   </h2>
                   {bookTotal > PREVIEW_BOOKS && (
-                    <button onClick={() => drillInto('books')} className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1">
-                      See all {bookTotal} <ChevronRight className="w-4 h-4" />
+                    <button onClick={() => drillInto('books')} className="px-4 py-2 bg-accent-rust/10 text-accent-rust font-medium rounded-lg hover:bg-accent-rust/20 transition-colors flex items-center gap-1.5">
+                      See all {bookTotal} books <ChevronRight className="w-4 h-4" />
                     </button>
                   )}
                 </div>
@@ -453,43 +480,20 @@ export default function SearchPage() {
             {indexTotal > 0 && (
               <section>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                    <Lightbulb className="w-5 h-5 text-accent-violet" />
+                  <h2 className="flex items-center gap-2 text-xl font-semibold text-primary">
+                    <Lightbulb className="w-6 h-6 text-accent-violet" />
                     Index
-                    <span className="text-sm font-normal text-muted">({indexTotal})</span>
+                    <span className="text-base font-normal text-muted">({indexTotal})</span>
                   </h2>
                   {indexTotal > PREVIEW_INDEX && (
-                    <button onClick={() => drillInto('index')} className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1">
-                      See all {indexTotal} <ChevronRight className="w-4 h-4" />
+                    <button onClick={() => drillInto('index')} className="px-4 py-2 bg-accent-violet/10 text-accent-violet font-medium rounded-lg hover:bg-accent-violet/20 transition-colors flex items-center gap-1.5">
+                      See all {indexTotal} entries <ChevronRight className="w-4 h-4" />
                     </button>
                   )}
                 </div>
                 <div className="space-y-3">
                   {indexResults.slice(0, PREVIEW_INDEX).map((result, idx) => (
                     <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Images Section */}
-            {imageTotal > 0 && (
-              <section>
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold text-primary">
-                    <ImageIcon className="w-5 h-5 text-accent-gold" />
-                    Images
-                    <span className="text-sm font-normal text-muted">({imageTotal})</span>
-                  </h2>
-                  {imageTotal > PREVIEW_IMAGES && (
-                    <button onClick={() => drillInto('images')} className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1">
-                      See all {imageTotal} <ChevronRight className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                  {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
-                    <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
                   ))}
                 </div>
               </section>
@@ -568,24 +572,42 @@ export default function SearchPage() {
 // ==================== RESULT CARDS ====================
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
+  const [thumbError, setThumbError] = useState(false);
+  const coverUrl = result.thumbnail_blob || result.thumbnail;
+
   return (
     <Link
       href={result.type === 'page' ? `/book/${result.book_id}/page/${result.page_number}` : `/book/${result.book_id}`}
-      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
-      <div className="flex items-start gap-3">
-        <div className={`p-2 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-accent-rust/10' : 'bg-accent-sage/12'}`}>
-          {result.type === 'book' ? <Book className="w-4 h-4 text-accent-rust" /> : <FileText className="w-4 h-4 text-accent-sage-dark" />}
-        </div>
+      <div className="flex items-start gap-4">
+        {/* Book cover thumbnail */}
+        {coverUrl && !thumbError ? (
+          <div className="w-16 h-20 md:w-20 md:h-26 flex-shrink-0 rounded-lg overflow-hidden bg-warm">
+            <Image
+              src={coverUrl}
+              alt=""
+              width={80}
+              height={104}
+              sizes="80px"
+              className="w-full h-full object-cover"
+              onError={() => setThumbError(true)}
+            />
+          </div>
+        ) : (
+          <div className={`p-2.5 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-accent-rust/10' : 'bg-accent-sage/12'}`}>
+            {result.type === 'book' ? <Book className="w-5 h-5 text-accent-rust" /> : <FileText className="w-5 h-5 text-accent-sage-dark" />}
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="text-lg font-medium text-primary line-clamp-1">
+              <h3 className="text-xl font-medium text-primary line-clamp-2 font-serif">
                 <HighlightedText text={result.display_title || result.title} query={query} />
-                {result.type === 'page' && <span className="text-muted font-normal ml-2">— Page {result.page_number}</span>}
+                {result.type === 'page' && <span className="text-muted font-normal text-base ml-2">— Page {result.page_number}</span>}
               </h3>
-              <p className="text-secondary mt-0.5">
-                <HighlightedText text={result.author} query={query} /> • {result.published} • {result.language}
+              <p className="text-base text-secondary mt-1">
+                <HighlightedText text={result.author} query={query} /> · {result.published} · {result.language}
               </p>
             </div>
             {result.has_doi && result.doi && (
@@ -596,13 +618,13 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
             )}
           </div>
           {result.snippet && (
-            <p className="mt-2 text-secondary line-clamp-2 font-body">
+            <p className="mt-2 text-base text-secondary line-clamp-2 font-body leading-relaxed">
               <HighlightedText text={result.snippet} query={query} />
             </p>
           )}
           {result.type === 'book' && result.page_count && (
-            <p className="mt-1.5 text-sm text-muted">
-              {result.page_count} pages{result.translated_count ? ` • ${result.translated_count} translated` : ''}
+            <p className="mt-2 text-sm text-muted">
+              {result.page_count} pages{result.translated_count ? ` · ${result.translated_count} translated` : ''}
             </p>
           )}
         </div>
@@ -624,30 +646,30 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
         ? `/book/${result.book_id}/guide?page=${result.pages[0]}`
         : `/book/${result.book_id}`
       }
-      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-violet/30 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-violet/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-3">
-        <div className={`p-2 rounded-lg flex-shrink-0 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge.split(' ')[0]}`}>
-          <TypeIcon className={`w-4 h-4 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).iconColor}`} />
+        <div className={`p-2.5 rounded-lg flex-shrink-0 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge.split(' ')[0]}`}>
+          <TypeIcon className={`w-5 h-5 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).iconColor}`} />
         </div>
         <div className="flex-1 min-w-0">
-          <span className={`text-xs px-2 py-0.5 rounded-full ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge}`}>{typeLabel}</span>
+          <span className={`text-sm px-2.5 py-0.5 rounded-full ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge}`}>{typeLabel}</span>
 
           {isQuote ? (
             <>
-              <blockquote className="font-serif text-lg text-primary italic border-l-2 border-accent-gold/40 pl-3 my-2">
+              <blockquote className="font-serif text-xl text-primary italic border-l-2 border-accent-gold/40 pl-4 my-2">
                 &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
               </blockquote>
               {result.quote_significance && (
-                <p className="text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
+                <p className="text-base text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
               )}
             </>
           ) : (
-            <h3 className="text-lg font-medium text-primary mt-1"><HighlightedText text={result.term} query={query} /></h3>
+            <h3 className="text-xl font-medium text-primary mt-1 font-serif"><HighlightedText text={result.term} query={query} /></h3>
           )}
 
-          <p className="text-muted mt-1.5">
-            From: <span className="text-secondary">{result.book_title}</span> • {result.book_author}
+          <p className="text-base text-muted mt-2">
+            From: <span className="text-secondary">{result.book_title}</span> · {result.book_author}
           </p>
           {result.pages && result.pages.length > 0 && (
             <p className="text-sm text-muted mt-1">

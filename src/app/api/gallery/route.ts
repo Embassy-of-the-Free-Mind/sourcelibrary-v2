@@ -61,6 +61,7 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') || '24'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
     const bookId = searchParams.get('bookId') || searchParams.get('book');
+    const collectionSlug = searchParams.get('collection');
     const imageType = searchParams.get('type');
     const subjectFilter = searchParams.get('subject');
     const figureFilter = searchParams.get('figure');
@@ -84,18 +85,28 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(await legacyGalleryQuery(db, searchParams));
     }
 
+    // If filtering by collection, resolve to book IDs
+    let collectionBookIds: string[] | null = null;
+    if (collectionSlug) {
+      collectionBookIds = await db.collection('books').distinct('id', {
+        collections: collectionSlug,
+        status: { $ne: 'deleted' },
+      }) as string[];
+    }
+
     // Build query filter
     const filter: Record<string, unknown> = {
       gallery_quality: { $gte: minQuality },
       book_hidden: { $ne: true },
     };
 
-    // Book diversity: limit to top N images per book (unless filtering by book)
+    // Book diversity: limit to top N images per book (unless filtering by single book)
     if (!bookId) {
       filter.book_rank = { $lte: maxPerBook };
     }
 
     if (bookId) filter.book_id = bookId;
+    if (collectionBookIds) filter.book_id = { $in: collectionBookIds };
     if (imageType) filter.type = imageType;
     if (subjectFilter) filter['metadata.subjects'] = subjectFilter;
     if (figureFilter) filter['metadata.figures'] = figureFilter;

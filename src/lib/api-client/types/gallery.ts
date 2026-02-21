@@ -67,6 +67,7 @@ export interface GalleryResponse {
 
 export interface GallerySearchParams {
   bookId?: string;
+  collection?: string;
   query?: string;
   type?: string;
   subject?: string;

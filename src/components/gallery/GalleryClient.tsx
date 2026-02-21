@@ -89,6 +89,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
 
   // Filter state from URL
   const bookId = searchParams.get('bookId') || searchParams.get('book') || '';
+  const collectionFilter = searchParams.get('collection') || '';
   const typeFilter = searchParams.get('type') || '';
   const subjectFilter = searchParams.get('subject') || '';
   const yearStart = searchParams.get('yearStart') || '';
@@ -112,7 +113,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
 
   // Fetch gallery data (skip on initial load only if no URL filters — server data is unfiltered)
   useEffect(() => {
-    const hasUrlFilters = bookId || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    const hasUrlFilters = bookId || collectionFilter || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
     if (isInitialLoad && !hasUrlFilters) {
       setIsInitialLoad(false);
       return;
@@ -127,6 +128,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           limit,
           offset: page * limit,
           bookId: bookId || undefined,
+          collection: collectionFilter || undefined,
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
           subject: subjectFilter || undefined,
@@ -147,7 +149,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
     };
 
     fetchGallery();
-  }, [bookId, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page, qualityParam, includeArchive]);
+  }, [bookId, collectionFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page, qualityParam, includeArchive]);
 
   // Book search with debounce
   useEffect(() => {

@@ -23,6 +23,7 @@ export const gallery = {
   list: async (params?: GallerySearchParams): Promise<GalleryResponse> => {
     const queryParams = new URLSearchParams();
     if (params?.bookId) queryParams.append('bookId', params.bookId);
+    if (params?.collection) queryParams.append('collection', params.collection);
     if (params?.query) queryParams.append('q', params.query);
     if (params?.type) queryParams.append('type', params.type);
     if (params?.subject) queryParams.append('subject', params.subject);

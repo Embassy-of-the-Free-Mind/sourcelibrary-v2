@@ -127,6 +127,8 @@ export async function GET(request: NextRequest) {
         categories: typedBook.categories,
         summary: summaryText ? extractSnippet(summaryText, query) : undefined,
         snippet_type: summaryText ? 'summary' : undefined,
+        thumbnail: (typedBook as any).thumbnail,
+        thumbnail_blob: (typedBook as any).thumbnail_blob,
       };
     }
 
@@ -270,6 +272,8 @@ export async function GET(request: NextRequest) {
           page_number: page.page_number as number,
           snippet: extractSnippet(snippetSource, query),
           snippet_type: snippetType,
+          thumbnail: (book as any).thumbnail,
+          thumbnail_blob: (book as any).thumbnail_blob,
         });
       }
     }

@@ -11,6 +11,8 @@ interface BookResult {
   language: string;
   published: string;
   translation_percent?: number;
+  thumbnail?: string;
+  thumbnail_blob?: string;
 }
 
 interface IndexResult {
@@ -91,6 +93,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
     const projection = {
       id: 1, title: 1, display_title: 1, author: 1,
       language: 1, published: 1, pages_count: 1, pages_translated: 1,
+      thumbnail: 1, thumbnail_blob: 1,
       score: { $meta: 'textScore' },
     };
     books = await db.collection('books')
@@ -109,7 +112,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
         ],
         hidden: { $ne: true },
       })
-      .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1 })
+      .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, thumbnail: 1, thumbnail_blob: 1 })
       .limit(limit)
       .toArray();
   }
@@ -122,7 +125,9 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       author: b.author || 'Unknown',
       language: b.language || 'Unknown',
       published: b.published || 'Unknown',
-      translation_percent: b.pages_count > 0 ? Math.round((b.pages_translated || 0) / b.pages_count * 100) : 0
+      translation_percent: b.pages_count > 0 ? Math.round((b.pages_translated || 0) / b.pages_count * 100) : 0,
+      thumbnail: b.thumbnail,
+      thumbnail_blob: b.thumbnail_blob,
     })),
     total: books.length
   };

@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { BookOpen, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { BookOpen, Images, Loader2 } from 'lucide-react';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
 import CollectionBookCard from '@/components/CollectionBookCard';
 
@@ -15,6 +16,20 @@ interface CollectionMeta {
   color: string;
   book_count: number;
   languages: { lang: string; count: number }[];
+}
+
+interface GalleryImage {
+  pageId: string;
+  bookId: string;
+  pageNumber: number;
+  detectionIndex: number;
+  thumbnailUrl?: string;
+  extractedUrl?: string;
+  imageUrl?: string;
+  description?: string;
+  museumDescription?: string;
+  bookTitle?: string;
+  type?: string;
 }
 
 interface BookItem {
@@ -51,6 +66,8 @@ export default function CollectionDetailPage() {
   const [books, setBooks] = useState<BookItem[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [galleryLoading, setGalleryLoading] = useState(true);
 
   const sort = searchParams.get('sort') || 'year_asc';
   const language = searchParams.get('language') || '';
@@ -76,6 +93,26 @@ export default function CollectionDetailPage() {
   }, [id, sort, language, offset]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+
+  // Fetch gallery images for this collection (only once per collection id)
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchGallery() {
+      setGalleryLoading(true);
+      try {
+        const res = await fetch(`/api/gallery?collection=${encodeURIComponent(id)}&limit=24&maxPerBook=2&minQuality=0.6`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (!cancelled) setGalleryImages(data.items || []);
+      } catch {
+        // gallery is optional — silently ignore
+      } finally {
+        if (!cancelled) setGalleryLoading(false);
+      }
+    }
+    fetchGallery();
+    return () => { cancelled = true; };
+  }, [id]);
 
   const updateParams = (updates: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -127,6 +164,68 @@ export default function CollectionDetailPage() {
           {total.toLocaleString()} books
         </p>
       </div>
+
+      {/* Gallery image strip */}
+      {(galleryLoading || galleryImages.length > 0) && (
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="flex items-center gap-2 text-sm font-medium text-secondary">
+              <Images className="w-4 h-4" />
+              Illustrations
+            </h2>
+            {galleryImages.length > 0 && (
+              <Link
+                href={`/gallery?collection=${id}`}
+                className="text-xs text-accent-rust hover:underline"
+              >
+                View all illustrations →
+              </Link>
+            )}
+          </div>
+
+          {galleryLoading ? (
+            <div className="flex gap-2 overflow-hidden">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i} className="flex-shrink-0 w-28 h-28 rounded bg-warm animate-pulse" />
+              ))}
+            </div>
+          ) : (
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+              {galleryImages.map((img) => {
+                const thumb = img.thumbnailUrl || img.extractedUrl || img.imageUrl;
+                const galleryId = `${img.pageId}-${img.detectionIndex}`;
+                return (
+                  <Link
+                    key={galleryId}
+                    href={`/gallery/image/${galleryId}`}
+                    className="flex-shrink-0 group relative w-28 h-28 rounded overflow-hidden border border-border-light hover:border-accent-rust/40 transition-colors"
+                    title={img.museumDescription || img.description || img.bookTitle}
+                  >
+                    {thumb ? (
+                      <Image
+                        src={thumb}
+                        alt={img.description || img.bookTitle || 'Illustration'}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="112px"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-warm flex items-center justify-center">
+                        <Images className="w-6 h-6 text-muted" />
+                      </div>
+                    )}
+                    {img.type && (
+                      <span className="absolute bottom-1 left-1 text-[10px] bg-dark/70 text-white px-1 py-0.5 rounded capitalize leading-none">
+                        {img.type}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-3 mb-6">

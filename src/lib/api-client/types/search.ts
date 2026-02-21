@@ -22,6 +22,8 @@ export interface SearchResult {
   page_number?: number;
   snippet?: string;
   snippet_type?: 'translation' | 'ocr' | 'summary';
+  thumbnail?: string;
+  thumbnail_blob?: string;
 }
 
 export interface SearchFilters {
