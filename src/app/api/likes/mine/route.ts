@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
           { book_id: { $in: booksWithoutGallery }, page_number: 1 },
           { projection: { book_id: 1, thumbnail_blob: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
         ).toArray();
-        thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.thumbnail_blob || p.archived_photo || p.cropped_photo || p.photo]));
+        thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.archived_photo || p.cropped_photo || p.photo || p.thumbnail_blob]));
       }
 
       // Preserve the user's like order (most recent first)
@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
             year: book.year,
             published: book.published,
             language: book.language,
-            thumbnail: book.thumbnail_blob || book.cover_image || thumbMap.get(book.id),
+            thumbnail: book.cover_image || thumbMap.get(book.id) || book.thumbnail_blob,
             featured_images: gallery,
             likeCount: countMap.get(id) || 1,
           };

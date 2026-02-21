@@ -5,6 +5,9 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 
 export const preferredRegion = 'fra1';
 
+const MAX_PAGE_RESULTS = 10;
+const SNIPPET_TEXT_LIMIT = 1000;
+
 function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -133,102 +136,103 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    // When searching within a specific book, skip book-level search
-    // and only search page content
-    if (!bookId) {
-      const bookFilters = buildBookFilters();
+    // Run book search and page content search in parallel
+    const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || year || yearFrom || yearTo);
 
-      // Try $text search first (uses books_text_idx), fall back to regex
-      let books;
-      try {
-        books = await db.collection('books')
-          .find(
-            { $text: { $search: query }, ...bookFilters },
-            { projection: { score: { $meta: 'textScore' } } }
-          )
-          .sort({ score: { $meta: 'textScore' } })
-          .limit(limit)
-          .toArray();
-      } catch {
-        // Fallback: regex search on title, author, summary
-        books = await db.collection('books')
-          .find({
-            $or: [
-              { title: queryRegex },
-              { display_title: queryRegex },
-              { author: queryRegex },
-              { 'summary.data': queryRegex },
-              { summary: queryRegex },
-            ],
-            ...bookFilters,
-          })
-          .limit(limit)
-          .toArray();
-      }
+    const [bookDocs, pageDocs] = await Promise.all([
+      // --- Book text search (skip when searching within a specific book) ---
+      (async () => {
+        if (bookId) return [];
+        const bookFilters = buildBookFilters();
+        try {
+          return await db.collection('books')
+            .find(
+              { $text: { $search: query }, ...bookFilters },
+              { projection: { score: { $meta: 'textScore' } } }
+            )
+            .sort({ score: { $meta: 'textScore' } })
+            .limit(limit)
+            .toArray();
+        } catch {
+          return await db.collection('books')
+            .find({
+              $or: [
+                { title: queryRegex },
+                { display_title: queryRegex },
+                { author: queryRegex },
+                { 'summary.data': queryRegex },
+                { summary: queryRegex },
+              ],
+              ...bookFilters,
+            })
+            .limit(limit)
+            .toArray();
+        }
+      })(),
 
-      for (const book of books) {
-        results.push(bookToResult(book as unknown as Book));
-        seenBooks.add((book as any).id);
-      }
+      // --- Page content search (aggregation pipeline truncates text for snippets) ---
+      (async () => {
+        if (!searchContent) return [];
+
+        const pageFilter: Record<string, unknown> = {};
+        if (bookId) {
+          pageFilter.book_id = bookId;
+        } else if (hasBookLevelFilters) {
+          const bookIdFilter: Record<string, unknown> = { hidden: { $ne: true } };
+          if (language) bookIdFilter.language = language;
+          if (category) bookIdFilter.categories = category;
+          if (dateFrom || dateTo) {
+            bookIdFilter.published = {};
+            if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
+            if (dateTo) (bookIdFilter.published as Record<string, string>).$lte = dateTo;
+          }
+          if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
+
+          const filteredBooks = await db.collection('books')
+            .find(bookIdFilter)
+            .project({ id: 1 })
+            .toArray();
+          const allowedBookIds = filteredBooks.map(b => b.id);
+          if (allowedBookIds.length > 0) {
+            pageFilter.book_id = { $in: allowedBookIds };
+          }
+        }
+
+        const pageLimit = bookId ? limit : MAX_PAGE_RESULTS;
+
+        try {
+          // Aggregation pipeline: sort + limit first, then truncate text (avoids transferring full page content)
+          return await db.collection('pages').aggregate([
+            { $match: { $text: { $search: query }, ...pageFilter } },
+            { $sort: { score: { $meta: 'textScore' } } },
+            { $limit: pageLimit },
+            { $project: {
+              id: 1, page_number: 1, book_id: 1,
+              'translation.data': { $substrCP: [{ $ifNull: ['$translation.data', ''] }, 0, SNIPPET_TEXT_LIMIT] },
+              'ocr.data': { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, SNIPPET_TEXT_LIMIT] },
+            }},
+          ]).toArray();
+        } catch {
+          return await db.collection('pages')
+            .find(
+              { $or: [{ 'translation.data': queryRegex }, { 'ocr.data': queryRegex }], ...pageFilter },
+              { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } }
+            )
+            .limit(pageLimit)
+            .toArray();
+        }
+      })(),
+    ]);
+
+    // Process book results
+    for (const book of bookDocs) {
+      results.push(bookToResult(book as unknown as Book));
+      seenBooks.add((book as any).id);
     }
 
-    // Search page content if requested and we have room
-    // When searching within a specific book, always search content
-    if (searchContent && (bookId || results.length < limit)) {
-      const pageLimit = limit - results.length;
-
-      // Build page filter with optional book_id constraint
-      const pageFilter: Record<string, unknown> = {};
-      if (bookId) {
-        pageFilter.book_id = bookId;
-      }
-
-      // Pre-fetch allowed book IDs if book-level filters are active
-      if (!bookId && (language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true')) {
-        const bookIdFilter: Record<string, unknown> = { hidden: { $ne: true } };
-        if (language) bookIdFilter.language = language;
-        if (category) bookIdFilter.categories = category;
-        if (dateFrom || dateTo) {
-          bookIdFilter.published = {};
-          if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
-          if (dateTo) (bookIdFilter.published as Record<string, string>).$lte = dateTo;
-        }
-        if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
-
-        const filteredBooks = await db.collection('books')
-          .find(bookIdFilter)
-          .project({ id: 1 })
-          .toArray();
-        const allowedBookIds = filteredBooks.map(b => b.id);
-        if (allowedBookIds.length > 0) {
-          pageFilter.book_id = { $in: allowedBookIds };
-        }
-      }
-
-      // Try $text search first (uses pages_text_idx — searches both OCR and translation)
-      let pages;
-      try {
-        pages = await db.collection('pages')
-          .find(
-            { $text: { $search: query }, ...pageFilter },
-            { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1, score: { $meta: 'textScore' } } }
-          )
-          .sort({ score: { $meta: 'textScore' } })
-          .limit(pageLimit)
-          .toArray();
-      } catch {
-        // Fallback: regex on translation and OCR text
-        pages = await db.collection('pages')
-          .find(
-            { $or: [{ 'translation.data': queryRegex }, { 'ocr.data': queryRegex }], ...pageFilter },
-            { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } }
-          )
-          .limit(pageLimit)
-          .toArray();
-      }
-
-      // Get book info for page results
-      const pageBookIds = [...new Set(pages.map(p => p.book_id as string))];
+    // Process page results (skip if book results already fill the limit)
+    if (pageDocs.length > 0 && (bookId || results.length < limit)) {
+      const pageBookIds = [...new Set(pageDocs.map(p => p.book_id as string))];
       const bookMap = new Map<string, Book>();
 
       if (pageBookIds.length > 0) {
@@ -243,17 +247,12 @@ export async function GET(request: NextRequest) {
         }
       }
 
-      for (const page of pages) {
+      for (const page of pageDocs) {
         const book = bookMap.get(page.book_id as string);
         if (!book) continue;
-
-        // Skip hidden books
         if ((book as any).hidden === true) continue;
-
-        // Skip if we already have this book in results
         if (seenBooks.has(book.id)) continue;
 
-        // Use translation snippet if available, otherwise OCR
         const translationText = page.translation?.data as string || '';
         const ocrText = page.ocr?.data as string || '';
         const snippetSource = translationText ? translationText : ocrText;

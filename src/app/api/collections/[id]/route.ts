@@ -34,10 +34,11 @@ export async function GET(
       return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
     }
 
-    // Build book filter
+    // Build book filter — exclude empty shells (0 pages) from failed imports
     const filter: Record<string, unknown> = {
       collections: id,
       status: { $ne: 'deleted' },
+      pages_count: { $gt: 0 },
     };
     if (language) filter.language = language;
 
@@ -47,16 +48,24 @@ export async function GET(
       year_desc: { year: -1, title: 1 },
       title: { title: 1 },
       recent: { created_at: -1 },
+      popular: { read_count: -1, title: 1 },
     };
     const sortObj = sortMap[sort] || sortMap.year_asc;
 
     const projection = {
       _id: 0, id: 1, title: 1, display_title: 1, author: 1, year: 1,
       language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
-      photo: 1, categories: 1, thumbnail: 1, published: 1,
+      photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
     };
 
-    const [books, total] = await Promise.all([
+    const highlightProjection = {
+      ...projection,
+      reading_summary: 1,
+      read_count: 1,
+      quality_score: 1,
+    };
+
+    const [books, total, highlights] = await Promise.all([
       db.collection('books')
         .find(filter, { projection })
         .sort(sortObj)
@@ -64,6 +73,15 @@ export async function GET(
         .limit(limit)
         .toArray(),
       db.collection('books').countDocuments(filter),
+      // Top 5 books: prefer translated books with summaries, ranked by quality/reads
+      db.collection('books')
+        .find(
+          { collections: id, status: { $ne: 'deleted' }, pages_translated: { $gt: 0 } },
+          { projection: highlightProjection },
+        )
+        .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
+        .limit(5)
+        .toArray(),
     ]);
 
     const { _id, ...collectionClean } = collection;
@@ -71,6 +89,7 @@ export async function GET(
     return NextResponse.json({
       collection: collectionClean,
       books,
+      highlights,
       total,
       limit,
       offset,

@@ -77,7 +77,7 @@ export const books = {
    * Get roadmap (books pending processing)
    */
   getRoadmap: async (): Promise<RoadmapResponse> => {
-    return await apiClient.get('/api/roadmap');
+    return await apiClient.get('/api/books/roadmap');
   },
 
   /**

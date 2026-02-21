@@ -211,8 +211,8 @@ async function createBatchJobInline(model, requests, displayName) {
     }
 
     const errorText = await response.text();
+    console.log(`    Key ${ki} failed (${response.status}): ${errorText.substring(0, 100)}`);
     if (response.status === 429) {
-      console.log(`    Key ${ki} quota exhausted, trying key ${ki + 1}...`);
       continue;
     }
     throw new Error(`Batch create failed (${response.status}): ${errorText.substring(0, 200)}`);

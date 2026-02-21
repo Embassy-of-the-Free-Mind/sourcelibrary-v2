@@ -4,6 +4,7 @@ import type { PipelineAutoStatus } from '@/lib/types/pipeline';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { extractChaptersForBook } from '@/lib/chapter-extraction';
 import { enrichBookMetadata } from '@/lib/metadata-enrichment';
+import { scoreBookQuality } from '@/lib/quality-scoring';
 import { nanoid } from 'nanoid';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
@@ -843,6 +844,9 @@ export async function GET(request: NextRequest) {
             log.errors.push(`Enrich ${book.id}: HTTP ${res.status}`);
             continue;
           }
+
+          // Quality scoring — non-blocking, fast (~2s)
+          try { await scoreBookQuality(db, book.id); } catch { /* non-critical */ }
 
           await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
           log.enriched++;

@@ -25,6 +25,7 @@ const BOOK_ID = (() => {
   const idx = process.argv.indexOf('--book-id');
   return idx !== -1 ? process.argv[idx + 1] : null;
 })();
+const RECHECK = process.argv.includes('--recheck'); // Re-evaluate auto-selected covers
 const SCAN_PAGES = 20;
 const BATCH_SIZE = 100; // Process books in batches
 
@@ -37,11 +38,32 @@ await client.connect();
 const db = client.db('bookstore');
 
 /**
+ * Detect if a page is an ex-libris bookplate rather than real content.
+ * These are often misclassified as "frontispiece" by OCR.
+ */
+function isExLibris(page) {
+  const ocrSnippet = (page.ocr_snippet || '').toLowerCase();
+  const patterns = [
+    'bookplate', 'ex-libris', 'exlibris', 'ex libris',
+    'ownership mark', 'library sticker',
+  ];
+  if (patterns.some(p => ocrSnippet.includes(p))) return true;
+
+  // "pasted-in emblem" on early pages is almost always a bookplate
+  if (page.page_number <= 5 && ocrSnippet.includes('pasted') && ocrSnippet.includes('emblem')) return true;
+
+  return false;
+}
+
+/**
  * Score a page as a potential cover. Higher = better.
  */
 function scorePage(page) {
   let score = 0;
   const pageType = page.page_type;
+
+  // Ex-libris bookplates should never be covers
+  if (isExLibris(page)) return -50;
 
   // Page type scoring
   if (pageType === 'frontispiece') score += 100;
@@ -109,18 +131,20 @@ function isThumbnailFromPage1(book, page1) {
 
 // --- Main ---
 console.log(`\n=== Fix Book Covers ===`);
-console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
+console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}${RECHECK ? ' (recheck auto covers)' : ''}`);
 if (BOOK_ID) console.log(`Book: ${BOOK_ID}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
 // Step 1: Fetch all books (lightweight)
 const bookQuery = BOOK_ID
   ? { id: BOOK_ID }
-  : { hidden: { $ne: true } };
+  : RECHECK
+    ? { hidden: { $ne: true }, cover_source: 'auto' }
+    : { hidden: { $ne: true } };
 
 const allBooks = await db.collection('books')
   .find(bookQuery, {
-    projection: { id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1, _id: 0 }
+    projection: { id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1, cover_source: 1, _id: 0 }
   })
   .toArray();
 
@@ -137,7 +161,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
   const batchBookIds = batch.map(b => b.id);
 
   // Single query: get first SCAN_PAGES pages for all books in this batch
-  // Skip ocr.data (huge) — use page_type and detected_images instead
+  // Include ocr.data for ex-libris detection (truncated in JS to save memory)
   const allPages = await db.collection('pages')
     .find(
       { book_id: { $in: batchBookIds }, page_number: { $lte: SCAN_PAGES } },
@@ -146,11 +170,18 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
           book_id: 1, id: 1, page_number: 1, page_type: 1, detected_images: 1,
           thumbnail_blob: 1, thumbnail: 1,
           photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1,
+          'ocr.data': 1,
         }
       }
     )
     .sort({ book_id: 1, page_number: 1 })
     .toArray();
+
+  // Truncate OCR to first 500 chars for ex-libris detection (save memory)
+  for (const p of allPages) {
+    p.ocr_snippet = (p.ocr?.data || '').substring(0, 500);
+    delete p.ocr;
+  }
 
   // Group pages by book_id
   const pagesByBook = new Map();
@@ -169,7 +200,17 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     checked++;
     const page1 = pages[0];
 
-    if (!isThumbnailFromPage1(book, page1)) { skipped++; continue; }
+    // In recheck mode, find the current cover page and check if it's ex-libris
+    if (RECHECK) {
+      const bookThumb = book.thumbnail_blob || book.thumbnail || '';
+      const currentCoverPage = pages.find(p =>
+        (p.thumbnail_blob && bookThumb === p.thumbnail_blob) ||
+        (p.archived_photo && bookThumb === p.archived_photo)
+      );
+      if (!currentCoverPage || !isExLibris(currentCoverPage)) { skipped++; continue; }
+    } else {
+      if (!isThumbnailFromPage1(book, page1)) { skipped++; continue; }
+    }
 
     // Score all pages
     const scored = pages
@@ -177,9 +218,11 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
       .sort((a, b) => b.score - a.score);
 
     const best = scored[0];
+    const currentPageNum = RECHECK ? '(ex-libris)' : page1.page_number;
 
     // Min score 40: frontispiece=100, title-page=90, illustration=70, good image=~50+
-    if (best.page.page_number === page1.page_number || best.score < 40) {
+    if (!RECHECK && best.page.page_number === page1.page_number) { skipped++; continue; }
+    if (best.score < 40) {
       skipped++;
       continue;
     }
@@ -201,7 +244,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     changes.push({
       bookId: book.id,
       title: book.title?.substring(0, 60),
-      from: `page ${page1.page_number}`,
+      from: RECHECK ? 'ex-libris' : `page ${page1.page_number}`,
       to: `page ${bestPage.page_number}`,
       reason,
       score: best.score,
