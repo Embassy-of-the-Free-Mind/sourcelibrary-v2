@@ -186,6 +186,8 @@ export async function GET(request: NextRequest) {
       offset,
       bookInfo,
       filters,
+    }, {
+      headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },
     });
   } catch (error) {
     console.error('Gallery error:', error);

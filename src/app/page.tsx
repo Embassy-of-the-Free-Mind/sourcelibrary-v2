@@ -17,93 +17,73 @@ async function getBooks(): Promise<{ books: Book[]; totalBooks: number; translat
   try {
     const db = await getDb();
 
-    const [books, totalBooks, translatedCount] = await Promise.all([
-      db.collection('books').aggregate([
-        { $match: { hidden: { $ne: true } } },
-        {
-          $addFields: {
-            id: { $ifNull: ['$id', { $toString: '$_id' }] },
-            pages_count: { $ifNull: ['$pages_count', 0] },
-            pages_translated: { $ifNull: ['$pages_translated', 0] },
-            pages_ocr: { $ifNull: ['$pages_ocr', 0] },
-            last_processed: { $ifNull: ['$updated_at', '$created_at'] },
-            translation_percent: {
-              $cond: {
-                if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
-                then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 0] }] }, 100] }] },
-                else: 0,
-              },
-            },
-            is_efm_translated: {
-              $cond: {
-                if: {
-                  $and: [
-                    { $eq: ['$image_source.provider', 'efm'] },
-                    { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
-                    { $gte: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 1] }] }, 100] }, 90] },
-                  ],
-                },
-                then: 1,
-                else: 0,
-              },
-            },
-            // Category priority: alchemy/astrology/hermeticism first, christian-mysticism/theology last
-            category_score: {
-              $sum: {
-                $map: {
-                  input: { $ifNull: ['$categories', []] },
-                  as: 'cat',
-                  in: {
-                    $switch: {
-                      branches: [
-                        { case: { $in: ['$$cat', ['alchemy', 'astrology', 'hermeticism', 'jewish-kabbalah', 'natural-magic', 'ritual-magic']] }, then: 3 },
-                        { case: { $in: ['$$cat', ['neoplatonism', 'rosicrucianism', 'theosophy', 'divination', 'florentine-platonism', 'prisca-theologia', 'spiritual-alchemy']] }, then: 2 },
-                        { case: { $in: ['$$cat', ['mysticism', 'natural-philosophy', 'philosophy', 'medicine', 'paracelsian']] }, then: 1 },
-                        { case: { $in: ['$$cat', ['christian-mysticism', 'theology', 'biblical-studies']] }, then: -1 },
-                      ],
-                      default: 0,
-                    },
+    // Single aggregation with $facet: gets books + counts in one collection scan
+    const [result] = await db.collection('books').aggregate([
+      { $match: { hidden: { $ne: true } } },
+      {
+        $facet: {
+          books: [
+            {
+              $addFields: {
+                id: { $ifNull: ['$id', { $toString: '$_id' }] },
+                pages_count: { $ifNull: ['$pages_count', 0] },
+                pages_translated: { $ifNull: ['$pages_translated', 0] },
+                pages_ocr: { $ifNull: ['$pages_ocr', 0] },
+                last_processed: { $ifNull: ['$updated_at', '$created_at'] },
+                translation_percent: {
+                  $cond: {
+                    if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+                    then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 0] }] }, 100] }] },
+                    else: 0,
                   },
                 },
+                is_efm_translated: {
+                  $cond: {
+                    if: {
+                      $and: [
+                        { $eq: ['$image_source.provider', 'efm'] },
+                        { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+                        { $gte: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 1] }] }, 100] }, 90] },
+                      ],
+                    },
+                    then: 1,
+                    else: 0,
+                  },
+                },
+                quality_score: { $ifNull: ['$quality_score', 0] },
               },
             },
-          },
+            { $sort: { is_efm_translated: -1, quality_score: -1, last_translation_at: -1, last_processed: -1, title: 1 } },
+            { $limit: INITIAL_SERVER_LIMIT },
+            {
+              $project: {
+                _id: 0, id: 1, title: 1, display_title: 1, author: 1,
+                thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1,
+                categories: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+                translation_percent: 1, last_processed: 1, last_translation_at: 1, featured: 1,
+              },
+            },
+          ],
+          counts: [
+            {
+              $group: {
+                _id: null,
+                total: { $sum: 1 },
+                translated: { $sum: { $cond: [{ $gt: [{ $ifNull: ['$pages_translated', 0] }, 0] }, 1, 0] } },
+              },
+            },
+          ],
         },
-        // EFM translated first, then by category priority, then by most recent translation
-        {
-          $sort: { is_efm_translated: -1, category_score: -1, last_translation_at: -1, last_processed: -1, title: 1 },
-        },
-        { $limit: INITIAL_SERVER_LIMIT },
-        {
-          $project: {
-            _id: 0,
-            id: 1,
-            title: 1,
-            display_title: 1,
-            author: 1,
-            thumbnail: 1,
-            thumbnail_blob: 1,
-            language: 1,
-            published: 1,
-            categories: 1,
-            pages_count: 1,
-            pages_ocr: 1,
-            pages_translated: 1,
-            translation_percent: 1,
-            last_processed: 1,
-            last_translation_at: 1,
-            featured: 1,
-          },
-        },
-      ]).toArray(),
-      db.collection('books').countDocuments({ hidden: { $ne: true } }),
-      db.collection('books').countDocuments({ hidden: { $ne: true }, pages_translated: { $gt: 0 } }),
-    ]);
+      },
+    ]).toArray();
+
+    const books = result?.books || [];
+    const counts = result?.counts?.[0] || { total: 0, translated: 0 };
 
     return {
       books: JSON.parse(JSON.stringify(books)) as Book[],
-      totalBooks,
-      translatedCount,
+      totalBooks: counts.total,
+      translatedCount: counts.translated,
     };
   } catch (error) {
     console.error('Error fetching books:', error);
@@ -130,10 +110,46 @@ async function getCollections(): Promise<CollectionForGrid[]> {
   }
 }
 
+async function getRecentlyTranslated(): Promise<Book[]> {
+  try {
+    const db = await getDb();
+    const books = await db.collection('books').find({
+      hidden: { $ne: true },
+      pages_translated: { $gt: 0 },
+      last_translation_at: { $exists: true },
+    }).sort({ last_translation_at: -1 }).limit(10).project({
+      _id: 0,
+      id: { $ifNull: ['$id', { $toString: '$_id' }] },
+      title: 1,
+      display_title: 1,
+      author: 1,
+      thumbnail: 1,
+      thumbnail_blob: 1,
+      language: 1,
+      published: 1,
+      pages_count: { $ifNull: ['$pages_count', 0] },
+      pages_translated: { $ifNull: ['$pages_translated', 0] },
+      pages_ocr: { $ifNull: ['$pages_ocr', 0] },
+      translation_percent: {
+        $cond: {
+          if: { $gt: [{ $ifNull: ['$pages_count', 0] }, 0] },
+          then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_count', 0] }] }, 100] }] },
+          else: 0,
+        },
+      },
+    }).toArray();
+    return JSON.parse(JSON.stringify(books)) as Book[];
+  } catch (error) {
+    console.error('Error fetching recently translated:', error);
+    return [];
+  }
+}
+
 async function LibrarySection() {
-  const [{ books, totalBooks, translatedCount }, collections] = await Promise.all([
+  const [{ books, totalBooks, translatedCount }, collections, recentlyTranslated] = await Promise.all([
     getBooks(),
     getCollections(),
+    getRecentlyTranslated(),
   ]);
 
   const languages = [...new Set(books.map(b => b.language))].filter(Boolean) as string[];
@@ -146,6 +162,7 @@ async function LibrarySection() {
         totalBooks={totalBooks}
         languages={languages}
         collections={collections}
+        recentlyTranslated={recentlyTranslated}
       />
     </>
   );
@@ -187,6 +204,29 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Search Section */}
+      <section className="bg-gradient-to-b from-white to-[#f6f3ee] py-16 md:py-20">
+        <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
+          <h2 className="text-2xl md:text-3xl text-gray-900 mb-3" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+            Search the collection
+          </h2>
+          <p className="text-stone-500 mb-6">
+            Search across books, translations, and AI-generated indexes
+          </p>
+          <form action="/search" method="get" className="relative max-w-lg mx-auto">
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input
+              type="text"
+              name="q"
+              placeholder="Hermes, alchemy, Ficino..."
+              className="w-full pl-12 pr-4 py-3.5 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-600/20 focus:border-amber-600 shadow-sm"
+            />
+          </form>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
@@ -195,11 +235,15 @@ export default async function HomePage() {
             <img
               src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
               alt="Embassy of the Free Mind"
+              loading="lazy"
+              decoding="async"
               className="h-16 md:h-20 w-auto object-contain"
             />
             <img
               src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif"
               alt="UNESCO Memory of the World"
+              loading="lazy"
+              decoding="async"
               className="h-20 md:h-24 w-auto object-contain"
             />
           </div>

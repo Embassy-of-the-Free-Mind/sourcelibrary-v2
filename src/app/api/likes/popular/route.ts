@@ -34,6 +34,8 @@ interface PopularImage {
  *   - limit: number (default: 20, max: 50)
  *   - min_likes: number (default: 1)
  */
+const CACHE_HEADERS = { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=600' };
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -72,7 +74,7 @@ export async function GET(request: NextRequest) {
     const popularItems = await db.collection('likes').aggregate(popularPipeline).toArray();
 
     if (popularItems.length === 0) {
-      return NextResponse.json({ items: [], total: 0 });
+      return NextResponse.json({ items: [], total: 0 }, { headers: CACHE_HEADERS });
     }
 
     // For images, enrich with full data (batch queries to avoid N+1)
@@ -149,7 +151,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({
         items: enrichedImages,
         total: enrichedImages.length,
-      });
+      }, { headers: CACHE_HEADERS });
     }
 
     // For books, enrich with title/author/year + top 3 extracted illustrations
@@ -178,7 +180,7 @@ export async function GET(request: NextRequest) {
           { book_id: { $in: booksWithoutGallery }, page_number: 1 },
           { projection: { book_id: 1, thumbnail_blob: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
         ).toArray();
-        thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.thumbnail_blob || p.archived_photo || p.cropped_photo || p.photo]));
+        thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.archived_photo || p.cropped_photo || p.photo || p.thumbnail_blob]));
       }
 
       const enrichedBooks = popularItems
@@ -196,14 +198,14 @@ export async function GET(request: NextRequest) {
             pages_count: book.pages_count,
             pages_ocr: book.pages_ocr,
             pages_translated: book.pages_translated,
-            thumbnail: book.thumbnail_blob || book.cover_image || thumbMap.get(book.id),
+            thumbnail: book.cover_image || thumbMap.get(book.id) || book.thumbnail_blob,
             featured_images: gallery,
             likeCount: item.count,
           };
         })
         .filter(Boolean);
 
-      return NextResponse.json({ items: enrichedBooks, total: enrichedBooks.length });
+      return NextResponse.json({ items: enrichedBooks, total: enrichedBooks.length }, { headers: CACHE_HEADERS });
     }
 
     // For pages, enrich with page content and book info
@@ -245,7 +247,7 @@ export async function GET(request: NextRequest) {
         })
         .filter(Boolean);
 
-      return NextResponse.json({ items: enrichedPages, total: enrichedPages.length });
+      return NextResponse.json({ items: enrichedPages, total: enrichedPages.length }, { headers: CACHE_HEADERS });
     }
 
     // Fallback for unknown types

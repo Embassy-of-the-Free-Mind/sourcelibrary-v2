@@ -42,7 +42,9 @@ export async function GET(request: NextRequest) {
       coverImage: coverPages.get(c.cover_image_id as string) || null,
     }));
 
-    return NextResponse.json({ collections: items, total: items.length });
+    return NextResponse.json({ collections: items, total: items.length }, {
+      headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+    });
   } catch (error) {
     console.error('List collections error:', error);
     return NextResponse.json(

@@ -36,7 +36,9 @@ export async function GET(request: NextRequest) {
 
     // Return cached global stats if fresh
     if (globalStatsCache && (Date.now() - globalStatsCache.timestamp) < CACHE_TTL_MS) {
-      return NextResponse.json(globalStatsCache.data);
+      return NextResponse.json(globalStatsCache.data, {
+        headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' },
+      });
     }
 
     // Get global stats - fast queries only (called on every page load via footer)
@@ -67,7 +69,9 @@ export async function GET(request: NextRequest) {
 
     globalStatsCache = { data, timestamp: Date.now() };
 
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: { 'Cache-Control': 'public, max-age=60, stale-while-revalidate=300' },
+    });
   } catch (error) {
     console.error('Analytics stats error:', error);
     return NextResponse.json(

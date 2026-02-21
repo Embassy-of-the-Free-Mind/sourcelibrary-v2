@@ -38,7 +38,7 @@ function buildDiacriticPattern(search: string): string {
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
-function buildSortStage(sort: SortOption) {
+function buildSortStage(sort: SortOption, collection?: string): { $sort: Record<string, 1 | -1> } {
   switch (sort) {
     case 'recent':
       return { $sort: { last_processed: -1, title: 1 } as Record<string, 1 | -1> };
@@ -48,7 +48,11 @@ function buildSortStage(sort: SortOption) {
       return { $sort: { sort_title: -1 } as Record<string, 1 | -1> };
     case 'recent-translation':
     default:
-      return { $sort: { is_efm_translated: -1, category_score: -1, has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
+      // When viewing a collection, sort by relevance score first
+      if (collection) {
+        return { $sort: { _collection_relevance: -1, has_translations: -1, title: 1 } as Record<string, 1 | -1> };
+      }
+      return { $sort: { is_efm_translated: -1, quality_score: -1, has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
   }
 }
 
@@ -67,7 +71,10 @@ export async function GET(request: NextRequest) {
     const isDefaultView = !search.trim() && !language && !category && !collection && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
     if (isDefaultView && defaultViewCache && (Date.now() - defaultViewCache.timestamp) < DEFAULT_CACHE_TTL) {
       return new NextResponse(defaultViewCache.data, {
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
+        },
       });
     }
 
@@ -155,29 +162,17 @@ export async function GET(request: NextRequest) {
               else: 0,
             },
           },
-          category_score: {
-            $sum: {
-              $map: {
-                input: { $ifNull: ['$categories', []] },
-                as: 'cat',
-                in: {
-                  $switch: {
-                    branches: [
-                      { case: { $in: ['$$cat', ['alchemy', 'astrology', 'hermeticism', 'jewish-kabbalah', 'natural-magic', 'ritual-magic']] }, then: 3 },
-                      { case: { $in: ['$$cat', ['neoplatonism', 'rosicrucianism', 'theosophy', 'divination', 'florentine-platonism', 'prisca-theologia', 'spiritual-alchemy']] }, then: 2 },
-                      { case: { $in: ['$$cat', ['mysticism', 'natural-philosophy', 'philosophy', 'medicine', 'paracelsian']] }, then: 1 },
-                      { case: { $in: ['$$cat', ['christian-mysticism', 'theology', 'biblical-studies']] }, then: -1 },
-                    ],
-                    default: 0,
-                  },
-                },
-              },
-            },
-          },
+          quality_score: { $ifNull: ['$quality_score', 0] },
           sort_title: { $toLower: { $ifNull: ['$display_title', '$title'] } },
+          // When filtering by collection, extract the relevance score for sorting
+          ...(collection ? {
+            _collection_relevance: {
+              $ifNull: [`$collection_relevance.${collection}`, 0],
+            },
+          } : {}),
         },
       },
-      buildSortStage(sort),
+      buildSortStage(sort, collection || undefined),
       {
         $facet: {
           books: [
@@ -225,7 +220,10 @@ export async function GET(request: NextRequest) {
     }
 
     return new NextResponse(responseData, {
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
+      },
     });
   } catch (error) {
     console.error('Error in /api/books/library:', error);

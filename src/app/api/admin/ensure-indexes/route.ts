@@ -214,6 +214,20 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Books - quality score sort (homepage, library default sort)
+    try {
+      await db.collection('books').createIndex(
+        { quality_score: -1 },
+        { name: 'books_quality_score_idx', background: true, sparse: true }
+      );
+      results['books.books_quality_score_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_quality_score_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Books - recently translated sort (homepage, library default sort)
     // Query: { hidden: { $ne: true }, pages_translated: { $gt: 0 }, last_translation_at: { $exists: true } }
     try {
@@ -268,6 +282,36 @@ export const POST = withAuth(async (request, session) => {
     } catch (e) {
       const err = e as Error;
       results['books.books_language_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - author lookup (book detail page: "other books by this author" count)
+    // Query: { author: book.author, id: { $ne: book.id } }
+    try {
+      await db.collection('books').createIndex(
+        { author: 1 },
+        { name: 'books_author_idx', background: true }
+      );
+      results['books.books_author_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_author_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - work_id lookup (WEMI work-level grouping: "other editions of this work")
+    // Query: { work_id: workId, id: { $ne: book.id } }
+    try {
+      await db.collection('books').createIndex(
+        { work_id: 1 },
+        { name: 'books_work_id_idx', background: true, sparse: true }
+      );
+      results['books.books_work_id_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_work_id_idx'] = err.message.includes('already exists')
         ? 'exists'
         : `error: ${err.message}`;
     }
@@ -914,7 +958,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'deleted_books', 'gemini_usage', 'audit_log', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

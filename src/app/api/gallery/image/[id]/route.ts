@@ -112,6 +112,8 @@ export async function GET(
           galleryUrl: `/gallery?bookId=${galleryDoc.book_id}`,
           citation: `${galleryDoc.book_author || ''}, "${galleryDoc.book_title || 'Unknown'}", p. ${galleryDoc.page_number}, Source Library`,
           orphaned: true, // Signal to UI that source page is gone
+        }, {
+          headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
         });
       }
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
@@ -224,7 +226,9 @@ export async function GET(
       citation: buildCitation(pageData, detection)
     };
 
-    return NextResponse.json(response);
+    return NextResponse.json(response, {
+      headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+    });
   } catch (error) {
     console.error('Gallery image error:', error);
     return NextResponse.json(
