@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" fill="white">
+  <g transform="translate(0, 6)">
+    <!-- Simplified TU Delft flame/torch mark -->
+    <path d="M10,28 L10,12 C10,8 14,4 17,2 C14,6 16,8 17,10 C18,8 16,6 17,2 C20,4 24,8 24,12 L24,28 Z" fill-rule="evenodd"/>
+  </g>
+  <text x="32" y="20" font-family="sans-serif" font-size="14" font-weight="700" letter-spacing="0.5">TU Delft</text>
+  <text x="32" y="32" font-family="sans-serif" font-size="7" letter-spacing="0.2">Delft University of Technology</text>
+</svg>

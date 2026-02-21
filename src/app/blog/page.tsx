@@ -20,6 +20,13 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'astrological-diagrams',
+    title: 'Reading the Stars: Astrological Diagrams from Nine Centuries',
+    subtitle: 'A visual tour of Source Library\'s astrological collection — from the 10th-century Dunhuang Star Chart and Ptolemy\'s horoscope diagrams to Copernicus\'s heliocentric revolution and Kircher\'s constellation maps.',
+    date: '21 February 2026',
+    readTime: '20 min read',
+  },
+  {
     slug: 'first-translations',
     title: '314 First English Translations',
     subtitle: 'Roughly a quarter of Source Library\'s 1,234 books appear to be first-ever English translations — alchemical lab manuals, radical theology, women alchemists, and founding texts of biblical criticism, all trapped in Latin, German, and French until now.',
