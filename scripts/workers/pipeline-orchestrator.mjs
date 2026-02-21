@@ -211,12 +211,13 @@ async function createBatchJobInline(model, requests, displayName) {
     }
 
     const errorText = await response.text();
-    if (response.status === 429 && ki < GEMINI_BATCH_KEYS.length - 1) {
+    if (response.status === 429) {
       console.log(`    Key ${ki} quota exhausted, trying key ${ki + 1}...`);
       continue;
     }
     throw new Error(`Batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
   }
+  throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 }
 
 async function getOcrPromptFromDb(db) {
@@ -543,7 +544,11 @@ async function run() {
           await sleep(API_DELAY_MS);
         } catch (err) {
           const msg = err.message || String(err);
-          if (msg.includes('image downloads failed')) {
+          if (msg.includes('ALL_KEYS_QUOTA_EXHAUSTED')) {
+            console.log(`  All Gemini keys quota exhausted — stopping OCR submissions`);
+            log.errors.push('OCR: All API keys quota exhausted');
+            break; // Stop trying more books
+          } else if (msg.includes('image downloads failed')) {
             await setPipelineStatus(db, book.id, 'needs_attention', { error: msg });
             log.needs_attention++;
           } else if (retries >= MAX_RETRIES) {
