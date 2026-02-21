@@ -4,7 +4,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, Images, Loader2, ArrowLeft } from 'lucide-react';
+import { BookOpen, Images, ArrowLeft } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 import CollectionBookCard from '@/components/CollectionBookCard';
 
 interface CollectionMeta {
@@ -201,10 +202,8 @@ export default function CollectionDetailPage() {
 
   if (loading && !collection) {
     return (
-      <div className="min-h-screen bg-cream">
-        <div className="flex justify-center py-20">
-          <Loader2 className="w-8 h-8 animate-spin text-muted" />
-        </div>
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <BookLoader />
       </div>
     );
   }
