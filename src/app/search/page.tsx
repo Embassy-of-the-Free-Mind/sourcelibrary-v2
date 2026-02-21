@@ -120,7 +120,7 @@ export default function SearchPage() {
         const [bookData, indexData, imageData] = await Promise.all([
           searchApi.search(q, { limit: PREVIEW_BOOKS }),
           searchApi.index(q, {}),
-          galleryApi.list({ query: q, limit: PREVIEW_IMAGES }),
+          galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }),
         ]);
         setBookResults(bookData.results || []);
         setBookTotal(bookData.total || 0);
@@ -453,48 +453,37 @@ export default function SearchPage() {
               </section>
             )}
 
-            {/* Books Section */}
-            {bookTotal > 0 && (
+            {/* Results — books and index entries together */}
+            {(bookTotal > 0 || indexTotal > 0) && (
               <section>
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="flex items-center gap-2 text-xl font-semibold text-primary">
-                    <Book className="w-6 h-6 text-accent-rust" />
-                    Books & Pages
-                    <span className="text-base font-normal text-muted">({bookTotal})</span>
+                    <Search className="w-6 h-6 text-accent-rust" />
+                    Results
+                    <span className="text-base font-normal text-muted">({bookTotal + indexTotal})</span>
                   </h2>
-                  {bookTotal > PREVIEW_BOOKS && (
-                    <button onClick={() => drillInto('books')} className="px-4 py-2 bg-accent-rust/10 text-accent-rust font-medium rounded-lg hover:bg-accent-rust/20 transition-colors flex items-center gap-1.5">
-                      See all {bookTotal} books <ChevronRight className="w-4 h-4" />
-                    </button>
-                  )}
                 </div>
+
                 <div className="space-y-3">
+                  {/* Books first */}
                   {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
                     <BookResultCard key={result.id} result={result} query={query} />
                   ))}
-                </div>
-              </section>
-            )}
-
-            {/* Index Section */}
-            {indexTotal > 0 && (
-              <section>
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-xl font-semibold text-primary">
-                    <Lightbulb className="w-6 h-6 text-accent-violet" />
-                    Index
-                    <span className="text-base font-normal text-muted">({indexTotal})</span>
-                  </h2>
-                  {indexTotal > PREVIEW_INDEX && (
-                    <button onClick={() => drillInto('index')} className="px-4 py-2 bg-accent-violet/10 text-accent-violet font-medium rounded-lg hover:bg-accent-violet/20 transition-colors flex items-center gap-1.5">
-                      See all {indexTotal} entries <ChevronRight className="w-4 h-4" />
+                  {bookTotal > PREVIEW_BOOKS && (
+                    <button onClick={() => drillInto('books')} className="w-full py-3 bg-accent-rust/8 text-accent-rust font-medium rounded-xl hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
+                      See all {bookTotal} books & pages <ChevronRight className="w-4 h-4" />
                     </button>
                   )}
-                </div>
-                <div className="space-y-3">
+
+                  {/* Index entries after books */}
                   {indexResults.slice(0, PREVIEW_INDEX).map((result, idx) => (
                     <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
                   ))}
+                  {indexTotal > PREVIEW_INDEX && (
+                    <button onClick={() => drillInto('index')} className="w-full py-3 bg-accent-violet/8 text-accent-violet font-medium rounded-xl hover:bg-accent-violet/15 transition-colors flex items-center justify-center gap-1.5">
+                      See all {indexTotal} index entries <ChevronRight className="w-4 h-4" />
+                    </button>
+                  )}
                 </div>
               </section>
             )}
@@ -572,33 +561,15 @@ export default function SearchPage() {
 // ==================== RESULT CARDS ====================
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
-  const [thumbError, setThumbError] = useState(false);
-  const coverUrl = result.thumbnail_blob || result.thumbnail;
-
   return (
     <Link
       href={result.type === 'page' ? `/book/${result.book_id}/page/${result.page_number}` : `/book/${result.book_id}`}
       className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
-        {/* Book cover thumbnail */}
-        {coverUrl && !thumbError ? (
-          <div className="w-16 h-20 md:w-20 md:h-26 flex-shrink-0 rounded-lg overflow-hidden bg-warm">
-            <Image
-              src={coverUrl}
-              alt=""
-              width={80}
-              height={104}
-              sizes="80px"
-              className="w-full h-full object-cover"
-              onError={() => setThumbError(true)}
-            />
-          </div>
-        ) : (
-          <div className={`p-2.5 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-accent-rust/10' : 'bg-accent-sage/12'}`}>
-            {result.type === 'book' ? <Book className="w-5 h-5 text-accent-rust" /> : <FileText className="w-5 h-5 text-accent-sage-dark" />}
-          </div>
-        )}
+        <div className={`p-2.5 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-accent-rust/10' : 'bg-accent-sage/12'}`}>
+          {result.type === 'book' ? <Book className="w-5 h-5 text-accent-rust" /> : <FileText className="w-5 h-5 text-accent-sage-dark" />}
+        </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
