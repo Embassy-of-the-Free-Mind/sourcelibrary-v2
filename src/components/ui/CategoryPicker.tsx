@@ -93,9 +93,8 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
           selected.map(catId => (
             <span
               key={catId}
-              className="inline-flex items-center gap-1 px-2 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-medium"
+              className="inline-flex items-center gap-1 px-2.5 py-1 bg-accent-gold/10 text-accent-gold-dark rounded-full text-xs font-medium"
             >
-              <span>{getCategoryIcon(catId)}</span>
               {getCategoryName(catId)}
             </span>
           ))

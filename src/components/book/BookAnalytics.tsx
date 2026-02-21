@@ -7,6 +7,7 @@ import { sendGAEvent } from '@/lib/ga';
 
 interface BookAnalyticsProps {
   bookId: string;
+  className?: string;
 }
 
 interface BookStats {
@@ -14,7 +15,7 @@ interface BookStats {
   edits?: number;
 }
 
-export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
+export default function BookAnalytics({ bookId, className }: BookAnalyticsProps) {
   const [stats, setStats] = useState<BookStats | null>(null);
 
   useEffect(() => {
@@ -32,20 +33,22 @@ export default function BookAnalytics({ bookId }: BookAnalyticsProps) {
       .catch(console.error);
   }, [bookId]);
 
+  const colorClass = className || 'text-stone-400';
+
   // Show placeholder while loading to prevent layout shift
   if (!stats) {
     return (
-      <div className="flex items-center gap-4 text-sm text-stone-400">
+      <div className={`flex items-center gap-4 text-sm ${colorClass}`}>
         <div className="flex items-center gap-1.5">
           <Eye className="w-4 h-4 opacity-50" />
-          <span className="w-8 h-4 bg-stone-200 rounded animate-pulse" />
+          <span className="w-8 h-4 bg-current/20 rounded animate-pulse" />
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center gap-4 text-sm text-stone-400">
+    <div className={`flex items-center gap-4 text-sm ${colorClass}`}>
       <div className="flex items-center gap-1.5" title="Times viewed">
         <Eye className="w-4 h-4" />
         <span>{stats.reads}</span>

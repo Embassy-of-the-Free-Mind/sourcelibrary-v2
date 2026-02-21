@@ -15,6 +15,7 @@ interface ShareButtonProps {
 
   // Display options
   variant?: 'icon' | 'button' | 'menu';
+  label?: string;          // Optional text label next to icon (icon variant only)
   className?: string;
 }
 
@@ -27,6 +28,7 @@ export default function ShareButton({
   url,
   doi,
   variant = 'icon',
+  label,
   className = '',
 }: ShareButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
@@ -110,10 +112,11 @@ export default function ShareButton({
       <div className="relative inline-block">
         <button
           onClick={() => setShowMenu(!showMenu)}
-          className={`p-2 text-stone-500 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors ${className}`}
+          className={`inline-flex items-center gap-1.5 p-2 text-stone-500 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors ${className}`}
           title="Share"
         >
           {copied ? <Check className="w-4 h-4 text-green-600" /> : <Share2 className="w-4 h-4" />}
+          {label && <span className="text-sm">{label}</span>}
         </button>
 
         {showMenu && (
@@ -220,6 +223,7 @@ export function BookShare({
   year,
   bookId,
   doi,
+  label,
   className = '',
 }: {
   title: string;
@@ -227,6 +231,7 @@ export function BookShare({
   year?: string;
   bookId: string;
   doi?: string;
+  label?: string;
   className?: string;
 }) {
   const baseUrl = typeof window !== 'undefined'
@@ -241,6 +246,7 @@ export function BookShare({
       url={`${baseUrl}/book/${bookId}`}
       doi={doi}
       variant="icon"
+      label={label}
       className={className}
     />
   );

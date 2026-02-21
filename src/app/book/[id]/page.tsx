@@ -19,7 +19,6 @@ import CategoryPicker from '@/components/ui/CategoryPicker';
 import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
-import AddToBookshelfButton from '@/components/bookshelf/AddToBookshelfButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 // RegistrationWall removed — gating handled client-side by BetaGateModal in BookPagesSection
 // auth import removed — gating handled client-side by useBetaGate
@@ -335,71 +334,73 @@ async function BookInfo({ id }: { id: string }) {
               </div>
 
               {/* Actions */}
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-5 text-sm">
-                {/* Primary action */}
-                {isComplete ? (
-                  <PublishEditionButton
-                    bookId={book.id}
-                    bookTitle={book.display_title || book.title}
-                    translatedCount={translatedCount}
-                    totalPages={pages.length}
-                    currentEdition={currentEdition}
-                  />
-                ) : (
-                  <span className="flex items-center gap-1.5 px-3 py-1.5 text-stone-500 cursor-not-allowed" title="Complete OCR, translation & summary first">
-                    <BookMarked className="w-4 h-4" />
-                    <span className="opacity-60">Publish</span>
-                  </span>
-                )}
+              <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                  {/* Publish — admin only */}
+                  <AuthCheck>
+                    {isComplete ? (
+                      <PublishEditionButton
+                        bookId={book.id}
+                        bookTitle={book.display_title || book.title}
+                        translatedCount={translatedCount}
+                        totalPages={pages.length}
+                        currentEdition={currentEdition}
+                      />
+                    ) : (
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 text-stone-500 cursor-not-allowed" title="Complete OCR, translation & summary first">
+                        <BookMarked className="w-4 h-4" />
+                        <span className="opacity-60">Publish</span>
+                      </span>
+                    )}
+                  </AuthCheck>
 
-                {/* Utility actions — grouped in a subtle container */}
-                <div className="flex flex-wrap items-center gap-1 rounded-lg bg-white/5 px-1 py-0.5">
-                  <AddToBookshelfButton bookId={book.id} />
-                  <div className="px-2 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors">
-                    <LikeButton
-                      targetType="book"
-                      targetId={book.id}
-                      size="sm"
-                      showCount={true}
+                  {/* Utility actions */}
+                  <div className="flex flex-wrap items-center gap-1 rounded-lg bg-white/5 px-1 py-0.5">
+                    <CiteButton
+                      bookId={book.id}
+                      title={book.title}
+                      displayTitle={book.display_title}
+                      author={book.author}
+                      year={book.published}
+                      publisher={book.publisher}
+                      placePublished={book.place_published}
+                      language={book.language}
+                      doi={book.doi}
+                      className="text-stone-300 hover:text-white hover:bg-white/10"
+                    />
+                    <DownloadButton
+                      bookId={book.id}
+                      hasTranslations={hasTranslations}
+                      hasOcr={hasOcr}
+                      hasImages={pages.length > 0}
+                      variant="header"
+                    />
+                    <span className="w-px h-5 bg-white/10 mx-1" />
+                    <div className="flex items-center gap-2.5 px-2 py-1.5">
+                      <BookAnalytics bookId={book.id} className="text-stone-300" />
+                      <LikeButton
+                        targetType="book"
+                        targetId={book.id}
+                        size="sm"
+                        showCount={true}
+                        className="text-stone-300"
+                      />
+                    </div>
+                    <span className="w-px h-5 bg-white/10 mx-1" />
+                    <BookShare
+                      title={book.display_title || book.title}
+                      author={book.author}
+                      year={book.published}
+                      bookId={book.id}
+                      doi={book.doi}
+                      label="Share"
+                      className="text-stone-300 hover:text-white hover:bg-white/10"
                     />
                   </div>
-                  <BookShare
-                    title={book.display_title || book.title}
-                    author={book.author}
-                    year={book.published}
-                    bookId={book.id}
-                    doi={book.doi}
-                    className="text-stone-300 hover:text-white hover:bg-white/10"
-                  />
-                  <CiteButton
-                    bookId={book.id}
-                    title={book.title}
-                    displayTitle={book.display_title}
-                    author={book.author}
-                    year={book.published}
-                    publisher={book.publisher}
-                    placePublished={book.place_published}
-                    language={book.language}
-                    doi={book.doi}
-                    className="text-stone-300 hover:text-white hover:bg-white/10"
-                  />
-                  <Link
-                    href={`/gallery?bookId=${book.id}`}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                  >
-                    <Images className="w-4 h-4" />
-                    {imageCount > 0 ? `${imageCount} images` : 'Gallery'}
-                  </Link>
-                  <DownloadButton
-                    bookId={book.id}
-                    hasTranslations={hasTranslations}
-                    hasOcr={hasOcr}
-                    hasImages={pages.length > 0}
-                    variant="header"
-                  />
-                  <BookAnalytics bookId={book.id} />
-                  <SearchPanel bookId={book.id} />
                 </div>
+
+                {/* Search — separate line */}
+                <SearchPanel bookId={book.id} />
               </div>
 
               {/* Bibliographic Info */}
