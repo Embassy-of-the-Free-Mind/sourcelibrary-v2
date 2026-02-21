@@ -84,7 +84,7 @@ export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
               {Array.from({ length: RINGS }).map((_, r) => {
                 const radius = (r + 1) * RING_SPACING;
                 // Outer rings fade more
-                const opacity = 0.55 - r * 0.04;
+                const opacity = 0.75 - r * 0.06;
                 return (
                   <circle
                     key={r}
@@ -93,13 +93,13 @@ export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
                     r={radius}
                     fill="none"
                     stroke="var(--accent-rust)"
-                    strokeWidth={r === 0 ? 1.2 : 0.8}
-                    opacity={Math.max(opacity, 0.12)}
+                    strokeWidth={r === 0 ? 2 : 1.2}
+                    opacity={Math.max(opacity, 0.18)}
                   />
                 );
               })}
               {/* Center dot */}
-              <circle cx={x} cy={y} r={3} fill="var(--accent-rust)" opacity="0.8" />
+              <circle cx={x} cy={y} r={4} fill="var(--accent-rust)" opacity="0.9" />
             </g>
           );
         })}
