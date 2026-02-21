@@ -44,9 +44,8 @@ const NAV_COLUMNS = [
 ] as const;
 
 const PARTNERS = [
-  { name: 'Embassy of the Free Mind', src: '/partners/efm-white.svg', href: 'https://embassyofthefreemind.com', width: 200, height: 40 },
-  { name: 'UNESCO Memory of the World', src: '/partners/unesco-white.svg', href: 'https://en.unesco.org/programme/mow', width: 200, height: 40 },
-  { name: 'TU Delft', src: '/partners/tudelft-white.svg', href: 'https://www.tudelft.nl', width: 180, height: 40 },
+  { name: 'Embassy of the Free Mind', src: 'https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png', href: 'https://embassyofthefreemind.com', width: 200, height: 60 },
+  { name: 'UNESCO Memory of the World', src: 'https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif', href: 'https://en.unesco.org/programme/mow', width: 200, height: 60 },
 ];
 
 export default function GlobalFooter() {
@@ -181,7 +180,7 @@ export default function GlobalFooter() {
                   width={partner.width}
                   height={partner.height}
                   sizes="auto"
-                  className="h-8 w-auto"
+                  className="h-10 md:h-12 w-auto brightness-0 invert"
                   unoptimized
                 />
               </a>
