@@ -9,22 +9,32 @@ function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/** Strip XML/HTML tags and clean up OCR artifacts for display */
+function cleanText(text: string): string {
+  return text
+    .replace(/<[^>]+>/g, '')        // strip all XML/HTML tags
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
+    .replace(/\s+/g, ' ')           // collapse whitespace
+    .trim();
+}
+
 function extractSnippet(text: string, query: string, contextChars = 150): string {
-  const lowerText = text.toLowerCase();
+  const cleaned = cleanText(text);
+  const lowerText = cleaned.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const index = lowerText.indexOf(lowerQuery);
 
   if (index === -1) {
     // If exact match not found, return start of text
-    return text.slice(0, contextChars * 2) + (text.length > contextChars * 2 ? '...' : '');
+    return cleaned.slice(0, contextChars * 2) + (cleaned.length > contextChars * 2 ? '...' : '');
   }
 
   const start = Math.max(0, index - contextChars);
-  const end = Math.min(text.length, index + query.length + contextChars);
+  const end = Math.min(cleaned.length, index + query.length + contextChars);
 
-  let snippet = text.slice(start, end);
+  let snippet = cleaned.slice(start, end);
   if (start > 0) snippet = '...' + snippet;
-  if (end < text.length) snippet = snippet + '...';
+  if (end < cleaned.length) snippet = snippet + '...';
 
   return snippet;
 }

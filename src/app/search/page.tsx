@@ -230,11 +230,18 @@ export default function SearchPage() {
     <div className="min-h-screen bg-cream">
       {/* Header */}
       <header className="bg-white border-b border-border-light">
-        <div className="max-w-5xl mx-auto px-4 py-6">
-          <Link href="/" className="text-2xl font-serif font-bold text-primary hover:text-accent-rust transition-colors">
-            Source Library
+        <div className="max-w-5xl mx-auto px-6 py-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+          >
+            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
+              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
+              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
+            </svg>
+            <span className="font-medium">Source Library</span>
           </Link>
-          <p className="text-muted mt-1">Search translated historical texts</p>
         </div>
       </header>
 
@@ -573,11 +580,11 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="font-medium text-primary line-clamp-1">
+              <h3 className="text-lg font-medium text-primary line-clamp-1">
                 <HighlightedText text={result.display_title || result.title} query={query} />
                 {result.type === 'page' && <span className="text-muted font-normal ml-2">— Page {result.page_number}</span>}
               </h3>
-              <p className="text-sm text-secondary mt-0.5">
+              <p className="text-secondary mt-0.5">
                 <HighlightedText text={result.author} query={query} /> • {result.published} • {result.language}
               </p>
             </div>
@@ -589,12 +596,12 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
             )}
           </div>
           {result.snippet && (
-            <p className="mt-2 text-sm text-secondary line-clamp-2 font-body">
+            <p className="mt-2 text-secondary line-clamp-2 font-body">
               <HighlightedText text={result.snippet} query={query} />
             </p>
           )}
           {result.type === 'book' && result.page_count && (
-            <p className="mt-1.5 text-xs text-muted">
+            <p className="mt-1.5 text-sm text-muted">
               {result.page_count} pages{result.translated_count ? ` • ${result.translated_count} translated` : ''}
             </p>
           )}
@@ -628,22 +635,22 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
 
           {isQuote ? (
             <>
-              <blockquote className="font-serif text-primary italic border-l-2 border-accent-gold/40 pl-3 my-2">
+              <blockquote className="font-serif text-lg text-primary italic border-l-2 border-accent-gold/40 pl-3 my-2">
                 &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
               </blockquote>
               {result.quote_significance && (
-                <p className="text-sm text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
+                <p className="text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
               )}
             </>
           ) : (
-            <h3 className="font-medium text-primary mt-1"><HighlightedText text={result.term} query={query} /></h3>
+            <h3 className="text-lg font-medium text-primary mt-1"><HighlightedText text={result.term} query={query} /></h3>
           )}
 
-          <p className="text-sm text-muted mt-1.5">
+          <p className="text-muted mt-1.5">
             From: <span className="text-secondary">{result.book_title}</span> • {result.book_author}
           </p>
           {result.pages && result.pages.length > 0 && (
-            <p className="text-xs text-muted mt-1">
+            <p className="text-sm text-muted mt-1">
               Pages: {result.pages.slice(0, 5).join(', ')}{result.pages.length > 5 && ` +${result.pages.length - 5} more`}
             </p>
           )}
