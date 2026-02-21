@@ -18,7 +18,7 @@ interface CoverImagePickerProps {
 export default function CoverImagePicker({ bookId, currentThumbnail, currentThumbnailBlob, bookTitle, pages }: CoverImagePickerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
-  const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnailBlob || currentThumbnail);
+  const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnail || currentThumbnailBlob);
 
   // Handle Escape key to close
   const handleClose = useCallback(() => setIsOpen(false), []);
@@ -71,7 +71,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
       }
 
       await books.update(bookId, updates);
-      setDisplayThumbnail((updates.thumbnail_blob || updates.thumbnail) as string);
+      setDisplayThumbnail((updates.thumbnail || updates.thumbnail_blob) as string);
       setIsOpen(false);
     } catch (error) {
       console.error('Error setting cover:', error);
