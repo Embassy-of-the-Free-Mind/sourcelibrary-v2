@@ -20,7 +20,17 @@ import { withAuth } from '@/lib/auth-helpers';
  * GET /api/books/[id]/batch-translate-async?jobName=xxx - Check job status
  */
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY || '' });
+// All available batch API keys for rotation (try each on quota exhaustion)
+const BATCH_API_KEYS = [
+  process.env.GEMINI_API_KEY_TIER3,
+  process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY,
+].filter((k): k is string => !!k);
+const UNIQUE_BATCH_KEYS = [...new Set(BATCH_API_KEYS)];
+
+function getAiClient(keyIndex: number): GoogleGenAI {
+  return new GoogleGenAI({ apiKey: UNIQUE_BATCH_KEYS[keyIndex] || UNIQUE_BATCH_KEYS[0] });
+}
 
 /**
  * POST - Submit a batch translation job
@@ -120,17 +130,36 @@ export const POST = withAuth(async (request, session, context) => {
       }, { status: 400 });
     }
 
-    // Submit batch job — each request includes metadata.key for result matching
-    const batchJob = await ai.batches.create({
-      model,
-      src: batchRequests.map(r => ({
-        ...r.request,
-        metadata: { key: r.key },
-      })),
-      config: {
-        displayName: `translate-${bookId}-${Date.now()}`,
+    // Submit batch job with key rotation — try each key until one succeeds
+    let batchJob;
+    let lastError: Error | null = null;
+    for (let ki = 0; ki < UNIQUE_BATCH_KEYS.length; ki++) {
+      try {
+        const client = getAiClient(ki);
+        batchJob = await client.batches.create({
+          model,
+          src: batchRequests.map(r => ({
+            ...r.request,
+            metadata: { key: r.key },
+          })),
+          config: {
+            displayName: `translate-${bookId}-${Date.now()}`,
+          }
+        });
+        break; // Success — stop trying keys
+      } catch (err: unknown) {
+        lastError = err instanceof Error ? err : new Error(String(err));
+        const msg = lastError.message || '';
+        if (msg.includes('429') || msg.includes('RESOURCE_EXHAUSTED') || msg.includes('quota')) {
+          console.warn(`[batch-translate] Key ${ki} quota exhausted, trying next...`);
+          continue;
+        }
+        throw lastError; // Non-quota error — don't retry
       }
-    });
+    }
+    if (!batchJob) {
+      return NextResponse.json({ error: lastError?.message || 'All API keys exhausted' }, { status: 429 });
+    }
 
     // Store job info in database for tracking
     await db.collection('batch_jobs').insertOne({
@@ -218,7 +247,7 @@ export const GET = withAuth(async (request, session, context) => {
     }
 
     // Get job status from Gemini
-    const batchJob = await ai.batches.get({ name: jobName });
+    const batchJob = await getAiClient(0).batches.get({ name: jobName });
 
     // Update status in database
     await db.collection('batch_jobs').updateOne(

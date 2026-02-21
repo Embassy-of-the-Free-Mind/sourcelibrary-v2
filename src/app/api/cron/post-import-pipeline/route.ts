@@ -146,6 +146,198 @@ export async function GET(request: NextRequest) {
   };
 
   try {
+    // ════════════════════════════════════════════════════════════════════
+    // PRIORITY PASS: Run fast, late-stage phases FIRST so they don't get
+    // starved by heavy enrichment/chapters work consuming the time budget.
+    // These are all cheap (DB writes + SQS) and unblock book completion.
+    // ════════════════════════════════════════════════════════════════════
+
+    // ── Priority: Finalize (images_complete -> complete) — with quality validation ──
+    if (hasTimeBudget(startTime)) {
+      const readyToFinalize = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'images_complete' })
+        .sort({ hidden: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, language: 1 })
+        .limit(FINALIZE_LIMIT)
+        .toArray();
+
+      for (const book of readyToFinalize) {
+        const totalPages = book.pages_count || await db.collection('pages').countDocuments({ book_id: book.id });
+
+        if (totalPages === 0) {
+          await setPipelineStatus(db, book.id, 'needs_attention', {
+            error: 'Empty book: 0 pages. Likely a failed import.',
+          });
+          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0 pages`);
+          continue;
+        }
+
+        const ocrCount = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
+        });
+
+        if (ocrCount === 0) {
+          await setPipelineStatus(db, book.id, 'archive_complete', {
+            error: 'Finalize blocked: 0 OCR pages. Resetting for re-processing.',
+            retry_count: 0,
+          });
+          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0/${totalPages} OCR pages, reset to archive_complete`);
+          continue;
+        }
+
+        const ocrPercent = ocrCount / totalPages;
+        if (ocrPercent < 0.1) {
+          await setPipelineStatus(db, book.id, 'needs_attention', {
+            error: `Very low OCR coverage: ${ocrCount}/${totalPages} (${(ocrPercent * 100).toFixed(1)}%)`,
+          });
+          log.errors.push(`Finalize blocked ${book.id} (${book.title}): ${ocrCount}/${totalPages} OCR (${(ocrPercent * 100).toFixed(1)}%)`);
+          continue;
+        }
+
+        await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
+        log.finalized++;
+      }
+    }
+
+    // ── Priority: Image extraction submission (chapters_complete -> images_submitted) ──
+    if (hasTimeBudget(startTime)) {
+      const activeImageJobs = await db.collection('jobs').countDocuments({
+        type: 'image_extraction',
+        status: { $in: ['pending', 'processing'] },
+      });
+
+      if (activeImageJobs >= MAX_ACTIVE_IMAGE_JOBS) {
+        logger.backpressure('image_jobs_limit', { active: activeImageJobs, max: MAX_ACTIVE_IMAGE_JOBS });
+      }
+
+      if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+        const readyForImages = await db.collection('books')
+          .find({ 'pipeline_auto.status': 'chapters_complete' })
+          .sort({ hidden: 1 })
+          .project({ id: 1, title: 1 })
+          .limit(IMAGE_SUBMIT_LIMIT)
+          .toArray();
+
+        for (const book of readyForImages) {
+          if (!hasTimeBudget(startTime)) break;
+          try {
+            const bookPages = await db.collection('pages')
+              .find(
+                { book_id: book.id },
+                { projection: { id: 1 } }
+              )
+              .toArray();
+
+            if (bookPages.length === 0) {
+              await setPipelineStatus(db, book.id, 'images_complete');
+              log.images_advanced++;
+              continue;
+            }
+
+            const pageIds = bookPages.map(p => p.id);
+            const jobId = nanoid(12);
+
+            await db.collection('jobs').insertOne({
+              id: jobId,
+              type: 'image_extraction',
+              status: 'pending',
+              book_id: book.id,
+              book_title: book.title,
+              progress: { total: pageIds.length, completed: 0, failed: 0 },
+              config: { page_ids: pageIds },
+              created_at: new Date(),
+              updated_at: new Date(),
+            });
+
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { job: { type: 'image_extraction', job_id: jobId } } }
+            );
+
+            await enqueuePagesForJob(book.id, pageIds, 'image_extraction', jobId);
+
+            await setPipelineStatus(db, book.id, 'images_submitted', {
+              image_extraction_job_id: jobId,
+            });
+            log.images_submitted++;
+          } catch (err) {
+            log.errors.push(`Images submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+          }
+        }
+      }
+
+      // Check for completed image extraction jobs
+      const imagesPending = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'images_submitted' })
+        .project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 })
+        .toArray();
+
+      for (const book of imagesPending) {
+        if (!hasTimeBudget(startTime)) break;
+        const imgJobId = book.pipeline_auto?.image_extraction_job_id;
+        if (!imgJobId) {
+          await setPipelineStatus(db, book.id, 'images_complete');
+          log.images_advanced++;
+          continue;
+        }
+
+        const imgJob = await db.collection('jobs').findOne({
+          id: imgJobId,
+          status: { $in: ['completed', 'completed_with_errors'] },
+        });
+
+        if (imgJob) {
+          await setPipelineStatus(db, book.id, 'images_complete');
+          log.images_advanced++;
+        }
+      }
+    }
+
+    // ── Priority: Staleness detection — unstick books in *_submitted states ──
+    if (hasTimeBudget(startTime)) {
+      const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
+      const staleBooks = await db.collection('books')
+        .find({
+          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'enriching', 'chapters'] },
+          'pipeline_auto.last_updated': { $lt: staleThreshold },
+        })
+        .project({ id: 1, title: 1, 'pipeline_auto': 1 })
+        .limit(10)
+        .toArray();
+
+      for (const book of staleBooks) {
+        if (!hasTimeBudget(startTime)) break;
+        const retries = book.pipeline_auto?.retry_count || 0;
+        const status = book.pipeline_auto?.status as string;
+
+        if (retries >= MAX_RETRIES) {
+          await markFailed(db, book.id, `Stale in ${status} for >48h after ${retries} retries`, retries);
+          log.stale_failed++;
+          logger.decision('circuit_breaker', `Stale ${book.id} in ${status} after ${retries} retries`, { book_id: book.id, status });
+        } else {
+          const rollbackMap: Record<string, PipelineAutoStatus> = {
+            'ocr_submitted': 'archive_complete',
+            'translate_submitted': 'metadata_enriched',
+            'images_submitted': 'chapters_complete',
+            'enriching': 'translate_complete',
+            'chapters': 'enriched',
+          };
+          const rollbackTo = rollbackMap[status];
+          if (rollbackTo) {
+            await setPipelineStatus(db, book.id, rollbackTo, { retry_count: retries + 1 });
+            log.stale_retried++;
+            logger.decision('rollback', `Stale ${book.id}: ${status} → ${rollbackTo} (retry ${retries + 1})`, { book_id: book.id, from: status, to: rollbackTo });
+          }
+        }
+        log.errors.push(`Stale ${book.id} (${book.title}): stuck in ${status} since ${book.pipeline_auto?.last_updated}`);
+      }
+    }
+
+    // ════════════════════════════════════════════════════════════════════
+    // MAIN PASS: Standard pipeline phases (enrollment through chapters)
+    // ════════════════════════════════════════════════════════════════════
+
     // ── Phase 0: Auto-enroll recently imported books ──
     if (hasTimeBudget(startTime)) {
       const cutoff = new Date(Date.now() - ENROLL_WINDOW_DAYS * 24 * 60 * 60 * 1000);
@@ -709,202 +901,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 8: Image extraction (chapters_complete -> images_submitted / images_complete) ──
-    // Queue pages to Lambda for illustration detection. ~$0.15/book, takes minutes-hours.
-    if (hasTimeBudget(startTime)) {
-      // Check backpressure — don't queue more if many jobs are active
-      const activeImageJobs = await db.collection('jobs').countDocuments({
-        type: 'image_extraction',
-        status: { $in: ['pending', 'processing'] },
-      });
-
-      if (activeImageJobs >= MAX_ACTIVE_IMAGE_JOBS) {
-        logger.backpressure('image_jobs_limit', { active: activeImageJobs, max: MAX_ACTIVE_IMAGE_JOBS });
-      }
-
-      if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
-        const readyForImages = await db.collection('books')
-          .find({ 'pipeline_auto.status': 'chapters_complete' })
-          .sort({ hidden: 1 }) // Visible books first
-          .project({ id: 1, title: 1 })
-          .limit(IMAGE_SUBMIT_LIMIT)
-          .toArray();
-
-        for (const book of readyForImages) {
-          if (!hasTimeBudget(startTime)) break;
-          try {
-            // Get all page IDs for this book
-            const bookPages = await db.collection('pages')
-              .find(
-                { book_id: book.id },
-                { projection: { id: 1 } }
-              )
-              .toArray();
-
-            if (bookPages.length === 0) {
-              await setPipelineStatus(db, book.id, 'images_complete');
-              log.images_advanced++;
-              continue;
-            }
-
-            const pageIds = bookPages.map(p => p.id);
-            const jobId = nanoid(12);
-
-            // Create job record
-            await db.collection('jobs').insertOne({
-              id: jobId,
-              type: 'image_extraction',
-              status: 'pending',
-              book_id: book.id,
-              book_title: book.title,
-              progress: { total: pageIds.length, completed: 0, failed: 0 },
-              config: { page_ids: pageIds },
-              created_at: new Date(),
-              updated_at: new Date(),
-            });
-
-            // Set book.job for UI display
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { job: { type: 'image_extraction', job_id: jobId } } }
-            );
-
-            // Enqueue pages to SQS
-            await enqueuePagesForJob(book.id, pageIds, 'image_extraction', jobId);
-
-            await setPipelineStatus(db, book.id, 'images_submitted', {
-              image_extraction_job_id: jobId,
-            });
-            log.images_submitted++;
-          } catch (err) {
-            log.errors.push(`Images submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
-          }
-        }
-      }
-
-      // Check for completed image extraction jobs
-      const imagesPending = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'images_submitted' })
-        .project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 })
-        .toArray();
-
-      for (const book of imagesPending) {
-        if (!hasTimeBudget(startTime)) break;
-        const imgJobId = book.pipeline_auto?.image_extraction_job_id;
-        if (!imgJobId) {
-          // No job ID — skip to complete
-          await setPipelineStatus(db, book.id, 'images_complete');
-          log.images_advanced++;
-          continue;
-        }
-
-        const imgJob = await db.collection('jobs').findOne({
-          id: imgJobId,
-          status: { $in: ['completed', 'completed_with_errors'] },
-        });
-
-        if (imgJob) {
-          await setPipelineStatus(db, book.id, 'images_complete');
-          log.images_advanced++;
-        }
-      }
-    }
-
-    // ── Phase 8.5: Staleness detection — unstick books in *_submitted states ──
-    // If a book has been in a submitted state for >48h, the batch job likely failed silently.
-    // Retry up to MAX_RETRIES, then mark failed.
-    if (hasTimeBudget(startTime)) {
-      const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
-      const staleBooks = await db.collection('books')
-        .find({
-          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'enriching', 'chapters'] },
-          'pipeline_auto.last_updated': { $lt: staleThreshold },
-        })
-        .project({ id: 1, title: 1, 'pipeline_auto': 1 })
-        .limit(10)
-        .toArray();
-
-      for (const book of staleBooks) {
-        if (!hasTimeBudget(startTime)) break;
-        const retries = book.pipeline_auto?.retry_count || 0;
-        const status = book.pipeline_auto?.status as string;
-
-        if (retries >= MAX_RETRIES) {
-          await markFailed(db, book.id, `Stale in ${status} for >48h after ${retries} retries`, retries);
-          log.stale_failed++;
-          logger.decision('circuit_breaker', `Stale ${book.id} in ${status} after ${retries} retries`, { book_id: book.id, status });
-        } else {
-          // Roll back to the previous state so it gets re-submitted next cycle
-          const rollbackMap: Record<string, PipelineAutoStatus> = {
-            'ocr_submitted': 'archive_complete',
-            'translate_submitted': 'metadata_enriched',
-            'images_submitted': 'chapters_complete',
-            'enriching': 'translate_complete',
-            'chapters': 'enriched',
-          };
-          const rollbackTo = rollbackMap[status];
-          if (rollbackTo) {
-            await setPipelineStatus(db, book.id, rollbackTo, { retry_count: retries + 1 });
-            log.stale_retried++;
-            logger.decision('rollback', `Stale ${book.id}: ${status} → ${rollbackTo} (retry ${retries + 1})`, { book_id: book.id, from: status, to: rollbackTo });
-          }
-        }
-        log.errors.push(`Stale ${book.id} (${book.title}): stuck in ${status} since ${book.pipeline_auto?.last_updated}`);
-      }
-    }
-
-    // ── Phase 9: Finalize (images_complete -> complete) — with quality validation ──
-    if (hasTimeBudget(startTime)) {
-      const readyToFinalize = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'images_complete' })
-        .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, pages_count: 1, language: 1 })
-        .limit(FINALIZE_LIMIT)
-        .toArray();
-
-      for (const book of readyToFinalize) {
-        // Quality gate: verify the book actually has content before marking complete
-        const totalPages = book.pages_count || await db.collection('pages').countDocuments({ book_id: book.id });
-
-        if (totalPages === 0) {
-          // Empty shell — no pages at all, mark as needs_attention
-          await setPipelineStatus(db, book.id, 'needs_attention', {
-            error: 'Empty book: 0 pages. Likely a failed import.',
-          });
-          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0 pages`);
-          continue;
-        }
-
-        // Check actual OCR count (don't trust cached pages_ocr)
-        const ocrCount = await db.collection('pages').countDocuments({
-          book_id: book.id,
-          'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
-        });
-
-        if (ocrCount === 0) {
-          // Has pages but zero OCR — reset to archive_complete for re-processing
-          await setPipelineStatus(db, book.id, 'archive_complete', {
-            error: 'Finalize blocked: 0 OCR pages. Resetting for re-processing.',
-            retry_count: 0,
-          });
-          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0/${totalPages} OCR pages, reset to archive_complete`);
-          continue;
-        }
-
-        // Check OCR coverage (at least 10% of pages should have OCR)
-        const ocrPercent = ocrCount / totalPages;
-        if (ocrPercent < 0.1) {
-          await setPipelineStatus(db, book.id, 'needs_attention', {
-            error: `Very low OCR coverage: ${ocrCount}/${totalPages} (${(ocrPercent * 100).toFixed(1)}%)`,
-          });
-          log.errors.push(`Finalize blocked ${book.id} (${book.title}): ${ocrCount}/${totalPages} OCR (${(ocrPercent * 100).toFixed(1)}%)`);
-          continue;
-        }
-
-        await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
-        log.finalized++;
-      }
-    }
+    // (Phases 8, 8.5, 9 now run in the priority pass above)
 
     const duration = Date.now() - startTime;
 

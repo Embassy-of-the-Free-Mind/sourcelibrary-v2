@@ -21,12 +21,21 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { nanoid } from 'nanoid';
 
 // ── Config ──
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const CRON_SECRET = process.env.CRON_SECRET;
 const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
+
+// Gemini Batch API config (for direct OCR submission, bypassing Vercel)
+const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
+const OCR_MODEL = 'gemini-3-flash-preview';
+const OCR_PROMPT_VERSION = 'v5.2026-02';
+const OCR_BATCH_SIZE = 20;        // Pages per Gemini inline batch
+const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
+const MAX_PAGES_PER_BOOK = 500;   // Max pages to OCR per book
 
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 if (!CRON_SECRET) { console.error('CRON_SECRET not set'); process.exit(1); }
@@ -116,6 +125,240 @@ async function markFailed(db, bookId, error, retryCount) {
 
 function shouldRun(phase) {
   return ONLY_PHASE === null || ONLY_PHASE === phase;
+}
+
+// ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
+
+// All keys for rotation — try each until one works (batch jobs are per-key)
+const GEMINI_BATCH_KEYS = [
+  process.env.GEMINI_API_KEY_2,       // Prefer KEY_2 for batch (separate quota pool)
+  process.env.GEMINI_API_KEY_TIER3,
+  process.env.GEMINI_API_KEY,
+].filter(k => !!k);
+
+function getGeminiApiKey(keyIndex = 0) {
+  const key = GEMINI_BATCH_KEYS[keyIndex] || GEMINI_BATCH_KEYS[0];
+  if (!key) throw new Error('No GEMINI_API_KEY found in env');
+  return key;
+}
+
+function getPageImageUrl(page) {
+  if (page.crop && page.cropped_photo) return page.cropped_photo;
+  if (page.archived_photo && !page.archived_photo.startsWith('failed:')) return page.archived_photo;
+  return page.photo_original || page.photo || null;
+}
+
+async function fetchImageBase64(url) {
+  try {
+    const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    if (!response.ok) return null;
+    const buffer = await response.arrayBuffer();
+    const contentType = response.headers.get('content-type') || 'image/jpeg';
+    return {
+      data: Buffer.from(buffer).toString('base64'),
+      mimeType: contentType.split(';')[0].trim(),
+    };
+  } catch {
+    return null;
+  }
+}
+
+async function downloadImagesParallel(pages, concurrency) {
+  const results = [];
+  for (let i = 0; i < pages.length; i += concurrency) {
+    const chunk = pages.slice(i, i + concurrency);
+    const settled = await Promise.allSettled(
+      chunk.map(async (page) => {
+        const url = getPageImageUrl(page);
+        if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
+        const image = await fetchImageBase64(url);
+        if (!image) return null;
+        return { pageId: page.id, image };
+      })
+    );
+    for (const r of settled) {
+      if (r.status === 'fulfilled' && r.value) {
+        results.push(r.value);
+      }
+    }
+  }
+  return results;
+}
+
+async function createBatchJobInline(model, requests, displayName) {
+  // Try each API key — rotate on quota exhaustion (429)
+  for (let ki = 0; ki < GEMINI_BATCH_KEYS.length; ki++) {
+    const apiKey = getGeminiApiKey(ki);
+    const response = await fetch(
+      `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          batch: {
+            display_name: displayName,
+            input_config: {
+              requests: { requests },
+            },
+          },
+        }),
+      }
+    );
+
+    if (response.ok) {
+      const result = await response.json();
+      return { name: result.name, state: result.state || 'JOB_STATE_PENDING' };
+    }
+
+    const errorText = await response.text();
+    if (response.status === 429 && ki < GEMINI_BATCH_KEYS.length - 1) {
+      console.log(`    Key ${ki} quota exhausted, trying key ${ki + 1}...`);
+      continue;
+    }
+    throw new Error(`Batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
+  }
+}
+
+async function getOcrPromptFromDb(db) {
+  const prompt = await db.collection('prompts').findOne(
+    { type: 'ocr', is_default: true },
+    { sort: { version: -1 } }
+  );
+  if (!prompt?.content) throw new Error('No default OCR prompt found in DB');
+
+  const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
+
+  return prompt.content
+    .replace('{language_instruction}', languageInstruction)
+    .replace('{language}', '');
+}
+
+/**
+ * Submit OCR for a single book directly to Gemini Batch API.
+ * Downloads images on Hetzner (no Vercel memory limits), splits into batches of 20.
+ * Returns { submitted: number, jobName: string } or throws.
+ */
+async function submitOcrDirectly(db, book) {
+  // Find pages needing OCR
+  const pages = await db.collection('pages')
+    .find({
+      book_id: book.id,
+      $or: [
+        { 'ocr.data': { $exists: false } },
+        { 'ocr.data': null },
+        { 'ocr.data': '' },
+      ],
+      $and: [{
+        $or: [
+          { photo: { $exists: true, $ne: null } },
+          { photo_original: { $exists: true, $ne: null } },
+        ]
+      }]
+    })
+    .sort({ page_number: 1 })
+    .limit(MAX_PAGES_PER_BOOK)
+    .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+    .toArray();
+
+  if (pages.length === 0) {
+    return { submitted: 0, jobName: null, alreadyDone: true };
+  }
+
+  console.log(`    Downloading ${pages.length} images...`);
+  const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+  if (downloaded.length === 0) {
+    throw new Error(`All ${pages.length} image downloads failed`);
+  }
+  console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
+
+  const prompt = await getOcrPromptFromDb(db);
+  const parentJobId = nanoid();
+  const childJobIds = [];
+  let totalSubmitted = 0;
+  let firstJobName = null;
+
+  for (let j = 0; j < downloaded.length; j += OCR_BATCH_SIZE) {
+    const chunk = downloaded.slice(j, j + OCR_BATCH_SIZE);
+
+    const inlineRequests = chunk.map(item => ({
+      request: {
+        contents: [{
+          parts: [
+            { text: prompt },
+            { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+          ],
+        }],
+        generationConfig: {
+          temperature: 0.1,
+          maxOutputTokens: 16384,
+          thinkingConfig: { thinkingBudget: 0 },
+        },
+      },
+      metadata: { key: item.pageId },
+    }));
+
+    const childJobId = nanoid();
+    const displayName = `pipeline-ocr-${book.id}-${childJobId}`;
+    const batchJob = await createBatchJobInline(OCR_MODEL, inlineRequests, displayName);
+
+    if (!firstJobName) firstJobName = batchJob.name;
+
+    // Record in batch_jobs
+    await db.collection('batch_jobs').insertOne({
+      id: childJobId,
+      parent_job_id: parentJobId,
+      job_name: batchJob.name,
+      type: 'ocr',
+      book_id: book.id,
+      page_ids: chunk.map(c => c.pageId),
+      page_count: chunk.length,
+      status: 'pending',
+      model: OCR_MODEL,
+      prompt_version: OCR_PROMPT_VERSION,
+      force: false,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    childJobIds.push(childJobId);
+    totalSubmitted += chunk.length;
+
+    // Log to gemini_usage
+    await db.collection('gemini_usage').insertOne({
+      type: 'ocr',
+      mode: 'batch',
+      model: OCR_MODEL,
+      book_id: book.id,
+      book_title: book.title,
+      page_ids: chunk.map(c => c.pageId),
+      page_count: chunk.length,
+      batch_job_id: childJobId,
+      gemini_job_name: batchJob.name,
+      input_tokens: 0,
+      output_tokens: 0,
+      status: 'submitted',
+      endpoint: 'hetzner/pipeline-orchestrator',
+      timestamp: new Date(),
+    });
+  }
+
+  // Create parent job if multiple children
+  if (childJobIds.length > 1) {
+    await db.collection('batch_jobs').insertOne({
+      id: parentJobId,
+      type: 'ocr',
+      book_id: book.id,
+      child_job_ids: childJobIds,
+      total_pages: totalSubmitted,
+      status: 'pending',
+      model: OCR_MODEL,
+      prompt_version: OCR_PROMPT_VERSION,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+  }
+
+  return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length };
 }
 
 // ── Main ──
@@ -273,81 +516,42 @@ async function run() {
       for (const book of readyForOcr) {
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
-          // Guard: verify book has pages with HTTP image URLs
-          const httpPageCount = await db.collection('pages').countDocuments({
-            book_id: book.id,
-            $or: [
-              { archived_photo: { $regex: /^https?:\/\// } },
-              { photo: { $regex: /^https?:\/\// } },
-              { photo_original: { $regex: /^https?:\/\// } },
-            ],
-          });
-
-          if (httpPageCount === 0) {
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'needs_attention', {
-                error: 'No pages with HTTP image URLs — cannot OCR',
-              });
-            }
-            log.needs_attention++;
-            log.errors.push(`OCR skip ${book.id}: no HTTP image URLs`);
-            continue;
-          }
+          const label = (book.title || '').substring(0, 50);
 
           if (DRY_RUN) {
-            console.log(`  Would submit OCR: ${book.title} (${httpPageCount} pages)`);
+            console.log(`  Would submit OCR: ${label} (${book.pages_count} pages)`);
             continue;
           }
 
-          const res = await fetch(`${BASE_URL}/api/books/${book.id}/batch-ocr-async`, {
-            method: 'POST',
-            headers: headers(),
-            body: JSON.stringify({ limit: 500, force: false }),
-          });
+          // Direct OCR submission — downloads images on Hetzner, submits to Gemini Batch API
+          console.log(`  Submitting OCR: ${label}...`);
+          const result = await submitOcrDirectly(db, book);
 
-          const text = await res.text();
-          let data;
-          try { data = JSON.parse(text); } catch {
-            data = { error: `invalid JSON (${text.length} chars)` };
-          }
-
-          if (!res.ok) {
-            if (data.error === 'no_valid_image_urls') {
-              await setPipelineStatus(db, book.id, 'needs_attention', { error: `${data.message}` });
-              log.needs_attention++;
-            } else if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `OCR submit: HTTP ${res.status}`, retries);
-            } else {
-              await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
-            }
-            log.errors.push(`OCR submit ${book.id}: HTTP ${res.status}`);
-          } else if (data.jobName) {
+          if (result.alreadyDone) {
+            await setPipelineStatus(db, book.id, 'ocr_complete');
+            log.ocr_advanced++;
+            console.log(`  Already OCR'd: ${label}`);
+          } else {
             await setPipelineStatus(db, book.id, 'ocr_submitted', {
-              ocr_job_name: data.jobName,
+              ocr_job_name: result.jobName,
               retry_count: 0,
             });
             log.ocr_submitted++;
-            console.log(`  OCR submitted: ${book.title} -> ${data.jobName}`);
-          } else if (data.processed === 0 || data.message?.includes('No pages need OCR')) {
-            await setPipelineStatus(db, book.id, 'ocr_complete');
-            log.ocr_advanced++;
-          } else {
-            if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `OCR submit unexpected: ${data.error || 'unknown'}`, retries);
-            } else {
-              await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
-            }
-            log.errors.push(`OCR submit ${book.id}: ${data.error || 'unexpected response'}`);
+            console.log(`  OCR submitted: ${label} — ${result.submitted} pages in ${result.childCount} batches`);
           }
 
           await sleep(API_DELAY_MS);
         } catch (err) {
-          if (retries >= MAX_RETRIES) {
-            await markFailed(db, book.id, `OCR submit exception: ${err.message}`, retries);
+          const msg = err.message || String(err);
+          if (msg.includes('image downloads failed')) {
+            await setPipelineStatus(db, book.id, 'needs_attention', { error: msg });
+            log.needs_attention++;
+          } else if (retries >= MAX_RETRIES) {
+            await markFailed(db, book.id, `OCR submit: ${msg}`, retries);
           } else {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
           }
-          log.errors.push(`OCR submit ${book.id}: ${err.message}`);
+          log.errors.push(`OCR submit ${book.id}: ${msg}`);
         }
       }
       console.log(`  OCR submitted: ${log.ocr_submitted}, advanced: ${log.ocr_advanced}`);
