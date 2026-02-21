@@ -19,6 +19,17 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
   const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnail || currentThumbnailBlob);
+  const [thumbnailError, setThumbnailError] = useState(false);
+
+  // If the primary thumbnail fails, fall back to thumbnail_blob
+  const handleThumbnailError = () => {
+    if (!thumbnailError && currentThumbnailBlob && displayThumbnail !== currentThumbnailBlob) {
+      setDisplayThumbnail(currentThumbnailBlob);
+      setThumbnailError(true);
+    } else {
+      setThumbnailError(true);
+    }
+  };
 
   // Handle Escape key to close
   const handleClose = useCallback(() => setIsOpen(false), []);
@@ -87,7 +98,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         fallback={
           // Non-authenticated users see the cover image but cannot click
           <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
-            {displayThumbnail ? (
+            {displayThumbnail && !thumbnailError ? (
               <Image
                 src={displayThumbnail}
                 alt={bookTitle}
@@ -95,6 +106,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                 className="object-cover"
                 sizes="(max-width: 640px) 128px, 192px"
                 priority
+                onError={handleThumbnailError}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
@@ -110,7 +122,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
           className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
           title="Click to change cover image"
         >
-          {displayThumbnail ? (
+          {displayThumbnail && !thumbnailError ? (
             <Image
               src={displayThumbnail}
               alt={bookTitle}
@@ -118,6 +130,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
               className="object-cover group-hover:opacity-80 transition-opacity"
               sizes="(max-width: 640px) 128px, 192px"
               priority
+              onError={handleThumbnailError}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center group-hover:bg-stone-600 transition-colors">
