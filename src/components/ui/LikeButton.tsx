@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { Heart } from 'lucide-react';
 import { LikeTargetType } from '@/lib/types';
 import { likes } from '@/lib/api-client';
@@ -56,7 +56,7 @@ function setLikeInCache(key: string, liked: boolean) {
   }
 }
 
-export default function LikeButton({
+export default memo(function LikeButton({
   targetType,
   targetId,
   bookId,
@@ -193,7 +193,7 @@ export default function LikeButton({
       )}
     </button>
   );
-}
+});
 
 // Hook to batch-fetch like status for multiple items
 export function useLikeStatus(

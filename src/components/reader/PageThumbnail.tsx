@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, memo } from 'react';
 import Link from 'next/link';
 import { CheckCircle } from 'lucide-react';
 import { cn, getPageImageUrl } from '@/lib/utils';
@@ -13,7 +13,7 @@ interface PageThumbnailProps {
   index: number;
 }
 
-export default function PageThumbnail({ page, bookId, index }: PageThumbnailProps) {
+export default memo(function PageThumbnail({ page, bookId, index }: PageThumbnailProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(index < 10); // Load first 10 immediately
@@ -162,4 +162,4 @@ export default function PageThumbnail({ page, bookId, index }: PageThumbnailProp
       </div>
     </Link>
   );
-}
+});

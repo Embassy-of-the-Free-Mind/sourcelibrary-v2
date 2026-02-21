@@ -129,6 +129,7 @@ export async function GET(request: NextRequest) {
         snippet_type: summaryText ? 'summary' : undefined,
         thumbnail: (typedBook as any).thumbnail,
         thumbnail_blob: (typedBook as any).thumbnail_blob,
+        quality_score: (typedBook as any).quality_score,
       };
     }
 
@@ -232,7 +233,10 @@ export async function GET(request: NextRequest) {
 
       if (pageBookIds.length > 0) {
         const pageBooks = await db.collection('books')
-          .find({ id: { $in: pageBookIds } })
+          .find(
+            { id: { $in: pageBookIds } },
+            { projection: { id: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1 } }
+          )
           .toArray();
         for (const b of pageBooks) {
           bookMap.set(b.id as string, b as unknown as Book);
@@ -293,7 +297,7 @@ export async function GET(request: NextRequest) {
         return aTitle.localeCompare(bTitle);
       });
     } else {
-      // Default: relevance — books first, title matches first
+      // Default: relevance — books first, title matches first, quality score tie-breaker
       results.sort((a, b) => {
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
         const aTitle = (a.display_title || a.title).toLowerCase();
@@ -302,7 +306,10 @@ export async function GET(request: NextRequest) {
         const aTitleMatch = aTitle.includes(queryLower);
         const bTitleMatch = bTitle.includes(queryLower);
         if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
-        return 0;
+        // Quality score tie-breaker
+        const aScore = (a as any).quality_score || 0;
+        const bScore = (b as any).quality_score || 0;
+        return bScore - aScore;
       });
     }
 

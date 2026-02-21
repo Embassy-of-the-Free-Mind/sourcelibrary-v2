@@ -316,6 +316,21 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Books - compound index for filtered search (language + category + hidden)
+    // Query: { $text: ..., hidden: { $ne: true }, language: ..., categories: ... }
+    try {
+      await db.collection('books').createIndex(
+        { hidden: 1, language: 1, categories: 1 },
+        { name: 'books_hidden_lang_cat_idx', background: true }
+      );
+      results['books.books_hidden_lang_cat_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_hidden_lang_cat_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Books - index.generatedAt existence (unified search fetches all indexed books)
     try {
       await db.collection('books').createIndex(
