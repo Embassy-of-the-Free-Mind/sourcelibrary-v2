@@ -613,7 +613,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         onDragEnd={handleDragEnd}
         onLoadMore={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
         getImageUrl={getImageUrl}
-        onPageClick={betaGate.hasAccess ? undefined : betaGate.requestAccess}
+        onPageClick={betaGate.requestAccess}
       />
 
       {/* Beta email gate modal */}
