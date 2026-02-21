@@ -6,7 +6,6 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 export const preferredRegion = 'fra1';
 
 const MAX_PAGE_RESULTS = 10;
-const SNIPPET_TEXT_LIMIT = 1000;
 
 function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -201,17 +200,14 @@ export async function GET(request: NextRequest) {
         const pageLimit = bookId ? limit : MAX_PAGE_RESULTS;
 
         try {
-          // Aggregation pipeline: sort + limit first, then truncate text (avoids transferring full page content)
-          return await db.collection('pages').aggregate([
-            { $match: { $text: { $search: query }, ...pageFilter } },
-            { $sort: { score: { $meta: 'textScore' } } },
-            { $limit: pageLimit },
-            { $project: {
-              id: 1, page_number: 1, book_id: 1,
-              'translation.data': { $substrCP: [{ $ifNull: ['$translation.data', ''] }, 0, SNIPPET_TEXT_LIMIT] },
-              'ocr.data': { $substrCP: [{ $ifNull: ['$ocr.data', ''] }, 0, SNIPPET_TEXT_LIMIT] },
-            }},
-          ]).toArray();
+          return await db.collection('pages')
+            .find(
+              { $text: { $search: query }, ...pageFilter },
+              { projection: { score: { $meta: 'textScore' }, id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } }
+            )
+            .sort({ score: { $meta: 'textScore' } })
+            .limit(pageLimit)
+            .toArray();
         } catch {
           return await db.collection('pages')
             .find(
