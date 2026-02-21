@@ -290,6 +290,7 @@ export default function AdminCollectionsPage() {
                             alt={col.title}
                             width={64}
                             height={64}
+                            sizes="64px"
                             className="object-cover w-full h-full"
                             unoptimized
                           />
@@ -447,6 +448,7 @@ export default function AdminCollectionsPage() {
                               alt={item.description}
                               width={150}
                               height={150}
+                              sizes="150px"
                               className="object-cover w-full h-full"
                               unoptimized
                             />

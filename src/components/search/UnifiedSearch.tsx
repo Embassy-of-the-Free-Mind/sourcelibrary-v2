@@ -391,6 +391,7 @@ export default function UnifiedSearch() {
                                 alt={img.description || ''}
                                 width={32}
                                 height={32}
+                                sizes="32px"
                                 className="w-full h-full object-cover"
                                 unoptimized
                               />

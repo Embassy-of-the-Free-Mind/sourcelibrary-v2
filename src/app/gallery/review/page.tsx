@@ -492,6 +492,7 @@ function PageReviewCard({
           alt={`Page ${page.pageNumber}`}
           width={600}
           height={900}
+          sizes="(max-width: 640px) 100vw, 600px"
           className="w-full h-auto"
           draggable={false}
           unoptimized

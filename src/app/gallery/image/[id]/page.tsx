@@ -866,6 +866,7 @@ export default function ImageDetailPage({
                           src={data.fullPageUrl}
                           alt="Full page"
                           fill
+                          sizes="(max-width: 768px) 90vw, 80vw"
                           className="object-contain pointer-events-none"
                           onDragStart={(e) => e.preventDefault()}
                           unoptimized
