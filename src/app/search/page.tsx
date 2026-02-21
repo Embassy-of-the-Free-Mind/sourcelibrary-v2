@@ -183,13 +183,14 @@ export default function SearchPage() {
     updateUrl(value, viewMode, 0);
   }, 300);
 
-  // Re-search when filters/sort/mode change
+  // Search on initial load (from URL params) and when filters/sort/mode change
   useEffect(() => {
     if (query.length >= 2) {
       performSearch(query, viewMode, offset);
       updateUrl(query, viewMode, offset);
     }
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset, performSearch, updateUrl]);
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
@@ -226,32 +227,32 @@ export default function SearchPage() {
   const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || sortBy !== 'relevance';
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-cream">
       {/* Header */}
-      <header className="bg-white border-b border-stone-200">
+      <header className="bg-white border-b border-border-light">
         <div className="max-w-5xl mx-auto px-4 py-6">
-          <Link href="/" className="text-2xl font-serif font-bold text-stone-900 hover:text-amber-700">
+          <Link href="/" className="text-2xl font-serif font-bold text-primary hover:text-accent-rust transition-colors">
             Source Library
           </Link>
-          <p className="text-stone-500 mt-1">Search translated historical texts</p>
+          <p className="text-muted mt-1">Search translated historical texts</p>
         </div>
       </header>
 
       {/* Search Bar */}
-      <div className="bg-white border-b border-stone-200 sticky top-0 z-10">
+      <div className="bg-white border-b border-border-light sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 py-4">
           {/* Back to unified + mode label */}
           {viewMode !== 'unified' && (
             <div className="flex items-center gap-2 mb-3">
               <button
                 onClick={backToUnified}
-                className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1"
+                className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1"
               >
                 <ChevronLeft className="w-4 h-4" />
                 All results
               </button>
-              <span className="text-sm text-stone-400">/</span>
-              <span className="text-sm font-medium text-stone-700">
+              <span className="text-sm text-muted">/</span>
+              <span className="text-sm font-medium text-secondary">
                 {viewMode === 'books' ? 'Books & Pages' : viewMode === 'index' ? 'Index' : 'Images'}
               </span>
             </div>
@@ -259,27 +260,27 @@ export default function SearchPage() {
 
           <div className="flex gap-3">
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
               <input
                 type="text"
                 value={query}
                 onChange={(e) => handleQueryChange(e.target.value)}
                 placeholder="Search books, concepts, people, images..."
-                className="w-full pl-12 pr-4 py-3 border border-stone-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-lg"
+                className="w-full pl-12 pr-4 py-3 border border-border-medium rounded-xl bg-cream/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust/40 text-lg text-primary font-body"
                 autoFocus
               />
               {loading && (
-                <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 animate-spin" />
+                <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted animate-spin" />
               )}
             </div>
             {viewMode === 'books' && (
               <>
                 <div className="relative">
-                  <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
+                  <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
                   <select
                     value={sortBy}
                     onChange={(e) => { setSortBy(e.target.value as any); setOffset(0); }}
-                    className="pl-9 pr-3 py-3 border border-stone-300 rounded-xl text-sm text-stone-600 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 appearance-none cursor-pointer"
+                    className="pl-9 pr-3 py-3 border border-border-medium rounded-xl text-sm text-secondary bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 appearance-none cursor-pointer"
                   >
                     <option value="relevance">Relevance</option>
                     <option value="date_desc">Newest first</option>
@@ -291,13 +292,13 @@ export default function SearchPage() {
                   onClick={() => setShowFilters(!showFilters)}
                   className={`px-4 py-3 border rounded-xl flex items-center gap-2 transition-colors ${
                     showFilters || hasActiveFilters
-                      ? 'bg-amber-100 border-amber-300 text-amber-800'
-                      : 'border-stone-300 text-stone-600 hover:bg-stone-50'
+                      ? 'bg-accent-rust/10 border-accent-rust/30 text-accent-rust'
+                      : 'border-border-medium text-secondary hover:bg-warm'
                   }`}
                 >
                   <Filter className="w-5 h-5" />
                   Filters
-                  {hasActiveFilters && <span className="w-2 h-2 bg-amber-500 rounded-full" />}
+                  {hasActiveFilters && <span className="w-2 h-2 bg-accent-rust rounded-full" />}
                 </button>
               </>
             )}
@@ -314,8 +315,8 @@ export default function SearchPage() {
                     onClick={() => { setIndexType(type.value); setOffset(0); }}
                     className={`px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5 transition-colors ${
                       indexType === type.value
-                        ? 'bg-amber-100 text-amber-800 border border-amber-300'
-                        : 'bg-stone-100 text-stone-600 border border-transparent hover:bg-stone-200'
+                        ? 'bg-accent-violet/12 text-accent-violet border border-accent-violet/30'
+                        : 'bg-warm text-secondary border border-transparent hover:bg-border-light'
                     }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -328,48 +329,48 @@ export default function SearchPage() {
 
           {/* Filters Panel (books drill-down mode) */}
           {showFilters && viewMode === 'books' && (
-            <div className="mt-4 p-4 bg-stone-50 rounded-xl border border-stone-200">
+            <div className="mt-4 p-4 bg-warm rounded-xl border border-border-light">
               <div className="flex items-center justify-between mb-3">
-                <span className="font-medium text-stone-700">Filters</span>
+                <span className="font-medium text-primary">Filters</span>
                 {hasActiveFilters && (
-                  <button onClick={clearFilters} className="text-sm text-stone-500 hover:text-stone-700 flex items-center gap-1">
+                  <button onClick={clearFilters} className="text-sm text-muted hover:text-primary flex items-center gap-1">
                     <X className="w-4 h-4" /> Clear all
                   </button>
                 )}
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm text-stone-600 mb-1">Language</label>
+                  <label className="block text-sm text-secondary mb-1">Language</label>
                   <select value={language} onChange={(e) => setLanguage(e.target.value)}
-                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
                     {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-stone-600 mb-1">Subject</label>
+                  <label className="block text-sm text-secondary mb-1">Subject</label>
                   <select value={category} onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500">
+                    className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
                     {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-stone-600 mb-1">Published After</label>
+                  <label className="block text-sm text-secondary mb-1">Published After</label>
                   <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
-                    placeholder="e.g., 1500" className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                    placeholder="e.g., 1500" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
                 </div>
                 <div>
-                  <label className="block text-sm text-stone-600 mb-1">Published Before</label>
+                  <label className="block text-sm text-secondary mb-1">Published Before</label>
                   <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
-                    placeholder="e.g., 1700" className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" />
+                    placeholder="e.g., 1700" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
                 </div>
                 <div className="flex flex-col gap-2 pt-6">
-                  <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
                     <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
-                      className="rounded border-stone-300 text-amber-500 focus:ring-amber-500" /> Has DOI
+                      className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has DOI
                   </label>
-                  <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer">
+                  <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
                     <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
-                      className="rounded border-stone-300 text-amber-500 focus:ring-amber-500" /> Has translation
+                      className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has translation
                   </label>
                 </div>
               </div>
@@ -383,9 +384,9 @@ export default function SearchPage() {
         {/* Empty state */}
         {!query && (
           <div className="text-center py-16">
-            <Book className="w-16 h-16 text-stone-300 mx-auto mb-4" />
-            <h2 className="text-xl font-medium text-stone-700 mb-2">Search the Library</h2>
-            <p className="text-stone-500 max-w-md mx-auto">
+            <Book className="w-16 h-16 text-border-medium mx-auto mb-4" />
+            <h2 className="text-xl font-serif font-medium text-primary mb-2">Search the Library</h2>
+            <p className="text-muted max-w-md mx-auto">
               Search across translated historical texts, concepts, people, and illustrations.
             </p>
           </div>
@@ -393,24 +394,24 @@ export default function SearchPage() {
 
         {/* Loading */}
         {query.length >= 2 && loading && viewMode === 'unified' && (
-          <div className="text-stone-500 mb-6">Searching...</div>
+          <div className="text-muted mb-6">Searching...</div>
         )}
 
         {/* No results */}
         {noResults && (
           <div className="text-center py-16">
-            <Search className="w-16 h-16 text-stone-300 mx-auto mb-4" />
-            <h2 className="text-xl font-medium text-stone-700 mb-2">No results found</h2>
+            <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
+            <h2 className="text-xl font-serif font-medium text-primary mb-2">No results found</h2>
             {suggestion ? (
-              <p className="text-stone-600">
+              <p className="text-secondary">
                 Did you mean{' '}
                 <button
                   onClick={() => { setQuery(suggestion); setOffset(0); performSearch(suggestion, viewMode, 0); updateUrl(suggestion, viewMode, 0); }}
-                  className="font-semibold text-amber-700 hover:text-amber-800 underline underline-offset-2"
+                  className="font-semibold text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
                 >{suggestion}</button>?
               </p>
             ) : (
-              <p className="text-stone-500">Try different keywords.</p>
+              <p className="text-muted">Try different keywords.</p>
             )}
           </div>
         )}
@@ -422,13 +423,13 @@ export default function SearchPage() {
             {bookTotal > 0 && (
               <section>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
-                    <Book className="w-5 h-5 text-amber-600" />
+                  <h2 className="flex items-center gap-2 text-lg font-semibold text-primary">
+                    <Book className="w-5 h-5 text-accent-rust" />
                     Books & Pages
-                    <span className="text-sm font-normal text-stone-500">({bookTotal})</span>
+                    <span className="text-sm font-normal text-muted">({bookTotal})</span>
                   </h2>
                   {bookTotal > PREVIEW_BOOKS && (
-                    <button onClick={() => drillInto('books')} className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1">
+                    <button onClick={() => drillInto('books')} className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1">
                       See all {bookTotal} <ChevronRight className="w-4 h-4" />
                     </button>
                   )}
@@ -445,13 +446,13 @@ export default function SearchPage() {
             {indexTotal > 0 && (
               <section>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
-                    <Lightbulb className="w-5 h-5 text-purple-600" />
+                  <h2 className="flex items-center gap-2 text-lg font-semibold text-primary">
+                    <Lightbulb className="w-5 h-5 text-accent-violet" />
                     Index
-                    <span className="text-sm font-normal text-stone-500">({indexTotal})</span>
+                    <span className="text-sm font-normal text-muted">({indexTotal})</span>
                   </h2>
                   {indexTotal > PREVIEW_INDEX && (
-                    <button onClick={() => drillInto('index')} className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1">
+                    <button onClick={() => drillInto('index')} className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1">
                       See all {indexTotal} <ChevronRight className="w-4 h-4" />
                     </button>
                   )}
@@ -468,13 +469,13 @@ export default function SearchPage() {
             {imageTotal > 0 && (
               <section>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-lg font-semibold text-stone-800">
-                    <ImageIcon className="w-5 h-5 text-rose-600" />
+                  <h2 className="flex items-center gap-2 text-lg font-semibold text-primary">
+                    <ImageIcon className="w-5 h-5 text-accent-gold" />
                     Images
-                    <span className="text-sm font-normal text-stone-500">({imageTotal})</span>
+                    <span className="text-sm font-normal text-muted">({imageTotal})</span>
                   </h2>
                   {imageTotal > PREVIEW_IMAGES && (
-                    <button onClick={() => drillInto('images')} className="text-sm text-amber-600 hover:text-amber-700 flex items-center gap-1">
+                    <button onClick={() => drillInto('images')} className="text-sm text-accent-rust hover:text-accent-rust/80 flex items-center gap-1">
                       See all {imageTotal} <ChevronRight className="w-4 h-4" />
                     </button>
                   )}
@@ -493,16 +494,16 @@ export default function SearchPage() {
         {viewMode === 'books' && query.length >= 2 && (
           <>
             {!loading && (
-              <div className="mb-6 text-stone-600">
-                Found <span className="font-medium text-stone-900">{bookTotal}</span> books & pages for &ldquo;{query}&rdquo;
+              <div className="mb-6 text-muted">
+                Found <span className="font-medium text-primary">{bookTotal}</span> books & pages for &ldquo;{query}&rdquo;
                 {bookTotal > RESULTS_PER_PAGE && (
-                  <span className="ml-2 text-stone-500">
+                  <span className="ml-2 text-faint">
                     (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, bookTotal)})
                   </span>
                 )}
               </div>
             )}
-            {loading && <div className="text-stone-500 mb-6">Searching...</div>}
+            {loading && <div className="text-muted mb-6">Searching...</div>}
             <div className="space-y-3">
               {bookResults.map((result) => (
                 <BookResultCard key={result.id} result={result} query={query} />
@@ -516,11 +517,11 @@ export default function SearchPage() {
         {viewMode === 'index' && query.length >= 2 && (
           <>
             {!loading && (
-              <div className="mb-6 text-stone-600">
-                Found <span className="font-medium text-stone-900">{indexTotal}</span> index entries for &ldquo;{query}&rdquo;
+              <div className="mb-6 text-muted">
+                Found <span className="font-medium text-primary">{indexTotal}</span> index entries for &ldquo;{query}&rdquo;
               </div>
             )}
-            {loading && <div className="text-stone-500 mb-6">Searching...</div>}
+            {loading && <div className="text-muted mb-6">Searching...</div>}
             <div className="space-y-3">
               {indexResults.map((result, idx) => (
                 <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
@@ -533,16 +534,16 @@ export default function SearchPage() {
         {viewMode === 'images' && query.length >= 2 && (
           <>
             {!loading && (
-              <div className="mb-6 text-stone-600">
-                Found <span className="font-medium text-stone-900">{imageTotal}</span> images for &ldquo;{query}&rdquo;
+              <div className="mb-6 text-muted">
+                Found <span className="font-medium text-primary">{imageTotal}</span> images for &ldquo;{query}&rdquo;
                 {imageTotal > RESULTS_PER_PAGE && (
-                  <span className="ml-2 text-stone-500">
+                  <span className="ml-2 text-faint">
                     (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, imageTotal)})
                   </span>
                 )}
               </div>
             )}
-            {loading && <div className="text-stone-500 mb-6">Searching...</div>}
+            {loading && <div className="text-muted mb-6">Searching...</div>}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {imageResults.map((item, idx) => (
                 <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large />
@@ -553,13 +554,6 @@ export default function SearchPage() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-stone-200 mt-16 py-8 bg-white">
-        <div className="max-w-5xl mx-auto px-4 text-center text-sm text-stone-500">
-          <p>Source Library — Making historical texts accessible through AI-assisted translation.</p>
-          <p className="mt-2">All translations are citable with DOIs via Zenodo.</p>
-        </div>
-      </footer>
     </div>
   );
 }
@@ -570,37 +564,37 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
   return (
     <Link
       href={result.type === 'page' ? `/book/${result.book_id}/page/${result.page_number}` : `/book/${result.book_id}`}
-      className="block bg-white rounded-xl border border-stone-200 p-4 hover:border-amber-300 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-3">
-        <div className={`p-2 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-amber-100' : 'bg-accent-sage/12'}`}>
-          {result.type === 'book' ? <Book className="w-4 h-4 text-amber-700" /> : <FileText className="w-4 h-4 text-accent-sage-dark" />}
+        <div className={`p-2 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-accent-rust/10' : 'bg-accent-sage/12'}`}>
+          {result.type === 'book' ? <Book className="w-4 h-4 text-accent-rust" /> : <FileText className="w-4 h-4 text-accent-sage-dark" />}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="font-medium text-stone-900 line-clamp-1">
+              <h3 className="font-medium text-primary line-clamp-1">
                 <HighlightedText text={result.display_title || result.title} query={query} />
-                {result.type === 'page' && <span className="text-stone-500 font-normal ml-2">— Page {result.page_number}</span>}
+                {result.type === 'page' && <span className="text-muted font-normal ml-2">— Page {result.page_number}</span>}
               </h3>
-              <p className="text-sm text-stone-600 mt-0.5">
+              <p className="text-sm text-secondary mt-0.5">
                 <HighlightedText text={result.author} query={query} /> • {result.published} • {result.language}
               </p>
             </div>
             {result.has_doi && result.doi && (
               <a href={`https://doi.org/${result.doi}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium hover:bg-green-200 flex-shrink-0">
+                className="flex items-center gap-1 px-2 py-1 bg-accent-sage/15 text-accent-sage-dark rounded text-xs font-medium hover:bg-accent-sage/25 flex-shrink-0">
                 DOI <ExternalLink className="w-3 h-3" />
               </a>
             )}
           </div>
           {result.snippet && (
-            <p className="mt-2 text-sm text-stone-600 line-clamp-2">
+            <p className="mt-2 text-sm text-secondary line-clamp-2 font-body">
               <HighlightedText text={result.snippet} query={query} />
             </p>
           )}
           {result.type === 'book' && result.page_count && (
-            <p className="mt-1.5 text-xs text-stone-500">
+            <p className="mt-1.5 text-xs text-muted">
               {result.page_count} pages{result.translated_count ? ` • ${result.translated_count} translated` : ''}
             </p>
           )}
@@ -623,7 +617,7 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
         ? `/book/${result.book_id}/guide?page=${result.pages[0]}`
         : `/book/${result.book_id}`
       }
-      className="block bg-white rounded-xl border border-stone-200 p-4 hover:border-accent-violet/30 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-violet/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-3">
         <div className={`p-2 rounded-lg flex-shrink-0 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge.split(' ')[0]}`}>
@@ -634,22 +628,22 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
 
           {isQuote ? (
             <>
-              <blockquote className="font-serif text-stone-800 italic border-l-2 border-amber-300 pl-3 my-2">
+              <blockquote className="font-serif text-primary italic border-l-2 border-accent-gold/40 pl-3 my-2">
                 &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
               </blockquote>
               {result.quote_significance && (
-                <p className="text-sm text-stone-600 mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
+                <p className="text-sm text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
               )}
             </>
           ) : (
-            <h3 className="font-medium text-stone-900 mt-1"><HighlightedText text={result.term} query={query} /></h3>
+            <h3 className="font-medium text-primary mt-1"><HighlightedText text={result.term} query={query} /></h3>
           )}
 
-          <p className="text-sm text-stone-500 mt-1.5">
-            From: <span className="text-stone-700">{result.book_title}</span> • {result.book_author}
+          <p className="text-sm text-muted mt-1.5">
+            From: <span className="text-secondary">{result.book_title}</span> • {result.book_author}
           </p>
           {result.pages && result.pages.length > 0 && (
-            <p className="text-xs text-stone-500 mt-1">
+            <p className="text-xs text-muted mt-1">
               Pages: {result.pages.slice(0, 5).join(', ')}{result.pages.length > 5 && ` +${result.pages.length - 5} more`}
             </p>
           )}
@@ -662,16 +656,16 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
 function ImageResultCard({ item, query, large }: { item: GalleryItem; query: string; large?: boolean }) {
   const [imageError, setImageError] = useState(false);
 
-  const displayUrl = item.bbox
-    ? `/api/crop-image?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
-    : item.imageUrl;
+  // Use pre-generated thumbnail/extracted URL first (publicly accessible),
+  // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
+  const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
 
   return (
     <Link
       href={`/gallery/image/${item.pageId}-${item.detectionIndex}`}
-      className="group block bg-white rounded-lg border border-stone-200 overflow-hidden hover:border-rose-300 hover:shadow-md transition-all"
+      className="group block bg-white rounded-lg border border-border-light overflow-hidden hover:border-accent-gold/30 hover:shadow-md transition-all"
     >
-      <div className={`relative bg-stone-100 ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>
+      <div className={`relative bg-warm ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>
         {!imageError ? (
           <Image
             src={displayUrl}
@@ -683,15 +677,15 @@ function ImageResultCard({ item, query, large }: { item: GalleryItem; query: str
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
-            <ImageIcon className="w-8 h-8 text-stone-300" />
+            <ImageIcon className="w-8 h-8 text-border-medium" />
           </div>
         )}
       </div>
-      <div className="p-2">
-        <p className="text-xs text-stone-700 line-clamp-2 mb-1">
+      <div className="p-2.5">
+        <p className="text-sm text-secondary line-clamp-2 mb-1">
           {query ? <HighlightedText text={item.description} query={query} /> : item.description}
         </p>
-        <p className="text-[10px] text-stone-400 line-clamp-1">{item.bookTitle}</p>
+        <p className="text-xs text-muted line-clamp-1">{item.bookTitle}</p>
       </div>
     </Link>
   );
@@ -705,21 +699,21 @@ function Pagination({ total, offset, setOffset, loading }: {
   if (total <= RESULTS_PER_PAGE || loading) return null;
 
   return (
-    <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-stone-200">
+    <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-border-light">
       <button
         onClick={() => { setOffset(Math.max(0, offset - RESULTS_PER_PAGE)); window.scrollTo(0, 0); }}
         disabled={offset === 0}
-        className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
+        className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border-medium text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-warm"
       >
         <ChevronLeft className="w-4 h-4" /> Previous
       </button>
-      <span className="text-sm text-stone-600">
+      <span className="text-sm text-muted">
         Page {Math.floor(offset / RESULTS_PER_PAGE) + 1} of {Math.ceil(total / RESULTS_PER_PAGE)}
       </span>
       <button
         onClick={() => { setOffset(offset + RESULTS_PER_PAGE); window.scrollTo(0, 0); }}
         disabled={offset + RESULTS_PER_PAGE >= total}
-        className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-stone-300 transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-stone-50"
+        className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border-medium text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-warm"
       >
         Next <ChevronRight className="w-4 h-4" />
       </button>

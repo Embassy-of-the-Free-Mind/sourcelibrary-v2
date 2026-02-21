@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { normalizeText } from '@/lib/utils';
 
 export const preferredRegion = 'fra1';
 
@@ -53,12 +52,11 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
     const queryRegex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
-    const queryNormalized = normalizeText(query);
 
     // Run book, index, and gallery search in parallel
     const [booksResult, indexResult, galleryResult] = await Promise.all([
       searchBooks(db, query, queryRegex, limit),
-      searchIndex(db, queryNormalized, limit),
+      searchIndex(db, query, limit),
       searchGallery(db, queryRegex, 3)
     ]);
 
@@ -87,7 +85,6 @@ export async function GET(request: NextRequest) {
 
 async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: number) {
   let books;
-  let total;
 
   try {
     // Use $text index for fast, relevance-ranked search
@@ -101,23 +98,20 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       .sort({ score: { $meta: 'textScore' } })
       .limit(limit)
       .toArray();
-    total = await db.collection('books').countDocuments({ $text: { $search: query }, hidden: { $ne: true } });
   } catch {
     // Fallback to regex
-    const filter = {
-      $or: [
-        { title: queryRegex },
-        { display_title: queryRegex },
-        { author: queryRegex },
-      ],
-      hidden: { $ne: true },
-    };
     books = await db.collection('books')
-      .find(filter)
+      .find({
+        $or: [
+          { title: queryRegex },
+          { display_title: queryRegex },
+          { author: queryRegex },
+        ],
+        hidden: { $ne: true },
+      })
       .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1 })
       .limit(limit)
       .toArray();
-    total = await db.collection('books').countDocuments(filter);
   }
 
   return {
@@ -130,57 +124,57 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       published: b.published || 'Unknown',
       translation_percent: b.pages_count > 0 ? Math.round((b.pages_translated || 0) / b.pages_count * 100) : 0
     })),
-    total
+    total: books.length
   };
 }
 
-async function searchIndex(db: any, queryNormalized: string, limit: number) {
-  const books = await db.collection('books')
-    .find({ 'index.generatedAt': { $exists: true }, hidden: { $ne: true } })
-    .project({
-      id: 1,
-      display_title: 1,
-      title: 1,
-      'index.keywords': 1,
-      'index.people': 1,
-      'index.places': 1,
-      'index.concepts': 1
-    })
-    .toArray();
+async function searchIndex(db: any, query: string, limit: number) {
+  // Use MongoDB aggregation to filter server-side instead of loading all indexes into memory
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const queryRegex = new RegExp(escapedQuery, 'i');
 
-  const results: IndexResult[] = [];
-  let total = 0;
-
-  for (const book of books) {
-    const bookTitle = book.display_title || book.title;
-    const index = book.index || {};
-
-    const searchInArray = (arr: any[], type: IndexResult['type']) => {
-      for (const entry of (arr || [])) {
-        if (entry.term && normalizeText(entry.term).includes(queryNormalized)) {
-          total++;
-          if (results.length < limit) {
-            results.push({
-              type,
-              term: entry.term,
-              book_id: book.id,
-              book_title: bookTitle,
-              pages: entry.pages
-            });
-          }
-        }
+  const results = await db.collection('books').aggregate([
+    // Pre-filter: only books with at least one matching term
+    { $match: {
+        'index.generatedAt': { $exists: true },
+        hidden: { $ne: true },
+        $or: [
+          { 'index.concepts.term': queryRegex },
+          { 'index.people.term': queryRegex },
+          { 'index.places.term': queryRegex },
+          { 'index.keywords.term': queryRegex }
+        ]
       }
-    };
+    },
+    // Merge all index arrays with type labels
+    { $project: {
+        id: 1,
+        book_title: { $ifNull: ['$display_title', '$title'] },
+        entries: { $concatArrays: [
+          { $map: { input: { $ifNull: ['$index.concepts', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'concept' } } },
+          { $map: { input: { $ifNull: ['$index.people', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'person' } } },
+          { $map: { input: { $ifNull: ['$index.places', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'place' } } },
+          { $map: { input: { $ifNull: ['$index.keywords', []] }, as: 'e', in: { term: '$$e.term', pages: '$$e.pages', type: 'keyword' } } }
+        ] }
+      }
+    },
+    { $unwind: '$entries' },
+    { $match: { 'entries.term': queryRegex } },
+    { $addFields: { _termLen: { $strLenCP: '$entries.term' } } },
+    { $sort: { _termLen: 1 } },
+    { $limit: limit },
+    { $project: {
+        _id: 0,
+        type: '$entries.type',
+        term: '$entries.term',
+        book_id: '$id',
+        book_title: 1,
+        pages: '$entries.pages'
+      }
+    }
+  ]).toArray();
 
-    searchInArray(index.concepts, 'concept');
-    searchInArray(index.people, 'person');
-    searchInArray(index.places, 'place');
-    searchInArray(index.keywords, 'keyword');
-  }
-
-  results.sort((a, b) => a.term.length - b.term.length);
-
-  return { results, total };
+  return { results: results as IndexResult[], total: results.length };
 }
 
 async function searchGallery(db: any, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {

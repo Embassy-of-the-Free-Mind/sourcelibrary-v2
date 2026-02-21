@@ -32,161 +32,123 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getDb();
-    const results: IndexSearchResult[] = [];
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const queryRegex = new RegExp(escapedQuery, 'i');
     const queryLower = query.toLowerCase();
-    const queryRegex = new RegExp(query, 'i');
 
-    // Get all books with indexes
-    const books = await db.collection('books')
-      .find({ 'index.generatedAt': { $exists: true }, hidden: { $ne: true } })
-      .project({
-        id: 1,
-        display_title: 1,
-        title: 1,
-        author: 1,
-        'index.vocabulary': 1,
-        'index.keywords': 1,
-        'index.people': 1,
-        'index.places': 1,
-        'index.concepts': 1,
-        'index.sectionSummaries': 1,
-      })
-      .toArray();
+    // Build the list of index array types to search
+    const termTypes: { field: string; type: IndexSearchResult['type'] }[] = [];
+    if (!type || type === 'vocabulary') termTypes.push({ field: 'index.vocabulary', type: 'vocabulary' });
+    if (!type || type === 'keyword') termTypes.push({ field: 'index.keywords', type: 'keyword' });
+    if (!type || type === 'person') termTypes.push({ field: 'index.people', type: 'person' });
+    if (!type || type === 'place') termTypes.push({ field: 'index.places', type: 'place' });
+    if (!type || type === 'concept') termTypes.push({ field: 'index.concepts', type: 'concept' });
 
-    for (const book of books) {
-      const bookTitle = book.display_title || book.title;
-      const bookAuthor = book.author || 'Unknown';
-      const index = book.index || {};
-
-      // Search vocabulary (original language terms)
-      if (!type || type === 'vocabulary') {
-        for (const entry of (index.vocabulary || [])) {
-          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
-            results.push({
-              type: 'vocabulary',
-              term: entry.term,
-              book_id: book.id,
-              book_title: bookTitle,
-              book_author: bookAuthor,
-              pages: entry.pages,
-            });
-          }
-        }
-      }
-
-      // Search keywords
-      if (!type || type === 'keyword') {
-        for (const entry of (index.keywords || [])) {
-          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
-            results.push({
-              type: 'keyword',
-              term: entry.term,
-              book_id: book.id,
-              book_title: bookTitle,
-              book_author: bookAuthor,
-              pages: entry.pages,
-            });
-          }
-        }
-      }
-
-      // Search people
-      if (!type || type === 'person') {
-        for (const entry of (index.people || [])) {
-          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
-            results.push({
-              type: 'person',
-              term: entry.term,
-              book_id: book.id,
-              book_title: bookTitle,
-              book_author: bookAuthor,
-              pages: entry.pages,
-            });
-          }
-        }
-      }
-
-      // Search places
-      if (!type || type === 'place') {
-        for (const entry of (index.places || [])) {
-          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
-            results.push({
-              type: 'place',
-              term: entry.term,
-              book_id: book.id,
-              book_title: bookTitle,
-              book_author: bookAuthor,
-              pages: entry.pages,
-            });
-          }
-        }
-      }
-
-      // Search concepts
-      if (!type || type === 'concept') {
-        for (const entry of (index.concepts || [])) {
-          if (entry.term && entry.term.toLowerCase().includes(queryLower)) {
-            results.push({
-              type: 'concept',
-              term: entry.term,
-              book_id: book.id,
-              book_title: bookTitle,
-              book_author: bookAuthor,
-              pages: entry.pages,
-            });
-          }
-        }
-      }
-
-      // Search quotes in section summaries
-      if (!type || type === 'quote') {
-        for (const section of (index.sectionSummaries || [])) {
-          for (const quote of (section.quotes || [])) {
-            if (quote.text && queryRegex.test(quote.text)) {
-              results.push({
-                type: 'quote',
-                term: quote.text.substring(0, 100) + (quote.text.length > 100 ? '...' : ''),
-                book_id: book.id,
-                book_title: bookTitle,
-                book_author: bookAuthor,
-                quote_text: quote.text,
-                quote_page: quote.page,
-                quote_significance: quote.significance,
-                section_title: section.title,
-              });
-            }
-          }
-        }
-      }
+    // Build pre-filter: only books with matching terms in relevant arrays
+    const preFilterOr = termTypes.map(t => ({ [`${t.field}.term`]: queryRegex }));
+    if (!type || type === 'quote') {
+      preFilterOr.push({ 'index.sectionSummaries.quotes.text': queryRegex });
     }
 
-    // Sort by relevance (exact matches first, then by frequency of pages)
-    results.sort((a, b) => {
-      const aExact = a.term.toLowerCase() === queryLower;
-      const bExact = b.term.toLowerCase() === queryLower;
-      if (aExact !== bExact) return aExact ? -1 : 1;
+    // Build $concatArrays for all requested term types
+    const concatInputs = termTypes.map(t => ({
+      $map: {
+        input: { $ifNull: [`$${t.field}`, []] },
+        as: 'e',
+        in: { term: '$$e.term', pages: '$$e.pages', type: t.type }
+      }
+    }));
 
-      // Then by number of page references (more = more important)
-      const aPages = a.pages?.length || 0;
-      const bPages = b.pages?.length || 0;
-      return bPages - aPages;
-    });
+    // Run term search and quote search in parallel
+    const termSearchPromise = concatInputs.length > 0
+      ? db.collection('books').aggregate([
+          { $match: {
+              'index.generatedAt': { $exists: true },
+              hidden: { $ne: true },
+              $or: termTypes.map(t => ({ [`${t.field}.term`]: queryRegex }))
+            }
+          },
+          { $project: {
+              id: 1,
+              book_title: { $ifNull: ['$display_title', '$title'] },
+              book_author: { $ifNull: ['$author', 'Unknown'] },
+              entries: { $concatArrays: concatInputs }
+            }
+          },
+          { $unwind: '$entries' },
+          { $match: { 'entries.term': queryRegex } },
+          { $addFields: {
+              _exactMatch: { $eq: [{ $toLower: '$entries.term' }, queryLower] },
+              _pageCount: { $size: { $ifNull: ['$entries.pages', []] } }
+            }
+          },
+          { $sort: { _exactMatch: -1, _pageCount: -1 } },
+          { $limit: limit },
+          { $project: {
+              _id: 0,
+              type: '$entries.type',
+              term: '$entries.term',
+              book_id: '$id',
+              book_title: 1,
+              book_author: 1,
+              pages: '$entries.pages'
+            }
+          }
+        ]).toArray()
+      : Promise.resolve([]);
+
+    // Quote search: needs double-unwind (sectionSummaries → quotes)
+    const quoteSearchPromise = (!type || type === 'quote')
+      ? db.collection('books').aggregate([
+          { $match: {
+              'index.generatedAt': { $exists: true },
+              hidden: { $ne: true },
+              'index.sectionSummaries.quotes.text': queryRegex
+            }
+          },
+          { $project: {
+              id: 1,
+              book_title: { $ifNull: ['$display_title', '$title'] },
+              book_author: { $ifNull: ['$author', 'Unknown'] },
+              sections: { $ifNull: ['$index.sectionSummaries', []] }
+            }
+          },
+          { $unwind: '$sections' },
+          { $unwind: { path: '$sections.quotes', preserveNullAndEmptyArrays: false } },
+          { $match: { 'sections.quotes.text': queryRegex } },
+          { $limit: limit },
+          { $project: {
+              _id: 0,
+              type: { $literal: 'quote' },
+              term: { $substrCP: ['$sections.quotes.text', 0, 100] },
+              book_id: '$id',
+              book_title: 1,
+              book_author: 1,
+              quote_text: '$sections.quotes.text',
+              quote_page: '$sections.quotes.page',
+              quote_significance: '$sections.quotes.significance',
+              section_title: '$sections.title'
+            }
+          }
+        ]).toArray()
+      : Promise.resolve([]);
+
+    const [termResults, quoteResults] = await Promise.all([termSearchPromise, quoteSearchPromise]);
+    const results = [...termResults, ...quoteResults].slice(0, limit) as IndexSearchResult[];
 
     // Group results by type for summary
     const byType = {
-      vocabulary: results.filter(r => r.type === 'vocabulary').length,
-      keyword: results.filter(r => r.type === 'keyword').length,
-      concept: results.filter(r => r.type === 'concept').length,
-      person: results.filter(r => r.type === 'person').length,
-      place: results.filter(r => r.type === 'place').length,
-      quote: results.filter(r => r.type === 'quote').length,
+      vocabulary: 0, keyword: 0, concept: 0, person: 0, place: 0, quote: 0,
     };
+    for (const r of results) {
+      byType[r.type as keyof typeof byType]++;
+    }
 
     return NextResponse.json({
       query,
       total: results.length,
       byType,
-      results: results.slice(0, limit),
+      results,
     });
   } catch (error) {
     console.error('Index search error:', error);
