@@ -994,7 +994,7 @@ export default function TranslationEditor({
                   targetId={page.id}
                   bookId={book.id}
                   size="sm"
-                  showCount={false}
+                  showCount={true}
                 />
               </div>
             </div>
@@ -1516,7 +1516,7 @@ export default function TranslationEditor({
                 targetId={page.id}
                 bookId={book.id}
                 size="sm"
-                showCount={false}
+                showCount={true}
               />
             </div>
           </div>

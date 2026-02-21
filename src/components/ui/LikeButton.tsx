@@ -73,14 +73,35 @@ export default memo(function LikeButton({
 
   const cacheKey = `${targetType}:${targetId}`;
 
-  // Check localStorage on mount
+  // Check localStorage on mount and when target changes
   useEffect(() => {
     setMounted(true);
     const cache = getLikesCache();
-    if (cache[cacheKey]) {
-      setLiked(true);
-    }
-  }, [cacheKey]);
+    setLiked(!!cache[cacheKey]);
+    setCount(initialCount);
+  }, [cacheKey, initialCount]);
+
+  // Fetch real like status from API on mount/target change
+  useEffect(() => {
+    const visitorId = getVisitorId();
+    if (!visitorId || !targetId) return;
+    let cancelled = false;
+
+    likes.getStatus(
+      JSON.stringify([{ type: targetType, id: targetId }]),
+      visitorId
+    ).then(data => {
+      if (cancelled) return;
+      const key = `${targetType}:${targetId}`;
+      if (data.results?.[key]) {
+        setCount(data.results[key].count);
+        setLiked(data.results[key].liked);
+        setLikeInCache(key, data.results[key].liked);
+      }
+    }).catch(() => {});
+
+    return () => { cancelled = true; };
+  }, [targetType, targetId]);
 
   const handleClick = useCallback(async (e: React.MouseEvent) => {
     e.preventDefault();
