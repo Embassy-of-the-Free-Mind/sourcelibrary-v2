@@ -97,7 +97,7 @@ export default function GlobalFooter() {
               width={300}
               height={96}
               sizes="auto"
-              className="h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+              className="h-10 sm:h-12 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
               unoptimized
             />
           </Link>
@@ -181,7 +181,7 @@ export default function GlobalFooter() {
                   width={partner.width}
                   height={partner.height}
                   sizes="auto"
-                  className={`h-8 w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
+                  className={`h-12 md:h-16 w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
                   unoptimized
                 />
               </a>
