@@ -44,8 +44,8 @@ const NAV_COLUMNS = [
 ] as const;
 
 const PARTNERS = [
-  { name: 'Embassy of the Free Mind', src: 'https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png', href: 'https://embassyofthefreemind.com', width: 200, height: 60 },
-  { name: 'UNESCO Memory of the World', src: 'https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif', href: 'https://en.unesco.org/programme/mow', width: 200, height: 60 },
+  { name: 'Embassy of the Free Mind', src: 'https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png', href: 'https://embassyofthefreemind.com', width: 200, height: 60, invert: true },
+  { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 373, height: 174, invert: false },
 ];
 
 export default function GlobalFooter() {
@@ -90,15 +90,16 @@ export default function GlobalFooter() {
 
         {/* Zone 1: Brand + Mission */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-b border-white/[0.08]">
-          <Link href="/" className="flex items-center gap-3 group">
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-            </svg>
-            <span className="text-white font-sans text-sm font-semibold tracking-[0.15em] uppercase">
-              Source Library
-            </span>
+          <Link href="/" className="group">
+            <Image
+              src="/brand/png/logo-compact--white-on-transparent--96h.png"
+              alt="Source Library"
+              width={300}
+              height={96}
+              sizes="auto"
+              className="h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity"
+              unoptimized
+            />
           </Link>
           <p className="font-serif italic text-white/50 text-lg">
             Wisdom belongs to everyone.
@@ -180,7 +181,7 @@ export default function GlobalFooter() {
                   width={partner.width}
                   height={partner.height}
                   sizes="auto"
-                  className="h-10 md:h-12 w-auto brightness-0 invert"
+                  className={`h-8 w-auto ${partner.invert ? 'brightness-0 invert' : ''}`}
                   unoptimized
                 />
               </a>
