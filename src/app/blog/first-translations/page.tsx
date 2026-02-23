@@ -3,8 +3,8 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: '314 First English Translations - Blog - Source Library',
-  description: 'Roughly a quarter of Source Library\'s 1,234 books appear to be first-ever English translations — alchemical lab manuals, radical theology, women alchemists, and founding texts of biblical criticism, all trapped in Latin, German, and French until now.',
+  title: 'First English Translations - Blog - Source Library',
+  description: 'Hundreds of books in Source Library appear to be first-ever English translations — alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
   alternates: {
     canonical: '/blog/first-translations',
   },
@@ -15,10 +15,10 @@ export default function FirstTranslationsPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="314 First English Translations"
-          subtitle="A quarter of Source Library's collection has never been read in English before"
+          title="First English Translations"
+          subtitle="Hundreds of books in Source Library have never been read in English before"
         >
-          <p className="text-stone-400 text-sm mt-4">20 February 2026 &middot; 12 min read</p>
+          <p className="text-stone-400 text-sm mt-4">20 February 2026, updated 23 February 2026 &middot; 14 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -37,11 +37,11 @@ export default function FirstTranslationsPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          When we set out to build Source Library, we knew the collection would include texts that had never been translated into English. We did not expect the number to be this large. Of the 1,234 books currently visible in the library, 1,124 are in languages other than English. After a systematic review, we estimate that 314 of those &mdash; roughly one in four &mdash; represent first-ever English translations. Another 17 appear to be the first <em>complete</em> translations, where only fragments had previously appeared in anthologies or scholarly excerpts.
+          When we set out to build Source Library, we knew the collection would include texts that had never been translated into English. We did not expect the number to be this large. As the library has grown, systematic classification has identified over 500 books that appear to be first-ever English translations, with another 26 that are the first <em>complete</em> translations where only fragments had previously appeared in anthologies or scholarly excerpts.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          These are not obscure marginalia. They include founding texts of biblical criticism, alchemical laboratory manuals, the writings of women philosophers, radical theological treatises that reshaped Protestantism, and one of the earliest attempts to decode Egyptian hieroglyphics. Most date from the 17th and 18th centuries &mdash; 275 of the 314 &mdash; and most are in German (136) or Latin (75). They were never translated because they fell outside the narrow canon that English-language scholarship chose to preserve. AI translation is now making them readable for the first time.
+          These are not obscure marginalia. They include founding texts of biblical criticism, alchemical laboratory manuals, the writings of women philosophers, radical theological treatises that reshaped Protestantism, one of the earliest attempts to decode Egyptian hieroglyphics, and &mdash; as a recent deep classification revealed &mdash; 95 works of astrology and divination, mostly Sanskrit jyotish manuscripts that have never existed in any European language. They were never translated because they fell outside the narrow canon that English-language scholarship chose to preserve. AI translation is now making them readable for the first time.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -117,6 +117,26 @@ export default function FirstTranslationsPage() {
           The remaining clusters include about 30 books on Christian Cabala and Jewish mysticism (including Postel&apos;s <em>Sefer Yetzirah</em> commentary and Gaffarel&apos;s catalogue of Pico&apos;s Kabbalistic manuscripts), 89 on natural philosophy and early science, 65 on law, politics, and history, and 46 on Paracelsian medicine and alchemical pharmacy. Each cluster represents a body of primary sources that English-language scholarship has discussed at second hand for centuries.
         </p>
 
+        <h3 className="text-xl text-stone-800 mb-3 mt-10">
+          Astrology and divination: 95 first translations
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A deep classification of the library&apos;s{' '}
+          <Link href="/collections/astrology" className="text-amber-700 hover:text-amber-600 underline">Astrology &amp; Divination</Link>{' '}
+          collection revealed 95 works that have never been translated into English &mdash; the largest single-subject cluster identified so far. The majority are Sanskrit jyotish manuscripts: 59 texts on electional astrology (<em>muhurta</em>), horary astrology (<em>prasna</em>), planetary remediation (<em>graha shanti</em>), nakshatras, nadi divination, and geomancy (<em>ramala shastra</em>). These are texts from an Indian astrological tradition that is enormous in its own right but has been almost entirely inaccessible to English-speaking readers.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Beyond Sanskrit, the astrology first translations include 14 German texts (early modern prognostications, geomancy manuals, astrological calendars), 11 Latin works (including medieval Bodleian manuscripts and a 1503 printing of Campanus on circle quadrature), 3 French occult treatises, 2 Arabic manuscripts (including the{' '}
+          <Link href="/book/6953b56577f38f6761bd979d" className="text-amber-700 hover:text-amber-600 underline">13th-century <em>Book of Wonders</em></Link>{' '}
+          from the Bodleian), 2 Tamil nadi jothidam texts, and a 1657 Chinese astrology manual from the Library of Congress.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Of these 95 first translations, 87 are already 80% or more complete. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
+        </p>
+
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           The women who wrote
         </h2>
@@ -178,24 +198,26 @@ export default function FirstTranslationsPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The 314 first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection &mdash; approaching the historical record without the filter of what previous generations decided was worth translating. When you translate 1,124 non-English books, you discover that a large fraction of them simply fell through the cracks.
+          The first translations in Source Library are not a planned editorial project. They are a consequence of digitizing and translating everything in the collection &mdash; approaching the historical record without the filter of what previous generations decided was worth translating. When you translate thousands of non-English books, you discover that a large fraction of them simply fell through the cracks.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The reasons differ. Some texts were too long (Kircher&apos;s 581 pages of dense Latin). Some were in the wrong language (the entire German alchemical tradition). Some were by the wrong people (women, heterodox theologians, anonymous pamphleteers). Some were in the wrong field &mdash; too religious for historians of science, too scientific for historians of religion, too esoteric for both. And some were simply never prioritized by the small number of scholars who could have translated them.
+          The reasons differ. Some texts were too long (Kircher&apos;s 581 pages of dense Latin). Some were in the wrong language (the entire German alchemical tradition, the Sanskrit jyotish corpus). Some were by the wrong people (women, heterodox theologians, anonymous pamphleteers). Some were in the wrong field &mdash; too religious for historians of science, too scientific for historians of religion, too esoteric for both. And some were simply never prioritized by the small number of scholars who could have translated them.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          AI translation does not replace scholarly editing. It cannot produce a critical apparatus, identify textual variants, or situate a passage in its full intellectual context. But it can do something that no human translator could do at this scale: it can make 314 previously unreadable books readable, all at once, and let readers decide for themselves what is important. The history of translation has always been a history of selection &mdash; someone deciding what is worth the effort. AI removes that bottleneck. The texts can speak for themselves.
+          AI translation does not replace scholarly editing. It cannot produce a critical apparatus, identify textual variants, or situate a passage in its full intellectual context. But it can do something that no human translator could do at this scale: it can make hundreds of previously unreadable books readable, all at once, and let readers decide for themselves what is important. The history of translation has always been a history of selection &mdash; someone deciding what is worth the effort. AI removes that bottleneck. The texts can speak for themselves.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Of the 314 first translations, 119 are high-confidence identifications where we are reasonably certain no prior English translation exists. The remaining 195 are probable first translations based on available evidence. If you are a specialist who knows of a prior translation we missed, we would welcome the correction.
+          Classification is ongoing. Where deep bibliographic verification has been performed &mdash; as with the 95 astrology first translations &mdash; confidence is high: 85 of those 95 were identified with 80%+ confidence that no prior English translation exists. For the broader library, many identifications are based on the AI&apos;s initial assessment and await deeper review. If you are a specialist who knows of a prior translation we missed, we would welcome the correction.
         </p>
 
         <div className="bg-amber-50/50 rounded-lg p-6 border border-amber-100 mb-8">
           <p className="text-stone-700 leading-relaxed">
             <strong>Explore the collection:</strong> Browse the{' '}
+            <Link href="/collections/astrology" className="text-amber-700 hover:text-amber-600 underline">Astrology &amp; Divination</Link>{' '}
+            collection (95 first translations), the{' '}
             <Link href="/collections/women-esoteric-voices" className="text-amber-700 hover:text-amber-600 underline">Women&apos;s Voices</Link>{' '}
             collection, or{' '}
             <Link href="/search" className="text-amber-700 hover:text-amber-600 underline">search the library</Link>{' '}
