@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13-Month Lunar Calendar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-dark: #1a1612;
+    --bg-card: #231f1a;
+    --bg-hover: #2d2822;
+    --cream: #fdfcf9;
+    --warm: #f5f0e8;
+    --muted: #8a8480;
+    --faint: #6b6560;
+    --border: #3a342e;
+    --accent-rust: #9e4a3a;
+    --accent-gold: #c9a86c;
+    --accent-sage: #8b9a7d;
+    --accent-violet: #7c5db5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--cream);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 2.8rem;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 300;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .control-group label {
+    color: var(--muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  input[type="number"], input[type="date"] {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    width: 100px;
+  }
+
+  input[type="date"] { width: 160px; }
+
+  input:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+  }
+
+  .year-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .year-nav button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--cream);
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+  }
+
+  .year-nav button:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent-gold);
+  }
+
+  .summary {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .summary span { color: var(--accent-gold); font-weight: 500; }
+
+  .birthday-banner {
+    text-align: center;
+    background: var(--accent-rust);
+    background: linear-gradient(135deg, rgba(158,74,58,0.15), rgba(201,168,108,0.15));
+    border: 1px solid rgba(201,168,108,0.25);
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+  }
+
+  .birthday-banner strong { color: var(--accent-gold); }
+
+  /* Lunation grid */
+  .lunations { display: flex; flex-direction: column; gap: 0.75rem; }
+
+  .lunation {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    gap: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .lunation:hover { border-color: rgba(201,168,108,0.3); }
+
+  .lunation.has-birthday {
+    border-color: var(--accent-rust);
+    background: linear-gradient(135deg, var(--bg-card), rgba(158,74,58,0.08));
+  }
+
+  .lunation-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .lunation-num small {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--faint);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+  }
+
+  .lunation.is-leap .lunation-num { color: var(--accent-violet); }
+
+  .lunation-body { min-width: 0; }
+
+  .phase-row {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .phase-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .phase-emoji { font-size: 1.5rem; line-height: 1; }
+
+  .phase-line {
+    flex: 0 0 auto;
+    width: 20px;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .phase-date {
+    font-size: 0.7rem;
+    color: var(--faint);
+    margin-top: 2px;
+    white-space: nowrap;
+  }
+
+  .phase-label {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .lunation-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .lunation-meta .tag {
+    background: rgba(255,255,255,0.05);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .lunation-meta .leap {
+    background: rgba(124,93,181,0.15);
+    color: var(--accent-violet);
+  }
+
+  .lunation-meta .birthday-tag {
+    background: rgba(158,74,58,0.2);
+    color: var(--accent-rust);
+    font-weight: 500;
+  }
+
+  .lunation-right {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .lunation-dates {
+    font-size: 0.8rem;
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  .lunation-days {
+    font-size: 0.7rem;
+    color: var(--faint);
+    margin-top: 2px;
+  }
+
+  /* Day grid within each lunation */
+  .day-grid {
+    display: flex;
+    gap: 1px;
+    margin-top: 0.5rem;
+  }
+
+  .day-cell {
+    flex: 1;
+    height: 4px;
+    border-radius: 1px;
+    background: rgba(255,255,255,0.06);
+    min-width: 0;
+  }
+
+  .day-cell.waxing { background: rgba(201,168,108,0.2); }
+  .day-cell.full { background: var(--accent-gold); }
+  .day-cell.waning { background: rgba(139,154,125,0.2); }
+  .day-cell.new { background: rgba(255,255,255,0.15); }
+  .day-cell.birthday { background: var(--accent-rust); height: 6px; border-radius: 2px; }
+
+  .today-marker {
+    background: var(--accent-sage) !important;
+    height: 6px;
+    border-radius: 2px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--faint);
+    font-size: 0.75rem;
+  }
+
+  footer a { color: var(--accent-gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 700px) {
+    h1 { font-size: 2rem; }
+    .lunation { grid-template-columns: 45px 1fr; gap: 0.75rem; }
+    .lunation-right { display: none; }
+    .controls { gap: 0.75rem; }
+    .phase-emoji { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>13-Month Lunar Calendar</h1>
+    <p class="subtitle">Each month is one lunation &mdash; new moon to new moon</p>
+  </header>
+
+  <div class="controls">
+    <div class="control-group">
+      <label>Year</label>
+      <div class="year-nav">
+        <button onclick="changeYear(-1)">&larr;</button>
+        <input type="number" id="yearInput" min="1900" max="2100" value="2026">
+        <button onclick="changeYear(1)">&rarr;</button>
+      </div>
+    </div>
+    <div class="control-group">
+      <label>Birth date</label>
+      <input type="date" id="birthInput" placeholder="YYYY-MM-DD">
+    </div>
+  </div>
+
+  <div id="summary" class="summary"></div>
+  <div id="birthdayBanner"></div>
+  <div id="lunations" class="lunations"></div>
+
+  <footer>
+    Astronomical calculations by <a href="https://github.com/cosinekitty/astronomy" target="_blank">astronomy-engine</a>.
+    Chinese calendar by <a href="https://github.com/6tail/lunar-typescript" target="_blank">lunar-typescript</a>.
+    Part of <a href="https://github.com/dereklomas/lunar-mcp" target="_blank">lunar-mcp</a>.
+  </footer>
+</div>
+
+<script type="module">
+import Astronomy from 'https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/+esm';
+
+// Minimal Chinese calendar — we compute leap months from the astronomical new moons
+// and solar terms. For accurate Chinese month mapping we use a lookup approach.
+
+function formatMonthDay(d) {
+  return `${d.toLocaleString('en', { month: 'short' })} ${d.getDate()}`;
+}
+
+function formatFullDate(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function daysBetween(a, b) {
+  return Math.round((b.getTime() - a.getTime()) / 86400000 * 100) / 100;
+}
+
+// Find the Chinese month number for a lunation using solar terms
+// The Chinese calendar assigns month numbers based on the principal term (zhongqi)
+// that falls within each lunation. A leap month contains no principal term.
+function getChineseMonthInfo(newMoonDate, nextNewMoonDate) {
+  // The 12 principal terms (zhongqi) are at ecliptic longitudes 330, 0, 30, 60, ... 300
+  // Month 1 (Spring) contains Rain Water (330 deg) — wait, let me use the standard mapping:
+  // Month 1: contains zhongqi at 330 deg (Rain Water)
+  // Month 2: 0 deg (Spring Equinox)
+  // Month 3: 30 deg (Grain Rain)
+  // ...
+  // The principal term for month N is at (N-1)*30 + 330) % 360
+  // Simpler: month 11 contains Winter Solstice (270 deg). So month = ((zhongqi_lon / 30) + 2) % 12
+  // with month 11 = 270 deg → (270/30 + 2) % 12 = (9+2)%12 = 11. Good.
+  // month 12 = 300 deg → (10+2)%12 = 0 → 12. Need adjustment.
+
+  // Find all principal terms (even-numbered solar terms) between the two new moons
+  const principalTerms = [];
+  // Check each of the 12 possible longitudes
+  for (let i = 0; i < 12; i++) {
+    const lon = i * 30; // 0, 30, 60, ..., 330
+    try {
+      const t = Astronomy.SearchSunLongitude(lon, newMoonDate, 35);
+      if (t && t.date >= newMoonDate && t.date < nextNewMoonDate) {
+        // Map longitude to Chinese month number
+        // Winter Solstice (270) = month 11
+        // lon 0 = Vernal Equinox = month 2
+        // Formula: month = ((lon/30) + 2) mod 12, but 0 → 12
+        let month = ((lon / 30) + 2) % 12;
+        if (month === 0) month = 12;
+        principalTerms.push({ lon, month, date: t.date });
+      }
+    } catch { /* ignore */ }
+  }
+
+  if (principalTerms.length === 0) {
+    // No principal term → this is a leap month
+    return { month: null, isLeap: true };
+  }
+
+  // Use the first principal term found
+  return { month: principalTerms[0].month, isLeap: false };
+}
+
+function computeCalendar(year, birthDate) {
+  const jan1 = new Date(year, 0, 1);
+
+  // Find first new moon on or after Jan 1
+  let searchStart = new Date(jan1.getTime() - 2 * 86400000);
+  let firstNew = Astronomy.SearchMoonPhase(0, searchStart, 35);
+  if (!firstNew || firstNew.date < jan1) {
+    firstNew = Astronomy.SearchMoonPhase(0, jan1, 35);
+  }
+
+  // Determine lunar birthday
+  let lunarBirthMonth = null, lunarBirthDay = null, lunarBirthdayGregorian = null;
+
+  // We'll do a simpler approach: count how many days into the birth lunation the birthday was
+  if (birthDate) {
+    // Find the new moon before the birth date
+    const searchBefore = new Date(birthDate.getTime() - 32 * 86400000);
+    const birthNewMoon = Astronomy.SearchMoonPhase(0, searchBefore, 35);
+    if (birthNewMoon) {
+      // Make sure this new moon is before the birth date
+      let bNM = birthNewMoon;
+      if (bNM.date > birthDate) {
+        // Search earlier
+        const earlier = new Date(birthDate.getTime() - 60 * 86400000);
+        bNM = Astronomy.SearchMoonPhase(0, earlier, 65);
+      }
+      // If still after, try again
+      while (bNM && bNM.date > birthDate) {
+        const earlier = new Date(bNM.date.getTime() - 35 * 86400000);
+        bNM = Astronomy.SearchMoonPhase(0, earlier, 35);
+      }
+      if (bNM) {
+        lunarBirthDay = Math.floor((birthDate.getTime() - bNM.date.getTime()) / 86400000) + 1;
+        // Find which lunation number (1-based from the year start)
+        // We'll match this in the calendar below
+      }
+    }
+  }
+
+  const lunations = [];
+  let currentNew = firstNew;
+  let lastMonthAssigned = 0;
+
+  for (let i = 0; i < 13; i++) {
+    const fq = Astronomy.SearchMoonPhase(90, currentNew.date, 30);
+    const fm = Astronomy.SearchMoonPhase(180, currentNew.date, 30);
+    const tq = Astronomy.SearchMoonPhase(270, currentNew.date, 30);
+    const nextNew = Astronomy.SearchMoonPhase(0, new Date(currentNew.date.getTime() + 20 * 86400000), 15);
+
+    if (!fq || !fm || !tq || !nextNew) break;
+
+    const length = daysBetween(currentNew.date, nextNew.date);
+
+    // Chinese month info
+    const chInfo = getChineseMonthInfo(currentNew.date, nextNew.date);
+    let displayMonth = chInfo.month;
+    let isLeap = chInfo.isLeap;
+
+    if (isLeap && lastMonthAssigned > 0) {
+      displayMonth = lastMonthAssigned; // leap month repeats the previous month number
+    } else if (displayMonth !== null) {
+      lastMonthAssigned = displayMonth;
+    }
+
+    // Check for lunar birthday
+    let containsBirthday = false;
+    let birthdayDate = null;
+    if (lunarBirthDay && birthDate) {
+      // The birthday falls on day N of whatever lunation the original birthday was in
+      // We need to find if this lunation "matches" — we'll check each lunation
+      const targetDate = new Date(currentNew.date.getTime() + (lunarBirthDay - 1) * 86400000);
+      if (targetDate < nextNew.date) {
+        // Check if this is roughly the right month by seeing if the birth date's
+        // lunation offset matches. Since we don't have exact Chinese month matching
+        // from browser, we flag ALL lunations where the day offset lands.
+        // The MCP tool does this properly with lunar-typescript.
+        // For the HTML demo, mark the lunation where the birthday Gregorian date matches.
+        // Actually, let's be smarter: find the lunation the original birth falls in
+        // and check if the month number matches.
+      }
+    }
+
+    lunations.push({
+      num: i + 1,
+      newMoon: currentNew.date,
+      firstQuarter: fq.date,
+      fullMoon: fm.date,
+      thirdQuarter: tq.date,
+      nextNewMoon: nextNew.date,
+      length,
+      chineseMonth: displayMonth,
+      isLeap,
+      containsBirthday: false, // will set below
+      birthdayDate: null,
+    });
+
+    currentNew = nextNew;
+  }
+
+  // If we have a birth date, find the lunar birthday properly
+  // Strategy: find which lunation of the birth year the birthday was in,
+  // get the day offset, then find the same-numbered lunation this year
+  if (birthDate && lunarBirthDay) {
+    const birthYear = birthDate.getFullYear();
+    const birthJan1 = new Date(birthYear, 0, 1);
+    let bSearchStart = new Date(birthJan1.getTime() - 2 * 86400000);
+    let birthFirstNew = Astronomy.SearchMoonPhase(0, bSearchStart, 35);
+    if (!birthFirstNew || birthFirstNew.date < birthJan1) {
+      birthFirstNew = Astronomy.SearchMoonPhase(0, birthJan1, 35);
+    }
+
+    // Walk through birth year lunations to find which one contains the birthday
+    let birthLunationIndex = -1;
+    let bCurrent = birthFirstNew;
+    for (let i = 0; i < 13; i++) {
+      const bNext = Astronomy.SearchMoonPhase(0, new Date(bCurrent.date.getTime() + 20 * 86400000), 15);
+      if (!bNext) break;
+      if (birthDate >= bCurrent.date && birthDate < bNext.date) {
+        birthLunationIndex = i;
+        lunarBirthDay = Math.floor((birthDate.getTime() - bCurrent.date.getTime()) / 86400000) + 1;
+        break;
+      }
+      bCurrent = bNext;
+    }
+
+    // Now mark the corresponding lunation in the target year
+    if (birthLunationIndex >= 0 && birthLunationIndex < lunations.length) {
+      const lun = lunations[birthLunationIndex];
+      const bdayDate = new Date(lun.newMoon.getTime() + (lunarBirthDay - 1) * 86400000);
+      if (bdayDate < lun.nextNewMoon) {
+        lun.containsBirthday = true;
+        lun.birthdayDate = bdayDate;
+        lunarBirthdayGregorian = bdayDate;
+      }
+    }
+  }
+
+  return {
+    lunations,
+    lunarBirthDay,
+    lunarBirthdayGregorian,
+    birthLunationMonth: lunarBirthMonth,
+  };
+}
+
+function render() {
+  const year = parseInt(document.getElementById('yearInput').value) || 2026;
+  const birthVal = document.getElementById('birthInput').value;
+  const birthDate = birthVal ? new Date(birthVal + 'T12:00:00') : null;
+
+  const cal = computeCalendar(year, birthDate);
+  const lunations = cal.lunations;
+  const today = new Date();
+
+  // Summary
+  const totalDays = lunations.reduce((s, l) => s + l.length, 0);
+  const leapCount = lunations.filter(l => l.isLeap).length;
+  document.getElementById('summary').innerHTML =
+    `<span>${lunations.length}</span> lunations &middot; <span>${Math.round(totalDays)}</span> days` +
+    (leapCount > 0 ? ` &middot; <span>${leapCount}</span> leap month${leapCount > 1 ? 's' : ''}` : '');
+
+  // Birthday banner
+  const bannerEl = document.getElementById('birthdayBanner');
+  if (birthDate && cal.lunarBirthdayGregorian) {
+    bannerEl.innerHTML = `<div class="birthday-banner">Lunar birthday falls on <strong>${formatMonthDay(cal.lunarBirthdayGregorian)}, ${year}</strong> (day ${cal.lunarBirthDay} of lunation)</div>`;
+  } else if (birthDate) {
+    bannerEl.innerHTML = `<div class="birthday-banner">Lunar birthday tracking active for ${formatFullDate(birthDate)}</div>`;
+  } else {
+    bannerEl.innerHTML = '';
+  }
+
+  // Render lunations
+  const container = document.getElementById('lunations');
+  container.innerHTML = '';
+
+  for (const lun of lunations) {
+    const el = document.createElement('div');
+    el.className = 'lunation' +
+      (lun.containsBirthday ? ' has-birthday' : '') +
+      (lun.isLeap ? ' is-leap' : '');
+
+    const monthLabel = lun.isLeap ? `Leap` : (lun.chineseMonth ? `Mo. ${lun.chineseMonth}` : '');
+
+    // Day grid: show each day as a tiny bar
+    const days = Math.round(lun.length);
+    const fqDay = Math.round(daysBetween(lun.newMoon, lun.firstQuarter));
+    const fmDay = Math.round(daysBetween(lun.newMoon, lun.fullMoon));
+    const tqDay = Math.round(daysBetween(lun.newMoon, lun.thirdQuarter));
+    const birthdayDayNum = lun.birthdayDate ? Math.round(daysBetween(lun.newMoon, lun.birthdayDate)) : -1;
+
+    // Check if today falls in this lunation
+    const todayDay = (today >= lun.newMoon && today < lun.nextNewMoon)
+      ? Math.round(daysBetween(lun.newMoon, today))
+      : -1;
+
+    let dayGridHTML = '<div class="day-grid">';
+    for (let d = 0; d < days; d++) {
+      let cls = 'day-cell';
+      if (d === birthdayDayNum) cls += ' birthday';
+      else if (d === todayDay) cls += ' today-marker';
+      else if (d === 0) cls += ' new';
+      else if (d === fmDay) cls += ' full';
+      else if (d < fmDay) cls += ' waxing';
+      else cls += ' waning';
+      dayGridHTML += `<div class="${cls}"></div>`;
+    }
+    dayGridHTML += '</div>';
+
+    el.innerHTML = `
+      <div class="lunation-num">
+        ${lun.num}
+        <small>${monthLabel}</small>
+      </div>
+      <div class="lunation-body">
+        <div class="phase-row">
+          <div class="phase-dot">
+            <div class="phase-emoji">\uD83C\uDF11</div>
+            <div class="phase-date">${formatMonthDay(lun.newMoon)}</div>
+            <div class="phase-label">New</div>
+          </div>
+          <div class="phase-line"></div>
+          <div class="phase-dot">
+            <div class="phase-emoji">\uD83C\uDF13</div>
+            <div class="phase-date">${formatMonthDay(lun.firstQuarter)}</div>
+            <div class="phase-label">1st Qtr</div>
+          </div>
+          <div class="phase-line"></div>
+          <div class="phase-dot">
+            <div class="phase-emoji">\uD83C\uDF15</div>
+            <div class="phase-date">${formatMonthDay(lun.fullMoon)}</div>
+            <div class="phase-label">Full</div>
+          </div>
+          <div class="phase-line"></div>
+          <div class="phase-dot">
+            <div class="phase-emoji">\uD83C\uDF17</div>
+            <div class="phase-date">${formatMonthDay(lun.thirdQuarter)}</div>
+            <div class="phase-label">3rd Qtr</div>
+          </div>
+          <div class="phase-line"></div>
+          <div class="phase-dot">
+            <div class="phase-emoji">\uD83C\uDF11</div>
+            <div class="phase-date">${formatMonthDay(lun.nextNewMoon)}</div>
+            <div class="phase-label">New</div>
+          </div>
+        </div>
+        ${dayGridHTML}
+        <div class="lunation-meta">
+          <span class="tag">${Math.round(lun.length * 10) / 10} days</span>
+          ${lun.isLeap ? '<span class="tag leap">Leap month</span>' : ''}
+          ${lun.containsBirthday ? `<span class="tag birthday-tag">Lunar birthday: ${formatMonthDay(lun.birthdayDate)}</span>` : ''}
+          ${todayDay >= 0 ? '<span class="tag" style="background:rgba(139,154,125,0.15);color:var(--accent-sage)">Today</span>' : ''}
+        </div>
+      </div>
+      <div class="lunation-right">
+        <div class="lunation-dates">${formatMonthDay(lun.newMoon)} &ndash; ${formatMonthDay(lun.nextNewMoon)}</div>
+        <div class="lunation-days">${year}</div>
+      </div>
+    `;
+
+    container.appendChild(el);
+  }
+}
+
+function changeYear(delta) {
+  const input = document.getElementById('yearInput');
+  input.value = parseInt(input.value) + delta;
+  render();
+}
+
+document.getElementById('yearInput').addEventListener('change', render);
+document.getElementById('yearInput').addEventListener('input', () => {
+  clearTimeout(window._yearTimeout);
+  window._yearTimeout = setTimeout(render, 400);
+});
+document.getElementById('birthInput').addEventListener('change', render);
+
+// Set current year as default
+document.getElementById('yearInput').value = new Date().getFullYear();
+render();
+</script>
+
+</body>
+</html>

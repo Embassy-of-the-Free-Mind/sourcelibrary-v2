@@ -1,0 +1,38 @@
+{
+  "name": "lunar-mcp",
+  "version": "1.1.0",
+  "description": "MCP server for lunar calendar calculations, moon phases, and Chinese zodiac",
+  "type": "module",
+  "bin": {
+    "lunar-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "keywords": [
+    "mcp",
+    "moon",
+    "lunar",
+    "astrology",
+    "zodiac",
+    "calendar",
+    "astronomy"
+  ],
+  "author": "Derek Lomas",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "astronomy-engine": "^2.1.0",
+    "lunar-typescript": "^1.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "@types/node": "^22.0.0"
+  },
+  "files": [
+    "dist"
+  ]
+}
