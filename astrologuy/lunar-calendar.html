@@ -298,6 +298,132 @@
     border-radius: 2px;
   }
 
+  /* Drift visualization */
+  .drift-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .drift-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .drift-subtitle {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .drift-chart {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+  }
+
+  .drift-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 28px;
+  }
+
+  .drift-year {
+    flex: 0 0 42px;
+    font-size: 0.75rem;
+    color: var(--faint);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .drift-bar-container {
+    flex: 1;
+    position: relative;
+    height: 100%;
+  }
+
+  .drift-bar {
+    position: absolute;
+    height: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 3px;
+    background: var(--accent-gold);
+    opacity: 0.7;
+    transition: opacity 0.15s;
+    cursor: default;
+  }
+
+  .drift-bar:hover { opacity: 1; }
+
+  .drift-bar.leap { background: var(--accent-violet); }
+  .drift-bar.current { opacity: 1; height: 18px; }
+
+  .drift-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-rust);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .drift-label {
+    position: absolute;
+    font-size: 0.65rem;
+    color: var(--cream);
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    padding-left: 4px;
+    pointer-events: none;
+  }
+
+  .drift-month-markers {
+    position: relative;
+    height: 20px;
+  }
+
+  .drift-month-marker {
+    position: absolute;
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--faint);
+    border-left: 1px solid rgba(255,255,255,0.08);
+    padding-top: 2px;
+    top: 0;
+  }
+
+  .drift-month-marker:first-child { border-left: none; }
+
+  .drift-legend {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .drift-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .drift-legend-swatch {
+    width: 12px;
+    height: 8px;
+    border-radius: 2px;
+  }
+
   footer {
     text-align: center;
     margin-top: 3rem;
@@ -345,6 +471,8 @@
   <div id="summary" class="summary"></div>
   <div id="birthdayBanner"></div>
   <div id="lunations" class="lunations"></div>
+
+  <div id="driftSection"></div>
 
   <footer>
     Astronomical calculations by <a href="https://github.com/cosinekitty/astronomy" target="_blank">astronomy-engine</a>.
@@ -674,6 +802,168 @@ function render() {
     `;
 
     container.appendChild(el);
+  }
+
+  // Drift visualization — 19-year Metonic cycle
+  const driftEl = document.getElementById('driftSection');
+  if (!birthDate || !cal.lunarBirthDay) {
+    driftEl.innerHTML = '';
+  } else {
+    const metonicYears = 19;
+    const driftData = [];
+
+    // Find birth lunation index in birth year
+    const birthYear = birthDate.getFullYear();
+    const birthJan1 = new Date(birthYear, 0, 1);
+    let bSearchStart = new Date(birthJan1.getTime() - 2 * 86400000);
+    let birthFirstNew = Astronomy.SearchMoonPhase(0, bSearchStart, 35);
+    if (!birthFirstNew || birthFirstNew.date < birthJan1) {
+      birthFirstNew = Astronomy.SearchMoonPhase(0, birthJan1, 35);
+    }
+
+    let birthLunIdx = -1;
+    let bCur = birthFirstNew;
+    for (let i = 0; i < 13; i++) {
+      const bNxt = Astronomy.SearchMoonPhase(0, new Date(bCur.date.getTime() + 20 * 86400000), 15);
+      if (!bNxt) break;
+      if (birthDate >= bCur.date && birthDate < bNxt.date) {
+        birthLunIdx = i;
+        break;
+      }
+      bCur = bNxt;
+    }
+
+    if (birthLunIdx >= 0) {
+      // Compute birthday for each year in the range
+      for (let y = year; y < year + metonicYears; y++) {
+        try {
+          const yJan1 = new Date(y, 0, 1);
+          let ySearchStart = new Date(yJan1.getTime() - 2 * 86400000);
+          let yFirstNew = Astronomy.SearchMoonPhase(0, ySearchStart, 35);
+          if (!yFirstNew || yFirstNew.date < yJan1) {
+            yFirstNew = Astronomy.SearchMoonPhase(0, yJan1, 35);
+          }
+
+          // Walk to the birth lunation index
+          let yCur = yFirstNew;
+          for (let j = 0; j < birthLunIdx; j++) {
+            const yNxt = Astronomy.SearchMoonPhase(0, new Date(yCur.date.getTime() + 20 * 86400000), 15);
+            if (!yNxt) { yCur = null; break; }
+            yCur = yNxt;
+          }
+
+          if (yCur) {
+            const bdayDate = new Date(yCur.date.getTime() + (cal.lunarBirthDay - 1) * 86400000);
+            // Day of year (0-365)
+            const yearStart = new Date(y, 0, 1);
+            const dayOfYear = Math.floor((bdayDate.getTime() - yearStart.getTime()) / 86400000);
+
+            // Check if this year has a leap lunation
+            // Simple check: count lunations in the year and see if any is a leap
+            let hasLeap = false;
+            let checkNew = yFirstNew;
+            for (let k = 0; k < 13; k++) {
+              const checkNext = Astronomy.SearchMoonPhase(0, new Date(checkNew.date.getTime() + 20 * 86400000), 15);
+              if (!checkNext) break;
+              const cInfo = getChineseMonthInfo(checkNew.date, checkNext.date);
+              if (cInfo.isLeap) { hasLeap = true; break; }
+              checkNew = checkNext;
+            }
+
+            driftData.push({
+              year: y,
+              date: bdayDate,
+              dayOfYear,
+              hasLeap,
+              isCurrent: y === year,
+            });
+          }
+        } catch { /* skip years that fail */ }
+      }
+    }
+
+    if (driftData.length > 0) {
+      // Compute drift from first year
+      const baseDoy = driftData[0].dayOfYear;
+
+      // Month boundaries for the x-axis (day of year for each month start)
+      const monthStarts = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+      const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+      // Find the range of dayOfYear values to determine what slice of the year to show
+      const minDoy = Math.min(...driftData.map(d => d.dayOfYear));
+      const maxDoy = Math.max(...driftData.map(d => d.dayOfYear));
+      // Show from 2 months before min to 2 months after max, clamped to 0-365
+      const viewStart = Math.max(0, minDoy - 45);
+      const viewEnd = Math.min(365, maxDoy + 45);
+      const viewSpan = viewEnd - viewStart;
+
+      // Build month markers (only show months in the view range)
+      let monthMarkersHTML = '<div class="drift-month-markers">';
+      for (let m = 0; m < 12; m++) {
+        const mStart = monthStarts[m];
+        const mEnd = m < 11 ? monthStarts[m + 1] : 365;
+        // Check if this month overlaps the view
+        if (mEnd <= viewStart || mStart >= viewEnd) continue;
+        const clampedStart = Math.max(mStart, viewStart);
+        const clampedEnd = Math.min(mEnd, viewEnd);
+        const leftPct = ((clampedStart - viewStart) / viewSpan) * 100;
+        const widthPct = ((clampedEnd - clampedStart) / viewSpan) * 100;
+        monthMarkersHTML += `<div class="drift-month-marker" style="position:absolute;left:${leftPct}%;width:${widthPct}%">${monthNames[m]}</div>`;
+      }
+      monthMarkersHTML += '</div>';
+
+      // Build rows
+      let rowsHTML = '';
+      for (const d of driftData) {
+        const positionPct = ((d.dayOfYear - viewStart) / viewSpan) * 100;
+        // Bar: show a thin bar centered on the birthday position
+        const barWidthPct = 100 / viewSpan * 29.5; // one lunation width
+        const barLeftPct = Math.max(0, positionPct - barWidthPct / 2);
+        const drift = d.dayOfYear - baseDoy;
+        const driftStr = drift === 0 ? '' : (drift > 0 ? `+${drift}d` : `${drift}d`);
+
+        rowsHTML += `
+          <div class="drift-row">
+            <div class="drift-year">${d.year}</div>
+            <div class="drift-bar-container">
+              <div class="drift-bar${d.hasLeap ? ' leap' : ''}${d.isCurrent ? ' current' : ''}"
+                   style="left:${barLeftPct}%;width:${barWidthPct}%"
+                   title="${formatMonthDay(d.date)}, ${d.year}${d.hasLeap ? ' (leap year)' : ''}"></div>
+              <div class="drift-dot" style="left:${positionPct}%" title="${formatMonthDay(d.date)}"></div>
+              <div class="drift-label" style="left:${positionPct + 1.5}%">${formatMonthDay(d.date)}${driftStr ? ' (' + driftStr + ')' : ''}</div>
+            </div>
+          </div>`;
+      }
+
+      driftEl.innerHTML = `
+        <div class="drift-section">
+          <h2>Birthday Drift</h2>
+          <p class="drift-subtitle">Your lunar birthday wanders through the Gregorian calendar over the 19-year Metonic cycle</p>
+          <div class="drift-chart">
+            <div style="position:relative;margin-left:48px;margin-bottom:0.5rem;height:20px">
+              ${monthMarkersHTML}
+            </div>
+            ${rowsHTML}
+          </div>
+          <div class="drift-legend">
+            <div class="drift-legend-item">
+              <div class="drift-legend-swatch" style="background:var(--accent-gold);opacity:0.7"></div>
+              <span>Normal year</span>
+            </div>
+            <div class="drift-legend-item">
+              <div class="drift-legend-swatch" style="background:var(--accent-violet);opacity:0.7"></div>
+              <span>Leap year (13 lunations)</span>
+            </div>
+            <div class="drift-legend-item">
+              <div class="drift-legend-swatch" style="background:var(--accent-rust);width:6px;height:6px;border-radius:50%"></div>
+              <span>Lunar birthday</span>
+            </div>
+          </div>
+        </div>`;
+    } else {
+      driftEl.innerHTML = '';
+    }
   }
 }
 

@@ -8,7 +8,7 @@ import {
   Tool,
 } from "@modelcontextprotocol/sdk/types.js";
 import * as Astronomy from "astronomy-engine";
-import { Solar, Lunar } from "lunar-typescript";
+import { Solar, Lunar, LunarYear } from "lunar-typescript";
 
 // ── Constants ───────────────────────────────────────────────────────────
 
@@ -990,13 +990,76 @@ function handleGet13MonthCalendar(args: Record<string, unknown>) {
     lunations,
   };
 
-  if (birthDateStr) {
+  if (birthDateStr && lunarBirthMonth !== null && lunarBirthDay !== null) {
+    // Compute the moon phase that always corresponds to this lunar day
+    // Day 1 = new moon (0°), day 15 ≈ full moon (180°), etc.
+    const synodicMonth = 29.53059;
+    const approxPhaseAngle = ((lunarBirthDay - 1) / synodicMonth) * 360;
+    const birthPhase = getPhaseName(approxPhaseAngle);
+
+    // Build 19-year drift table (one Metonic cycle)
+    const drift: Array<{
+      year: number;
+      gregorian_date: string | null;
+      day_of_year: number | null;
+      has_leap_month: boolean;
+      drift_from_previous_days: number | null;
+    }> = [];
+
+    let prevDayOfYear: number | null = null;
+
+    for (let y = year; y < year + 19; y++) {
+      let gDate: string | null = null;
+      let dayOfYear: number | null = null;
+      let driftDays: number | null = null;
+
+      try {
+        const targetLunar = Lunar.fromYmd(y, lunarBirthMonth, lunarBirthDay);
+        const targetSolar = targetLunar.getSolar();
+        // Use solar component values directly to avoid timezone issues with Date→toISOString
+        gDate = `${targetSolar.getYear()}-${String(targetSolar.getMonth()).padStart(2, "0")}-${String(targetSolar.getDay()).padStart(2, "0")}`;
+        // Day of year from month/day components
+        const d = new Date(targetSolar.getYear(), targetSolar.getMonth() - 1, targetSolar.getDay());
+        const jan1OfYear = new Date(targetSolar.getYear(), 0, 1);
+        dayOfYear = Math.floor((d.getTime() - jan1OfYear.getTime()) / 86400000) + 1;
+
+        if (prevDayOfYear !== null) {
+          // Drift in days (negative = earlier in year)
+          driftDays = dayOfYear - prevDayOfYear;
+        }
+        prevDayOfYear = dayOfYear;
+      } catch {
+        // Lunar date doesn't exist this year
+        prevDayOfYear = null;
+      }
+
+      // Check if this lunar year has a leap month
+      let hasLeap = false;
+      try {
+        const ly = LunarYear.fromYear(y);
+        hasLeap = ly.getLeapMonth() > 0;
+      } catch { /* ignore */ }
+
+      drift.push({
+        year: y,
+        gregorian_date: gDate,
+        day_of_year: dayOfYear,
+        has_leap_month: hasLeap,
+        drift_from_previous_days: driftDays,
+      });
+    }
+
     result.birth_date = birthDateStr;
     result.lunar_birthday = {
       lunar_month: lunarBirthMonth,
       lunar_day: lunarBirthDay,
       gregorian_date_this_year: lunarBirthdayGregorian,
+      birth_moon_phase: birthPhase.name,
+      birth_moon_phase_emoji: birthPhase.emoji,
+      phase_note: `Day ${lunarBirthDay} of the lunar month always falls near the ${birthPhase.name.toLowerCase()}`,
     };
+    result.birthday_drift = drift;
+    result.drift_note = "The lunar birthday shifts ~11 days earlier each year, then jumps forward when a leap month is inserted. The pattern repeats every 19 years (Metonic cycle).";
   }
 
   return result;
