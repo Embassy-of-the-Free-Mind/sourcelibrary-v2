@@ -37,6 +37,7 @@ export interface SearchFilters {
   sort?: 'relevance' | 'date_asc' | 'date_desc' | 'title';
   offset?: number;
   limit?: number;
+  search_content?: string;
 }
 
 export interface SearchResponse {

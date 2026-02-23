@@ -1,36 +1,52 @@
-'use client';
-
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Metadata } from 'next';
 import { BookOpen, Images, ArrowLeft } from 'lucide-react';
-import { BookLoader } from '@/components/ui/BookLoader';
+import { getDb } from '@/lib/mongodb';
+import { notFound } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
+import CollectionFilters from '@/components/collections/CollectionFilters';
 
-interface CollectionMeta {
-  slug: string;
-  name: string;
-  subtitle: string;
-  description: string;
-  expanded_description?: string;
-  color: string;
-  book_count: number;
-  languages: { lang: string; count: number }[];
+const PER_PAGE = 60;
+
+interface Props {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-interface GalleryImage {
-  pageId: string;
-  bookId: string;
-  pageNumber: number;
-  detectionIndex: number;
-  thumbnailUrl?: string;
-  extractedUrl?: string;
-  imageUrl?: string;
-  description?: string;
-  museumDescription?: string;
-  bookTitle?: string;
-  type?: string;
+// ---------- Metadata ----------
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const db = await getDb();
+  const collection = await db.collection('collections').findOne({ slug: id });
+
+  if (!collection) {
+    return { title: 'Collection Not Found - Source Library' };
+  }
+
+  const description = collection.description
+    ? String(collection.description).slice(0, 200)
+    : `Browse the ${collection.name} collection on Source Library.`;
+
+  return {
+    title: `${collection.name} - Source Library`,
+    description,
+    alternates: { canonical: `/collections/${id}` },
+    openGraph: {
+      title: `${collection.name} - Source Library`,
+      description,
+      type: 'website',
+    },
+  };
+}
+
+// ---------- Helpers ----------
+
+function bookTitle(book: { display_title?: string; title: string }): string {
+  const dt = book.display_title;
+  return (dt && dt !== 'None') ? dt : book.title;
 }
 
 interface BookItem {
@@ -48,22 +64,11 @@ interface BookItem {
   thumbnail_blob?: string;
   categories?: string[];
   published?: string;
-}
-
-interface HighlightBook extends BookItem {
-  reading_summary?: { overview?: string };
   read_count?: number;
-  quality_score?: number;
 }
 
-function bookTitle(book: { display_title?: string; title: string }): string {
-  const dt = book.display_title;
-  return (dt && dt !== 'None') ? dt : book.title;
-}
-
-/** Auto-link italic book titles found in description text to their book pages */
+/** Auto-link book titles found in description text to their book pages */
 function linkBookTitles(text: string, allBooks: BookItem[]): React.ReactNode {
-  // Build a map of title variants → book id, longest first to avoid partial matches
   const titleMap: { title: string; id: string }[] = [];
   for (const book of allBooks) {
     const id = book.id;
@@ -72,26 +77,21 @@ function linkBookTitles(text: string, allBooks: BookItem[]): React.ReactNode {
     if (dt && dt !== 'None') titleMap.push({ title: dt, id });
     if (t && t !== dt) titleMap.push({ title: t, id });
   }
-  // Sort longest first so we match "Musurgia Universalis" before "Musurgia"
   titleMap.sort((a, b) => b.title.length - a.title.length);
 
-  // Only match titles that are 8+ chars to avoid false positives on very short words
   const candidates = titleMap.filter(t => t.title.length >= 8);
   if (candidates.length === 0) return text;
 
-  // Find all matches in the text
   const matches: { start: number; end: number; title: string; id: string }[] = [];
   const usedRanges: [number, number][] = [];
 
   for (const { title, id } of candidates) {
-    // Escape regex special chars
     const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(escaped, 'gi');
     let match;
     while ((match = regex.exec(text)) !== null) {
       const start = match.index;
       const end = start + match[0].length;
-      // Check no overlap with existing matches
       if (!usedRanges.some(([s, e]) => start < e && end > s)) {
         matches.push({ start, end, title: match[0], id });
         usedRanges.push([start, end]);
@@ -100,11 +100,8 @@ function linkBookTitles(text: string, allBooks: BookItem[]): React.ReactNode {
   }
 
   if (matches.length === 0) return text;
-
-  // Sort by position
   matches.sort((a, b) => a.start - b.start);
 
-  // Build React nodes
   const parts: React.ReactNode[] = [];
   let lastIdx = 0;
   for (const m of matches) {
@@ -121,144 +118,122 @@ function linkBookTitles(text: string, allBooks: BookItem[]): React.ReactNode {
   return <>{parts}</>;
 }
 
-const SORT_OPTIONS = [
-  { value: 'popular', label: 'Most popular' },
-  { value: 'year_asc', label: 'Oldest first' },
-  { value: 'year_desc', label: 'Newest first' },
-  { value: 'title', label: 'Title A-Z' },
-  { value: 'recent', label: 'Recently added' },
-];
+// ---------- Data fetching ----------
 
-const PER_PAGE = 60;
+async function fetchCollectionData(id: string, sort: string, language: string, offset: number) {
+  const db = await getDb();
 
-export default function CollectionDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const collection = await db.collection('collections').findOne({ slug: id });
+  if (!collection) return null;
 
-  const [collection, setCollection] = useState<CollectionMeta | null>(null);
-  const [books, setBooks] = useState<BookItem[]>([]);
-  const [highlights, setHighlights] = useState<HighlightBook[]>([]);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
-  const [galleryLoading, setGalleryLoading] = useState(true);
+  const filter: Record<string, unknown> = {
+    collections: id,
+    status: { $ne: 'deleted' },
+    pages_count: { $gt: 0 },
+  };
+  if (language) filter.language = language;
 
-  const sort = searchParams.get('sort') || 'popular';
-  const language = searchParams.get('language') || '';
-  const offset = parseInt(searchParams.get('offset') || '0');
+  const sortMap: Record<string, Record<string, 1 | -1>> = {
+    year_asc: { year: 1, title: 1 },
+    year_desc: { year: -1, title: 1 },
+    title: { title: 1 },
+    recent: { created_at: -1 },
+    popular: { read_count: -1, title: 1 },
+  };
+  const sortObj = sortMap[sort] || sortMap.popular;
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const qs = new URLSearchParams({ sort, limit: String(PER_PAGE), offset: String(offset) });
-      if (language) qs.set('language', language);
-
-      const res = await fetch(`/api/collections/${id}?${qs}`);
-      if (!res.ok) throw new Error('Not found');
-      const data = await res.json();
-      setCollection(data.collection);
-      setBooks(data.books);
-      setHighlights(data.highlights || []);
-      setTotal(data.total);
-    } catch {
-      setCollection(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [id, sort, language, offset]);
-
-  useEffect(() => { fetchData(); }, [fetchData]);
-
-  // Fetch gallery images
-  useEffect(() => {
-    let cancelled = false;
-    async function fetchGallery() {
-      setGalleryLoading(true);
-      try {
-        const res = await fetch(`/api/gallery?collection=${encodeURIComponent(id)}&limit=12&maxPerBook=2&minQuality=0.6`);
-        if (!res.ok) return;
-        const data = await res.json();
-        if (!cancelled) setGalleryImages(data.items || []);
-      } catch {
-        // gallery is optional
-      } finally {
-        if (!cancelled) setGalleryLoading(false);
-      }
-    }
-    fetchGallery();
-    return () => { cancelled = true; };
-  }, [id]);
-
-  const updateParams = (updates: Record<string, string>) => {
-    const params = new URLSearchParams(searchParams.toString());
-    for (const [k, v] of Object.entries(updates)) {
-      if (v) params.set(k, v);
-      else params.delete(k);
-    }
-    if (updates.sort || updates.language) params.delete('offset');
-    router.push(`/collections/${id}?${params.toString()}`, { scroll: false });
+  const projection = {
+    _id: 0, id: 1, title: 1, display_title: 1, author: 1, year: 1,
+    language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+    photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
   };
 
-  if (loading && !collection) {
-    return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <BookLoader />
-      </div>
-    );
-  }
+  const highlightProjection = {
+    ...projection,
+    reading_summary: 1,
+    quality_score: 1,
+  };
 
-  if (!collection) {
-    return (
-      <div className="min-h-screen bg-cream">
-        <div className="text-center py-20">
-          <BookOpen className="w-12 h-12 text-muted mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-primary">Collection not found</h2>
-          <Link href="/collections" className="text-accent-rust hover:underline mt-2 inline-block">
-            Browse all collections
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  const [books, total, highlights, galleryImages] = await Promise.all([
+    db.collection('books')
+      .find(filter, { projection })
+      .sort(sortObj)
+      .skip(offset)
+      .limit(PER_PAGE)
+      .toArray(),
+    db.collection('books').countDocuments(filter),
+    db.collection('books')
+      .find(
+        { collections: id, status: { $ne: 'deleted' }, pages_translated: { $gt: 0 } },
+        { projection: highlightProjection },
+      )
+      .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
+      .limit(5)
+      .toArray(),
+    db.collection('gallery_images')
+      .find({ collection: id, gallery_quality: { $gte: 0.6 } })
+      .sort({ gallery_quality: -1 })
+      .limit(12)
+      .toArray()
+      .catch(() => []),
+  ]);
 
+  const { _id, ...collectionClean } = collection;
+
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    collection: collectionClean as any,
+    books: books as unknown as BookItem[],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    highlights: highlights as any[],
+    total,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    galleryImages: galleryImages as any[],
+  };
+}
+
+// ---------- Page ----------
+
+export default async function CollectionDetailPage({ params, searchParams }: Props) {
+  const { id } = await params;
+  const sp = await searchParams;
+  const sort = (typeof sp.sort === 'string' ? sp.sort : '') || 'popular';
+  const language = typeof sp.language === 'string' ? sp.language : '';
+  const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
+
+  const data = await fetchCollectionData(id, sort, language, offset);
+  if (!data) notFound();
+
+  const { collection, books, highlights, galleryImages, total } = data;
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
-  const languages = (collection.languages || []).filter(l => l.count > 2);
-
-  // Pick hero images for the mosaic (up to 6)
+  const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const heroImages = galleryImages.slice(0, 6);
+  const allBooksForLinking = [...highlights, ...books];
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* ── Hero Section ── */}
+      {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
-        {/* Gallery mosaic background */}
-        {!galleryLoading && heroImages.length > 0 && (
+        {heroImages.length > 0 && (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
-            {heroImages.map((img) => {
-              const src = img.thumbnailUrl || img.extractedUrl || img.imageUrl;
+            {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
+              const src = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
+              const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
               if (!src) return null;
               return (
-                <div key={`${img.pageId}-${img.detectionIndex}`} className="relative overflow-hidden">
+                <div key={key} className="relative overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={src}
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
+                  <img src={src} alt="" className="absolute inset-0 w-full h-full object-cover" />
                 </div>
               );
             })}
           </div>
         )}
 
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/80 to-dark" />
 
-        {/* Content */}
         <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
-          {/* Back link */}
           <Link
             href="/#library"
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
@@ -267,7 +242,6 @@ export default function CollectionDetailPage() {
             Library
           </Link>
 
-          {/* Collection name */}
           <h1
             className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3"
             style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
@@ -275,96 +249,87 @@ export default function CollectionDetailPage() {
             {collection.name}
           </h1>
 
-          {/* Subtitle */}
           {collection.subtitle && (
             <p className="text-lg sm:text-xl text-white/70 max-w-3xl leading-relaxed mb-4">
               {collection.subtitle}
             </p>
           )}
 
-          {/* Stats row */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
             <span>{total.toLocaleString()} books</span>
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
-                <span>{languages.map(l => l.lang).join(', ')}</span>
+                <span>{languages.map((l: { lang: string }) => l.lang).join(', ')}</span>
               </>
             )}
           </div>
         </div>
       </div>
 
-      {/* ── Gallery Strip ── */}
-      {(galleryLoading || galleryImages.length > 0) && (
+      {/* Gallery Strip */}
+      {galleryImages.length > 0 && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-6xl mx-auto px-6 py-5">
-            {galleryLoading ? (
-              <div className="flex gap-3 overflow-hidden">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className="flex-shrink-0 w-32 h-32 rounded-lg bg-cream animate-pulse" />
-                ))}
-              </div>
-            ) : (
-              <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-thin">
-                {galleryImages.map((img) => {
-                  const thumb = img.thumbnailUrl || img.extractedUrl || img.imageUrl;
-                  const galleryId = `${img.pageId}-${img.detectionIndex}`;
-                  return (
-                    <Link
-                      key={galleryId}
-                      href={`/gallery/image/${galleryId}`}
-                      className="flex-shrink-0 group relative w-32 h-32 rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
-                      title={img.museumDescription || img.description || img.bookTitle}
-                    >
-                      {thumb ? (
-                        <Image
-                          src={thumb}
-                          alt={img.description || img.bookTitle || 'Illustration'}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          sizes="128px"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-cream flex items-center justify-center">
-                          <Images className="w-6 h-6 text-muted" />
-                        </div>
-                      )}
-                      {img.type && (
-                        <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize leading-none">
-                          {img.type}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-                {/* "View all" card */}
-                <Link
-                  href={`/gallery?collection=${id}`}
-                  className="flex-shrink-0 w-32 h-32 rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
-                >
-                  <Images className="w-6 h-6" />
-                  <span className="text-xs font-medium">View all</span>
-                </Link>
-              </div>
-            )}
+            <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-thin">
+              {galleryImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
+                const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
+                const pageId = img.pageId || img.page_id;
+                const detIdx = img.detectionIndex ?? img.detection_index;
+                const galleryId = `${pageId}-${detIdx}`;
+                return (
+                  <Link
+                    key={galleryId}
+                    href={`/gallery/image/${galleryId}`}
+                    className="flex-shrink-0 group relative w-32 h-32 rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
+                    title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
+                  >
+                    {thumb ? (
+                      <Image
+                        src={thumb}
+                        alt={img.description || img.bookTitle || img.book_title || 'Illustration'}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="128px"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-cream flex items-center justify-center">
+                        <Images className="w-6 h-6 text-muted" />
+                      </div>
+                    )}
+                    {img.type && (
+                      <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize leading-none">
+                        {img.type}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+              <Link
+                href={`/gallery?collection=${id}`}
+                className="flex-shrink-0 w-32 h-32 rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
+              >
+                <Images className="w-6 h-6" />
+                <span className="text-xs font-medium">View all</span>
+              </Link>
+            </div>
           </div>
         </div>
       )}
 
       <div className="max-w-6xl mx-auto px-6 py-10">
-        {/* ── Description ── */}
+        {/* Description */}
         {(collection.expanded_description || collection.description) && (
           <div className="mb-10 max-w-5xl">
-            {(collection.expanded_description || collection.description)!.split('\n\n').map((para, i) => (
+            {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
               <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
-                {linkBookTitles(para, [...highlights, ...books])}
+                {linkBookTitles(para, allBooksForLinking)}
               </p>
             ))}
           </div>
         )}
 
-        {/* ── Highlights ── */}
+        {/* Highlights */}
         {highlights.length > 0 && (
           <div className="mb-12">
             <h2
@@ -374,7 +339,7 @@ export default function CollectionDetailPage() {
               Highlights
             </h2>
             <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {highlights.slice(0, 3).map((book) => {
+              {highlights.slice(0, 3).map((book: { id: string; display_title?: string; title: string; author?: string; year?: number; language?: string; pages_count?: number; thumbnail?: string; reading_summary?: { overview?: string } }) => {
                 const summary = book.reading_summary?.overview;
                 const snippet = summary
                   ? summary.length > 160 ? summary.slice(0, 160).replace(/\s+\S*$/, '') + '...' : summary
@@ -386,7 +351,6 @@ export default function CollectionDetailPage() {
                     href={`/book/${book.id}`}
                     className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                   >
-                    {/* Thumbnail */}
                     <div className="w-20 sm:w-24 flex-shrink-0">
                       <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-warm">
                         {book.thumbnail ? (
@@ -405,7 +369,6 @@ export default function CollectionDetailPage() {
                       </div>
                     </div>
 
-                    {/* Info */}
                     <div className="flex-1 min-w-0 py-1">
                       <h3
                         className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1"
@@ -433,7 +396,7 @@ export default function CollectionDetailPage() {
             </div>
             {highlights.length > 3 && (
               <div className="mt-4 grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
-                {highlights.slice(3).map((book) => (
+                {highlights.slice(3).map((book: { id: string; display_title?: string; title: string; author?: string; year?: number; thumbnail?: string }) => (
                   <Link
                     key={book.id}
                     href={`/book/${book.id}`}
@@ -471,7 +434,7 @@ export default function CollectionDetailPage() {
           </div>
         )}
 
-        {/* ── All Books Header ── */}
+        {/* All Books Header */}
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
             <h2
@@ -485,93 +448,65 @@ export default function CollectionDetailPage() {
             </p>
           </div>
 
-          {/* Controls */}
-          <div className="flex flex-wrap items-center gap-3">
-            <select
-              value={sort}
-              onChange={(e) => updateParams({ sort: e.target.value })}
-              className="text-sm border border-border-light rounded-md px-3 py-1.5 bg-white text-primary"
-            >
-              {SORT_OPTIONS.map(o => (
-                <option key={o.value} value={o.value}>{o.label}</option>
-              ))}
-            </select>
-
-            {languages.length > 1 && (
-              <select
-                value={language}
-                onChange={(e) => updateParams({ language: e.target.value })}
-                className="text-sm border border-border-light rounded-md px-3 py-1.5 bg-white text-primary"
-              >
-                <option value="">All languages</option>
-                {languages.map(l => (
-                  <option key={l.lang} value={l.lang}>{l.lang} ({l.count})</option>
-                ))}
-              </select>
-            )}
-          </div>
+          <CollectionFilters collectionId={id} languages={languages} />
         </div>
 
         {/* Books Grid */}
-        {loading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="space-y-3 animate-pulse">
-                <div className="aspect-[3/4] bg-white rounded-lg" />
-                <div className="space-y-2">
-                  <div className="h-4 bg-white rounded w-4/5" />
-                  <div className="h-3 bg-white rounded w-3/5" />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {books.map((book, i) => (
-              <CollectionBookCard
-                key={book.id}
-                book={{
-                  bookId: book.id,
-                  id: book.id,
-                  title: bookTitle(book),
-                  author: book.author || '',
-                  year: book.year || 0,
-                  pages_count: book.pages_count,
-                  pages_ocr: book.pages_ocr,
-                  pages_translated: book.pages_translated,
-                  thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
-                  language: book.language,
-                  published: book.published,
-                  translation_percent: book.pages_count && book.pages_translated
-                    ? Math.round((book.pages_translated / book.pages_count) * 100)
-                    : 0,
-                }}
-                priority={i < 10}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          {books.map((book, i) => (
+            <CollectionBookCard
+              key={book.id}
+              book={{
+                bookId: book.id,
+                id: book.id,
+                title: bookTitle(book),
+                author: book.author || '',
+                year: book.year || 0,
+                pages_count: book.pages_count,
+                pages_ocr: book.pages_ocr,
+                pages_translated: book.pages_translated,
+                thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                language: book.language,
+                published: book.published,
+                translation_percent: book.pages_count && book.pages_translated
+                  ? Math.round((book.pages_translated / book.pages_count) * 100)
+                  : 0,
+              }}
+              priority={i < 10}
+            />
+          ))}
+        </div>
 
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-10 text-sm">
-            <button
-              onClick={() => updateParams({ offset: String(Math.max(0, offset - PER_PAGE)) })}
-              disabled={offset === 0}
-              className="px-4 py-2 rounded-lg border border-border-light disabled:opacity-30 hover:bg-warm transition-colors"
-            >
-              Previous
-            </button>
+            {offset > 0 ? (
+              <Link
+                href={`/collections/${id}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
+                className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
+              >
+                Previous
+              </Link>
+            ) : (
+              <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
+                Previous
+              </span>
+            )}
             <span className="text-muted">
               Page {currentPage} of {totalPages}
             </span>
-            <button
-              onClick={() => updateParams({ offset: String(offset + PER_PAGE) })}
-              disabled={currentPage >= totalPages}
-              className="px-4 py-2 rounded-lg border border-border-light disabled:opacity-30 hover:bg-warm transition-colors"
-            >
-              Next
-            </button>
+            {currentPage < totalPages ? (
+              <Link
+                href={`/collections/${id}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
+                className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
+              >
+                Next
+              </Link>
+            ) : (
+              <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
+                Next
+              </span>
+            )}
           </div>
         )}
       </div>

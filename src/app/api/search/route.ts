@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     const hasDoi = searchParams.get('has_doi');
     const hasTranslation = searchParams.get('has_translation');
     const bookId = searchParams.get('book_id'); // Filter to specific book
-    const searchContent = searchParams.get('search_content') !== 'false'; // Default true
+    const searchContent = searchParams.get('search_content') === 'true'; // Default false (page search is slow on 300K+ docs)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
     const offset = parseInt(searchParams.get('offset') || '0');
@@ -207,15 +207,11 @@ export async function GET(request: NextRequest) {
             )
             .sort({ score: { $meta: 'textScore' } })
             .limit(pageLimit)
+            .maxTimeMS(5000)
             .toArray();
         } catch {
-          return await db.collection('pages')
-            .find(
-              { $or: [{ 'translation.data': queryRegex }, { 'ocr.data': queryRegex }], ...pageFilter },
-              { projection: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } }
-            )
-            .limit(pageLimit)
-            .toArray();
+          // Fallback: skip page search if text index unavailable or query timed out
+          return [];
         }
       })(),
     ]);

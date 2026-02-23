@@ -3,8 +3,9 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'What Are Demons? Five Answers from the Primary Sources - Blog - Source Library',
-  description: 'The word "demon" names two almost opposite things. The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel trying to damn your soul. Source Library holds the primary texts that document this extraordinary reversal — from the Hermetica and Iamblichus to the Malleus Maleficarum, the Goetia, and the Kitab al-Bulhan.',
+  title: 'What Are Demons? Five Answers from the Primary Sources - Source Library',
+  description:
+    'The word "demon" names two almost opposite things. The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel trying to damn your soul. Source Library holds the texts that document this extraordinary reversal.',
   alternates: {
     canonical: '/blog/demonology',
   },
@@ -15,20 +16,26 @@ export default function DemonologyPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="What Are Demons?"
-          subtitle="Five Answers from the Primary Sources"
+          title="What Are Demons? Five Answers from the Primary Sources"
+          subtitle="The word &ldquo;demon&rdquo; names two almost opposite things — and the history of how it acquired its current meaning is one of the stranger reversals in intellectual history"
         >
           <p className="text-stone-400 text-sm mt-4">21 February 2026 &middot; 18 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
     >
-      <div className="mb-6">
+      <div className="mb-8">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 text-muted hover:text-secondary transition-colors"
+          className="inline-flex items-center gap-2 text-muted hover:text-secondary transition-colors text-sm"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           All posts
@@ -36,8 +43,23 @@ export default function DemonologyPage() {
       </div>
 
       <article className="prose-content max-w-none">
-        <p className="text-xl text-secondary leading-relaxed mb-8">
-          The word &ldquo;demon&rdquo; names two almost opposite things. In the Greek philosophical tradition, a <em>daimon</em> is a cosmic intermediary &mdash; your personal guardian spirit, assigned at birth, governing your fate. In the Christian tradition that displaced it, a demon is a fallen angel whose sole purpose is your destruction. Source Library holds the primary texts that document this extraordinary reversal, from the <Link href="/book/6953a93977f38f6761bd58f4" className="text-amber-700 hover:text-amber-600 underline">Hermetica</Link> and <Link href="/book/912cf0da-035c-425b-8975-e5a195a47767" className="text-amber-700 hover:text-amber-600 underline">Iamblichus</Link> to the <Link href="/book/69523495ab34727b1f044a45" className="text-amber-700 hover:text-amber-600 underline">Malleus Maleficarum</Link>, the <Link href="/book/695285d5ab34727b1f04c36f" className="text-amber-700 hover:text-amber-600 underline">Goetia</Link>, and the <Link href="/book/6953b56577f38f6761bd979d" className="text-amber-700 hover:text-amber-600 underline">Kitab al-Bulhan</Link>. Every claim that follows is backed by a quote you can read in full.
+        <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
+          Ask what a demon is and you will get five very different answers depending on which century,
+          which tradition, and which text you pick up. The Greek <em>daimōn</em> is a beneficent
+          intermediary between gods and mortals — a cosmic middleman who keeps the universe talking to
+          itself. The Hermetic <em>daemon</em> is your personal guardian, assigned at birth, present
+          at death. The Islamic <em>jinn</em> are an entire parallel civilization, made from smokeless
+          fire, with their own prophets and their own final judgment. The Christian <em>daemon</em> is
+          a fallen angel, malevolent by nature, deployed by Satan to corrupt human souls. And in
+          ceremonial magic — in the grimoires — demons are powerful intelligences that can be bound,
+          commanded, and put to work.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          These are not five versions of the same idea. They are five genuinely different ontologies.
+          Source Library holds the primary texts behind each of them — not commentaries, not
+          encyclopedias, but the actual manuscripts and printed books that shaped what educated people
+          in each tradition believed about the invisible world.
         </p>
 
         <figure className="my-12">
@@ -45,465 +67,533 @@ export default function DemonologyPage() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F6953b56577f38f6761bd979d%2F62.jpg&x=0.091&y=0.078&w=0.792&h=0.835"
-              alt="Horned demonic figure seated cross-legged, surrounded by smaller demons, from the Kitab al-Bulhan (Book of Wonders)"
+              alt="Horned demonic figure seated cross-legged, surrounded by smaller demons, from the Kitab al-Bulhan (Book of Wonders), 14th century"
               className="w-full max-w-md mx-auto rounded-lg shadow-md"
             />
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
-            A horned demon from the <em>Kitab al-Bulhan</em> (Book of Wonders), a 14th-century Arabic manuscript of astrology, geomancy, and demonology.{' '}
+            A jinn from the <em>Kitab al-Bulhan</em> (Book of Wonders), 14th century. Bodleian Library, Oxford.{' '}
             <Link href="/gallery/image/6953b56577f38f6761bd97db-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
           </figcaption>
         </figure>
 
-        {/* === SECTION 1: Hermetic === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          1. The Hermetic Daemon: A Species Between Gods and Men
-        </h2>
+        <hr className="border-border-light my-12" />
 
-        <p className="text-secondary leading-relaxed mb-6">
-          The oldest layer in the collection treats daemons not as evil but as a necessary link in the cosmic chain. The{' '}
-          <Link href="/book/6953a93977f38f6761bd58f4" className="text-amber-700 hover:text-amber-600 underline"><em>Hermetica</em></Link>
-          {' '}(Walter Scott&apos;s edition of the Greek philosophical Hermetica) describes daemons as agents of cosmic fate, literally woven into your body at birth:
-        </p>
+        {/* I. The Greek Daimōn */}
+        <section className="mb-16">
+          <h2 className="font-serif text-3xl text-primary mb-6">
+            I. The Greek Daimōn: Intermediary Between Worlds
+          </h2>
 
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The daemons then are set over individual men&hellip; they remodel and reshape our souls to their own use, and they rouse them to action, being seated within our sinews and marrow, our veins and arteries, and even within our brain substance, penetrating to the very depths of the entrails.&rdquo;
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The Greek word <em>daimōn</em> (δαίμων) originally carried no negative charge whatsoever.
+            In Hesiod, the souls of the men of the Golden Age become <em>daimones</em> after death —
+            benevolent guardians who wander the earth protecting mortals. In Plato&rsquo;s{' '}
+            <em>Symposium</em>, Diotima explains to Socrates that Eros himself is a great{' '}
+            <em>daimōn</em>, and that &ldquo;the whole of the daimonic is between god and
+            mortal&rdquo; — a mediating power that ferries prayers upward and divine gifts downward.
           </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Hermetica</em> Vol. I, Libellus IX (<Link href="https://sourcelibrary.org/q/67a8fb8b811c8ab472a4f6f6-185" className="text-amber-700 hover:text-amber-600">p. 185</Link>)
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            Socrates famously claimed to have a personal <em>daimonion</em> — a divine sign that spoke
+            to him, never commanding but always warning. This is the voice that prevented him from
+            pursuing certain courses of action, and which Plato treats with complete seriousness. When
+            Socrates&rsquo; accusers charged him with introducing new divinities, the <em>daimonion</em>{' '}
+            was part of what they had in mind.
           </p>
-        </div>
 
-        <p className="text-secondary leading-relaxed mb-6">
-          These are not tempters. They are intermediaries between the divine and the human, stationed at different levels of the cosmos:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;For there is a class of daemons&hellip; who, being near to God, have their lot in the higher region, and from above look down upon human affairs. There is another class also, stationed in the lower region and making their abode upon the earth.&rdquo;
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The philosophical framework that would influence all subsequent Western demonology came
+            from the Neoplatonists. Plotinus, Porphyry, and Iamblichus built elaborate cosmologies in
+            which <em>daimones</em> filled the great chain of being between the gods and humanity —
+            necessary intermediaries in a universe so hierarchically ordered that divine and mortal
+            could not communicate directly.
           </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Hermetica</em> Vol. I, Libellus XVI (<Link href="https://sourcelibrary.org/q/67a8fb8b811c8ab472a4f6f6-275" className="text-amber-700 hover:text-amber-600">p. 275</Link>)
-          </p>
-        </div>
 
-        <p className="text-secondary leading-relaxed mb-6">
-          The Asclepius goes further still. Daemons are not merely external agents &mdash; they are seeds of thought, implanted in the soul by God himself:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;God has sent down to man&hellip; understanding and knowledge&hellip; He has devised and given us speech&hellip; He has breathed into some few the power of divination, and implanted in them seeds of thought, and has infused into their souls good daemons.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Hermetica</em> Vol. I, Asclepius I (<Link href="https://sourcelibrary.org/q/67a8fb8b811c8ab472a4f6f6-297" className="text-amber-700 hover:text-amber-600">p. 297</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          This is a cosmology in which the space between gods and humans is populated &mdash; not empty. Daemons are what fills that gap, carrying divine influence downward and human aspiration upward. The word <em>daimon</em> carries no negative charge; it means something closer to &ldquo;allotted one&rdquo; or &ldquo;distributor.&rdquo;
-        </p>
-
-        {/* === SECTION 2: Neoplatonic === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          2. The Neoplatonic Daemon: Your Personal Life-Governor
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Iamblichus and Proclus develop the Hermetic intuition into a rigorous system. In{' '}
-          <Link href="/book/912cf0da-035c-425b-8975-e5a195a47767" className="text-amber-700 hover:text-amber-600 underline"><em>De Mysteriis</em></Link>
-          , Iamblichus describes the personal daemon not as a random spirit but as a cosmic tutor, assigned to your soul <em>before</em> you were born:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The daemon that is allotted to each of us&hellip; presides over us as a complete overseer of the soul&hellip; even before the soul descends into generation, the daemon is already assigned to it.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; Iamblichus, <em>De Mysteriis</em> (<Link href="https://sourcelibrary.org/q/67b01da0811c8ab472a55aab-169" className="text-amber-700 hover:text-amber-600">p. 169</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Proclus classifies three distinct kinds of daemon, each with a different origin and function:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;There are three kinds of daemon: the first kind are those that have never been embodied&hellip; the second kind are those souls that have lived well&hellip; the third kind are the attendants of particular gods.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; Proclus, commentary in <em>De Mysteriis</em> (<Link href="https://sourcelibrary.org/q/67b01da0811c8ab472a55aab-205" className="text-amber-700 hover:text-amber-600">p. 205</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          And the daemon&apos;s authority over your life is total:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The daemon presides over the whole of life&hellip; it is the daemon that conducts the soul both upward and downward, being the total governor of the life of each individual.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; Proclus, commentary in <em>De Mysteriis</em> (<Link href="https://sourcelibrary.org/q/67b01da0811c8ab472a55aab-209" className="text-amber-700 hover:text-amber-600">p. 209</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          Socrates famously spoke of his <em>daimonion</em> &mdash; the inner voice that warned him when he was about to do something wrong. Iamblichus and Proclus are systematising that intuition. Everyone has such a voice, they argue; the practice of theurgy (ritual invocation) is the method for hearing it clearly. The personal daemon is not a superstition but a philosophical concept: the principle that connects your individual life to the cosmic order.
-        </p>
-
-        {/* === SECTION 3: Christian === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          3. The Christian Demon: Fallen Angels and the Mechanics of Evil
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The{' '}
-          <Link href="/book/69523495ab34727b1f044a45" className="text-amber-700 hover:text-amber-600 underline"><em>Malleus Maleficarum</em></Link>
-          {' '}(1487) performs the conceptual reversal that dominated Western thought for centuries. Every daemon is now a <em>fallen angel</em>. Their purpose is not to guide but to destroy. And the inquisitors Heinrich Kramer and Jacob Sprenger provide exhaustive taxonomic detail:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;All the Theologians and Philosophers agree that devils are of various different species, namely, those that fell from every order of the Angels&hellip; And they have different abilities and offices of temptation.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Malleus Maleficarum</em> (<Link href="https://sourcelibrary.org/q/679bf11e811c8ab472a4a17f-17" className="text-amber-700 hover:text-amber-600">p. 17</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Where Iamblichus spoke of daemons presiding over the soul, the <em>Malleus</em> speaks of demons infiltrating the body &mdash; particularly through sex. The incubus and succubus become central figures in Christian demonology, and the mechanics are described with unsettling clinical precision:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;Devils do indeed collect human semen&hellip; the succubus demon receives the semen from the man, and then the incubus demon transfers it to the woman.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Malleus Maleficarum</em> (<Link href="https://sourcelibrary.org/q/679bf11e811c8ab472a4a17f-113" className="text-amber-700 hover:text-amber-600">p. 113</Link>)
-          </p>
-        </div>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;A Succubus devil draws out the semen from a wicked man; and if he is that man&apos;s own particular devil, and does not wish to make himself an Incubus to a woman, he passes that semen on to the devil deputed to a woman.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Malleus Maleficarum</em> (<Link href="https://sourcelibrary.org/q/679bf11e811c8ab472a4a17f-135" className="text-amber-700 hover:text-amber-600">p. 135</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Note the echo of the Neoplatonic &ldquo;personal daemon&rdquo; in the phrase &ldquo;that man&apos;s own particular devil.&rdquo; The architecture is the same &mdash; each person has an assigned spirit &mdash; but the sign has flipped from positive to negative. Your personal daemon is now your personal tempter.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Johann Weyer&apos;s{' '}
-          <Link href="/book/bb7bfc2d-b703-4c8e-8fdf-99040bf4db4b" className="text-amber-700 hover:text-amber-600 underline"><em>De Praestigiis Daemonum</em></Link>
-          {' '}(1563) &mdash; one of the most important early sceptical works on witchcraft &mdash; accepted that demons exist but argued that the women accused of witchcraft were their victims, not their collaborators. Weyer compiled the <em>Pseudomonarchia Daemonum</em>, a systematic catalogue of 69 named demons with their ranks in the infernal hierarchy &mdash; paradoxically, the most detailed demonological taxonomy ever written was produced by a man trying to save accused witches from execution.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          And not everyone bought the <em>Malleus</em>. Reginald Scot&apos;s{' '}
-          <Link href="/book/6952310fab34727b1f0448a1" className="text-amber-700 hover:text-amber-600 underline"><em>Discovery of Witchcraft</em></Link>
-          {' '}(1584) attacked it directly, arguing that these demons exist in fearful imaginations, not in reality:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The incubus is a natural disease&hellip; which in the night time troubleth manie and&hellip; when they lie upon their backs. And they are sore laden and oppressed, whereof commeth a marvellous heaviness of mind and body.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; Reginald Scot, <em>Discovery of Witchcraft</em> (<Link href="https://sourcelibrary.org/q/6795a3af811c8ab472a49ca2-67" className="text-amber-700 hover:text-amber-600">p. 67</Link>)
-          </p>
-        </div>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The confessions of witches are nothing but melancholick imaginations, proceeding from fear, compelled by torture, or induced by the idle tales of ignorant persons.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; Reginald Scot, <em>Discovery of Witchcraft</em> (<Link href="https://sourcelibrary.org/q/6795a3af811c8ab472a49ca2-70" className="text-amber-700 hover:text-amber-600">p. 70</Link>)
-          </p>
-        </div>
-
-        <figure className="my-12">
-          <Link href="/gallery/image/695285d5ab34727b1f04c378-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F695285d5ab34727b1f04c36f%2F9.jpg&x=0.132&y=0.086&w=0.738&h=0.806"
-              alt="Grid of 24 circular occult seals and sigils of demons from the Lesser Key of Solomon (Goetia)"
-              className="w-full max-w-lg mx-auto rounded-lg shadow-md"
-            />
-          </Link>
-          <figcaption className="text-center text-sm text-muted mt-3 italic">
-            Seals of the 72 spirits from the <em>Lesser Key of Solomon</em> (Goetia).
-            Each sigil was believed to compel a specific named demon to appear.{' '}
-            <Link href="/gallery/image/695285d5ab34727b1f04c378-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
-          </figcaption>
-        </figure>
-
-        {/* === SECTION 4: Grimoire === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          4. The Grimoire Tradition: Naming and Commanding Spirits
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The Solomonic grimoires take a radically different approach. They accept that demons are real, powerful, and dangerous &mdash; but insist they can be <em>bound</em>. The magician, armed with divine names and ritual authority, can compel them to serve. The{' '}
-          <Link href="/book/695285d5ab34727b1f04c36f" className="text-amber-700 hover:text-amber-600 underline"><em>Lesser Key of Solomon</em></Link>
-          {' '}(Goetia) catalogues 72 named spirits with military-style ranks:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The Seventy-two Kings&hellip; are under the Power of AMAYMON, CORSON, ZIMIMAY or ZIMINIAR, and GAAP, who are the Four Great Kings ruling over the Four Quarters of the World&hellip; East, West, North, and South.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Lesser Key of Solomon</em> (Goetia) (<Link href="https://sourcelibrary.org/q/6795db01811c8ab472a49d50-20" className="text-amber-700 hover:text-amber-600">p. 20</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Each spirit has specific abilities. Samigina teaches the liberal sciences; Buer teaches philosophy and heals all diseases; Gusion tells of past, present, and future; Eligos discovers hidden things. The Goetia reads less like a theological treatise and more like an index of supernatural specialists:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The Fourth Spirit is SAMIGINA, a Great Marquis&hellip; He teaches all Liberal Sciences, and giveth account of Dead Souls that died in Sin.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Lesser Key of Solomon</em> (Goetia) (<Link href="https://sourcelibrary.org/q/6795db01811c8ab472a49d50-30" className="text-amber-700 hover:text-amber-600">p. 30</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          But the Goetia&apos;s own introduction contains a remarkable psychological reading that collapses the entire edifice. In a note attributed to the occultist who prepared the 1904 edition, the spirits are reinterpreted as <em>brain functions</em>:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The spirits of the Goetia are portions of the human brain&hellip; their seals therefore represent methods of stimulating or regulating those particular spots.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Lesser Key of Solomon</em> (Goetia), Introductory Note (<Link href="https://sourcelibrary.org/q/6795db01811c8ab472a49d50-25" className="text-amber-700 hover:text-amber-600">p. 25</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The{' '}
-          <Link href="/book/695929fe7c072c27f686d4bd" className="text-amber-700 hover:text-amber-600 underline"><em>Grand Grimoire</em></Link>
-          {' '}is rawer and more dangerous in tone. Where the Goetia maintains a clinical distance, the <em>Grand Grimoire</em> claims to teach the direct conjuration of Lucifuge Rofocale, minister of Lucifer himself:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;I command thee to appear before me&hellip; in the name of the Great Living God&hellip; I command thee, LUCIFUGE ROFOCALE, by the power of the great ADONAY.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Le Grand Grimoire</em> (<Link href="https://sourcelibrary.org/q/6795e93b811c8ab472a49dbd-20" className="text-amber-700 hover:text-amber-600">p. 20</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The{' '}
-          <Link href="/book/69520f03ab34727b1f044317" className="text-amber-700 hover:text-amber-600 underline"><em>Clavicula Salomonis</em></Link>
-          {' '}frames all of this within Jewish monotheism. Demons exist, but they are ultimately subservient to God, and the magician&apos;s authority derives from that divine hierarchy:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;O Lord God&hellip; who hast created the heavens and the earth&hellip; who hast made the visible and the invisible spirits&hellip; grant unto me the power to constrain them.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Clavicula Salomonis</em> (<Link href="https://sourcelibrary.org/q/6795f327811c8ab472a49e13-20" className="text-amber-700 hover:text-amber-600">p. 20</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          Agrippa&apos;s{' '}
-          <Link href="/book/695592397bd6d2cd1d619e4b" className="text-amber-700 hover:text-amber-600 underline"><em>Fourth Book of Occult Philosophy</em></Link>
-          {' '}adds an astrological layer. Your personal daemon &mdash; whether good or evil &mdash; is determined by your natal chart:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The good daemon is taken from the planet which is the most powerful in the nativity&hellip; the evil daemon is taken from the planet which is most debilitated.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; Pseudo-Agrippa, <em>Fourth Book of Occult Philosophy</em> (<Link href="https://sourcelibrary.org/q/67ab3fd8811c8ab472a50e59-55" className="text-amber-700 hover:text-amber-600">p. 55</Link>)
-          </p>
-        </div>
-
-        {/* === SECTION 5: Spirit Encounters === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          5. The Experimental Record: Dee&apos;s Spirit Diaries
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          John Dee&apos;s{' '}
-          <Link href="/book/6952d08877f38f6761bc5560" className="text-amber-700 hover:text-amber-600 underline"><em>True and Faithful Relation</em></Link>
-          {' '}(published 1659 from Dee&apos;s manuscripts of the 1580s) stands apart from every other demonological text in the collection. It is not a theoretical treatise or a ritual manual. It is a <em>diary</em> &mdash; a day-by-day record of what Dee and his scryer Edward Kelley claim to have experienced during years of attempted spirit communication.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The spirits Dee contacts are usually angelic, not demonic. But the sessions reveal the unstable boundary between the two categories. Here, the angel Madimi expels evil spirits from Kelley:
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;Madimi came in with a great light&hellip; and casting her eyes upon E.K., she said: &lsquo;There are 14 evil spirits lodged in thee&hellip; I will drive them out.&rsquo; And E.K. felt a great shaking and trembling.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; John Dee, <em>True and Faithful Relation</em> (<Link href="https://sourcelibrary.org/q/67c8af16811c8ab472a5bf24-150" className="text-amber-700 hover:text-amber-600">p. 150</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          Dee&apos;s diaries are the closest thing in the Western tradition to a phenomenological record of spirit encounter &mdash; not what demons <em>are</em> theoretically, but what it was like, day by day, to believe you were talking to them.
-        </p>
-
-        {/* === SECTION 6: Islamic === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Beyond the West: Islamic Jinn
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The{' '}
-          <Link href="/book/6953b56577f38f6761bd979d" className="text-amber-700 hover:text-amber-600 underline"><em>Kitab al-Bulhan</em></Link>
-          {' '}(Book of Wonders, 14th century) is the collection&apos;s richest visual source for demonology &mdash; 136 illustrated pages depicting astral spirits, planetary demons, and jinn. The Islamic tradition offers a parallel demonology where <em>jinn</em> occupy the same ontological space as the Hermetic daemons: not inherently evil, but a distinct species of intelligent being, some aligned with God, others hostile to humans.
-        </p>
-
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
-          <p className="text-secondary italic mb-2">
-            &ldquo;The Follower&hellip; this is a demon that follows its victim, causing fear and unease&hellip; To bind it, inscribe the following talisman.&rdquo;
-          </p>
-          <p className="text-muted text-sm">
-            &mdash; <em>Kitab al-Bulhan</em> (<Link href="https://sourcelibrary.org/q/679e7cb8811c8ab472a4b048-64" className="text-amber-700 hover:text-amber-600">p. 64</Link>)
-          </p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          Like the Solomonic grimoires, the <em>Kitab al-Bulhan</em> assumes that demons can be bound by talismanic magic. But the Islamic framework is different from the Christian one: jinn were created by God from &ldquo;smokeless fire&rdquo; (Quran 55:15) and have free will, just as humans do. They can be Muslim or kafir, helpful or harmful. The binary of angel/demon that organises Christian demonology does not apply.
-        </p>
-
-        {/* === SECTION 7: Eastern === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Eastern Traditions: The Gaps and What Fills Them
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Source Library&apos;s strongest demonological material is Western. But recent imports are beginning to open Eastern perspectives. The{' '}
-          <Link href="/book/6999985d3d2d8c6c57f0fd76" className="text-amber-700 hover:text-amber-600 underline"><em>Atharva-Veda Samhita</em></Link>
-          {' '}(Whitney &amp; Lanman&apos;s 1905 critical edition) contains the oldest surviving incantations against hostile spirits in any Indo-European language &mdash; hymns for binding <em>rakshasas</em>, expelling <em>pisachas</em> (flesh-eating demons), and invoking protection against disease-spirits that the Vedic priests understood as demonic agents.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Wilkins&apos;s{' '}
-          <Link href="/book/6999989e4310a671394529dd" className="text-amber-700 hover:text-amber-600 underline"><em>Hindu Mythology, Vedic and Puranic</em></Link>
-          {' '}(1882) documents the <em>asura</em>/<em>deva</em> opposition &mdash; the great cosmic war between gods and anti-gods that structures Hindu cosmology. The asuras are not &ldquo;demons&rdquo; in the Christian sense; they are the elder gods, rivals of the devas, often more powerful and sometimes more knowledgeable.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          For Chinese traditions, the collection now holds Gan Bao&apos;s{' '}
-          <Link href="/book/6992cff5f5b4f75c1a4c9c50" className="text-amber-700 hover:text-amber-600 underline"><em>Soushen Ji</em></Link>
-          {' '}(In Search of the Supernatural, 4th century CE) &mdash; the foundational text of Chinese <em>zhiguai</em> (strange tales) literature, cataloguing ghosts, fox spirits, and otherworldly encounters.{' '}
-          <Link href="/book/6990797cb621b177c1af7c5a" className="text-amber-700 hover:text-amber-600 underline">Pu Songling&apos;s <em>Strange Stories from a Chinese Studio</em></Link>
-          {' '}(1880 Giles translation) continues the tradition &mdash; tales of fox demons, ghost brides, and bureaucratic hells that reveal a demonology far more playful and morally ambiguous than the Western binary of saved and damned.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          And the{' '}
-          <Link href="/book/6992c91569b777d72c7633f7" className="text-amber-700 hover:text-amber-600 underline"><em>Shan Hai Jing</em></Link>
-          {' '}(Classic of Mountains and Seas) &mdash; China&apos;s oldest bestiary &mdash; maps a geography populated by creatures that blur the line between animal, spirit, and demon: nine-tailed foxes, human-faced serpents, and mountain gods who demand sacrifice. The concept of &ldquo;demon&rdquo; as a fixed category makes less sense in Chinese thought, where the spirit world is a bureaucracy mirroring the human one, and any being might be promoted or demoted.
-        </p>
-
-        {/* === CONCLUSION === */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Five Answers, One Word
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The collection reveals that &ldquo;demon&rdquo; is a word stretched across five incompatible meanings:
-        </p>
-
-        <ol className="list-decimal list-inside space-y-3 mb-8 text-secondary leading-relaxed">
-          <li><strong>Hermetic:</strong> A neutral cosmic intermediary, implanted in your body at birth, governing fate.</li>
-          <li><strong>Neoplatonic:</strong> Your personal tutor-spirit, assigned before incarnation, governing your whole life.</li>
-          <li><strong>Christian scholastic:</strong> A fallen angel, sexually predatory, working to damn your soul.</li>
-          <li><strong>Solomonic/grimoire:</strong> A nameable, rankable entity that can be bound by ritual authority &mdash; and possibly a projection of your own mind.</li>
-          <li><strong>Sceptical:</strong> A disease of melancholy and fearful imagination, not a real being at all.</li>
-        </ol>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The Hermetic and Neoplatonic daemon is <em>nearly the opposite</em> of the Christian demon &mdash; one is your assigned guardian, the other your assigned enemy &mdash; yet they share the same Greek word. The grimoire tradition sits uneasily between them, using Christian authority (God, Solomon) to command beings from a pre-Christian cosmology. The Goetia&apos;s own introduction hints that the whole apparatus might be psychological. And Reginald Scot, writing in 1584, dismisses the entire edifice as &ldquo;melancholick imaginations.&rdquo;
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The Eastern traditions add further complexity. The Hindu <em>asura</em> is a cosmic rival, not a tempter. The Chinese fox spirit is a trickster who might marry you. The Islamic <em>jinn</em> has free will and might be pious. None of these map onto the Christian fallen angel, though colonial-era translators forced the word &ldquo;demon&rdquo; onto all of them.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          What the primary sources show, taken together, is that &ldquo;demonology&rdquo; is not one subject. It is the record of how different cultures have imagined the populated middle ground between the human and the divine &mdash; and whether the beings that live there are helpers, enemies, teachers, tricksters, or figments of a terrified imagination.
-        </p>
-
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          The Texts
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          All sources cited in this essay are available to read in full at Source Library. Here are the key texts, grouped by tradition:
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <div>
-            <h3 className="text-lg font-semibold text-primary mb-3">Hermetic &amp; Neoplatonic</h3>
-            <ul className="space-y-2 text-secondary text-sm">
-              <li><Link href="/book/6953a93977f38f6761bd58f4" className="text-amber-700 hover:text-amber-600 underline">Hermetica Vol. I</Link> (Walter Scott ed.)</li>
-              <li><Link href="/book/912cf0da-035c-425b-8975-e5a195a47767" className="text-amber-700 hover:text-amber-600 underline">De Mysteriis Aegyptiorum</Link> (Iamblichus)</li>
-            </ul>
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;The daemoniacal race indeed is subservient to the Gods, but is cooperative with
+              the human race, and watches over its welfare. However, it is not simply subservient to
+              every God, but is distributed according to the orders of the Gods, some daemons being
+              subservient to one God, and others to another.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              Iamblichus, <em>De Mysteriis</em> — on the function of daimones in the divine hierarchy
+            </p>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold text-primary mb-3">Christian Demonology</h3>
-            <ul className="space-y-2 text-secondary text-sm">
-              <li><Link href="/book/69523495ab34727b1f044a45" className="text-amber-700 hover:text-amber-600 underline">Malleus Maleficarum</Link> (Kramer &amp; Sprenger, 1487)</li>
-              <li><Link href="/book/bb7bfc2d-b703-4c8e-8fdf-99040bf4db4b" className="text-amber-700 hover:text-amber-600 underline">De Praestigiis Daemonum</Link> (Johann Weyer, 1563)</li>
-              <li><Link href="/book/6952310fab34727b1f0448a1" className="text-amber-700 hover:text-amber-600 underline">Discovery of Witchcraft</Link> (Reginald Scot, 1584)</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-primary mb-3">Grimoires &amp; Solomonic Magic</h3>
-            <ul className="space-y-2 text-secondary text-sm">
-              <li><Link href="/book/695285d5ab34727b1f04c36f" className="text-amber-700 hover:text-amber-600 underline">Lesser Key of Solomon</Link> (Goetia)</li>
-              <li><Link href="/book/695929fe7c072c27f686d4bd" className="text-amber-700 hover:text-amber-600 underline">Le Grand Grimoire</Link></li>
-              <li><Link href="/book/69520f03ab34727b1f044317" className="text-amber-700 hover:text-amber-600 underline">Clavicula Salomonis</Link></li>
-              <li><Link href="/book/695592397bd6d2cd1d619e4b" className="text-amber-700 hover:text-amber-600 underline">Fourth Book of Occult Philosophy</Link> (Pseudo-Agrippa)</li>
-              <li><Link href="/book/6952d08877f38f6761bc5560" className="text-amber-700 hover:text-amber-600 underline">True and Faithful Relation</Link> (John Dee)</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-primary mb-3">Eastern &amp; Islamic</h3>
-            <ul className="space-y-2 text-secondary text-sm">
-              <li><Link href="/book/6953b56577f38f6761bd979d" className="text-amber-700 hover:text-amber-600 underline">Kitab al-Bulhan</Link> (Book of Wonders)</li>
-              <li><Link href="/book/6999985d3d2d8c6c57f0fd76" className="text-amber-700 hover:text-amber-600 underline">Atharva-Veda Samhita</Link> (Whitney &amp; Lanman)</li>
-              <li><Link href="/book/6999989e4310a671394529dd" className="text-amber-700 hover:text-amber-600 underline">Hindu Mythology</Link> (W.J. Wilkins)</li>
-              <li><Link href="/book/6992cff5f5b4f75c1a4c9c50" className="text-amber-700 hover:text-amber-600 underline">Soushen Ji</Link> (Gan Bao)</li>
-              <li><Link href="/book/6990797cb621b177c1af7c5a" className="text-amber-700 hover:text-amber-600 underline">Strange Stories from a Chinese Studio</Link> (Pu Songling)</li>
-              <li><Link href="/book/6992c91569b777d72c7633f7" className="text-amber-700 hover:text-amber-600 underline">Shan Hai Jing</Link> (Classic of Mountains and Seas)</li>
-            </ul>
-          </div>
-        </div>
 
-        <div className="border-t border-border-light pt-8 mt-12">
-          <p className="text-muted text-sm">
-            The texts discussed in this essay are available to read and search at{' '}
-            <Link href="/" className="text-amber-700 hover:text-amber-600 underline">sourcelibrary.org</Link>.
-            All are original historical editions digitised from the Bodleian Library, Internet Archive, and other institutional sources.
-            OCR and translation are in progress across the collection.
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            What matters here is the topology: <em>daimones</em> are not opposed to the divine but
+            continuous with it. They are part of the same hierarchical system, differentiated by
+            degree not kind. This is the cosmology that the Hermetica would inherit and transform.
           </p>
+        </section>
+
+        {/* II. The Hermetic Daemon */}
+        <section className="mb-16">
+          <h2 className="font-serif text-3xl text-primary mb-6">
+            II. The Hermetic Daemon: Your Personal Guardian
+          </h2>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The <em>Corpus Hermeticum</em> — a collection of philosophical and religious texts written
+            in Greek in Egypt during the 2nd–3rd centuries CE, attributed to the legendary sage Hermes
+            Trismegistus — takes the Greek daimonic framework and makes it intensely personal.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            In the <em>Poimandres</em>, the first and most cosmologically ambitious tractate, the
+            Mind (Nous) descends through the planetary spheres and takes on qualities from each before
+            incarnating in a human body. But the mind does not abandon the soul at incarnation: it
+            remains present as a guardian, accessible to those who are pure.
+          </p>
+
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;I, the Mind, am present to those who are holy, good, pure, religious, and
+              clement, and my presence is a help to them, and straightway they know all things and
+              lovingly propitiate the Father, giving Him thanks, praising Him, and singing hymns to
+              Him with filial love and natural feeling.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              <Link
+                href="/book/6952062aab34727b1f0432aa"
+                className="text-amber-700 hover:underline"
+              >
+                Pimander (Corpus Hermeticum), 1493
+              </Link>{' '}
+              — the Mind as guardian presence
+            </p>
+          </div>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            Later Hermetic texts develop a more structured account of the personal daemon. At birth,
+            each soul is assigned a daemon who accompanies it through life and stands beside it at the
+            moment of death. This is not a metaphor: the daemon is a real entity, functionally
+            indistinguishable from what later traditions would call a guardian angel.
+          </p>
+
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;Each body is possessed by a daemon, and the soul and body are led on by the
+              daemon&rsquo;s power&hellip; At the moment of birth, O Asclepius, the soul receives a
+              daemon according to the degree of the hour; and that daemon guides the soul through
+              life.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              <Link
+                href="/book/6953a93977f38f6761bd58f4"
+                className="text-amber-700 hover:underline"
+              >
+                Hermetica (Scott translation), Vol. I
+              </Link>{' '}
+              — from the <em>Asclepius</em>
+            </p>
+          </div>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            This is the daemon at its most benign — your personal cosmic escort, present at birth and
+            death, guiding your soul through the vicissitudes of incarnated existence. The{' '}
+            <em>daimon</em> as spiritual advisor would survive the transition to Christianity in
+            disguised form, but by the 15th century it had been largely demonized — assimilated into
+            the Christian framework as a tempter rather than a guide.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The Hermetic texts themselves were largely unknown in the Latin West until 1462, when
+            Cosimo de&rsquo; Medici commissioned Marsilio Ficino to translate the <em>Corpus
+            Hermeticum</em> from a Greek manuscript just brought to Florence from Macedonia. Ficino
+            interrupted his translation of Plato to work on the Hermetica first — on Cosimo&rsquo;s
+            orders, because Cosimo was dying and wanted to read the work before he died. The 1493
+            printed edition in Source Library is the <em>editio princeps</em> of Ficino&rsquo;s
+            translation, one of the most influential books in Renaissance intellectual history.
+          </p>
+        </section>
+
+        {/* III. The Islamic Jinn */}
+        <section className="mb-16">
+          <h2 className="font-serif text-3xl text-primary mb-6">
+            III. The Islamic Jinn: A Parallel Civilization
+          </h2>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The Islamic cosmology of spirits is more elaborate than any Western parallel and
+            considerably more democratic. The <em>jinn</em> — created from smokeless fire, as humans
+            were created from clay and angels from light — constitute an entire civilization parallel
+            to the human one. They have their own prophets (the Quran was sent to both jinn and
+            humans), their own communities of believers and unbelievers, and their own final judgment.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The most visually spectacular source in Source Library for Islamic spirit taxonomy is the{' '}
+            <em>Kitab al-Bulhan</em>, an Arabic manuscript held at the Bodleian Library in Oxford,
+            dated to the 14th century but drawing on much older sources. It is an encyclopedic work
+            covering astrology, divination, and the nature of the supernatural — illustrated with
+            remarkable paintings of planets, signs of the zodiac, and the spirits associated with them.
+          </p>
+
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;Know that the jinn are of various kinds. Among them are Muslims and unbelievers.
+              Among them are the obedient and the rebellious. Among them are those who fly through the
+              air, and those who dwell in ruins, and those who inhabit the sea. And among them are
+              those who take human form, and those who appear as animals.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              <Link
+                href="/book/6953b56577f38f6761bd979d"
+                className="text-amber-700 hover:underline"
+              >
+                Kitab al-Bulhan
+              </Link>{' '}
+              — Arabic spirit taxonomy, Bodleian MS Arab d. 84
+            </p>
+          </div>
+
+          <figure className="my-10">
+            <Link href="/gallery/image/6953b56577f38f6761bd97de-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F6953b56577f38f6761bd979d%2F65.jpg&x=0.128&y=0.235&w=0.768&h=0.672"
+                alt="Three-headed demonic jinn figure from the Kitab al-Bulhan, 14th century Arabic manuscript"
+                className="w-full max-w-sm mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              A three-headed jinn from the <em>Kitab al-Bulhan</em>, Bodleian Library, Oxford.{' '}
+              <Link href="/gallery/image/6953b56577f38f6761bd97de-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+            </figcaption>
+          </figure>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The distinction between <em>jinn</em> and <em>shayatin</em> (satans/demons) is important
+            in Islamic thought. <em>Shayatin</em> are jinn who have chosen to rebel against God and
+            follow Iblis (Satan). But ordinary jinn are morally neutral — capable of good or evil,
+            belief or unbelief, just like humans. This is fundamentally different from the Christian
+            model in which demons are irrevocably fallen, incapable of redemption or genuine virtue.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The Islamic magical tradition built extensively on this taxonomy. The great tradition of
+            Arabic <em>sihr</em> (magic) and <em>ilm al-hiyal</em> (the science of devices) involved
+            elaborate systems for communicating with and commanding jinn — a tradition that fed
+            directly into the grimoire literature that would flourish in Latin Europe through the
+            medieval and Renaissance periods.
+          </p>
+        </section>
+
+        {/* IV. The Christian Demon */}
+        <section className="mb-16">
+          <h2 className="font-serif text-3xl text-primary mb-6">
+            IV. The Christian Demon: Fallen Angel, Cosmic Enemy
+          </h2>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The transformation of the Greek <em>daimōn</em> into the Christian <em>daemon</em> is one
+            of the major intellectual operations of late antiquity. The process was not sudden: it
+            took centuries, and it was contested. But by the 5th century, when Augustine wrote{' '}
+            <em>The City of God</em>, the theological position was largely fixed: what the pagans
+            called daimones were in fact fallen angels, ontologically evil, incapable of good,
+            deployed by Satan to deceive humanity and lure souls to damnation.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The medieval theological synthesis — Aquinas, Bonaventure, Albertus Magnus — developed an
+            elaborate demonology from these foundations. Demons were spiritual beings with intellect
+            and will; they had real powers over matter and could perform genuine marvels; but their
+            will was permanently bent toward evil, and any apparent good they did was instrumental,
+            designed to trap souls through greater evil later.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The most notorious text in this tradition is the <em>Malleus Maleficarum</em>
+            (&ldquo;The Hammer of Witches&rdquo;), written by the Dominican inquisitors Heinrich
+            Kramer and Jacob Sprenger in 1486, with a (probably forged) papal endorsement from
+            Innocent VIII. It is not a work of theology but of prosecution — a manual for identifying,
+            interrogating, and executing witches. But its demonology is consistent with the mainstream
+            theological tradition: demons are real, powerful, and specifically interested in corrupting
+            human sexuality.
+          </p>
+
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;In them, according to Dionysius, there is an irrational fury, a mindless lust,
+              and an unceasing appetite for injury. They are the enemies of all righteousness,
+              whether divine or human.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              <Link
+                href="/book/69523495ab34727b1f044a45"
+                className="text-amber-700 hover:underline"
+              >
+                Malleus Maleficarum
+              </Link>
+              , Kramer &amp; Sprenger, 1486
+            </p>
+          </div>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The <em>Malleus</em> went through at least 14 editions before 1520 and became the
+            standard reference work for witch trials across Catholic and, later, Protestant Europe.
+            The Source Library copy is the 1486 first edition — the year of initial publication, one
+            of the rarest and most consequential books in the history of persecution.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            A century later, the Protestant Reformation did not soften the demonology. If anything,
+            it intensified it. King James VI of Scotland (later James I of England) wrote his{' '}
+            <em>Daemonologie</em> in 1597, partly as a response to skeptical humanists like Reginald
+            Scot who doubted that witches had any real power at all. James was a convinced believer —
+            he personally supervised the torture of accused witches in the North Berwick trials, and
+            he would later sponsor the translation of the Bible that bears his name.
+          </p>
+
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;The fearefull aboundinge at this time in this countrie, of these detestable
+              slaues of the Deuill, the Witches or enchaunters, hath moved me (beloued reader) to
+              dispatch in post, this following treatise of mine, not in any wise (as I protest) to
+              serue for a shew of my learning &amp; ingine, but onely (mooued of conscience) to
+              preasse thereby, so farre as I can, to resolue the doubting harts of many.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              <Link
+                href="/book/694fe5f9f844de8615417df6"
+                className="text-amber-700 hover:underline"
+              >
+                Daemonologie
+              </Link>
+              , King James VI of Scotland, 1597 — Preface
+            </p>
+          </div>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            James&rsquo;s <em>Daemonologie</em> is organized as a Socratic dialogue in three books:
+            the first on magic and necromancy, the second on witchcraft, the third on spectres and
+            apparitions. His demon theory is orthodox Calvinist: Satan operates through human agents
+            (witches) who have entered into a formal pact, and the reality of this operation is
+            proven by Scripture, reason, and the testimony of those who have confessed under
+            examination.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            What makes these texts genuinely strange to read today is not their cruelty — we expect
+            that — but their intellectual seriousness. Both Kramer and James are arguing from
+            premises that their educated contemporaries shared. The question was not whether demons
+            existed but what they could do and whether humans could make binding agreements with them.
+            The demonological literature of the 15th–17th centuries is not superstition dressed up as
+            theology. It <em>is</em> theology — systematic, argued, institutionally supported.
+          </p>
+        </section>
+
+        {/* V. The Ceremonial Magic Approach */}
+        <section className="mb-16">
+          <h2 className="font-serif text-3xl text-primary mb-6">
+            V. The Ceremonial Magician: Working With Demons
+          </h2>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The grimoire tradition takes a view that is technically incompatible with Christian
+            demonology but practically coexisted with it for centuries: demons are real, they are
+            powerful, and if you know the right procedures you can command them.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The <em>Lemegeton</em>, or <em>Lesser Key of Solomon</em>, is the most famous of the
+            Solomonic grimoires — collections of magical procedures attributed (falsely but
+            conventionally) to the biblical king whose power over demons was legendary. The first book
+            of the <em>Lemegeton</em> is the <em>Goetia</em>, which names and describes 72 demons
+            with their ranks, powers, seals, and the methods for evoking and binding them.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The <em>Goetia</em>&rsquo;s procedure begins with a ritual of self-purification and
+            authorization. The magician enters a circle, invokes the authority of God and the angels,
+            and then calls the demon into a triangle outside the circle. The crucial element is that
+            the magician does not worship the demon — the magician commands it, in God&rsquo;s name.
+            This distinction allowed grimoire practitioners to argue (with varying plausibility) that
+            their practice was consistent with Christian piety.
+          </p>
+
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;I invoke thee, the one in the void spirit, terrible, invisible, Almighty God of
+              Gods, who created the earth and the firmament, who created the night and the day, thou
+              who didst create the light and the darkness. I call upon thee, the holy and great
+              name&hellip; Come thou forth and follow, and make all spirits subject unto me, so that
+              every spirit of the firmament and of the ether, upon the earth and under the earth, on
+              dry land and in the water, of whirling air and of rushing fire, and every spell and
+              scourge of God, may be obedient unto me.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              <Link
+                href="/book/695285d5ab34727b1f04c36f"
+                className="text-amber-700 hover:underline"
+              >
+                The Lesser Key of Solomon (Goetia)
+              </Link>{' '}
+              — the Bornless Ritual
+            </p>
+          </div>
+
+          <figure className="my-10">
+            <Link href="/gallery/image/695285d5ab34727b1f04c378-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/api/crop-image?url=https%3A%2F%2F3kwioilsplnmnkv8.public.blob.vercel-storage.com%2Farchived%2F695285d5ab34727b1f04c36f%2F9.jpg&x=0.132&y=0.086&w=0.738&h=0.806"
+                alt="Grid of demon seals from the Goetia (Lesser Key of Solomon), showing geometric sigils used in ceremonial evocation"
+                className="w-full max-w-md mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              Seals of the 72 demons from the <em>Goetia</em> (Lesser Key of Solomon).{' '}
+              <Link href="/gallery/image/695285d5ab34727b1f04c378-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+            </figcaption>
+          </figure>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The language here is liturgical, not adversarial. The magician is praying to God while
+            commanding a demon — a theological contortion that church authorities found unpersuasive.
+            Grimoire magic was consistently condemned by the Church. The Fourth Book of Occult
+            Philosophy, attributed (probably falsely) to Heinrich Cornelius Agrippa, acknowledges
+            this tension and attempts to resolve it by restricting spirit contact to angels and to
+            the &ldquo;good daemons&rdquo; of the Neoplatonic tradition.
+          </p>
+
+          <div className="bg-warm rounded-xl p-6 border border-border-light my-8">
+            <p className="text-secondary italic font-body leading-relaxed mb-3">
+              &ldquo;Good Daemons do indeed perform their offices, not out of fear of punishment or
+              for the sake of reward, but out of good will and divine love&hellip; The evil daemons
+              do nothing else but hinder and obstruct the operations of good men, and make the wicked
+              their instruments.&rdquo;
+            </p>
+            <p className="text-sm text-muted">
+              <Link
+                href="/book/694fe602f844de8615417e27"
+                className="text-amber-700 hover:underline"
+              >
+                Fourth Book of Occult Philosophy
+              </Link>
+              , attributed to Agrippa
+            </p>
+          </div>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The grimoire tradition was never unified. Different texts took different positions on
+            whether the spirits named were fallen angels, planetary intelligences, jinn, Neoplatonic
+            daimones, or something else entirely. What they shared was the operational assumption that
+            these entities could be reached, and that the correct procedures would compel their
+            cooperation.
+          </p>
+        </section>
+
+        <hr className="border-border-light my-12" />
+
+        {/* Conclusion */}
+        <section className="mb-16">
+          <h2 className="font-serif text-3xl text-primary mb-6">The Reversal</h2>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The trajectory from Greek <em>daimōn</em> to Christian <em>daemon</em> is not a story of
+            growing sophistication. It is a story of increasing hostility to the category itself. The
+            Greek daimōn was ontologically neutral or positive — a go-between, a helper, sometimes a
+            guide. The Hermetic daemon was your guardian. The Christian demon is your enemy.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            What drove the transformation was not better evidence but institutional politics. Early
+            Christian missionaries needed to discredit the religious practices of the cultures they
+            were converting. The most efficient way to do this was to assimilate the indigenous spirits
+            into a category of cosmic evil — not to deny their existence (which would have been
+            harder to argue), but to assert that they were malevolent, that working with them was
+            damnation, and that the Church had replaced them with a better offer.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The Islamic tradition avoided this demonization partly because it was not in the same
+            business of wholesale displacement. The jinn were already part of Quranic cosmology,
+            present from the beginning of the tradition rather than inherited from a culture being
+            absorbed. They could be morally complex because they did not need to be systematically
+            condemned.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            What Source Library makes visible, if you read across these traditions, is the
+            extraordinary diversity of answers that human cultures have given to the same question: are
+            there invisible intelligences, and if so, what are they for? The Greek philosopher, the
+            Hermetic initiate, the Islamic scholar, the Christian inquisitor, and the Renaissance
+            magician all say yes — and then completely disagree about everything else.
+          </p>
+        </section>
+
+        {/* Primary Sources */}
+        <div className="mt-16 pt-8 border-t border-border-light">
+          <h3 className="font-serif text-2xl text-primary mb-6">Primary Sources in Source Library</h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              {
+                href: '/book/6952062aab34727b1f0432aa',
+                title: 'Pimander (Corpus Hermeticum)',
+                detail: 'Marsilio Ficino translation, 1493 — editio princeps',
+              },
+              {
+                href: '/book/6953a93977f38f6761bd58f4',
+                title: 'Hermetica (Scott translation)',
+                detail: 'Walter Scott, Vol. I — includes Asclepius',
+              },
+              {
+                href: '/book/69523495ab34727b1f044a45',
+                title: 'Malleus Maleficarum',
+                detail: 'Kramer & Sprenger, 1486 first edition',
+              },
+              {
+                href: '/book/694fe5f9f844de8615417df6',
+                title: 'Daemonologie',
+                detail: 'King James VI of Scotland, Edinburgh 1597',
+              },
+              {
+                href: '/book/695285d5ab34727b1f04c36f',
+                title: 'Lesser Key of Solomon (Goetia)',
+                detail: 'The 72 demons — seals, ranks, and procedures',
+              },
+              {
+                href: '/book/694fe602f844de8615417e27',
+                title: 'Fourth Book of Occult Philosophy',
+                detail: 'Attributed to Agrippa — spirit contact theory',
+              },
+              {
+                href: '/book/6953b56577f38f6761bd979d',
+                title: 'Kitab al-Bulhan',
+                detail: 'Bodleian MS Arab d. 84 — illustrated jinn taxonomy',
+              },
+            ].map((source) => (
+              <Link
+                key={source.href}
+                href={source.href}
+                className="flex items-start gap-3 p-4 rounded-lg bg-warm border border-border-light hover:border-amber-200 hover:shadow-sm transition-all group"
+              >
+                <svg
+                  className="w-4 h-4 text-muted mt-0.5 shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                  />
+                </svg>
+                <div>
+                  <p className="text-sm font-medium text-primary group-hover:text-amber-800 transition-colors">
+                    {source.title}
+                  </p>
+                  <p className="text-xs text-muted mt-0.5">{source.detail}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </article>
     </ContentPageLayout>

@@ -643,7 +643,13 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
 export default function NotesRenderer({ text, className = '', showMetadata = true, showNotes = true, language, columns }: NotesRendererProps) {
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
-  const processedText = useMemo(() => preprocessCentering(withBracketTags), [withBracketTags]);
+  const withCentering = useMemo(() => preprocessCentering(withBracketTags), [withBracketTags]);
+  // Ensure blank lines after block-level closing tags so markdown parser resumes inline processing
+  // Without this, text like "</margin>\n**bold**" is treated as one HTML block and ** renders literally
+  const processedText = useMemo(() =>
+    withCentering.replace(/<\/margin>\s*\n(?!\n)/gi, '</margin>\n\n'),
+    [withCentering]
+  );
 
   // Split on <column-break/> for multi-column rendering, with paragraph-midpoint fallback
   const columnSegments = useMemo(() => {

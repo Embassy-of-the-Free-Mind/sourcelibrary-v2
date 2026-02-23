@@ -18,11 +18,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { db } = await connectToDatabase();
   const page = await db.collection('pages').findOne(
     { book_id: bookId, page_number: pageNumber },
-    { projection: { _id: 1 } }
+    { projection: { _id: 1, id: 1 } }
   );
 
   const canonicalPath = page
-    ? `/book/${bookId}/page/${page._id.toString()}`
+    ? `/book/${bookId}/page/${page.id || page._id.toString()}`
     : `/book/${bookId}`;
 
   return {
@@ -57,7 +57,7 @@ export default async function PageNumberRedirect({ params }: Props) {
   // Find the page by book_id and page_number
   const page = await db.collection('pages').findOne(
     { book_id: bookId, page_number: pageNumber },
-    { projection: { _id: 1 } }
+    { projection: { _id: 1, id: 1 } }
   );
 
   if (!page) {
@@ -65,5 +65,6 @@ export default async function PageNumberRedirect({ params }: Props) {
     redirect(`/book/${bookId}`);
   }
 
-  redirect(`/book/${bookId}/page/${page._id.toString()}`);
+  // Use id field (matches API lookup), fall back to _id
+  redirect(`/book/${bookId}/page/${page.id || page._id.toString()}`);
 }

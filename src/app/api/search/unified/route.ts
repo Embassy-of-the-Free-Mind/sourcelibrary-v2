@@ -177,72 +177,42 @@ async function searchIndex(db: any, query: string, limit: number) {
         pages: '$entries.pages'
       }
     }
-  ]).toArray();
+  ], { maxTimeMS: 5000 }).toArray();
 
   return { results: results as IndexResult[], total: results.length };
 }
 
 async function searchGallery(db: any, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
   try {
-    const pages = await db.collection('pages').aggregate([
-      {
-        $match: {
-          'detected_images.0': { $exists: true },
+    // Use materialized gallery_images collection (indexed, much faster than scanning pages)
+    const images = await db.collection('gallery_images')
+      .find(
+        {
+          gallery_quality: { $gte: 0.5 },
           $or: [
-            { 'detected_images.description': queryRegex },
-            { 'detected_images.museum_description': queryRegex },
-            { 'detected_images.metadata.subjects': queryRegex },
-            { 'detected_images.metadata.figures': queryRegex },
+            { description: queryRegex },
+            { museum_description: queryRegex },
+            { 'metadata.subjects': queryRegex },
+            { 'metadata.figures': queryRegex },
           ],
         },
-      },
-      { $limit: 20 },
-      { $unwind: { path: '$detected_images', includeArrayIndex: 'detIdx' } },
-      {
-        $match: {
-          'detected_images.gallery_quality': { $gte: 0.5 },
-          'detected_images.bbox': { $exists: true },
-          $or: [
-            { 'detected_images.description': queryRegex },
-            { 'detected_images.museum_description': queryRegex },
-            { 'detected_images.metadata.subjects': queryRegex },
-            { 'detected_images.metadata.figures': queryRegex },
-          ],
-        },
-      },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'book_id',
-          foreignField: 'id',
-          as: 'book',
-        },
-      },
-      { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-      { $match: { 'book.hidden': { $ne: true } } },
-      { $sort: { 'detected_images.gallery_quality': -1 } },
-      { $limit: limit },
-      {
-        $project: {
-          _id: 0,
-          id: { $concat: ['$id', '-', { $toString: '$detIdx' }] },
-          imageUrl: {
-            $ifNull: [
-              '$detected_images.thumbnail_url',
-              { $ifNull: ['$detected_images.extracted_url', '$cropped_photo'] },
-            ],
-          },
-          description: '$detected_images.description',
-          type: '$detected_images.type',
-          bookTitle: { $ifNull: ['$book.display_title', '$book.title'] },
-          bookId: '$book_id',
-        },
-      },
-    ]).toArray();
+        { projection: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
+      )
+      .sort({ gallery_quality: -1 })
+      .limit(limit)
+      .maxTimeMS(3000)
+      .toArray();
 
     return {
-      results: pages as GalleryResult[],
-      total: pages.length,
+      results: images.map((img: any) => ({
+        id: `${img.page_id}-${img.detection_index}`,
+        imageUrl: img.thumbnail_url || img.extracted_url || '',
+        description: img.description || '',
+        type: img.type,
+        bookTitle: img.book_title || '',
+        bookId: img.book_id || '',
+      })),
+      total: images.length,
     };
   } catch (err) {
     console.error('Gallery search error:', err);

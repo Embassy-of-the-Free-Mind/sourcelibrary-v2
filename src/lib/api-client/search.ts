@@ -20,6 +20,7 @@ export const search = {
     if (filters?.sort) params.append('sort', filters.sort);
     if (filters?.offset) params.append('offset', filters.offset.toString());
     if (filters?.limit) params.append('limit', filters.limit.toString());
+    if (filters?.search_content) params.append('search_content', filters.search_content);
 
     return await apiClient.get(`/api/search?${params}`);
   },

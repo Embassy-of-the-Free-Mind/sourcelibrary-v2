@@ -42,7 +42,16 @@ export async function GET(
 
     // Default: exclude detected_images (large array unused by the reader)
     const projection = full ? undefined : { detected_images: 0 };
-    const page = await db.collection('pages').findOne({ id }, projection ? { projection } : undefined);
+    let page = await db.collection('pages').findOne({ id }, projection ? { projection } : undefined);
+
+    // Fallback: try _id lookup (some pages have id != _id due to split page creation)
+    if (!page) {
+      const { ObjectId } = await import('mongodb');
+      if (ObjectId.isValid(id)) {
+        page = await db.collection('pages').findOne({ _id: new ObjectId(id) }, projection ? { projection } : undefined);
+      }
+    }
+
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }

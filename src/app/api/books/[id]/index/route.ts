@@ -4,6 +4,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { withAuth } from '@/lib/auth-helpers';
 
+export const maxDuration = 300;
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 // Research a book/author using Wikipedia API and web search
