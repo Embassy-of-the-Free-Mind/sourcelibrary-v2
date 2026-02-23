@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg-dark: #1a1612;
+  --color-bg-card: #231f1a;
+  --color-bg-hover: #2d2822;
+  --color-cream: #fdfcf9;
+  --color-warm: #f5f0e8;
+  --color-muted: #8a8480;
+  --color-faint: #6b6560;
+  --color-border: #3a342e;
+  --color-accent-rust: #9e4a3a;
+  --color-accent-gold: #c9a86c;
+  --color-accent-sage: #8b9a7d;
+  --color-accent-violet: #7c5db5;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-bg-dark);
+  color: var(--color-cream);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: rgba(201, 168, 108, 0.3);
+  color: var(--color-cream);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
+}
+
+/* Input styling */
+input[type="number"],
+input[type="date"] {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-cream);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+input[type="date"] {
+  width: 160px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-accent-gold);
+}
+
+/* Date input calendar icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
+}
