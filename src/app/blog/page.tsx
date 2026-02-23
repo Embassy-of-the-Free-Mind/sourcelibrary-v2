@@ -20,6 +20,13 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'first-translation-methodology',
+    title: 'How We Identify First Translations',
+    subtitle: 'The methodology behind Source Library\'s first-translation classification: AI enrichment, six-level status system, bibliographic heuristics, deep verification, and known limitations. Transparency about what "first translation" means and how confident we are.',
+    date: '23 February 2026',
+    readTime: '10 min read',
+  },
+  {
     slug: 'demonology',
     title: 'What Are Demons? Five Answers from the Primary Sources',
     subtitle: 'The word "demon" names two almost opposite things. The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel trying to damn your soul. Source Library holds the texts that document this extraordinary reversal — from the Hermetica to the Malleus Maleficarum, the Goetia, and the Kitab al-Bulhan.',

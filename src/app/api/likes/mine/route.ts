@@ -31,13 +31,15 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'type is required (image, page, or book)' }, { status: 400 });
     }
 
+    const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000);
+
     const db = await getDb();
 
     const myLikes = await db.collection('likes')
       .find({ visitor_id: visitorId, target_type: targetType })
       .project({ target_id: 1, created_at: 1 })
       .sort({ created_at: -1 })
-      .limit(100)
+      .limit(limit)
       .toArray();
 
     if (myLikes.length === 0) {
