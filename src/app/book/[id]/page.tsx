@@ -311,10 +311,25 @@ async function BookInfo({ id }: { id: string }) {
                     {book.language}
                   </div>
                 )}
-                {book.published && (
+                {(book.published || book.source_work_dates?.length) && (
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
-                    {book.published}
+                    {book.source_work_dates?.length ? (
+                      <span>
+                        {book.source_work_dates.find(l => l.type === 'composition')
+                          ? `${book.source_work_dates.find(l => l.type === 'composition')!.author || ''} ${book.source_work_dates.find(l => l.type === 'composition')!.date_display}`.trim()
+                          : ''}
+                        {book.source_work_dates.find(l => l.type === 'composition') && book.published
+                          ? <span className="text-stone-500"> · published {book.published}</span>
+                          : ''}
+                        {!book.source_work_dates.find(l => l.type === 'composition') && book.source_work_dates.find(l => l.type === 'translation')
+                          ? `${book.source_work_dates.find(l => l.type === 'translation')!.author || ''} trans. ${book.source_work_dates.find(l => l.type === 'translation')!.date_display}`.trim()
+                          : ''}
+                        {!book.source_work_dates.find(l => l.type === 'composition') && !book.source_work_dates.find(l => l.type === 'translation') && book.published
+                          ? book.published
+                          : ''}
+                      </span>
+                    ) : book.published}
                   </div>
                 )}
                 <div className="flex items-center gap-2">
@@ -657,7 +672,7 @@ async function BookInfo({ id }: { id: string }) {
                       <Link
                         key={p.term}
                         href={`/search?q=${encodeURIComponent(p.term)}`}
-                        className="px-3 py-1.5 text-sm bg-blue-50 text-blue-700 rounded-full hover:bg-blue-100 transition-colors"
+                        className="px-3 py-1.5 text-sm bg-accent-rust/8 text-accent-rust rounded-full hover:bg-accent-rust/15 transition-colors"
                       >
                         {p.term}
                       </Link>
@@ -666,7 +681,7 @@ async function BookInfo({ id }: { id: string }) {
                       <Link
                         key={c.term}
                         href={`/search?q=${encodeURIComponent(c.term)}`}
-                        className="px-3 py-1.5 text-sm bg-purple-50 text-purple-700 rounded-full hover:bg-purple-100 transition-colors"
+                        className="px-3 py-1.5 text-sm bg-accent-violet/8 text-accent-violet rounded-full hover:bg-accent-violet/15 transition-colors"
                       >
                         {c.term}
                       </Link>

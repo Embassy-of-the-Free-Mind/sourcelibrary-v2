@@ -103,7 +103,7 @@ export default function RevisionHistory({ pageId, field, currentSource }: Revisi
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors hover:bg-stone-100"
+        className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors hover:bg-stone-100"
         style={{ color: 'var(--text-muted)' }}
         title={`${field === 'ocr' ? 'OCR' : 'Translation'} revision history`}
       >
@@ -127,7 +127,7 @@ export default function RevisionHistory({ pageId, field, currentSource }: Revisi
               {field === 'ocr' ? 'OCR' : 'Translation'} History
               {total > 0 && <span className="ml-1" style={{ color: 'var(--text-muted)' }}>({total})</span>}
             </span>
-            <button onClick={() => setIsOpen(false)} className="p-0.5 rounded hover:bg-stone-100">
+            <button onClick={() => setIsOpen(false)} className="p-1.5 -mr-1 rounded hover:bg-stone-100" aria-label="Close history">
               <X className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
             </button>
           </div>
@@ -208,7 +208,7 @@ export default function RevisionHistory({ pageId, field, currentSource }: Revisi
                         <button
                           onClick={(e) => { e.stopPropagation(); handleRestore(rev.id); }}
                           disabled={restoring === rev.id}
-                          className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors hover:bg-amber-50"
+                          className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[10px] font-medium transition-colors hover:bg-amber-50"
                           style={{ color: 'var(--accent-rust)' }}
                         >
                           <RotateCcw className={`w-3 h-3 ${restoring === rev.id ? 'animate-spin' : ''}`} />

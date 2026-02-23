@@ -25,7 +25,8 @@ export default function PageTracker() {
       }
     };
 
-    trackPageview();
+    const timeout = setTimeout(trackPageview, 300);
+    return () => clearTimeout(timeout);
   }, [pathname]);
 
   return null;

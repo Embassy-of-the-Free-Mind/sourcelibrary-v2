@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Tag, X, Plus, Loader2, Check } from 'lucide-react';
+import { toast } from 'sonner';
 import { categories as categoriesApi, books } from '@/lib/api-client';
 
 interface Category {
@@ -51,6 +52,7 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
       setCategories(data.categories);
     } catch (error) {
       console.error('Failed to fetch categories:', error);
+      toast.error('Failed to load categories');
     } finally {
       setLoading(false);
     }
@@ -72,6 +74,7 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
       setIsOpen(false);
     } catch (error) {
       console.error('Failed to save categories:', error);
+      toast.error('Failed to save categories');
     } finally {
       setSaving(false);
     }
@@ -126,7 +129,7 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
               <button
                 onClick={handleClose}
                 aria-label="Close dialog"
-                className="p-1 hover:bg-stone-100 rounded transition-colors"
+                className="p-2 hover:bg-stone-100 rounded transition-colors"
               >
                 <X className="w-5 h-5 text-stone-500" aria-hidden="true" />
               </button>

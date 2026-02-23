@@ -16,6 +16,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -30,6 +31,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
       setScale(1);
       setPosition({ x: 0, y: 0 });
       setIsLoaded(false);
+      setHasError(false);
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -240,26 +242,40 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {!isLoaded && (
+        {!isLoaded && !hasError && (
           <div className="absolute inset-0 flex items-center justify-center">
             <BookLoader size="sm" variant="dark" />
           </div>
         )}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          ref={imageRef}
-          src={src}
-          alt={alt}
-          className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-          style={{
-            transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-            transition: isDragging ? 'none' : 'transform 0.2s ease-out',
-            cursor: scale > 1 ? 'grab' : 'default',
-          }}
-          onLoad={() => setIsLoaded(true)}
-          onTouchEnd={handleTap}
-          draggable={false}
-        />
+        {hasError ? (
+          <div className="flex flex-col items-center justify-center gap-4 text-white/70">
+            <X className="w-12 h-12 opacity-40" />
+            <p className="text-sm">Failed to load image</p>
+            <button
+              onClick={onClose}
+              className="px-4 py-2 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            ref={imageRef}
+            src={src}
+            alt={alt}
+            className={`max-w-full max-h-full object-contain transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+            style={{
+              transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+              transition: isDragging ? 'none' : 'transform 0.2s ease-out',
+              cursor: scale > 1 ? 'grab' : 'default',
+            }}
+            onLoad={() => setIsLoaded(true)}
+            onError={() => setHasError(true)}
+            onTouchEnd={handleTap}
+            draggable={false}
+          />
+        )}
       </div>
 
       {/* Hint */}

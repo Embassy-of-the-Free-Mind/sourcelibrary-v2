@@ -197,7 +197,8 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
           </h2>
           <button
             onClick={onClose}
-            className="p-1 hover:bg-stone-200 rounded-lg transition-colors"
+            className="p-2 hover:bg-stone-200 rounded-lg transition-colors"
+            aria-label="Close metadata panel"
           >
             <X className="w-5 h-5 text-stone-500" />
           </button>

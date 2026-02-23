@@ -806,7 +806,7 @@ export default function TranslationEditor({
               <button
                 onClick={() => previousPage && onNavigate(previousPage.id)}
                 disabled={!previousPage}
-                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
+                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                 style={{ color: 'var(--text-secondary)' }}
                 aria-label="Previous page"
               >
@@ -816,7 +816,7 @@ export default function TranslationEditor({
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
                 disabled={!nextPage}
-                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30"
+                className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                 style={{ color: 'var(--text-secondary)' }}
                 aria-label="Next page"
               >
@@ -831,7 +831,7 @@ export default function TranslationEditor({
             <div className="flex items-center gap-0.5 p-1 rounded-lg" role="toolbar" aria-label="Panel visibility">
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showImagePanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showImagePanel ? 'var(--bg-white)' : 'transparent',
                   color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -845,7 +845,7 @@ export default function TranslationEditor({
               </button>
               <button
                 onClick={() => setShowOcrPanel(!showOcrPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showOcrPanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showOcrPanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
                   color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -859,7 +859,7 @@ export default function TranslationEditor({
               </button>
               <button
                 onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? '' : 'opacity-50'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? '' : 'opacity-50'}`}
                 style={{
                   background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
                   color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
@@ -930,7 +930,7 @@ export default function TranslationEditor({
                         <button
                           onClick={decreaseFontSize}
                           disabled={isMinSize}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg text-base transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100"
+                          className="w-10 h-10 flex items-center justify-center rounded-lg text-base transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                           style={{ color: 'var(--text-primary)' }}
                           title="Smaller (Cmd+-)"
                         >
@@ -948,7 +948,7 @@ export default function TranslationEditor({
                         <button
                           onClick={increaseFontSize}
                           disabled={isMaxSize}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg text-xl font-semibold transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100"
+                          className="w-10 h-10 flex items-center justify-center rounded-lg text-xl font-semibold transition-colors bg-stone-100 hover:bg-stone-200 active:bg-stone-300 disabled:opacity-25 disabled:hover:bg-stone-100 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
                           style={{ color: 'var(--text-primary)' }}
                           title="Larger (Cmd+=)"
                         >
