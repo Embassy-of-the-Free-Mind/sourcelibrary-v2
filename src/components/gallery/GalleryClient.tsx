@@ -9,6 +9,7 @@ import {
   SlidersHorizontal, Loader2, ImagePlus, AlertCircle
 } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
+import { BookLoader } from '@/components/ui/BookLoader';
 import HighlightedText from '@/components/search/HighlightedText';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import {
@@ -482,7 +483,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
         {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
+            <BookLoader size="sm" variant="dark" />
           </div>
         )}
 

@@ -309,7 +309,7 @@ async function upsertGalleryImages(
       { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1 } }
     );
 
-    const imageUrl = page.cropped_photo || page.photo_original || page.photo || '';
+    const imageUrl = page.cropped_photo || page.archived_photo || page.photo_original || page.photo || '';
     const galleryImages = db.collection('gallery_images');
 
     // Remove old gallery_images for this page (in case image count changed)

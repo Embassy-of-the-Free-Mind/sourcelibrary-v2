@@ -6,6 +6,7 @@ interface BookLoaderProps {
   className?: string;
   size?: 'sm' | 'md' | 'lg';
   label?: string;
+  variant?: 'light' | 'dark';
 }
 
 /*
@@ -41,10 +42,12 @@ function getPos(row: number, col: number) {
   };
 }
 
-export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
+export function BookLoader({ className, size = 'md', variant = 'light' }: BookLoaderProps) {
   const svgClass = size === 'sm' ? 'w-32 h-32'
     : size === 'md' ? 'w-64 h-64'
     : 'w-[28rem] h-[28rem]';
+  const strokeColor = variant === 'dark' ? '#c9a86c' : 'var(--accent-rust)';
+  const dotColor = variant === 'dark' ? '#c9a86c' : 'var(--accent-rust)';
 
   return (
     <div className={cn('flex items-center justify-center', className)}>
@@ -92,14 +95,14 @@ export function BookLoader({ className, size = 'md' }: BookLoaderProps) {
                     cy={y}
                     r={radius}
                     fill="none"
-                    stroke="var(--accent-rust)"
+                    stroke={strokeColor}
                     strokeWidth={r === 0 ? 2 : 1.2}
                     opacity={Math.max(opacity, 0.18)}
                   />
                 );
               })}
               {/* Center dot */}
-              <circle cx={x} cy={y} r={4} fill="var(--accent-rust)" opacity="0.9" />
+              <circle cx={x} cy={y} r={4} fill={dotColor} opacity="0.9" />
             </g>
           );
         })}

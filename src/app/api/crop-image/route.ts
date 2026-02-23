@@ -1,18 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
-import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/crop-image
  *
  * Crop an image using normalized bounding box coordinates.
+ * Public endpoint — used in blog posts and gallery pages.
  * Query params:
  *   - url: source image URL
  *   - x, y, w, h: normalized bbox (0-1)
  *   - padding: extra padding around bbox (default 0.02)
  */
-export const GET = withAuth(async (request, session) => {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const imageUrl = searchParams.get('url');
@@ -80,4 +80,4 @@ export const GET = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}

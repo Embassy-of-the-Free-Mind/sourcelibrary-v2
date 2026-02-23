@@ -44,12 +44,23 @@ export async function generateGalleryImages(
   const origWidth = rawMeta.width || 1;
   const origHeight = rawMeta.height || 1;
 
-  // Normalize bbox: detect pixel-value coordinates (> 1) and convert to 0-1 range
+  // Normalize bbox: detect pixel-value coordinates (> 1) and convert to 0-1 range.
+  // AI models sometimes return 0-1000 scale instead of 0-1. Use the same heuristic as
+  // the UI editor: divide by max(x+w, y+h, 1000) so both 0-1000 and raw-pixel cases work.
   const isPixels = bbox.x > 1 || bbox.y > 1 || bbox.width > 1 || bbox.height > 1;
-  const normX = isPixels ? bbox.x / origWidth : bbox.x;
-  const normY = isPixels ? bbox.y / origHeight : bbox.y;
-  const normW = isPixels ? bbox.width / origWidth : bbox.width;
-  const normH = isPixels ? bbox.height / origHeight : bbox.height;
+  let normX: number, normY: number, normW: number, normH: number;
+  if (isPixels) {
+    const scale = Math.max(bbox.x + bbox.width, bbox.y + bbox.height, 1000);
+    normX = Math.min(bbox.x / scale, 0.95);
+    normY = Math.min(bbox.y / scale, 0.95);
+    normW = Math.min(bbox.width / scale, 1);
+    normH = Math.min(bbox.height / scale, 1);
+  } else {
+    normX = bbox.x;
+    normY = bbox.y;
+    normW = bbox.width;
+    normH = bbox.height;
+  }
 
   // Downscale oversized images before cropping to avoid memory/timeout issues
   // Max 3000px on longest side — plenty for gallery quality

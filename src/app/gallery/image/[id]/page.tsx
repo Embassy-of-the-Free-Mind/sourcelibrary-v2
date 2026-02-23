@@ -38,6 +38,7 @@ import {
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { gallery } from '@/lib/api-client';
 import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
@@ -301,7 +302,7 @@ export default function ImageDetailPage({
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-900 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500" />
+        <BookLoader size="md" variant="dark" />
       </div>
     );
   }

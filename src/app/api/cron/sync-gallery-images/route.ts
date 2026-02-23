@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
       {
         $project: {
           id: 1, book_id: 1, page_number: 1,
-          cropped_photo: 1, photo_original: 1, photo: 1,
+          cropped_photo: 1, archived_photo: 1, photo_original: 1, photo: 1,
           detected_images: 1, book: 1,
         },
       },
@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
           book_id: '$book_id',
           page_number: '$page_number',
           detection_index: '$detection_index',
-          image_url: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
+          image_url: { $ifNull: ['$cropped_photo', { $ifNull: ['$archived_photo', { $ifNull: ['$photo_original', '$photo'] }] }] },
           thumbnail_url: '$detected_images.thumbnail_url',
           extracted_url: '$detected_images.extracted_url',
           description: { $ifNull: ['$detected_images.description', ''] },
