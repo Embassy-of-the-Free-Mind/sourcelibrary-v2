@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, User, MapPin, Lightbulb, BookOpen, ExternalLink } from 'lucide-react';
 import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
-import { getEntity } from './layout';
+import { getEntity, getEntityGraph } from './layout';
+import EntityGraph from '@/components/encyclopedia/EntityGraph';
 
 const TYPE_ICONS = {
   person: User,
@@ -24,6 +25,7 @@ export default async function EntityDetailPage({
   }
 
   const Icon = TYPE_ICONS[entity.type];
+  const graph = await getEntityGraph(decodedName);
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -80,12 +82,23 @@ export default async function EntityDetailPage({
                 href={entity.wikipedia_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 mt-4 text-sm text-amber-700 hover:text-amber-800"
+                className="inline-flex items-center gap-1 mt-4 text-sm text-accent-rust hover:text-accent-gold-dark"
               >
                 Read more on Wikipedia
                 <ExternalLink className="w-3 h-3" />
               </a>
             )}
+          </div>
+        )}
+
+        {/* Relationship Graph */}
+        {graph && (
+          <div className="bg-white rounded-lg border border-stone-200 p-6">
+            <h2 className="text-lg font-semibold text-stone-900 mb-1">Connections</h2>
+            <p className="text-sm text-stone-500 mb-4">
+              Entities that appear in the same books. Hover to explore, click to navigate.
+            </p>
+            <EntityGraph nodes={graph.nodes} edges={graph.edges} />
           </div>
         )}
 
@@ -98,11 +111,11 @@ export default async function EntityDetailPage({
             {entity.books.map((book) => (
               <div
                 key={book.book_id}
-                className="border-l-2 border-amber-400 pl-4 py-2"
+                className="border-l-2 border-accent-gold/30 pl-4 py-2"
               >
                 <Link
                   href={`/book/${book.book_id}`}
-                  className="font-medium text-stone-900 hover:text-amber-700 transition-colors"
+                  className="font-medium text-stone-900 hover:text-accent-rust transition-colors"
                 >
                   {book.book_title}
                 </Link>
@@ -112,7 +125,7 @@ export default async function EntityDetailPage({
                     <Link
                       key={page}
                       href={`/book/${book.book_id}/page-number/${page}`}
-                      className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-amber-100 hover:text-amber-700 transition-colors"
+                      className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded hover:bg-accent-gold/15 hover:text-accent-rust transition-colors"
                     >
                       p. {page}
                     </Link>
@@ -142,7 +155,7 @@ export default async function EntityDetailPage({
                   <Link
                     key={related._id}
                     href={`/encyclopedia/${encodeURIComponent(related.name)}`}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-stone-100 hover:bg-amber-100 text-stone-700 hover:text-amber-800 rounded-full text-sm transition-colors"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 bg-stone-100 hover:bg-accent-gold/15 text-stone-700 hover:text-accent-gold-dark rounded-full text-sm transition-colors"
                   >
                     <RelIcon className="w-3.5 h-3.5" />
                     {related.name}

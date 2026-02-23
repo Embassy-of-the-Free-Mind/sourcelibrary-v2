@@ -9,6 +9,84 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+export interface GraphNode {
+  id: string;
+  name: string;
+  type: 'person' | 'place' | 'concept';
+  bookCount: number;
+  isCenter: boolean;
+}
+
+export interface GraphEdge {
+  source: string;
+  target: string;
+  weight: number;
+}
+
+// Graph data for the entity relationship visualization
+export const getEntityGraph = cache(async (name: string): Promise<{ nodes: GraphNode[]; edges: GraphEdge[] } | null> => {
+  try {
+    const db = await getDb();
+    const entity = await db.collection('entities').findOne(
+      { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
+      { sort: { book_count: -1 } }
+    );
+    if (!entity?.books?.length) return null;
+
+    const centerBookIds = entity.books.map((b: { book_id: string }) => b.book_id);
+    const related = await db.collection('entities')
+      .find({
+        _id: { $ne: entity._id },
+        'books.book_id': { $in: centerBookIds },
+      })
+      .sort({ book_count: -1 })
+      .limit(15)
+      .project({ name: 1, type: 1, book_count: 1, 'books.book_id': 1 })
+      .toArray();
+
+    if (related.length < 3) return null;
+
+    const nodes: GraphNode[] = [
+      { id: entity.name, name: entity.name, type: entity.type, bookCount: entity.book_count || 0, isCenter: true },
+      ...related.map(r => ({
+        id: r.name as string,
+        name: r.name as string,
+        type: r.type as 'person' | 'place' | 'concept',
+        bookCount: (r.book_count || 0) as number,
+        isCenter: false,
+      })),
+    ];
+
+    // Build book sets for edge computation
+    const bookSets = new Map<string, Set<string>>();
+    bookSets.set(entity.name as string, new Set(centerBookIds));
+    for (const r of related) {
+      bookSets.set(r.name as string, new Set((r.books as Array<{ book_id: string }>).map(b => b.book_id)));
+    }
+
+    // Compute edges (shared books between all pairs)
+    const edges: GraphEdge[] = [];
+    const names = [entity.name as string, ...related.map(r => r.name as string)];
+    for (let i = 0; i < names.length; i++) {
+      for (let j = i + 1; j < names.length; j++) {
+        const setA = bookSets.get(names[i])!;
+        const setB = bookSets.get(names[j])!;
+        let shared = 0;
+        for (const id of setA) {
+          if (setB.has(id)) shared++;
+        }
+        if (shared > 0) {
+          edges.push({ source: names[i], target: names[j], weight: shared });
+        }
+      }
+    }
+
+    return { nodes, edges };
+  } catch {
+    return null;
+  }
+});
+
 // Shared cached fetch — used by both layout (metadata/schema) and page (rendering)
 export const getEntity = cache(async (name: string) => {
   try {
