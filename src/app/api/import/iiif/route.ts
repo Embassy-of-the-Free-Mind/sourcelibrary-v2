@@ -334,6 +334,14 @@ export const POST = withAuth(async (request, session) => {
       }
     }
 
+    // Build a human-readable source URL instead of the raw IIIF manifest JSON
+    const rawManifestId = manifest['@id'] || manifest.id || manifest_url;
+    let sourceUrl = rawManifestId;
+    const bodleianMatch = manifest_url.match(/iiif\.bodleian\.ox\.ac\.uk\/iiif\/manifest\/([a-f0-9-]+)/);
+    if (bodleianMatch) {
+      sourceUrl = `https://digital.bodleian.ox.ac.uk/objects/${bodleianMatch[1]}`;
+    }
+
     const bookDoc = {
       _id: bookId,
       id: bookIdStr,
@@ -350,13 +358,13 @@ export const POST = withAuth(async (request, session) => {
       pages_ocr: 0,
       pages_translated: 0,
       dublin_core: {
-        dc_identifier: [`IIIF:${manifest['@id'] || manifest.id || manifest_url}`],
-        dc_source: manifest['@id'] || manifest.id || manifest_url
+        dc_identifier: [`IIIF:${rawManifestId}`],
+        dc_source: rawManifestId
       },
       image_source: {
-        provider: 'iiif',
+        provider: bodleianMatch ? 'bodleian' : 'iiif',
         provider_name: providerName,
-        source_url: manifest['@id'] || manifest.id || manifest_url,
+        source_url: sourceUrl,
         iiif_manifest: manifest_url,
         license,
         license_url,
