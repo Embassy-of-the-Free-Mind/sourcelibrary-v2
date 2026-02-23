@@ -62,6 +62,7 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0');
     const bookId = searchParams.get('bookId') || searchParams.get('book');
     const collectionSlug = searchParams.get('collection');
+    const libraryFilter = searchParams.get('library');
     const imageType = searchParams.get('type');
     const subjectFilter = searchParams.get('subject');
     const figureFilter = searchParams.get('figure');
@@ -94,6 +95,15 @@ export async function GET(request: NextRequest) {
       }) as string[];
     }
 
+    // If filtering by library/provider, resolve to book IDs
+    let libraryBookIds: string[] | null = null;
+    if (libraryFilter) {
+      libraryBookIds = await db.collection('books').distinct('id', {
+        'image_source.provider': libraryFilter,
+        status: { $ne: 'deleted' },
+      }) as string[];
+    }
+
     // Build query filter
     const filter: Record<string, unknown> = {
       gallery_quality: { $gte: minQuality },
@@ -106,7 +116,15 @@ export async function GET(request: NextRequest) {
     }
 
     if (bookId) filter.book_id = bookId;
-    if (collectionBookIds) filter.book_id = { $in: collectionBookIds };
+    if (collectionBookIds && libraryBookIds) {
+      // Intersect both sets
+      const intersection = collectionBookIds.filter(id => libraryBookIds!.includes(id));
+      filter.book_id = { $in: intersection };
+    } else if (collectionBookIds) {
+      filter.book_id = { $in: collectionBookIds };
+    } else if (libraryBookIds) {
+      filter.book_id = { $in: libraryBookIds };
+    }
     if (imageType) filter.type = imageType;
     if (subjectFilter) filter['metadata.subjects'] = subjectFilter;
     if (figureFilter) filter['metadata.figures'] = figureFilter;

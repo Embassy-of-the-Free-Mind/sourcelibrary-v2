@@ -12,6 +12,7 @@ export const search = {
   search: async (query: string, filters?: SearchFilters): Promise<SearchResponse> => {
     const params = new URLSearchParams({ q: query });
     if (filters?.language) params.append('language', filters.language);
+    if (filters?.library) params.append('library', filters.library);
     if (filters?.date_from) params.append('date_from', filters.date_from);
     if (filters?.date_to) params.append('date_to', filters.date_to);
     if (filters?.has_doi) params.append('has_doi', filters.has_doi);

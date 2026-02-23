@@ -30,6 +30,7 @@ export interface SearchResult {
 
 export interface SearchFilters {
   language?: string;
+  library?: string;
   date_from?: string;
   date_to?: string;
   has_doi?: string;

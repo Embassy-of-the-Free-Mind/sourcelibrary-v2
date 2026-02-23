@@ -22,6 +22,7 @@ import {
 import { sendGAEvent } from '@/lib/ga';
 import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
+import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -77,6 +78,7 @@ export default function SearchPage() {
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
   const [hasTranslation, setHasTranslation] = useState(searchParams.get('has_translation') === 'true');
   const [firstTranslation, setFirstTranslation] = useState(searchParams.get('first_translation') === 'true');
+  const [library, setLibrary] = useState(searchParams.get('library') || '');
   const [languages, setLanguages] = useState<LanguageOption[]>([{ value: '', label: 'All Languages' }]);
   const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
 
@@ -139,6 +141,7 @@ export default function SearchPage() {
           has_doi: hasDoi ? 'true' : undefined,
           has_translation: hasTranslation ? 'true' : undefined,
           first_translation: firstTranslation ? 'true' : undefined,
+          library: library || undefined,
           sort: sortBy !== 'relevance' ? sortBy : undefined,
           offset: pageOffset > 0 ? pageOffset : undefined,
           limit: RESULTS_PER_PAGE,
@@ -160,7 +163,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, sortBy]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
     const params = new URLSearchParams();
@@ -175,11 +178,12 @@ export default function SearchPage() {
       if (hasDoi) params.set('has_doi', 'true');
       if (hasTranslation) params.set('has_translation', 'true');
       if (firstTranslation) params.set('first_translation', 'true');
+      if (library) params.set('library', library);
       if (sortBy !== 'relevance') params.set('sort', sortBy);
     }
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     router.replace(`/search?${params.toString()}`, { scroll: false });
-  }, [router, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, sortBy]);
+  }, [router, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setOffset(0);
@@ -194,7 +198,7 @@ export default function SearchPage() {
       updateUrl(query, viewMode, offset);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, sortBy, offset, performSearch, updateUrl]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, offset, performSearch, updateUrl]);
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
@@ -226,9 +230,9 @@ export default function SearchPage() {
 
   const clearFilters = () => {
     setLanguage(''); setCategory(''); setDateFrom(''); setDateTo('');
-    setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setSortBy('relevance'); setOffset(0);
+    setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setLibrary(''); setSortBy('relevance'); setOffset(0);
   };
-  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || sortBy !== 'relevance';
+  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || library || sortBy !== 'relevance';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -377,6 +381,16 @@ export default function SearchPage() {
                   <label className="block text-sm text-secondary mb-1">Published Before</label>
                   <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
                     placeholder="e.g., 1700" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                </div>
+                <div>
+                  <label className="block text-sm text-secondary mb-1">Library</label>
+                  <select value={library} onChange={(e) => setLibrary(e.target.value)}
+                    className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                    <option value="">All Libraries</option>
+                    {Object.values(LIBRARY_PARTNERS).map((p) => (
+                      <option key={p.providerKey} value={p.providerKey}>{p.shortName}</option>
+                    ))}
+                  </select>
                 </div>
                 <div className="flex flex-col gap-2 pt-6">
                   <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">

@@ -56,6 +56,7 @@ export async function GET(request: NextRequest) {
     const hasDoi = searchParams.get('has_doi');
     const hasTranslation = searchParams.get('has_translation');
     const firstTranslation = searchParams.get('first_translation');
+    const library = searchParams.get('library');
     const bookId = searchParams.get('book_id'); // Filter to specific book
     const searchContent = searchParams.get('search_content') === 'true'; // Default false (page search is slow on 300K+ docs)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
@@ -107,6 +108,7 @@ export async function GET(request: NextRequest) {
       if (hasDoi === 'true') filters.doi = { $exists: true, $ne: null };
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
       if (firstTranslation === 'true') filters.is_first_translation = true;
+      if (library) filters['image_source.provider'] = library;
       return filters;
     }
 
@@ -139,7 +141,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Run book search and page content search in parallel
-    const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo);
+    const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
     const [bookDocs, pageDocs] = await Promise.all([
       // --- Book text search (skip when searching within a specific book) ---
@@ -376,7 +378,7 @@ export async function GET(request: NextRequest) {
       event: 'search_query',
       query,
       results_count: results.length,
-      filters: { language, category, year, bookId },
+      filters: { language, category, year, bookId, library },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
       created_at: new Date(),
