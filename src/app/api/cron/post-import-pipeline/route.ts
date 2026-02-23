@@ -179,11 +179,11 @@ export async function GET(request: NextRequest) {
         });
 
         if (ocrCount === 0) {
-          await setPipelineStatus(db, book.id, 'archive_complete', {
-            error: 'Finalize blocked: 0 OCR pages. Resetting for re-processing.',
-            retry_count: 0,
+          await setPipelineStatus(db, book.id, 'needs_attention', {
+            error: `Finalize blocked: 0/${totalPages} OCR pages. Needs manual investigation.`,
           });
-          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0/${totalPages} OCR pages, reset to archive_complete`);
+          log.needs_attention++;
+          log.errors.push(`Finalize blocked ${book.id} (${book.title}): 0/${totalPages} OCR pages`);
           continue;
         }
 
@@ -311,6 +311,26 @@ export async function GET(request: NextRequest) {
         if (!hasTimeBudget(startTime)) break;
         const retries = book.pipeline_auto?.retry_count || 0;
         const status = book.pipeline_auto?.status as string;
+
+        // Before rolling back ocr_submitted/translate_submitted, check if batch_jobs are still active
+        // Rolling back while Gemini is still processing creates duplicate submissions
+        if (status === 'ocr_submitted' || status === 'translate_submitted') {
+          const batchType = status === 'ocr_submitted' ? 'ocr' : 'translation';
+          const activeBatch = await db.collection('batch_jobs').countDocuments({
+            book_id: book.id,
+            type: batchType,
+            status: { $in: ['pending', 'processing', 'completed'] }, // completed = not yet collected
+          });
+          if (activeBatch > 0) {
+            // Extend staleness window — batch jobs exist but haven't been collected
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { 'pipeline_auto.last_updated': new Date() } }
+            );
+            logger.decision('skip', `Stale skip ${book.id}: ${activeBatch} uncollected batch jobs`, { book_id: book.id, status });
+            continue;
+          }
+        }
 
         if (retries >= MAX_RETRIES) {
           await markFailed(db, book.id, `Stale in ${status} for >48h after ${retries} retries`, retries);
@@ -449,8 +469,9 @@ export async function GET(request: NextRequest) {
         .limit(ocrLimit)
         .toArray() : [];
 
+      let ocrQuotaExhausted = false;
       for (const book of readyForOcr) {
-        if (!hasTimeBudget(startTime)) break;
+        if (!hasTimeBudget(startTime) || ocrQuotaExhausted) break;
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
           // Guard: verify book has pages with good archived images (not failed)
@@ -500,6 +521,14 @@ export async function GET(request: NextRequest) {
               log.errors.push(`OCR submit ${book.id}: no valid image URLs — needs_attention`);
               continue;
             }
+            // Circuit breaker: 429 = quota/rate limit — stop trying more books this run
+            // Don't count systemic quota exhaustion against per-book retry count
+            if (res.status === 429) {
+              ocrQuotaExhausted = true;
+              logger.backpressure('ocr_quota_exhausted', { book_id: book.id, status: 429 });
+              log.errors.push(`OCR: quota/rate limit hit (HTTP 429) — skipping remaining OCR submits`);
+              break;
+            }
             // Transient failure — retry with tracking
             if (retries >= MAX_RETRIES) {
               await markFailed(db, book.id, `OCR submit failed after ${retries} retries: HTTP ${res.status}`, retries);
@@ -529,13 +558,25 @@ export async function GET(request: NextRequest) {
             log.errors.push(`OCR submit ${book.id}: ${data.error || 'unexpected response'}`);
           }
         } catch (err) {
+          const errMsg = err instanceof Error ? err.message : 'unknown';
+          // Circuit breaker: catch quota errors that come through as exceptions
+          if (errMsg.includes('429') || errMsg.includes('quota')) {
+            ocrQuotaExhausted = true;
+            logger.backpressure('ocr_quota_exhausted', { book_id: book.id, error: errMsg });
+            log.errors.push(`OCR: quota/rate limit hit — skipping remaining OCR submits`);
+            break;
+          }
           if (retries >= MAX_RETRIES) {
-            await markFailed(db, book.id, `OCR submit exception: ${err instanceof Error ? err.message : 'unknown'}`, retries);
+            await markFailed(db, book.id, `OCR submit exception: ${errMsg}`, retries);
           } else {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
           }
-          log.errors.push(`OCR submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+          log.errors.push(`OCR submit ${book.id}: ${errMsg}`);
         }
+      }
+
+      if (ocrQuotaExhausted) {
+        log.errors.push('OCR: All API keys quota exhausted');
       }
     }
 
@@ -602,17 +643,29 @@ export async function GET(request: NextRequest) {
           });
 
           if (remainingOcr > 0) {
-            // More pages to OCR — loop back, but with circuit breaker
-            const loopCount = (book.pipeline_auto?.ocr_loop_count || 0) + 1;
-            if (loopCount > MAX_RETRIES) {
-              await setPipelineStatus(db, book.id, 'needs_attention', {
-                error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
-                ocr_loop_count: loopCount,
-              });
-              log.needs_attention++;
-              log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
+            // Check if there are uncollected batch_jobs — collector may not have saved results yet
+            const uncollectedBatch = await db.collection('batch_jobs').countDocuments({
+              book_id: book.id,
+              type: 'ocr',
+              status: { $in: ['pending', 'processing', 'completed'] }, // NOT 'saved' — results not yet written to pages
+            });
+
+            if (uncollectedBatch > 0) {
+              // Results exist in Gemini but haven't been saved — wait for collector
+              // Don't change state, don't increment loop count
             } else {
-              await setPipelineStatus(db, book.id, 'archive_complete', { ocr_loop_count: loopCount });
+              // All batch_jobs collected — remaining pages genuinely failed
+              const loopCount = (book.pipeline_auto?.ocr_loop_count || 0) + 1;
+              if (loopCount > MAX_RETRIES) {
+                await setPipelineStatus(db, book.id, 'needs_attention', {
+                  error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
+                  ocr_loop_count: loopCount,
+                });
+                log.needs_attention++;
+                log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
+              } else {
+                await setPipelineStatus(db, book.id, 'archive_complete', { ocr_loop_count: loopCount });
+              }
             }
             log.ocr_advanced++;
           } else {
@@ -680,8 +733,9 @@ export async function GET(request: NextRequest) {
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray();
 
+      let translateQuotaExhausted = false;
       for (const book of readyForTranslate) {
-        if (!hasTimeBudget(startTime)) break;
+        if (!hasTimeBudget(startTime) || translateQuotaExhausted) break;
         const retries = book.pipeline_auto?.retry_count || 0;
 
         // English books get modernized (Early Modern → Modern English) via the same batch route
@@ -699,6 +753,14 @@ export async function GET(request: NextRequest) {
           }
 
           if (!res.ok) {
+            // Circuit breaker: 429 = quota/rate limit — stop trying more books this run
+            // Don't count systemic rate limits against per-book retry count
+            if (res.status === 429) {
+              translateQuotaExhausted = true;
+              logger.backpressure('translate_quota_exhausted', { book_id: book.id, status: 429 });
+              log.errors.push(`Translate: rate limit hit (HTTP 429) — skipping remaining translate submits`);
+              break;
+            }
             if (retries >= MAX_RETRIES) {
               await markFailed(db, book.id, `Translate submit failed after ${retries} retries: HTTP ${res.status}`, retries);
             } else {
@@ -726,12 +788,20 @@ export async function GET(request: NextRequest) {
             log.errors.push(`Translate submit ${book.id}: ${data.error || 'unexpected response'}`);
           }
         } catch (err) {
+          const errMsg = err instanceof Error ? err.message : 'unknown';
+          // Circuit breaker: catch rate limit errors that come through as exceptions
+          if (errMsg.includes('429') || errMsg.includes('quota') || errMsg.includes('rate')) {
+            translateQuotaExhausted = true;
+            logger.backpressure('translate_quota_exhausted', { book_id: book.id, error: errMsg });
+            log.errors.push(`Translate: rate limit hit — skipping remaining translate submits`);
+            break;
+          }
           if (retries >= MAX_RETRIES) {
-            await markFailed(db, book.id, `Translate submit exception: ${err instanceof Error ? err.message : 'unknown'}`, retries);
+            await markFailed(db, book.id, `Translate submit exception: ${errMsg}`, retries);
           } else {
             await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
           }
-          log.errors.push(`Translate submit ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+          log.errors.push(`Translate submit ${book.id}: ${errMsg}`);
         }
       }
     }
@@ -795,16 +865,27 @@ export async function GET(request: NextRequest) {
           });
 
           if (remainingTranslate > 0) {
-            const tLoopCount = (book.pipeline_auto?.translate_loop_count || 0) + 1;
-            if (tLoopCount > MAX_RETRIES) {
-              await setPipelineStatus(db, book.id, 'needs_attention', {
-                error: `Translation looped ${tLoopCount} times with ${remainingTranslate} pages still untranslated`,
-                translate_loop_count: tLoopCount,
-              });
-              log.needs_attention++;
-              log.errors.push(`Translate circuit breaker ${book.id}: looped ${tLoopCount}x, ${remainingTranslate} pages remaining`);
+            // Check if there are uncollected batch_jobs — collector may not have saved results yet
+            const uncollectedTransBatch = await db.collection('batch_jobs').countDocuments({
+              book_id: book.id,
+              type: 'translation',
+              status: { $in: ['pending', 'processing', 'completed'] }, // NOT 'saved'
+            });
+
+            if (uncollectedTransBatch > 0) {
+              // Wait for collector to save results
             } else {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { translate_loop_count: tLoopCount });
+              const tLoopCount = (book.pipeline_auto?.translate_loop_count || 0) + 1;
+              if (tLoopCount > MAX_RETRIES) {
+                await setPipelineStatus(db, book.id, 'needs_attention', {
+                  error: `Translation looped ${tLoopCount} times with ${remainingTranslate} pages still untranslated`,
+                  translate_loop_count: tLoopCount,
+                });
+                log.needs_attention++;
+                log.errors.push(`Translate circuit breaker ${book.id}: looped ${tLoopCount}x, ${remainingTranslate} pages remaining`);
+              } else {
+                await setPipelineStatus(db, book.id, 'metadata_enriched', { translate_loop_count: tLoopCount });
+              }
             }
             log.translate_advanced++;
           } else {

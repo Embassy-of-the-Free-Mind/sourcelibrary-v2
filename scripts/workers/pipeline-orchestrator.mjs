@@ -334,6 +334,17 @@ async function getOcrPromptFromDb(db) {
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
 async function submitOcrDirectly(db, book) {
+  // Guard: check for existing active batch_jobs for this book
+  const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
+    book_id: book.id,
+    type: 'ocr',
+    status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+  });
+  if (activeBatchForBook > 0) {
+    console.log(`    Skipping: ${activeBatchForBook} active batch jobs already exist for this book`);
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true };
+  }
+
   // Find pages needing OCR
   const pages = await db.collection('pages')
     .find({
@@ -667,6 +678,9 @@ async function run() {
             await setPipelineStatus(db, book.id, 'ocr_complete');
             log.ocr_advanced++;
             console.log(`  Already OCR'd: ${label}`);
+          } else if (result.skippedDuplicate) {
+            // Don't change state — active batch jobs exist, wait for them
+            console.log(`  Skipped (active batch exists): ${label}`);
           } else {
             await setPipelineStatus(db, book.id, 'ocr_submitted', {
               ocr_job_name: result.jobName,
@@ -755,21 +769,35 @@ async function run() {
           });
 
           if (remainingOcr > 0) {
-            const loopCount = (book.pipeline_auto?.ocr_loop_count || 0) + 1;
-            if (loopCount > MAX_RETRIES) {
-              if (!DRY_RUN) {
-                await setPipelineStatus(db, book.id, 'needs_attention', {
-                  error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
-                  ocr_loop_count: loopCount,
-                });
-              }
-              log.needs_attention++;
-              log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
+            // Check if there are uncollected batch_jobs — collector may not have saved results yet
+            const uncollectedBatch = await db.collection('batch_jobs').countDocuments({
+              book_id: book.id,
+              type: 'ocr',
+              status: { $in: ['pending', 'processing', 'completed'] }, // NOT 'saved' — results not yet written to pages
+            });
+
+            if (uncollectedBatch > 0) {
+              // Results exist in Gemini but haven't been saved to pages yet — wait for collector
+              console.log(`  Waiting for collector: ${book.title} — ${uncollectedBatch} uncollected batch jobs, ${remainingOcr} pages remaining`);
+              // Don't change state, don't increment loop count — just wait
             } else {
-              if (!DRY_RUN) {
-                await setPipelineStatus(db, book.id, 'archive_complete', { ocr_loop_count: loopCount });
+              // All batch_jobs have been collected ('saved'), so remaining pages genuinely failed
+              const loopCount = (book.pipeline_auto?.ocr_loop_count || 0) + 1;
+              if (loopCount > MAX_RETRIES) {
+                if (!DRY_RUN) {
+                  await setPipelineStatus(db, book.id, 'needs_attention', {
+                    error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
+                    ocr_loop_count: loopCount,
+                  });
+                }
+                log.needs_attention++;
+                log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
+              } else {
+                if (!DRY_RUN) {
+                  await setPipelineStatus(db, book.id, 'archive_complete', { ocr_loop_count: loopCount });
+                }
+                console.log(`  OCR loop ${loopCount} for ${book.title}: ${remainingOcr} pages remaining (all batches collected)`);
               }
-              console.log(`  OCR loop ${loopCount} for ${book.title}: ${remainingOcr} pages remaining`);
             }
             log.ocr_advanced++;
           } else {
@@ -969,21 +997,33 @@ async function run() {
           });
 
           if (remainingTranslate > 0) {
-            const tLoopCount = (book.pipeline_auto?.translate_loop_count || 0) + 1;
-            if (tLoopCount > MAX_RETRIES) {
-              if (!DRY_RUN) {
-                await setPipelineStatus(db, book.id, 'needs_attention', {
-                  error: `Translation looped ${tLoopCount} times with ${remainingTranslate} pages still untranslated`,
-                  translate_loop_count: tLoopCount,
-                });
-              }
-              log.needs_attention++;
-              log.errors.push(`Translate circuit breaker ${book.id}: looped ${tLoopCount}x, ${remainingTranslate} remaining`);
+            // Check if there are uncollected batch_jobs — collector may not have saved results yet
+            const uncollectedTransBatch = await db.collection('batch_jobs').countDocuments({
+              book_id: book.id,
+              type: 'translation',
+              status: { $in: ['pending', 'processing', 'completed'] }, // NOT 'saved'
+            });
+
+            if (uncollectedTransBatch > 0) {
+              console.log(`  Waiting for collector: ${book.title} — ${uncollectedTransBatch} uncollected translation batches, ${remainingTranslate} pages remaining`);
+              // Don't change state, don't increment loop count
             } else {
-              if (!DRY_RUN) {
-                await setPipelineStatus(db, book.id, 'metadata_enriched', { translate_loop_count: tLoopCount });
+              const tLoopCount = (book.pipeline_auto?.translate_loop_count || 0) + 1;
+              if (tLoopCount > MAX_RETRIES) {
+                if (!DRY_RUN) {
+                  await setPipelineStatus(db, book.id, 'needs_attention', {
+                    error: `Translation looped ${tLoopCount} times with ${remainingTranslate} pages still untranslated`,
+                    translate_loop_count: tLoopCount,
+                  });
+                }
+                log.needs_attention++;
+                log.errors.push(`Translate circuit breaker ${book.id}: looped ${tLoopCount}x, ${remainingTranslate} remaining`);
+              } else {
+                if (!DRY_RUN) {
+                  await setPipelineStatus(db, book.id, 'metadata_enriched', { translate_loop_count: tLoopCount });
+                }
+                console.log(`  Translate loop ${tLoopCount} for ${book.title}: ${remainingTranslate} pages remaining (all batches collected)`);
               }
-              console.log(`  Translate loop ${tLoopCount} for ${book.title}: ${remainingTranslate} pages remaining`);
             }
             log.translate_advanced++;
           } else {
@@ -1233,6 +1273,28 @@ async function run() {
         const retries = book.pipeline_auto?.retry_count || 0;
         const status = book.pipeline_auto?.status;
 
+        // Before rolling back ocr_submitted/translate_submitted, check if batch_jobs are still active
+        // Rolling back while Gemini is still processing creates duplicate submissions
+        if (status === 'ocr_submitted' || status === 'translate_submitted') {
+          const batchType = status === 'ocr_submitted' ? 'ocr' : 'translation';
+          const activeBatch = await db.collection('batch_jobs').countDocuments({
+            book_id: book.id,
+            type: batchType,
+            status: { $in: ['pending', 'processing', 'completed'] }, // completed = not yet collected
+          });
+          if (activeBatch > 0) {
+            console.log(`  Stale SKIP: ${book.title} (${status}) — ${activeBatch} active/uncollected batch jobs, waiting for collector`);
+            // Update last_updated to extend the staleness window
+            if (!DRY_RUN) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { 'pipeline_auto.last_updated': new Date() } }
+              );
+            }
+            continue;
+          }
+        }
+
         if (retries >= MAX_RETRIES) {
           if (!DRY_RUN) {
             await markFailed(db, book.id, `Stale in ${status} for >48h after ${retries} retries`, retries);
@@ -1285,11 +1347,11 @@ async function run() {
 
         if (ocrCount === 0) {
           if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'archive_complete', {
-              error: 'Finalize blocked: 0 OCR pages. Resetting for re-processing.',
-              retry_count: 0,
+            await setPipelineStatus(db, book.id, 'needs_attention', {
+              error: `Finalize blocked: 0/${totalPages} OCR pages. Needs manual investigation.`,
             });
           }
+          log.needs_attention++;
           log.errors.push(`Finalize blocked ${book.id}: 0/${totalPages} OCR pages`);
           continue;
         }
