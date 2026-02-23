@@ -5,9 +5,9 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Astrologuy - Lunar Calendar & Moon Phases",
-  description: "Interactive 13-month lunar calendar with real-time moon phases, Chinese zodiac, and eclipse forecasts. All calculations run in your browser.",
-  keywords: ["lunar calendar", "moon phases", "13 month calendar", "Chinese zodiac", "eclipse", "astronomy"],
+  title: "Astrologuy - The Calendar You Never Knew You Were Missing",
+  description: "An interactive essay on the moon, the month, and the year that should have been. Discover why 13 months of 28 days makes more sense than the calendar we use.",
+  keywords: ["lunar calendar", "13 month calendar", "moon phases", "interactive essay", "Chinese zodiac", "Metonic cycle", "astronomy"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,127 +1,479 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { PhaseCard } from "@/components/ui/PhaseCard";
+import { useState, useMemo } from "react";
 import { PhaseWheel } from "@/components/viz/PhaseWheel";
-import { useMoonSign, useMoonCycle } from "@/lib/hooks";
-import { getLunarEvents } from "@/lib/astro";
-import { useMemo } from "react";
-import Link from "next/link";
+import { MoonHeatmap } from "@/components/viz/MoonHeatmap";
+import { YearCalendar } from "@/components/viz/YearCalendar";
+import { DriftChart } from "@/components/viz/DriftChart";
+import { ZodiacWheel } from "@/components/viz/ZodiacWheel";
+import { EclipseTimeline } from "@/components/viz/EclipseTimeline";
+import { BirthDateInput } from "@/components/ui/BirthDateInput";
+import { useMoonPhase, useMoonSign, useMoonCycle } from "@/lib/hooks";
+import { useAppState } from "@/lib/store";
+import { SYNODIC_MONTH } from "@/lib/constants";
 
-const MoonGlobe = dynamic(() => import("@/components/three/Scene").then((m) => m.Scene), {
+const Scene = dynamic(() => import("@/components/three/Scene").then((m) => m.Scene), {
   ssr: false,
   loading: () => (
-    <div className="w-full aspect-square max-w-sm mx-auto flex items-center justify-center">
-      <PhaseWheel size={280} />
+    <div className="w-full aspect-square max-w-xs mx-auto flex items-center justify-center">
+      <PhaseWheel size={240} />
     </div>
   ),
 });
 
-export default function HomePage() {
+export default function EssayPage() {
+  const phase = useMoonPhase();
   const sign = useMoonSign();
   const cycle = useMoonCycle();
-
-  const upcomingEvents = useMemo(() => {
-    const events = getLunarEvents(new Date(), 60);
-    return events.slice(0, 4);
-  }, []);
+  const { birthDate } = useAppState();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-      {/* Hero section */}
-      <div className="text-center mb-12">
-        <h1 className="font-serif text-4xl sm:text-5xl font-semibold tracking-wide mb-3">
-          Astrologuy
+    <article className="essay">
+      {/* ═══════════════════════════════════════════════
+          I. THE HOOK
+          ═══════════════════════════════════════════════ */}
+      <header className="essay-hero">
+        <h1 className="essay-title">
+          The Calendar You Never Knew You Were Missing
         </h1>
-        <p className="text-muted text-lg max-w-xl mx-auto">
-          Interactive lunar calendar with real-time moon phases, Chinese zodiac, and eclipse forecasts.
-          All calculations run in your browser.
+        <p className="essay-subtitle">
+          An interactive essay on the moon, the month, and the year that should have been.
         </p>
-      </div>
+      </header>
 
-      {/* 3D Moon + Phase Card */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-        <div className="flex items-center justify-center">
-          <MoonGlobe />
+      <section className="essay-section">
+        <div className="essay-prose">
+          <p className="essay-lede">
+            The word <em>month</em> comes from <em>moon.</em> Old English <em>m&#x14D;nath</em>,
+            from Proto-Germanic <em>*m&#x113;n&#x14D;th-</em>, literally &ldquo;moon-time.&rdquo;
+            In every Indo-European language, the connection is transparent.
+          </p>
+          <p>
+            But look at your calendar. January has 31 days. February has 28.
+            March has 31 again. None of these have anything to do with the moon.
+            The months don&rsquo;t start at the new moon. The full moon doesn&rsquo;t fall
+            mid-month. The word <em>month</em> is a fossil &mdash; a linguistic ghost
+            of a relationship your calendar severed two thousand years ago.
+          </p>
+          <p>
+            This essay is about what we lost, and what we&rsquo;d gain by looking at it again.
+          </p>
         </div>
-        <div className="flex flex-col gap-4">
-          <PhaseCard />
+      </section>
 
-          {/* Moon sign card */}
-          <div className="bg-bg-card border border-border rounded-xl p-5">
-            <div className="text-faint text-xs uppercase tracking-wider mb-2">Moon Sign</div>
-            <div className="flex items-center gap-3">
-              <span className="text-3xl">{sign.symbol}</span>
-              <div>
-                <div className="text-cream font-medium text-lg">{sign.name}</div>
-                <div className="text-muted text-sm">
-                  {sign.element} &middot; {sign.modality} &middot; {sign.degrees.toFixed(1)}&deg;
-                </div>
-              </div>
-            </div>
+      {/* ═══════════════════════════════════════════════
+          II. RIGHT NOW
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">The Moon Right Now</h2>
+        <div className="essay-prose">
+          <p>
+            Before we talk about calendars, look up. Or rather, look here.
+            Right now, at this moment, the moon is a{" "}
+            <strong className="text-accent-gold">{phase.phase_name}</strong>.
+            It&rsquo;s {phase.illumination}% illuminated, {cycle.moon_age.toFixed(1)} days
+            into its current cycle, and sitting in the constellation of{" "}
+            <strong>{sign.name}</strong> {sign.symbol}.
+          </p>
+        </div>
+
+        <figure className="essay-figure">
+          <div className="max-w-xs mx-auto">
+            <Scene />
           </div>
-        </div>
-      </div>
+          <figcaption>
+            The moon as it appears right now &mdash; {phase.phase_name},{" "}
+            {phase.illumination}% illuminated. The 3D model shows
+            the actual sunlight angle computed from orbital mechanics.
+          </figcaption>
+        </figure>
 
-      {/* Upcoming events */}
-      <div className="mb-12">
-        <h2 className="font-serif text-2xl font-semibold mb-4">Upcoming Events</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {upcomingEvents.map((evt, i) => (
-            <div key={i} className="bg-bg-card border border-border rounded-xl p-4">
-              <div className="text-2xl mb-1">{evt.emoji}</div>
-              <div className="text-cream font-medium text-sm">{evt.name}</div>
-              <div className="text-muted text-xs mt-1">
-                {evt.date.toLocaleDateString("en", {
-                  month: "long",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </div>
-            </div>
-          ))}
+        <div className="essay-prose">
+          <p>
+            This isn&rsquo;t decorative. Every data point on this page is computed
+            in real time from the actual positions of the Earth, Moon, and Sun.
+            No server, no lookup table &mdash; your browser is doing the orbital
+            mechanics right now.
+          </p>
+          {cycle.next_phase && (
+            <p>
+              The next phase shift is in{" "}
+              <strong className="text-accent-gold">
+                {cycle.next_phase.days_away.toFixed(1)} days
+              </strong>, when the moon enters{" "}
+              {["New Moon", "First Quarter", "Full Moon", "Third Quarter"][cycle.next_phase.quarter]}.
+            </p>
+          )}
         </div>
-      </div>
+      </section>
 
-      {/* Quick links */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Link
-          href="/calendar"
-          className="bg-bg-card border border-border rounded-xl p-6 hover:border-accent-gold/30 transition-colors group"
-        >
-          <div className="text-2xl mb-2">&#x1F4C5;</div>
-          <h3 className="font-serif text-lg font-semibold group-hover:text-accent-gold transition-colors">
-            13-Month Calendar
-          </h3>
-          <p className="text-muted text-sm mt-1">
-            The year as 13 perfect lunar months. See the rhythm.
+      {/* ═══════════════════════════════════════════════
+          III. THE ORIGINAL MONTH
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">The Original Month</h2>
+        <div className="essay-prose">
+          <p>
+            For most of human history, a &ldquo;month&rdquo; meant one thing: the time
+            between two new moons. Every civilization on Earth &mdash; Babylonian,
+            Egyptian, Chinese, Hebrew, Islamic, Hindu, Maya &mdash; organized
+            time around the lunar cycle.
           </p>
-        </Link>
-        <Link
-          href="/birthday"
-          className="bg-bg-card border border-border rounded-xl p-6 hover:border-accent-gold/30 transition-colors group"
-        >
-          <div className="text-2xl mb-2">&#x1F382;</div>
-          <h3 className="font-serif text-lg font-semibold group-hover:text-accent-gold transition-colors">
-            Lunar Birthday
-          </h3>
-          <p className="text-muted text-sm mt-1">
-            Find your lunar birthday and track the 19-year drift.
+          <p>
+            The reason is obvious. The moon is the most visible clock in the sky.
+            It takes {SYNODIC_MONTH} days to go from invisible (new) to full and back
+            to invisible again. Unlike the sun, which requires instruments to track
+            precisely, the moon&rsquo;s phase is readable at a glance.
+            Anyone can count to 29.
           </p>
-        </Link>
-        <Link
-          href="/zodiac"
-          className="bg-bg-card border border-border rounded-xl p-6 hover:border-accent-gold/30 transition-colors group"
-        >
-          <div className="text-2xl mb-2">&#x1F409;</div>
-          <h3 className="font-serif text-lg font-semibold group-hover:text-accent-gold transition-colors">
-            Chinese Zodiac
-          </h3>
-          <p className="text-muted text-sm mt-1">
-            Your zodiac animal, element, traits, and compatibility.
+        </div>
+
+        <figure className="essay-figure">
+          <div className="max-w-sm mx-auto">
+            <PhaseWheel size={320} />
+          </div>
+          <figcaption>
+            The eight phases of a single lunation. New moon at top, full moon at bottom.
+            The golden pointer shows where we are right now.
+          </figcaption>
+        </figure>
+
+        <div className="essay-prose">
+          <p>
+            Each lunation has a built-in structure. The first half &mdash; waxing &mdash;
+            the moon grows brighter every night. The full moon marks the midpoint.
+            Then the waning half, as it fades back to nothing. Four weeks, four quarters,
+            an obvious and elegant division of time.
           </p>
-        </Link>
-      </div>
-    </div>
+          <p>
+            The seven-day week almost certainly comes from this: each quarter of the
+            moon lasts roughly seven days. Sunday to Saturday isn&rsquo;t arbitrary &mdash;
+            it&rsquo;s a quarter-moon.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          IV. THE BREAK
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">The Break</h2>
+        <div className="essay-prose">
+          <p>
+            In 46 BC, Julius Caesar hired the Alexandrian astronomer Sosigenes to
+            redesign Rome&rsquo;s calendar. The old Roman calendar was lunar &mdash;
+            and a mess. Priests had been manipulating the intercalary month for
+            political advantage, and the calendar had drifted months from the actual
+            seasons.
+          </p>
+          <p>
+            Sosigenes&rsquo;s solution was radical: abandon the moon entirely. Make the
+            year 365 days with a leap day every four years. Distribute days into
+            12 months of 28&ndash;31 days, chosen for political and superstitious
+            reasons (even numbers were unlucky in Rome), not astronomical ones.
+          </p>
+          <p>
+            It worked brilliantly for keeping track of seasons. And it completely
+            severed the connection between &ldquo;month&rdquo; and &ldquo;moon.&rdquo;
+          </p>
+          <p>
+            We&rsquo;ve been using a modified version of Caesar&rsquo;s calendar for
+            2,070 years. Most people alive today have never experienced the rhythm
+            it replaced.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          V. WHAT WE LOST — THE HIDDEN RHYTHM
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">The Hidden Rhythm</h2>
+        <div className="essay-prose">
+          <p>
+            But the moon didn&rsquo;t stop. It&rsquo;s still up there, cycling through its
+            phases every {SYNODIC_MONTH} days, completely indifferent to our calendars.
+            The rhythm is still happening &mdash; we just can&rsquo;t see it on a wall calendar.
+          </p>
+          <p>
+            Here&rsquo;s what it looks like. Every cell below is one day of the current year,
+            colored by moon illumination &mdash; brighter gold means a fuller moon.
+            See the waves?
+          </p>
+        </div>
+
+        <figure className="essay-figure essay-figure-wide">
+          <MoonHeatmap />
+          <figcaption>
+            Every day of the year, colored by moon illumination. Each bright wave is a
+            full moon; each dark trough is a new moon. The rhythm is as regular as breathing &mdash;
+            roughly 29.5 days per cycle, 12 to 13 times per year.
+          </figcaption>
+        </figure>
+
+        <div className="essay-prose">
+          <p>
+            That rhythm &mdash; those regular golden waves &mdash; is what the word
+            &ldquo;month&rdquo; used to describe. Twelve and a half lunations per
+            solar year, each one as predictable as the tides (which, not coincidentally,
+            the moon also controls).
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          VI. THE SOLUTION — 13 × 28
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section essay-section-hero">
+        <h2 className="essay-heading">Thirteen Months</h2>
+        <div className="essay-prose">
+          <p>
+            Here is the year as the moon sees it.
+          </p>
+          <p>
+            Below, each card is one <em>lunation</em> &mdash; one complete cycle from
+            new moon to new moon. Day 1 is always the new moon. Day 7 is always the first
+            quarter. Day 14 is always the full moon. Day 21 is always the third quarter.
+            Day 28 wraps a perfect four-week month.
+          </p>
+          <p>
+            Thirteen of these months give you 364 days &mdash; plus one
+            &ldquo;Day Out of Time&rdquo; to complete the solar year.
+          </p>
+          <p className="text-accent-gold font-serif text-2xl sm:text-3xl text-center my-8">
+            13 &times; 28 = 364 + 1 = 365
+          </p>
+          <p>
+            Every month has the same structure. Every month starts the same way.
+            The full moon is <em>always</em> mid-month. You never have to look up
+            when the full moon is &mdash; it&rsquo;s the 14th and 15th, every month,
+            forever.
+          </p>
+        </div>
+
+        <figure className="essay-figure essay-figure-wide">
+          <YearCalendar />
+          <figcaption>
+            The year as thirteen 28-day months. Each month starts at the new moon.
+            Real lunations average {SYNODIC_MONTH} days &mdash; the extra ~1.5 days per month
+            accumulate into the &ldquo;Day Out of Time&rdquo; at year&rsquo;s end.
+            Toggle to &ldquo;Astronomical&rdquo; to see real lunation lengths.
+          </figcaption>
+        </figure>
+
+        <div className="essay-prose">
+          <p>
+            Compare this to the Gregorian calendar. In the 13-month calendar,
+            every month is identical. Every paycheck falls on the same dates.
+            Every quarter is exactly 91 days. Planning is trivial.
+          </p>
+          <p>
+            This isn&rsquo;t a new idea. The International Fixed Calendar, proposed by
+            Moses B. Cotsworth in 1902 and championed by George Eastman (of Kodak),
+            had exactly this structure. Kodak used it internally from 1928 to 1989.
+            The League of Nations considered adopting it globally. It&rsquo;s been
+            proposed to the UN multiple times.
+          </p>
+          <p>
+            It never caught on, partly because of religious resistance (some sabbaths
+            would need rescheduling), partly because of inertia. But the math doesn&rsquo;t
+            care about politics. Thirteen months is what the moon gives us.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          VII. YOUR LUNAR BIRTHDAY
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">Your Lunar Birthday</h2>
+        <div className="essay-prose">
+          <p>
+            Here&rsquo;s where it gets personal. Enter your birth date, and the rest of
+            this essay adapts to you.
+          </p>
+        </div>
+
+        <div className="flex justify-center my-8">
+          <BirthDateInput />
+        </div>
+
+        {birthDate && (
+          <div className="essay-prose">
+            <p>
+              In the lunar calendar, your birthday falls on a different Gregorian date
+              every year. It drifts about 11 days earlier each year &mdash; because
+              12 lunations add up to only 354 days, not 365.
+            </p>
+            <p>
+              But here&rsquo;s the remarkable thing: after exactly 19 years &mdash; a period
+              called the <em>Metonic cycle</em>, discovered by the Athenian astronomer
+              Meton in 432 BC &mdash; the lunar and solar calendars realign almost perfectly.
+              Your lunar birthday returns to nearly the same Gregorian date.
+            </p>
+            <p>
+              The chart below shows this drift across 19 years. Gold bars mark where your
+              lunar birthday falls each year. Violet bars mark leap years that insert
+              a 13th month to correct the drift.
+            </p>
+          </div>
+        )}
+
+        <figure className="essay-figure essay-figure-wide">
+          <DriftChart />
+          <figcaption>
+            {birthDate
+              ? "Your lunar birthday drifting across 19 years. Gold bars = normal years, violet = years with a leap month (13 lunations). After 19 years, it returns to nearly the same Gregorian date."
+              : "Enter your birth date above to see the 19-year Metonic cycle drift."}
+          </figcaption>
+        </figure>
+
+        {!birthDate && (
+          <div className="essay-prose">
+            <p>
+              Your birthday in the lunar calendar doesn&rsquo;t fall on the same Gregorian
+              date each year. It drifts approximately 11 days earlier annually,
+              then corrects with a leap month every 2&ndash;3 years. After 19 years
+              (the Metonic cycle), it returns to nearly the same date. Enter your
+              birth date above to see your personal drift pattern.
+            </p>
+          </div>
+        )}
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          VIII. THE LIVING CALENDAR — CHINESE ZODIAC
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">The Living Calendar</h2>
+        <div className="essay-prose">
+          <p>
+            While the West abandoned the moon, one major civilization never did.
+            The Chinese calendar is a <em>lunisolar</em> calendar &mdash; months follow
+            the moon, but leap months keep the whole system aligned with the sun
+            and the seasons. It&rsquo;s been in continuous use for over 4,000 years.
+          </p>
+          <p>
+            The twelve-animal zodiac cycle (Rat, Ox, Tiger&hellip;) is layered on top of
+            a deeper system: the Heavenly Stems and Earthly Branches, a 60-year
+            supercycle that combines 10 celestial stems with 12 terrestrial branches.
+            Each year has an animal <em>and</em> an element (Wood, Fire, Earth, Metal, Water),
+            creating a pattern that takes six decades to repeat.
+          </p>
+          <p>
+            Click any animal below to explore its traits.
+          </p>
+        </div>
+
+        <figure className="essay-figure essay-figure-wide">
+          <ZodiacWheel />
+          <figcaption>
+            The twelve Chinese zodiac animals, colored by element. Your zodiac animal
+            {birthDate ? " is highlighted based on your birth year" : " will highlight when you enter your birth date above"}.
+            Click any animal to see traits and compatibility.
+          </figcaption>
+        </figure>
+
+        <div className="essay-prose">
+          <p>
+            The Chinese calendar solves the fundamental problem that Caesar gave up on:
+            how to reconcile the moon&rsquo;s 29.5-day cycle with the sun&rsquo;s 365.25-day
+            year. The answer is leap months &mdash; roughly every three years, an extra
+            lunation is inserted to keep the months in sync with the seasons. It&rsquo;s
+            more complex than the Julian solution, but it preserves the lunar connection
+            that the West lost.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          IX. THE COSMIC CLOCK
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">The Cosmic Clock</h2>
+        <div className="essay-prose">
+          <p>
+            Eclipses are the most dramatic proof that these cycles are real and
+            predictable. A solar eclipse means the moon has passed directly between
+            Earth and Sun &mdash; which can only happen at a new moon. A lunar eclipse
+            means Earth&rsquo;s shadow has fallen on the moon &mdash; which can only happen
+            at a full moon.
+          </p>
+          <p>
+            Ancient astronomers used eclipse records to discover the <em>Saros cycle</em>:
+            after 18 years, 11 days, and 8 hours, the Sun, Earth, and Moon return to
+            nearly the same relative positions, and the pattern of eclipses repeats.
+            The Babylonians knew this. The Greeks used it to predict eclipses centuries
+            in advance. We&rsquo;re still using the same orbital mechanics.
+          </p>
+        </div>
+
+        <figure className="essay-figure">
+          <EclipseTimeline count={6} />
+          <figcaption>
+            The next six eclipses, computed from orbital mechanics. Solar eclipses
+            always fall on a new moon; lunar eclipses always fall on a full moon.
+          </figcaption>
+        </figure>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          X. CODA
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section essay-coda">
+        <div className="essay-prose">
+          <p>
+            The Gregorian calendar is a fine piece of engineering. It keeps the
+            seasons in place, it&rsquo;s simple, and the whole world agrees on it.
+            We&rsquo;re not going to replace it.
+          </p>
+          <p>
+            But there&rsquo;s something lost when we can&rsquo;t feel the month anymore.
+            When &ldquo;October 17th&rdquo; has no relationship to anything happening
+            in the sky. When the full moon is a surprise because it isn&rsquo;t on
+            anyone&rsquo;s calendar.
+          </p>
+          <p>
+            The lunar calendar doesn&rsquo;t compete with the Gregorian calendar.
+            It&rsquo;s a layer underneath it &mdash; the older, deeper rhythm that the
+            sun calendar was built to replace but never fully erased. The tides
+            still follow the moon. The months still bear its name.
+          </p>
+          <p>
+            Thirteen months. Four weeks each. Every month the same.
+            Day 1 is dark. Day 14 is bright. The pattern repeats forever.
+          </p>
+          <p className="text-accent-gold font-serif text-xl text-center mt-8">
+            The moon is still keeping time. We just stopped listening.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
+          FOOTER LINKS TO DEEP DIVES
+          ═══════════════════════════════════════════════ */}
+      <nav className="essay-deeplinks">
+        <h3>Explore Further</h3>
+        <div className="essay-deeplinks-grid">
+          <a href="/calendar">
+            <strong>Full Calendar</strong>
+            <span>13-month calendar with astronomical mode, year picker, and illumination heatmap.</span>
+          </a>
+          <a href="/birthday">
+            <strong>Lunar Birthday</strong>
+            <span>Your birth moon phase, lunar birthday dates, and full 19-year drift chart.</span>
+          </a>
+          <a href="/zodiac">
+            <strong>Chinese Zodiac</strong>
+            <span>Interactive zodiac wheel with traits, compatibility, and element cycles.</span>
+          </a>
+          <a href="/eclipses">
+            <strong>Eclipse Forecast</strong>
+            <span>Full timeline of upcoming lunar and solar eclipses with type and visibility.</span>
+          </a>
+        </div>
+      </nav>
+    </article>
   );
 }

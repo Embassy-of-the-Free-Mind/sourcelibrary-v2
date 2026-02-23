@@ -82,3 +82,181 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(0.7);
   cursor: pointer;
 }
+
+/* ═══════════════════════════════════════════════
+   ESSAY TYPOGRAPHY & LAYOUT
+   ═══════════════════════════════════════════════ */
+
+.essay {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.essay-hero {
+  text-align: center;
+  padding: 6rem 1.5rem 4rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.essay-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--color-cream);
+  margin-bottom: 1rem;
+}
+
+.essay-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  color: var(--color-muted);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+}
+
+.essay-section {
+  padding: 3rem 1.5rem;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.essay-section + .essay-section {
+  border-top: 1px solid var(--color-border);
+}
+
+.essay-section-hero {
+  max-width: 72rem;
+}
+
+.essay-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 600;
+  color: var(--color-accent-gold);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.01em;
+}
+
+.essay-prose {
+  max-width: 38rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.essay-prose p {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: var(--color-cream);
+  margin-bottom: 1.25rem;
+  font-weight: 400;
+}
+
+.essay-prose p:last-child {
+  margin-bottom: 0;
+}
+
+.essay-prose em {
+  font-style: italic;
+  color: var(--color-warm);
+}
+
+.essay-prose strong {
+  font-weight: 600;
+}
+
+.essay-lede {
+  font-size: 1.35rem !important;
+  line-height: 1.65 !important;
+}
+
+/* Figures — visualizations embedded in the essay */
+.essay-figure {
+  margin: 2.5rem auto;
+  max-width: 38rem;
+}
+
+.essay-figure-wide {
+  max-width: 72rem;
+  padding: 0 1rem;
+}
+
+.essay-figure figcaption {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-faint);
+  text-align: center;
+  margin-top: 1rem;
+  line-height: 1.5;
+  max-width: 38rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Coda — the closing section */
+.essay-coda .essay-prose p {
+  font-size: 1.25rem;
+  line-height: 1.7;
+}
+
+/* Deep dive links at the bottom */
+.essay-deeplinks {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.essay-deeplinks h3 {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.essay-deeplinks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .essay-deeplinks-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.essay-deeplinks-grid a {
+  display: block;
+  padding: 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  background: var(--color-bg-card);
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+
+.essay-deeplinks-grid a:hover {
+  border-color: rgba(201, 168, 108, 0.3);
+}
+
+.essay-deeplinks-grid a strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  margin-bottom: 0.25rem;
+}
+
+.essay-deeplinks-grid a span {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
