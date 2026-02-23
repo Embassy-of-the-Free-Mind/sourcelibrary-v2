@@ -108,6 +108,7 @@ export async function POST(request: NextRequest) {
           book_year: '$book.year',
           book_language: '$book.language',
           book_hidden: '$book.hidden',
+          book_provider: '$book.image_source.provider',
           book_rank: '$book_rank',
           updated_at: new Date(),
         },

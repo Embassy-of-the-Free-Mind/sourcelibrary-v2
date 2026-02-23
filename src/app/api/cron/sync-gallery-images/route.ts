@@ -102,6 +102,7 @@ export async function GET(request: NextRequest) {
           book_year: '$book.year',
           book_language: '$book.language',
           book_hidden: '$book.hidden',
+          book_provider: '$book.image_source.provider',
           book_rank: 0, // placeholder, recomputed below
           updated_at: new Date(),
         },
