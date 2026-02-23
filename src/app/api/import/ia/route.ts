@@ -144,6 +144,9 @@ export const POST = withAuth(async (request, session) => {
     const iaMetadata = metadata.metadata || {};
     const licenseUrl = iaMetadata.licenseurl || iaMetadata.license || null;
     const rights = iaMetadata.rights || iaMetadata.possible_copyright_status || null;
+    const stripHtml = (s: string) => s.replace(/<[^>]*>/g, '').trim();
+    const contributor = typeof iaMetadata.contributor === 'string' ? stripHtml(iaMetadata.contributor) : null;
+    const sponsor = typeof iaMetadata.sponsor === 'string' ? stripHtml(iaMetadata.sponsor) : null;
 
     const bookDoc = {
       _id: bookId,
@@ -173,6 +176,8 @@ export const POST = withAuth(async (request, session) => {
         license: licenseUrl || 'publicdomain',
         license_url: licenseUrl,
         rights: rights,
+        ...(contributor ? { contributing_library: contributor } : {}),
+        ...(sponsor ? { sponsor } : {}),
         access_date: new Date(),
       },
       page_count_source: pageCountSource,

@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, ExternalLink, Images, ArrowLeft } from 'lucide-react';
+import { BookOpen, ExternalLink, Images, ArrowLeft, Library } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
@@ -77,6 +77,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   const filter: Record<string, unknown> = {
     'image_source.provider': providerKey,
     status: { $ne: 'deleted' },
+    hidden: { $ne: true },
     pages_count: { $gt: 0 },
   };
   if (language) filter.language = language;
@@ -101,10 +102,11 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
     photo: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
   };
 
-  // Get all unique languages for this provider (unfiltered)
+  // Get all unique languages for this provider (unfiltered by language/search, but exclude hidden)
   const langFilter = {
     'image_source.provider': providerKey,
     status: { $ne: 'deleted' },
+    hidden: { $ne: true },
     pages_count: { $gt: 0 },
   };
 
@@ -134,8 +136,9 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
       ? db.collection('gallery_images').aggregate([
           { $match: {
             book_id: { $in: sampleBookIds },
-            gallery_quality: { $gte: 0.6 },
-            type: { $nin: ['decorative', 'exlibris', 'bookplate'] },
+            gallery_quality: { $gte: 0.7 },
+            book_hidden: { $ne: true },
+            type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
           }},
           { $sort: { gallery_quality: -1 } },
           // Limit to 2 per book for diversity
@@ -154,12 +157,26 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
 
   const languages = langAgg.map(l => ({ lang: l._id as string, count: l.count as number }));
 
+  // Aggregate contributing libraries (for providers like IA that track this)
+  const contributorsAgg = await db.collection('books').aggregate([
+    { $match: { ...langFilter, 'image_source.contributing_library': { $exists: true, $ne: null } } },
+    { $group: { _id: '$image_source.contributing_library', count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+    { $limit: 20 },
+  ]).toArray().catch(() => []);
+
+  const contributingLibraries = contributorsAgg.map(c => ({
+    name: c._id as string,
+    count: c.count as number,
+  }));
+
   return {
     books: books as unknown as BookItem[],
     total,
     languages,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: galleryImages as any[],
+    contributingLibraries,
   };
 }
 
@@ -176,7 +193,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
 
-  const { books, total, languages, galleryImages } = await fetchLibraryData(
+  const { books, total, languages, galleryImages, contributingLibraries } = await fetchLibraryData(
     partner.providerKey, sort, language, offset, q || undefined
   );
 
@@ -277,6 +294,37 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                   </Link>
                 );
               })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contributing Libraries (for IA and similar aggregators) */}
+      {contributingLibraries.length > 0 && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-6xl mx-auto px-6 py-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Library className="w-5 h-5 text-accent-rust" />
+              <h2
+                className="text-xl sm:text-2xl text-primary"
+                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              >
+                Contributing Libraries
+              </h2>
+            </div>
+            <p className="text-sm text-muted mb-4">
+              These institutions provided the physical books digitized through {partner.name}.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {contributingLibraries.map((lib) => (
+                <span
+                  key={lib.name}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-white border border-border-light rounded-full text-secondary"
+                >
+                  {lib.name}
+                  <span className="text-xs text-muted">({lib.count})</span>
+                </span>
+              ))}
             </div>
           </div>
         </div>

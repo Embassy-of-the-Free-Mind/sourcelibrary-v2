@@ -40,4 +40,6 @@ export interface ImageSource {
   attribution?: string;         // Required credit text (if any)
   access_date?: Date;           // When images were retrieved
   notes?: string;               // Additional context (e.g., "Scans provided by X library")
+  contributing_library?: string; // Physical library that provided/digitized the item (e.g., IA contributor field)
+  sponsor?: string;             // Funding entity for digitization (e.g., "Google", "Sloan Foundation")
 }

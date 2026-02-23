@@ -8,6 +8,8 @@ export interface LibraryPartner {
   url: string;
   description: string;
   color: 'rust' | 'sage' | 'violet' | 'gold';
+  /** Hand-picked hero image URL — takes priority over auto-selected gallery images */
+  heroImageOverride?: string;
 }
 
 /**
@@ -59,6 +61,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://cudl.lib.cam.ac.uk',
     description: 'The Cambridge University Digital Library provides free online access to some of the University of Cambridge\'s most important collections, including Isaac Newton\'s papers, medieval manuscripts, and early printed books.',
     color: 'violet',
+    heroImageOverride: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065ad3dc2ed39a49f2387/77.jpg',
   },
   'embassy-of-the-free-mind': {
     slug: 'embassy-of-the-free-mind',
@@ -68,6 +71,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://embassyofthefreemind.com',
     description: 'The Embassy of the Free Mind in Amsterdam houses the Bibliotheca Philosophica Hermetica, one of the world\'s foremost collections of Hermetic, alchemical, mystical, and esoteric texts from the Renaissance to the present day.',
     color: 'gold',
+    heroImageOverride: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/200.jpg',
   },
   'e-rara': {
     slug: 'e-rara',
@@ -113,6 +117,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://books.google.com',
     description: 'Google Books has digitized millions of volumes in partnership with major research libraries worldwide. Source Library imports Google Books content via Internet Archive mirrors, which host the digitized page images.',
     color: 'sage',
+    heroImageOverride: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6991ebe2e93551dd846a79cd/4.jpg',
   },
   'hathi-trust': {
     slug: 'hathi-trust',
