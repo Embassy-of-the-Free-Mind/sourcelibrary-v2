@@ -92,17 +92,19 @@ export default function CiteButton({
       {showMenu && (
         <>
           <div
-            className="fixed inset-0 z-[9998]"
+            className="fixed inset-0 z-[9998] sm:bg-transparent bg-black/30"
             onClick={() => setShowMenu(false)}
           />
-          <div className="absolute right-0 top-full mt-1 z-[9999] bg-white rounded-lg shadow-lg border border-stone-200 py-1 min-w-[240px]">
+          {/* Desktop: absolute dropdown. Mobile: fixed bottom sheet */}
+          <div className="fixed inset-x-0 bottom-0 sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-1 z-[9999] bg-white sm:rounded-lg rounded-t-xl shadow-lg border border-stone-200 py-1 sm:min-w-[240px]">
+            <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto my-2" />
             {/* APA */}
             <button
               onClick={() => {
                 copyToClipboard(generateApa(props), 'apa');
                 setShowMenu(false);
               }}
-              className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+              className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
             >
               {copiedId === 'apa' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-stone-400" />}
               Copy APA Citation
@@ -114,7 +116,7 @@ export default function CiteButton({
                 copyToClipboard(generateBibtex(props), 'bibtex');
                 setShowMenu(false);
               }}
-              className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
+              className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
             >
               {copiedId === 'bibtex' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-stone-400" />}
               Copy BibTeX
@@ -122,9 +124,10 @@ export default function CiteButton({
 
             {/* Preview */}
             <hr className="my-1 border-stone-100" />
-            <div className="px-3 py-2 text-xs text-stone-500 font-mono break-all leading-relaxed">
+            <div className="px-4 sm:px-3 py-2 text-xs text-stone-500 font-mono break-all leading-relaxed">
               {generateApa(props)}
             </div>
+            <div className="sm:hidden h-[env(safe-area-inset-bottom)]" />
           </div>
         </>
       )}

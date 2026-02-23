@@ -297,7 +297,7 @@ async function BookInfo({ id }: { id: string }) {
 
             {/* Details */}
             <div className="flex-1 text-center sm:text-left">
-              <h1 className="text-2xl sm:text-3xl font-serif font-bold">{book.display_title || book.title}</h1>
+              <h1 className="text-2xl sm:text-3xl font-serif font-bold break-words">{book.display_title || book.title}</h1>
               {book.display_title && book.title !== book.display_title && (
                 <p className="text-stone-400 mt-1 italic text-sm sm:text-base">{book.title}</p>
               )}
@@ -355,7 +355,7 @@ async function BookInfo({ id }: { id: string }) {
                   </AuthCheck>
 
                   {/* Utility actions */}
-                  <div className="flex flex-wrap items-center gap-1 rounded-lg bg-white/5 px-1 py-0.5">
+                  <div className="flex items-center gap-1 rounded-lg bg-white/5 px-1 py-0.5">
                     <CiteButton
                       bookId={book.id}
                       title={book.title}
@@ -375,7 +375,7 @@ async function BookInfo({ id }: { id: string }) {
                       hasImages={pages.length > 0}
                       variant="header"
                     />
-                    <span className="w-px h-5 bg-white/10 mx-1" />
+                    <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
                     <div className="flex items-center gap-2.5 px-2 py-1.5">
                       <BookAnalytics bookId={book.id} className="text-stone-300" />
                       <LikeButton
@@ -386,7 +386,7 @@ async function BookInfo({ id }: { id: string }) {
                         className="text-stone-300"
                       />
                     </div>
-                    <span className="w-px h-5 bg-white/10 mx-1" />
+                    <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
                     <BookShare
                       title={book.display_title || book.title}
                       author={book.author}

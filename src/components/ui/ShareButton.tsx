@@ -122,20 +122,22 @@ export default function ShareButton({
         {showMenu && (
           <>
             <div
-              className="fixed inset-0 z-[9998]"
+              className="fixed inset-0 z-[9998] sm:bg-transparent bg-black/30"
               onClick={() => setShowMenu(false)}
             />
-            <div className="absolute right-0 top-full mt-1 z-[9999] bg-white rounded-lg shadow-lg border border-stone-200 py-1 min-w-[160px] !text-stone-900">
+            {/* Desktop: absolute dropdown. Mobile: fixed bottom sheet */}
+            <div className="fixed inset-x-0 bottom-0 sm:absolute sm:inset-auto sm:right-0 sm:top-full sm:mt-1 z-[9999] bg-white sm:rounded-lg rounded-t-xl shadow-lg border border-stone-200 py-1 sm:min-w-[160px] !text-stone-900">
+              <div className="sm:hidden w-10 h-1 bg-stone-300 rounded-full mx-auto my-2" />
               <button
                 onClick={shareToTwitter}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
+                className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
               >
                 <Twitter className="w-4 h-4 text-stone-700" />
                 <span>Share on X</span>
               </button>
               <button
                 onClick={shareToBluesky}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
+                className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
               >
                 <MessageCircle className="w-4 h-4 text-stone-700" />
                 <span>Share on Bluesky</span>
@@ -144,7 +146,7 @@ export default function ShareButton({
               {text && (
                 <button
                   onClick={copyQuote}
-                  className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
+                  className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
                 >
                   <Link2 className="w-4 h-4 text-stone-700" />
                   <span>Copy quote</span>
@@ -152,11 +154,12 @@ export default function ShareButton({
               )}
               <button
                 onClick={copyLink}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
+                className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 !text-stone-700"
               >
                 <Link2 className="w-4 h-4 text-stone-700" />
                 <span>Copy link</span>
               </button>
+              <div className="sm:hidden h-[env(safe-area-inset-bottom)]" />
             </div>
           </>
         )}

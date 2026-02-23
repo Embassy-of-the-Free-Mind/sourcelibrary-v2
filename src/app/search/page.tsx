@@ -140,6 +140,7 @@ export default function SearchPage() {
           sort: sortBy !== 'relevance' ? sortBy : undefined,
           offset: pageOffset > 0 ? pageOffset : undefined,
           limit: RESULTS_PER_PAGE,
+          search_content: 'true',
         });
         setBookResults(data.results || []);
         setBookTotal(data.total || 0);
@@ -269,7 +270,7 @@ export default function SearchPage() {
             </div>
           )}
 
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
               <input
@@ -285,13 +286,13 @@ export default function SearchPage() {
               )}
             </div>
             {viewMode === 'books' && (
-              <>
-                <div className="relative">
+              <div className="flex gap-3">
+                <div className="relative flex-1 sm:flex-initial">
                   <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
                   <select
                     value={sortBy}
                     onChange={(e) => { setSortBy(e.target.value as any); setOffset(0); }}
-                    className="pl-9 pr-3 py-3 border border-border-medium rounded-xl text-sm text-secondary bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 appearance-none cursor-pointer"
+                    className="w-full sm:w-auto pl-9 pr-3 py-3 border border-border-medium rounded-xl text-sm text-secondary bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 appearance-none cursor-pointer"
                   >
                     <option value="relevance">Relevance</option>
                     <option value="date_desc">Newest first</option>
@@ -308,10 +309,10 @@ export default function SearchPage() {
                   }`}
                 >
                   <Filter className="w-5 h-5" />
-                  Filters
+                  <span className="sm:inline">Filters</span>
                   {hasActiveFilters && <span className="w-2 h-2 bg-accent-rust rounded-full" />}
                 </button>
-              </>
+              </div>
             )}
           </div>
 

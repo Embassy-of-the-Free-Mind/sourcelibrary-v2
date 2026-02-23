@@ -507,7 +507,9 @@ export default function TranslationEditor({
   const [assistantMode, setAssistantMode] = useState<'explain' | 'ask'>('explain');
 
   // Panel visibility toggles for read mode (default: image + translation visible, OCR hidden)
-  const [showImagePanel, setShowImagePanel] = useState(true);
+  const [showImagePanel, setShowImagePanel] = useState(
+    typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
+  );
   const [showNotes, setShowNotes] = useState(true); // Toggle for inline notes visibility
   const [showOcrPanel, setShowOcrPanel] = useState(false);
   const [showTranslationPanel, setShowTranslationPanel] = useState(true);
@@ -1021,7 +1023,7 @@ export default function TranslationEditor({
             >
               {/* Source Image Panel */}
               {showImagePanel && (
-                <div className={`w-full ${panelWidth} flex flex-col h-48 lg:h-auto`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+                <div className={`w-full ${panelWidth} flex flex-col h-64 lg:h-auto`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
                   </div>
