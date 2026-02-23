@@ -40,8 +40,9 @@ async function enrichBook(book, idx, total, db) {
 
   console.log(` OK ${elapsed}s`);
 
-  // Advance pipeline if stuck at translate_complete
-  if (book.pipeline_auto?.status === 'translate_complete') {
+  // Advance pipeline — these books already have translations, skip ahead to enriched
+  const advanceable = ['translate_complete', 'metadata_enriched'];
+  if (advanceable.includes(book.pipeline_auto?.status)) {
     await db.collection('books').updateOne(
       { id: book.id },
       { $set: { 'pipeline_auto.status': 'enriched', 'pipeline_auto.last_updated': new Date() } }
