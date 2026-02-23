@@ -364,7 +364,7 @@ export default function FireHorsePage() {
         <div className="bg-white rounded-xl p-8 shadow-sm border border-border-light mt-12">
           <h3 className="text-xl text-primary mb-4">Explore the Chinese Collection</h3>
           <p className="text-secondary mb-6">
-            Browse 85+ Chinese philosophical, astrological, and medical texts in Source Library &mdash; from the Dunhuang Star Chart to the Taoist Canon, from Confucius to the I Ching.
+            Browse over 110 Chinese philosophical, astrological, and medical texts in Source Library &mdash; from the Dunhuang Star Chart to the Taoist Canon, from Confucius to the I Ching.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link

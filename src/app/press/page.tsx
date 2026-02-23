@@ -77,7 +77,7 @@ export default function PressPage() {
           </h1>
           <p className="text-xl text-white/70 max-w-2xl" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
             An initiative of the Embassy of the Free Mind, Amsterdam.
-            AI-powered translations of 5,000+ rare historical texts, freely available online.
+            AI-powered translations of thousands of rare historical texts, freely available online.
           </p>
         </div>
       </header>
@@ -92,13 +92,13 @@ export default function PressPage() {
             className="text-3xl md:text-4xl text-stone-900 mb-6"
             style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
           >
-            Source Library Launches Open Beta: 5,000 Rare Books Translated by AI
+            Source Library Launches Open Beta: Over 4,000 Rare Books Translated by AI
           </h2>
           <div className="prose prose-stone max-w-none text-lg leading-relaxed space-y-4">
             <p>
               <strong>Amsterdam, February 22, 2026</strong> &mdash; Source Library, an initiative of the
               Embassy of the Free Mind in Amsterdam, today launches its open beta: a digital library of
-              over 5,000 rare historical texts from the 15th through 19th centuries, translated into
+              over 4,000 rare historical texts from the 15th through 19th centuries, translated into
               modern English using artificial intelligence.
             </p>
             <p>
@@ -171,11 +171,11 @@ export default function PressPage() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
             {[
-              { number: '5,000+', label: 'Rare books digitised' },
+              { number: '4,400+', label: 'Rare books digitised' },
               { number: '1.6M', label: 'Pages scanned' },
-              { number: '80K+', label: 'Pages translated to English' },
-              { number: '71', label: 'Source languages' },
-              { number: '29K+', label: 'Illustrations extracted' },
+              { number: '280K+', label: 'Pages translated to English' },
+              { number: '90+', label: 'Source languages' },
+              { number: '53K+', label: 'Illustrations extracted' },
               { number: '13', label: 'Source libraries worldwide' },
             ].map((stat) => (
               <div key={stat.label} className="bg-stone-50 rounded-xl p-5">

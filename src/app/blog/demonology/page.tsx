@@ -204,9 +204,9 @@ export default function DemonologyPage() {
             Cosimo de&rsquo; Medici commissioned Marsilio Ficino to translate the <em>Corpus
             Hermeticum</em> from a Greek manuscript just brought to Florence from Macedonia. Ficino
             interrupted his translation of Plato to work on the Hermetica first — on Cosimo&rsquo;s
-            orders, because Cosimo was dying and wanted to read the work before he died. The 1493
-            printed edition in Source Library is the <em>editio princeps</em> of Ficino&rsquo;s
-            translation, one of the most influential books in Renaissance intellectual history.
+            orders, because Cosimo was dying and wanted to read the work before he died. Source
+            Library holds both Ficino&rsquo;s 1481 Venice edition and the 1493 printing &mdash;
+            among the most influential books in Renaissance intellectual history.
           </p>
         </section>
 

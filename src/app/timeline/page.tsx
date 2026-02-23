@@ -8,7 +8,7 @@ export const revalidate = 3600; // Cache for 1 hour
 
 export const metadata: Metadata = {
   title: 'Timeline | Source Library',
-  description: 'Browse 5,000+ historical texts chronologically — from antiquity through the early modern period. See what was published when and explore by decade.',
+  description: 'Browse thousands of historical texts chronologically — from antiquity through the early modern period. See what was published when and explore by decade.',
 };
 
 async function fetchTimelineData(): Promise<TimelineOverview> {

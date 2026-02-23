@@ -3,8 +3,8 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Claude Can Now Read 5,000 Rare Books - Blog - Source Library',
-  description: 'We shipped an MCP server that gives Claude direct access to Source Library — 5,000+ historical texts with translations, a cross-book entity graph, and 34,000+ illustrations. One command to install.',
+  title: 'Claude Can Now Read Thousands of Rare Books - Blog - Source Library',
+  description: 'We shipped an MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 50,000+ illustrations. One command to install.',
   alternates: {
     canonical: '/blog/mcp-server',
   },
@@ -15,7 +15,7 @@ export default function McpServerPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Claude Can Now Read 5,000 Rare Books"
+          title="Claude Can Now Read Thousands of Rare Books"
           subtitle="An MCP server for primary source research in alchemy, Hermeticism, Renaissance philosophy, and early modern science"
         >
           <p className="text-stone-400 text-sm mt-4">18 February 2026 &middot; 8 min read</p>
@@ -39,7 +39,7 @@ export default function McpServerPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           Today we&apos;re releasing an{' '}
           <a href="https://www.npmjs.com/package/@source-library/mcp-server" className="text-amber-700 hover:text-amber-600 underline" target="_blank" rel="noopener noreferrer">MCP server</a>
-          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite 5,000+ historical texts &mdash; with full English translations, a cross-book entity knowledge graph, and 34,000+ extracted illustrations.
+          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts &mdash; with full English translations, a cross-book entity knowledge graph, and 50,000+ extracted illustrations.
         </p>
 
         <div className="bg-stone-900 rounded-xl p-4 mb-8 overflow-x-auto">
@@ -139,7 +139,7 @@ export default function McpServerPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Source Library has extracted and catalogued 34,000+ illustrations from its books &mdash; woodcuts, engravings, emblems, frontispieces, diagrams &mdash; each with AI-generated metadata including subject tags, depicted figures, symbols, and museum-style descriptions. Claude can search this gallery, find the images, identify which books they come from, and read the surrounding text to explain their context.
+          Source Library has extracted and catalogued 50,000+ illustrations from its books &mdash; woodcuts, engravings, emblems, frontispieces, diagrams &mdash; each with AI-generated metadata including subject tags, depicted figures, symbols, and museum-style descriptions. Claude can search this gallery, find the images, identify which books they come from, and read the surrounding text to explain their context.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -147,7 +147,7 @@ export default function McpServerPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Source Library holds 5,000+ books digitized from 13 archives worldwide &mdash; the Internet Archive, Gallica, the Bodleian, the Vatican Library, the Bavarian State Library, and others. The collection focuses on the Western esoteric tradition broadly defined:
+          Source Library holds over 4,000 books digitized from 13 archives worldwide &mdash; the Internet Archive, Gallica, the Bodleian, the Vatican Library, the Bavarian State Library, and others. The collection focuses on the Western esoteric tradition broadly defined:
         </p>
 
         <ul className="space-y-2 mb-8 ml-4">
@@ -219,7 +219,7 @@ export default function McpServerPage() {
           <div className="bg-white rounded-lg border border-border-light p-5">
             <h4 className="font-semibold text-primary mb-2">Gallery</h4>
             <p className="text-secondary text-sm">
-              <code className="text-amber-700">search_images</code> across 34,000+ illustrations by subject, symbol, figure, or type.{' '}
+              <code className="text-amber-700">search_images</code> across 50,000+ illustrations by subject, symbol, figure, or type.{' '}
               <code className="text-amber-700">get_image</code> and <code className="text-amber-700">get_book_images</code> for details.
             </p>
           </div>

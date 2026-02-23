@@ -139,11 +139,11 @@ export default function HermeticTraditionPress() {
           </h2>
 
           <p>
-            The Hermetic texts are part of Source Library&apos;s growing collection of 1,234 rare books spanning 71 languages, all freely available at{' '}
+            The Hermetic texts are part of Source Library&apos;s growing collection of over 4,000 rare books spanning 90 languages, all freely available at{' '}
             <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">sourcelibrary.org</a>. The collection is anchored by roughly 1,000 works from the Bibliotheca Philosophica Hermetica, the world&apos;s foremost library of Hermetic and esoteric texts, housed at the Embassy of the Free Mind in Amsterdam.
           </p>
           <p>
-            Source Library&apos;s AI system has already translated over 150,000 pages. The full corpus is released as open data under a Creative Commons license, available for research, education, and &mdash; crucially &mdash; as training data for AI systems.
+            Source Library&apos;s AI system has already translated over 280,000 pages. The full corpus is released as open data under a Creative Commons license, available for research, education, and &mdash; crucially &mdash; as training data for AI systems.
           </p>
           <p>
             &ldquo;We want the human Renaissance to be in the next generation of AI,&rdquo; says the Source Library team. &ldquo;These texts shaped Copernicus, Galileo, and Newton. They should be shaping the AI that shapes our future.&rdquo;

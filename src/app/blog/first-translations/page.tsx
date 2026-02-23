@@ -53,7 +53,7 @@ export default function FirstTranslationsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          But for the vast majority of these 314 books, the alternative is not a better translation. The alternative is no translation at all. A German sermon from 1618 that has never been rendered into English is simply invisible to anglophone readers &mdash; invisible to students, to researchers working outside German studies, to anyone who cannot read 17th-century Fraktur. An imperfect translation that makes the text legible for the first time is, we believe, a genuine scholarly contribution.
+          But for the vast majority of these books, the alternative is not a better translation. The alternative is no translation at all. A German sermon from 1618 that has never been rendered into English is simply invisible to anglophone readers &mdash; invisible to students, to researchers working outside German studies, to anyone who cannot read 17th-century Fraktur. An imperfect translation that makes the text legible for the first time is, we believe, a genuine scholarly contribution.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -134,7 +134,7 @@ export default function FirstTranslationsPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Of these 95 first translations, 87 are already 80% or more complete. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
+          Of these first translations, over 200 are already 80% or more complete. Many of the Sanskrit manuscripts are fully translated &mdash; texts like the <em>Muhurta Ratna</em> of Govinda Bhatta (c. 1420), the <em>Prashna Bhairava</em>, the <em>Pashakavali</em> (a treatise on dice divination from c. 1610), and the <em>Ramala Shastra</em> (Indian geomancy, c. 1700). These are works that scholars of Indian astrology have long known about but could only access in Sanskrit. They are now readable in English for the first time.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">

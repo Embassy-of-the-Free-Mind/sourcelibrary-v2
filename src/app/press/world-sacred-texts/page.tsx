@@ -183,7 +183,7 @@ export default function WorldSacredTextsPress() {
             &ldquo;Right now, AI systems are trained overwhelmingly on modern English-language text,&rdquo; says the Source Library team. &ldquo;That means they encode the assumptions of one culture at one moment in time. If we want AI that can reason about consciousness, ethics, meaning, and the nature of reality &mdash; questions that will define the next century &mdash; it needs access to humanity&apos;s deepest thinking on those subjects.&rdquo;
           </p>
           <p>
-            Source Library&apos;s full corpus &mdash; now spanning 1,234 books in 71 languages &mdash; is released as open data under a Creative Commons license, available to researchers, educators, and AI developers worldwide.
+            Source Library&apos;s full corpus &mdash; now spanning over 4,000 books in 90 languages &mdash; is released as open data under a Creative Commons license, available to researchers, educators, and AI developers worldwide.
           </p>
 
           <h2

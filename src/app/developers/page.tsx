@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
-  description: 'Give Claude access to 5,000+ rare historical texts via MCP Server. 11 research tools: full-text search, bulk reading, entity knowledge graph, AI-generated indexes, DOI citations, and 34,000+ historical illustrations. No API key needed.',
+  description: 'Give Claude access to thousands of rare historical texts via MCP Server. 11 research tools: full-text search, bulk reading, entity knowledge graph, AI-generated indexes, DOI citations, and 50,000+ historical illustrations. No API key needed.',
   alternates: {
     canonical: '/developers',
   },
@@ -37,7 +37,7 @@ const tools = [
   {
     category: 'Gallery & Images',
     items: [
-      { name: 'search_images', desc: 'Search 34,000+ historical illustrations by subject, figure, symbol, type, or date.' },
+      { name: 'search_images', desc: 'Search 50,000+ historical illustrations by subject, figure, symbol, type, or date.' },
       { name: 'get_image', desc: 'Full image metadata with museum description and source book context.' },
       { name: 'get_book_images', desc: 'All extracted images from a specific book.' },
     ],
@@ -77,7 +77,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="For Developers & AI"
-          subtitle="Give Claude access to 5,000+ rare historical texts. 11 research tools, no API key needed."
+          subtitle="Give Claude access to thousands of rare historical texts. 11 research tools, no API key needed."
         />
       }
     >
@@ -94,7 +94,7 @@ export default function DevelopersPage() {
         </div>
 
         <p className="text-secondary mb-6 max-w-2xl">
-          The Model Context Protocol server gives Claude and other MCP-compatible AI clients direct access to Source Library&apos;s full collection &mdash; search, full-text reading, entity knowledge graph, and 34,000+ historical illustrations. No API keys, no authentication.
+          The Model Context Protocol server gives Claude and other MCP-compatible AI clients direct access to Source Library&apos;s full collection &mdash; search, full-text reading, entity knowledge graph, and 50,000+ historical illustrations. No API keys, no authentication.
         </p>
 
         {/* Install commands */}

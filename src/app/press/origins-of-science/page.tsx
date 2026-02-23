@@ -148,7 +148,7 @@ export default function OriginsOfSciencePress() {
           </h2>
 
           <p>
-            All 1,234 books in the collection are freely available at{' '}
+            All books in the collection are freely available at{' '}
             <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">sourcelibrary.org</a>. The full corpus &mdash; translations, original texts, and page images &mdash; is released as open data under a Creative Commons license.
           </p>
           <p>
