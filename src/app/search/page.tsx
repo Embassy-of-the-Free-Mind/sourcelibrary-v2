@@ -76,6 +76,7 @@ export default function SearchPage() {
   const [dateTo, setDateTo] = useState(searchParams.get('date_to') || '');
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
   const [hasTranslation, setHasTranslation] = useState(searchParams.get('has_translation') === 'true');
+  const [firstTranslation, setFirstTranslation] = useState(searchParams.get('first_translation') === 'true');
   const [languages, setLanguages] = useState<LanguageOption[]>([{ value: '', label: 'All Languages' }]);
   const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
 
@@ -137,6 +138,7 @@ export default function SearchPage() {
           date_to: dateTo || undefined,
           has_doi: hasDoi ? 'true' : undefined,
           has_translation: hasTranslation ? 'true' : undefined,
+          first_translation: firstTranslation ? 'true' : undefined,
           sort: sortBy !== 'relevance' ? sortBy : undefined,
           offset: pageOffset > 0 ? pageOffset : undefined,
           limit: RESULTS_PER_PAGE,
@@ -158,7 +160,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, sortBy]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
     const params = new URLSearchParams();
@@ -172,11 +174,12 @@ export default function SearchPage() {
       if (dateTo) params.set('date_to', dateTo);
       if (hasDoi) params.set('has_doi', 'true');
       if (hasTranslation) params.set('has_translation', 'true');
+      if (firstTranslation) params.set('first_translation', 'true');
       if (sortBy !== 'relevance') params.set('sort', sortBy);
     }
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     router.replace(`/search?${params.toString()}`, { scroll: false });
-  }, [router, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy]);
+  }, [router, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, sortBy]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setOffset(0);
@@ -191,7 +194,7 @@ export default function SearchPage() {
       updateUrl(query, viewMode, offset);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, sortBy, offset, performSearch, updateUrl]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, sortBy, offset, performSearch, updateUrl]);
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
@@ -223,9 +226,9 @@ export default function SearchPage() {
 
   const clearFilters = () => {
     setLanguage(''); setCategory(''); setDateFrom(''); setDateTo('');
-    setHasDoi(false); setHasTranslation(false); setSortBy('relevance'); setOffset(0);
+    setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setSortBy('relevance'); setOffset(0);
   };
-  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || sortBy !== 'relevance';
+  const hasActiveFilters = language || category || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || sortBy !== 'relevance';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -383,6 +386,10 @@ export default function SearchPage() {
                   <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
                     <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
                       className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has translation
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                    <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
+                      className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> First translation
                   </label>
                 </div>
               </div>

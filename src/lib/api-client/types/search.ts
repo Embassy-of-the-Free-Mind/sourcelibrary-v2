@@ -16,6 +16,7 @@ export interface SearchResult {
   translated_count?: number;
   translation_percent?: number;
   has_doi: boolean;
+  is_first_translation?: boolean;
   doi?: string;
   summary?: string;
   categories?: string[];
@@ -33,6 +34,7 @@ export interface SearchFilters {
   date_to?: string;
   has_doi?: string;
   has_translation?: string;
+  first_translation?: string;
   category?: string;
   sort?: 'relevance' | 'date_asc' | 'date_desc' | 'title';
   offset?: number;

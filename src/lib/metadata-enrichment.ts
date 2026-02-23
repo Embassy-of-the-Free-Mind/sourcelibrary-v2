@@ -49,6 +49,7 @@ interface EnrichmentResult {
   estimated_century?: string;
   description?: string;
   confidence?: 'high' | 'medium' | 'low';
+  author?: string | null;
   first_translation?: {
     status: string;
     reasoning?: string;
@@ -88,6 +89,7 @@ Based on this text and metadata, classify the book. Respond with JSON only — n
 
 {
   "language": "<primary language of the text, e.g. Latin, German, French, English, Chinese, Greek, Arabic, Hebrew, Italian, Dutch, Spanish, Sanskrit, Syriac, Armenian, Persian, Turkish, Japanese, Korean, etc.>",
+  "author": "<detected author name from title page or text. Return the most complete form of the name. null if not identifiable>",
   "secondary_languages": ["<any other languages present>"],
   "script": "<writing system: Latin alphabet, Fraktur, Greek, Chinese characters, Hebrew, Arabic, Devanagari, etc.>",
   "categories": ["<1-4 subject tags from EXACTLY this list: ${CATEGORIES.join(', ')}>"],
@@ -109,7 +111,8 @@ Rules:
 - If there are multiple languages (e.g. parallel Latin/Greek), list the primary one and put others in secondary_languages
 - For categories, pick 1-4 using ONLY the exact slugs from the list above. Prefer specific esoteric tags over generic ones.
 - Most pre-1800 Latin, German, and other non-English texts on alchemy, Hermeticism, Kabbalah, astrology, and natural philosophy were NEVER translated to English.
-- If the book IS already in English, set first_translation status to "not_applicable"`;
+- If the book IS already in English, set first_translation status to "not_applicable"
+- For author, look for author attributions on the title page (first 1-3 pages). Common patterns: "by [Name]", authorship in Latin ("auctore [Name]", "[Name] scripsit"). Return null if truly uncertain.`;
 }
 
 /**
@@ -281,6 +284,17 @@ export async function enrichBookMetadata(
     updates.ai_detected_language = aiLang;
   }
 
+  // Author: auto-update if Unknown or missing
+  const currentAuthor = (book.author as string) || 'Unknown';
+  const aiAuthor = parsed.author || '';
+
+  if (aiAuthor && (currentAuthor === 'Unknown' || !currentAuthor)) {
+    updates.author = aiAuthor;
+    changes.push({ field: 'author', previous: currentAuthor, new_value: aiAuthor });
+  } else if (aiAuthor && aiAuthor.toLowerCase() !== currentAuthor.toLowerCase() && confidence === 'high') {
+    updates.ai_detected_author = aiAuthor;
+  }
+
   // Year: set if missing
   if (!book.year && parsed.estimated_year) {
     const year = parseInt(String(parsed.estimated_year));
@@ -316,6 +330,13 @@ export async function enrichBookMetadata(
     changes.push({ field: 'subject_keywords', previous: null, new_value: parsed.subject_keywords });
   }
 
+  // First translation: derive top-level boolean
+  if (parsed.first_translation?.status) {
+    const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
+    updates.is_first_translation = isFirst;
+    changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
+  }
+
   // Save ai_metadata
   const enrichment = {
     ...parsed,
@@ -348,6 +369,8 @@ export async function enrichBookMetadata(
       };
     }
   }
+  if (updates.author) provenance.author = { ...aiSource, previous_value: currentAuthor };
+  if (updates.is_first_translation !== undefined) provenance.is_first_translation = aiSource;
   if (updates.year) provenance.year = { ...aiSource, previous_value: null };
   if (updates.published) provenance.published = { ...aiSource, previous_value: book.published || null };
   if (updates.categories) provenance.categories = { ...aiSource, previous_value: book.categories || [] };

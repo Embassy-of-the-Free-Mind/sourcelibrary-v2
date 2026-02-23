@@ -19,6 +19,7 @@ interface CollectionBook {
   thumbnail?: string;
   language?: string;
   has_doi?: boolean;
+  is_first_translation?: boolean;
   published?: string;
   translation_percent?: number;
 }
@@ -69,11 +70,18 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
           )}
 
           {/* Status badges */}
-          {book.has_doi && (
-            <div className="absolute top-3 right-3 z-10">
-              <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
-                DOI
-              </div>
+          {(book.is_first_translation || book.has_doi) && (
+            <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5 items-end">
+              {book.is_first_translation && (
+                <div className="bg-accent-gold text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
+                  First Translation
+                </div>
+              )}
+              {book.has_doi && (
+                <div className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
+                  DOI
+                </div>
+              )}
             </div>
           )}
         </div>

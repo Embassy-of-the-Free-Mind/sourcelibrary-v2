@@ -333,6 +333,14 @@ async function BookInfo({ id }: { id: string }) {
                 )}
               </div>
 
+              {book.is_first_translation && (
+                <div className="mt-3">
+                  <span className="px-2.5 py-1 bg-accent-gold/20 text-accent-gold text-xs font-medium rounded-full border border-accent-gold/30">
+                    First English Translation
+                  </span>
+                </div>
+              )}
+
               {/* Actions */}
               <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3">

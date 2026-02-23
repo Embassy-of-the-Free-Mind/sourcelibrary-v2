@@ -193,6 +193,7 @@ export async function GET(request: NextRequest) {
                 pages_ocr: 1,
                 pages_translated: 1,
                 translation_percent: 1,
+                is_first_translation: 1,
                 last_processed: 1,
                 last_translation_at: 1,
               },

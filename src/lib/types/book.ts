@@ -44,6 +44,7 @@ export interface Book {
 
   // Standard identifiers
   doi?: string;                 // Digital Object Identifier (e.g., "10.5281/zenodo.12345")
+  is_first_translation?: boolean; // AI-detected: first known English translation of this text
   license?: string;             // SPDX identifier (e.g., "CC0-1.0", "CC-BY-4.0")
 
   // Dublin Core metadata for library interoperability

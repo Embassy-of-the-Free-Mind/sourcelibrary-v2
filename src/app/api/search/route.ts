@@ -55,6 +55,7 @@ export async function GET(request: NextRequest) {
     const yearTo = searchParams.get('year_to'); // Year range end
     const hasDoi = searchParams.get('has_doi');
     const hasTranslation = searchParams.get('has_translation');
+    const firstTranslation = searchParams.get('first_translation');
     const bookId = searchParams.get('book_id'); // Filter to specific book
     const searchContent = searchParams.get('search_content') === 'true'; // Default false (page search is slow on 300K+ docs)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
@@ -105,6 +106,7 @@ export async function GET(request: NextRequest) {
       }
       if (hasDoi === 'true') filters.doi = { $exists: true, $ne: null };
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
+      if (firstTranslation === 'true') filters.is_first_translation = true;
       return filters;
     }
 
@@ -125,6 +127,7 @@ export async function GET(request: NextRequest) {
         page_count: typedBook.pages_count,
         translated_count: typedBook.pages_translated,
         has_doi: !!typedBook.doi,
+        is_first_translation: !!(typedBook as any).is_first_translation,
         doi: typedBook.doi,
         categories: typedBook.categories,
         summary: summaryText ? extractSnippet(summaryText, query) : undefined,
@@ -136,7 +139,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Run book search and page content search in parallel
-    const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || year || yearFrom || yearTo);
+    const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo);
 
     const [bookDocs, pageDocs] = await Promise.all([
       // --- Book text search (skip when searching within a specific book) ---

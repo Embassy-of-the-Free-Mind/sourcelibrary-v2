@@ -16,6 +16,7 @@ export const search = {
     if (filters?.date_to) params.append('date_to', filters.date_to);
     if (filters?.has_doi) params.append('has_doi', filters.has_doi);
     if (filters?.has_translation) params.append('has_translation', filters.has_translation);
+    if (filters?.first_translation) params.append('first_translation', filters.first_translation);
     if (filters?.category) params.append('category', filters.category);
     if (filters?.sort) params.append('sort', filters.sort);
     if (filters?.offset) params.append('offset', filters.offset.toString());

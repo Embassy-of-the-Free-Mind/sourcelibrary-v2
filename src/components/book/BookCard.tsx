@@ -137,6 +137,14 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               <BookIcon className="w-16 h-16 text-stone-300" />
             </div>
           )}
+
+          {book.is_first_translation && (
+            <div className="absolute top-2 right-2 z-10">
+              <div className="bg-accent-gold text-white text-[10px] px-1.5 py-0.5 rounded-full shadow font-medium">
+                First Translation
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Text content - visible immediately, no shimmer */}
