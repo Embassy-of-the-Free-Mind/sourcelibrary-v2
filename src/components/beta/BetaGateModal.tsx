@@ -103,7 +103,7 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
                 fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
               }}
             >
-              Share your email for beta access to 1,234 rare books,
+              Share your email for full access to over 2,000 rare books,
               translated and searchable for the first time.
             </p>
             <p
