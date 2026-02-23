@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -22,6 +23,7 @@ import {
 import { sendGAEvent } from '@/lib/ga';
 import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 
 // How many results to show in unified view per section
@@ -160,6 +162,7 @@ export default function SearchPage() {
       }
     } catch (error) {
       console.error('Search error:', error);
+      toast.error('Search failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -427,7 +430,7 @@ export default function SearchPage() {
 
         {/* Loading */}
         {query.length >= 2 && loading && viewMode === 'unified' && (
-          <div className="text-muted mb-6">Searching...</div>
+          <div className="py-8"><BookLoader size="xs" /></div>
         )}
 
         {/* No results */}
@@ -525,7 +528,7 @@ export default function SearchPage() {
                 )}
               </div>
             )}
-            {loading && <div className="text-muted mb-6">Searching...</div>}
+            {loading && <div className="py-4"><BookLoader size="xs" /></div>}
             <div className="space-y-3">
               {bookResults.map((result) => (
                 <BookResultCard key={result.id} result={result} query={query} />
@@ -543,7 +546,7 @@ export default function SearchPage() {
                 Found <span className="font-medium text-primary">{indexTotal}</span> index entries for &ldquo;{query}&rdquo;
               </div>
             )}
-            {loading && <div className="text-muted mb-6">Searching...</div>}
+            {loading && <div className="py-4"><BookLoader size="xs" /></div>}
             <div className="space-y-3">
               {indexResults.map((result, idx) => (
                 <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
@@ -565,7 +568,7 @@ export default function SearchPage() {
                 )}
               </div>
             )}
-            {loading && <div className="text-muted mb-6">Searching...</div>}
+            {loading && <div className="py-4"><BookLoader size="xs" /></div>}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {imageResults.map((item, idx) => (
                 <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large />

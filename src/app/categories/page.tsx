@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -18,6 +19,7 @@ export default function CategoriesPage() {
         setCategories(data.categories);
       } catch (error) {
         console.error('Failed to fetch categories:', error);
+        toast.error('Failed to load categories');
       } finally {
         setLoading(false);
       }

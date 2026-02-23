@@ -6,6 +6,7 @@ import {
   ChevronLeft, RefreshCw, Activity, Zap, Clock, CheckCircle,
   AlertTriangle, Cpu, BookOpen, ExternalLink, Pause, Play,
 } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface ActiveJob {
   id: string;
@@ -195,10 +196,7 @@ export default function RealtimeDashboard() {
       </header>
 
       {!data ? (
-        <div className="flex items-center justify-center py-24" style={{ color: 'var(--text-muted)' }}>
-          <RefreshCw className="w-6 h-6 animate-spin mr-3 opacity-40" />
-          Loading...
-        </div>
+        <div className="py-24"><BookLoader size="xs" /></div>
       ) : (
         <main className="max-w-6xl mx-auto px-4 py-6 space-y-6">
           {/* Top stats row */}

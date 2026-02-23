@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface FeedbackItem {
   _id: string;
@@ -27,7 +29,10 @@ export default function FeedbackPage() {
         setTotal(data.total || 0);
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => {
+        toast.error('Failed to load feedback');
+        setLoading(false);
+      });
   }, []);
 
   return (
@@ -48,7 +53,7 @@ export default function FeedbackPage() {
 
       <main className="max-w-4xl mx-auto px-6 py-8">
         {loading ? (
-          <p style={{ color: 'var(--text-muted)' }}>Loading...</p>
+          <div className="py-12"><BookLoader size="xs" /></div>
         ) : items.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-lg" style={{ color: 'var(--text-muted)' }}>No feedback yet.</p>

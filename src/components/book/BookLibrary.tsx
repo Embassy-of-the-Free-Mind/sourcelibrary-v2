@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BookCard from '@/components/book/BookCard';
@@ -317,9 +318,9 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       const errorMessage = error.message || 'Import failed. Please try again.';
 
       if (errorMessage.includes('already exists')) {
-        alert('This book already exists in the library.');
+        toast.error('This book already exists in the library.');
       } else {
-        alert(`Import failed: ${errorMessage}`);
+        toast.error(`Import failed: ${errorMessage}`);
       }
     } finally {
       setImportingIds(prev => {

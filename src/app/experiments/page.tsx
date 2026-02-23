@@ -16,6 +16,7 @@ import {
 import { experiments, books } from '@/lib/api-client';
 import type { Experiment } from '@/lib/api-client/types/experiments';
 import type { Book } from '@/lib/types';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 export default function ExperimentsPage() {
   const [experimentsList, setExperimentsList] = useState<Experiment[]>([]);
@@ -388,7 +389,7 @@ export default function ExperimentsPage() {
 
         {/* Experiments list */}
         {loading ? (
-          <div className="text-center py-12 text-stone-500">Loading...</div>
+          <div className="py-12"><BookLoader size="xs" /></div>
         ) : filteredExperiments.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-xl border border-stone-200">
             <FlaskConical className="w-12 h-12 text-stone-300 mx-auto mb-3" />

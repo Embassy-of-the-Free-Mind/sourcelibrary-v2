@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { toast } from 'sonner';
 import { Heart, Loader2, Check, Filter } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
@@ -249,10 +250,10 @@ export default function CurateClient() {
       if (data.success) {
         setApplied(true);
       } else {
-        alert(data.error || 'Failed to apply curated flag');
+        toast.error(data.error || 'Failed to apply curated flag');
       }
     } catch (err) {
-      alert('Failed to apply curated flag');
+      toast.error('Failed to apply curated flag');
       console.error(err);
     } finally {
       setApplying(false);

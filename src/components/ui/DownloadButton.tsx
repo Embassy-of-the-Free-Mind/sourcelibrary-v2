@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { toast } from 'sonner';
 import { Download, ChevronDown, FileText, Languages, Layers, BookOpen, Columns, Image } from 'lucide-react';
 import { BookDownloadFormats, books } from '@/lib/api-client';
 
@@ -53,7 +54,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
       setIsOpen(false);
     } catch (error) {
       console.error('Download error:', error);
-      alert('Download failed. Please try again.');
+      toast.error('Download failed. Please try again.');
     } finally {
       setDownloading(null);
     }

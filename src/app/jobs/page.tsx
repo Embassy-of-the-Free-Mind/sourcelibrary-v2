@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import { ChevronLeft, RefreshCw, Clock, RotateCw, Pause, Play } from 'lucide-react';
 import type { Job } from '@/lib/types';
@@ -41,6 +42,7 @@ export default function JobsPage() {
       await fetchJobs();
     } catch (e) {
       console.error('Failed to delete job:', e);
+      toast.error('Failed to delete job');
     }
   };
 
@@ -52,6 +54,7 @@ export default function JobsPage() {
       await fetchJobs();
     } catch (e) {
       console.error(`Failed to ${action} job:`, e);
+      toast.error(`Failed to ${action} job`);
     }
   };
 

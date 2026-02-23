@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import {
   ChevronLeft,
@@ -329,7 +330,7 @@ export default function SocialAdminPage() {
       setGeneratedTweet(data);
     } catch (error) {
       console.error('Generation error:', error);
-      alert(`Generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      toast.error(`Generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setGenerating(false);
     }
@@ -362,7 +363,7 @@ export default function SocialAdminPage() {
         hashtags: variation.hashtags,
         status: 'draft',
       });
-      alert('Saved to drafts!');
+      toast.success('Saved to drafts');
       fetchPosts();
     } catch (error) {
       console.error('Save error:', error);
@@ -402,12 +403,12 @@ export default function SocialAdminPage() {
     setPublishing(postId);
     try {
       const data = await social.publishPost(postId) as { tweetUrl?: string };
-      alert(`Posted! ${data.tweetUrl || ''}`);
+      toast.success(data.tweetUrl ? `Posted! ${data.tweetUrl}` : 'Posted!');
       fetchPosts();
       fetchConfig();
     } catch (error) {
       console.error('Publish error:', error);
-      alert(`Failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      toast.error(error instanceof Error ? error.message : 'Failed to publish');
     } finally {
       setPublishing(null);
     }
@@ -422,14 +423,13 @@ export default function SocialAdminPage() {
         body: JSON.stringify(updates),
       });
       if (res.ok) {
-        // Refresh posts
         fetchPosts();
       } else {
-        alert('Failed to update post');
+        toast.error('Failed to update post');
       }
     } catch (error) {
       console.error('Update error:', error);
-      alert('Failed to update post');
+      toast.error('Failed to update post');
     }
   };
 
@@ -1534,7 +1534,7 @@ function PostCard({
   const handleSave = async () => {
     if (!onUpdate) return;
     if (isOverLimit) {
-      alert('Tweet exceeds 280 characters. Please shorten it.');
+      toast.error('Tweet exceeds 280 characters. Please shorten it.');
       return;
     }
     setSaving(true);

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import { Search, User, MapPin, Lightbulb, BookOpen, ArrowRight } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -36,6 +37,7 @@ export default function EncyclopediaPage() {
       setEntities(data.entities);
     } catch (error) {
       console.error('Failed to fetch entities:', error);
+      toast.error('Failed to load entities');
     } finally {
       setLoading(false);
     }
@@ -151,7 +153,9 @@ export default function EncyclopediaPage() {
           </div>
         ) : filteredEntities.length === 0 ? (
           <div className="text-center py-16">
-            <p className="text-stone-500">No entities found matching your filters.</p>
+            <Search className="w-12 h-12 mx-auto mb-4 opacity-30" style={{ color: 'var(--text-muted)' }} />
+            <h3 className="text-lg font-medium mb-1" style={{ color: 'var(--text-primary)' }}>No entities found</h3>
+            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Try adjusting your filters or search query.</p>
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import { ArrowLeft, RefreshCw, Loader2, CheckCircle, AlertTriangle, Wrench, RotateCcw, Trash2 } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -64,7 +65,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
       // Refresh the data
       await fetchQA();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to apply fix');
+      toast.error(err instanceof Error ? err.message : 'Failed to apply fix');
     } finally {
       setApplying(null);
     }
@@ -86,7 +87,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
       // Refresh the data
       await fetchQA();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to re-translate');
+      toast.error(err instanceof Error ? err.message : 'Failed to re-translate');
     } finally {
       setRetranslating(null);
     }
@@ -102,7 +103,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
       // Refresh QA data
       await fetchQA();
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Cleanup failed');
+      toast.error(err instanceof Error ? err.message : 'Cleanup failed');
     } finally {
       setCleaning(false);
     }

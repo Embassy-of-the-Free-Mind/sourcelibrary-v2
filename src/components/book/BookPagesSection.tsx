@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { toast } from 'sonner';
 import type { Page, Prompt } from '@/lib/types';
 import type { JobType, Job } from '@/lib/types/job';
 import type { ActionType } from './ProcessingPanel';
@@ -319,7 +320,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         setBatchMode(false);
       } catch (error) {
         console.error('Failed to save brightness:', error);
-        alert(error instanceof Error ? error.message : 'Failed to save brightness');
+        toast.error(error instanceof Error ? error.message : 'Failed to save brightness');
       } finally {
         setQueueing(false);
       }
@@ -352,7 +353,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     }
 
     if (pageIdsToProcess.length === 0) {
-      alert('All selected pages already have data. Enable overwrite mode to re-process.');
+      toast.error('All selected pages already have data. Enable overwrite mode to re-process.');
       return;
     }
 
@@ -393,7 +394,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       setBatchMode(false);
     } catch (error) {
       console.error('Failed to queue job:', error);
-      alert(error instanceof Error ? error.message : 'Failed to queue job');
+      toast.error(error instanceof Error ? error.message : 'Failed to queue job');
     } finally {
       setQueueing(false);
     }
@@ -433,7 +434,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       await fetchJobStatus();
     } catch (error) {
       console.error('Failed to retry job:', error);
-      alert(error instanceof Error ? error.message : 'Failed to retry job');
+      toast.error(error instanceof Error ? error.message : 'Failed to retry job');
     } finally {
       setRetrying(false);
     }
@@ -449,7 +450,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       setCurrentJob(null);
     } catch (error) {
       console.error('Failed to cancel job:', error);
-      alert(error instanceof Error ? error.message : 'Failed to cancel job');
+      toast.error(error instanceof Error ? error.message : 'Failed to cancel job');
     } finally {
       setCancelling(false);
     }

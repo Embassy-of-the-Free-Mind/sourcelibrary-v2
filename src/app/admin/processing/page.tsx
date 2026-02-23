@@ -7,6 +7,7 @@ import {
   ArrowUpDown, ExternalLink,
 } from 'lucide-react';
 import type { ProcessingRow } from '@/app/api/admin/processing-csv/route';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 type SortKey = keyof ProcessingRow;
 type SortDir = 'asc' | 'desc';
@@ -268,8 +269,7 @@ export default function ProcessingPage() {
                   className="text-center py-16"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  <RefreshCw className="w-6 h-6 mx-auto mb-2 animate-spin opacity-30" />
-                  Loading...
+                  <BookLoader size="xs" />
                 </td>
               </tr>
             ) : filtered.length === 0 ? (

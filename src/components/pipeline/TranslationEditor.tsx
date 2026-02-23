@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import RevisionHistory from '@/components/reader/RevisionHistory';
 import {
   Loader2,
@@ -482,7 +483,7 @@ export default function TranslationEditor({
       window.location.href = `/book/${book.id}/split`;
     } catch (error) {
       console.error('Reset split error:', error);
-      alert(error instanceof Error ? error.message : 'Failed to reset split. Please try again.');
+      toast.error(error instanceof Error ? error.message : 'Failed to reset split. Please try again.');
     } finally {
       setResettingSplit(false);
       setShowResetSplitConfirm(false);
@@ -739,7 +740,7 @@ export default function TranslationEditor({
       }
     } catch (error) {
       console.error('Processing error:', error);
-      alert('Processing failed. Please try again.');
+      toast.error('Processing failed. Please try again.');
     } finally {
       setProcessing(null);
     }

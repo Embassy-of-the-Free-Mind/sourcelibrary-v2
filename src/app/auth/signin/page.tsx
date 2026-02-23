@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import Link from 'next/link';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 function SignInContent() {
   const searchParams = useSearchParams();
@@ -142,7 +143,7 @@ export default function SignInPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-cream)' }}>
-        <p style={{ color: 'var(--text-muted)' }}>Loading...</p>
+        <BookLoader size="xs" />
       </div>
     }>
       <SignInContent />
