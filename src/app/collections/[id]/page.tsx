@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Images, ArrowLeft } from 'lucide-react';
+import { BookOpen, Images, ArrowLeft, ArrowRight } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
@@ -67,8 +67,38 @@ interface BookItem {
   read_count?: number;
 }
 
-/** Auto-link book titles found in description text to their book pages */
-function linkBookTitles(text: string, allBooks: BookItem[]): React.ReactNode {
+/** Auto-link book titles found in description text to their book pages.
+ *  Explicit mentions (from collection.mentioned_books) take priority over auto-detection. */
+function linkBookTitles(
+  text: string,
+  allBooks: BookItem[],
+  explicitMentions?: { text: string; book_id: string }[],
+): React.ReactNode {
+  const matches: { start: number; end: number; title: string; id: string }[] = [];
+  const usedRanges: [number, number][] = [];
+
+  // 1. Explicit mentions first (highest priority — exact text from description)
+  if (explicitMentions?.length) {
+    // Sort longest first to avoid partial matches
+    const sorted = [...explicitMentions].sort((a, b) => b.text.length - a.text.length);
+    for (const { text: mentionText, book_id } of sorted) {
+      const escaped = mentionText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      try {
+        const regex = new RegExp(escaped, 'gi');
+        let match;
+        while ((match = regex.exec(text)) !== null) {
+          const start = match.index;
+          const end = start + match[0].length;
+          if (!usedRanges.some(([s, e]) => start < e && end > s)) {
+            matches.push({ start, end, title: match[0], id: book_id });
+            usedRanges.push([start, end]);
+          }
+        }
+      } catch { /* skip bad regex */ }
+    }
+  }
+
+  // 2. Auto-detect from book titles (fills gaps not covered by explicit mentions)
   const titleMap: { title: string; id: string }[] = [];
   for (const book of allBooks) {
     const id = book.id;
@@ -79,13 +109,7 @@ function linkBookTitles(text: string, allBooks: BookItem[]): React.ReactNode {
   }
   titleMap.sort((a, b) => b.title.length - a.title.length);
 
-  const candidates = titleMap.filter(t => t.title.length >= 8);
-  if (candidates.length === 0) return text;
-
-  const matches: { start: number; end: number; title: string; id: string }[] = [];
-  const usedRanges: [number, number][] = [];
-
-  for (const { title, id } of candidates) {
+  for (const { title, id } of titleMap.filter(t => t.title.length >= 8)) {
     const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(escaped, 'gi');
     let match;
@@ -129,6 +153,7 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
   const filter: Record<string, unknown> = {
     collections: id,
     status: { $ne: 'deleted' },
+    hidden: { $ne: true },
     pages_count: { $gt: 0 },
   };
   if (language) filter.language = language;
@@ -154,7 +179,18 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
     quality_score: 1,
   };
 
-  const [books, total, highlights, galleryImages] = await Promise.all([
+  // First get book IDs for gallery image lookup
+  const collectionBookIds = await db.collection('books')
+    .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 } })
+    .toArray()
+    .then(docs => docs.map(d => d.id));
+
+  // Fetch mentioned book IDs for explicit linking in descriptions
+  const mentionedBookIds = (collection.mentioned_books || [])
+    .map((m: { book_id: string }) => m.book_id)
+    .filter(Boolean);
+
+  const [books, total, highlights, galleryImages, mentionedBooks] = await Promise.all([
     db.collection('books')
       .find(filter, { projection })
       .sort(sortObj)
@@ -164,18 +200,25 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
     db.collection('books').countDocuments(filter),
     db.collection('books')
       .find(
-        { collections: id, status: { $ne: 'deleted' }, pages_translated: { $gt: 0 } },
+        { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
         { projection: highlightProjection },
       )
       .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
       .limit(5)
       .toArray(),
-    db.collection('gallery_images')
-      .find({ collection: id, gallery_quality: { $gte: 0.6 } })
-      .sort({ gallery_quality: -1 })
-      .limit(12)
-      .toArray()
-      .catch(() => []),
+    collectionBookIds.length > 0
+      ? db.collection('gallery_images')
+          .find({ book_id: { $in: collectionBookIds }, gallery_quality: { $gte: 0.6 } })
+          .sort({ gallery_quality: -1 })
+          .limit(60)
+          .toArray()
+          .catch(() => [])
+      : Promise.resolve([]),
+    mentionedBookIds.length > 0
+      ? db.collection('books')
+          .find({ id: { $in: mentionedBookIds } }, { projection })
+          .toArray()
+      : Promise.resolve([]),
   ]);
 
   const { _id, ...collectionClean } = collection;
@@ -189,6 +232,7 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
     total,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: galleryImages as any[],
+    mentionedBooks: mentionedBooks as unknown as BookItem[],
   };
 }
 
@@ -200,16 +244,41 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
   const sort = (typeof sp.sort === 'string' ? sp.sort : '') || 'popular';
   const language = typeof sp.language === 'string' ? sp.language : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
+  const showAll = sp.show_all === '1';
 
   const data = await fetchCollectionData(id, sort, language, offset);
   if (!data) notFound();
 
-  const { collection, books, highlights, galleryImages, total } = data;
+  const { collection, books, highlights, galleryImages, total, mentionedBooks } = data;
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
-  const heroImages = galleryImages.slice(0, 6);
-  const allBooksForLinking = [...highlights, ...books];
+
+  // Diversify gallery images: max 2 per book, skip images without thumbnails, take first 11
+  const diverseGalleryImages: typeof galleryImages = [];
+  const bookImageCounts: Record<string, number> = {};
+  for (const img of galleryImages) {
+    const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
+    if (!thumb) continue;
+    const bid = img.book_id || img.bookId;
+    const count = bookImageCounts[bid] || 0;
+    if (count >= 2) continue;
+    bookImageCounts[bid] = count + 1;
+    diverseGalleryImages.push(img);
+    if (diverseGalleryImages.length >= 11) break;
+  }
+
+  const heroImages = diverseGalleryImages.slice(0, 6);
+  const allBooksForLinking = [...highlights, ...books, ...mentionedBooks];
+  const explicitMentions: { text: string; book_id: string }[] = collection.mentioned_books || [];
+
+  // Compact view: 3 rows of books with last slot as "See all" card
+  // Row counts: 5 cols (xl) = 15 slots, 4 cols (lg) = 12, 3 cols (sm) = 9, 2 cols (default) = 6
+  // We cap at 14 books (15 slots - 1 for "See all" at 5-col) and CSS handles smaller breakpoints
+  const COMPACT_LIMIT = 14;
+  const compactBooks = books.slice(0, COMPACT_LIMIT);
+  const displayBooks = showAll ? books : compactBooks;
+  const showSeeAllCard = !showAll && total > COMPACT_LIMIT;
 
   return (
     <div className="min-h-screen bg-cream">
@@ -267,12 +336,18 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
         </div>
       </div>
 
-      {/* Gallery Strip */}
-      {galleryImages.length > 0 && (
+      {/* Gallery Grid */}
+      {diverseGalleryImages.length > 0 && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-6xl mx-auto px-6 py-5">
-            <div className="flex gap-3 overflow-x-auto pb-1 scrollbar-thin">
-              {galleryImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
+          <div className="max-w-6xl mx-auto px-6 py-6">
+            <h2
+              className="text-xl sm:text-2xl text-primary mb-4"
+              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            >
+              Illustrations
+            </h2>
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
                 const pageId = img.pageId || img.page_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;
@@ -281,7 +356,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
                   <Link
                     key={galleryId}
                     href={`/gallery/image/${galleryId}`}
-                    className="flex-shrink-0 group relative w-32 h-32 rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
+                    className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                     title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
                   >
                     {thumb ? (
@@ -290,7 +365,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
                         alt={img.description || img.bookTitle || img.book_title || 'Illustration'}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="128px"
+                        sizes="(min-width: 1024px) 160px, (min-width: 640px) 140px, 120px"
                       />
                     ) : (
                       <div className="w-full h-full bg-cream flex items-center justify-center">
@@ -307,10 +382,10 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
               })}
               <Link
                 href={`/gallery?collection=${id}`}
-                className="flex-shrink-0 w-32 h-32 rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
+                className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
               >
-                <Images className="w-6 h-6" />
-                <span className="text-xs font-medium">View all</span>
+                <Images className="w-7 h-7" />
+                <span className="text-xs font-medium">Browse gallery</span>
               </Link>
             </div>
           </div>
@@ -323,7 +398,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
           <div className="mb-10 max-w-5xl">
             {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
               <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
-                {linkBookTitles(para, allBooksForLinking)}
+                {linkBookTitles(para, allBooksForLinking, explicitMentions)}
               </p>
             ))}
           </div>
@@ -448,12 +523,12 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
             </p>
           </div>
 
-          <CollectionFilters collectionId={id} languages={languages} />
+          {showAll && <CollectionFilters collectionId={id} languages={languages} />}
         </div>
 
         {/* Books Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {books.map((book, i) => (
+          {displayBooks.map((book, i) => (
             <CollectionBookCard
               key={book.id}
               book={{
@@ -475,14 +550,32 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
               priority={i < 10}
             />
           ))}
+
+          {/* "See all" card in compact view */}
+          {showSeeAllCard && (
+            <Link
+              href={`/collections/${id}?show_all=1&sort=${sort}${language ? `&language=${language}` : ''}`}
+              className="group flex flex-col items-center justify-center gap-3 rounded-xl border border-border-light bg-white hover:border-accent-rust/30 hover:shadow-md transition-all aspect-[3/4]"
+            >
+              <div className="w-12 h-12 rounded-full bg-accent-rust/8 flex items-center justify-center group-hover:bg-accent-rust/15 transition-colors">
+                <ArrowRight className="w-5 h-5 text-accent-rust" />
+              </div>
+              <div className="text-center px-3">
+                <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
+                  See all {total.toLocaleString()}
+                </span>
+                <span className="text-xs text-muted">books</span>
+              </div>
+            </Link>
+          )}
         </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
+        {/* Pagination (only in full view) */}
+        {showAll && totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-10 text-sm">
             {offset > 0 ? (
               <Link
-                href={`/collections/${id}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
+                href={`/collections/${id}?show_all=1&sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
                 className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
               >
                 Previous
@@ -497,7 +590,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
             </span>
             {currentPage < totalPages ? (
               <Link
-                href={`/collections/${id}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
+                href={`/collections/${id}?show_all=1&sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
                 className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
               >
                 Next
@@ -507,6 +600,18 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
                 Next
               </span>
             )}
+          </div>
+        )}
+
+        {/* Show filters link in compact view */}
+        {showAll && (
+          <div className="mt-6 text-center">
+            <Link
+              href={`/collections/${id}?sort=${sort}${language ? `&language=${language}` : ''}`}
+              className="text-sm text-muted hover:text-accent-rust transition-colors"
+            >
+              Show less
+            </Link>
           </div>
         )}
       </div>

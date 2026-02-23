@@ -12,6 +12,7 @@ import LikeButton from '@/components/ui/LikeButton';
 import { BookLoader } from '@/components/ui/BookLoader';
 import HighlightedText from '@/components/search/HighlightedText';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
+import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import {
   gallery,
   books,
@@ -91,6 +92,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
   // Filter state from URL
   const bookId = searchParams.get('bookId') || searchParams.get('book') || '';
   const collectionFilter = searchParams.get('collection') || '';
+  const libraryFilter = searchParams.get('library') || '';
   const typeFilter = searchParams.get('type') || '';
   const subjectFilter = searchParams.get('subject') || '';
   const yearStart = searchParams.get('yearStart') || '';
@@ -114,7 +116,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
 
   // Fetch gallery data (skip on initial load only if no URL filters — server data is unfiltered)
   useEffect(() => {
-    const hasUrlFilters = bookId || collectionFilter || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    const hasUrlFilters = bookId || collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
     if (isInitialLoad && !hasUrlFilters) {
       setIsInitialLoad(false);
       return;
@@ -130,6 +132,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           offset: page * limit,
           bookId: bookId || undefined,
           collection: collectionFilter || undefined,
+          library: libraryFilter || undefined,
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
           subject: subjectFilter || undefined,
@@ -150,7 +153,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
     };
 
     fetchGallery();
-  }, [bookId, collectionFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page, qualityParam, includeArchive]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, page, qualityParam, includeArchive]);
 
   // Book search with debounce
   useEffect(() => {
@@ -217,7 +220,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
     }
   };
 
-  const hasFilters = bookId || typeFilter || subjectFilter || imageSearchQuery;
+  const hasFilters = bookId || typeFilter || subjectFilter || libraryFilter || imageSearchQuery;
   const showCollections = !hasFilters && page === 0;
 
   return (
@@ -321,7 +324,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Active Filters / Book Info */}
-        {(data?.bookInfo || typeFilter || subjectFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
+        {(data?.bookInfo || typeFilter || subjectFilter || libraryFilter || imageSearchQuery || currentQualityLevel !== 'gallery') && (
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {data?.bookInfo && (
               <>
@@ -340,6 +343,14 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                   View all images
                 </button>
               </>
+            )}
+            {libraryFilter && (
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
+                Library: {getPartnerByProvider(libraryFilter)?.shortName || libraryFilter}
+                <button onClick={() => updateParams({ library: '' })} className="hover:text-stone-900">
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
             )}
             {typeFilter && (
               <div className="flex items-center gap-2 px-3 py-1.5 bg-stone-200 text-stone-700 rounded-full text-sm">
@@ -402,6 +413,21 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                     </button>
                   ))}
                 </div>
+              </div>
+
+              {/* Library */}
+              <div>
+                <label className="block text-xs font-medium text-stone-500 mb-2">Library</label>
+                <select
+                  value={libraryFilter}
+                  onChange={(e) => updateParams({ library: e.target.value })}
+                  className="w-full px-2 py-1 text-sm border border-stone-300 rounded"
+                >
+                  <option value="">All libraries</option>
+                  {Object.values(LIBRARY_PARTNERS).map((p) => (
+                    <option key={p.providerKey} value={p.providerKey}>{p.shortName}</option>
+                  ))}
+                </select>
               </div>
 
               {/* Image Type */}
@@ -606,11 +632,6 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
             </span>
           )}
 
-          {item.galleryQuality && item.galleryQuality >= 0.9 && (
-            <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-amber-500 text-white">
-              ★
-            </span>
-          )}
         </div>
 
         <div className="p-2">
