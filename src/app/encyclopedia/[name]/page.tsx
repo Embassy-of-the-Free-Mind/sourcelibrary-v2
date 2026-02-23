@@ -1,13 +1,8 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, User, MapPin, Lightbulb, BookOpen, ExternalLink } from 'lucide-react';
-import { BookLoader } from '@/components/ui/BookLoader';
-import { entities as entitiesApi } from '@/lib/api-client';
-import type { EntityResponse } from '@/lib/api-client';
 import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
+import { getEntity } from './layout';
 
 const TYPE_ICONS = {
   person: User,
@@ -15,55 +10,17 @@ const TYPE_ICONS = {
   concept: Lightbulb,
 };
 
-export default function EntityDetailPage() {
-  const params = useParams();
-  const name = decodeURIComponent(params.name as string);
+export default async function EntityDetailPage({
+  params,
+}: {
+  params: Promise<{ name: string }>;
+}) {
+  const { name } = await params;
+  const decodedName = decodeURIComponent(name);
+  const entity = await getEntity(decodedName);
 
-  const [entity, setEntity] = useState<EntityResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchEntity();
-  }, [name]);
-
-  const fetchEntity = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await entitiesApi.get(name);
-      setEntity(data);
-    } catch (err: any) {
-      if (err.response?.status === 404) {
-        setError('Entity not found');
-      } else {
-        setError('Failed to load entity');
-      }
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <BookLoader />
-      </div>
-    );
-  }
-
-  if (error || !entity) {
-    return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-stone-600 mb-4">{error || 'Entity not found'}</p>
-          <Link href="/encyclopedia" className="text-amber-700 hover:text-amber-800">
-            Back to Encyclopedia
-          </Link>
-        </div>
-      </div>
-    );
+  if (!entity) {
+    notFound();
   }
 
   const Icon = TYPE_ICONS[entity.type];
