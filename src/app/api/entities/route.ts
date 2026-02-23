@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { loadAliasResolver } from '@/lib/entity-aliases';
 
 export interface Entity {
   _id?: string;
@@ -121,73 +122,68 @@ export const POST = withAuth(async (request, session) => {
 
     console.log(`Syncing entities from ${books.length} books...`);
 
-    // Build entity map: name -> entity data
+    // Load alias resolver to merge variant names into canonical entities
+    const aliasResolver = await loadAliasResolver(db);
+    console.log(`Loaded ${aliasResolver.size} alias mappings`);
+
+    // Build entity map: canonical_name -> entity data
     const entityMap = new Map<string, {
       name: string;
       type: Entity['type'];
+      variantNames: Set<string>;
       books: Map<string, { book_id: string; book_title: string; book_author: string; pages: number[] }>;
     }>();
+
+    const addToEntityMap = (
+      term: string,
+      type: Entity['type'],
+      bookId: string,
+      bookTitle: string,
+      bookAuthor: string,
+      pages: number[]
+    ) => {
+      // Resolve alias to canonical name
+      const canonicalName = aliasResolver.resolve(term, type);
+      const key = `${type}:${canonicalName.toLowerCase()}`;
+
+      if (!entityMap.has(key)) {
+        entityMap.set(key, {
+          name: canonicalName,
+          type,
+          variantNames: new Set(),
+          books: new Map()
+        });
+      }
+      const entity = entityMap.get(key)!;
+      // Track all variant names as aliases
+      if (term !== canonicalName) {
+        entity.variantNames.add(term);
+      }
+      // Merge book data — combine pages if same book appears via different variants
+      const existing = entity.books.get(bookId);
+      if (existing) {
+        const allPages = [...new Set([...existing.pages, ...pages])].sort((a, b) => a - b);
+        entity.books.set(bookId, { ...existing, pages: allPages });
+      } else {
+        entity.books.set(bookId, { book_id: bookId, book_title: bookTitle, book_author: bookAuthor, pages });
+      }
+    };
 
     for (const book of books) {
       const bookId = book.id;
       const bookTitle = book.display_title || book.title;
       const bookAuthor = book.author || 'Unknown';
 
-      // Process people
       for (const person of (book.index?.people || [])) {
-        const key = `person:${person.term.toLowerCase()}`;
-        if (!entityMap.has(key)) {
-          entityMap.set(key, {
-            name: person.term,
-            type: 'person',
-            books: new Map()
-          });
-        }
-        const entity = entityMap.get(key)!;
-        entity.books.set(bookId, {
-          book_id: bookId,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          pages: person.pages || []
-        });
+        addToEntityMap(person.term, 'person', bookId, bookTitle, bookAuthor, person.pages || []);
       }
 
-      // Process places
       for (const place of (book.index?.places || [])) {
-        const key = `place:${place.term.toLowerCase()}`;
-        if (!entityMap.has(key)) {
-          entityMap.set(key, {
-            name: place.term,
-            type: 'place',
-            books: new Map()
-          });
-        }
-        const entity = entityMap.get(key)!;
-        entity.books.set(bookId, {
-          book_id: bookId,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          pages: place.pages || []
-        });
+        addToEntityMap(place.term, 'place', bookId, bookTitle, bookAuthor, place.pages || []);
       }
 
-      // Process concepts
       for (const concept of (book.index?.concepts || [])) {
-        const key = `concept:${concept.term.toLowerCase()}`;
-        if (!entityMap.has(key)) {
-          entityMap.set(key, {
-            name: concept.term,
-            type: 'concept',
-            books: new Map()
-          });
-        }
-        const entity = entityMap.get(key)!;
-        entity.books.set(bookId, {
-          book_id: bookId,
-          book_title: bookTitle,
-          book_author: bookAuthor,
-          pages: concept.pages || []
-        });
+        addToEntityMap(concept.term, 'concept', bookId, bookTitle, bookAuthor, concept.pages || []);
       }
     }
 
@@ -196,30 +192,62 @@ export const POST = withAuth(async (request, session) => {
     let created = 0;
     let updated = 0;
 
+    let merged = 0;
     for (const [key, data] of entityMap) {
       const booksArray = Array.from(data.books.values());
       const totalMentions = booksArray.reduce((sum, b) => sum + b.pages.length, 0);
 
+      // Build update — merge variant names into aliases without overwriting manual aliases
+      const updateSet: Record<string, unknown> = {
+        name: data.name,
+        type: data.type,
+        books: booksArray,
+        total_mentions: totalMentions,
+        book_count: booksArray.length,
+        updated_at: now,
+      };
+
+      const update: Record<string, unknown> = {
+        $set: updateSet,
+        $setOnInsert: { created_at: now },
+      };
+
+      // Add variant names to aliases (without duplicating existing aliases)
+      if (data.variantNames.size > 0) {
+        update.$addToSet = { aliases: { $each: Array.from(data.variantNames) } };
+        merged += data.variantNames.size;
+      }
+
       const result = await db.collection('entities').updateOne(
         { name: data.name, type: data.type },
-        {
-          $set: {
-            name: data.name,
-            type: data.type,
-            books: booksArray,
-            total_mentions: totalMentions,
-            book_count: booksArray.length,
-            updated_at: now
-          },
-          $setOnInsert: {
-            created_at: now
-          }
-        },
+        update,
         { upsert: true }
       );
 
       if (result.upsertedCount > 0) created++;
       else if (result.modifiedCount > 0) updated++;
+    }
+
+    // Clean up orphaned entity records whose names are now aliases
+    // (they were replaced by the canonical entity)
+    if (aliasResolver.size > 0) {
+      const aliasNames = await db.collection('entity_aliases')
+        .find({})
+        .project({ alias_name: 1, type: 1 })
+        .toArray();
+
+      let cleaned = 0;
+      for (const alias of aliasNames) {
+        // Delete entity records that match alias names (the data is now in the canonical entity)
+        const del = await db.collection('entities').deleteOne({
+          name: alias.alias_name,
+          type: alias.type,
+        });
+        if (del.deletedCount > 0) cleaned++;
+      }
+      if (cleaned > 0) {
+        console.log(`Cleaned up ${cleaned} orphaned alias entities`);
+      }
     }
 
     // Create indexes
@@ -233,6 +261,7 @@ export const POST = withAuth(async (request, session) => {
       booksProcessed: books.length,
       entitiesCreated: created,
       entitiesUpdated: updated,
+      aliasesMerged: merged,
       totalEntities: entityMap.size
     });
   } catch (error) {

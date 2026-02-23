@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { loadAliasResolver } from '@/lib/entity-aliases';
 
 export const maxDuration = 300;
 
@@ -748,27 +749,34 @@ async function syncBookEntities(
 ) {
   const now = new Date();
 
+  // Load alias resolver to merge variant names into canonical entities
+  const aliasResolver = await loadAliasResolver(db);
+
   const syncEntity = async (term: string, type: 'person' | 'place' | 'concept', pages: number[]) => {
+    // Resolve to canonical name
+    const canonicalName = aliasResolver.resolve(term, type);
+
+    const update: Record<string, unknown> = {
+      $set: { updated_at: now },
+      $setOnInsert: { name: canonicalName, type, created_at: now },
+      $addToSet: {
+        books: {
+          book_id: bookId,
+          book_title: bookTitle,
+          book_author: bookAuthor,
+          pages: pages
+        },
+      } as Record<string, unknown>,
+    };
+
+    // If this term is a variant, add it to aliases
+    if (term !== canonicalName) {
+      (update.$addToSet as Record<string, unknown>).aliases = term;
+    }
+
     await db.collection('entities').updateOne(
-      { name: term, type },
-      {
-        $set: {
-          updated_at: now
-        },
-        $setOnInsert: {
-          name: term,
-          type,
-          created_at: now
-        },
-        $addToSet: {
-          books: {
-            book_id: bookId,
-            book_title: bookTitle,
-            book_author: bookAuthor,
-            pages: pages
-          }
-        }
-      },
+      { name: canonicalName, type },
+      update,
       { upsert: true }
     );
   };
@@ -791,13 +799,17 @@ async function syncBookEntities(
   await Promise.all(promises);
 
   // Update book_count and total_mentions for affected entities
+  // Use canonical names for the lookup
   const allTerms = [
-    ...conceptIndex.people.map(p => ({ name: p.term, type: 'person' })),
-    ...conceptIndex.places.map(p => ({ name: p.term, type: 'place' })),
-    ...conceptIndex.concepts.map(p => ({ name: p.term, type: 'concept' }))
+    ...conceptIndex.people.map(p => ({ name: aliasResolver.resolve(p.term, 'person'), type: 'person' as const })),
+    ...conceptIndex.places.map(p => ({ name: aliasResolver.resolve(p.term, 'place'), type: 'place' as const })),
+    ...conceptIndex.concepts.map(p => ({ name: aliasResolver.resolve(p.term, 'concept'), type: 'concept' as const }))
   ];
 
-  for (const { name, type } of allTerms) {
+  // Deduplicate — multiple variants may resolve to the same canonical
+  const uniqueTerms = [...new Map(allTerms.map(t => [`${t.type}:${t.name}`, t])).values()];
+
+  for (const { name, type } of uniqueTerms) {
     const entity = await db.collection('entities').findOne({ name, type });
     if (entity) {
       const bookCount = entity.books?.length || 0;
