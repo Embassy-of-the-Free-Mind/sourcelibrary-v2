@@ -479,8 +479,8 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           <FeaturedCollections initialCollections={initialCollections} />
         )}
 
-        {/* Loading State */}
-        {loading && (
+        {/* Loading State — only show full spinner when no existing data */}
+        {loading && (!data || data.items.length === 0) && (
           <div className="flex items-center justify-center py-20">
             <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
           </div>
@@ -510,13 +510,20 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           </div>
         )}
 
-        {/* Image Grid */}
-        {!loading && data && data.items.length > 0 && (
+        {/* Image Grid — show existing data even while loading (with opacity) */}
+        {data && data.items.length > 0 && (
           <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {data.items.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
-              ))}
+            <div className={`relative transition-opacity duration-200 ${loading ? 'opacity-60 pointer-events-none' : ''}`}>
+              {loading && (
+                <div className="absolute inset-0 flex items-center justify-center z-10">
+                  <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
+                </div>
+              )}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {data.items.map((item, idx) => (
+                  <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={imageSearchQuery} />
+                ))}
+              </div>
             </div>
 
             {/* Pagination */}
@@ -551,17 +558,23 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
 }
 
 function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
-  const [imageError, setImageError] = useState(false);
-  const [useCropFallback, setUseCropFallback] = useState(false);
+  // Fallback stages: 0 = blob/best, 1 = crop API, 2 = raw IIIF thumbnail, 3 = give up
+  const [fallbackStage, setFallbackStage] = useState(0);
 
   const cropUrl = item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
   const blobUrl = item.thumbnailUrl || item.extractedUrl;
+  const iiifUrl = toThumbnailUrl(item.imageUrl);
 
-  const displayUrl = useCropFallback
-    ? (cropUrl || toThumbnailUrl(item.imageUrl))
-    : (blobUrl || cropUrl || toThumbnailUrl(item.imageUrl));
+  // Build the URL chain: blob → crop → raw IIIF
+  const urlChain = [
+    blobUrl,
+    cropUrl,
+    iiifUrl,
+  ].filter(Boolean) as string[];
 
-  const isPreGenerated = !useCropFallback && !!blobUrl;
+  const displayUrl = urlChain[Math.min(fallbackStage, urlChain.length - 1)] || iiifUrl;
+  const imageError = fallbackStage >= urlChain.length;
+  const isPreGenerated = fallbackStage === 0 && !!blobUrl;
   const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
 
   return (
@@ -576,21 +589,15 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
               className="object-contain group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
               onLoad={(e) => {
-                // Detect corrupt Blob thumbnails (real ones are 300px+)
-                if (!useCropFallback && blobUrl && cropUrl) {
+                // Detect corrupt Blob thumbnails (real ones are 300px+) — advance to next URL
+                if (fallbackStage === 0 && blobUrl && urlChain.length > 1) {
                   const img = e.target as HTMLImageElement;
                   if (img.naturalWidth < 150 || img.naturalHeight < 150) {
-                    setUseCropFallback(true);
+                    setFallbackStage(1);
                   }
                 }
               }}
-              onError={() => {
-                if (!useCropFallback && cropUrl) {
-                  setUseCropFallback(true);
-                } else {
-                  setImageError(true);
-                }
-              }}
+              onError={() => setFallbackStage(s => s + 1)}
               unoptimized={!isPreGenerated && !!item.bbox}
             />
           ) : (

@@ -1,18 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sharp from 'sharp';
 import { images } from '@/lib/api-client';
-import { withAuth } from '@/lib/auth-helpers';
 
 /**
  * GET /api/crop-image
  *
  * Crop an image using normalized bounding box coordinates.
+ * Public endpoint — used by gallery thumbnails for anonymous visitors.
  * Query params:
  *   - url: source image URL
  *   - x, y, w, h: normalized bbox (0-1)
  *   - padding: extra padding around bbox (default 0.02)
  */
-export const GET = withAuth(async (request, session) => {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const imageUrl = searchParams.get('url');
@@ -35,17 +35,18 @@ export const GET = withAuth(async (request, session) => {
     const imgWidth = metadata.width || 1;
     const imgHeight = metadata.height || 1;
 
-    // Detect if values are pixels (>1) or normalized (0-1)
-    // If any value > 1, treat all as pixels; otherwise treat as normalized
+    // Detect if values are pixels (>1) or normalized (0-1).
+    // AI models sometimes return 0-1000 scale instead of 0-1. Use the same heuristic
+    // as the UI editor: divide by max(x+w, y+h, 1000) to handle both cases correctly.
     const isPixels = x > 1 || y > 1 || w > 1 || h > 1;
 
     let normX = x, normY = y, normW = w, normH = h;
     if (isPixels) {
-      // Convert pixels to normalized
-      normX = x / imgWidth;
-      normY = y / imgHeight;
-      normW = w / imgWidth;
-      normH = h / imgHeight;
+      const scale = Math.max(x + w, y + h, 1000);
+      normX = Math.min(x / scale, 0.95);
+      normY = Math.min(y / scale, 0.95);
+      normW = Math.min(w / scale, 1);
+      normH = Math.min(h / scale, 1);
     }
 
     // Apply padding and clamp to valid range
@@ -80,4 +81,4 @@ export const GET = withAuth(async (request, session) => {
       { status: 500 }
     );
   }
-});
+}
