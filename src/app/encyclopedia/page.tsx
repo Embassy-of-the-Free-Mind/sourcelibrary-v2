@@ -1,13 +1,9 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
+import { Suspense } from 'react';
 import Link from 'next/link';
-import { Search, User, MapPin, Lightbulb, BookOpen, ArrowRight } from 'lucide-react';
-import { BookLoader } from '@/components/ui/BookLoader';
-import { entities as entitiesApi } from '@/lib/api-client';
-import type { Entity } from '@/lib/api-client';
+import { User, MapPin, Lightbulb, BookOpen, ArrowRight, Search } from 'lucide-react';
+import { getDb } from '@/lib/mongodb';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
+import EncyclopediaFilters from './EncyclopediaFilters';
 
 const TYPE_ICONS = {
   person: User,
@@ -15,44 +11,74 @@ const TYPE_ICONS = {
   concept: Lightbulb,
 };
 
-export default function EncyclopediaPage() {
-  const [entities, setEntities] = useState<Entity[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeType, setActiveType] = useState<'all' | 'person' | 'place' | 'concept'>('all');
-  const [minBooks, setMinBooks] = useState(2);
+interface SearchParams {
+  type?: string;
+  min_books?: string;
+  q?: string;
+}
 
-  useEffect(() => {
-    fetchEntities();
-  }, [activeType, minBooks]);
+async function getEntities(searchParams: SearchParams) {
+  const db = await getDb();
 
-  const fetchEntities = async () => {
-    setLoading(true);
-    try {
-      const data = await entitiesApi.list({
-        type: activeType !== 'all' ? activeType : undefined,
-        min_books: minBooks > 1 ? minBooks : undefined,
-        limit: 100,
-      });
-      setEntities(data.entities);
-    } catch (error) {
-      console.error('Failed to fetch entities:', error);
-      toast.error('Failed to load entities');
-    } finally {
-      setLoading(false);
-    }
+  const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
+  const minBooks = parseInt(searchParams.min_books || '2') || 2;
+  const query = searchParams.q?.trim() || null;
+
+  const filter: Record<string, unknown> = {
+    book_count: { $gte: minBooks },
   };
+  if (type) filter.type = type;
+  if (query) {
+    filter.name = { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' };
+  }
 
-  const filteredEntities = entities.filter(e =>
-    e.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const [entities, stats] = await Promise.all([
+    db.collection('entities')
+      .find(filter)
+      .sort({ book_count: -1 })
+      .limit(100)
+      .project({
+        name: 1, type: 1, book_count: 1, total_mentions: 1, description: 1,
+        books: { $slice: 3 },
+      })
+      .toArray(),
+    db.collection('entities').aggregate([
+      { $match: { book_count: { $gte: minBooks }, ...(query ? { name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } } : {}) } },
+      { $group: { _id: '$type', count: { $sum: 1 } } },
+    ]).toArray(),
+  ]);
 
-  const stats = {
-    total: entities.length,
-    people: entities.filter(e => e.type === 'person').length,
-    places: entities.filter(e => e.type === 'place').length,
-    concepts: entities.filter(e => e.type === 'concept').length,
+  const statsByType = stats.reduce((acc: Record<string, number>, s) => {
+    acc[s._id as string] = s.count as number;
+    return acc;
+  }, {} as Record<string, number>);
+
+  return {
+    entities: entities.map(e => ({
+      _id: e._id.toString(),
+      name: e.name as string,
+      type: e.type as 'person' | 'place' | 'concept',
+      book_count: (e.book_count || 0) as number,
+      total_mentions: (e.total_mentions || 0) as number,
+      description: (e.description || null) as string | null,
+      books: (e.books || []) as Array<{ book_id: string; book_title: string }>,
+    })),
+    stats: {
+      total: (statsByType.person || 0) + (statsByType.place || 0) + (statsByType.concept || 0),
+      people: statsByType.person || 0,
+      places: statsByType.place || 0,
+      concepts: statsByType.concept || 0,
+    },
   };
+}
+
+export default async function EncyclopediaPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const params = await searchParams;
+  const { entities, stats } = await getEntities(params);
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -77,81 +103,34 @@ export default function EncyclopediaPage() {
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="bg-white border-b border-stone-200 sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex flex-wrap items-center gap-4">
-            {/* Search */}
-            <div className="flex-1 min-w-[200px] relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <input
-                type="text"
-                placeholder="Search entities..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </div>
-
-            {/* Type filter */}
-            <div className="flex gap-1 bg-stone-100 p-1 rounded-lg">
-              {(['all', 'person', 'place', 'concept'] as const).map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setActiveType(type)}
-                  className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                    activeType === type
-                      ? 'bg-white text-stone-900 shadow-sm'
-                      : 'text-stone-600 hover:text-stone-900'
-                  }`}
-                >
-                  {type === 'all' ? 'All' : type.charAt(0).toUpperCase() + type.slice(1) + 's'}
-                </button>
-              ))}
-            </div>
-
-            {/* Min books filter */}
-            <select
-              value={minBooks}
-              onChange={(e) => setMinBooks(parseInt(e.target.value))}
-              className="px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
-            >
-              <option value={1}>All entities</option>
-              <option value={2}>2+ books</option>
-              <option value={3}>3+ books</option>
-              <option value={5}>5+ books</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      {/* Filters (client component) */}
+      <Suspense>
+        <EncyclopediaFilters />
+      </Suspense>
 
       {/* Stats */}
       <div className="max-w-6xl mx-auto px-4 py-6">
         <div className="grid grid-cols-4 gap-4 mb-8">
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-stone-900">{stats.total}</div>
+            <div className="text-2xl font-bold text-stone-900">{stats.total.toLocaleString()}</div>
             <div className="text-sm text-stone-500">Total</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-accent-rust">{stats.people}</div>
+            <div className="text-2xl font-bold text-accent-rust">{stats.people.toLocaleString()}</div>
             <div className="text-sm text-stone-500">People</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-accent-sage">{stats.places}</div>
+            <div className="text-2xl font-bold text-accent-sage">{stats.places.toLocaleString()}</div>
             <div className="text-sm text-stone-500">Places</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4 text-center">
-            <div className="text-2xl font-bold text-accent-violet">{stats.concepts}</div>
+            <div className="text-2xl font-bold text-accent-violet">{stats.concepts.toLocaleString()}</div>
             <div className="text-sm text-stone-500">Concepts</div>
           </div>
         </div>
 
         {/* Entity List */}
-        {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <BookLoader size="sm" />
-          </div>
-        ) : filteredEntities.length === 0 ? (
+        {entities.length === 0 ? (
           <div className="text-center py-16">
             <Search className="w-12 h-12 mx-auto mb-4 opacity-30" style={{ color: 'var(--text-muted)' }} />
             <h3 className="text-lg font-medium mb-1" style={{ color: 'var(--text-primary)' }}>No entities found</h3>
@@ -159,7 +138,7 @@ export default function EncyclopediaPage() {
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {filteredEntities.map((entity) => {
+            {entities.map((entity) => {
               const Icon = TYPE_ICONS[entity.type];
               return (
                 <Link
@@ -175,6 +154,9 @@ export default function EncyclopediaPage() {
                       <h3 className="font-medium text-stone-900 group-hover:text-amber-700 transition-colors truncate">
                         {entity.name}
                       </h3>
+                      {entity.description && (
+                        <p className="text-xs text-stone-500 mt-0.5 line-clamp-2">{entity.description}</p>
+                      )}
                       <p className="text-sm text-stone-500 mt-1">
                         {entity.book_count} book{entity.book_count !== 1 ? 's' : ''}
                         {' '}&middot;{' '}
