@@ -266,18 +266,26 @@ async function checkJobCompletion(
       'translation.data': { $exists: true, $ne: '' }
     });
 
+    // Mark enrichment stale if this book already has an index
+    const bookDoc = await db.collection('books').findOne(
+      { id: bookId },
+      { projection: { 'index.generatedAt': 1 } }
+    );
+    const enrichmentStale = bookDoc?.index?.generatedAt ? { enrichment_stale: true } : {};
+
     await db.collection('books').updateOne(
       { id: bookId },
       {
         $set: {
           pages_translated: totalPagesWithTranslation,
           last_translation_at: new Date(),
+          ...enrichmentStale,
           updated_at: new Date()
         },
         $unset: { job: '' }
       }
     );
 
-    console.log(`[TRANS] Updated book ${bookId}: pages_translated = ${totalPagesWithTranslation}`);
+    console.log(`[TRANS] Updated book ${bookId}: pages_translated = ${totalPagesWithTranslation}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
   }
 }

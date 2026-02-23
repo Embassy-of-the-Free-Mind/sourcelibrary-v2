@@ -4,7 +4,7 @@
  * that already have sufficient OCR/translation but are missing enrichment.
  *
  * Usage:
- *   set -a; source .env.production.local; set +a; node scripts/batch-enrich.mjs [--limit=50] [--dry-run]
+ *   set -a; source .env.production.local; set +a; node scripts/batch-enrich.mjs [--limit=50] [--concurrency=5] [--dry-run]
  *
  * Targets books with >50% translation that lack reading_summary.
  * Calls GET /api/books/{id}/index on production for each book.
@@ -18,6 +18,8 @@ const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const limitArg = args.find(a => a.startsWith('--limit='));
 const limit = limitArg ? parseInt(limitArg.split('=')[1]) : DEFAULT_LIMIT;
+const concurrencyArg = args.find(a => a.startsWith('--concurrency='));
+const concurrency = concurrencyArg ? parseInt(concurrencyArg.split('=')[1]) : 5;
 
 async function enrichBook(book, idx, total, db) {
   process.stdout.write(`  [${idx}/${total}] ${book.title?.substring(0, 55)} (${book.pages_count}pg)...`);
@@ -92,27 +94,31 @@ async function main() {
   let success = 0, failed = 0;
   const errors = [];
 
-  for (let i = 0; i < candidates.length; i++) {
-    const book = candidates[i];
-    try {
-      const ok = await enrichBook(book, i + 1, candidates.length, db);
-      if (ok) success++;
-      else {
-        failed++;
-        errors.push({ title: book.title, error: 'HTTP error' });
-      }
-    } catch (err) {
-      failed++;
-      const msg = err.message || 'unknown';
-      console.log(` ERROR: ${msg.substring(0, 100)}`);
-      errors.push({ title: book.title, error: msg });
-    }
+  console.log(`Processing with concurrency=${concurrency}`);
 
-    // Brief pause between books
-    if (i < candidates.length - 1) {
-      await new Promise(r => setTimeout(r, 500));
+  // Promise pool: maintain up to `concurrency` in-flight enrichments
+  let nextIdx = 0;
+  async function processOne() {
+    while (nextIdx < candidates.length) {
+      const i = nextIdx++;
+      const book = candidates[i];
+      try {
+        const ok = await enrichBook(book, i + 1, candidates.length, db);
+        if (ok) success++;
+        else {
+          failed++;
+          errors.push({ title: book.title, error: 'HTTP error' });
+        }
+      } catch (err) {
+        failed++;
+        const msg = err.message || 'unknown';
+        console.log(` ERROR: ${msg.substring(0, 100)}`);
+        errors.push({ title: book.title, error: msg });
+      }
     }
   }
+
+  await Promise.all(Array.from({ length: Math.min(concurrency, candidates.length) }, () => processOne()));
 
   console.log(`\nDone: ${success} enriched, ${failed} failed out of ${candidates.length}`);
   if (errors.length) {

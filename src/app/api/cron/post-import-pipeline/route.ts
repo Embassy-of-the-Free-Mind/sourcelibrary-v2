@@ -20,7 +20,7 @@ const OCR_SUBMIT_LIMIT = 40; // Batch API jobs are async — submit more per cyc
 const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
 const TRANSLATE_SUBMIT_LIMIT = 30; // Batch API jobs are async
-const ENRICH_LIMIT = 10; // ~30-60s each, time budget is the real throttle
+const ENRICH_LIMIT = 8; // Processed concurrently — 8 books × ~60s each in parallel
 const CHAPTER_LIMIT = 15; // Fast (~5-10s each)
 const IMAGE_SUBMIT_LIMIT = 5;
 const FINALIZE_LIMIT = 50; // Just DB updates
@@ -897,50 +897,79 @@ export async function GET(request: NextRequest) {
     }
 
     // ── Phase 6: Enrich — generate summary + index (translate_complete -> enriched) ──
+    // Also re-enriches books where enrichment_stale was set by OCR/translation workers.
     if (hasTimeBudget(startTime)) {
       const readyForEnrich = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'translate_complete' })
+        .find({
+          $or: [
+            { 'pipeline_auto.status': 'translate_complete' },
+            { enrichment_stale: true, 'index.generatedAt': { $exists: true } },
+          ]
+        })
         .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1 })
+        .project({ id: 1, title: 1, 'pipeline_auto.status': 1, 'pipeline_auto.retry_count': 1, enrichment_stale: 1 })
         .limit(ENRICH_LIMIT)
         .toArray();
 
+      // Mark all as enriching up front
       for (const book of readyForEnrich) {
-        if (!hasTimeBudget(startTime)) break;
-        try {
+        if (book.pipeline_auto?.status === 'translate_complete') {
           await setPipelineStatus(db, book.id, 'enriching');
+        }
+      }
 
+      // Process all books concurrently
+      const enrichResults = await Promise.allSettled(
+        readyForEnrich.map(async (book) => {
           // GET /api/books/{id}/index generates summary + index if stale
           const res = await fetch(`${baseUrl}/api/books/${book.id}/index`, {
             method: 'GET',
           });
 
           if (!res.ok) {
-            const retries = book.pipeline_auto?.retry_count || 0;
-            if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Enrich failed: HTTP ${res.status}`, retries);
-            } else {
-              await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
-            }
-            log.errors.push(`Enrich ${book.id}: HTTP ${res.status}`);
-            continue;
+            throw new Error(`HTTP ${res.status}`);
           }
 
           // Quality scoring — non-blocking, fast (~2s)
           try { await scoreBookQuality(db, book.id); } catch { /* non-critical */ }
 
-          await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
+          return book;
+        })
+      );
+
+      // Process results
+      for (let i = 0; i < enrichResults.length; i++) {
+        const result = enrichResults[i];
+        const book = readyForEnrich[i];
+        const isStaleReenrich = book.enrichment_stale && book.pipeline_auto?.status !== 'translate_complete';
+
+        if (result.status === 'fulfilled') {
+          if (isStaleReenrich) {
+            // Stale re-enrich: just clear the flag, don't touch pipeline status
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $unset: { enrichment_stale: '' } }
+            );
+          } else {
+            await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
+          }
           log.enriched++;
-        } catch (err) {
+        } else {
           const retries = book.pipeline_auto?.retry_count || 0;
-          if (retries >= MAX_RETRIES) {
+          if (isStaleReenrich) {
+            // Stale re-enrich failure: clear the flag anyway — will retry next time OCR/translation runs
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $unset: { enrichment_stale: '' } }
+            );
+          } else if (retries >= MAX_RETRIES) {
             // Enrichment is non-critical — skip on persistent failure
             await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
             log.enriched++;
           } else {
             await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
           }
-          log.errors.push(`Enrich ${book.id}: ${err instanceof Error ? err.message : 'unknown'}`);
+          log.errors.push(`Enrich ${book.id}: ${result.reason instanceof Error ? result.reason.message : 'unknown'}`);
         }
       }
     }

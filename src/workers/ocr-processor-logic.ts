@@ -434,17 +434,25 @@ async function checkJobCompletion(
       'ocr.data': { $exists: true, $ne: '' }
     });
 
+    // Mark enrichment stale if this book already has an index
+    const bookDoc = await db.collection('books').findOne(
+      { id: bookId },
+      { projection: { 'index.generatedAt': 1 } }
+    );
+    const enrichmentStale = bookDoc?.index?.generatedAt ? { enrichment_stale: true } : {};
+
     await db.collection('books').updateOne(
       { id: bookId },
       {
         $set: {
           pages_ocr: totalPagesWithOcr,
+          ...enrichmentStale,
           updated_at: new Date()
         },
         $unset: { job: '' }
       }
     );
 
-    console.log(`[OCR] Updated book ${bookId}: pages_ocr = ${totalPagesWithOcr}`);
+    console.log(`[OCR] Updated book ${bookId}: pages_ocr = ${totalPagesWithOcr}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
   }
 }

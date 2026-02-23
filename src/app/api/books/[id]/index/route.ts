@@ -733,6 +733,49 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
   };
 }
 
+/**
+ * Validate quotes against source translation text.
+ * Returns only quotes whose text has >70% word overlap with some passage in the source.
+ */
+function validateQuotes(
+  quotes: Array<{ text: string; page: number; context?: string; significance?: string }>,
+  pages: PageData[]
+): Array<{ text: string; page: number; context?: string; significance?: string }> {
+  // Build a lookup of translation text by page number
+  const textByPage = new Map<number, string>();
+  for (const page of pages) {
+    if (page.translation?.data) {
+      // Clean metadata tags for matching
+      const clean = page.translation.data
+        .replace(/<[a-z-]+>[\s\S]*?<\/[a-z-]+>/gi, '')
+        .replace(/\[\[[^\]]+\]\]/g, '')
+        .toLowerCase();
+      textByPage.set(page.page_number, clean);
+    }
+  }
+
+  // Combine all text for fallback matching (quote might reference wrong page)
+  const allText = Array.from(textByPage.values()).join(' ');
+
+  return quotes.filter(quote => {
+    if (!quote.text || quote.text.length < 10) return false;
+
+    const quoteWords = quote.text.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+    if (quoteWords.length === 0) return true; // Very short quote, keep it
+
+    // First try the specific page
+    const pageText = textByPage.get(quote.page);
+    if (pageText) {
+      const matchCount = quoteWords.filter(w => pageText.includes(w)).length;
+      if (matchCount / quoteWords.length > 0.7) return true;
+    }
+
+    // Fallback: check across all pages
+    const matchCount = quoteWords.filter(w => allText.includes(w)).length;
+    return matchCount / quoteWords.length > 0.7;
+  });
+}
+
 // Sync entities from a single book to the cross-book entities collection
 async function syncBookEntities(
   db: Awaited<ReturnType<typeof getDb>>,
@@ -936,6 +979,26 @@ export async function GET(
       console.log('Skipping summary: no translations and no research context');
     }
 
+    // Validate quotes against source text — drop hallucinated ones
+    const allBatchQuotes = batchExtractions.flatMap(b => b.quotes);
+    const validatedBatchQuotes = validateQuotes(allBatchQuotes, pages);
+    const droppedBatch = allBatchQuotes.length - validatedBatchQuotes.length;
+    if (droppedBatch > 0) {
+      console.log(`Quote validation: dropped ${droppedBatch}/${allBatchQuotes.length} batch quotes`);
+    }
+
+    // Also validate section quotes
+    for (const section of sectionSummaries) {
+      if (section.quotes && section.quotes.length > 0) {
+        const before = section.quotes.length;
+        section.quotes = validateQuotes(section.quotes, pages);
+        const dropped = before - section.quotes.length;
+        if (dropped > 0) {
+          console.log(`Quote validation: dropped ${dropped}/${before} quotes from section "${section.title}"`);
+        }
+      }
+    }
+
     const index: BookIndex = {
       ...conceptIndex,
       pageSummaries,
@@ -965,7 +1028,7 @@ export async function GET(
         overview: bookSummary.abstract || bookSummary.brief,
         detailed: bookSummary.detailed || '',
         themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
-        quotes: batchExtractions.flatMap(b => b.quotes).slice(0, 15),
+        quotes: validatedBatchQuotes.slice(0, 15),
         generated_at: new Date(),
         model: 'gemini-3-flash-preview'
       };
@@ -973,7 +1036,7 @@ export async function GET(
 
     await db.collection('books').updateOne(
       { id },
-      { $set: updateData }
+      { $set: updateData, $unset: { enrichment_stale: '' } }
     );
 
     // Sync entities to cross-book entity collection (non-blocking)
