@@ -27,7 +27,8 @@ import { nanoid } from 'nanoid';
 const TARGET_MODEL = 'gemini-3-flash-preview';
 const TARGET_PROMPT = 'v5.2026-02';
 const SKIP_MODELS = ['manual', 'manual-correction'];
-const BATCH_SIZE = 20; // Pages per inline batch (keep small to stay under request size limits)
+const INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in HTTP body, ~20MB limit)
+const FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
 const IMAGE_CONCURRENCY = 20; // Parallel image downloads
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
@@ -372,39 +373,69 @@ async function main() {
         continue;
       }
 
-      // Build JSONL and submit in chunks
+      // Build and submit in chunks — use file-based for larger batches (7.5x quota savings)
       const parentJobId = nanoid();
       const childJobIds = [];
       let bookPagesSubmitted = 0;
+      const useFileBased = downloaded.length > INLINE_BATCH_SIZE;
+      const batchSize = useFileBased ? FILE_BATCH_SIZE : INLINE_BATCH_SIZE;
 
-      for (let j = 0; j < downloaded.length; j += BATCH_SIZE) {
-        const chunk = downloaded.slice(j, j + BATCH_SIZE);
-
-        // Build inline requests (no file upload — bypasses file storage quota)
-        const inlineRequests = chunk.map(item => ({
-          request: {
-            contents: [{
-              parts: [
-                { text: prompt },
-                { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
-              ],
-            }],
-            generationConfig: {
-              temperature: 0.1,
-              maxOutputTokens: 16384,
-              thinkingConfig: { thinkingBudget: 0 },
-            },
-          },
-          metadata: { key: item.pageId },
-        }));
+      for (let j = 0; j < downloaded.length; j += batchSize) {
+        const chunk = downloaded.slice(j, j + batchSize);
 
         try {
           const childJobId = nanoid();
           const displayName = `reocr-${book.id}-${childJobId}`;
-          console.log(`  Submitting batch ${Math.floor(j / BATCH_SIZE) + 1} (${chunk.length} pages)...`);
+          const batchNum = Math.floor(j / batchSize) + 1;
+          let batchJob;
 
-          // Submit batch job with inline requests
-          const batchJob = await createBatchJobInline(TARGET_MODEL, inlineRequests, displayName);
+          if (useFileBased) {
+            // File-based: build JSONL, upload to File API, submit one batch job
+            console.log(`  Building JSONL for batch ${batchNum} (${chunk.length} pages, file-based)...`);
+            const jsonlLines = chunk.map(item => JSON.stringify({
+              request: {
+                contents: [{
+                  parts: [
+                    { text: prompt },
+                    { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+                  ],
+                }],
+                generationConfig: {
+                  temperature: 0.1,
+                  maxOutputTokens: 16384,
+                  thinkingConfig: { thinkingBudget: 0 },
+                },
+              },
+              metadata: { key: item.pageId },
+            }));
+            const jsonlContent = jsonlLines.join('\n');
+            const sizeMB = (Buffer.byteLength(jsonlContent) / 1024 / 1024).toFixed(1);
+            console.log(`  Uploading ${sizeMB} MB JSONL...`);
+            const fileResult = await uploadBatchFile(jsonlContent, displayName);
+            console.log(`  Uploaded: ${fileResult.name}`);
+            batchJob = await createBatchJobFromFile(TARGET_MODEL, fileResult.name, displayName);
+          } else {
+            // Inline: small batch, base64 in HTTP body
+            console.log(`  Submitting batch ${batchNum} (${chunk.length} pages, inline)...`);
+            const inlineRequests = chunk.map(item => ({
+              request: {
+                contents: [{
+                  parts: [
+                    { text: prompt },
+                    { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+                  ],
+                }],
+                generationConfig: {
+                  temperature: 0.1,
+                  maxOutputTokens: 16384,
+                  thinkingConfig: { thinkingBudget: 0 },
+                },
+              },
+              metadata: { key: item.pageId },
+            }));
+            batchJob = await createBatchJobInline(TARGET_MODEL, inlineRequests, displayName);
+          }
+
           console.log(`  Submitted: ${batchJob.name} (${batchJob.state})`);
 
           // Record in DB
@@ -420,6 +451,7 @@ async function main() {
             model: TARGET_MODEL,
             language,
             prompt_version: TARGET_PROMPT,
+            submission_method: useFileBased ? 'file' : 'inline',
             force: !NEW_ONLY,
             created_at: new Date(),
             updated_at: new Date(),
@@ -443,6 +475,7 @@ async function main() {
             output_tokens: 0,
             status: 'submitted',
             endpoint: 'scripts/bulk-reocr-local.mjs',
+            submission_method: useFileBased ? 'file' : 'inline',
             timestamp: new Date(),
           });
         } catch (error) {

@@ -33,7 +33,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const OCR_MODEL = 'gemini-3-flash-preview';
 const OCR_PROMPT_VERSION = 'v5.2026-02';
-const OCR_BATCH_SIZE = 20;        // Pages per Gemini inline batch
+const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
+const OCR_FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
 const MAX_PAGES_PER_BOOK = 500;   // Max pages to OCR per book
 
@@ -220,6 +221,95 @@ async function createBatchJobInline(model, requests, displayName) {
   throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 }
 
+/**
+ * Upload JSONL content to Gemini File API for file-based batch submission.
+ * Uses resumable upload protocol. Returns { name, uri } of uploaded file.
+ */
+async function uploadBatchFile(jsonlContent, displayName, apiKey) {
+  const contentLength = Buffer.byteLength(jsonlContent);
+
+  // Step 1: Start resumable upload (text/plain as workaround for Gemini JSONL bug)
+  const startResponse = await fetch(
+    `https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Upload-Protocol': 'resumable',
+        'X-Goog-Upload-Command': 'start',
+        'X-Goog-Upload-Header-Content-Length': contentLength.toString(),
+        'X-Goog-Upload-Header-Content-Type': 'text/plain',
+      },
+      body: JSON.stringify({ file: { displayName } }),
+    }
+  );
+
+  if (!startResponse.ok) {
+    const error = await startResponse.text();
+    throw new Error(`File upload start failed: ${error.substring(0, 200)}`);
+  }
+
+  const uploadUrl = startResponse.headers.get('X-Goog-Upload-URL');
+  if (!uploadUrl) throw new Error('No upload URL returned from File API');
+
+  // Step 2: Upload the content
+  const uploadResponse = await fetch(uploadUrl, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'text/plain',
+      'X-Goog-Upload-Command': 'upload, finalize',
+      'X-Goog-Upload-Offset': '0',
+    },
+    body: jsonlContent,
+  });
+
+  if (!uploadResponse.ok) {
+    const error = await uploadResponse.text();
+    throw new Error(`File upload failed: ${error.substring(0, 200)}`);
+  }
+
+  const fileInfo = await uploadResponse.json();
+  if (!fileInfo.file?.name) {
+    throw new Error(`File upload response missing 'file.name': ${JSON.stringify(fileInfo).substring(0, 200)}`);
+  }
+
+  return { name: fileInfo.file.name, uri: fileInfo.file.uri };
+}
+
+/**
+ * Create a batch job from an uploaded JSONL file.
+ * Tries all API keys on quota exhaustion (429).
+ */
+async function createBatchJobFromFile(model, fileName, displayName, preferredKeyIndex = 0) {
+  for (let ki = preferredKeyIndex; ki < GEMINI_BATCH_KEYS.length; ki++) {
+    const apiKey = getGeminiApiKey(ki);
+    const response = await fetch(
+      `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          batch: {
+            display_name: displayName,
+            input_config: { file_name: fileName },
+          },
+        }),
+      }
+    );
+
+    if (response.ok) {
+      const result = await response.json();
+      return { name: result.name, state: result.state || 'JOB_STATE_PENDING', keyIndex: ki };
+    }
+
+    const errorText = await response.text();
+    console.log(`    Key ${ki} failed for file batch (${response.status}): ${errorText.substring(0, 100)}`);
+    if (response.status === 429) continue;
+    throw new Error(`File batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
+  }
+  throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+}
+
 async function getOcrPromptFromDb(db) {
   const prompt = await db.collection('prompts').findOne(
     { type: 'ocr', is_default: true },
@@ -236,8 +326,12 @@ async function getOcrPromptFromDb(db) {
 
 /**
  * Submit OCR for a single book directly to Gemini Batch API.
- * Downloads images on Hetzner (no Vercel memory limits), splits into batches of 20.
- * Returns { submitted: number, jobName: string } or throws.
+ * Downloads images on Hetzner, then submits via:
+ *   - Inline batch for ≤20 pages (base64 in HTTP body, simple)
+ *   - File-based batch for >20 pages (JSONL uploaded to File API, ~150 pages/job)
+ *
+ * This is a 7.5x improvement in quota efficiency vs the old 20-page-per-job approach.
+ * A 300-page book now uses 2 batch jobs instead of 15.
  */
 async function submitOcrDirectly(db, book) {
   // Find pages needing OCR
@@ -273,34 +367,72 @@ async function submitOcrDirectly(db, book) {
   console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
 
   const prompt = await getOcrPromptFromDb(db);
+
+  // Choose batch size based on page count
+  const useFileBased = downloaded.length > OCR_INLINE_BATCH_SIZE;
+  const batchSize = useFileBased ? OCR_FILE_BATCH_SIZE : OCR_INLINE_BATCH_SIZE;
+
   const parentJobId = nanoid();
   const childJobIds = [];
   let totalSubmitted = 0;
   let firstJobName = null;
 
-  for (let j = 0; j < downloaded.length; j += OCR_BATCH_SIZE) {
-    const chunk = downloaded.slice(j, j + OCR_BATCH_SIZE);
-
-    const inlineRequests = chunk.map(item => ({
-      request: {
-        contents: [{
-          parts: [
-            { text: prompt },
-            { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
-          ],
-        }],
-        generationConfig: {
-          temperature: 0.1,
-          maxOutputTokens: 16384,
-          thinkingConfig: { thinkingBudget: 0 },
-        },
-      },
-      metadata: { key: item.pageId },
-    }));
-
+  for (let j = 0; j < downloaded.length; j += batchSize) {
+    const chunk = downloaded.slice(j, j + batchSize);
     const childJobId = nanoid();
     const displayName = `pipeline-ocr-${book.id}-${childJobId}`;
-    const batchJob = await createBatchJobInline(OCR_MODEL, inlineRequests, displayName);
+    let batchJob;
+
+    if (useFileBased) {
+      // File-based: build JSONL, upload, submit one batch job per chunk
+      console.log(`    Building JSONL for ${chunk.length} pages (file-based)...`);
+      const jsonlLines = chunk.map(item => JSON.stringify({
+        request: {
+          contents: [{
+            parts: [
+              { text: prompt },
+              { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+            ],
+          }],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 16384,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
+        },
+        metadata: { key: item.pageId },
+      }));
+      const jsonlContent = jsonlLines.join('\n');
+      const jsonlSizeMB = (Buffer.byteLength(jsonlContent) / 1024 / 1024).toFixed(1);
+      console.log(`    JSONL size: ${jsonlSizeMB} MB for ${chunk.length} pages`);
+
+      // Upload JSONL to Gemini File API (use the first key that works)
+      const apiKey = getGeminiApiKey(0);
+      const fileResult = await uploadBatchFile(jsonlContent, displayName, apiKey);
+      console.log(`    Uploaded file: ${fileResult.name}`);
+
+      // Create batch job from the uploaded file
+      batchJob = await createBatchJobFromFile(OCR_MODEL, fileResult.name, displayName, 0);
+    } else {
+      // Inline: small batch, embed base64 directly in request body
+      const inlineRequests = chunk.map(item => ({
+        request: {
+          contents: [{
+            parts: [
+              { text: prompt },
+              { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+            ],
+          }],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 16384,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
+        },
+        metadata: { key: item.pageId },
+      }));
+      batchJob = await createBatchJobInline(OCR_MODEL, inlineRequests, displayName);
+    }
 
     if (!firstJobName) firstJobName = batchJob.name;
 
@@ -316,6 +448,7 @@ async function submitOcrDirectly(db, book) {
       status: 'pending',
       model: OCR_MODEL,
       prompt_version: OCR_PROMPT_VERSION,
+      submission_method: useFileBased ? 'file' : 'inline',
       force: false,
       created_at: new Date(),
       updated_at: new Date(),
@@ -339,6 +472,7 @@ async function submitOcrDirectly(db, book) {
       output_tokens: 0,
       status: 'submitted',
       endpoint: 'hetzner/pipeline-orchestrator',
+      submission_method: useFileBased ? 'file' : 'inline',
       timestamp: new Date(),
     });
   }
@@ -359,7 +493,8 @@ async function submitOcrDirectly(db, book) {
     });
   }
 
-  return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length };
+  const method = useFileBased ? 'file-based' : 'inline';
+  return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
 }
 
 // ── Main ──
