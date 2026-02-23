@@ -118,11 +118,11 @@ async function generateThumbnails(sourceUrl, bbox, rotation, bookId, pageId, det
   const [extractedBlob, thumbnailBlob] = await Promise.all([
     put(`${blobPrefix}.jpg`, extractedBuffer, {
       access: 'public', contentType: 'image/jpeg', addRandomSuffix: false,
-      token: BLOB_TOKEN,
+      allowOverwrite: true, token: BLOB_TOKEN,
     }),
     put(`${blobPrefix}-thumb.jpg`, thumbnailBuffer, {
       access: 'public', contentType: 'image/jpeg', addRandomSuffix: false,
-      token: BLOB_TOKEN,
+      allowOverwrite: true, token: BLOB_TOKEN,
     }),
   ]);
 
