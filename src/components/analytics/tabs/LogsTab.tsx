@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ListChecks, CheckCircle, XCircle, Pause, Loader2, Clock } from 'lucide-react';
 import { jobs } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { JobLog } from '@/lib/api-client';
 import { formatDuration, formatJobType, getStatusColor } from '../shared/formatters';
 
@@ -35,7 +36,7 @@ export default function LogsTab() {
     }
   };
 
-  if (loading) return <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}><Loader2 className="w-8 h-8 mx-auto animate-spin opacity-30" /></div>;
+  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
 
   return (
     <div className="space-y-6">

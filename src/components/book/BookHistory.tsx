@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import {
-  History, ChevronDown, ChevronUp, Loader2,
+  History, ChevronDown, ChevronUp,
   Download, Archive, FileText, Languages,
   BookOpen, ListTree, Images, Award, RotateCcw,
 } from 'lucide-react';
 import { books } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { HISTORY_EVENT_LABELS, HISTORY_EVENT_CSS_COLORS, type HistoryEventType } from '@/lib/style-constants';
 
 interface HistoryEvent {
@@ -137,9 +138,8 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
       {expanded && (
         <div className="border-t border-stone-200">
           {loading ? (
-            <div className="flex items-center justify-center py-8 text-stone-400">
-              <Loader2 className="w-5 h-5 animate-spin mr-2" />
-              Loading history...
+            <div className="py-8">
+              <BookLoader size="xs" />
             </div>
           ) : error ? (
             <div className="text-center py-8 text-red-500 text-sm">

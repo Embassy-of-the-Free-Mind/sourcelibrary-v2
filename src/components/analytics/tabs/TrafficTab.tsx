@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Users, Globe, BarChart3, Loader2 } from 'lucide-react';
+import { Users, Globe, BarChart3 } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { TrafficData } from '@/lib/api-client/types/analytics';
 
 export default function TrafficTab() {
@@ -14,7 +15,7 @@ export default function TrafficTab() {
     analytics.traffic().then(setData).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}><Loader2 className="w-8 h-8 mx-auto animate-spin opacity-30" /></div>;
+  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
 
   if (!data) {
     return (

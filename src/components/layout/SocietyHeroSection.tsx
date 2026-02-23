@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { recordLoadingMetric } from '@/lib/analytics';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 export default function SocietyHeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -31,10 +32,7 @@ export default function SocietyHeroSection() {
       {/* Loading state */}
       {!showContent && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-stone-950">
-          <div className="text-center">
-            <div className="w-12 h-12 border-2 border-amber-500/30 border-t-amber-500 rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white/60 text-sm">Loading...</p>
-          </div>
+          <BookLoader size="sm" variant="dark" />
         </div>
       )}
 

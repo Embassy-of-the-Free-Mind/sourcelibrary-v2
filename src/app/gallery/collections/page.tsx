@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Image as ImageIcon, Loader2, Layers } from 'lucide-react';
+import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
 import { gallery } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface CollectionListItem {
   id: string;
@@ -67,8 +68,8 @@ export default function CollectionsPage() {
         </div>
 
         {loading && (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
+          <div className="py-20">
+            <BookLoader size="xs" />
           </div>
         )}
 

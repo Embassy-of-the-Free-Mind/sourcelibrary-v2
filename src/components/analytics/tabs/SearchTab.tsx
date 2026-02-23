@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, BookOpen, AlertTriangle, Loader2 } from 'lucide-react';
+import { Search, BookOpen, AlertTriangle } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { SearchAnalyticsData } from '@/lib/api-client/types/analytics';
 import { formatNumber } from '../shared/formatters';
 import { BarChart } from '../charts/BarChart';
@@ -20,7 +21,7 @@ export default function SearchTab({ days }: SearchTabProps) {
     analytics.search(days).then(setSearchData).finally(() => setLoading(false));
   }, [days]);
 
-  if (loading) return <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}><Loader2 className="w-8 h-8 mx-auto animate-spin opacity-30" /></div>;
+  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
 
   if (!searchData) {
     return (

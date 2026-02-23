@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Image as ImageIcon, Loader2, Layers } from 'lucide-react';
+import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
 import { gallery } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface CollectionImage {
   id: string;
@@ -69,7 +70,7 @@ export default function CollectionDetailPage({
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
+        <BookLoader size="sm" />
       </div>
     );
   }

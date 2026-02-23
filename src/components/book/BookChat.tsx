@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { books } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -163,7 +164,7 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {initializing ? (
               <div className="flex items-center justify-center h-full">
-                <Loader2 className="w-6 h-6 animate-spin text-amber-600" />
+                <BookLoader size="xs" />
               </div>
             ) : (
               messages.map((msg, i) => (

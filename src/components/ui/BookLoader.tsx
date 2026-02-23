@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 interface BookLoaderProps {
   className?: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   label?: string;
   variant?: 'light' | 'dark';
 }
@@ -43,7 +43,8 @@ function getPos(row: number, col: number) {
 }
 
 export function BookLoader({ className, size = 'md', variant = 'light' }: BookLoaderProps) {
-  const svgClass = size === 'sm' ? 'w-32 h-32'
+  const svgClass = size === 'xs' ? 'w-16 h-16'
+    : size === 'sm' ? 'w-32 h-32'
     : size === 'md' ? 'w-64 h-64'
     : 'w-[28rem] h-[28rem]';
   const strokeColor = variant === 'dark' ? '#c9a86c' : 'var(--accent-rust)';

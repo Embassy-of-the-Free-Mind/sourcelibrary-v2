@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { X, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface FullscreenImageViewerProps {
   src: string;
@@ -241,7 +242,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
       >
         {!isLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-10 h-10 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            <BookLoader size="sm" variant="dark" />
           </div>
         )}
         {/* eslint-disable-next-line @next/next/no-img-element */}

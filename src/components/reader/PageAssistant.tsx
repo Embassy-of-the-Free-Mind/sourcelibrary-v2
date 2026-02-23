@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Sparkles, MessageCircle, X, Loader2, Send, ArrowLeft, Settings, Info, RotateCcw, ChevronRight, BookOpen, MessageSquarePlus } from 'lucide-react';
 import type { Page, Book } from '@/lib/types';
 import { utils, pages } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -726,8 +727,8 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
               {/* Loading state */}
               {loading && (
                 <div className="flex flex-col items-center justify-center py-8">
-                  <Loader2 className="w-8 h-8 animate-spin mb-3" style={{ color: 'var(--accent-violet)' }} />
-                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                  <BookLoader size="xs" />
+                  <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>
                     {selectedTerm ? 'Explaining...' : 'Analyzing the page...'}
                   </p>
                 </div>

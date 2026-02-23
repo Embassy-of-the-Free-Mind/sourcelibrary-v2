@@ -20,6 +20,7 @@ import {
 import { TranslationEdition, Book } from '@/lib/types';
 import ReactMarkdown from 'react-markdown';
 import { books } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface PageProps {
   params: Promise<{ id: string; editionId: string }>;
@@ -135,10 +136,7 @@ export default function EditionReviewPage({ params }: PageProps) {
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <div className="flex items-center gap-3 text-stone-600">
-          <Loader2 className="w-6 h-6 animate-spin" />
-          Loading edition...
-        </div>
+        <BookLoader size="sm" />
       </div>
     );
   }

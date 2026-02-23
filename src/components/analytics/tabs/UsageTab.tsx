@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { BookOpen, FileText, Languages, Users, DollarSign, Coins, ListChecks, Database, HardDrive, Archive, AlertTriangle, Loader2 } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { UsageStats } from '@/lib/api-client/types/analytics';
 import { formatNumber, formatCost, formatTokens } from '../shared/formatters';
 import { AreaChart } from '../charts/AreaChart';
@@ -21,7 +22,7 @@ export default function UsageTab({ days }: UsageTabProps) {
     analytics.usage(days).then(setData).finally(() => setLoading(false));
   }, [days]);
 
-  if (loading) return <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}><Loader2 className="w-8 h-8 mx-auto animate-spin opacity-30" /></div>;
+  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
   if (!data) return null;
 
   return (

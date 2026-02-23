@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { ChevronLeft, BookOpen, Zap, CheckCircle, AlertCircle, Loader2, Users, ExternalLink } from 'lucide-react';
+import { ChevronLeft, BookOpen, Zap, CheckCircle, AlertCircle, Users, ExternalLink } from 'lucide-react';
 import { contribute } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { ContributeBook, ContributorStats } from '@/lib/api-client/types';
 
 interface ProcessingStatus {
@@ -482,7 +483,7 @@ export default function ProcessPage() {
               <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
                 <div className="text-center mb-6">
                   {processing.status === 'processing' ? (
-                    <Loader2 className="w-12 h-12 mx-auto mb-4 animate-spin" style={{ color: 'var(--accent-sage)' }} />
+                    <BookLoader size="xs" />
                   ) : processing.status === 'limit_reached' ? (
                     <AlertCircle className="w-12 h-12 mx-auto mb-4" style={{ color: '#f59e0b' }} />
                   ) : (

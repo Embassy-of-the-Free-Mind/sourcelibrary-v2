@@ -14,6 +14,7 @@ import {
 import type { Book, Page } from '@/lib/types';
 import SplitModeOverlay from '@/components/pipeline/SplitModeOverlay';
 import { books, pages as pagesApi, splitDetection } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -542,7 +543,7 @@ export default function SplitPage({ params }: PageProps) {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-stone-50">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+        <BookLoader size="sm" />
       </div>
     );
   }
@@ -888,7 +889,7 @@ export default function SplitPage({ params }: PageProps) {
       {splitting && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl p-8 text-center max-w-md w-full mx-4">
-            <Loader2 className="w-12 h-12 animate-spin text-amber-600 mx-auto mb-4" />
+            <BookLoader size="xs" className="mb-4" />
             <p className="text-lg font-medium text-stone-900">
               {splitProgress || 'Splitting pages and generating cropped images...'}
             </p>
@@ -938,7 +939,7 @@ export default function SplitPage({ params }: PageProps) {
       {resettingAll && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl p-8 text-center">
-            <Loader2 className="w-12 h-12 animate-spin text-amber-600 mx-auto mb-4" />
+            <BookLoader size="xs" className="mb-4" />
             <p className="text-lg font-medium text-stone-900">Resetting pages...</p>
             <p className="text-sm text-stone-500 mt-2">This may take a moment</p>
           </div>

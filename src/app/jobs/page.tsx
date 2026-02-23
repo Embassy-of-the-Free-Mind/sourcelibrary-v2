@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronLeft, RefreshCw, Clock, RotateCw, Pause, Play } from 'lucide-react';
 import type { Job } from '@/lib/types';
 import { jobs as jobsApi } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import { JobCard } from './job-card';
 
 export default function JobsPage() {
@@ -102,9 +103,8 @@ export default function JobsPage() {
 
       <main className="max-w-5xl mx-auto px-6 py-8">
         {loading && jobs.length === 0 ? (
-          <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>
-            <RefreshCw className="w-8 h-8 mx-auto mb-4 animate-spin opacity-30" />
-            <p>Loading jobs...</p>
+          <div className="py-12">
+            <BookLoader size="xs" />
           </div>
         ) : jobs.length === 0 ? (
           <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}>

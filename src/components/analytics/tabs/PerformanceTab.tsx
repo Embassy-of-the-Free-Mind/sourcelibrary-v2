@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Clock, Loader2 } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { PerformanceData } from '@/lib/api-client/types/analytics';
 import { formatDuration, formatTime } from '../shared/formatters';
 
@@ -19,7 +20,7 @@ export default function PerformanceTab({ hours }: PerformanceTabProps) {
     analytics.loading(hours).then(setPerfData).finally(() => setLoading(false));
   }, [hours]);
 
-  if (loading) return <div className="text-center py-12" style={{ color: 'var(--text-muted)' }}><Loader2 className="w-8 h-8 mx-auto animate-spin opacity-30" /></div>;
+  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
 
   return (
     <div className="space-y-6">

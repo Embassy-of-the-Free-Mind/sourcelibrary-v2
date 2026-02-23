@@ -18,6 +18,7 @@ import {
   Trash2
 } from 'lucide-react';
 import { detections } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { Detection, PageWithDetections, ReviewResponse } from '@/lib/api-client/types/detections';
 
 type BBox = NonNullable<Detection['bbox']>;
@@ -325,8 +326,8 @@ export default function DetectionReviewPage() {
 
         {/* Loading */}
         {loading && (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+          <div className="py-20">
+            <BookLoader size="xs" />
           </div>
         )}
 

@@ -12,6 +12,7 @@ import {
   FileText,
 } from 'lucide-react';
 import { experiments, books } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 import type { Experiment, ExperimentRunResponse } from '@/lib/api-client/types/experiments';
 import type { Book } from '@/lib/types';
 
@@ -79,7 +80,7 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
   if (loading) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-stone-400" />
+        <BookLoader size="sm" />
       </div>
     );
   }

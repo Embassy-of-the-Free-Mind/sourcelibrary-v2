@@ -20,6 +20,7 @@ import {
   X,
 } from 'lucide-react';
 import { gallery } from '@/lib/api-client';
+import { BookLoader } from '@/components/ui/BookLoader';
 
 interface CollectionItem {
   id: string;
@@ -261,8 +262,8 @@ export default function AdminCollectionsPage() {
         )}
 
         {loading && (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
+          <div className="py-20">
+            <BookLoader size="xs" />
           </div>
         )}
 
@@ -354,8 +355,8 @@ export default function AdminCollectionsPage() {
               )}
 
               {editingSlug && detailLoading && (
-                <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                  <Loader2 className="w-8 h-8 text-amber-600 animate-spin mx-auto" />
+                <div className="bg-white rounded-lg shadow-sm p-8">
+                  <BookLoader size="xs" />
                 </div>
               )}
 
