@@ -29,7 +29,7 @@ const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
 export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, displayBrightness, bookFeatured, totalBooks }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
-  const betaGate = useBetaGate(bookFeatured);
+  const betaGate = useBetaGate();
   const [batchMode, setBatchMode] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
