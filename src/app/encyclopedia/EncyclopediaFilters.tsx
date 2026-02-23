@@ -23,8 +23,11 @@ export default function EncyclopediaFilters() {
         params.set(key, value);
       }
     }
-    // Reset to first page on filter change
-    params.delete('offset');
+    // Reset pagination and letter on filter change
+    params.delete('page');
+    if (updates.q !== undefined) {
+      params.delete('letter');
+    }
     startTransition(() => {
       router.push(`/encyclopedia?${params.toString()}`, { scroll: false });
     });
@@ -48,7 +51,7 @@ export default function EncyclopediaFilters() {
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               onBlur={() => { if (searchInput !== query) updateParams({ q: searchInput || null }); }}
-              className="w-full pl-10 pr-4 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full pl-10 pr-4 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
             />
           </form>
 
@@ -73,7 +76,7 @@ export default function EncyclopediaFilters() {
           <select
             value={minBooks}
             onChange={(e) => updateParams({ min_books: e.target.value })}
-            className="px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-3 py-2 border border-stone-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
           >
             <option value={1}>All entities</option>
             <option value={2}>2+ books</option>
