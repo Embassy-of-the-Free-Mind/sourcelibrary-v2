@@ -38,6 +38,7 @@ export async function GET(
     const filter: Record<string, unknown> = {
       collections: id,
       status: { $ne: 'deleted' },
+      hidden: { $ne: true },
       pages_count: { $gt: 0 },
     };
     if (language) filter.language = language;
@@ -76,7 +77,7 @@ export async function GET(
       // Top 5 books: prefer translated books with summaries, ranked by quality/reads
       db.collection('books')
         .find(
-          { collections: id, status: { $ne: 'deleted' }, pages_translated: { $gt: 0 } },
+          { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
           { projection: highlightProjection },
         )
         .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
