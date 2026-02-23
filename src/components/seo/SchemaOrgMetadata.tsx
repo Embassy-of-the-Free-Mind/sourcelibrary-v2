@@ -23,6 +23,9 @@ export default function SchemaOrgMetadata({
   baseUrl = BASE_URL,
   currentPage,
 }: SchemaOrgMetadataProps) {
+  // Composition date from source work timeline (if available)
+  const compositionLayer = book.source_work_dates?.find(l => l.type === 'composition');
+
   // Original work metadata
   const originalWork = {
     '@type': 'Book',
@@ -34,6 +37,7 @@ export default function SchemaOrgMetadata({
     },
     inLanguage: book.language,
     ...(book.published && { datePublished: book.published }),
+    ...(compositionLayer && { dateCreated: compositionLayer.date_display }),
     ...(book.publisher && {
       publisher: {
         '@type': 'Organization',

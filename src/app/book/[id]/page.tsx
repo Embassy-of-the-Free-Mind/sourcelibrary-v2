@@ -339,7 +339,7 @@ async function BookInfo({ id }: { id: string }) {
                 {imageCount > 0 && (
                   <Link
                     href={`/gallery?bookId=${book.id}`}
-                    className="flex items-center gap-2 text-amber-400 hover:text-amber-300 transition-colors"
+                    className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
                     title="View identified images in gallery"
                   >
                     <Images className="w-4 h-4" />
@@ -442,11 +442,11 @@ async function BookInfo({ id }: { id: string }) {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="card p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>About This Book</h2>
+                <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
                 {hasTranslations ? (
                   <Link
                     href={`/book/${book.id}/guide`}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:text-amber-800 hover:bg-amber-50 rounded-lg transition-colors"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-accent-rust hover:text-accent-gold-dark hover:bg-accent-gold/8 rounded-lg transition-colors"
                   >
                     <BookText className="w-4 h-4" />
                     {hasSummary ? 'Full Summary & Index' : 'Generate Summary'}
@@ -513,12 +513,12 @@ async function BookInfo({ id }: { id: string }) {
                 <details className="card mt-6">
                   <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                     <div className="flex items-center gap-3">
-                      <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Index</h2>
+                      <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Index</h2>
                       <span className="text-xs text-stone-400">{counts}</span>
                     </div>
                     <Link
                       href="/encyclopedia"
-                      className="text-sm text-amber-700 hover:text-amber-800"
+                      className="text-sm text-accent-rust hover:text-accent-gold-dark"
                     >
                       Browse All &rarr;
                     </Link>
@@ -619,7 +619,7 @@ async function BookInfo({ id }: { id: string }) {
                 <div className="card p-6 mt-6">
                   <div className="flex items-center gap-2 mb-4">
                     <Search className="w-4 h-4 text-stone-400" />
-                    <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Related Books</h2>
+                    <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Related Books</h2>
                   </div>
 
                   {/* Work siblings — other editions of the same text */}
@@ -635,7 +635,7 @@ async function BookInfo({ id }: { id: string }) {
                             href={`/book/${sibling.id || sibling._id?.toString()}`}
                             className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
                           >
-                            <span className="text-stone-800 group-hover:text-amber-800 transition-colors">
+                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors">
                               {sibling.display_title || sibling.title}
                             </span>
                             {sibling.language && (

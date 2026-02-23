@@ -110,6 +110,16 @@ export interface Book {
   // Read analytics (maintained by analytics/track)
   read_count?: number;
 
+  // Source work compositional timeline
+  source_work_dates?: SourceWorkDateLayer[];
+  source_work_dates_meta?: {
+    enriched_at: Date;
+    model: string;
+    confidence: 'high' | 'medium' | 'low';
+    source: 'ai_enrichment' | 'manual';
+    reasoning?: string;
+  };
+
   // Split detection for two-page spreads
   needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous
   split_check?: {
@@ -150,6 +160,20 @@ export interface Section {
   source_chapter?: string;  // Original chapter heading from OCR (if hybrid detection)
   generated_at?: Date;
   detection_method: 'ai' | 'manual' | 'hybrid';
+}
+
+// Compositional timeline layer for source work provenance
+export type SourceWorkDateType = 'composition' | 'translation' | 'compilation' | 'commentary' | 'redaction' | 'edition' | 'abridgement' | 'adaptation';
+
+export interface SourceWorkDateLayer {
+  type: SourceWorkDateType;
+  date: string;              // ISO-ish: negative = BCE (e.g. '-360', '1484')
+  date_display: string;      // Human-readable (e.g. 'c. 360 BCE', '1484')
+  date_precision: 'exact' | 'decade' | 'century' | 'millennium';
+  author?: string;
+  work_title?: string;
+  language?: string;
+  notes?: string;
 }
 
 // Chapter/heading extracted from OCR for table of contents

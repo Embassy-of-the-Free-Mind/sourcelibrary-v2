@@ -108,7 +108,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
         <AuthCheck>
           <button
             onClick={() => setShowEditModal(true)}
-            className="flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300 transition-colors"
+            className="flex items-center gap-1.5 text-sm text-accent-gold hover:text-accent-gold transition-colors"
             title="Edit metadata"
           >
             <Pencil className="w-3.5 h-3.5" />
@@ -166,8 +166,29 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
 
             {book.published && (
               <div className="flex gap-2">
-                <span className="text-stone-500 w-24 flex-shrink-0">Date:</span>
+                <span className="text-stone-500 w-24 flex-shrink-0">Published:</span>
                 <span className="text-stone-200">{book.published}</span>
+              </div>
+            )}
+
+            {/* Source Work Timeline */}
+            {book.source_work_dates && book.source_work_dates.length > 0 && (
+              <div className="mt-3 pt-3 border-t border-stone-700/50">
+                <span className="text-stone-400 text-xs font-medium uppercase tracking-wide">Source Work</span>
+                <div className="mt-2 space-y-1.5">
+                  {book.source_work_dates.map((layer, i) => (
+                    <div key={i} className="flex gap-2">
+                      <span className="text-stone-500 w-24 flex-shrink-0 capitalize">{layer.type}:</span>
+                      <span className="text-stone-200">
+                        {layer.author && <span>{layer.author}, </span>}
+                        {layer.work_title && <span className="italic">{layer.work_title} </span>}
+                        {layer.language && <span className="text-stone-400">({layer.language}, </span>}
+                        {layer.date_display}
+                        {layer.language && <span className="text-stone-400">)</span>}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -192,7 +213,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                   href={`https://www.ustc.ac.uk/editions/${book.ustc_id}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-amber-400 hover:text-amber-300 flex items-center gap-1"
+                  className="text-accent-gold hover:text-accent-gold flex items-center gap-1"
                 >
                   {book.ustc_id}
                   <ExternalLink className="w-3 h-3" />
@@ -217,7 +238,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                         href={book.image_source.source_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-amber-400 hover:text-amber-300 flex items-center gap-1"
+                        className="text-accent-gold hover:text-accent-gold flex items-center gap-1"
                       >
                         {book.image_source.provider_name}
                         <ExternalLink className="w-3 h-3" />
@@ -295,11 +316,11 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
 
       {/* Reset Modal */}
       {showResetModal && (
-        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-stone-800 rounded-xl max-w-md w-full p-6 border border-stone-700">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-amber-500/20 rounded-lg">
-                <AlertTriangle className="w-6 h-6 text-amber-400" />
+              <div className="p-2 bg-accent-gold/15 rounded-lg">
+                <AlertTriangle className="w-6 h-6 text-accent-gold" />
               </div>
               <h3 className="text-lg font-semibold text-white">Reset to Source</h3>
             </div>
@@ -312,7 +333,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
               {/* Soft Reset Option */}
               <label
                 className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${resetMode === 'soft'
-                    ? 'border-amber-500 bg-amber-500/10'
+                    ? 'border-accent-gold bg-accent-gold/8'
                     : 'border-stone-600 hover:border-stone-500'
                   }`}
               >
@@ -336,7 +357,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
               <label
                 className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${!canFullReimport ? 'opacity-50 cursor-not-allowed' : ''
                   } ${resetMode === 'full'
-                    ? 'border-red-500 bg-red-500/10'
+                    ? 'border-red-500 bg-status-error/10'
                     : 'border-stone-600 hover:border-stone-500'
                   }`}
               >
@@ -365,7 +386,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
 
             {/* Result message */}
             {resetResult && (
-              <div className={`p-3 rounded-lg mb-4 ${resetResult.success ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'
+              <div className={`p-3 rounded-lg mb-4 ${resetResult.success ? 'bg-status-success/20 text-green-300' : 'bg-status-error/20 text-red-300'
                 }`}>
                 {resetResult.message}
               </div>
@@ -387,8 +408,8 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                 onClick={handleReset}
                 disabled={resetting}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${resetMode === 'full'
-                    ? 'bg-red-600 hover:bg-red-700 text-white'
-                    : 'bg-amber-600 hover:bg-amber-700 text-white'
+                    ? 'bg-status-error hover:bg-status-error/90 text-white'
+                    : 'bg-accent-rust hover:bg-accent-rust/90 text-white'
                   }`}
               >
                 {resetting ? (
