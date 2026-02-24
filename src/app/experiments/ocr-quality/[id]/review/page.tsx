@@ -134,7 +134,7 @@ export default function ReviewPage({ params }: { params: Promise<{ id: string }>
               onClick={() => setShowPrompt(prev => !prev)}
               className={`px-3 py-1.5 rounded-lg text-base transition-colors ${
                 showPrompt
-                  ? 'bg-amber-100 text-amber-800'
+                  ? 'bg-accent-gold/15 text-accent-gold-dark'
                   : 'bg-warm text-muted hover:text-secondary'
               }`}
               title="Toggle prompt view (p)"
@@ -168,27 +168,27 @@ export default function ReviewPage({ params }: { params: Promise<{ id: string }>
 
       {/* Prompt panel */}
       {showPrompt && (
-        <div className="bg-amber-50 border-b border-amber-200">
+        <div className="bg-accent-gold/8 border-b border-accent-gold/20">
           <div className="max-w-7xl mx-auto p-4">
             <div className="flex items-start gap-4">
               {conditions.length > 1 ? (
                 conditions.map(cond => (
                   <div key={cond.id} className="flex-1">
-                    <h3 className="text-sm font-semibold text-amber-900 mb-2">
+                    <h3 className="text-sm font-semibold text-accent-gold-dark mb-2">
                       {cond.label}
-                      <span className="ml-2 font-normal text-amber-700">({cond.promptType})</span>
+                      <span className="ml-2 font-normal text-accent-rust">({cond.promptType})</span>
                     </h3>
-                    <pre className="text-xs font-mono text-amber-900/80 whitespace-pre-wrap bg-white/60 rounded-lg p-3 max-h-[50vh] overflow-auto border border-amber-200">
+                    <pre className="text-xs font-mono text-accent-gold-dark/80 whitespace-pre-wrap bg-white/60 rounded-lg p-3 max-h-[50vh] overflow-auto border border-accent-gold/20">
                       {resolvedPrompts[cond.id] || '(prompt not available)'}
                     </pre>
                   </div>
                 ))
               ) : (
                 <div className="w-full">
-                  <h3 className="text-sm font-semibold text-amber-900 mb-2">
+                  <h3 className="text-sm font-semibold text-accent-gold-dark mb-2">
                     {conditions[0]?.label || 'Prompt'}
                   </h3>
-                  <pre className="text-xs font-mono text-amber-900/80 whitespace-pre-wrap bg-white/60 rounded-lg p-3 max-h-[50vh] overflow-auto border border-amber-200">
+                  <pre className="text-xs font-mono text-accent-gold-dark/80 whitespace-pre-wrap bg-white/60 rounded-lg p-3 max-h-[50vh] overflow-auto border border-accent-gold/20">
                     {resolvedPrompts[conditions[0]?.id] || '(prompt not available)'}
                   </pre>
                 </div>
@@ -224,7 +224,7 @@ export default function ReviewPage({ params }: { params: Promise<{ id: string }>
             <div className="bg-blue-50 px-4 py-2.5 border-b border-blue-100">
               <span className="text-base font-semibold text-blue-900">OCR Output</span>
               {!current.success && (
-                <span className="ml-2 text-sm text-red-600">(failed)</span>
+                <span className="ml-2 text-sm text-status-error">(failed)</span>
               )}
             </div>
             <div className="p-4 max-h-[85vh] overflow-auto">

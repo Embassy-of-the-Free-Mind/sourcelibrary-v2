@@ -57,7 +57,7 @@ function PreviewCard({ src, label, filename, dark }: { src: string; label: strin
         <a
           href={src}
           download={filename}
-          className="text-xs text-stone-400 hover:text-amber-600 transition-colors opacity-0 group-hover:opacity-100"
+          className="text-xs text-stone-400 hover:text-accent-rust transition-colors opacity-0 group-hover:opacity-100"
         >
           Download
         </a>
@@ -105,7 +105,7 @@ function DecisionCard({ title, status, problem, proposal, evidence }: {
   evidence: string;
 }) {
   const statusColors = {
-    proposal: 'bg-amber-50 text-amber-700 border-amber-200',
+    proposal: 'bg-accent-gold/8 text-accent-gold-dark border-accent-gold/20',
     decided: 'bg-green-50 text-green-700 border-green-200',
     open: 'bg-blue-50 text-blue-700 border-blue-200',
   };
@@ -293,7 +293,7 @@ export default function BrandPage() {
                                       key={file}
                                       href={`/brand/png/${file}`}
                                       download
-                                      className="px-2 py-0.5 text-xs bg-stone-100 hover:bg-amber-100 text-stone-500 hover:text-amber-700 rounded transition-colors"
+                                      className="px-2 py-0.5 text-xs bg-stone-100 hover:bg-accent-gold/15 text-stone-500 hover:text-accent-rust rounded transition-colors"
                                     >
                                       {height}px
                                     </a>
@@ -368,17 +368,17 @@ export default function BrandPage() {
           </div>
 
           {/* Amber vs Gold comparison */}
-          <div className="mb-12 bg-amber-50/50 border border-amber-100 rounded-lg p-5">
-            <h4 className="font-medium text-amber-800 mb-2">Amber vs Gold &mdash; are these the same color?</h4>
+          <div className="mb-12 bg-accent-gold/5 border border-accent-gold/15 rounded-lg p-5">
+            <h4 className="font-medium text-accent-gold-dark mb-2">Amber vs Gold &mdash; are these the same color?</h4>
             <div className="flex items-center gap-6 mb-3">
               <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-amber-200" style={{ backgroundColor: '#d97706' }} />
+                <div className="w-16 h-16 rounded-lg border-2 border-accent-gold/20" style={{ backgroundColor: '#d97706' }} />
                 <p className="text-xs text-stone-600 mt-1 font-medium">Amber-600</p>
                 <p className="text-[10px] text-stone-400 font-mono">#d97706</p>
               </div>
               <div className="text-stone-300 text-2xl">&ne;</div>
               <div className="text-center">
-                <div className="w-16 h-16 rounded-lg border-2 border-amber-200" style={{ backgroundColor: '#c9a86c' }} />
+                <div className="w-16 h-16 rounded-lg border-2 border-accent-gold/20" style={{ backgroundColor: '#c9a86c' }} />
                 <p className="text-xs text-stone-600 mt-1 font-medium">Gold token</p>
                 <p className="text-[10px] text-stone-400 font-mono">#c9a86c</p>
               </div>
@@ -498,14 +498,14 @@ export default function BrandPage() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 rounded bg-green-600" />
+                  <div className="w-6 h-6 rounded bg-status-success" />
                   <p className="text-sm font-medium text-stone-700">Green (Success)</p>
                 </div>
                 <p className="text-xs text-stone-500">52 files. OCR/translation complete, pipeline done, success.</p>
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-6 h-6 rounded bg-red-600" />
+                  <div className="w-6 h-6 rounded bg-status-error" />
                   <p className="text-sm font-medium text-stone-700">Red (Error)</p>
                 </div>
                 <p className="text-xs text-stone-500">46 files. Failed jobs, errors, delete confirmations.</p>
@@ -646,15 +646,15 @@ export default function BrandPage() {
               <div className="space-y-4">
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Display / Headings</p>
-                  <p className="font-serif text-2xl text-stone-800" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>Playfair Display</p>
+                  <p className="font-serif text-2xl text-stone-800 font-display">Playfair Display</p>
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Body / Reading</p>
-                  <p className="text-lg text-stone-800" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>Newsreader &mdash; optimized for extended reading</p>
+                  <p className="text-lg text-stone-800 font-body">Newsreader &mdash; optimized for extended reading</p>
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">Scholarly / OCR text</p>
-                  <p className="text-lg text-stone-800" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}>Cormorant Garamond &mdash; historical text display</p>
+                  <p className="text-lg text-stone-800 font-serif">Cormorant Garamond &mdash; historical text display</p>
                 </div>
                 <div>
                   <p className="text-xs text-stone-400 uppercase tracking-wide mb-1">UI / Navigation</p>

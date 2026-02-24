@@ -51,7 +51,7 @@ const timelineEras = [
   {
     era: 'Baroque Science',
     entries: [
-      { year: '1650', label: 'Gaffarel', work: 'Curiositez inouyes', lang: 'French', langColor: 'text-amber-700 bg-amber-50', note: 'Talismanic astrology and celestial scripts' },
+      { year: '1650', label: 'Gaffarel', work: 'Curiositez inouyes', lang: 'French', langColor: 'text-accent-rust bg-accent-gold/8', note: 'Talismanic astrology and celestial scripts' },
       { year: '1656', label: 'Kircher', work: 'Itinerarium Exstaticum', lang: 'Latin', langColor: 'text-secondary bg-stone-100', note: 'A Jesuit\'s ecstatic voyage through the cosmos' },
       { year: '1671', label: 'Kircher', work: 'Ars Magna Lucis et Umbrae', lang: 'Latin', langColor: 'text-secondary bg-stone-100', note: 'Light, shadow, and the stellar sphere' },
     ],
@@ -112,14 +112,14 @@ export default function AstrologicalDiagramsPage() {
                 <div className="flex-1 h-px bg-border-light" />
               </div>
               {/* Entries */}
-              <div className="pl-4 border-l-2 border-amber-300/60 space-y-4">
+              <div className="pl-4 border-l-2 border-accent-gold/12 space-y-4">
                 {era.entries.map((entry) => (
                   <div key={entry.year + entry.work} className="relative flex gap-4 items-start group">
                     {/* Dot on the line */}
-                    <div className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-amber-400 border-2 border-amber-200 shrink-0" />
+                    <div className="absolute -left-[21px] top-1.5 w-2.5 h-2.5 rounded-full bg-accent-gold border-2 border-accent-gold/20 shrink-0" />
                     {/* Year */}
                     <div className="w-28 shrink-0">
-                      <span className="text-sm font-bold text-amber-700 tabular-nums">{entry.year}</span>
+                      <span className="text-sm font-bold text-accent-rust tabular-nums">{entry.year}</span>
                     </div>
                     {/* Content */}
                     <div className="flex-1 min-w-0">
@@ -152,7 +152,7 @@ export default function AstrologicalDiagramsPage() {
             </p>
             <p className="text-secondary leading-relaxed">
               The manuscript is held at the Bibliothèque nationale de France (Pelliot chinois 3594) and is now{' '}
-              <Link href="/book/6992ca1ad4d545ae73fed806" className="text-amber-700 hover:text-amber-600 underline">
+              <Link href="/book/6992ca1ad4d545ae73fed806" className="text-accent-rust hover:text-accent-rust underline">
                 in Source Library
               </Link>
               {' '}with a full English translation.
@@ -160,7 +160,7 @@ export default function AstrologicalDiagramsPage() {
           </div>
           <div>
             <figure>
-              <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md">
+              <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md">
                 <Image
                   src="https://gallica.bnf.fr/iiif/ark:/12148/btv1b8300637x/f2/full/800,/0/default.jpg"
                   alt="Dunhuang Star Chart, c. 900 CE — Chinese star atlas showing lunar lodges"
@@ -172,7 +172,7 @@ export default function AstrologicalDiagramsPage() {
               </div>
               <figcaption className="text-xs text-muted mt-2 text-center">
                 Pelliot chinois 3594, c. 900 CE. One of the oldest comprehensive star atlases in the world.{' '}
-                <Link href="/book/6992ca1ad4d545ae73fed806" className="text-amber-700 hover:text-amber-600">
+                <Link href="/book/6992ca1ad4d545ae73fed806" className="text-accent-rust hover:text-accent-rust">
                   View in collection →
                 </Link>
               </figcaption>
@@ -187,16 +187,16 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The Egyptian astronomer Claudius Ptolemy, working in Alexandria around 150&nbsp;CE, produced two texts that would dominate Western cosmology for fifteen centuries. The <em>Almagest</em> (now{' '}
-          <Link href="/book/6993881874305116d72cf0ab" className="text-amber-700 hover:text-amber-600 underline">in the collection</Link>
+          <Link href="/book/6993881874305116d72cf0ab" className="text-accent-rust hover:text-accent-rust underline">in the collection</Link>
           ) was the mathematical atlas of the heavens. The <em>Tetrabiblos</em> — &ldquo;Four Books&rdquo; — was the interpretive companion, explaining how planetary positions at birth determine character, health, and fate. In Latin translation it circulated as the <em>Quadripartitum</em>, and the 1484 Venetian printed edition{' '}
-          <Link href="/book/69906313e7b7642c081de828" className="text-amber-700 hover:text-amber-600 underline">now in Source Library</Link>
+          <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust underline">now in Source Library</Link>
           {' '}is one of the earliest printed astrological books in existence.
         </p>
 
         {/* Two-image grid */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906313e7b7642c081de828/8.jpg"
                 alt="Astrological horoscope chart from Ptolemy's Quadripartitum, 1484 — twelve houses in square format"
@@ -207,11 +207,11 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 8: The horoscope chart. Twelve triangular and diamond-shaped &ldquo;houses&rdquo; labelled in Latin — the basic framework of Western natal astrology.{' '}
-              <Link href="/book/69906313e7b7642c081de828" className="text-amber-700 hover:text-amber-600">View →</Link>
+              <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906313e7b7642c081de828/22.jpg"
                 alt="Circular zodiac diagram from Ptolemy's Quadripartitum — twelve signs and their geometric aspects"
@@ -222,7 +222,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 22: The twelve zodiac signs and their geometric <em>aspects</em> — the angular relationships (opposition, trine, square) that determine planetary influence.{' '}
-              <Link href="/book/69906313e7b7642c081de828" className="text-amber-700 hover:text-amber-600">View →</Link>
+              <Link href="/book/69906313e7b7642c081de828" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
         </div>
@@ -231,13 +231,13 @@ export default function AstrologicalDiagramsPage() {
           The horoscope chart on page 8 is an early printed version of a diagram that had been drawn by hand in manuscripts for a thousand years. The twelve houses — domains of life ranging from body and wealth to death and the afterlife — are arranged around a central diamond. Above left sits the ascendant, the degree of the zodiac rising on the eastern horizon at the moment of birth. This single diagram encapsulates the entire logic of natal astrology: a snapshot of the sky at the instant of first breath, from which a trained astrologer could read a lifetime.
         </p>
 
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
+        <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
           <p className="text-secondary italic mb-2">
             &ldquo;The astrologer does not speak of what must necessarily happen, but of what is likely to happen according to the stars&rsquo; natural inclination.&rdquo;
           </p>
           <p className="text-muted text-sm">
             &mdash; Claudius Ptolemy, <em>Tetrabiblos</em>, Book I — translated in{' '}
-            <Link href="/book/69906057ef12272ffdc8ce25" className="text-amber-700 hover:text-amber-600 underline">Source Library</Link>
+            <Link href="/book/69906057ef12272ffdc8ce25" className="text-accent-rust hover:text-accent-rust underline">Source Library</Link>
           </p>
         </div>
 
@@ -248,7 +248,7 @@ export default function AstrologicalDiagramsPage() {
 
         <div className="grid md:grid-cols-2 gap-8 mb-8 items-start">
           <figure className="order-2 md:order-1">
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69905e3c2fd6a039938a1980/5.jpg"
                 alt="Page from Abu Ma'shar's Introductorium in Astronomiam, Venice 1489"
@@ -259,7 +259,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Abu Ma&rsquo;shar, <em>Introductorium in Astronomiam</em>, Venice 1489. One of the most influential Arabic texts translated into Latin.{' '}
-              <Link href="/book/69905e3c2fd6a039938a1980" className="text-amber-700 hover:text-amber-600">View →</Link>
+              <Link href="/book/69905e3c2fd6a039938a1980" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
           <div className="order-1 md:order-2">
@@ -271,7 +271,7 @@ export default function AstrologicalDiagramsPage() {
             </p>
             <p className="text-secondary leading-relaxed">
               The 1489 Venetian incunable{' '}
-              <Link href="/book/69905e3c2fd6a039938a1980" className="text-amber-700 hover:text-amber-600 underline">in Source Library</Link>
+              <Link href="/book/69905e3c2fd6a039938a1980" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
               {' '}is a landmark of early printing: one of the first Arabic-derived scientific texts to reach a mass audience.
             </p>
           </div>
@@ -292,12 +292,12 @@ export default function AstrologicalDiagramsPage() {
             </p>
             <p className="text-secondary leading-relaxed">
               The manuscript{' '}
-              <Link href="/book/69906e6d8a353648e1ecfd91" className="text-amber-700 hover:text-amber-600 underline">in Source Library</Link>
+              <Link href="/book/69906e6d8a353648e1ecfd91" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
               {' '}is a rare survival: a complete Latin treatise on judicial and horary astrology from 15th-century England, now with English translation.
             </p>
           </div>
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906e6d8a353648e1ecfd91/15.jpg"
                 alt="Page from John Dunstable's Judicial Astrology and Astronomy, c. 1440"
@@ -308,7 +308,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               John Dunstable, <em>Judicial Astrology and Astronomy</em>, c.&nbsp;1440. The composer-astronomer&rsquo;s astrological compilation.{' '}
-              <Link href="/book/69906e6d8a353648e1ecfd91" className="text-amber-700 hover:text-amber-600">View →</Link>
+              <Link href="/book/69906e6d8a353648e1ecfd91" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
         </div>
@@ -324,7 +324,7 @@ export default function AstrologicalDiagramsPage() {
 
         {/* Hero image: Copernicus heliocentric diagram */}
         <figure className="mb-8">
-          <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-lg bg-stone-100 max-w-2xl mx-auto">
+          <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-lg bg-stone-100 max-w-2xl mx-auto">
             <Image
               src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/694b3b5b58a47807cc735dce/34.jpg"
               alt="Heliocentric diagram from Copernicus's De revolutionibus orbium coelestium, 1543 — the Sun at the centre of nested planetary orbits"
@@ -335,7 +335,7 @@ export default function AstrologicalDiagramsPage() {
           </div>
           <figcaption className="text-xs text-muted mt-2 text-center">
             <em>De revolutionibus</em>, Book I, page 34. The heliocentric diagram: the Sun at the centre, surrounded by Mercury, Venus, Earth with the Moon, Mars, Jupiter, Saturn, and the sphere of fixed stars.{' '}
-            <Link href="/book/694b3b5b58a47807cc735dce" className="text-amber-700 hover:text-amber-600">
+            <Link href="/book/694b3b5b58a47807cc735dce" className="text-accent-rust hover:text-accent-rust">
               View in collection →
             </Link>
           </figcaption>
@@ -347,7 +347,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           For astrology, the Copernican shift posed a profound challenge. The entire edifice of astrological theory rested on Earth&rsquo;s central position as the receiver of planetary influences. If Earth moved around the Sun, what became of the ascendant, the houses, the angles? Astrological practitioners of the 16th and 17th centuries largely ignored the problem and continued their calculations unchanged — the geocentric tables still worked — but the conceptual foundation had been quietly pulled away. The{' '}
-          <Link href="/book/694b3b5b58a47807cc735dce" className="text-amber-700 hover:text-amber-600 underline">full text is in Source Library</Link>
+          <Link href="/book/694b3b5b58a47807cc735dce" className="text-accent-rust hover:text-accent-rust underline">full text is in Source Library</Link>
           , with 411 pages and all the original woodcut diagrams, translated into English.
         </p>
 
@@ -358,7 +358,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Theophrastus Bombastus von Hohenheim — Paracelsus — was the most controversial physician of the 16th century: a wandering empiricist who rejected university medicine, burned Galenic textbooks, and insisted that the physician must understand the stars before he could understand the body. His <em>Astronomia Magna oder die gantze Philosophia sagax der grossen und kleinen Welt</em> (&ldquo;The Great Astronomy, or the Complete Sagacious Philosophy of the Great and Small World,&rdquo; published 1571){' '}
-          <Link href="/book/6956eae3b5d89fc3ccb47a2a" className="text-amber-700 hover:text-amber-600 underline">is now in Source Library in German</Link>
+          <Link href="/book/6956eae3b5d89fc3ccb47a2a" className="text-accent-rust hover:text-accent-rust underline">is now in Source Library in German</Link>
           {' '}with English translation.
         </p>
 
@@ -366,13 +366,13 @@ export default function AstrologicalDiagramsPage() {
           For Paracelsus, &ldquo;astronomy&rdquo; meant something far broader than celestial mechanics. Every human being contains a &ldquo;sidereal body&rdquo; — an inner constellation — that mediates between the outer cosmos and the physical flesh. The planets do not act on us mechanically from outside; they act through this inner firmament, which is why the physician must read both: the sky above and the microcosm within. This was astrology transformed into a theory of biological individuality, and it would influence medical thinking well into the 18th century.
         </p>
 
-        <div className="bg-amber-50/60 border border-amber-200/60 rounded-xl p-6 mb-10">
+        <div className="bg-accent-gold/5 border border-accent-gold/12 rounded-xl p-6 mb-10">
           <p className="text-secondary italic mb-2">
             &ldquo;A physician who has no knowledge of astronomy can be no physician at all. He knows nothing, for heaven and earth are one, and what is above is also below.&rdquo;
           </p>
           <p className="text-muted text-sm">
             &mdash; Paracelsus, <em>Astronomia Magna</em> (1571) —{' '}
-            <Link href="/book/6956eae3b5d89fc3ccb47a2a" className="text-amber-700 hover:text-amber-600 underline">translated in Source Library</Link>
+            <Link href="/book/6956eae3b5d89fc3ccb47a2a" className="text-accent-rust hover:text-accent-rust underline">translated in Source Library</Link>
           </p>
         </div>
 
@@ -383,13 +383,13 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Johannes Kepler discovered the laws of planetary motion — the same Kepler who made his living as an imperial astrologer to Rudolf II. He believed both completely. The <em>Harmonices Mundi</em> (&ldquo;Harmony of the World,&rdquo; 1619){' '}
-          <Link href="/book/6952d12e77f38f6761bc5bec" className="text-amber-700 hover:text-amber-600 underline">in Source Library</Link>
+          <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
           {' '}contains his Third Law of Planetary Motion — the square of a planet&rsquo;s orbital period is proportional to the cube of its distance from the Sun — embedded within a vast Neoplatonic argument that the solar system is structured according to the five Platonic solids and musical ratios.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952d12e77f38f6761bc5bec/2.jpg"
                 alt="Atlas or Hercules bearing an armillary sphere — bookplate engraving from Kepler's Harmonices Mundi, 1619"
@@ -400,11 +400,11 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 2: Atlas bearing an armillary sphere — the bookplate of the Burndy Library copy of <em>Harmonices Mundi</em>.{' '}
-              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-amber-700 hover:text-amber-600">View →</Link>
+              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952d12e77f38f6761bc5bec/74.jpg"
                 alt="Five Platonic solids from Kepler's Harmonices Mundi — the cosmic figures inscribing the planetary orbits"
@@ -415,7 +415,7 @@ export default function AstrologicalDiagramsPage() {
             </div>
             <figcaption className="text-xs text-muted mt-2 text-center">
               Page 74: The five Platonic solids — the &ldquo;cosmic figures&rdquo; that, in Kepler&rsquo;s theory, nest inside one another to produce the exact spacing of the planetary orbits.{' '}
-              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-amber-700 hover:text-amber-600">View →</Link>
+              <Link href="/book/6952d12e77f38f6761bc5bec" className="text-accent-rust hover:text-accent-rust">View →</Link>
             </figcaption>
           </figure>
         </div>
@@ -431,7 +431,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Jacques Gaffarel was librarian to Cardinal Richelieu and one of the strangest figures in the history of French letters. His <em>Curiositez inouyes sur la sculpture talismanique des Persans. Horoscope des Patriarches, et Lecture des Estoilles</em> (&ldquo;Unheard-of Curiosities on the Talismanic Sculpture of the Persians, the Horoscope of the Patriarchs, and the Reading of the Stars,&rdquo; 1650){' '}
-          <Link href="/book/697a3055a3866af9498458ac" className="text-amber-700 hover:text-amber-600 underline">is in Source Library in French</Link>
+          <Link href="/book/697a3055a3866af9498458ac" className="text-accent-rust hover:text-accent-rust underline">is in Source Library in French</Link>
           {' '}with English translation. It argues three remarkable claims.
         </p>
 
@@ -450,14 +450,14 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Athanasius Kircher (1602–1680) was the most prolific scholarly polymath of the 17th century: a Jesuit priest who wrote 40 books on music, cryptography, China, Egyptology, geology, optics, magnetism, and the construction of mechanical organs. Two of his major works are{' '}
-          <Link href="/book/6952db5477f38f6761bc7402" className="text-amber-700 hover:text-amber-600 underline">in Source Library</Link>
+          <Link href="/book/6952db5477f38f6761bc7402" className="text-accent-rust hover:text-accent-rust underline">in Source Library</Link>
           . The <em>Itinerarium Exstaticum</em> (1656) is an extraordinary cosmological dialogue in which Kircher is taken on an ecstatic journey through the heavens by the angel Cosmiel, visiting each planet in turn and receiving an account of its properties. Think Dante&rsquo;s <em>Paradiso</em> rewritten by a natural philosopher who has read Copernicus, Galileo, and Kepler.
         </p>
 
         {/* Three-image gallery */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/5.jpg"
                 alt="Allegorical frontispiece from Athanasius Kircher's Ars Magna Lucis et Umbrae, 1671"
@@ -471,7 +471,7 @@ export default function AstrologicalDiagramsPage() {
             </figcaption>
           </figure>
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/2.jpg"
                 alt="Atlas bearing an armillary sphere from Kircher's Ars Magna Lucis et Umbrae"
@@ -485,7 +485,7 @@ export default function AstrologicalDiagramsPage() {
             </figcaption>
           </figure>
           <figure>
-            <div className="rounded-xl overflow-hidden border border-amber-200/50 shadow-md bg-stone-100">
+            <div className="rounded-xl overflow-hidden border border-accent-gold/10 shadow-md bg-stone-100">
               <Image
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/a5d0c381-d4ea-42cd-8864-44457e7fda33/366.jpg"
                 alt="Circular star map with zodiac constellations from Kircher's Ars Magna Lucis et Umbrae — Sciathericon stellarum fixarum"
@@ -506,7 +506,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           Kircher accepted the broad outline of the Copernican cosmos while rejecting Galileo&rsquo;s specific mechanical claims. He was, like most learned Europeans of his era, trying to hold together a cosmos that was rapidly splitting between the mathematical and the theological — to maintain a universe in which the planets were still angels, the music of the spheres was still audible to the attentive soul, and the fixed stars were still signs written for human benefit. The{' '}
-          <Link href="/book/a5d0c381-d4ea-42cd-8864-44457e7fda33" className="text-amber-700 hover:text-amber-600 underline">
+          <Link href="/book/a5d0c381-d4ea-42cd-8864-44457e7fda33" className="text-accent-rust hover:text-accent-rust underline">
             <em>Ars Magna</em>
           </Link>
           {' '}is 760 pages and represents the last great baroque synthesis of natural philosophy and celestial symbolism.
@@ -519,7 +519,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           While Western astrology developed from Babylonian, Greek, and Arabic sources, the Indian tradition — <em>jyotiṣa</em> — grew independently and reached comparable sophistication. Source Library holds over 50 Sanskrit astrological texts, including the foundational classics. Varahamihira&rsquo;s{' '}
-          <Link href="/book/69905f4440bc3a0478efb9b2" className="text-amber-700 hover:text-amber-600 underline">
+          <Link href="/book/69905f4440bc3a0478efb9b2" className="text-accent-rust hover:text-accent-rust underline">
             <em>Brihat Jataka</em>
           </Link>
           {' '}(c. 550&nbsp;CE) — &ldquo;Large Nativity&rdquo; — is the definitive Sanskrit text on natal horoscopy: 25 chapters covering every aspect of birth chart interpretation, with its celebrated commentary by Bhattotpala (966&nbsp;CE).
@@ -548,7 +548,7 @@ export default function AstrologicalDiagramsPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           Source Library is continuing to expand its astrological collection. All the texts featured here are{' '}
-          <Link href="/search?q=astrology&has_translation=true" className="text-amber-700 hover:text-amber-600 underline">
+          <Link href="/search?q=astrology&has_translation=true" className="text-accent-rust hover:text-accent-rust underline">
             searchable with full English translations
           </Link>
           . Many of the Sanskrit texts are receiving first-ever English translations through our ongoing pipeline. If you are researching astrology&rsquo;s history, the planetary medicine tradition, or the relationship between astronomy and magic in the early modern period, the primary sources are here.
@@ -575,8 +575,8 @@ export default function AstrologicalDiagramsPage() {
               { href: '/book/a5d0c381-d4ea-42cd-8864-44457e7fda33', text: 'Athanasius Kircher, Ars Magna Lucis et Umbrae (1671, Latin)' },
             ].map((item) => (
               <li key={item.href} className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1 shrink-0">→</span>
-                <Link href={item.href} className="text-amber-700 hover:text-amber-600 hover:underline transition-colors">
+                <span className="text-accent-gold mt-1 shrink-0">→</span>
+                <Link href={item.href} className="text-accent-rust hover:text-accent-rust hover:underline transition-colors">
                   {item.text}
                 </Link>
               </li>

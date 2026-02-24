@@ -101,14 +101,14 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
           ol: ({ children }) => <ol className="list-decimal ml-4 mb-2">{children}</ol>,
           li: ({ children }) => <li className="mb-1">{children}</li>,
           blockquote: ({ children }) => (
-            <blockquote className="border-l-2 border-amber-400 pl-3 my-2 italic bg-amber-50 py-1 pr-2 rounded-r [&_p]:text-stone-700 [&_p]:mb-0">
+            <blockquote className="border-l-2 border-accent-gold/30 pl-3 my-2 italic bg-accent-gold/8 py-1 pr-2 rounded-r [&_p]:text-stone-700 [&_p]:mb-0">
               {children}
             </blockquote>
           ),
           a: ({ href, children }) => (
             <a
               href={href}
-              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded text-xs font-medium hover:bg-amber-200 transition-colors no-underline"
+              className="inline-flex items-center gap-0.5 px-1.5 py-0.5 bg-accent-gold/15 text-accent-gold-dark rounded text-xs font-medium hover:bg-accent-gold/25 transition-colors no-underline"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -136,7 +136,7 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
       ) : (
         <button
           onClick={() => setIsOpen(true)}
-          className={`fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-amber-600 text-white rounded-full shadow-lg hover:bg-amber-700 transition-all ${isOpen ? 'hidden' : ''}`}
+          className={`fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 bg-accent-rust text-white rounded-full shadow-lg hover:bg-accent-rust/90 transition-all ${isOpen ? 'hidden' : ''}`}
         >
           <MessageCircle className="w-5 h-5" />
           <span className="font-medium">Ask about this book</span>
@@ -147,7 +147,7 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
       {isOpen && (
         <div className="fixed bottom-0 right-0 z-50 w-full sm:w-[420px] h-[600px] max-h-[80vh] bg-white border-l border-t border-stone-200 shadow-2xl flex flex-col sm:rounded-tl-xl overflow-hidden">
           {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white">
+          <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-accent-rust to-accent-rust text-white">
             <div className="flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
               <span className="font-medium">Chat with this book</span>
@@ -175,7 +175,7 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
                   <div
                     className={`max-w-[85%] px-4 py-2 rounded-2xl text-sm ${
                       msg.role === 'user'
-                        ? 'bg-amber-600 text-white rounded-br-md'
+                        ? 'bg-accent-rust text-white rounded-br-md'
                         : 'bg-stone-100 rounded-bl-md'
                     }`}
                   >
@@ -209,7 +209,7 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
                 onKeyPress={handleKeyPress}
                 placeholder="Ask a question..."
                 rows={1}
-                className="flex-1 px-4 py-2 border border-stone-300 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
+                className="flex-1 px-4 py-2 border border-stone-300 rounded-xl resize-none focus:outline-none focus:ring-2 focus-visible:ring-accent-rust focus:border-transparent text-sm"
                 style={{ minHeight: '42px', maxHeight: '120px' }}
                 onInput={(e) => {
                   const target = e.target as HTMLTextAreaElement;
@@ -220,7 +220,7 @@ export default function BookChat({ bookId, bookTitle, inline = false }: BookChat
               <button
                 onClick={sendMessage}
                 disabled={!input.trim() || loading}
-                className="p-2 bg-amber-600 text-white rounded-xl hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="p-2 bg-accent-rust text-white rounded-xl hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 <Send className="w-5 h-5" />
               </button>

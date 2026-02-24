@@ -55,12 +55,12 @@ export default function BatchModePanel({
   onStartProcess
 }: BatchModePanelProps) {
   return (
-    <div className="bg-amber-50 rounded-xl border border-amber-200 p-4 space-y-4">
+    <div className="bg-accent-gold/8 rounded-xl border border-accent-gold/20 p-4 space-y-4">
       {/* Action selector & Selection controls */}
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <span className="text-sm text-stone-600">Action:</span>
-          <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
+          <div className="flex rounded-lg border border-accent-gold/20 overflow-hidden bg-white">
             {(['ocr', 'translation', 'image_extraction'] as JobType[]).map(type => {
               const { label, icon: Icon, color } = actionConfig[type];
               const isSelected = action === type;
@@ -81,7 +81,7 @@ export default function BatchModePanel({
           </div>
         </div>
 
-        <div className="h-6 w-px bg-amber-300" />
+        <div className="h-6 w-px bg-accent-gold/30" />
 
         {/* Mode selector */}
         <div className="flex items-center gap-2">
@@ -89,7 +89,7 @@ export default function BatchModePanel({
           <select
             value={overwriteMode ? 'all' : 'missing'}
             onChange={(e) => onOverwriteModeChange(e.target.value === 'all')}
-            className="px-2 py-1.5 text-sm bg-white border border-amber-300 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="px-2 py-1.5 text-sm bg-white border border-accent-gold/20 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
           >
             <option value="missing">Only Missing</option>
             <option value="all">All (Overwrite)</option>
@@ -99,10 +99,10 @@ export default function BatchModePanel({
         {/* Processing Mode Toggle - Only for OCR and Image Extraction */}
         {(action === 'ocr' || action === 'image_extraction') && (
           <>
-            <div className="h-6 w-px bg-amber-300" />
+            <div className="h-6 w-px bg-accent-gold/30" />
             <div className="flex items-center gap-2">
               <span className="text-sm text-stone-600">Processing:</span>
-              <div className="flex rounded-lg border border-amber-300 overflow-hidden bg-white">
+              <div className="flex rounded-lg border border-accent-gold/20 overflow-hidden bg-white">
                 <button
                   onClick={() => onProcessingModeChange('realtime')}
                   className={`px-3 py-1.5 text-sm font-medium transition-colors ${
@@ -128,13 +128,13 @@ export default function BatchModePanel({
           </>
         )}
 
-        <div className="h-6 w-px bg-amber-300" />
+        <div className="h-6 w-px bg-accent-gold/30" />
 
         <div className="flex items-center gap-3 text-sm">
           <span className="text-stone-600">
             <strong>{selectedCount}</strong> selected
           </span>
-          <button onClick={onSelectAll} className="text-amber-700 hover:text-amber-800 font-medium">
+          <button onClick={onSelectAll} className="text-accent-rust hover:text-accent-gold-dark font-medium">
             Select all
           </button>
           {selectedCount > 0 && (
@@ -150,7 +150,7 @@ export default function BatchModePanel({
         <button
           onClick={onTogglePromptSettings}
           className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm transition-colors ${
-            showPromptSettings ? 'bg-amber-200 text-amber-800' : 'bg-white text-stone-600 hover:bg-amber-100'
+            showPromptSettings ? 'bg-accent-gold/25 text-accent-gold-dark' : 'bg-white text-stone-600 hover:bg-accent-gold/15'
           }`}
         >
           <Settings className="w-4 h-4" />
@@ -160,7 +160,7 @@ export default function BatchModePanel({
 
       {/* Prompt Settings Panel */}
       {showPromptSettings && (
-        <div className="bg-white rounded-lg border border-amber-200 p-4 space-y-3">
+        <div className="bg-white rounded-lg border border-accent-gold/20 p-4 space-y-3">
           <div className="flex items-center gap-4">
             <label className="text-sm text-stone-600">Template:</label>
             <select
@@ -206,7 +206,7 @@ export default function BatchModePanel({
         <button
           onClick={onStartProcess}
           disabled={selectedCount === 0 || !!currentJob || queueing}
-          className="flex items-center gap-2 px-5 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
+          className="flex items-center gap-2 px-5 py-2 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed text-sm font-medium shadow-sm"
           title={currentJob ? 'Another job is already running for this book' : ''}
         >
           {queueing ? (

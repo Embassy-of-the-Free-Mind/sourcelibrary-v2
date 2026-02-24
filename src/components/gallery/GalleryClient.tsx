@@ -248,7 +248,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                   {data?.total || 0} illustrations
                 </p>
               </div>
-              <ImageIcon className="w-6 h-6 text-amber-500" />
+              <ImageIcon className="w-6 h-6 text-accent-gold" />
             </div>
           </div>
 
@@ -267,7 +267,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                 onFocus={() => setShowBookDropdown(true)}
                 placeholder="Find a book..."
                 aria-label="Filter by book"
-                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
+                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-accent-gold focus:outline-none"
               />
               {bookSearchLoading && (
                 <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 animate-spin" />
@@ -279,7 +279,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                     <button
                       key={book.id}
                       onClick={() => handleBookSelect(book)}
-                      className="w-full px-4 py-2 text-left text-stone-800 hover:bg-amber-50 border-b border-stone-100 last:border-0"
+                      className="w-full px-4 py-2 text-left text-stone-800 hover:bg-accent-gold/8 border-b border-stone-100 last:border-0"
                     >
                       <div className="font-medium text-sm line-clamp-1">
                         <HighlightedText text={book.display_title || book.title} query={bookSearchQuery} />
@@ -304,7 +304,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                 onChange={(e) => setImageSearchQuery(e.target.value)}
                 placeholder="Search image content (serpent, Mercury, emblem...)"
                 aria-label="Search image descriptions"
-                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-amber-500 focus:outline-none"
+                className="w-full pl-9 pr-4 py-2 bg-stone-800 text-white placeholder-stone-500 rounded-lg border border-stone-700 focus:border-accent-gold focus:outline-none"
               />
             </form>
 
@@ -312,7 +312,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
             <button
               onClick={() => setShowFilters(!showFilters)}
               className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-colors ${
-                showFilters ? 'bg-amber-600 text-white' : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
+                showFilters ? 'bg-accent-rust text-white' : 'bg-stone-800 text-stone-300 hover:bg-stone-700'
               }`}
             >
               <SlidersHorizontal className="w-4 h-4" />
@@ -328,11 +328,11 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
           <div className="mb-4 flex flex-wrap items-center gap-2">
             {data?.bookInfo && (
               <>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-800 rounded-full">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-accent-gold/15 text-accent-gold-dark rounded-full">
                   <BookOpen className="w-4 h-4" />
                   <span className="text-sm font-medium">{data.bookInfo.title}</span>
                   {data.bookInfo.year && <span className="text-xs">({data.bookInfo.year})</span>}
-                  <button onClick={clearBookFilter} className="ml-1 hover:text-amber-600" title="Clear filter">
+                  <button onClick={clearBookFilter} className="ml-1 hover:text-accent-rust" title="Clear filter">
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -405,7 +405,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                       onClick={() => handleQualityChange(key)}
                       className={`px-2 py-1 text-xs rounded-full transition-colors ${
                         currentQualityLevel === key
-                          ? 'bg-amber-600 text-white'
+                          ? 'bg-accent-rust text-white'
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                       }`}
                     >
@@ -440,7 +440,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                       onClick={() => updateParams({ type: typeFilter === type ? '' : type })}
                       className={`px-2 py-1 text-xs rounded-full transition-colors ${
                         typeFilter === type
-                          ? 'bg-amber-600 text-white'
+                          ? 'bg-accent-rust text-white'
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                       }`}
                     >
@@ -461,7 +461,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
                         onClick={() => updateParams({ subject: subjectFilter === subject ? '' : subject })}
                         className={`px-2 py-1 text-xs rounded-full transition-colors ${
                           subjectFilter === subject
-                            ? 'bg-amber-600 text-white'
+                            ? 'bg-accent-rust text-white'
                             : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                         }`}
                       >
@@ -517,7 +517,7 @@ export default function GalleryClient({ initialData, initialCollections }: Galle
         {error && (
           <div className="text-center py-20">
             <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
-            <p className="text-red-600">{error}</p>
+            <p className="text-status-error">{error}</p>
           </div>
         )}
 
@@ -645,7 +645,7 @@ function GalleryCard({ item, query }: { item: GalleryItem; query?: string }) {
       </Link>
       <Link
         href={`/gallery?bookId=${item.bookId}`}
-        className="block px-2 pb-2 text-[10px] text-amber-600 hover:text-amber-800 transition-colors"
+        className="block px-2 pb-2 text-[10px] text-accent-rust hover:text-accent-gold-dark transition-colors"
         onClick={(e) => e.stopPropagation()}
       >
         More from this book
@@ -691,16 +691,16 @@ function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
 
         {!bookInfo.hasImages && bookInfo.hasOcr && (
           <>
-            <div className="bg-amber-50 rounded-lg p-4 mb-4">
-              <ImagePlus className="w-8 h-8 text-amber-600 mx-auto mb-2" />
-              <p className="text-amber-800 text-sm">
+            <div className="bg-accent-gold/8 rounded-lg p-4 mb-4">
+              <ImagePlus className="w-8 h-8 text-accent-rust mx-auto mb-2" />
+              <p className="text-accent-gold-dark text-sm">
                 This book has OCR data but no extracted images yet.
               </p>
             </div>
             <button
               onClick={handleExtract}
               disabled={extracting}
-              className="px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
+              className="px-6 py-2 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 disabled:opacity-50 transition-colors"
             >
               {extracting ? (
                 <span className="flex items-center gap-2">
@@ -722,7 +722,7 @@ function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
             </p>
             <Link
               href={`/book/${bookInfo.id}`}
-              className="inline-block mt-3 text-amber-600 hover:text-amber-700 text-sm"
+              className="inline-block mt-3 text-accent-rust hover:text-accent-rust text-sm"
             >
               Go to book page →
             </Link>

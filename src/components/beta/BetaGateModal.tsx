@@ -83,7 +83,6 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
             <h2
               className="mb-4 sm:mb-5"
               style={{
-                fontFamily: 'Cormorant Garamond, Georgia, serif',
                 color: 'var(--text-primary, #1a1612)',
                 fontWeight: 500,
                 letterSpacing: '-0.01em',
@@ -97,7 +96,6 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
               className="leading-relaxed mb-5 sm:mb-7"
               style={{
                 color: 'var(--text-muted, #6b6560)',
-                fontFamily: 'Newsreader, Georgia, serif',
                 maxWidth: '32em',
                 margin: '0 auto',
                 fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
@@ -110,7 +108,6 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
               className="leading-relaxed"
               style={{
                 color: 'var(--text-secondary, #444)',
-                fontFamily: 'Newsreader, Georgia, serif',
                 fontStyle: 'italic',
                 fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
               }}
@@ -132,7 +129,6 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
                 background: 'var(--bg-warm, #f5f0e8)',
                 color: 'var(--text-primary, #1a1612)',
                 border: '1px solid var(--border-medium, #d4cfc4)',
-                fontFamily: 'Inter, system-ui, sans-serif',
                 fontSize: '17px',
                 padding: '16px 20px',
               }}
@@ -151,7 +147,6 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
                 background: 'var(--bg-warm, #f5f0e8)',
                 color: 'var(--text-primary, #1a1612)',
                 border: '1px solid var(--border-medium, #d4cfc4)',
-                fontFamily: 'Inter, system-ui, sans-serif',
                 fontSize: '16px',
                 padding: '14px 20px',
               }}
@@ -166,7 +161,6 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
               style={{
                 background: 'var(--accent-rust, #9e4a3a)',
                 color: '#ffffff',
-                fontFamily: 'Inter, system-ui, sans-serif',
                 fontSize: '17px',
                 padding: '16px 20px',
               }}
@@ -187,13 +181,13 @@ export default function BetaGateModal({ onSuccess, onDismiss }: BetaGateModalPro
           className="px-6 py-5 sm:px-16 flex items-center justify-between"
           style={{ borderTop: '1px solid var(--border-light, #e8e4dc)' }}
         >
-          <p style={{ color: 'var(--text-faint, #8a8480)', fontFamily: 'Inter, system-ui, sans-serif', fontSize: '14px' }}>
+          <p style={{ color: 'var(--text-faint, #8a8480)', fontSize: '14px' }}>
             No spam, ever.
           </p>
           <button
             onClick={onDismiss}
             className="transition-colors"
-            style={{ color: 'var(--text-faint, #8a8480)', fontFamily: 'Inter, system-ui, sans-serif', fontSize: '14px' }}
+            style={{ color: 'var(--text-faint, #8a8480)', fontSize: '14px' }}
             onMouseEnter={(e) => e.currentTarget.style.color = 'var(--accent-rust, #9e4a3a)'}
             onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-faint, #8a8480)'}
           >

@@ -114,7 +114,7 @@ export default function AddToBookshelfButton({ bookId, className = '' }: AddToBo
         disabled={loading}
         className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-colors ${
           status
-            ? 'bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-200'
+            ? 'bg-accent-gold/15 text-accent-gold-dark hover:bg-accent-gold/25 border border-accent-gold/20'
             : 'bg-stone-100 text-stone-700 hover:bg-stone-200 border border-stone-200'
         } disabled:opacity-50`}
       >
@@ -137,7 +137,7 @@ export default function AddToBookshelfButton({ bookId, className = '' }: AddToBo
               onClick={() => handleStatusChange(s)}
               className={`w-full px-3 py-2 text-left text-sm flex items-center gap-2 transition-colors ${
                 status === s
-                  ? 'bg-amber-50 text-amber-800'
+                  ? 'bg-accent-gold/8 text-accent-gold-dark'
                   : 'text-stone-700 hover:bg-stone-50'
               }`}
             >
@@ -150,7 +150,7 @@ export default function AddToBookshelfButton({ bookId, className = '' }: AddToBo
               <div className="border-t border-stone-100 my-1" />
               <button
                 onClick={handleRemove}
-                className="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
+                className="w-full px-3 py-2 text-left text-sm text-status-error hover:bg-red-50 flex items-center gap-2 transition-colors"
               >
                 <X className="w-3 h-3" />
                 <span>Remove</span>

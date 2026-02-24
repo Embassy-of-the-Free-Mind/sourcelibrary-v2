@@ -274,8 +274,8 @@ const CATEGORY_LABELS: Record<DirectoryItem['category'], string> = {
 };
 
 const STATUS_COLORS: Record<DirectoryItem['status'], string> = {
-  listed: 'text-green-500',
-  submitted: 'text-amber-500',
+  listed: 'text-status-success',
+  submitted: 'text-accent-gold',
   pending: 'text-blue-500',
   'not-started': 'text-stone-500',
 };
@@ -312,7 +312,7 @@ export default function MarketingPage() {
               </Link>
               <div>
                 <h1 className="text-xl font-semibold flex items-center gap-2">
-                  <Megaphone className="w-5 h-5 text-amber-500" />
+                  <Megaphone className="w-5 h-5 text-accent-gold" />
                   Marketing & Outreach
                 </h1>
                 <p className="text-sm text-stone-400">Directory listings, SEO, and outreach templates</p>
@@ -326,24 +326,24 @@ export default function MarketingPage() {
         {/* SEO Status */}
         <section className="bg-stone-900 rounded-lg p-6 border border-stone-800">
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-green-500" />
+            <TrendingUp className="w-5 h-5 text-status-success" />
             SEO Status
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-green-500">48,546</p>
+              <p className="text-2xl font-bold text-status-success">48,546</p>
               <p className="text-sm text-stone-400">URLs in Sitemap</p>
             </div>
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-amber-500">~2</p>
+              <p className="text-2xl font-bold text-accent-gold">~2</p>
               <p className="text-sm text-stone-400">Google Indexed</p>
             </div>
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-green-500">47,284</p>
+              <p className="text-2xl font-bold text-status-success">47,284</p>
               <p className="text-sm text-stone-400">Bing Submitted</p>
             </div>
             <div className="bg-stone-800 rounded-lg p-4">
-              <p className="text-2xl font-bold text-green-500">Active</p>
+              <p className="text-2xl font-bold text-status-success">Active</p>
               <p className="text-sm text-stone-400">IndexNow</p>
             </div>
           </div>
@@ -375,11 +375,11 @@ export default function MarketingPage() {
               Directory Listings
             </h2>
             <div className="flex items-center gap-4 text-sm">
-              <span className="flex items-center gap-1 text-green-500">
+              <span className="flex items-center gap-1 text-status-success">
                 <CheckCircle className="w-4 h-4" />
                 {stats.listed} Listed
               </span>
-              <span className="flex items-center gap-1 text-amber-500">
+              <span className="flex items-center gap-1 text-accent-gold">
                 <Circle className="w-4 h-4" />
                 {stats.submitted} Submitted
               </span>
@@ -491,7 +491,7 @@ export default function MarketingPage() {
                     >
                       {copiedTemplate === template.id ? (
                         <>
-                          <CheckCircle className="w-4 h-4 text-green-500" />
+                          <CheckCircle className="w-4 h-4 text-status-success" />
                           Copied!
                         </>
                       ) : (
@@ -585,7 +585,7 @@ export default function MarketingPage() {
             {/* Academic */}
             <div className="bg-stone-800 rounded-lg p-4 border border-stone-700">
               <h3 className="font-medium flex items-center gap-2 mb-3">
-                <BookOpen className="w-4 h-4 text-green-500" />
+                <BookOpen className="w-4 h-4 text-status-success" />
                 Academic Platforms
               </h3>
               <ul className="space-y-2 text-sm">
@@ -643,7 +643,7 @@ export default function MarketingPage() {
         {/* Quick Actions */}
         <section className="bg-stone-900 rounded-lg p-6 border border-stone-800">
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
-            <Search className="w-5 h-5 text-amber-500" />
+            <Search className="w-5 h-5 text-accent-gold" />
             Quick Links
           </h2>
           <div className="flex flex-wrap gap-3">

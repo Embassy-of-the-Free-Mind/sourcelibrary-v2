@@ -34,6 +34,12 @@
   --border-light: #e8e4dc;
   --border-medium: #d4cfc4;
 
+  /* Status colors */
+  --status-success: #16a34a;
+  --status-error: #dc2626;
+  --status-warning: #d97706;
+  --status-info: #2563eb;
+
   /* Legacy support */
   --background: var(--bg-cream);
   --foreground: var(--text-primary);
@@ -45,6 +51,7 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Newsreader', Georgia, serif;
+  --font-display: 'Playfair Display', Georgia, serif;
 
   /* Palette as Tailwind utilities */
   --color-cream: #fdfcf9;
@@ -61,6 +68,12 @@
   --color-accent-gold-dark: #9e7c3c;
   --color-border-light: #e8e4dc;
   --color-border-medium: #d4cfc4;
+
+  /* Status colors as Tailwind utilities */
+  --color-status-success: #16a34a;
+  --color-status-error: #dc2626;
+  --color-status-warning: #d97706;
+  --color-status-info: #2563eb;
 
   /* Container widths */
   --container-narrow: 680px;
@@ -387,10 +400,10 @@ mark {
 /* Pulse glow animation for loading spinner */
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.4);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-gold) 40%, transparent);
   }
   50% {
-    box-shadow: 0 0 20px 10px rgba(217, 119, 6, 0.1);
+    box-shadow: 0 0 20px 10px color-mix(in srgb, var(--accent-gold) 10%, transparent);
   }
 }
 

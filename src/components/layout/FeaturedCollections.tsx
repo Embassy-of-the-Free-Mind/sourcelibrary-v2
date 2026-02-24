@@ -67,7 +67,7 @@ const DISPLAY_COUNT = 6;
 
 // Category color mapping
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  'Alchemy': { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200' },
+  'Alchemy': { bg: 'bg-accent-gold/8', text: 'text-accent-rust', border: 'border-accent-gold/20' },
   'Renaissance': { bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200' },
   'Byzantine': { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200' },
   'Scientific Revolution': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200' },
@@ -149,8 +149,7 @@ export default async function FeaturedCollections() {
         <div className="flex items-end justify-between mb-8">
           <div>
             <h2
-              className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic font-display"
             >
               Collections
             </h2>
@@ -160,7 +159,7 @@ export default async function FeaturedCollections() {
           </div>
           <Link
             href="/collections"
-            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-amber-700 hover:text-amber-800 font-medium transition-colors"
+            className="hidden sm:inline-flex items-center gap-1.5 text-sm text-accent-rust hover:text-accent-gold-dark font-medium transition-colors"
           >
             All collections
             <ArrowRight className="w-4 h-4" />
@@ -190,8 +189,7 @@ export default async function FeaturedCollections() {
 
                   {/* Title */}
                   <h3
-                    className="text-base font-bold text-stone-900 group-hover:text-amber-800 transition-colors leading-snug mb-2"
-                    style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                    className="text-base font-bold text-stone-900 group-hover:text-accent-gold-dark transition-colors leading-snug mb-2 font-display"
                   >
                     {coll.shortTitle || coll.title.split(':')[0]}
                   </h3>
@@ -240,7 +238,7 @@ export default async function FeaturedCollections() {
         <div className="sm:hidden mt-6 text-center">
           <Link
             href="/collections"
-            className="inline-flex items-center gap-1.5 text-sm text-amber-700 hover:text-amber-800 font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm text-accent-rust hover:text-accent-gold-dark font-medium transition-colors"
           >
             All collections
             <ArrowRight className="w-4 h-4" />

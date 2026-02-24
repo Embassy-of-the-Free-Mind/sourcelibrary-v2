@@ -11,16 +11,15 @@ export default function KabbalahPress() {
     <div className="min-h-screen bg-white">
       <header className="bg-stone-900 text-white py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6 md:px-12">
-          <Link href="/press" className="text-amber-400 text-sm tracking-[0.2em] uppercase mb-4 inline-block hover:text-amber-300 transition-colors">
+          <Link href="/press" className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4 inline-block hover:text-accent-gold transition-colors">
             &larr; Press
           </Link>
           <h1
-            className="text-3xl md:text-4xl lg:text-5xl mb-6"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl lg:text-5xl mb-6 font-display"
           >
             The Language That Created the World: AI Translates the Kabbalistic Texts That Shaped Renaissance Philosophy
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
+          <p className="text-lg text-white/70 max-w-2xl font-body">
             The foundational texts of Jewish and Christian Kabbalah &mdash; including the Sefer Yetzirah, Kircher&apos;s Oedipus Aegyptiacus, and Reuchlin&apos;s De Arte Cabalistica &mdash; are now freely readable in English
           </p>
         </div>
@@ -40,12 +39,11 @@ export default function KabbalahPress() {
           </p>
           <p>
             This text, and the tradition it drew upon, is now freely accessible in English through{' '}
-            <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">Source Library</a>, the AI-powered digital library created by the Embassy of the Free Mind in Amsterdam.
+            <a href="https://sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">Source Library</a>, the AI-powered digital library created by the Embassy of the Free Mind in Amsterdam.
           </p>
 
           <h2
-            className="text-2xl text-stone-900 mt-12 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mt-12 mb-4 font-display"
           >
             What the Kabbalists Taught
           </h2>
@@ -57,13 +55,13 @@ export default function KabbalahPress() {
             The <em>Sefer Yetzirah</em> (Book of Formation), one of the oldest Kabbalistic texts, describes creation itself as a combinatorial explosion of Hebrew letters &mdash; anticipating modern mathematics by a millennium:
           </p>
 
-          <blockquote className="border-l-4 border-amber-500 pl-6 py-2 my-8 bg-amber-50/50 rounded-r-lg">
+          <blockquote className="border-l-4 border-accent-gold pl-6 py-2 my-8 bg-accent-gold/5 rounded-r-lg">
             <p className="italic text-stone-700">
               &ldquo;Two stones build two houses, three stones build six houses, four stones build twenty-four houses, five stones build one hundred and twenty houses, six stones build seven hundred and twenty houses, and seven stones build five thousand and forty houses. From here onward, go and calculate what the mouth is unable to pronounce and the ear is unable to hear.&rdquo;
             </p>
             <footer className="text-sm text-stone-500 mt-3">
               &mdash; <em>Sefer Yetzirah</em> (Book of Formation),{' '}
-              <a href="https://sourcelibrary.org/book/69528666ab34727b1f04c966?page=59" className="text-amber-700 hover:text-amber-800">p. 59</a>
+              <a href="https://sourcelibrary.org/book/69528666ab34727b1f04c966?page=59" className="text-accent-rust hover:text-accent-gold-dark">p. 59</a>
             </footer>
           </blockquote>
 
@@ -75,13 +73,13 @@ export default function KabbalahPress() {
             When Athanasius Kircher synthesized Kabbalistic thought with Egyptian and Greek philosophy in his <em>Oedipus Aegyptiacus</em> (1652), he wrestled with the Kabbalistic insight that the infinite God exceeds all categories &mdash; that unity itself is both the origin and end of all number:
           </p>
 
-          <blockquote className="border-l-4 border-amber-500 pl-6 py-2 my-8 bg-amber-50/50 rounded-r-lg">
+          <blockquote className="border-l-4 border-accent-gold pl-6 py-2 my-8 bg-accent-gold/5 rounded-r-lg">
             <p className="italic text-stone-700">
               &ldquo;It is necessary in number to reach the minimum, than which nothing smaller can be; and this is unity: and since nothing smaller than unity can exist, this unity will be the absolute minimum, and thus will coincide with the absolute maximum.&rdquo;
             </p>
             <footer className="text-sm text-stone-500 mt-3">
               &mdash; Athanasius Kircher, <em>Oedipus Aegyptiacus</em> (1652),{' '}
-              <a href="https://sourcelibrary.org/book/695273a1ab34727b1f049baf?page=13" className="text-amber-700 hover:text-amber-800">p. 13</a>
+              <a href="https://sourcelibrary.org/book/695273a1ab34727b1f049baf?page=13" className="text-accent-rust hover:text-accent-gold-dark">p. 13</a>
             </footer>
           </blockquote>
 
@@ -90,8 +88,7 @@ export default function KabbalahPress() {
           </p>
 
           <h2
-            className="text-2xl text-stone-900 mt-12 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mt-12 mb-4 font-display"
           >
             The Collection
           </h2>
@@ -116,8 +113,7 @@ export default function KabbalahPress() {
           </ul>
 
           <h2
-            className="text-2xl text-stone-900 mt-12 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mt-12 mb-4 font-display"
           >
             Why It Matters
           </h2>
@@ -135,15 +131,15 @@ export default function KabbalahPress() {
           <div className="mt-12 pt-8 border-t border-stone-200 space-y-2 text-stone-600">
             <p>
               <strong>Read the texts:</strong>{' '}
-              <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">sourcelibrary.org</a>
+              <a href="https://sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">sourcelibrary.org</a>
             </p>
             <p>
               <strong>Explore Kabbalah texts:</strong>{' '}
-              <a href="https://sourcelibrary.org/search?q=kabbalah" className="text-amber-700 hover:text-amber-800">sourcelibrary.org/search?q=kabbalah</a>
+              <a href="https://sourcelibrary.org/search?q=kabbalah" className="text-accent-rust hover:text-accent-gold-dark">sourcelibrary.org/search?q=kabbalah</a>
             </p>
             <p>
               <strong>Press contact:</strong>{' '}
-              <a href="mailto:press@sourcelibrary.org" className="text-amber-700 hover:text-amber-800">press@sourcelibrary.org</a>
+              <a href="mailto:press@sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">press@sourcelibrary.org</a>
             </p>
           </div>
         </div>
@@ -152,7 +148,7 @@ export default function KabbalahPress() {
       <footer className="bg-stone-900 text-white/60 py-8">
         <div className="max-w-4xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <span>&copy; {new Date().getFullYear()} Source Library &mdash; An initiative of the Embassy of the Free Mind</span>
-          <Link href="/press" className="text-amber-500/60 hover:text-amber-400 transition-colors">
+          <Link href="/press" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
             All Press Releases
           </Link>
         </div>

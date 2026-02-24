@@ -60,7 +60,7 @@ export default function AboutPage() {
           In the Spirit of the Renaissance
         </h2>
 
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
+        <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
           <p className="text-secondary italic mb-4">
             &ldquo;Wisdom belongs to everyone.&rdquo;
           </p>
@@ -87,7 +87,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="bg-amber-50/50 rounded-lg p-6 border border-amber-100 mb-16">
+        <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-16">
           <p className="text-stone-700 leading-relaxed">
             <strong>Source Library continues their work.</strong> Just as Cosimo funded translations to make ancient wisdom freely available, and Ficino labored to render Greek and Latin texts accessible to readers across Europe, we use modern tools to digitize, translate, and openly share these same traditions with the world.
           </p>
@@ -104,23 +104,23 @@ export default function AboutPage() {
 
         <ul className="space-y-3 text-secondary mb-12">
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1">•</span>
+            <span className="text-accent-rust mt-1">•</span>
             <span><strong>OCR:</strong> Gemini vision models read historical typefaces and handwriting</span>
           </li>
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1">•</span>
+            <span className="text-accent-rust mt-1">•</span>
             <span><strong>Translation:</strong> Context-aware translation preserving technical terminology</span>
           </li>
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1">•</span>
+            <span className="text-accent-rust mt-1">•</span>
             <span><strong>Original preserved:</strong> Every translation includes the original language text</span>
           </li>
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1">•</span>
+            <span className="text-accent-rust mt-1">•</span>
             <span><strong>DOI citations:</strong> Published editions receive DOIs via Zenodo</span>
           </li>
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1">•</span>
+            <span className="text-accent-rust mt-1">•</span>
             <span><strong>API & MCP:</strong> Programmatic access for researchers and AI systems</span>
           </li>
         </ul>

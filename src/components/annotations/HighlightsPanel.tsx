@@ -120,9 +120,9 @@ export default function HighlightsPanel({
       {/* Panel */}
       <div className="relative w-full max-w-md bg-white shadow-xl flex flex-col h-full">
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-amber-50 to-yellow-50">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200 bg-gradient-to-r from-accent-gold/8 to-accent-gold/5">
           <div className="flex items-center gap-2">
-            <Highlighter className="w-5 h-5 text-amber-600" />
+            <Highlighter className="w-5 h-5 text-accent-rust" />
             <h2 className="font-semibold text-stone-900">
               {bookId ? 'Book Highlights' : 'All Highlights'}
             </h2>
@@ -144,7 +144,7 @@ export default function HighlightsPanel({
         <div className="flex-1 overflow-y-auto p-4">
           {loading ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-6 h-6 animate-spin text-amber-600" />
+              <Loader2 className="w-6 h-6 animate-spin text-accent-rust" />
             </div>
           ) : highlights.length === 0 ? (
             <div className="text-center py-12">
@@ -175,7 +175,7 @@ export default function HighlightsPanel({
                       {!bookId && ' · '}
                       <Link
                         href={`/book/${highlight.book_id}/page/${highlight.page_id}`}
-                        className="text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
+                        className="text-accent-rust hover:text-accent-rust inline-flex items-center gap-1"
                       >
                         Page {highlight.page_number}
                         <ExternalLink className="w-3 h-3" />
@@ -190,11 +190,11 @@ export default function HighlightsPanel({
                       <div className="relative">
                         <button
                           onClick={() => setShareMenuOpen(shareMenuOpen === highlight.id ? null : highlight.id)}
-                          className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-amber-600 transition-all"
+                          className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-accent-rust transition-all"
                           title="Share"
                         >
                           {copied && shareMenuOpen === highlight.id ? (
-                            <Check className="w-4 h-4 text-green-500" />
+                            <Check className="w-4 h-4 text-status-success" />
                           ) : (
                             <Share2 className="w-4 h-4" />
                           )}
@@ -230,7 +230,7 @@ export default function HighlightsPanel({
                       <button
                         onClick={() => handleDelete(highlight.id)}
                         disabled={deletingId === highlight.id}
-                        className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-red-500 transition-all"
+                        className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-status-error transition-all"
                         title="Delete highlight"
                       >
                         {deletingId === highlight.id ? (

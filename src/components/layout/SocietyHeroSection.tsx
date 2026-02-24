@@ -93,7 +93,7 @@ export default function SocietyHeroSection() {
           </Link>
           <Link
             href="/apply"
-            className="flex items-center gap-2 px-5 py-2.5 bg-amber-700/90 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-amber-600 transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 bg-accent-rust/90 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-accent-rust transition-colors"
           >
             Apply for Membership
           </Link>
@@ -105,8 +105,7 @@ export default function SocietyHeroSection() {
         <div className="px-6 md:px-12 max-w-4xl">
           {/* Small eyebrow */}
           <p
-            className="text-amber-400/90 text-sm md:text-base tracking-widest uppercase mb-6"
-            style={{ fontFamily: 'Inter, sans-serif' }}
+            className="text-accent-gold/90 text-sm md:text-base tracking-widest uppercase mb-6 font-sans"
           >
             A Cooperative of Scholars & Seekers
           </p>
@@ -114,16 +113,15 @@ export default function SocietyHeroSection() {
           {/* Main headline */}
           <h1
             className="text-4xl md:text-5xl lg:text-6xl text-white mb-8 leading-tight"
-            style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+            style={{ fontWeight: 400 }}
           >
             Join the community translating<br />
-            <span className="text-amber-400">the Western esoteric tradition</span>
+            <span className="text-accent-gold">the Western esoteric tradition</span>
           </h1>
 
           {/* Subheadline */}
           <p
-            className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mb-10"
-            style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+            className="text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl mb-10 font-body"
           >
             Rare alchemical manuscripts, Hermetic treatises, and Kabbalistic texts—freshly
             translated from Latin, German, and Greek. Your membership funds the work.
@@ -134,15 +132,13 @@ export default function SocietyHeroSection() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/apply"
-              className="px-8 py-4 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-base font-medium transition-colors"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="px-8 py-4 bg-accent-rust hover:bg-accent-gold/80 text-white rounded-lg text-base font-medium transition-colors font-sans"
             >
               Apply for Membership
             </Link>
             <a
               href="#what-inside"
-              className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-lg text-base font-medium transition-colors border border-white/20"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white rounded-lg text-base font-medium transition-colors border border-white/20 font-sans"
             >
               See What&apos;s Inside
             </a>
@@ -151,26 +147,26 @@ export default function SocietyHeroSection() {
           {/* Stats row */}
           <div className="flex flex-wrap gap-8 md:gap-12 mt-16 pt-8 border-t border-white/20">
             <div>
-              <p className="text-3xl md:text-4xl text-white font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <p className="text-3xl md:text-4xl text-white font-light font-serif">
                 847
               </p>
-              <p className="text-xs text-white/60 uppercase tracking-wider mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-xs text-white/60 uppercase tracking-wider mt-1 font-sans">
                 Texts Translated
               </p>
             </div>
             <div>
-              <p className="text-3xl md:text-4xl text-white font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <p className="text-3xl md:text-4xl text-white font-light font-serif">
                 12,400+
               </p>
-              <p className="text-xs text-white/60 uppercase tracking-wider mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-xs text-white/60 uppercase tracking-wider mt-1 font-sans">
                 Pages Available
               </p>
             </div>
             <div>
-              <p className="text-3xl md:text-4xl text-amber-400 font-light" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <p className="text-3xl md:text-4xl text-accent-gold font-light font-serif">
                 $2,400
               </p>
-              <p className="text-xs text-white/60 uppercase tracking-wider mt-1" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-xs text-white/60 uppercase tracking-wider mt-1 font-sans">
                 Funded This Month
               </p>
             </div>
@@ -181,7 +177,7 @@ export default function SocietyHeroSection() {
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
         <a href="#what-inside" className="flex flex-col items-center gap-2 text-white/60 hover:text-white/80 transition-colors">
-          <span className="text-xs tracking-widest uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>Explore</span>
+          <span className="text-xs tracking-widest uppercase font-sans">Explore</span>
           <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>

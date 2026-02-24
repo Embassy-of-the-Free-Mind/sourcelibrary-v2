@@ -291,7 +291,7 @@ export default function AnnotationPanel({
         <button
           onClick={() => handleUpvote(annotation.id)}
           disabled={upvoting.has(annotation.id)}
-          className="inline-flex items-center gap-1 text-xs text-stone-500 hover:text-amber-600 transition-colors"
+          className="inline-flex items-center gap-1 text-xs text-stone-500 hover:text-accent-rust transition-colors"
         >
           {upvoting.has(annotation.id) ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -330,10 +330,10 @@ export default function AnnotationPanel({
         <div className="relative ml-auto">
           <button
             onClick={() => setShareMenuOpen(shareMenuOpen === annotation.id ? null : annotation.id)}
-            className="inline-flex items-center gap-1 text-xs text-stone-400 hover:text-amber-600 transition-colors"
+            className="inline-flex items-center gap-1 text-xs text-stone-400 hover:text-accent-rust transition-colors"
           >
             {copied && shareMenuOpen === annotation.id ? (
-              <Check className="w-3.5 h-3.5 text-green-500" />
+              <Check className="w-3.5 h-3.5 text-status-success" />
             ) : (
               <Share2 className="w-3.5 h-3.5" />
             )}
@@ -369,7 +369,7 @@ export default function AnnotationPanel({
         <button
           onClick={() => handleDelete(annotation.id)}
           disabled={deleting.has(annotation.id)}
-          className="inline-flex items-center gap-1 text-xs text-stone-400 hover:text-red-500 transition-colors"
+          className="inline-flex items-center gap-1 text-xs text-stone-400 hover:text-status-error transition-colors"
         >
           {deleting.has(annotation.id) ? (
             <Loader2 className="w-3.5 h-3.5 animate-spin" />

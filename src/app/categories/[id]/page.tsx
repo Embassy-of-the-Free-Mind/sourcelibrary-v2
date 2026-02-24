@@ -96,7 +96,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               )}
             </div>
           </div>
-          <p className="text-amber-400 mt-4 font-medium">
+          <p className="text-accent-gold mt-4 font-medium">
             {books.length} book{books.length !== 1 ? 's' : ''} in this category
           </p>
         </div>
@@ -125,7 +125,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                 <Link
                   key={book.id}
                   href={`/book/${book.id}`}
-                  className="group bg-white rounded-xl border border-stone-200 overflow-hidden hover:border-amber-300 hover:shadow-lg transition-all"
+                  className="group bg-white rounded-xl border border-stone-200 overflow-hidden hover:border-accent-gold/20 hover:shadow-lg transition-all"
                 >
                   {/* Thumbnail */}
                   <div className="aspect-[3/2] bg-stone-100 relative overflow-hidden">
@@ -146,9 +146,9 @@ export default function CategoryPage({ params }: CategoryPageProps) {
                     {book.translation_percent !== undefined && (
                       <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium ${
                         book.translation_percent === 100
-                          ? 'bg-green-500 text-white'
+                          ? 'bg-status-success text-white'
                           : book.translation_percent > 0
-                            ? 'bg-amber-500 text-white'
+                            ? 'bg-accent-gold/80 text-white'
                             : 'bg-stone-500 text-white'
                       }`}>
                         {book.translation_percent === 100
@@ -160,7 +160,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
                   {/* Info */}
                   <div className="p-4">
-                    <h3 className="font-serif font-semibold text-stone-900 group-hover:text-amber-700 transition-colors line-clamp-2">
+                    <h3 className="font-serif font-semibold text-stone-900 group-hover:text-accent-rust transition-colors line-clamp-2">
                       {book.display_title || book.title}
                     </h3>
                     <p className="text-sm text-stone-600 mt-1">{book.author}</p>

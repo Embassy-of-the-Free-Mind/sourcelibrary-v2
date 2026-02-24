@@ -148,7 +148,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
       {/* Picker Modal - Only rendered for authenticated users */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div
             role="dialog"
             aria-modal="true"
@@ -183,7 +183,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                       onClick={() => selectCover(page)}
                       disabled={isSaving}
                       className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-all hover:shadow-lg ${isCurrentCover
-                        ? 'border-amber-500 ring-2 ring-amber-200'
+                        ? 'border-accent-gold ring-2 ring-accent-gold/25'
                         : 'border-stone-200 hover:border-stone-400'
                         }`}
                     >
@@ -195,7 +195,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
                         />
                       )}
                       {isCurrentCover && (
-                        <div className="absolute top-1 right-1 p-0.5 bg-amber-500 rounded-full">
+                        <div className="absolute top-1 right-1 p-0.5 bg-accent-gold/80 rounded-full">
                           <Check className="w-3 h-3 text-white" />
                         </div>
                       )}

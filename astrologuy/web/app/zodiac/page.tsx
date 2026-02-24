@@ -3,12 +3,14 @@
 import { ZodiacWheel } from "@/components/viz/ZodiacWheel";
 import { BirthDateInput } from "@/components/ui/BirthDateInput";
 import { YearPicker } from "@/components/ui/YearPicker";
+import { useHydrated } from "@/lib/hooks";
 import { useAppState } from "@/lib/store";
 import { useMemo } from "react";
 import { getZodiacInfo } from "@/lib/lunar";
 import { ZODIAC_ANIMAL_EMOJIS } from "@/lib/constants";
 
 export default function ZodiacPage() {
+  const hydrated = useHydrated();
   const { year, birthDate } = useAppState();
 
   const yearZodiac = useMemo(() => {
@@ -37,7 +39,7 @@ export default function ZodiacPage() {
       </div>
 
       {/* Current year info */}
-      {yearZodiac && (
+      {hydrated && yearZodiac && (
         <div className="bg-bg-card border border-border rounded-xl p-5 mb-8 max-w-md mx-auto text-center">
           <div className="text-faint text-xs uppercase tracking-wider mb-2">
             Year of the
@@ -59,7 +61,11 @@ export default function ZodiacPage() {
       )}
 
       {/* Zodiac wheel + traits */}
-      <ZodiacWheel />
+      {hydrated ? <ZodiacWheel /> : (
+        <div className="w-full h-64 flex items-center justify-center text-faint text-sm">
+          Drawing zodiac wheel&hellip;
+        </div>
+      )}
     </div>
   );
 }

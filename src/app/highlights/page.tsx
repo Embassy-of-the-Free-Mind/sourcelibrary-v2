@@ -72,9 +72,9 @@ export default function HighlightsPage() {
       </header>
 
       {/* Hero */}
-      <div className="bg-gradient-to-b from-amber-50 to-yellow-50 border-b border-amber-100">
+      <div className="bg-gradient-to-b from-accent-gold/8 to-accent-gold/5 border-b border-accent-gold/15">
         <div className="max-w-4xl mx-auto px-4 py-8 text-center">
-          <Highlighter className="w-10 h-10 text-amber-600 mx-auto mb-3" />
+          <Highlighter className="w-10 h-10 text-accent-rust mx-auto mb-3" />
           <h1 className="text-2xl sm:text-3xl font-serif font-bold text-stone-900">
             What People Are Reading
           </h1>
@@ -82,7 +82,7 @@ export default function HighlightsPage() {
             Passages that caught readers&apos; attention from Renaissance texts
           </p>
           {!loading && (
-            <p className="text-amber-700 text-sm mt-2 font-medium">
+            <p className="text-accent-rust text-sm mt-2 font-medium">
               {highlights.length} highlight{highlights.length !== 1 ? 's' : ''} from the community
             </p>
           )}
@@ -104,7 +104,7 @@ export default function HighlightsPage() {
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors"
             >
               <BookOpen className="w-4 h-4" />
               Browse Library
@@ -120,7 +120,7 @@ export default function HighlightsPage() {
                     <div>
                       <Link
                         href={`/book/${bookId}`}
-                        className="font-semibold text-stone-900 hover:text-amber-700 transition-colors"
+                        className="font-semibold text-stone-900 hover:text-accent-rust transition-colors"
                       >
                         {book_title || 'Untitled Book'}
                       </Link>
@@ -146,7 +146,7 @@ export default function HighlightsPage() {
                         <div className="flex items-center gap-3 text-stone-500">
                           <Link
                             href={`/book/${highlight.book_id}/page-number/${highlight.page_number}`}
-                            className="text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
+                            className="text-accent-rust hover:text-accent-rust inline-flex items-center gap-1"
                           >
                             p. {highlight.page_number}
                             <ExternalLink className="w-3 h-3" />
@@ -166,7 +166,7 @@ export default function HighlightsPage() {
                         <button
                           onClick={() => handleDelete(highlight.id)}
                           disabled={deletingId === highlight.id}
-                          className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-red-500 transition-all"
+                          className="opacity-0 group-hover:opacity-100 p-1 text-stone-400 hover:text-status-error transition-all"
                           title="Delete highlight"
                         >
                           {deletingId === highlight.id ? (

@@ -84,8 +84,8 @@ export default function DevelopersPage() {
       {/* MCP Server Section */}
       <section className="mb-16">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-amber-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="w-10 h-10 bg-accent-gold/15 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-accent-rust" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
           </div>
@@ -162,7 +162,7 @@ export default function DevelopersPage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {group.items.map((tool) => (
                   <div key={tool.name} className="bg-white rounded-lg border border-border-light p-4">
-                    <code className="text-amber-700 font-mono text-sm">{tool.name}</code>
+                    <code className="text-accent-rust font-mono text-sm">{tool.name}</code>
                     <p className="text-secondary text-sm mt-2">{tool.desc}</p>
                   </div>
                 ))}
@@ -177,7 +177,7 @@ export default function DevelopersPage() {
           {examplePrompts.map((ex, i) => (
             <div key={i} className="bg-white rounded-lg border border-border-light p-4">
               <p className="text-stone-700 italic">&ldquo;{ex.prompt}&rdquo;</p>
-              <p className="text-xs text-muted mt-2">Uses: <code className="text-amber-700">{ex.tools}</code></p>
+              <p className="text-xs text-muted mt-2">Uses: <code className="text-accent-rust">{ex.tools}</code></p>
             </div>
           ))}
         </div>
@@ -199,7 +199,7 @@ export default function DevelopersPage() {
         </p>
 
         <div className="bg-stone-100 rounded-lg px-4 py-2 mb-6 inline-block">
-          <code className="text-stone-700">Base URL: <span className="text-amber-700">https://sourcelibrary.org/api</span></code>
+          <code className="text-stone-700">Base URL: <span className="text-accent-rust">https://sourcelibrary.org/api</span></code>
         </div>
 
         {/* Endpoints */}
@@ -216,27 +216,27 @@ export default function DevelopersPage() {
               <table className="w-full text-sm">
                 <tbody>
                   <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-amber-700">q</td>
+                    <td className="py-2 font-mono text-accent-rust">q</td>
                     <td className="py-2 text-muted">string</td>
                     <td className="py-2 text-secondary">Search query (required)</td>
                   </tr>
                   <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-amber-700">language</td>
+                    <td className="py-2 font-mono text-accent-rust">language</td>
                     <td className="py-2 text-muted">string</td>
                     <td className="py-2 text-secondary">Filter by language</td>
                   </tr>
                   <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-amber-700">year_from / year_to</td>
+                    <td className="py-2 font-mono text-accent-rust">year_from / year_to</td>
                     <td className="py-2 text-muted">number</td>
                     <td className="py-2 text-secondary">Publication year range</td>
                   </tr>
                   <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-amber-700">has_doi</td>
+                    <td className="py-2 font-mono text-accent-rust">has_doi</td>
                     <td className="py-2 text-muted">boolean</td>
                     <td className="py-2 text-secondary">Only books with DOIs</td>
                   </tr>
                   <tr>
-                    <td className="py-2 font-mono text-amber-700">sort</td>
+                    <td className="py-2 font-mono text-accent-rust">sort</td>
                     <td className="py-2 text-muted">string</td>
                     <td className="py-2 text-secondary">relevance, date_asc, date_desc, title</td>
                   </tr>
@@ -260,17 +260,17 @@ export default function DevelopersPage() {
               <table className="w-full text-sm">
                 <tbody>
                   <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-amber-700">content</td>
+                    <td className="py-2 font-mono text-accent-rust">content</td>
                     <td className="py-2 text-muted">string</td>
                     <td className="py-2 text-secondary">ocr, translation, or both (default)</td>
                   </tr>
                   <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-amber-700">from / to</td>
+                    <td className="py-2 font-mono text-accent-rust">from / to</td>
                     <td className="py-2 text-muted">number</td>
                     <td className="py-2 text-secondary">Page range (inclusive)</td>
                   </tr>
                   <tr>
-                    <td className="py-2 font-mono text-amber-700">format</td>
+                    <td className="py-2 font-mono text-accent-rust">format</td>
                     <td className="py-2 text-muted">string</td>
                     <td className="py-2 text-secondary">json (structured) or plain (concatenated text)</td>
                   </tr>
@@ -342,7 +342,7 @@ export default function DevelopersPage() {
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-6">Citation Format</h2>
         <p className="text-secondary mb-6">
-          All published editions have DOIs via Zenodo. The <code className="text-amber-700">get_quote</code> tool returns pre-formatted citations:
+          All published editions have DOIs via Zenodo. The <code className="text-accent-rust">get_quote</code> tool returns pre-formatted citations:
         </p>
         <div className="bg-white rounded-xl border border-border-light p-6 space-y-4">
           <div>
@@ -368,7 +368,7 @@ export default function DevelopersPage() {
         </p>
         <a
           href="/llms.txt"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-700 text-white rounded-full hover:bg-amber-600 transition-colors"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-rust text-white rounded-full hover:bg-accent-rust transition-colors"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

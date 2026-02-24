@@ -139,7 +139,7 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
             <div className="flex-1 overflow-y-auto p-4">
               {loading ? (
                 <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 animate-spin text-amber-600" />
+                  <Loader2 className="w-6 h-6 animate-spin text-accent-rust" />
                 </div>
               ) : (
                 <div className="space-y-2">
@@ -151,14 +151,14 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
                         onClick={() => toggleCategory(category.id)}
                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                           isSelected
-                            ? 'bg-amber-100 text-amber-900'
+                            ? 'bg-accent-gold/15 text-accent-gold-dark'
                             : 'hover:bg-stone-100 text-stone-700'
                         }`}
                       >
                         <span className="text-lg">{category.icon}</span>
                         <span className="flex-1 font-medium">{category.name}</span>
                         {isSelected && (
-                          <Check className="w-5 h-5 text-amber-600" />
+                          <Check className="w-5 h-5 text-accent-rust" />
                         )}
                       </button>
                     );
@@ -178,7 +178,7 @@ export default function CategoryPicker({ bookId, currentCategories, onUpdate }: 
               <button
                 onClick={saveCategories}
                 disabled={saving}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg text-sm font-medium hover:bg-amber-700 disabled:opacity-50 transition-colors"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-accent-rust text-white rounded-lg text-sm font-medium hover:bg-accent-rust/90 disabled:opacity-50 transition-colors"
               >
                 {saving ? (
                   <Loader2 className="w-4 h-4 animate-spin" />

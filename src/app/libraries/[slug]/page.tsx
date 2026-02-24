@@ -218,8 +218,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
           </Link>
 
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display"
           >
             {partner.name}
           </h1>
@@ -255,8 +254,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-6xl mx-auto px-6 py-6">
             <h2
-              className="text-xl sm:text-2xl text-primary mb-4"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-xl sm:text-2xl text-primary mb-4 font-display"
             >
               Illustrations
             </h2>
@@ -306,8 +304,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
             <div className="flex items-center gap-2 mb-4">
               <Library className="w-5 h-5 text-accent-rust" />
               <h2
-                className="text-xl sm:text-2xl text-primary"
-                style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                className="text-xl sm:text-2xl text-primary font-display"
               >
                 Contributing Libraries
               </h2>
@@ -335,8 +332,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
             <h2
-              className="text-2xl sm:text-3xl text-primary"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-2xl sm:text-3xl text-primary font-display"
             >
               All Books
             </h2>

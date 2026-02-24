@@ -44,6 +44,7 @@ export const POST = withAuth(async (request, session, context) => {
       targetLanguage = 'English',
       model = 'gemini-3-flash-preview',
       force = false, // When true, include pages that already have translation (for re-processing)
+      staleOnly = false, // When true, only retranslate pages where translation model differs from OCR model
     } = body;
 
     const db = await getDb();
@@ -55,23 +56,37 @@ export const POST = withAuth(async (request, session, context) => {
     }
 
     // Find pages to translate (or modernize for English books)
-    // When force=true, include pages that already have translation (for re-processing with new prompts)
-    const translationFilter = force
-      ? {
-          book_id: bookId,
-          'ocr.data': { $exists: true, $nin: [null, ''] },
-          page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
-        }
-      : {
-          book_id: bookId,
-          'ocr.data': { $exists: true, $nin: [null, ''] },
-          page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
-          $or: [
-            { 'translation.data': { $exists: false } },
-            { 'translation.data': null },
-            { 'translation.data': '' }
-          ]
-        };
+    // staleOnly: retranslate pages where OCR was redone with a newer model but translation is stale
+    // force: retranslate ALL pages regardless of existing translation
+    // default: only translate pages without any translation
+    let translationFilter: Record<string, unknown>;
+    if (staleOnly) {
+      translationFilter = {
+        book_id: bookId,
+        'ocr.data': { $exists: true, $nin: [null, ''] },
+        'ocr.model': model, // Has current OCR
+        'translation.data': { $exists: true, $nin: [null, ''] },
+        'translation.model': { $ne: model }, // But translation is from a different model
+        page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+      };
+    } else if (force) {
+      translationFilter = {
+        book_id: bookId,
+        'ocr.data': { $exists: true, $nin: [null, ''] },
+        page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+      };
+    } else {
+      translationFilter = {
+        book_id: bookId,
+        'ocr.data': { $exists: true, $nin: [null, ''] },
+        page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+        $or: [
+          { 'translation.data': { $exists: false } },
+          { 'translation.data': null },
+          { 'translation.data': '' }
+        ]
+      };
+    }
 
     const pagesToProcess = await db.collection('pages')
       .find(translationFilter)
@@ -170,6 +185,7 @@ export const POST = withAuth(async (request, session, context) => {
       source_language: sourceLanguage,
       target_language: targetLanguage,
       force,
+      stale_only: staleOnly,
       prompt_version: PROMPT_VERSION,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,

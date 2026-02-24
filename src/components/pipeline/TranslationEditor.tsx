@@ -316,7 +316,7 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
   const modalId = `settings-modal-${promptType}`;
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div
         role="dialog"
         aria-modal="true"
@@ -325,7 +325,7 @@ function SettingsModal({ isOpen, onClose, title, promptType, selectedPromptId, o
         style={{ background: 'var(--bg-white)' }}
       >
         <div className="flex items-center justify-between p-5 flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
-          <h2 id={`${modalId}-title`} className="text-lg font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>{title}</h2>
+          <h2 id={`${modalId}-title`} className="text-lg font-medium" style={{ color: 'var(--text-primary)' }}>{title}</h2>
           <button onClick={onClose} aria-label="Close dialog" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
             <X className="w-5 h-5" aria-hidden="true" />
           </button>
@@ -780,7 +780,7 @@ export default function TranslationEditor({
                 <BookOpen className="w-5 h-5" aria-hidden="true" />
               </a>
               <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
-                <h1 className="text-base sm:text-lg font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                <h1 className="text-base sm:text-lg font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
               </a>
@@ -1069,7 +1069,7 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0">
                     {ocrText ? (
-                      <div className="prose-manuscript leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
+                      <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} />
                       </div>
                     ) : (
@@ -1079,7 +1079,7 @@ export default function TranslationEditor({
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                           </svg>
                         </div>
-                        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                        <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
                           Transcribe the {book.language || 'original text'}
                         </h3>
                         <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
@@ -1140,7 +1140,7 @@ export default function TranslationEditor({
                         <button
                           onClick={() => setShowNotes(prev => !prev)}
                           className={`flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${showNotes
-                            ? 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                            ? 'bg-accent-gold/15 text-accent-gold-dark hover:bg-accent-gold/25'
                             : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
                             }`}
                           title={showNotes ? "Hide notes and metadata" : "Show notes and metadata"}
@@ -1203,7 +1203,7 @@ export default function TranslationEditor({
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
                           </svg>
                         </div>
-                        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                        <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
                           Ready to translate
                         </h3>
                         <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
@@ -1237,7 +1237,7 @@ export default function TranslationEditor({
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                           </svg>
                         </div>
-                        <h3 className="text-lg font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-muted)' }}>
+                        <h3 className="text-lg font-medium mb-2" style={{ color: 'var(--text-muted)' }}>
                           Complete OCR first
                         </h3>
                         <p className="text-sm max-w-xs" style={{ color: 'var(--text-faint)' }}>
@@ -1341,7 +1341,7 @@ export default function TranslationEditor({
                 <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
                   <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} aria-hidden="true" />
                 </div>
-                <h3 id="reset-split-title-read" className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                <h3 id="reset-split-title-read" className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                   Reset Split?
                 </h3>
               </div>
@@ -1411,7 +1411,7 @@ export default function TranslationEditor({
             <a href={`/book/${book.id}`} className="hover:opacity-70 transition-opacity shrink-0" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
             </a>
-            <h1 className="text-base sm:text-xl font-medium truncate" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+            <h1 className="text-base sm:text-xl font-medium truncate" style={{ color: 'var(--text-primary)' }}>
               {book.display_title || book.title}
             </h1>
           </div>
@@ -1603,7 +1603,7 @@ export default function TranslationEditor({
                 onChange={(e) => setOcrText(e.target.value)}
                 onBlur={handleSave}
                 className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }}
+                style={{ color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }}
                 placeholder="OCR text will appear here..."
               />
             </div>
@@ -1655,7 +1655,7 @@ export default function TranslationEditor({
                 onChange={(e) => setTranslationText(e.target.value)}
                 onBlur={handleSave}
                 className="w-full h-full p-0 border-0 resize-none leading-relaxed focus:outline-none focus:ring-0"
-                style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }}
+                style={{ color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }}
                 placeholder="Translation will appear here..."
               />
             </div>
@@ -1697,7 +1697,7 @@ export default function TranslationEditor({
 
       {/* How It Works Modal */}
       {showHowItWorks && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div
             role="dialog"
             aria-modal="true"
@@ -1707,7 +1707,7 @@ export default function TranslationEditor({
           >
             {/* Header */}
             <div className="px-6 py-5 flex items-center justify-between" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-              <h2 id="how-it-works-title" className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+              <h2 id="how-it-works-title" className="text-xl font-medium" style={{ color: 'var(--text-primary)' }}>
                 How Translation Works
               </h2>
               <button onClick={() => setShowHowItWorks(false)} aria-label="Close dialog" className="p-1 rounded-full hover:bg-white/50 transition-colors" style={{ color: 'var(--text-secondary)' }}>
@@ -1758,7 +1758,7 @@ export default function TranslationEditor({
               </div>
 
               {/* Description */}
-              <div className="space-y-4" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
+              <div className="space-y-4 font-body">
                 <p className="text-base leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   Our AI-powered translation uses <strong>Gemini 2.0 Flash</strong> to read and understand historical manuscripts. The process happens in two stages:
                 </p>
@@ -1776,7 +1776,7 @@ export default function TranslationEditor({
 
               {/* How to Help */}
               <div className="rounded-xl p-5" style={{ background: 'var(--bg-cream)', border: '1px solid var(--border-light)' }}>
-                <h3 className="text-base font-medium mb-3" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+                <h3 className="text-base font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
                   How You Can Help
                 </h3>
                 <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
@@ -1823,7 +1823,7 @@ export default function TranslationEditor({
               <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
                 <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} aria-hidden="true" />
               </div>
-              <h3 id="reset-split-title" className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+              <h3 id="reset-split-title" className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                 Reset Split?
               </h3>
             </div>

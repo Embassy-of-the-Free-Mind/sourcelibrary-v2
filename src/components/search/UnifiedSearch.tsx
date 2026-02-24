@@ -189,7 +189,7 @@ export default function UnifiedSearch() {
           aria-activedescendant={activeIndex >= 0 ? `search-item-${activeIndex}` : undefined}
           role="combobox"
           aria-controls="search-results"
-          className="w-full pl-12 pr-12 py-4 bg-white/95 backdrop-blur border border-white/20 rounded-2xl text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 text-lg shadow-lg"
+          className="w-full pl-12 pr-12 py-4 bg-white/95 backdrop-blur border border-white/20 rounded-2xl text-stone-900 placeholder-stone-500 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust/50 text-lg shadow-lg"
         />
         {loading && (
           <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400 animate-spin" />
@@ -220,7 +220,7 @@ export default function UnifiedSearch() {
                       setQuery(suggestion);
                       performSearch(suggestion);
                     }}
-                    className="font-medium text-amber-700 hover:text-amber-800 underline underline-offset-2"
+                    className="font-medium text-accent-rust hover:text-accent-gold-dark underline underline-offset-2"
                   >
                     {suggestion}
                   </button>
@@ -230,7 +230,7 @@ export default function UnifiedSearch() {
               <Link
                 href={`/search?q=${encodeURIComponent(query)}`}
                 onClick={() => setIsOpen(false)}
-                className="inline-flex items-center gap-2 mt-3 text-sm text-amber-600 hover:text-amber-700"
+                className="inline-flex items-center gap-2 mt-3 text-sm text-accent-rust hover:text-accent-rust"
               >
                 <Search className="w-4 h-4" />
                 Try full search
@@ -250,7 +250,7 @@ export default function UnifiedSearch() {
                       {results.books.total > 5 && (
                         <Link
                           href={`/search?q=${encodeURIComponent(query)}`}
-                          className="text-xs text-amber-600 hover:text-amber-700 flex items-center gap-0.5"
+                          className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                           onClick={() => setIsOpen(false)}
                         >
                           See all <ChevronRight className="w-3 h-3" />
@@ -269,10 +269,10 @@ export default function UnifiedSearch() {
                           aria-selected={activeIndex === itemIndex}
                           data-search-index={itemIndex}
                           className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${
-                            activeIndex === itemIndex ? 'bg-amber-50' : 'hover:bg-amber-50'
+                            activeIndex === itemIndex ? 'bg-accent-gold/8' : 'hover:bg-accent-gold/8'
                           }`}
                         >
-                          <Book className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                          <Book className="w-4 h-4 text-accent-rust flex-shrink-0" />
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-stone-900 truncate text-sm">
                               <HighlightedText text={book.display_title || book.title} query={query} />
@@ -305,7 +305,7 @@ export default function UnifiedSearch() {
                       {results.index.total > 5 && (
                         <Link
                           href={`/search?q=${encodeURIComponent(query)}&mode=index`}
-                          className="text-xs text-amber-600 hover:text-amber-700 flex items-center gap-0.5"
+                          className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                           onClick={() => setIsOpen(false)}
                         >
                           See all <ChevronRight className="w-3 h-3" />
@@ -363,7 +363,7 @@ export default function UnifiedSearch() {
                       </span>
                       <Link
                         href={`/gallery?q=${encodeURIComponent(query)}`}
-                        className="text-xs text-amber-600 hover:text-amber-700 flex items-center gap-0.5"
+                        className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                         onClick={() => setIsOpen(false)}
                       >
                         See all <ChevronRight className="w-3 h-3" />
@@ -430,7 +430,7 @@ export default function UnifiedSearch() {
                     data-search-index={fullSearchIndex}
                     className={`flex items-center justify-center gap-2 p-3 text-sm font-medium transition-colors ${
                       activeIndex === fullSearchIndex
-                        ? 'bg-amber-50 text-amber-800'
+                        ? 'bg-accent-gold/8 text-accent-gold-dark'
                         : 'bg-stone-50 text-stone-600 hover:text-stone-900'
                     }`}
                   >

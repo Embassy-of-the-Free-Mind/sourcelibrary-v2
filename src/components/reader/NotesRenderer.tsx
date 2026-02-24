@@ -328,7 +328,7 @@ function processNoteTags(text: string, showNotes: boolean): ReactNode[] {
       case 'note':
       case 'notes':
         parts.push(
-          <span key={key++} className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
+          <span key={key++} className="bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
             {content}
           </span>
         );
@@ -426,14 +426,14 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
       {/* Warning displayed prominently if present */}
       {metadata.warning && (
         <div className="px-3 py-2 bg-red-50 border-b border-red-200 text-sm text-red-800 flex items-start gap-2">
-          <span className="text-red-500 font-bold">⚠</span>
+          <span className="text-status-error font-bold">⚠</span>
           <span><span className="font-medium">Quality Warning: </span>{metadata.warning}</span>
         </div>
       )}
 
       {/* Summary displayed prominently if present */}
       {metadata.summary && (
-        <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-900">
+        <div className="px-3 py-2 bg-accent-gold/8 border-b border-accent-gold/20 text-sm text-accent-gold-dark">
           <span className="font-medium">Summary: </span>
           {metadata.summary}
         </div>
@@ -563,7 +563,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         pre: ({ children }: any) => <span>{children}</span>,
         hr: () => <hr className="my-6 border-stone-200" />,
         a: ({ href, children }: any) => (
-          <a href={href} className="text-amber-700 underline hover:text-amber-800" target="_blank" rel="noopener noreferrer">
+          <a href={href} className="text-accent-rust underline hover:text-accent-gold-dark" target="_blank" rel="noopener noreferrer">
             {children}
           </a>
         ),
@@ -589,10 +589,10 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
           }
           if (divClassName === 'image-description') {
             return (
-              <div className="my-4 p-4 bg-amber-50 border border-amber-200 rounded-lg text-stone-600 italic">
-                <span className="text-amber-700 font-medium not-italic">[Image: </span>
+              <div className="my-4 p-4 bg-accent-gold/8 border border-accent-gold/20 rounded-lg text-stone-600 italic">
+                <span className="text-accent-rust font-medium not-italic">[Image: </span>
                 {children}
-                <span className="text-amber-700 font-medium not-italic">]</span>
+                <span className="text-accent-rust font-medium not-italic">]</span>
               </div>
             );
           }
@@ -603,7 +603,7 @@ function ColumnMarkdown({ text, showNotes, withNotes }: {
         ),
         // XML annotation elements (TEI-aligned, new syntax)
         note: ({ children }: any) => showNotes ? (
-          <span className="bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
+          <span className="bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded text-sm mx-0.5" title="Editorial note">
             {children}
           </span>
         ) : null,

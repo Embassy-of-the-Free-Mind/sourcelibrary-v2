@@ -196,8 +196,7 @@ export default function RevisionHistory({ pageId, field, currentSource }: Revisi
                           background: 'var(--bg-warm)',
                           color: 'var(--text-secondary)',
                           maxHeight: '120px',
-                          fontFamily: 'Newsreader, Georgia, serif',
-                        }}
+                          }}
                       >
                         {truncate(rev.data, 500)}
                       </div>
@@ -208,7 +207,7 @@ export default function RevisionHistory({ pageId, field, currentSource }: Revisi
                         <button
                           onClick={(e) => { e.stopPropagation(); handleRestore(rev.id); }}
                           disabled={restoring === rev.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[10px] font-medium transition-colors hover:bg-amber-50"
+                          className="flex items-center gap-1 px-2.5 py-1.5 rounded text-[10px] font-medium transition-colors hover:bg-accent-gold/8"
                           style={{ color: 'var(--accent-rust)' }}
                         >
                           <RotateCcw className={`w-3 h-3 ${restoring === rev.id ? 'animate-spin' : ''}`} />

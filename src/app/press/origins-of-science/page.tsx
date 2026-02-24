@@ -11,16 +11,15 @@ export default function OriginsOfSciencePress() {
     <div className="min-h-screen bg-white">
       <header className="bg-stone-900 text-white py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6 md:px-12">
-          <Link href="/press" className="text-amber-400 text-sm tracking-[0.2em] uppercase mb-4 inline-block hover:text-amber-300 transition-colors">
+          <Link href="/press" className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4 inline-block hover:text-accent-gold transition-colors">
             &larr; Press
           </Link>
           <h1
-            className="text-3xl md:text-4xl lg:text-5xl mb-6"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl lg:text-5xl mb-6 font-display"
           >
             The Mystic Who Discovered Planetary Motion: How Kepler&apos;s Occult Beliefs Led to Modern Astronomy
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
+          <p className="text-lg text-white/70 max-w-2xl font-body">
             Source Library&apos;s AI translation of Kepler&apos;s Astronomia Nova reveals how mystical convictions about cosmic harmony produced the laws of planetary motion
           </p>
         </div>
@@ -40,16 +39,16 @@ export default function OriginsOfSciencePress() {
           </p>
           <p>
             From Kepler&apos;s <em>Astronomia Nova</em> (1609), now fully translated on{' '}
-            <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">Source Library</a> in 388 pages of AI-assisted translation from Latin, here is Kepler defining gravity &mdash; not as a property of objects falling toward the center of the Earth, but as a mutual attraction between bodies. Eighty years before Newton:
+            <a href="https://sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">Source Library</a> in 388 pages of AI-assisted translation from Latin, here is Kepler defining gravity &mdash; not as a property of objects falling toward the center of the Earth, but as a mutual attraction between bodies. Eighty years before Newton:
           </p>
 
-          <blockquote className="border-l-4 border-amber-500 pl-6 py-2 my-8 bg-amber-50/50 rounded-r-lg">
+          <blockquote className="border-l-4 border-accent-gold pl-6 py-2 my-8 bg-accent-gold/5 rounded-r-lg">
             <p className="italic text-stone-700">
               &ldquo;Gravity is a mutual material tendency between related bodies toward union or conjunction (of the same order of things as the magnetic faculty), such that the Earth attracts a stone much more than the stone seeks the Earth... If two stones were placed in some location in the world near each other, outside the sphere of influence of a third related body, those stones would come together at an intermediate place, much like two magnetic bodies; each would approach the other by a distance proportional to the other&apos;s mass.&rdquo;
             </p>
             <footer className="text-sm text-stone-500 mt-3">
               &mdash; Johannes Kepler, <em>Astronomia Nova</em> (1609),{' '}
-              <a href="https://sourcelibrary.org/book/31f2d90a-88af-4414-a445-68406caca58d?page=25" className="text-amber-700 hover:text-amber-800">p. 25</a>
+              <a href="https://sourcelibrary.org/book/31f2d90a-88af-4414-a445-68406caca58d?page=25" className="text-accent-rust hover:text-accent-gold-dark">p. 25</a>
             </footer>
           </blockquote>
 
@@ -57,13 +56,13 @@ export default function OriginsOfSciencePress() {
             And in his summary of the chapters, the kernel of what would become the inverse-square law:
           </p>
 
-          <blockquote className="border-l-4 border-amber-500 pl-6 py-2 my-8 bg-amber-50/50 rounded-r-lg">
+          <blockquote className="border-l-4 border-accent-gold pl-6 py-2 my-8 bg-accent-gold/5 rounded-r-lg">
             <p className="italic text-stone-700">
               &ldquo;It is demonstrated that the Moving Power behaves exactly like Light: it occupies space, is weakened over a larger area, and is concentrated in a smaller one.&rdquo;
             </p>
             <footer className="text-sm text-stone-500 mt-3">
               &mdash; Kepler, <em>Astronomia Nova</em>,{' '}
-              <a href="https://sourcelibrary.org/book/31f2d90a-88af-4414-a445-68406caca58d?page=37" className="text-amber-700 hover:text-amber-800">p. 37</a>
+              <a href="https://sourcelibrary.org/book/31f2d90a-88af-4414-a445-68406caca58d?page=37" className="text-accent-rust hover:text-accent-gold-dark">p. 37</a>
             </footer>
           </blockquote>
 
@@ -75,8 +74,7 @@ export default function OriginsOfSciencePress() {
           </p>
 
           <h2
-            className="text-2xl text-stone-900 mt-12 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mt-12 mb-4 font-display"
           >
             The Scientists Who Believed in Magic
           </h2>
@@ -94,13 +92,13 @@ export default function OriginsOfSciencePress() {
             </li>
           </ul>
 
-          <blockquote className="border-l-4 border-amber-500 pl-6 py-2 my-8 bg-amber-50/50 rounded-r-lg">
+          <blockquote className="border-l-4 border-accent-gold pl-6 py-2 my-8 bg-accent-gold/5 rounded-r-lg">
             <p className="italic text-stone-700">
               &ldquo;They say that within all things are moved by a soul, by which they believe all things in the world live... there must be an intermediate spirit. This they call neither body nor soul, but a middle substance, participating in both, which brings these two extremes back into one.&rdquo;
             </p>
             <footer className="text-sm text-stone-500 mt-3">
               &mdash; Robert Fludd, <em>Mosaicall Philosophy</em> (1659),{' '}
-              <a href="https://sourcelibrary.org/book/6952722bab34727b1f047e18?page=55" className="text-amber-700 hover:text-amber-800">p. 55</a>
+              <a href="https://sourcelibrary.org/book/6952722bab34727b1f047e18?page=55" className="text-accent-rust hover:text-accent-gold-dark">p. 55</a>
             </footer>
           </blockquote>
 
@@ -110,13 +108,13 @@ export default function OriginsOfSciencePress() {
             </li>
           </ul>
 
-          <blockquote className="border-l-4 border-amber-500 pl-6 py-2 my-8 bg-amber-50/50 rounded-r-lg">
+          <blockquote className="border-l-4 border-accent-gold pl-6 py-2 my-8 bg-accent-gold/5 rounded-r-lg">
             <p className="italic text-stone-700">
               &ldquo;Trees of different sizes, between which there is a harmonic proportion, emit a harmonious sound when moved by the wind.&rdquo;
             </p>
             <footer className="text-sm text-stone-500 mt-3">
               &mdash; Athanasius Kircher, <em>Musurgia Universalis</em> (1650),{' '}
-              <a href="https://sourcelibrary.org/book/69520516ab34727b1f04245b?page=46" className="text-amber-700 hover:text-amber-800">p. 46</a>
+              <a href="https://sourcelibrary.org/book/69520516ab34727b1f04245b?page=46" className="text-accent-rust hover:text-accent-gold-dark">p. 46</a>
             </footer>
           </blockquote>
 
@@ -127,8 +125,7 @@ export default function OriginsOfSciencePress() {
           </ul>
 
           <h2
-            className="text-2xl text-stone-900 mt-12 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mt-12 mb-4 font-display"
           >
             The Missing Chapter
           </h2>
@@ -141,15 +138,14 @@ export default function OriginsOfSciencePress() {
           </p>
 
           <h2
-            className="text-2xl text-stone-900 mt-12 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mt-12 mb-4 font-display"
           >
             Open for Discovery
           </h2>
 
           <p>
             All books in the collection are freely available at{' '}
-            <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">sourcelibrary.org</a>. The full corpus &mdash; translations, original texts, and page images &mdash; is released as open data under a Creative Commons license.
+            <a href="https://sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">sourcelibrary.org</a>. The full corpus &mdash; translations, original texts, and page images &mdash; is released as open data under a Creative Commons license.
           </p>
           <p>
             &ldquo;Kepler didn&apos;t discover planetary motion despite his mysticism,&rdquo; says the Source Library team. &ldquo;He discovered it because of his mysticism. That&apos;s a fact that should inform how we think about the relationship between science and other ways of knowing &mdash; including the ones we&apos;re building into AI.&rdquo;
@@ -158,15 +154,15 @@ export default function OriginsOfSciencePress() {
           <div className="mt-12 pt-8 border-t border-stone-200 space-y-2 text-stone-600">
             <p>
               <strong>Read the texts:</strong>{' '}
-              <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">sourcelibrary.org</a>
+              <a href="https://sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">sourcelibrary.org</a>
             </p>
             <p>
               <strong>Read Kepler&apos;s Astronomia Nova:</strong>{' '}
-              <a href="https://sourcelibrary.org/book/31f2d90a-88af-4414-a445-68406caca58d" className="text-amber-700 hover:text-amber-800">sourcelibrary.org/book/31f2d90a-88af...</a>
+              <a href="https://sourcelibrary.org/book/31f2d90a-88af-4414-a445-68406caca58d" className="text-accent-rust hover:text-accent-gold-dark">sourcelibrary.org/book/31f2d90a-88af...</a>
             </p>
             <p>
               <strong>Press contact:</strong>{' '}
-              <a href="mailto:press@sourcelibrary.org" className="text-amber-700 hover:text-amber-800">press@sourcelibrary.org</a>
+              <a href="mailto:press@sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">press@sourcelibrary.org</a>
             </p>
           </div>
         </div>
@@ -175,7 +171,7 @@ export default function OriginsOfSciencePress() {
       <footer className="bg-stone-900 text-white/60 py-8">
         <div className="max-w-4xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <span>&copy; {new Date().getFullYear()} Source Library &mdash; An initiative of the Embassy of the Free Mind</span>
-          <Link href="/press" className="text-amber-500/60 hover:text-amber-400 transition-colors">
+          <Link href="/press" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
             All Press Releases
           </Link>
         </div>

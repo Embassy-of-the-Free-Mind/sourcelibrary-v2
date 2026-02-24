@@ -40,7 +40,7 @@ export default function QASamplingPage() {
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <BarChart3 className="w-5 h-5 text-amber-600" />
+              <BarChart3 className="w-5 h-5 text-accent-rust" />
               <h1 className="text-lg font-semibold">QA Sampling</h1>
             </div>
             <div className="flex items-center gap-3">
@@ -57,7 +57,7 @@ export default function QASamplingPage() {
               <button
                 onClick={fetchSample}
                 disabled={loading}
-                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm bg-amber-600 text-white hover:bg-amber-700 rounded-lg transition-colors disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-1.5 text-sm bg-accent-rust text-white hover:bg-accent-rust/90 rounded-lg transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
                 Resample
@@ -89,7 +89,7 @@ export default function QASamplingPage() {
                 </div>
               </div>
               <div className="bg-white rounded-lg border border-stone-200 p-4">
-                <div className={`text-2xl font-bold ${data.estimate.issueRate > 0.1 ? 'text-red-600' : data.estimate.issueRate > 0.05 ? 'text-amber-600' : 'text-green-600'}`}>
+                <div className={`text-2xl font-bold ${data.estimate.issueRate > 0.1 ? 'text-status-error' : data.estimate.issueRate > 0.05 ? 'text-accent-rust' : 'text-status-success'}`}>
                   {formatPercent(data.estimate.issueRate)}
                 </div>
                 <div className="text-sm text-stone-500">Issue Rate (sample)</div>
@@ -119,7 +119,7 @@ export default function QASamplingPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className={`text-sm font-medium ${stat.issueRate > 0.1 ? 'text-red-600' : stat.issueRate > 0.05 ? 'text-amber-600' : 'text-green-600'}`}>
+                        <div className={`text-sm font-medium ${stat.issueRate > 0.1 ? 'text-status-error' : stat.issueRate > 0.05 ? 'text-accent-rust' : 'text-status-success'}`}>
                           {formatPercent(stat.issueRate)} issues
                         </div>
                         <div className="text-xs text-stone-500">
@@ -149,7 +149,7 @@ export default function QASamplingPage() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className={`text-sm font-medium ${stat.issueRate > 0.1 ? 'text-red-600' : stat.issueRate > 0.05 ? 'text-amber-600' : 'text-green-600'}`}>
+                        <div className={`text-sm font-medium ${stat.issueRate > 0.1 ? 'text-status-error' : stat.issueRate > 0.05 ? 'text-accent-rust' : 'text-status-success'}`}>
                           {formatPercent(stat.issueRate)} issues
                         </div>
                         <div className="text-xs text-stone-500">
@@ -181,14 +181,14 @@ export default function QASamplingPage() {
                         <div className="flex items-center gap-2 mb-1">
                           <Link
                             href={`/book/${sample.bookId}/page/${sample.pageId}`}
-                            className="font-medium text-amber-600 hover:text-amber-700"
+                            className="font-medium text-accent-rust hover:text-accent-rust"
                           >
                             {sample.bookTitle} - Page {sample.pageNumber}
                           </Link>
                           {sample.ocrIssues > 0 || sample.translationIssues > 0 ? (
-                            <AlertTriangle className="w-4 h-4 text-amber-500" />
+                            <AlertTriangle className="w-4 h-4 text-accent-gold" />
                           ) : (
-                            <CheckCircle className="w-4 h-4 text-green-500" />
+                            <CheckCircle className="w-4 h-4 text-status-success" />
                           )}
                         </div>
                         <div className="flex flex-wrap gap-2 text-xs mb-2">

@@ -55,9 +55,8 @@ function EmailForm({
   if (status === 'success') {
     return (
       <div
-        className={`border rounded-xl p-6 max-w-xl ${variant === 'dark' ? 'bg-white/10 border-white/20' : 'bg-amber-50 border-amber-200'
-          }`}
-        style={{ fontFamily: 'Inter, sans-serif' }}
+        className={`border rounded-xl p-6 max-w-xl ${variant === 'dark' ? 'bg-white/10 border-white/20' : 'bg-accent-gold/8 border-accent-gold/20'
+          } font-sans`}
       >
         <p className={`text-lg font-medium mb-1 ${variant === 'dark' ? 'text-white' : 'text-stone-900'}`}>
           You&apos;re in.
@@ -79,23 +78,21 @@ function EmailForm({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className={`flex-1 px-5 py-4 rounded-lg text-base focus:outline-none transition-colors ${variant === 'dark'
-              ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/40 focus:border-amber-400/60 focus:ring-1 focus:ring-amber-400/30'
-              : 'bg-white border border-stone-300 text-stone-900 placeholder-stone-400 focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30'
-            }`}
-          style={{ fontFamily: 'Inter, sans-serif' }}
+              ? 'bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder-white/40 focus:border-accent-gold/20 focus:ring-1 focus:ring-accent-gold/30'
+              : 'bg-white border border-stone-300 text-stone-900 placeholder-stone-400 focus:border-accent-gold focus:ring-1 focus-visible:ring-accent-rust/30'
+            } font-sans`}
           disabled={status === 'loading'}
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="px-8 py-4 bg-amber-500 hover:bg-amber-400 disabled:bg-amber-500/50 text-stone-900 rounded-lg text-base font-medium transition-colors whitespace-nowrap"
-          style={{ fontFamily: 'Inter, sans-serif' }}
+          className="px-8 py-4 bg-accent-gold/80 hover:bg-accent-gold disabled:bg-accent-gold/40 text-stone-900 rounded-lg text-base font-medium transition-colors whitespace-nowrap font-sans"
         >
           {status === 'loading' ? 'Joining...' : 'Get Early Access'}
         </button>
       </form>
       {status === 'error' && (
-        <p className="text-red-400 text-sm mt-2" style={{ fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-red-400 text-sm mt-2 font-sans">
           {errorMsg}
         </p>
       )}
@@ -188,7 +185,7 @@ export default function BetaLandingPage() {
               className="hidden md:block h-8 w-auto opacity-80"
             />
           </div>
-          <div className="hidden md:flex items-center gap-6 text-sm text-white/60" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <div className="hidden md:flex items-center gap-6 text-sm text-white/60 font-sans">
             <a href="#demo" className="hover:text-white transition-colors">See It Work</a>
             <a href="#gallery" className="hover:text-white transition-colors">Gallery</a>
             <a href="#signup" className="hover:text-white transition-colors">Get Access</a>
@@ -199,22 +196,19 @@ export default function BetaLandingPage() {
         <div className="relative z-10 flex-1 flex items-center">
           <div className="px-6 md:px-12 w-full max-w-4xl">
             <p
-              className="text-amber-400/80 text-lg md:text-xl mb-6"
-              style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+              className="text-accent-gold/80 text-lg md:text-xl mb-6 font-body"
             >
               Most books written before 1800 have never been translated<br />
               into any modern language.
             </p>
             <h1
-              className="text-4xl md:text-5xl lg:text-7xl text-white mb-6 leading-[1.05]"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-4xl md:text-5xl lg:text-7xl text-white mb-6 leading-[1.05] font-display"
             >
               We&apos;re bringing them<br />
               <span className="italic font-normal">back to life.</span>
             </h1>
             <p
-              className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mb-10"
-              style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+              className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mb-10 font-body"
             >
               Source Library uses AI to translate thousands of rare historical texts —
               early science, philosophy, medicine, alchemy, theology — into modern English.
@@ -230,7 +224,7 @@ export default function BetaLandingPage() {
               onSubmit={handleSubmit}
               variant="dark"
             />
-            <p className="text-white/30 text-xs mt-3" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-white/30 text-xs mt-3 font-sans">
               An initiative of the Embassy of the Free Mind, Amsterdam
             </p>
           </div>
@@ -251,20 +245,18 @@ export default function BetaLandingPage() {
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="text-center mb-10">
             <p
-              className="text-amber-500 text-sm tracking-[0.2em] uppercase mb-4"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4 font-sans"
             >
               See it in action
             </p>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl text-white mb-4"
-              style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+              style={{ fontWeight: 400 }}
             >
               A 1,000-page cosmology, translated for the first time
             </h2>
             <p
-              className="text-lg text-white/50 max-w-2xl mx-auto"
-              style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+              className="text-lg text-white/50 max-w-2xl mx-auto font-body"
             >
               Robert Fludd&apos;s <em>Utriusque Cosmi Historia</em> (1617) — a lavishly illustrated
               theory of the universe as a musical instrument. No complete English translation
@@ -278,7 +270,7 @@ export default function BetaLandingPage() {
               href="https://sourcelibrary.org/book/6952dac677f38f6761bc683a?page=87"
               target="_blank"
               rel="noopener noreferrer"
-              className="block rounded-xl overflow-hidden shadow-2xl border border-white/10 hover:border-amber-500/30 transition-colors"
+              className="block rounded-xl overflow-hidden shadow-2xl border border-white/10 hover:border-accent-gold/30 transition-colors"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -288,11 +280,11 @@ export default function BetaLandingPage() {
                 loading="lazy"
               />
             </a>
-            <p className="text-center mt-4 text-white/30 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-center mt-4 text-white/30 text-sm font-sans">
               Original manuscript and AI translation, side by side.{' '}
               <a
                 href="https://sourcelibrary.org/book/6952dac677f38f6761bc683a?page=87"
-                className="text-amber-500/60 hover:text-amber-400 transition-colors"
+                className="text-accent-gold/60 hover:text-accent-gold transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -311,13 +303,12 @@ export default function BetaLandingPage() {
           <div className="text-center mb-14">
             <h2
               className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-4"
-              style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+              style={{ fontWeight: 400 }}
             >
               29,000+ illustrations extracted
             </h2>
             <p
-              className="text-lg text-stone-600 max-w-2xl mx-auto"
-              style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+              className="text-lg text-stone-600 max-w-2xl mx-auto font-body"
             >
               Emblems, engravings, diagrams, and woodcuts — identified by AI,
               described with museum-quality metadata, and searchable.
@@ -342,11 +333,11 @@ export default function BetaLandingPage() {
                 <div className="p-3 md:p-4">
                   <h3
                     className="text-stone-900 text-sm md:text-base mb-0.5"
-                    style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
+                    style={{ fontWeight: 500 }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-stone-400 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-stone-400 text-xs font-sans">
                     {item.source}, {item.year}
                   </p>
                 </div>
@@ -371,12 +362,12 @@ export default function BetaLandingPage() {
             ].map((stat) => (
               <div key={stat.label}>
                 <div
-                  className="text-3xl md:text-4xl text-amber-400 mb-2"
-                  style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300 }}
+                  className="text-3xl md:text-4xl text-accent-gold mb-2"
+                  style={{ fontWeight: 300 }}
                 >
                   {stat.number}
                 </div>
-                <div className="text-white/50 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+                <div className="text-white/50 text-sm font-sans">
                   {stat.label}
                 </div>
               </div>
@@ -392,13 +383,12 @@ export default function BetaLandingPage() {
         <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
           <h2
             className="text-3xl md:text-4xl text-white mb-6"
-            style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+            style={{ fontWeight: 400 }}
           >
             Free to read and cite.
           </h2>
           <p
-            className="text-lg text-white/50 mb-10 max-w-xl mx-auto"
-            style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+            className="text-lg text-white/50 mb-10 max-w-xl mx-auto font-body"
           >
             Source Library opens February 22, 2026.
             120 books are completely open — no account needed.
@@ -416,7 +406,7 @@ export default function BetaLandingPage() {
               variant="dark"
             />
           </div>
-          <p className="text-white/20 text-xs mt-4" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <p className="text-white/20 text-xs mt-4 font-sans">
             Free access with registration. No paywall.
           </p>
         </div>
@@ -426,14 +416,14 @@ export default function BetaLandingPage() {
       <footer className="py-12 bg-stone-950">
         <div className="px-6 md:px-12 max-w-6xl mx-auto">
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/30 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-white/30 text-sm font-sans">
               &copy; {new Date().getFullYear()} Source Library
             </p>
-            <div className="flex gap-6 text-sm text-white/30" style={{ fontFamily: 'Inter, sans-serif' }}>
-              <a href="mailto:press@sourcelibrary.org" className="text-amber-500/60 hover:text-amber-400 transition-colors">
+            <div className="flex gap-6 text-sm text-white/30 font-sans">
+              <a href="mailto:press@sourcelibrary.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
                 Press
               </a>
-              <a href="mailto:derek@ancientwisdomtrust.org" className="text-amber-500/60 hover:text-amber-400 transition-colors">
+              <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
                 Contact
               </a>
             </div>

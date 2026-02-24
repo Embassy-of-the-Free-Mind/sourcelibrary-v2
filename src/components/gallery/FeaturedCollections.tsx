@@ -41,12 +41,12 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <Layers className="w-5 h-5 text-amber-600" />
+          <Layers className="w-5 h-5 text-accent-rust" />
           <h2 className="text-lg font-serif text-stone-800">Collections</h2>
         </div>
         <Link
           href="/gallery/collections"
-          className="flex items-center gap-1 text-sm text-amber-600 hover:text-amber-700 transition-colors"
+          className="flex items-center gap-1 text-sm text-accent-rust hover:text-accent-rust transition-colors"
         >
           View all
           <ChevronRight className="w-4 h-4" />
@@ -77,7 +77,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
               )}
             </div>
             <div className="p-3">
-              <h3 className="font-medium text-sm text-stone-800 group-hover:text-amber-700 transition-colors">
+              <h3 className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">
                 {collection.title}
               </h3>
               <p className="text-xs text-stone-500 line-clamp-1 mt-0.5">

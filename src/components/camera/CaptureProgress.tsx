@@ -50,7 +50,7 @@ export default function CaptureProgress({
         className={`
           flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors
           ${capturedCount > 0
-            ? 'bg-green-600 text-white hover:bg-green-700'
+            ? 'bg-status-success text-white hover:bg-status-success/90'
             : 'bg-stone-700 text-stone-400 cursor-not-allowed'
           }
         `}

@@ -35,10 +35,10 @@ export function BatchJobCard({ job }: Props) {
   const statusColor = isPending
     ? 'text-purple-600'
     : isComplete
-      ? 'text-green-600'
+      ? 'text-status-success'
       : hasErrors
-        ? 'text-amber-600'
-        : 'text-red-600';
+        ? 'text-accent-rust'
+        : 'text-status-error';
 
   return (
     <div className="p-4 rounded-xl bg-white border border-stone-200">
@@ -74,7 +74,7 @@ export function BatchJobCard({ job }: Props) {
                 {job.progress.failed > 0 && (
                   <>
                     <span>•</span>
-                    <span className="text-red-600">{job.progress.failed} failed</span>
+                    <span className="text-status-error">{job.progress.failed} failed</span>
                   </>
                 )}
               </div>

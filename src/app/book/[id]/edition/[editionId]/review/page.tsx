@@ -145,9 +145,9 @@ export default function EditionReviewPage({ params }: PageProps) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="text-center">
-          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <AlertCircle className="w-12 h-12 text-status-error mx-auto mb-4" />
           <p className="text-stone-600">{error || 'Edition not found'}</p>
-          <Link href={`/book/${bookId}`} className="text-amber-600 hover:underline mt-2 inline-block">
+          <Link href={`/book/${bookId}`} className="text-accent-rust hover:underline mt-2 inline-block">
             Back to book
           </Link>
         </div>
@@ -242,22 +242,22 @@ export default function EditionReviewPage({ params }: PageProps) {
                       onClick={() => setActiveSection(section.id)}
                       className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
                         activeSection === section.id
-                          ? 'bg-amber-100 text-amber-800'
+                          ? 'bg-accent-gold/15 text-accent-gold-dark'
                           : 'text-stone-600 hover:bg-stone-50'
                       }`}
                     >
                       <span className={
-                        section.status === 'complete' ? 'text-green-600' :
-                        section.status === 'warning' ? 'text-amber-600' : 'text-stone-400'
+                        section.status === 'complete' ? 'text-status-success' :
+                        section.status === 'warning' ? 'text-accent-rust' : 'text-stone-400'
                       }>
                         {section.icon}
                       </span>
                       <span className="flex-1 text-left">{section.label}</span>
                       {section.status === 'complete' && (
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-status-success" />
                       )}
                       {section.status === 'warning' && (
-                        <AlertCircle className="w-4 h-4 text-amber-500" />
+                        <AlertCircle className="w-4 h-4 text-accent-gold" />
                       )}
                     </button>
                   </li>
@@ -337,20 +337,20 @@ export default function EditionReviewPage({ params }: PageProps) {
                   <h3 className="text-sm font-semibold text-stone-900 mb-3">Publication Checklist</h3>
                   <ul className="space-y-2">
                     <li className="flex items-center gap-2 text-sm">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
+                      <CheckCircle className="w-4 h-4 text-status-success" />
                       <span className="text-stone-700">All pages translated ({edition.page_count} pages)</span>
                     </li>
                     <li className="flex items-center gap-2 text-sm">
                       {hasFrontMatter ? (
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-status-success" />
                       ) : (
-                        <AlertCircle className="w-4 h-4 text-amber-500" />
+                        <AlertCircle className="w-4 h-4 text-accent-gold" />
                       )}
                       <span className="text-stone-700">Front matter generated</span>
                     </li>
                     <li className="flex items-center gap-2 text-sm">
                       {hasDoi ? (
-                        <CheckCircle className="w-4 h-4 text-green-500" />
+                        <CheckCircle className="w-4 h-4 text-status-success" />
                       ) : (
                         <div className="w-4 h-4 rounded-full border-2 border-stone-300" />
                       )}
@@ -380,7 +380,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                       <button
                         onClick={handleSaveFrontMatter}
                         disabled={isSaving}
-                        className="flex items-center gap-2 px-4 py-1.5 text-sm bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50"
+                        className="flex items-center gap-2 px-4 py-1.5 text-sm bg-accent-gold/80 text-white rounded-lg hover:bg-accent-rust transition-colors disabled:opacity-50"
                       >
                         {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                         Save Changes
@@ -394,7 +394,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                     <textarea
                       value={editedIntro}
                       onChange={(e) => setEditedIntro(e.target.value)}
-                      className="w-full h-[600px] p-4 border border-stone-300 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="w-full h-[600px] p-4 border border-stone-300 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                     />
                   ) : (
                     <div className="prose prose-stone max-w-none">
@@ -403,7 +403,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                   )
                 ) : (
                   <div className="text-center py-12">
-                    <AlertCircle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+                    <AlertCircle className="w-12 h-12 text-accent-gold mx-auto mb-4" />
                     <p className="text-stone-600 mb-4">No introduction generated yet.</p>
                     <button
                       onClick={async () => {
@@ -414,7 +414,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                           console.error('Failed to generate front matter:', err);
                         }
                       }}
-                      className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
+                      className="px-4 py-2 bg-accent-gold/80 text-white rounded-lg hover:bg-accent-rust transition-colors"
                     >
                       <RefreshCw className="w-4 h-4 inline mr-2" />
                       Generate Introduction
@@ -443,7 +443,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                       <button
                         onClick={handleSaveFrontMatter}
                         disabled={isSaving}
-                        className="flex items-center gap-2 px-4 py-1.5 text-sm bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors disabled:opacity-50"
+                        className="flex items-center gap-2 px-4 py-1.5 text-sm bg-accent-gold/80 text-white rounded-lg hover:bg-accent-rust transition-colors disabled:opacity-50"
                       >
                         {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                         Save Changes
@@ -457,7 +457,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                     <textarea
                       value={editedMethodology}
                       onChange={(e) => setEditedMethodology(e.target.value)}
-                      className="w-full h-[600px] p-4 border border-stone-300 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="w-full h-[600px] p-4 border border-stone-300 rounded-lg font-mono text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                     />
                   ) : (
                     <div className="prose prose-stone max-w-none">
@@ -466,7 +466,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                   )
                 ) : (
                   <div className="text-center py-12">
-                    <AlertCircle className="w-12 h-12 text-amber-500 mx-auto mb-4" />
+                    <AlertCircle className="w-12 h-12 text-accent-gold mx-auto mb-4" />
                     <p className="text-stone-600">No methodology section generated yet.</p>
                   </div>
                 )}
@@ -480,7 +480,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                   <h2 className="text-xl font-semibold text-stone-900">EPUB Preview</h2>
                   <button
                     onClick={handleDownloadEpub}
-                    className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 bg-accent-gold/80 text-white rounded-lg hover:bg-accent-rust transition-colors"
                   >
                     <Download className="w-4 h-4" />
                     Download Scholarly EPUB
@@ -533,7 +533,7 @@ export default function EditionReviewPage({ params }: PageProps) {
 
                 {hasDoi ? (
                   <div className="text-center py-8">
-                    <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                    <CheckCircle className="w-16 h-16 text-status-success mx-auto mb-4" />
                     <h3 className="text-2xl font-bold text-stone-900 mb-2">DOI Minted Successfully</h3>
                     <p className="text-stone-600 mb-6">
                       This edition is now permanently published and citable.
@@ -551,7 +551,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                             href={edition.doi_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-amber-600 hover:underline flex items-center gap-1"
+                            className="text-accent-rust hover:underline flex items-center gap-1"
                           >
                             {edition.doi_url}
                             <ExternalLink className="w-3 h-3" />
@@ -563,7 +563,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                             href={edition.zenodo_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-amber-600 hover:underline flex items-center gap-1"
+                            className="text-accent-rust hover:underline flex items-center gap-1"
                           >
                             View on Zenodo
                             <ExternalLink className="w-3 h-3" />
@@ -574,12 +574,12 @@ export default function EditionReviewPage({ params }: PageProps) {
                   </div>
                 ) : (
                   <>
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+                    <div className="bg-accent-gold/8 border border-accent-gold/20 rounded-lg p-4 mb-6">
                       <div className="flex gap-3">
-                        <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                        <AlertCircle className="w-5 h-5 text-accent-rust flex-shrink-0 mt-0.5" />
                         <div>
-                          <p className="font-medium text-amber-800">Important: This action is permanent</p>
-                          <p className="text-sm text-amber-700 mt-1">
+                          <p className="font-medium text-accent-gold-dark">Important: This action is permanent</p>
+                          <p className="text-sm text-accent-rust mt-1">
                             Once a DOI is minted, the content cannot be changed. Only new versions can be created.
                             Please review all sections carefully before proceeding.
                           </p>
@@ -634,7 +634,7 @@ export default function EditionReviewPage({ params }: PageProps) {
                       <button
                         onClick={handleMintDoi}
                         disabled={isMinting}
-                        className="flex items-center gap-3 px-8 py-4 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50 text-lg font-medium"
+                        className="flex items-center gap-3 px-8 py-4 bg-status-success text-white rounded-xl hover:bg-status-success/90 transition-colors disabled:opacity-50 text-lg font-medium"
                       >
                         {isMinting ? (
                           <>

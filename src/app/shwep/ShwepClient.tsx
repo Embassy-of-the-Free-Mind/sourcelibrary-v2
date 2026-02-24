@@ -63,7 +63,7 @@ export default function ShwepClient({ data }: Props) {
               href="https://shwep.net"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-300 hover:text-amber-200 underline"
+              className="text-accent-gold hover:text-accent-gold underline"
             >
               Secret History of Western Esotericism Podcast
             </a>
@@ -100,7 +100,7 @@ export default function ShwepClient({ data }: Props) {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search episodes, authors, texts..."
-              className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold focus:border-transparent"
             />
           </div>
           <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer select-none">
@@ -108,7 +108,7 @@ export default function ShwepClient({ data }: Props) {
               type="checkbox"
               checked={showOnlyWithBooks}
               onChange={e => setShowOnlyWithBooks(e.target.checked)}
-              className="rounded border-stone-300 text-amber-600 focus:ring-amber-400"
+              className="rounded border-stone-300 text-accent-rust focus:ring-accent-gold"
             />
             Only episodes with source texts
           </label>
@@ -141,7 +141,7 @@ export default function ShwepClient({ data }: Props) {
               >
                 {period.name}
                 {bookCount > 0 && (
-                  <span className="ml-1.5 text-xs text-amber-600 font-medium">{bookCount}</span>
+                  <span className="ml-1.5 text-xs text-accent-rust font-medium">{bookCount}</span>
                 )}
               </button>
             );
@@ -173,7 +173,7 @@ export default function ShwepClient({ data }: Props) {
                 setSearch('');
                 setShowOnlyWithBooks(false);
               }}
-              className="text-amber-600 hover:text-amber-700 underline"
+              className="text-accent-rust hover:text-accent-rust underline"
             >
               Clear filters
             </button>
@@ -189,7 +189,7 @@ export default function ShwepClient({ data }: Props) {
                 href="https://shwep.net"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-amber-600 hover:text-amber-700 underline"
+                className="text-accent-rust hover:text-accent-rust underline"
               >
                 Earl Fontainelle
               </a>
@@ -197,11 +197,11 @@ export default function ShwepClient({ data }: Props) {
             </p>
             <p>
               Missing a source?{' '}
-              <Link href="/contribute" className="text-amber-600 hover:text-amber-700 underline">
+              <Link href="/contribute" className="text-accent-rust hover:text-accent-rust underline">
                 Suggest a book
               </Link>{' '}
               or{' '}
-              <Link href="/support" className="text-amber-600 hover:text-amber-700 underline">
+              <Link href="/support" className="text-accent-rust hover:text-accent-rust underline">
                 support the project
               </Link>
               .
@@ -252,7 +252,7 @@ function EpisodeCard({ episode }: { episode: EnrichedEpisode }) {
 
             {/* Book count badge */}
             {hasBooks && (
-              <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 text-xs font-medium border border-amber-200">
+              <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-accent-gold/8 text-accent-gold-dark text-xs font-medium border border-accent-gold/20">
                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
@@ -335,7 +335,7 @@ function BookLink({ book }: { book: MatchedBook }) {
       className="flex items-start gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors group"
     >
       <svg
-        className="w-4 h-4 text-stone-400 group-hover:text-amber-600 mt-0.5 shrink-0"
+        className="w-4 h-4 text-stone-400 group-hover:text-accent-rust mt-0.5 shrink-0"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -370,7 +370,7 @@ function BookLink({ book }: { book: MatchedBook }) {
           </span>
         )}
         <svg
-          className="w-3.5 h-3.5 text-stone-400 group-hover:text-amber-600"
+          className="w-3.5 h-3.5 text-stone-400 group-hover:text-accent-rust"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

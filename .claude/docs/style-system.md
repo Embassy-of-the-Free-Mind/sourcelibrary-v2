@@ -43,6 +43,27 @@ All brand colors are defined as CSS custom properties in `src/app/globals.css` a
 | `--font-sans` | `font-sans` | UI text (Inter) |
 | `--font-serif` | `font-serif` | Headings (Cormorant Garamond) |
 | `--font-body` | `font-body` | Reading text (Newsreader) |
+| `--font-display` | `font-display` | Display headings (Playfair Display) |
+
+### Status Colors
+
+Semantic tokens for success/error/warning/info states. Use these instead of hardcoded green/red/amber/blue Tailwind classes.
+
+| Token | Value | Tailwind class | Usage |
+|-------|-------|---------------|-------|
+| `--status-success` | `#16a34a` | `text-status-success`, `bg-status-success` | Completed states, positive indicators |
+| `--status-error` | `#dc2626` | `text-status-error`, `bg-status-error` | Failed states, destructive actions |
+| `--status-warning` | `#d97706` | `text-status-warning`, `bg-status-warning` | Pending states, caution indicators |
+| `--status-info` | `#2563eb` | `text-status-info`, `bg-status-info` | Neutral info, links, active states |
+
+```tsx
+// Status badges
+<span className="bg-status-success/15 text-status-success">Completed</span>
+<span className="bg-status-error/15 text-status-error">Failed</span>
+
+// Borders
+<div className="border-status-success/30">
+```
 
 ## Using Tailwind Tokens
 
@@ -124,7 +145,7 @@ import { ANNOTATION_TYPE_STYLES, type AnnotationType } from '@/lib/style-constan
 | reference | violet |
 | correction | rust |
 | etymology | sage |
-| question | amber |
+| question | gold |
 
 ### Processing Actions
 
@@ -163,7 +184,7 @@ import {
 } from '@/lib/style-constants';
 ```
 
-Superset of processing actions plus `imported` (stone), `archived` (amber), `index` (gold), `edition_published` (sage), `admin_action` (red).
+Superset of processing actions plus `imported` (stone), `archived` (warning), `index` (gold), `edition_published` (sage), `admin_action` (error).
 
 ### Note Tag Styles
 
@@ -181,7 +202,7 @@ import { NOTE_TAG_STYLES } from '@/lib/style-constants';
 | margin | sage with left border |
 | gloss | violet tint |
 | insert | sage tint |
-| note | amber |
+| note | gold |
 | pageType | gold |
 | blockquote | rust border + tint |
 | keywords | violet text |

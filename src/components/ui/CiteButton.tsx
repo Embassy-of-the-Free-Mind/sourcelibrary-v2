@@ -106,7 +106,7 @@ export default function CiteButton({
               }}
               className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
             >
-              {copiedId === 'apa' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-stone-400" />}
+              {copiedId === 'apa' ? <Check className="w-4 h-4 text-status-success" /> : <Copy className="w-4 h-4 text-stone-400" />}
               Copy APA Citation
             </button>
 
@@ -118,7 +118,7 @@ export default function CiteButton({
               }}
               className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
             >
-              {copiedId === 'bibtex' ? <Check className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4 text-stone-400" />}
+              {copiedId === 'bibtex' ? <Check className="w-4 h-4 text-status-success" /> : <Copy className="w-4 h-4 text-stone-400" />}
               Copy BibTeX
             </button>
 

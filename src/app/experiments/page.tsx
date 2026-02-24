@@ -135,7 +135,7 @@ export default function ExperimentsPage() {
 
   const statusColors: Record<string, string> = {
     pending: 'bg-stone-100 text-stone-600',
-    running: 'bg-amber-100 text-amber-700',
+    running: 'bg-accent-gold/15 text-accent-gold-dark',
     completed: 'bg-green-100 text-green-700',
     failed: 'bg-red-100 text-red-700',
   };
@@ -268,18 +268,18 @@ export default function ExperimentsPage() {
               </div>
 
               {/* Variant B */}
-              <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-                <h3 className="font-semibold text-amber-900 mb-3 flex items-center gap-2">
-                  <span className="w-6 h-6 bg-amber-600 text-white rounded-full flex items-center justify-center text-sm">B</span>
+              <div className="bg-accent-gold/8 rounded-lg p-4 border border-accent-gold/20">
+                <h3 className="font-semibold text-accent-gold-dark mb-3 flex items-center gap-2">
+                  <span className="w-6 h-6 bg-accent-rust text-white rounded-full flex items-center justify-center text-sm">B</span>
                   Variant B
                 </h3>
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-xs font-medium text-amber-800 mb-1">Method</label>
+                    <label className="block text-xs font-medium text-accent-gold-dark mb-1">Method</label>
                     <select
                       value={newExperiment.method_b}
                       onChange={e => setNewExperiment(prev => ({ ...prev, method_b: e.target.value }))}
-                      className="w-full px-2 py-1.5 border border-amber-300 rounded text-sm"
+                      className="w-full px-2 py-1.5 border border-accent-gold/20 rounded text-sm"
                     >
                       <option value="single_ocr">Single-page OCR</option>
                       <option value="batch_ocr">Batch OCR (5 pages)</option>
@@ -288,17 +288,17 @@ export default function ExperimentsPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-amber-800 mb-1">Model</label>
+                    <label className="block text-xs font-medium text-accent-gold-dark mb-1">Model</label>
                     <select
                       value={newExperiment.model_b}
                       onChange={e => setNewExperiment(prev => ({ ...prev, model_b: e.target.value }))}
-                      className="w-full px-2 py-1.5 border border-amber-300 rounded text-sm"
+                      className="w-full px-2 py-1.5 border border-accent-gold/20 rounded text-sm"
                     >
                       <option value="gemini-2.5-flash-preview-05-20">Gemini 2.5 Flash</option>
                       <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
                     </select>
                   </div>
-                  <label className="flex items-center gap-2 text-sm text-amber-800">
+                  <label className="flex items-center gap-2 text-sm text-accent-gold-dark">
                     <input
                       type="checkbox"
                       checked={newExperiment.context_b}
@@ -427,7 +427,7 @@ export default function ExperimentsPage() {
                           <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded text-[10px] font-medium">A</span>
                           {methodLabels[cfg.variant_a.method] || cfg.variant_a.method}
                           <span className="text-stone-300 mx-1">vs</span>
-                          <span className="px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded text-[10px] font-medium">B</span>
+                          <span className="px-1.5 py-0.5 bg-accent-gold/15 text-accent-gold-dark rounded text-[10px] font-medium">B</span>
                           {methodLabels[cfg.variant_b.method] || cfg.variant_b.method}
                         </span>
                       ) : (
@@ -466,7 +466,7 @@ export default function ExperimentsPage() {
                     {exp.status === 'pending' && (
                       <Link
                         href={`/experiments/${exp.id}/run`}
-                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg"
+                        className="p-2 text-status-success hover:bg-green-50 rounded-lg"
                         title="Run experiment"
                       >
                         <Play className="w-4 h-4" />
@@ -483,7 +483,7 @@ export default function ExperimentsPage() {
                     )}
                     <button
                       onClick={() => deleteExperiment(exp.id)}
-                      className="p-2 text-red-500 hover:bg-red-50 rounded-lg"
+                      className="p-2 text-status-error hover:bg-red-50 rounded-lg"
                       title="Delete"
                     >
                       <Trash2 className="w-4 h-4" />

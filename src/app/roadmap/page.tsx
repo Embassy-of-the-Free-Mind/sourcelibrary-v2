@@ -114,7 +114,7 @@ export default function RoadmapPage() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
               onClick={() => window.location.reload()}
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl transition-colors font-medium"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white rounded-xl transition-colors font-medium"
             >
               Try Again
             </button>
@@ -161,15 +161,15 @@ export default function RoadmapPage() {
           {/* Stats */}
           <div className="flex gap-8 mt-8">
             <div>
-              <div className="text-3xl font-bold text-amber-400">{totalWorks}</div>
+              <div className="text-3xl font-bold text-accent-gold">{totalWorks}</div>
               <div className="text-sm text-stone-400">Total Works</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-400">{inDatabase}</div>
+              <div className="text-3xl font-bold text-accent-gold">{inDatabase}</div>
               <div className="text-sm text-stone-400">In Database</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-400">{pending}</div>
+              <div className="text-3xl font-bold text-accent-gold">{pending}</div>
               <div className="text-sm text-stone-400">Pending</div>
             </div>
           </div>
@@ -177,7 +177,7 @@ export default function RoadmapPage() {
       </div>
 
       {/* Mission Statement */}
-      <div className="bg-amber-50 border-b border-amber-200">
+      <div className="bg-accent-gold/8 border-b border-accent-gold/20">
         <div className="max-w-5xl mx-auto px-4 py-8">
           <h2 className="text-xl font-serif font-semibold text-stone-800 mb-3">
             Our Mission
@@ -204,9 +204,9 @@ export default function RoadmapPage() {
                 href={`#${section.id}`}
                 className="flex items-center gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors group"
               >
-                <span className="text-amber-600">{section.icon}</span>
+                <span className="text-accent-rust">{section.icon}</span>
                 <div>
-                  <div className="font-medium text-stone-800 group-hover:text-amber-700">
+                  <div className="font-medium text-stone-800 group-hover:text-accent-rust">
                     {section.title}
                   </div>
                   <div className="text-sm text-stone-500">
@@ -223,7 +223,7 @@ export default function RoadmapPage() {
           {PRIORITY_SECTIONS.filter(section => booksByPriority[section.priority]?.length > 0).map(section => (
             <section key={section.id} id={section.id}>
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-amber-600">{section.icon}</span>
+                <span className="text-accent-rust">{section.icon}</span>
                 <h2 className="text-2xl font-serif font-bold text-stone-800">
                   {section.title}
                 </h2>
@@ -236,12 +236,12 @@ export default function RoadmapPage() {
                 {booksByPriority[section.priority]?.map((book) => (
                   <div
                     key={book.ia_identifier}
-                    className="bg-white rounded-xl border border-stone-200 p-5 hover:border-amber-200 transition-colors"
+                    className="bg-white rounded-xl border border-stone-200 p-5 hover:border-accent-gold/20 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          {section.priority === 1 && <span className="text-amber-500" title="High Priority">★</span>}
+                          {section.priority === 1 && <span className="text-accent-gold" title="High Priority">★</span>}
                           <h3 className="font-semibold text-stone-900">
                             {book.author}
                           </h3>
@@ -253,7 +253,7 @@ export default function RoadmapPage() {
                             {book.in_database ? 'In Database' : 'Planned'}
                           </span>
                         </div>
-                        <div className="text-lg text-amber-800 font-medium">
+                        <div className="text-lg text-accent-gold-dark font-medium">
                           {book.display_title || book.title}
                         </div>
                         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-sm text-stone-600">
@@ -273,7 +273,7 @@ export default function RoadmapPage() {
                           href={book.source_url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-shrink-0 p-2 text-stone-400 hover:text-amber-600 transition-colors"
+                          className="flex-shrink-0 p-2 text-stone-400 hover:text-accent-rust transition-colors"
                           title="View on Internet Archive"
                         >
                           <ExternalLink className="w-5 h-5" />
@@ -300,7 +300,7 @@ export default function RoadmapPage() {
           <div className="flex flex-wrap gap-4">
             <a
               href="mailto:derek@ancientwisdomtrust.org"
-              className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              className="inline-flex items-center gap-2 bg-accent-rust hover:bg-accent-gold/80 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
               <BookOpen className="w-5 h-5" />
               Get Involved
@@ -327,7 +327,7 @@ export default function RoadmapPage() {
               href="https://secondrenaissance.ai/blog/roadmap"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-700 hover:text-amber-800"
+              className="text-accent-rust hover:text-accent-gold-dark"
             >
               Second Renaissance Research
             </a>

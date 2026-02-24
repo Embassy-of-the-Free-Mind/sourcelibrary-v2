@@ -38,9 +38,9 @@ export default function JobStatusBanner({
   const borderColor = isCancelled ? 'border-stone-200' : hasFailed ? 'border-red-200' : 'border-blue-200';
   const textColor = isCancelled ? 'text-stone-900' : hasFailed ? 'text-red-900' : 'text-blue-900';
   const subTextColor = isCancelled ? 'text-stone-700' : hasFailed ? 'text-red-700' : 'text-blue-700';
-  const iconColor = isCancelled ? 'text-stone-600' : hasFailed ? 'text-red-600' : 'text-blue-600';
+  const iconColor = isCancelled ? 'text-stone-600' : hasFailed ? 'text-status-error' : 'text-blue-600';
   const progressBg = isCancelled ? 'bg-stone-200' : hasFailed ? 'bg-red-200' : 'bg-blue-200';
-  const progressBar = isCancelled ? 'bg-stone-600' : hasFailed ? 'bg-red-600' : 'bg-blue-600';
+  const progressBar = isCancelled ? 'bg-stone-600' : hasFailed ? 'bg-status-error' : 'bg-blue-600';
 
   return (
     <div className={`${bgColor} rounded-xl border ${borderColor} p-4`}>
@@ -60,7 +60,7 @@ export default function JobStatusBanner({
                  isCancelled ? `${actionConfig[job.type].label} cancelled` :
                  `${actionConfig[job.type].label} completed with errors`}
               </span>
-              <span className={`text-xs ${isCancelled ? 'text-stone-600 bg-stone-100' : hasFailed ? 'text-red-600 bg-red-100' : 'text-blue-600 bg-blue-100'} px-2 py-0.5 rounded`}>
+              <span className={`text-xs ${isCancelled ? 'text-stone-600 bg-stone-100' : hasFailed ? 'text-status-error bg-red-100' : 'text-blue-600 bg-blue-100'} px-2 py-0.5 rounded`}>
                 {job.status}
               </span>
             </div>
@@ -84,7 +84,7 @@ export default function JobStatusBanner({
               <button
                 onClick={onCancel}
                 disabled={cancelling || loading}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-status-error text-white rounded-lg hover:bg-status-error/90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {cancelling ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -100,7 +100,7 @@ export default function JobStatusBanner({
               <button
                 onClick={onRetry}
                 disabled={retrying}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-sm bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {retrying ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />

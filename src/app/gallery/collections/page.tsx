@@ -52,7 +52,7 @@ export default function CollectionsPage() {
                   {collections.length} curated collections
                 </p>
               </div>
-              <Layers className="w-6 h-6 text-amber-500" />
+              <Layers className="w-6 h-6 text-accent-gold" />
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@ export default function CollectionsPage() {
                     </div>
                   )}
                   {collection.featured && (
-                    <span className="absolute top-3 left-3 px-2 py-0.5 bg-amber-600 text-white text-xs rounded-full">
+                    <span className="absolute top-3 left-3 px-2 py-0.5 bg-accent-rust text-white text-xs rounded-full">
                       Featured
                     </span>
                   )}
@@ -113,7 +113,7 @@ export default function CollectionsPage() {
 
                 {/* Info */}
                 <div className="p-4">
-                  <h3 className="font-serif text-lg text-stone-800 group-hover:text-amber-700 transition-colors">
+                  <h3 className="font-serif text-lg text-stone-800 group-hover:text-accent-rust transition-colors">
                     {collection.title}
                   </h3>
                   <p className="text-stone-500 text-sm mt-1 line-clamp-2">

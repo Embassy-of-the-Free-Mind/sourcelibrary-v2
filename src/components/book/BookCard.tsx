@@ -149,7 +149,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
 
         {/* Text content - visible immediately, no shimmer */}
         <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-serif font-semibold text-stone-900 line-clamp-2 group-hover:text-amber-700 transition-colors">
+          <h3 className="font-serif font-semibold text-stone-900 line-clamp-2 group-hover:text-accent-rust transition-colors">
             {book.display_title || book.title}
           </h3>
           <p className="text-sm text-stone-600 mt-1 line-clamp-1">{book.author}</p>
@@ -186,7 +186,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               {/* Translation Progress */}
               <div>
                 <div className="flex items-center justify-between text-xs mb-1">
-                  <span className={book.translation_percent === 100 ? 'text-green-600 font-medium' : 'text-stone-500'}>
+                  <span className={book.translation_percent === 100 ? 'text-status-success font-medium' : 'text-stone-500'}>
                     {book.translation_percent === 100 ? '✓ Translated' : `${book.translation_percent || 0}% Translated`}
                   </span>
                   {book.pages_translated !== undefined && book.translation_percent !== 100 && (
@@ -196,9 +196,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
                 <div className="h-1.5 bg-stone-100 rounded-full overflow-hidden">
                   <div
                     className={`h-full transition-all duration-300 ${book.translation_percent === 100
-                      ? 'bg-green-500'
+                      ? 'bg-status-success'
                       : book.translation_percent && book.translation_percent > 0
-                        ? 'bg-amber-500'
+                        ? 'bg-accent-gold/80'
                         : 'bg-stone-200'
                       }`}
                     style={{ width: `${book.translation_percent || 0}%` }}

@@ -114,9 +114,9 @@ export default function ModernizedReader({
     <div className="space-y-6">
       {/* Action bar - only show if there are translations to modernize */}
       {hasAnyTranslation && needsModernization && !loading && (
-        <div className="sticky top-0 z-10 bg-amber-50 border border-amber-200 rounded-lg p-4 shadow-sm">
+        <div className="sticky top-0 z-10 bg-accent-gold/8 border border-accent-gold/20 rounded-lg p-4 shadow-sm">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="text-sm text-amber-800 text-center sm:text-left">
+            <div className="text-sm text-accent-gold-dark text-center sm:text-left">
               {modernizedCount > 0
                 ? `${modernizedCount} of ${pagesWithTranslation.length} pages modernized`
                 : `${pagesWithTranslation.length} pages ready to modernize`
@@ -124,7 +124,7 @@ export default function ModernizedReader({
             </div>
             <button
               onClick={modernizeAll}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 text-white rounded-lg hover:bg-amber-700 active:bg-amber-800 transition-colors text-sm font-medium min-h-[44px]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 active:bg-accent-rust/80 transition-colors text-sm font-medium min-h-[44px]"
             >
               <Sparkles className="w-4 h-4" />
               {modernizedCount > 0 ? 'Continue Modernizing' : 'Modernize for Reading'}
@@ -135,16 +135,16 @@ export default function ModernizedReader({
 
       {/* Loading state */}
       {loading && (
-        <div className="sticky top-0 z-10 bg-amber-50 border border-amber-200 rounded-lg p-4">
+        <div className="sticky top-0 z-10 bg-accent-gold/8 border border-accent-gold/20 rounded-lg p-4">
           <div className="flex items-center justify-center gap-3">
-            <Loader2 className="w-5 h-5 animate-spin text-amber-600" />
-            <span className="text-amber-800">
+            <Loader2 className="w-5 h-5 animate-spin text-accent-rust" />
+            <span className="text-accent-gold-dark">
               {currentlyProcessing
                 ? `Modernizing page ${currentlyProcessing}...`
                 : 'Modernizing...'}
             </span>
           </div>
-          <div className="mt-2 text-xs text-amber-600 text-center">
+          <div className="mt-2 text-xs text-accent-rust text-center">
             {modernizedCount} of {pagesWithTranslation.length} complete
           </div>
         </div>
@@ -154,7 +154,7 @@ export default function ModernizedReader({
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-status-error flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-red-800 text-sm">{error}</p>
               <button

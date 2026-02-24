@@ -154,7 +154,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
           <AlertTriangle className="w-12 h-12 text-red-400 mx-auto mb-4" />
           <h1 className="text-xl font-semibold mb-2">Error</h1>
           <p className="text-stone-600 mb-4">{error}</p>
-          <button onClick={fetchQA} className="text-amber-600 hover:text-amber-700">
+          <button onClick={fetchQA} className="text-accent-rust hover:text-accent-rust">
             Try again
           </button>
         </div>
@@ -179,7 +179,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
               <button
                 onClick={cleanupEmptyTags}
                 disabled={cleaning || loading}
-                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 rounded-lg transition-colors disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-sm bg-accent-gold/15 text-accent-gold-dark hover:bg-accent-gold/25 rounded-lg transition-colors disabled:opacity-50"
               >
                 {cleaning ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -212,14 +212,14 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
         {cleanupResult && (
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-green-600" />
+              <CheckCircle className="w-5 h-5 text-status-success" />
               <span className="text-green-800">
                 Removed {cleanupResult.removed} empty tag{cleanupResult.removed !== 1 ? 's' : ''} from {cleanupResult.pages} page{cleanupResult.pages !== 1 ? 's' : ''}
               </span>
             </div>
             <button
               onClick={() => setCleanupResult(null)}
-              className="text-green-600 hover:text-green-800 text-sm"
+              className="text-status-success hover:text-green-800 text-sm"
             >
               Dismiss
             </button>
@@ -237,13 +237,13 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
             <div className="text-sm text-stone-500">Translated</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4">
-            <div className={`text-2xl font-bold ${data?.pagesWithIssues === 0 ? 'text-green-600' : 'text-red-600'}`}>
+            <div className={`text-2xl font-bold ${data?.pagesWithIssues === 0 ? 'text-status-success' : 'text-status-error'}`}>
               {data?.pagesWithIssues}
             </div>
             <div className="text-sm text-stone-500">Pages with Issues</div>
           </div>
           <div className="bg-white rounded-lg border border-stone-200 p-4">
-            <div className={`text-2xl font-bold ${data?.totalIssues === 0 ? 'text-green-600' : 'text-amber-600'}`}>
+            <div className={`text-2xl font-bold ${data?.totalIssues === 0 ? 'text-status-success' : 'text-accent-rust'}`}>
               {data?.totalIssues}
             </div>
             <div className="text-sm text-stone-500">Total Issues</div>
@@ -253,9 +253,9 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
         {/* Issues List */}
         {data?.issues.length === 0 ? (
           <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-            <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
+            <CheckCircle className="w-12 h-12 text-status-success mx-auto mb-4" />
             <h2 className="text-xl font-semibold text-green-800">All Clear!</h2>
-            <p className="text-green-600 mt-2">No formatting issues found in translations.</p>
+            <p className="text-status-success mt-2">No formatting issues found in translations.</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -266,7 +266,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
                   <div className="flex items-center gap-3">
                     <Link
                       href={`/book/${bookId}/page/${pageIssue.pageId}`}
-                      className="font-medium text-amber-600 hover:text-amber-700"
+                      className="font-medium text-accent-rust hover:text-accent-rust"
                     >
                       Page {pageIssue.pageNumber}
                     </Link>
@@ -277,7 +277,7 @@ export default function QAReviewPage({ params }: { params: Promise<{ id: string 
                   <button
                     onClick={() => retranslate(pageIssue.pageId)}
                     disabled={retranslating === pageIssue.pageId}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-amber-100 text-amber-700 hover:bg-amber-200 rounded-lg transition-colors disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-accent-gold/15 text-accent-gold-dark hover:bg-accent-gold/25 rounded-lg transition-colors disabled:opacity-50"
                   >
                     {retranslating === pageIssue.pageId ? (
                       <Loader2 className="w-4 h-4 animate-spin" />

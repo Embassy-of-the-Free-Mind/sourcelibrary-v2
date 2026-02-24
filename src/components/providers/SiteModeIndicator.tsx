@@ -22,7 +22,7 @@ export default function SiteModeIndicator() {
     <div
       className={`fixed bottom-4 right-4 z-50 px-3 py-2 rounded-full text-xs font-medium shadow-lg ${
         isSociety
-          ? 'bg-amber-600 text-white'
+          ? 'bg-accent-rust text-white'
           : 'bg-stone-800 text-stone-200'
       }`}
     >

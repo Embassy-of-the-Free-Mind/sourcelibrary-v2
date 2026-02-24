@@ -18,8 +18,8 @@ export default function PipelineError({
   return (
     <div className="min-h-screen bg-stone-50 flex items-center justify-center p-8">
       <div className="max-w-md w-full text-center">
-        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-amber-100 flex items-center justify-center">
-          <AlertTriangle className="w-8 h-8 text-amber-600" />
+        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-accent-gold/15 flex items-center justify-center">
+          <AlertTriangle className="w-8 h-8 text-accent-rust" />
         </div>
         <h2 className="text-xl font-semibold text-stone-900 mb-2">
           Pipeline error
@@ -42,7 +42,7 @@ export default function PipelineError({
           </Link>
           <button
             onClick={reset}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-amber-600 hover:bg-amber-700 rounded-lg transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-accent-rust hover:bg-accent-rust/90 rounded-lg transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
             Try again

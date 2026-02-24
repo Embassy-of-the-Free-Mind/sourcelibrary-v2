@@ -440,7 +440,7 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
     return (
       <div className="absolute inset-0 bg-white z-10 flex flex-col">
         <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
-          <h3 className="font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+          <h3 className="font-medium" style={{ color: 'var(--text-primary)' }}>
             {title}
           </h3>
           <button
@@ -513,7 +513,7 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
           <Settings className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
           <h2
             className="font-medium"
-            style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+            style={{ color: 'var(--text-primary)' }}
           >
             Prompt Settings
           </h2>
@@ -676,7 +676,7 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
             <h2
               id="assistant-title"
               className="font-medium"
-              style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+              style={{ color: 'var(--text-primary)' }}
             >
               {mode === 'explain'
                 ? selectedTerm
@@ -713,7 +713,7 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
           className="px-4 py-2 text-xs flex-shrink-0"
           style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-light)' }}
         >
-          <span style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}>
+          <span className="font-serif">
             {book.display_title || book.title}
           </span>
           <span className="mx-2">·</span>
@@ -752,7 +752,7 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
               {selectedTerm && explanation && !loading && (
                 <div
                   className="prose prose-sm max-w-none leading-relaxed"
-                  style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   {explanation.split('\n').map((paragraph, i) => (
                     <p key={i} className="mb-3">{paragraph}</p>
@@ -857,7 +857,7 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
                         onClose();
                         onOpenAnnotations();
                       }}
-                      className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all hover:bg-amber-50"
+                      className="w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all hover:bg-accent-gold/8"
                       style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                     >
                       <span
@@ -991,8 +991,7 @@ Respond in character, keeping your answers focused and conversational (2-3 parag
                     }}
                   >
                     <p
-                      className="text-sm leading-relaxed"
-                      style={{ fontFamily: msg.role === 'assistant' ? 'Newsreader, Georgia, serif' : 'inherit' }}
+                      className={`text-sm leading-relaxed ${msg.role === 'assistant' ? 'font-body' : ''}`}
                     >
                       {msg.content}
                     </p>

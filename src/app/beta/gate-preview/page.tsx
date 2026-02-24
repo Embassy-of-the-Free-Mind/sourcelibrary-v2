@@ -12,7 +12,7 @@ export default function GatePreviewPage() {
       <div className="text-center mb-8">
         <h1
           className="text-3xl mb-2"
-          style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary, #1a1612)', fontWeight: 500 }}
+          style={{ color: 'var(--text-primary, #1a1612)', fontWeight: 500 }}
         >
           Gate Preview
         </h1>
@@ -32,8 +32,7 @@ export default function GatePreviewPage() {
         style={{
           background: 'var(--accent-rust, #9e4a3a)',
           color: '#ffffff',
-          fontFamily: 'Inter, system-ui, sans-serif',
-        }}
+          }}
         onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
         onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
       >

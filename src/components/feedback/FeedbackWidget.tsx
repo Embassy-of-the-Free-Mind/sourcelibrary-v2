@@ -35,7 +35,7 @@ export default function FeedbackWidget({ className }: { className?: string }) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className={className || "text-amber-600 hover:text-amber-500 transition-colors"}
+        className={className || "text-accent-rust hover:text-accent-gold transition-colors"}
       >
         Feedback
       </button>
@@ -69,7 +69,7 @@ export default function FeedbackWidget({ className }: { className?: string }) {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Spot an error? Have an idea? Anything at all..."
               rows={4}
-              className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-amber-500 resize-none"
+              className="w-full px-3 py-2 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold resize-none"
               autoFocus
             />
 
@@ -78,7 +78,7 @@ export default function FeedbackWidget({ className }: { className?: string }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name (optional)"
-              className="w-full px-3 py-2 mt-3 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-amber-500"
+              className="w-full px-3 py-2 mt-3 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold"
             />
 
             <div className="flex items-center justify-between mt-4">

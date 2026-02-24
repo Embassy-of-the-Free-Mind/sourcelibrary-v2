@@ -66,16 +66,15 @@ export default function PressPage() {
       {/* Header */}
       <header className="bg-stone-900 text-white py-16 md:py-24">
         <div className="max-w-4xl mx-auto px-6 md:px-12">
-          <p className="text-amber-400 text-sm tracking-[0.2em] uppercase mb-4">
+          <p className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4">
             Press
           </p>
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl mb-6"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-4xl md:text-5xl lg:text-6xl mb-6 font-display"
           >
             Source Library
           </h1>
-          <p className="text-xl text-white/70 max-w-2xl" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
+          <p className="text-xl text-white/70 max-w-2xl font-body">
             An initiative of the Embassy of the Free Mind, Amsterdam.
             AI-powered translations of thousands of rare historical texts, freely available online.
           </p>
@@ -89,8 +88,7 @@ export default function PressPage() {
             FOR IMMEDIATE RELEASE &mdash; February 22, 2026
           </p>
           <h2
-            className="text-3xl md:text-4xl text-stone-900 mb-6"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl text-stone-900 mb-6 font-display"
           >
             Source Library Launches Open Beta: Over 4,000 Rare Books Translated by AI
           </h2>
@@ -125,8 +123,7 @@ export default function PressPage() {
         {/* Themed Press Releases */}
         <section>
           <h2
-            className="text-2xl text-stone-900 mb-8"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mb-8 font-display"
           >
             Press Releases
           </h2>
@@ -135,16 +132,15 @@ export default function PressPage() {
               <Link
                 key={release.slug}
                 href={release.slug}
-                className="block group border border-stone-200 rounded-xl p-6 hover:border-amber-300 hover:bg-amber-50/30 transition-all"
+                className="block group border border-stone-200 rounded-xl p-6 hover:border-accent-gold/20 hover:bg-accent-gold/3 transition-all"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <p className="text-xs text-amber-600 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-accent-rust uppercase tracking-wider mb-1">
                       {release.theme}
                     </p>
                     <h3
-                      className="text-xl text-stone-900 group-hover:text-amber-800 transition-colors mb-2"
-                      style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                      className="text-xl text-stone-900 group-hover:text-accent-gold-dark transition-colors mb-2 font-display"
                     >
                       {release.title}
                     </h3>
@@ -152,7 +148,7 @@ export default function PressPage() {
                       {release.description}
                     </p>
                   </div>
-                  <span className="text-stone-400 group-hover:text-amber-600 transition-colors mt-1 shrink-0">
+                  <span className="text-stone-400 group-hover:text-accent-rust transition-colors mt-1 shrink-0">
                     &rarr;
                   </span>
                 </div>
@@ -164,8 +160,7 @@ export default function PressPage() {
         {/* Key Facts */}
         <section>
           <h2
-            className="text-2xl text-stone-900 mb-6"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mb-6 font-display"
           >
             Key Facts
           </h2>
@@ -180,8 +175,8 @@ export default function PressPage() {
             ].map((stat) => (
               <div key={stat.label} className="bg-stone-50 rounded-xl p-5">
                 <div
-                  className="text-3xl text-amber-600 mb-1"
-                  style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 300 }}
+                  className="text-3xl text-accent-rust mb-1"
+                  style={{ fontWeight: 300 }}
                 >
                   {stat.number}
                 </div>
@@ -194,8 +189,7 @@ export default function PressPage() {
         {/* Source Libraries */}
         <section>
           <h2
-            className="text-2xl text-stone-900 mb-6"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mb-6 font-display"
           >
             Source Libraries
           </h2>
@@ -205,7 +199,7 @@ export default function PressPage() {
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-stone-700">
             {SOURCE_LIBRARIES.map((name) => (
               <li key={name} className="flex items-start gap-2">
-                <span className="text-amber-500 mt-1.5 shrink-0">&bull;</span>
+                <span className="text-accent-gold mt-1.5 shrink-0">&bull;</span>
                 {name}
               </li>
             ))}
@@ -215,8 +209,7 @@ export default function PressPage() {
         {/* About the Embassy */}
         <section>
           <h2
-            className="text-2xl text-stone-900 mb-6"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mb-6 font-display"
           >
             About the Embassy of the Free Mind
           </h2>
@@ -258,8 +251,7 @@ export default function PressPage() {
         {/* Contact */}
         <section className="border-t border-stone-200 pt-12">
           <h2
-            className="text-2xl text-stone-900 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mb-4 font-display"
           >
             Press Contact
           </h2>
@@ -269,13 +261,13 @@ export default function PressPage() {
           <div className="space-y-2 text-stone-700">
             <p>
               <strong>Email:</strong>{' '}
-              <a href="mailto:press@sourcelibrary.org" className="text-amber-700 hover:text-amber-800">
+              <a href="mailto:press@sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">
                 press@sourcelibrary.org
               </a>
             </p>
             <p>
               <strong>Website:</strong>{' '}
-              <a href="https://sourcelibrary.org" className="text-amber-700 hover:text-amber-800">
+              <a href="https://sourcelibrary.org" className="text-accent-rust hover:text-accent-gold-dark">
                 sourcelibrary.org
               </a>
             </p>
@@ -285,19 +277,18 @@ export default function PressPage() {
         {/* Press Kit */}
         <section className="bg-stone-50 rounded-xl p-8">
           <h2
-            className="text-2xl text-stone-900 mb-4"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-2xl text-stone-900 mb-4 font-display"
           >
             Press Kit
           </h2>
           <div className="space-y-3 text-stone-600">
             <p>
               Logos and brand assets are available in the{' '}
-              <a href="/brand" className="text-amber-700 hover:text-amber-800">brand kit</a>.
+              <a href="/brand" className="text-accent-rust hover:text-accent-gold-dark">brand kit</a>.
             </p>
             <p>
               For a high-resolution screenshot of the reader interface, see the{' '}
-              <Link href="/beta" className="text-amber-700 hover:text-amber-800">beta page</Link>.
+              <Link href="/beta" className="text-accent-rust hover:text-accent-gold-dark">beta page</Link>.
             </p>
           </div>
         </section>
@@ -307,7 +298,7 @@ export default function PressPage() {
       <footer className="bg-stone-900 text-white/60 py-8">
         <div className="max-w-4xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm">
           <span>&copy; {new Date().getFullYear()} Source Library &mdash; An initiative of the Embassy of the Free Mind</span>
-          <Link href="/" className="text-amber-500/60 hover:text-amber-400 transition-colors">
+          <Link href="/" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
             Back to Source Library
           </Link>
         </div>

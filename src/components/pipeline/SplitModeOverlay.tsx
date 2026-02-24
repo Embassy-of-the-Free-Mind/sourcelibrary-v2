@@ -58,7 +58,7 @@ export default function SplitModeOverlay({
 
       {/* Right overlay */}
       <div
-        className="absolute top-0 bottom-0 right-0 bg-green-500/20"
+        className="absolute top-0 bottom-0 right-0 bg-status-success/20"
         style={{ width: `${100 - leftPercent}%` }}
       />
 
@@ -85,7 +85,7 @@ export default function SplitModeOverlay({
         style={{ left: `${leftPercent}%`, transform: 'translateX(-50%)' }}
         onMouseDown={handleMouseDown}
       >
-        <div className={`w-px h-full ${isDragging ? 'bg-red-600' : 'bg-red-500'}`} />
+        <div className={`w-px h-full ${isDragging ? 'bg-status-error' : 'bg-status-error'}`} />
       </div>
 
       {/* Arrow buttons */}

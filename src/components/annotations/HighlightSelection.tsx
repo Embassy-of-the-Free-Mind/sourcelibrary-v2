@@ -311,7 +311,7 @@ export default function HighlightSelection({
                   className="flex items-center gap-2 px-3 py-2 hover:bg-stone-800 transition-colors border-l border-stone-700"
                   title="Share quote"
                 >
-                  <Share2 className="w-4 h-4 text-amber-400" />
+                  <Share2 className="w-4 h-4 text-accent-gold" />
                 </button>
                 <button
                   onClick={handleDismiss}

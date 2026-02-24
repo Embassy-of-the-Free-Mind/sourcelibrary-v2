@@ -1,7 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { getMoonPhase, getMoonSign, getMoonCycle, compute13MonthCalendar, type Lunation } from "./astro";
+
+export function useHydrated(): boolean {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
+  return hydrated;
+}
 
 export function useMoonPhase(date?: Date) {
   return useMemo(() => getMoonPhase(date ?? new Date()), [date]);

@@ -57,7 +57,7 @@ export default function PipelineConfigForm({
             value={model}
             onChange={(e) => setModel(e.target.value)}
             disabled={disabled}
-            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 disabled:opacity-50 disabled:bg-stone-100"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold disabled:opacity-50 disabled:bg-stone-100"
           >
             {GEMINI_MODELS.map((m) => (
               <option key={m.id} value={m.id}>
@@ -79,7 +79,7 @@ export default function PipelineConfigForm({
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
             disabled={disabled}
-            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 disabled:opacity-50 disabled:bg-stone-100"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold disabled:opacity-50 disabled:bg-stone-100"
           >
             {LANGUAGES.map((lang) => (
               <option key={lang} value={lang}>
@@ -98,7 +98,7 @@ export default function PipelineConfigForm({
             value={license}
             onChange={(e) => setLicense(e.target.value)}
             disabled={disabled}
-            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 disabled:opacity-50 disabled:bg-stone-100"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold disabled:opacity-50 disabled:bg-stone-100"
           >
             {LICENSES.map((lic) => (
               <option key={lic.id} value={lic.id}>
@@ -126,7 +126,7 @@ export default function PipelineConfigForm({
             disabled={disabled}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               !useBatchApi
-                ? 'bg-amber-600 text-white'
+                ? 'bg-accent-rust text-white'
                 : 'bg-white text-stone-600 border border-stone-300 hover:bg-stone-50'
             } disabled:opacity-50`}
           >
@@ -138,7 +138,7 @@ export default function PipelineConfigForm({
             disabled={disabled}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               useBatchApi
-                ? 'bg-green-600 text-white'
+                ? 'bg-status-success text-white'
                 : 'bg-white text-stone-600 border border-stone-300 hover:bg-stone-50'
             } disabled:opacity-50`}
           >
@@ -150,7 +150,7 @@ export default function PipelineConfigForm({
       <button
         type="submit"
         disabled={disabled}
-        className="w-full sm:w-auto px-6 py-3 bg-amber-600 text-white font-medium rounded-lg hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="w-full sm:w-auto px-6 py-3 bg-accent-rust text-white font-medium rounded-lg hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         Start Pipeline
       </button>

@@ -197,10 +197,10 @@ export default function PageEditorPage({ params }: PageProps) {
             </svg>
           </div>
 
-          <h2 className="text-2xl font-medium mb-3" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary, #2c2416)' }}>
+          <h2 className="text-2xl font-medium mb-3" style={{ color: 'var(--text-primary, #2c2416)' }}>
             Page not found
           </h2>
-          <p className="text-base mb-6" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-muted, #8b8579)' }}>
+          <p className="text-base mb-6" style={{ color: 'var(--text-muted, #8b8579)' }}>
             This page may have been moved or doesn&apos;t exist in the manuscript.
           </p>
 

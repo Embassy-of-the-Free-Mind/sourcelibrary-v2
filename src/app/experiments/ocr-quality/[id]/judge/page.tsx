@@ -232,10 +232,10 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
 
           {/* Right OCR */}
           <div className="card overflow-hidden">
-            <div className="bg-amber-50 px-4 py-2.5 border-b border-amber-100">
+            <div className="bg-accent-gold/8 px-4 py-2.5 border-b border-accent-gold/15">
               <div className="flex items-center justify-between">
-                <span className="text-base font-semibold text-amber-900">Right</span>
-                <span className="text-sm text-amber-600 font-mono">Press 2 or B</span>
+                <span className="text-base font-semibold text-accent-gold-dark">Right</span>
+                <span className="text-sm text-accent-rust font-mono">Press 2 or B</span>
               </div>
             </div>
             <div className="p-4 max-h-[70vh] overflow-auto">
@@ -282,7 +282,7 @@ export default function JudgePage({ params }: { params: Promise<{ id: string }> 
           <button
             onClick={() => submitJudgment('right')}
             disabled={submitting}
-            className="flex-1 max-w-[200px] py-4 bg-amber-600 text-white rounded-xl font-semibold hover:bg-amber-700 disabled:opacity-50 text-lg"
+            className="flex-1 max-w-[200px] py-4 bg-accent-rust text-white rounded-xl font-semibold hover:bg-accent-rust/90 disabled:opacity-50 text-lg"
           >
             Right Wins
           </button>

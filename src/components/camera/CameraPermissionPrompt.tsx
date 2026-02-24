@@ -31,7 +31,7 @@ export default function CameraPermissionPrompt({
 
           <button
             onClick={onRequestPermission}
-            className="px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors mb-4"
+            className="px-6 py-3 bg-accent-rust text-white rounded-lg font-medium hover:bg-accent-rust/90 transition-colors mb-4"
           >
             Allow Camera
           </button>

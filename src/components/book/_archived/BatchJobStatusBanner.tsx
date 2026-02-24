@@ -34,7 +34,7 @@ export default function BatchJobStatusBanner({ job, onClose, onRefresh, loading 
         <div className="flex-1">
           <div className="flex items-center gap-2">
             {isPending && <Loader2 className="w-5 h-5 text-purple-600 animate-spin" />}
-            {job.status === 'completed' && <CheckCircle className="w-5 h-5 text-green-600" />}
+            {job.status === 'completed' && <CheckCircle className="w-5 h-5 text-status-success" />}
             <span className="text-sm font-medium text-purple-900">
               {job.type.toUpperCase()} Batch Job ({job.total_batches} Gemini batches)
             </span>
@@ -52,7 +52,7 @@ export default function BatchJobStatusBanner({ job, onClose, onRefresh, loading 
                 {job.progress.failed > 0 && (
                   <>
                     <span>•</span>
-                    <span className="text-red-600">{job.progress.failed} failed</span>
+                    <span className="text-status-error">{job.progress.failed} failed</span>
                   </>
                 )}
               </div>

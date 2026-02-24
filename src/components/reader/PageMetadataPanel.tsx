@@ -164,7 +164,7 @@ function TagList({ tags, color = 'stone' }: { tags: string[]; color?: 'stone' | 
 
   const colorClasses = {
     stone: 'bg-stone-100 text-stone-700',
-    amber: 'bg-amber-100 text-amber-800',
+    amber: 'bg-accent-gold/15 text-accent-gold-dark',
     purple: 'bg-purple-100 text-purple-800',
   };
 
@@ -215,7 +215,7 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
 
           {/* Summary if present */}
           {translationMeta.summary && (
-            <div className="mx-4 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-900">
+            <div className="mx-4 mt-4 p-3 bg-accent-gold/8 border border-accent-gold/20 rounded-lg text-sm text-accent-gold-dark">
               <strong>Summary:</strong> {translationMeta.summary}
             </div>
           )}
@@ -235,9 +235,9 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
               label="Source"
               value={
                 page.ocr?.source === 'manual' ? (
-                  <span className="text-amber-600">Manual edit</span>
+                  <span className="text-accent-rust">Manual edit</span>
                 ) : (
-                  <span className="text-green-600">AI generated</span>
+                  <span className="text-status-success">AI generated</span>
                 )
               }
             />
@@ -296,9 +296,9 @@ export default function PageMetadataPanel({ page, onClose }: PageMetadataPanelPr
               label="Source"
               value={
                 page.translation?.source === 'manual' ? (
-                  <span className="text-amber-600">Manual edit</span>
+                  <span className="text-accent-rust">Manual edit</span>
                 ) : (
-                  <span className="text-green-600">AI generated</span>
+                  <span className="text-status-success">AI generated</span>
                 )
               }
             />

@@ -143,6 +143,7 @@ export async function GET(request: NextRequest) {
     needs_attention: 0,
     stale_retried: 0,
     stale_failed: 0,
+    stale_retranslate: 0,
     errors: [] as string[],
   };
 
@@ -352,6 +353,83 @@ export async function GET(request: NextRequest) {
           }
         }
         log.errors.push(`Stale ${book.id} (${book.title}): stuck in ${status} since ${book.pipeline_auto?.last_updated}`);
+      }
+    }
+
+    // ── Priority: Stale translation retranslation — books past translation phase with outdated translations ──
+    if (hasTimeBudget(startTime)) {
+      const STALE_RETRANSLATE_LIMIT = 5; // Conservative — each book is a batch job
+      // Find books in late pipeline stages (or complete) that have pages with stale translations
+      const lateStages: PipelineAutoStatus[] = [
+        'translate_complete', 'enriching', 'enriched', 'chapters', 'chapters_complete',
+        'images_submitted', 'images_complete', 'complete',
+      ];
+      const booksInLateStages = await db.collection('books')
+        .find({ 'pipeline_auto.status': { $in: lateStages } })
+        .project({ id: 1, title: 1, language: 1, 'pipeline_auto.status': 1 })
+        .toArray();
+
+      // For each, check if it has stale translation pages (batch-efficient: single aggregation)
+      if (booksInLateStages.length > 0) {
+        const lateBookIds = booksInLateStages.map(b => b.id);
+        const staleTranslationBooks = await db.collection('pages').aggregate([
+          {
+            $match: {
+              book_id: { $in: lateBookIds },
+              'ocr.data': { $exists: true, $nin: [null, ''] },
+              'ocr.model': 'gemini-3-flash-preview',
+              'translation.data': { $exists: true, $nin: [null, ''] },
+              'translation.model': { $ne: 'gemini-3-flash-preview' },
+              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+            },
+          },
+          { $group: { _id: '$book_id', stale_count: { $sum: 1 } } },
+          { $sort: { stale_count: -1 } },
+          { $limit: STALE_RETRANSLATE_LIMIT },
+        ]).toArray();
+
+        let staleTranslateQuotaExhausted = false;
+        for (const staleBook of staleTranslationBooks) {
+          if (!hasTimeBudget(startTime) || staleTranslateQuotaExhausted) break;
+
+          // Check there isn't already a pending/processing stale retranslation batch job
+          const existingJob = await db.collection('batch_jobs').countDocuments({
+            book_id: staleBook._id,
+            type: 'translation',
+            stale_only: true,
+            status: { $in: ['JOB_STATE_PENDING', 'JOB_STATE_RUNNING', 'pending', 'processing'] },
+          });
+          if (existingJob > 0) continue;
+
+          try {
+            const res = await fetch(`${baseUrl}/api/books/${staleBook._id}/batch-translate-async`, {
+              method: 'POST',
+              headers: getInternalHeaders(),
+              body: JSON.stringify({ staleOnly: true, limit: 500 }),
+            });
+
+            if (res.status === 429) {
+              staleTranslateQuotaExhausted = true;
+              logger.backpressure('stale_retranslate_quota', { book_id: staleBook._id });
+              break;
+            }
+
+            if (res.ok) {
+              const data = await res.json();
+              if (data.jobName) {
+                log.stale_retranslate++;
+                logger.action('stale_retranslate', 1);
+              }
+            }
+          } catch (err) {
+            const errMsg = err instanceof Error ? err.message : 'unknown';
+            if (errMsg.includes('429') || errMsg.includes('quota')) {
+              staleTranslateQuotaExhausted = true;
+              break;
+            }
+            log.errors.push(`Stale retranslate ${staleBook._id}: ${errMsg}`);
+          }
+        }
       }
     }
 
@@ -1080,6 +1158,7 @@ export async function GET(request: NextRequest) {
       needs_attention: log.needs_attention,
       stale_retried: log.stale_retried,
       stale_failed: log.stale_failed,
+      stale_retranslate: log.stale_retranslate,
     });
     logger.addErrors(log.errors);
 
@@ -1112,6 +1191,7 @@ export async function GET(request: NextRequest) {
       needs_attention: log.needs_attention,
       stale_retried: log.stale_retried,
       stale_failed: log.stale_failed,
+      stale_retranslate: log.stale_retranslate,
     });
     logger.addErrors(log.errors);
     logger.error(error instanceof Error ? error.message : 'Unknown error');

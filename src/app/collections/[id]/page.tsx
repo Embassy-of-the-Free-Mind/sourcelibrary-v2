@@ -208,7 +208,11 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
       .toArray(),
     collectionBookIds.length > 0
       ? db.collection('gallery_images')
-          .find({ book_id: { $in: collectionBookIds }, gallery_quality: { $gte: 0.6 } })
+          .find({
+            book_id: { $in: collectionBookIds },
+            gallery_quality: { $gte: 0.7 },
+            type: { $nin: ['decorative', 'symbol', 'musical_score'] },
+          })
           .sort({ gallery_quality: -1 })
           .limit(60)
           .toArray()
@@ -312,8 +316,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
           </Link>
 
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display"
           >
             {collection.name}
           </h1>
@@ -341,21 +344,21 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-6xl mx-auto px-6 py-6">
             <h2
-              className="text-xl sm:text-2xl text-primary mb-4"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-xl sm:text-2xl text-primary mb-4 font-display"
             >
               Illustrations
             </h2>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
+              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
                 const pageId = img.pageId || img.page_id;
+                const bookId = img.bookId || img.book_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;
                 const galleryId = `${pageId}-${detIdx}`;
                 return (
                   <Link
                     key={galleryId}
-                    href={`/gallery/image/${galleryId}`}
+                    href={`/book/${bookId}/page/${pageId}`}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                     title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
                   >
@@ -397,7 +400,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
         {(collection.expanded_description || collection.description) && (
           <div className="mb-10 max-w-5xl">
             {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-              <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
+              <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
                 {linkBookTitles(para, allBooksForLinking, explicitMentions)}
               </p>
             ))}
@@ -408,8 +411,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
         {highlights.length > 0 && (
           <div className="mb-12">
             <h2
-              className="text-2xl sm:text-3xl text-primary mb-6"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-2xl sm:text-3xl text-primary mb-6 font-display"
             >
               Highlights
             </h2>
@@ -446,8 +448,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
 
                     <div className="flex-1 min-w-0 py-1">
                       <h3
-                        className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1"
-                        style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+                        className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-display"
                       >
                         {bookTitle(book)}
                       </h3>
@@ -513,8 +514,7 @@ export default async function CollectionDetailPage({ params, searchParams }: Pro
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>
             <h2
-              className="text-2xl sm:text-3xl text-primary"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-2xl sm:text-3xl text-primary font-display"
             >
               All Books
             </h2>

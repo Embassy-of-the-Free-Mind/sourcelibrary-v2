@@ -192,7 +192,7 @@ export default async function HomePage() {
       {/* About Section */}
       <section id="about" className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
             Source Library continues the Ficino Society&apos;s mission to transform 2500+ years of wisdom texts into a living archive.
           </h2>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
@@ -207,7 +207,7 @@ export default async function HomePage() {
       {/* Search Section */}
       <section className="bg-gradient-to-b from-white to-[#f6f3ee] py-16 md:py-20">
         <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl text-gray-900 mb-3" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+          <h2 className="text-2xl md:text-3xl text-gray-900 mb-3 font-display">
             Search the collection
           </h2>
           <p className="text-stone-500 mb-6">
@@ -221,7 +221,7 @@ export default async function HomePage() {
               type="text"
               name="q"
               placeholder="Hermes, alchemy, Ficino..."
-              className="w-full pl-12 pr-4 py-3.5 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-amber-600/20 focus:border-amber-600 shadow-sm"
+              className="w-full pl-12 pr-4 py-3.5 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-rust/20 focus:border-accent-rust shadow-sm"
             />
           </form>
         </div>
@@ -255,7 +255,7 @@ export default async function HomePage() {
             </p>
             <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-12">
               <div className="flex-1">
-                <h3 className="text-xl md:text-2xl text-stone-800 mb-1" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                <h3 className="text-xl md:text-2xl text-stone-800 mb-1 font-display">
                   Cosimo de&apos; Medici
                 </h3>
                 <p className="text-stone-500 text-sm mb-3">
@@ -266,7 +266,7 @@ export default async function HomePage() {
                 </p>
               </div>
               <div className="flex-1">
-                <h3 className="text-xl md:text-2xl text-stone-800 mb-1" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+                <h3 className="text-xl md:text-2xl text-stone-800 mb-1 font-display">
                   Marsilio Ficino
                 </h3>
                 <p className="text-stone-500 text-sm mb-3">
@@ -277,7 +277,7 @@ export default async function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="mt-8 bg-amber-50/50 rounded-lg p-5 border border-amber-100">
+            <div className="mt-8 bg-accent-gold/5 rounded-lg p-5 border border-accent-gold/15">
               <p className="text-stone-700 text-sm leading-relaxed">
                 <strong>Source Library continues their work.</strong> Just as Cosimo funded translations to make ancient wisdom freely available, and Ficino labored to render Greek and Latin texts accessible to readers across Europe, we use modern tools to digitize, translate, and openly share these same traditions with the world. The mission remains unchanged: <em>wisdom belongs to everyone</em>.
               </p>
@@ -301,14 +301,14 @@ export default async function HomePage() {
               <span className="hidden md:inline">•</span>
               <a
                 href="/press"
-                className="text-amber-700 hover:text-amber-800 transition-colors"
+                className="text-accent-rust hover:text-accent-gold-dark transition-colors"
               >
                 Press
               </a>
               <span className="hidden md:inline">•</span>
               <a
                 href="mailto:derek@ancientwisdomtrust.org"
-                className="text-amber-700 hover:text-amber-800 transition-colors"
+                className="text-accent-rust hover:text-accent-gold-dark transition-colors"
               >
                 Contact
               </a>

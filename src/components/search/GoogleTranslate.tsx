@@ -67,7 +67,7 @@ export function GoogleTranslate() {
     return (
       <button
         onClick={() => setEnabled(true)}
-        className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-amber-600 transition-colors"
+        className="inline-flex items-center gap-1.5 text-sm text-stone-600 hover:text-accent-rust transition-colors"
         title="Translate to other languages"
       >
         <Languages className="w-4 h-4" />
@@ -78,7 +78,7 @@ export function GoogleTranslate() {
 
   return (
     <div className="inline-flex items-center gap-2">
-      <Languages className="w-4 h-4 text-amber-600" />
+      <Languages className="w-4 h-4 text-accent-rust" />
       <div id="google_translate_element" className="google-translate-wrapper" />
       <button
         onClick={disableTranslation}

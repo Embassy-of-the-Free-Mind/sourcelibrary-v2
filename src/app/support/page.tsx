@@ -106,8 +106,7 @@ export default function SupportPage() {
         <div className="relative z-10 h-full flex items-center">
           <div className="px-6 md:px-12 max-w-3xl">
             <h1
-              className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display"
             >
               Help Preserve Ancient Wisdom
             </h1>
@@ -129,8 +128,7 @@ export default function SupportPage() {
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-4xl mx-auto">
           <h2
-            className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display"
           >
             Why now?
           </h2>
@@ -144,8 +142,7 @@ export default function SupportPage() {
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2
-            className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display"
           >
             Become a Member
           </h2>
@@ -181,7 +178,7 @@ export default function SupportPage() {
                 <ul className={`text-sm space-y-2 mb-8 flex-1 ${tier.highlight ? 'text-stone-300' : 'text-stone-600'}`}>
                   {tier.benefits.map((benefit) => (
                     <li key={benefit} className="flex gap-2">
-                      <span className={`mt-1 shrink-0 ${tier.highlight ? 'text-amber-400' : 'text-stone-400'}`}>
+                      <span className={`mt-1 shrink-0 ${tier.highlight ? 'text-accent-gold' : 'text-stone-400'}`}>
                         &#10003;
                       </span>
                       {benefit}
@@ -237,8 +234,7 @@ export default function SupportPage() {
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
           <h2
-            className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight font-display"
           >
             Give Once
           </h2>
@@ -259,7 +255,7 @@ export default function SupportPage() {
           </p>
           <p className="text-stone-500 text-sm mt-6">
             For wire transfers, stock gifts, or donations over $10,000,{' '}
-            <a href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry`} className="text-amber-700 hover:text-amber-800 underline">
+            <a href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry`} className="text-accent-rust hover:text-accent-gold-dark underline">
               contact us directly
             </a>.
           </p>
@@ -270,8 +266,7 @@ export default function SupportPage() {
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2
-            className="text-3xl md:text-4xl text-stone-900 mb-12 leading-tight"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl text-stone-900 mb-12 leading-tight font-display"
           >
             Where Your Support Goes
           </h2>
@@ -307,15 +302,14 @@ export default function SupportPage() {
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-4xl mx-auto">
           <h2
-            className="text-3xl md:text-4xl text-gray-900 mb-8 leading-tight"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-3xl md:text-4xl text-gray-900 mb-8 leading-tight font-display"
           >
             How It All Connects
           </h2>
           <div className="text-gray-600 text-lg leading-relaxed space-y-6">
             <p>
               Source Library is a project of the Ancient Wisdom Trust, based at the{' '}
-              <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-amber-700 hover:text-amber-800 underline">
+              <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-gold-dark underline">
                 Embassy of the Free Mind
               </a>{' '}
               in Amsterdam — home to the Bibliotheca Philosophica Hermetica (BPH). The Embassy, supported by the Worldheart Foundation, preserves and shares the physical collection. Source Library extends that mission digitally, making these texts freely accessible worldwide.
@@ -349,7 +343,7 @@ export default function SupportPage() {
           <div className="mb-12 pb-12 border-b border-stone-300">
             <p className="text-gray-600 text-lg">
               Not everyone gives money — some give time and expertise.{' '}
-              <Link href="/contribute" className="text-amber-700 hover:text-amber-800 underline font-medium">
+              <Link href="/contribute" className="text-accent-rust hover:text-accent-gold-dark underline font-medium">
                 Participate
               </Link>{' '}
               as a translator, reviewer, or community volunteer.
@@ -373,7 +367,7 @@ export default function SupportPage() {
               <span className="hidden md:inline">•</span>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="text-amber-700 hover:text-amber-800 transition-colors"
+                className="text-accent-rust hover:text-accent-gold-dark transition-colors"
               >
                 {CONTACT_EMAIL}
               </a>

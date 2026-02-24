@@ -194,7 +194,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
                 )}
                 {translationPages > 0 && (
                   <span className="flex items-center gap-1">
-                    <Languages className="w-3 h-3 text-green-600" />
+                    <Languages className="w-3 h-3 text-status-success" />
                     {translationPages} translated
                   </span>
                 )}
@@ -219,7 +219,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
                       {result.matches.slice(0, 2).map((match, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-sm">
                           {match.field === 'translation' ? (
-                            <Languages className="w-3.5 h-3.5 text-green-600 mt-0.5 flex-shrink-0" />
+                            <Languages className="w-3.5 h-3.5 text-status-success mt-0.5 flex-shrink-0" />
                           ) : (
                             <FileText className="w-3.5 h-3.5 text-blue-600 mt-0.5 flex-shrink-0" />
                           )}

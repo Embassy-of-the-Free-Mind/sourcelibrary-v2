@@ -115,7 +115,7 @@ export default function ShareButton({
           className={`inline-flex items-center gap-1.5 p-2 text-stone-500 hover:text-stone-700 hover:bg-stone-100 rounded-lg transition-colors ${className}`}
           title="Share"
         >
-          {copied ? <Check className="w-4 h-4 text-green-600" /> : <Share2 className="w-4 h-4" />}
+          {copied ? <Check className="w-4 h-4 text-status-success" /> : <Share2 className="w-4 h-4" />}
           {label && <span className="text-sm">{label}</span>}
         </button>
 

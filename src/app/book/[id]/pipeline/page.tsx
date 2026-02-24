@@ -45,10 +45,10 @@ function PipelineContent({ bookId }: { bookId: string }) {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="text-center">
-          <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
+          <AlertCircle className="w-12 h-12 text-status-error mx-auto mb-4" />
           <h1 className="text-xl font-semibold mb-2">Error Loading Pipeline</h1>
           <p className="text-stone-600 mb-4">{error || 'Book not found'}</p>
-          <Link href="/" className="text-amber-600 hover:text-amber-700">
+          <Link href="/" className="text-accent-rust hover:text-accent-rust">
             Back to Library
           </Link>
         </div>
@@ -91,7 +91,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
               {isPaused && (
                 <button
                   onClick={resume}
-                  className="inline-flex items-center gap-2 px-4 py-2 text-white bg-amber-600 rounded-lg hover:bg-amber-700 transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 text-white bg-accent-rust rounded-lg hover:bg-accent-rust/90 transition-colors"
                 >
                   <Play className="w-4 h-4" />
                   Resume
@@ -125,7 +125,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
                 <span>•</span>
                 <span className={`capitalize ${isCompleted ? 'text-green-400' :
                   isFailed ? 'text-red-400' :
-                    isRunning ? 'text-amber-400' :
+                    isRunning ? 'text-accent-gold' :
                       'text-stone-400'
                   }`}>
                   {pipeline.status}
@@ -141,7 +141,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
         {/* Status banner */}
         {isCompleted && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
-            <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+            <CheckCircle className="w-5 h-5 text-status-success flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="font-medium text-green-900">Pipeline Complete!</h3>
               <p className="text-sm text-green-700 mt-1">
@@ -162,7 +162,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
 
         {isFailed && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-status-error flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="font-medium text-red-900">Pipeline Failed</h3>
               <p className="text-sm text-red-700 mt-1">
@@ -221,7 +221,7 @@ function PipelineContent({ bookId }: { bookId: string }) {
             <li>3. <strong>Translation</strong> — Translates the extracted text to English</li>
             <li>4. <strong>Summarize</strong> — Generates a book overview with key quotes</li>
             <li>5. <strong>Edition</strong> — Creates a draft edition with front matter</li>
-            <li className="text-amber-700 font-medium">→ Review the edition and mint a DOI when ready</li>
+            <li className="text-accent-rust font-medium">→ Review the edition and mint a DOI when ready</li>
           </ul>
         </div>
       </main>

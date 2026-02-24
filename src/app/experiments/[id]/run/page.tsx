@@ -156,27 +156,27 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
           </div>
 
           {/* Variant B */}
-          <div className="bg-amber-50 rounded-xl border border-amber-200 p-4">
+          <div className="bg-accent-gold/8 rounded-xl border border-accent-gold/20 p-4">
             <div className="flex items-center gap-2 mb-3">
-              <span className="w-6 h-6 bg-amber-600 text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
-              <span className="font-semibold text-amber-900">Variant B</span>
+              <span className="w-6 h-6 bg-accent-rust text-white rounded-full flex items-center justify-center text-sm font-bold">B</span>
+              <span className="font-semibold text-accent-gold-dark">Variant B</span>
             </div>
             {expConfig?.variant_b ? (
               <div className="space-y-1 text-sm">
-                <p className="text-amber-800">
-                  <span className="text-amber-600">Method:</span>{' '}
+                <p className="text-accent-gold-dark">
+                  <span className="text-accent-rust">Method:</span>{' '}
                   {methodLabels[expConfig?.variant_b.method] || expConfig?.variant_b.method}
                 </p>
-                <p className="text-amber-800">
-                  <span className="text-amber-600">Model:</span> {expConfig?.variant_b.model}
+                <p className="text-accent-gold-dark">
+                  <span className="text-accent-rust">Model:</span> {expConfig?.variant_b.model}
                 </p>
-                <p className="text-amber-800">
-                  <span className="text-amber-600">Context:</span>{' '}
+                <p className="text-accent-gold-dark">
+                  <span className="text-accent-rust">Context:</span>{' '}
                   {expConfig?.variant_b.use_context ? 'Yes' : 'No'}
                 </p>
               </div>
             ) : (
-              <p className="text-amber-600 text-sm">Not configured</p>
+              <p className="text-accent-rust text-sm">Not configured</p>
             )}
           </div>
         </div>
@@ -190,9 +190,9 @@ export default function RunExperimentPage({ params }: { params: Promise<{ id: st
           >
             <div className="flex items-center gap-2 mb-2">
               {result.success ? (
-                <CheckCircle2 className="w-5 h-5 text-green-600" />
+                <CheckCircle2 className="w-5 h-5 text-status-success" />
               ) : (
-                <AlertCircle className="w-5 h-5 text-red-600" />
+                <AlertCircle className="w-5 h-5 text-status-error" />
               )}
               <span className="font-semibold">
                 {result.success ? 'Experiment Complete' : 'Experiment Failed'}

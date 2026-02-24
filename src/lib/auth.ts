@@ -3,7 +3,7 @@ import Google from 'next-auth/providers/google';
 import Email from 'next-auth/providers/nodemailer';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import clientPromise from './mongodb-client';
-import { Resend } from 'resend';
+import { sendEmail } from './email';
 
 const dbName = process.env.MONGODB_DB || 'bookstore';
 
@@ -23,6 +23,24 @@ async function isAdminUser(email: string): Promise<boolean> {
   }
 }
 
+function buildSignInHtml(url: string): string {
+  return `
+    <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 40px 20px;">
+      <h1 style="font-size: 24px; color: #1c1917; margin-bottom: 8px;">Source Library</h1>
+      <p style="color: #57534e; font-size: 16px; line-height: 1.6;">
+        Click the link below to sign in and access the full collection of rare texts.
+      </p>
+      <a href="${url}" style="display: inline-block; margin: 24px 0; padding: 12px 32px; background: #1c1917; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px;">
+        Sign in to Source Library
+      </a>
+      <p style="color: #a8a29e; font-size: 13px; margin-top: 32px;">
+        If you didn't request this email, you can safely ignore it.
+        This link expires in 24 hours.
+      </p>
+    </div>
+  `;
+}
+
 // Build providers
 const providers: any[] = [];
 
@@ -33,38 +51,41 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   }));
 }
 
-// Email magic link provider — requires RESEND_API_KEY
-if (process.env.RESEND_API_KEY) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+// Email magic link provider — uses SMTP (Hetzner), falls back to Resend
+const hasSmtp = process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS;
+const hasResend = !!process.env.RESEND_API_KEY;
 
+if (hasSmtp || hasResend) {
   providers.push(Email({
     from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
     sendVerificationRequest: async ({ identifier: email, url }) => {
-      try {
-        await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
-          to: email,
-          subject: 'Sign in to Source Library',
-          html: `
-            <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 40px 20px;">
-              <h1 style="font-size: 24px; color: #1c1917; margin-bottom: 8px;">Source Library</h1>
-              <p style="color: #57534e; font-size: 16px; line-height: 1.6;">
-                Click the link below to sign in and access the full collection of rare texts.
-              </p>
-              <a href="${url}" style="display: inline-block; margin: 24px 0; padding: 12px 32px; background: #1c1917; color: #ffffff; text-decoration: none; border-radius: 8px; font-size: 16px;">
-                Sign in to Source Library
-              </a>
-              <p style="color: #a8a29e; font-size: 13px; margin-top: 32px;">
-                If you didn't request this email, you can safely ignore it.
-                This link expires in 24 hours.
-              </p>
-            </div>
-          `,
-        });
-      } catch (error) {
-        console.error('[auth] Failed to send verification email:', error);
-        throw new Error('Failed to send verification email');
+      const html = buildSignInHtml(url);
+
+      // Try SMTP first
+      if (hasSmtp) {
+        const sent = await sendEmail({ to: email, subject: 'Sign in to Source Library', html });
+        if (sent) return;
+        console.warn('[auth] SMTP failed, falling back to Resend');
       }
+
+      // Fallback to Resend
+      if (hasResend) {
+        try {
+          const { Resend } = await import('resend');
+          const resend = new Resend(process.env.RESEND_API_KEY);
+          await resend.emails.send({
+            from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+            to: email,
+            subject: 'Sign in to Source Library',
+            html,
+          });
+          return;
+        } catch (error) {
+          console.error('[auth] Resend fallback also failed:', error);
+        }
+      }
+
+      throw new Error('Failed to send verification email');
     },
   }));
 }

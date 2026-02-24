@@ -67,8 +67,7 @@ export default function HeroSection() {
       <div className="relative z-10 h-full flex items-center">
         <div className="px-6 md:px-12 w-full max-w-4xl">
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display"
           >
             Unlock a New Renaissance of Ancient Knowledge
           </h1>

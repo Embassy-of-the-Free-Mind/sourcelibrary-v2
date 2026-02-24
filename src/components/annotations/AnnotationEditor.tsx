@@ -174,7 +174,7 @@ export default function AnnotationEditor({
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 placeholder="Your name"
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold"
               />
             </div>
           )}
@@ -189,7 +189,7 @@ export default function AnnotationEditor({
               placeholder="Write your comment..."
               rows={3}
               autoFocus
-              className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 resize-none"
+              className="w-full px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold resize-none"
             />
           </div>
 
@@ -221,7 +221,7 @@ export default function AnnotationEditor({
                       onClick={() => setType(t.value)}
                       className={`inline-flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors ${
                         type === t.value
-                          ? 'bg-amber-100 text-amber-800 border border-amber-300'
+                          ? 'bg-accent-gold/15 text-accent-gold-dark border border-accent-gold/20'
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200 border border-transparent'
                       }`}
                       title={t.description}
@@ -259,7 +259,7 @@ export default function AnnotationEditor({
               <button
                 type="submit"
                 disabled={saving || content.length < 3}
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-amber-600 text-white rounded text-xs font-medium hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="inline-flex items-center gap-1 px-3 py-1.5 bg-accent-rust text-white rounded text-xs font-medium hover:bg-accent-rust/90 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {saving ? (
                   <>

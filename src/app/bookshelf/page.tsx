@@ -56,7 +56,7 @@ export default function BookshelfPage() {
                 {entries.length} {entries.length === 1 ? 'book' : 'books'} saved
               </p>
             </div>
-            <Library className="w-8 h-8 text-amber-500" />
+            <Library className="w-8 h-8 text-accent-gold" />
           </div>
         </div>
       </header>
@@ -77,7 +77,7 @@ export default function BookshelfPage() {
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors"
             >
               Browse Library
               <ArrowRight className="w-4 h-4" />
@@ -95,7 +95,7 @@ export default function BookshelfPage() {
                   onClick={() => setActiveTab(tab.key)}
                   className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm transition-colors ${
                     activeTab === tab.key
-                      ? 'bg-amber-600 text-white'
+                      ? 'bg-accent-rust text-white'
                       : 'text-stone-600 hover:bg-stone-50'
                   }`}
                 >
@@ -103,7 +103,7 @@ export default function BookshelfPage() {
                   <span className="hidden sm:inline">{tab.label}</span>
                   {counts[tab.key] > 0 && (
                     <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                      activeTab === tab.key ? 'bg-amber-500' : 'bg-stone-100'
+                      activeTab === tab.key ? 'bg-accent-gold/80' : 'bg-stone-100'
                     }`}>
                       {counts[tab.key]}
                     </span>
@@ -189,7 +189,7 @@ function BookshelfCard({ entry }: { entry: BookshelfEntryWithBook }) {
             </div>
             <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
               <div
-                className="h-full bg-amber-500 rounded-full transition-all"
+                className="h-full bg-accent-gold/80 rounded-full transition-all"
                 style={{ width: `${Math.min(100, progress)}%` }}
               />
             </div>
@@ -205,7 +205,7 @@ function BookshelfCard({ entry }: { entry: BookshelfEntryWithBook }) {
       </div>
 
       {/* Action */}
-      <div className="flex items-center text-amber-600">
+      <div className="flex items-center text-accent-rust">
         {entry.status === 'reading' && entry.last_read_page_id && (
           <span className="text-xs whitespace-nowrap">Continue</span>
         )}

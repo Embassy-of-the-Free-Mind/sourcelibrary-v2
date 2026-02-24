@@ -100,9 +100,9 @@ const TRADITIONS: Tradition[] = [
     description:
       'Song dynasty woodblock sutras from the Library of Congress — including a 975 AD Dharani Sutra, one of the earliest surviving printed Buddhist texts — alongside English translations of key Mahayana works and the first Zen teachings published in English.',
     color: 'amber',
-    borderColor: 'border-amber-300',
-    bgColor: 'bg-amber-50',
-    accentColor: 'text-amber-700',
+    borderColor: 'border-accent-gold/20',
+    bgColor: 'bg-accent-gold/8',
+    accentColor: 'text-accent-rust',
     originals: [
       '699356c28ed86e583b7b8320', // Dharani Sutra 975 AD
       '699356c58ed86e583b7b8334', // Lotus Sutra Song dynasty
@@ -234,7 +234,7 @@ function BookCard({
 
   return (
     <Link href={`/book/${id}`} className="group block">
-      <div className="h-full rounded-lg border border-stone-200 hover:border-amber-400 hover:shadow-lg transition-all overflow-hidden bg-white">
+      <div className="h-full rounded-lg border border-stone-200 hover:border-accent-gold/30 hover:shadow-lg transition-all overflow-hidden bg-white">
         <div className="relative aspect-[3/4] bg-stone-100 overflow-hidden">
           {thumb ? (
             <Image
@@ -252,7 +252,7 @@ function BookCard({
           )}
           {isOriginal && (
             <div className="absolute top-2 left-2 z-10">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-stone-900/80 text-amber-200 text-[10px] font-semibold uppercase tracking-wider rounded">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-stone-900/80 text-accent-gold text-[10px] font-semibold uppercase tracking-wider rounded">
                 <ScrollText className="w-3 h-3" />
                 Original
               </span>
@@ -269,8 +269,7 @@ function BookCard({
         </div>
         <div className="p-3">
           <h3
-            className="text-sm font-bold text-stone-900 group-hover:text-amber-700 transition-colors leading-tight line-clamp-2 mb-1"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-sm font-bold text-stone-900 group-hover:text-accent-rust transition-colors leading-tight line-clamp-2 mb-1 font-display"
           >
             {book.display_title || book.title}
           </h3>
@@ -322,8 +321,7 @@ function TraditionSection({
         <div className={`${tradition.bgColor} px-6 py-6 sm:px-8`}>
           <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
             <h2
-              className={`text-2xl sm:text-3xl font-bold ${tradition.accentColor}`}
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className={`text-2xl sm:text-3xl font-bold ${tradition.accentColor} font-display`}
             >
               {tradition.name}
             </h2>
@@ -398,11 +396,11 @@ export default async function ContemplativeTraditionsPage() {
   return (
     <div className="min-h-screen bg-stone-50">
       {/* Nav */}
-      <header className="bg-gradient-to-r from-stone-800 via-stone-900 to-stone-800 border-b border-amber-900/30">
+      <header className="bg-gradient-to-r from-stone-800 via-stone-900 to-stone-800 border-b border-accent-gold-dark/30">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <Link
             href="/collections"
-            className="inline-flex items-center gap-2 text-amber-200 hover:text-amber-100 transition-colors text-sm"
+            className="inline-flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
             Collections
@@ -419,12 +417,11 @@ export default async function ContemplativeTraditionsPage() {
           }}
         />
         <div className="relative max-w-6xl mx-auto px-6 py-16 sm:py-20">
-          <p className="text-xs uppercase tracking-[0.3em] text-amber-300 font-semibold mb-4">
+          <p className="text-xs uppercase tracking-[0.3em] text-accent-gold font-semibold mb-4">
             Curated Collection
           </p>
           <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-[1.1] max-w-4xl"
-            style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-[1.1] max-w-4xl font-display"
           >
             The Contemplative<br />Traditions
           </h1>
@@ -437,19 +434,19 @@ export default async function ContemplativeTraditionsPage() {
           {/* Stats */}
           <div className="flex flex-wrap gap-6 sm:gap-10">
             <div>
-              <div className="text-3xl font-bold text-amber-300">{totalBooks}</div>
+              <div className="text-3xl font-bold text-accent-gold">{totalBooks}</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Texts</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-300">{allLanguages.length}</div>
+              <div className="text-3xl font-bold text-accent-gold">{allLanguages.length}</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Languages</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-300">3,000+</div>
+              <div className="text-3xl font-bold text-accent-gold">3,000+</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Years</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-amber-300">5</div>
+              <div className="text-3xl font-bold text-accent-gold">5</div>
               <div className="text-xs text-stone-400 uppercase tracking-wider mt-1">Traditions</div>
             </div>
           </div>
@@ -476,8 +473,8 @@ export default async function ContemplativeTraditionsPage() {
       {/* Standout callout */}
       <div className="max-w-6xl mx-auto px-6 pt-10 pb-4">
         <div className="grid sm:grid-cols-2 gap-4">
-          <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-5 border border-amber-200">
-            <p className="text-xs font-semibold uppercase tracking-wider text-amber-600 mb-1">
+          <div className="bg-gradient-to-br from-accent-gold/8 to-orange-50 rounded-xl p-5 border border-accent-gold/20">
+            <p className="text-xs font-semibold uppercase tracking-wider text-accent-rust mb-1">
               975 AD
             </p>
             <p className="text-stone-800 font-medium text-sm leading-relaxed">

@@ -55,7 +55,8 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
     ? await db.collection('gallery_images')
         .find({
           book_id: { $in: allBookIds },
-          gallery_quality: { $gte: 0.6 },
+          gallery_quality: { $gte: 0.7 },
+          type: { $nin: ['decorative', 'symbol', 'musical_score'] },
         })
         .sort({ gallery_quality: -1 })
         .limit(200)
@@ -95,7 +96,7 @@ export default async function LibrariesPage() {
     .map(s => {
       const partner = getPartnerByProvider(s.provider);
       if (!partner) return null;
-      return { ...partner, count: s.count, languages: s.languages, heroImage: s.heroImage };
+      return { ...partner, count: s.count, languages: s.languages, heroImage: partner.heroImageOverride || s.heroImage };
     })
     .filter(Boolean) as (typeof LIBRARY_PARTNERS[string] & { count: number; languages: string[]; heroImage?: string })[];
 

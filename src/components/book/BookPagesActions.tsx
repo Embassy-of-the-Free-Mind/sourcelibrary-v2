@@ -42,7 +42,7 @@ export default function BookPagesActions({
         <>
           <button
             onClick={onBatchClick}
-            className="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-lg hover:bg-amber-100 transition-colors text-sm font-medium border border-amber-200"
+            className="flex items-center gap-2 px-4 py-2 bg-accent-gold/8 text-accent-gold-dark rounded-lg hover:bg-accent-gold/15 transition-colors text-sm font-medium border border-accent-gold/20"
           >
             <Wand2 className="w-4 h-4" />
             Batch Process
@@ -76,7 +76,7 @@ export default function BookPagesActions({
             <button
               onClick={onSaveOrder}
               disabled={savingOrder}
-              className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 bg-status-success text-white rounded-lg hover:bg-status-success/90 transition-colors text-sm font-medium disabled:opacity-50"
             >
               {savingOrder ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
               Save Order

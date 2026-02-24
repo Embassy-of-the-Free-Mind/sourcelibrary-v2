@@ -241,7 +241,7 @@ export default function CameraCapture({ bookId, onComplete }: CameraCaptureProps
     <div className="flex-1 flex flex-col relative">
       {/* Error banner */}
       {error && (
-        <div className="absolute top-0 left-0 right-0 z-10 bg-red-600 text-white text-center py-2 text-sm">
+        <div className="absolute top-0 left-0 right-0 z-10 bg-status-error text-white text-center py-2 text-sm">
           {error}
         </div>
       )}

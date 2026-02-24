@@ -77,7 +77,7 @@ export default function VolunteerForm() {
             required
             value={name}
             onChange={e => setName(e.target.value)}
-            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
           />
         </div>
         <div>
@@ -88,7 +88,7 @@ export default function VolunteerForm() {
             required
             value={email}
             onChange={e => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg text-base text-stone-900 focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
           />
         </div>
       </div>
@@ -105,7 +105,7 @@ export default function VolunteerForm() {
               key={interest.id}
               className={`flex items-start gap-3 p-4 rounded-lg border cursor-pointer transition-colors ${
                 interests.includes(interest.id)
-                  ? 'bg-amber-50 border-amber-300'
+                  ? 'bg-accent-gold/8 border-accent-gold/20'
                   : 'bg-white border-stone-200 hover:border-stone-300'
               }`}
             >
@@ -151,7 +151,7 @@ export default function VolunteerForm() {
           placeholder="Other language..."
           value={otherLanguage}
           onChange={e => setOtherLanguage(e.target.value)}
-          className="w-full md:w-64 px-3 py-2 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600"
+          className="w-full md:w-64 px-3 py-2 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust"
         />
       </div>
 
@@ -167,7 +167,7 @@ export default function VolunteerForm() {
           value={message}
           onChange={e => setMessage(e.target.value)}
           placeholder="Your background, what texts interest you, how you'd like to contribute..."
-          className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600 resize-y"
+          className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 text-base focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust resize-y"
         />
       </div>
 
@@ -181,7 +181,7 @@ export default function VolunteerForm() {
           {status === 'submitting' ? 'Sending...' : 'Sign Up to Volunteer'}
         </button>
         {status === 'error' && (
-          <span className="text-red-600 text-sm">Something went wrong. Please try again or email directly.</span>
+          <span className="text-status-error text-sm">Something went wrong. Please try again or email directly.</span>
         )}
       </div>
     </form>

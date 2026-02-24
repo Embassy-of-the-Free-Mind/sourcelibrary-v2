@@ -64,8 +64,8 @@ export const SEARCH_TYPE_STYLES: Record<SearchIndexType, {
     }])
   ) as Record<EntityType, { badge: string; iconColor: string }>,
   quote: {
-    badge: 'bg-amber-100 text-amber-700',
-    iconColor: 'text-amber-700',
+    badge: 'bg-accent-gold/15 text-accent-gold-dark',
+    iconColor: 'text-accent-rust',
   },
   vocabulary: {
     badge: 'bg-rose-100 text-rose-700',
@@ -87,7 +87,7 @@ export const ANNOTATION_TYPE_STYLES: Record<AnnotationType, string> = {
   reference: 'bg-accent-violet/10 text-accent-violet',
   correction: 'bg-accent-rust/10 text-accent-rust',
   etymology: 'bg-accent-sage/15 text-accent-sage-dark',
-  question: 'bg-amber-100 text-amber-700',
+  question: 'bg-accent-gold/15 text-accent-gold-dark',
 };
 
 // ─── Processing actions (ProcessingPanel, JobStatusBanner) ──────────────
@@ -132,15 +132,15 @@ export const HISTORY_EVENT_LABELS: Record<HistoryEventType, string> = {
 /** CSS color values for timeline dots and icons (need style= for dynamic bg). */
 export const HISTORY_EVENT_CSS_COLORS: Record<HistoryEventType, string> = {
   imported: '#78716c',       // stone
-  archived: '#d97706',       // amber
+  archived: 'var(--status-warning)',
   ocr: 'var(--accent-sage)',
   translation: 'var(--accent-rust)',
   summary: 'var(--accent-violet)',
   index: 'var(--accent-gold)',
-  image_extraction: '#d97706', // amber
+  image_extraction: 'var(--status-warning)',
   metadata_enriched: 'var(--accent-gold)',
   edition_published: 'var(--accent-sage)',
-  admin_action: '#ef4444',   // red
+  admin_action: 'var(--status-error)',
 };
 
 // ─── Note tag styles (NotesRenderer inline annotations) ─────────────────
@@ -150,7 +150,7 @@ export const NOTE_TAG_STYLES = {
   margin: 'bg-accent-sage/12 text-accent-sage-dark border-l-2 border-accent-sage',
   gloss: 'bg-accent-violet/8 text-accent-violet',
   insert: 'bg-accent-sage/12 text-accent-sage-dark',
-  note: 'bg-amber-100 text-amber-800',
+  note: 'bg-accent-gold/15 text-accent-gold-dark',
   pageType: 'bg-accent-gold/15 text-accent-gold-dark',
   blockquote: 'border-accent-rust bg-accent-rust/[0.06]',
   keywords: 'text-accent-violet',

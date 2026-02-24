@@ -143,7 +143,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                     {/* Condition A */}
                     <div className={`p-3 rounded-lg ${winner === 'a' ? 'bg-green-50 border border-green-200' : 'bg-warm'}`}>
                       <div className="flex items-center gap-2 mb-1">
-                        {winner === 'a' && <span className="text-green-600">&#x25B2;</span>}
+                        {winner === 'a' && <span className="text-status-success">&#x25B2;</span>}
                         <span className="text-base font-medium text-secondary">
                           {comp.label_a || comp.condition_a}
                         </span>
@@ -170,7 +170,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                     {/* Condition B */}
                     <div className={`p-3 rounded-lg ${winner === 'b' ? 'bg-green-50 border border-green-200' : 'bg-warm'}`}>
                       <div className="flex items-center gap-2 mb-1">
-                        {winner === 'b' && <span className="text-green-600">&#x25B2;</span>}
+                        {winner === 'b' && <span className="text-status-success">&#x25B2;</span>}
                         <span className="text-base font-medium text-secondary">
                           {comp.label_b || comp.condition_b}
                         </span>
@@ -213,7 +213,7 @@ export default function ResultsPage({ params }: { params: Promise<{ id: string }
                     }`}
                   >
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-base ${
-                      i === 0 ? 'bg-green-600 text-white' : 'bg-border-medium text-secondary'
+                      i === 0 ? 'bg-status-success text-white' : 'bg-border-medium text-secondary'
                     }`}>
                       {i + 1}
                     </div>

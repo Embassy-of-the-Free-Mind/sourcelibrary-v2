@@ -234,8 +234,7 @@ export default function TimelineClient({ initialData }: Props) {
         <div ref={detailRef} className="pt-2">
           <div className="flex items-center justify-between mb-6">
             <h2
-              className="text-2xl font-bold text-stone-900"
-              style={{ fontFamily: 'Playfair Display, Georgia, serif' }}
+              className="text-2xl font-bold text-stone-900 font-display"
             >
               {formatDecadeLabel(selectedDecade)}
               <span className="ml-3 text-base font-normal text-stone-500">

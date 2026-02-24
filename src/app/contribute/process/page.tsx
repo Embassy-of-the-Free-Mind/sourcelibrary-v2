@@ -187,7 +187,7 @@ export default function ProcessPage() {
             <Link href="/contribute" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
             </Link>
-            <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+            <h1 className="text-xl font-medium" style={{ color: 'var(--text-primary)' }}>
               Process Pages
             </h1>
           </div>
@@ -208,7 +208,7 @@ export default function ProcessPage() {
         {step === 'generosity' && (
           <div className="space-y-8">
             <div className="text-center max-w-2xl mx-auto">
-              <h2 className="text-3xl mb-4" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+              <h2 className="text-3xl mb-4" style={{ color: 'var(--text-primary)' }}>
                 Help bring a book to life
               </h2>
               <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
@@ -222,7 +222,7 @@ export default function ProcessPage() {
                 <button
                   key={tier.id}
                   onClick={() => selectTier(tier.id)}
-                  className="p-6 rounded-xl text-left transition-all border-2 border-transparent hover:border-amber-300 hover:shadow-md"
+                  className="p-6 rounded-xl text-left transition-all border-2 border-transparent hover:border-accent-gold/20 hover:shadow-md"
                   style={{ background: 'var(--bg-white)' }}
                 >
                   <div className="text-lg font-medium mb-1" style={{ color: 'var(--text-primary)' }}>

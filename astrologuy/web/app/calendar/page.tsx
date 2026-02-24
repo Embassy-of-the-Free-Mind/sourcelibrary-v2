@@ -4,8 +4,11 @@ import { YearCalendar } from "@/components/viz/YearCalendar";
 import { MoonHeatmap } from "@/components/viz/MoonHeatmap";
 import { YearPicker } from "@/components/ui/YearPicker";
 import { BirthDateInput } from "@/components/ui/BirthDateInput";
+import { useHydrated } from "@/lib/hooks";
 
 export default function CalendarPage() {
+  const hydrated = useHydrated();
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
       <div className="text-center mb-8">
@@ -24,7 +27,11 @@ export default function CalendarPage() {
       </div>
 
       {/* The hero visualization */}
-      <YearCalendar />
+      {hydrated ? <YearCalendar /> : (
+        <div className="w-full h-64 flex items-center justify-center text-faint text-sm">
+          Building 13-month calendar&hellip;
+        </div>
+      )}
 
       {/* Heatmap */}
       <div className="mt-12 pt-8 border-t border-border">
@@ -32,7 +39,11 @@ export default function CalendarPage() {
         <p className="text-muted text-sm mb-4">
           Moon illumination for every day of the year. Brighter = fuller moon.
         </p>
-        <MoonHeatmap />
+        {hydrated ? <MoonHeatmap /> : (
+          <div className="w-full h-32 flex items-center justify-center text-faint text-sm">
+            Computing illumination data&hellip;
+          </div>
+        )}
       </div>
     </div>
   );

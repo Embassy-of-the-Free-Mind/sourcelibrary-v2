@@ -74,11 +74,11 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The{' '}
-          <Link href="/book/6992cabad4d545ae73fee83d" className="text-amber-700 hover:text-amber-600 underline">五行大義 (<em>Wuxing Dayi</em>, Great Meaning of the Five Elements)</Link>
+          <Link href="/book/6992cabad4d545ae73fee83d" className="text-accent-rust hover:text-accent-rust underline">五行大義 (<em>Wuxing Dayi</em>, Great Meaning of the Five Elements)</Link>
           , a Sui dynasty (581&ndash;618) treatise now in Source Library in the original Chinese, lays out the cosmological framework. The five elements are not substances but <em>phases</em> &mdash; patterns of change through which all phenomena cycle. Fire&apos;s phase is expansion, illumination, and transformation. Doubled, it signifies a period of extraordinary intensity: purification through combustion, the burning away of what is no longer needed. The process is magnificent. It is also violent.
         </p>
 
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
+        <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
           <p className="text-secondary italic mb-2">
             &ldquo;Fire has no definite form but clings to the burning object and thus is bright. It is twofold clarity: as the sun and moon cling to heaven, so the luminaries of the earth cling to what is right.&rdquo;
           </p>
@@ -101,9 +101,9 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Source Library holds two extraordinary documents of this celestial system. The{' '}
-          <Link href="/book/6992ca1ad4d545ae73fed806" className="text-amber-700 hover:text-amber-600 underline">Pelliot chinois 3594 &mdash; the Dunhuang Star Chart</Link>
+          <Link href="/book/6992ca1ad4d545ae73fed806" className="text-accent-rust hover:text-accent-rust underline">Pelliot chinois 3594 &mdash; the Dunhuang Star Chart</Link>
           {' '}&mdash; is the oldest known complete star atlas in the world, dating to approximately 700 CE. Discovered in the sealed library cave at Dunhuang in 1907, it maps over 1,300 stars across all 28 mansions. The{' '}
-          <Link href="/book/6992c93c69b777d72c76353e" className="text-amber-700 hover:text-amber-600 underline">周天星位經緯宿度考 (Study of Celestial Star Positions and Lunar Mansions)</Link>
+          <Link href="/book/6992c93c69b777d72c76353e" className="text-accent-rust hover:text-accent-rust underline">周天星位經緯宿度考 (Study of Celestial Star Positions and Lunar Mansions)</Link>
           {' '}provides the mathematical framework &mdash; the degree measurements and positional calculations for each mansion.
         </p>
 
@@ -117,13 +117,13 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Source Library holds seven editions of the I Ching, from{' '}
-          <Link href="/book/6953e27477f38f6761be8d28" className="text-amber-700 hover:text-amber-600 underline">James Legge&apos;s 1882 English translation</Link>
+          <Link href="/book/6953e27477f38f6761be8d28" className="text-accent-rust hover:text-accent-rust underline">James Legge&apos;s 1882 English translation</Link>
           {' '}and{' '}
-          <Link href="/book/6990653a726f64800c10a225" className="text-amber-700 hover:text-amber-600 underline">Richard Wilhelm&apos;s German edition</Link>
+          <Link href="/book/6990653a726f64800c10a225" className="text-accent-rust hover:text-accent-rust underline">Richard Wilhelm&apos;s German edition</Link>
           {' '}to three Chinese originals, including a{' '}
-          <Link href="/book/6992c92869b777d72c763513" className="text-amber-700 hover:text-amber-600 underline">64-hexagram illustrated diagram set</Link>
+          <Link href="/book/6992c92869b777d72c763513" className="text-accent-rust hover:text-accent-rust underline">64-hexagram illustrated diagram set</Link>
           {' '}and a{' '}
-          <Link href="/book/6992cabdd4d545ae73fee906" className="text-amber-700 hover:text-amber-600 underline">visual commentary on hexagram imagery</Link>
+          <Link href="/book/6992cabdd4d545ae73fee906" className="text-accent-rust hover:text-accent-rust underline">visual commentary on hexagram imagery</Link>
           .
         </p>
 
@@ -171,7 +171,7 @@ export default function FireHorsePage() {
           The consequences were not merely statistical. Academic research has documented that women born in 1966 Japan experienced higher divorce rates, lower educational attainment, and reduced household income compared to women born in adjacent years &mdash; effects caused not by any astrological reality but by the smaller cohort size and the lingering stigma itself. Studies in medical journals documented increased abortion rates in 1966 and anomalies in the reported male-to-female birth ratio consistent with parents falsifying their daughters&apos; birth years. An estimated 721 excess female infant deaths were attributed to the Fire Horse year. The superstition didn&apos;t just predict misfortune; it created it.
         </p>
 
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
+        <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
           <p className="text-secondary italic mb-2">
             &ldquo;The 1966 birth rate crash is the only documented case in modern history of a folk superstition producing a measurable, nationwide demographic event in an industrialised country.&rdquo;
           </p>
@@ -224,10 +224,10 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The{' '}
-          <Link href="/book/6992cac0d4d545ae73feea71" className="text-amber-700 hover:text-amber-600 underline">新刊指南臺司袁天罡先生五星三命大全 (Five Stars Three Fates Complete Guide to Astrology)</Link>
+          <Link href="/book/6992cac0d4d545ae73feea71" className="text-accent-rust hover:text-accent-rust underline">新刊指南臺司袁天罡先生五星三命大全 (Five Stars Three Fates Complete Guide to Astrology)</Link>
           {' '}is attributed to Yuan Tiangang, the legendary Tang dynasty astrologer who is said to have predicted the rise of Empress Wu Zetian. The text systematises the &ldquo;Three Fates&rdquo; (三命) method of astrological calculation &mdash; the interaction of year, month, and hour pillars with the five planets and their elemental associations. Two{' '}
-          <Link href="/book/6992c9af54b3f8b16b4afd0c" className="text-amber-700 hover:text-amber-600 underline">Taiyi divination</Link>
-          {' '}<Link href="/book/6992c9a9d4d545ae73fed5e9" className="text-amber-700 hover:text-amber-600 underline">manuals</Link>
+          <Link href="/book/6992c9af54b3f8b16b4afd0c" className="text-accent-rust hover:text-accent-rust underline">Taiyi divination</Link>
+          {' '}<Link href="/book/6992c9a9d4d545ae73fed5e9" className="text-accent-rust hover:text-accent-rust underline">manuals</Link>
           {' '}document the &ldquo;Supreme Unity&rdquo; system, one of the three great Chinese divination methods alongside the I Ching and Qimen Dunjia.
         </p>
 
@@ -235,9 +235,9 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The{' '}
-          <Link href="/book/6992cabad4d545ae73fee83d" className="text-amber-700 hover:text-amber-600 underline">五行大義 (<em>Wuxing Dayi</em>)</Link>
+          <Link href="/book/6992cabad4d545ae73fee83d" className="text-accent-rust hover:text-accent-rust underline">五行大義 (<em>Wuxing Dayi</em>)</Link>
           {' '}is the most important surviving treatise on the five-element system. Written during the Sui dynasty, it synthesises centuries of five-element theory into a comprehensive reference. Two volumes are now in Source Library in the original Chinese.{' '}
-          <Link href="/book/695580ac57e3b773024f5c37" className="text-amber-700 hover:text-amber-600 underline">Zhu Xi&apos;s <em>Confucian Cosmogony</em></Link>
+          <Link href="/book/695580ac57e3b773024f5c37" className="text-accent-rust hover:text-accent-rust underline">Zhu Xi&apos;s <em>Confucian Cosmogony</em></Link>
           {' '}provides the Neo-Confucian synthesis of yin-yang and five-element theory that shaped later Chinese astrological thought.
         </p>
 
@@ -245,13 +245,13 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Seven editions span the collection &mdash; from{' '}
-          <Link href="/book/6992c92869b777d72c763513" className="text-amber-700 hover:text-amber-600 underline">original Chinese hexagram diagrams</Link>
+          <Link href="/book/6992c92869b777d72c763513" className="text-accent-rust hover:text-accent-rust underline">original Chinese hexagram diagrams</Link>
           {' '}and{' '}
-          <Link href="/book/6992cb54d4d545ae73feef31" className="text-amber-700 hover:text-amber-600 underline"><em>Zhou Yi Xixin</em> (Cleansing the Heart through the Book of Changes)</Link>
+          <Link href="/book/6992cb54d4d545ae73feef31" className="text-accent-rust hover:text-accent-rust underline"><em>Zhou Yi Xixin</em> (Cleansing the Heart through the Book of Changes)</Link>
           {' '}to the landmark English translations by{' '}
-          <Link href="/book/6953e27477f38f6761be8d28" className="text-amber-700 hover:text-amber-600 underline">Legge (1882)</Link>
+          <Link href="/book/6953e27477f38f6761be8d28" className="text-accent-rust hover:text-accent-rust underline">Legge (1882)</Link>
           {' '}and{' '}
-          <Link href="/book/6990653a726f64800c10a225" className="text-amber-700 hover:text-amber-600 underline">Wilhelm</Link>
+          <Link href="/book/6990653a726f64800c10a225" className="text-accent-rust hover:text-accent-rust underline">Wilhelm</Link>
           . The Chinese originals preserve notation and commentary that no translation can fully convey &mdash; the visual structure of the hexagrams, the interlinear glosses, the layers of commentary accumulated over centuries.
         </p>
 
@@ -259,9 +259,9 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The{' '}
-          <Link href="/book/6992ca1ad4d545ae73fed806" className="text-amber-700 hover:text-amber-600 underline">Dunhuang Star Chart</Link>
+          <Link href="/book/6992ca1ad4d545ae73fed806" className="text-accent-rust hover:text-accent-rust underline">Dunhuang Star Chart</Link>
           {' '}(Pelliot chinois 3594, c. 700 CE) maps over 1,300 stars across all 28 lunar mansions &mdash; the celestial coordinate system within which the Horse occupies its fire-palace position. The{' '}
-          <Link href="/book/6992cc33b81ed280ee32680b" className="text-amber-700 hover:text-amber-600 underline">Chinese celestial planispheres</Link>
+          <Link href="/book/6992cc33b81ed280ee32680b" className="text-accent-rust hover:text-accent-rust underline">Chinese celestial planispheres</Link>
           {' '}held at the Biblioth&egrave;que nationale de France show the full sky in traditional Chinese projection.
         </p>
 
@@ -269,19 +269,19 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           These astrological texts sit within a larger collection of Chinese source material: the{' '}
-          <Link href="/book/695924fa1cac2ce31a4a8a33" className="text-amber-700 hover:text-amber-600 underline">Daozang (道藏, Taoist Canon)</Link>
+          <Link href="/book/695924fa1cac2ce31a4a8a33" className="text-accent-rust hover:text-accent-rust underline">Daozang (道藏, Taoist Canon)</Link>
           , the{' '}
-          <Link href="/book/699249eda2d53df4853c123d" className="text-amber-700 hover:text-amber-600 underline">Analects of Confucius</Link>
+          <Link href="/book/699249eda2d53df4853c123d" className="text-accent-rust hover:text-accent-rust underline">Analects of Confucius</Link>
           {' '}(in both{' '}
-          <Link href="/book/697a30536dc6ae6bd18cd1e1" className="text-amber-700 hover:text-amber-600 underline">the 1687 Latin Jesuit translation</Link>
+          <Link href="/book/697a30536dc6ae6bd18cd1e1" className="text-accent-rust hover:text-accent-rust underline">the 1687 Latin Jesuit translation</Link>
           {' '}and modern English), the{' '}
-          <Link href="/book/6990659a3dc2ed39a49f1e7b" className="text-amber-700 hover:text-amber-600 underline">Huang Di Nei Jing (Yellow Emperor&apos;s Classic of Internal Medicine)</Link>
+          <Link href="/book/6990659a3dc2ed39a49f1e7b" className="text-accent-rust hover:text-accent-rust underline">Huang Di Nei Jing (Yellow Emperor&apos;s Classic of Internal Medicine)</Link>
           , the{' '}
-          <Link href="/book/699065663dc2ed39a49f0c60" className="text-amber-700 hover:text-amber-600 underline">Tao Te Ching</Link>
+          <Link href="/book/699065663dc2ed39a49f0c60" className="text-accent-rust hover:text-accent-rust underline">Tao Te Ching</Link>
           , the{' '}
-          <Link href="/book/6990656b3dc2ed39a49f0f07" className="text-amber-700 hover:text-amber-600 underline">Zhuangzi</Link>
+          <Link href="/book/6990656b3dc2ed39a49f0f07" className="text-accent-rust hover:text-accent-rust underline">Zhuangzi</Link>
           , and the{' '}
-          <Link href="/book/695363bc77f38f6761bcddfa" className="text-amber-700 hover:text-amber-600 underline">Secret of the Golden Flower</Link>
+          <Link href="/book/695363bc77f38f6761bcddfa" className="text-accent-rust hover:text-accent-rust underline">Secret of the Golden Flower</Link>
           . Together, they constitute a philosophical tradition in which astrology, medicine, politics, ethics, and metaphysics are not separate disciplines but facets of a single cosmological vision.
         </p>
 
@@ -296,42 +296,42 @@ export default function FireHorsePage() {
             </thead>
             <tbody className="text-secondary">
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cac0d4d545ae73feea71" className="text-amber-700 hover:text-amber-600 underline">五星三命大全</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cac0d4d545ae73feea71" className="text-accent-rust hover:text-accent-rust underline">五星三命大全</Link></td>
                 <td className="py-3 px-4">Tang dynasty astrological system (Five Stars, Three Fates)</td>
                 <td className="py-3 px-4">Chinese</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992c9af54b3f8b16b4afd0c" className="text-amber-700 hover:text-amber-600 underline">太乙統宗寶鑑</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992c9af54b3f8b16b4afd0c" className="text-accent-rust hover:text-accent-rust underline">太乙統宗寶鑑</Link></td>
                 <td className="py-3 px-4">Taiyi divination system</td>
                 <td className="py-3 px-4">Chinese</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cabad4d545ae73fee83d" className="text-amber-700 hover:text-amber-600 underline">五行大義</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cabad4d545ae73fee83d" className="text-accent-rust hover:text-accent-rust underline">五行大義</Link></td>
                 <td className="py-3 px-4">Definitive treatise on the five elements</td>
                 <td className="py-3 px-4">Chinese</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992ca1ad4d545ae73fed806" className="text-amber-700 hover:text-amber-600 underline">Dunhuang Star Chart</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992ca1ad4d545ae73fed806" className="text-accent-rust hover:text-accent-rust underline">Dunhuang Star Chart</Link></td>
                 <td className="py-3 px-4">Oldest complete star atlas (c. 700 CE)</td>
                 <td className="py-3 px-4">Chinese</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992c93c69b777d72c76353e" className="text-amber-700 hover:text-amber-600 underline">周天星位經緯宿度考</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992c93c69b777d72c76353e" className="text-accent-rust hover:text-accent-rust underline">周天星位經緯宿度考</Link></td>
                 <td className="py-3 px-4">Lunar mansion positions and degree measurements</td>
                 <td className="py-3 px-4">Chinese</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992c92869b777d72c763513" className="text-amber-700 hover:text-amber-600 underline">易經 64卦圖</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992c92869b777d72c763513" className="text-accent-rust hover:text-accent-rust underline">易經 64卦圖</Link></td>
                 <td className="py-3 px-4">I Ching hexagram diagrams</td>
                 <td className="py-3 px-4">Chinese</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cabdd4d545ae73fee906" className="text-amber-700 hover:text-amber-600 underline">易象圖說</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cabdd4d545ae73fee906" className="text-accent-rust hover:text-accent-rust underline">易象圖說</Link></td>
                 <td className="py-3 px-4">Illustrated commentary on hexagram imagery</td>
                 <td className="py-3 px-4">Chinese</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/695580ac57e3b773024f5c37" className="text-amber-700 hover:text-amber-600 underline">Confucian Cosmogony</Link></td>
+                <td className="py-3 px-4"><Link href="/book/695580ac57e3b773024f5c37" className="text-accent-rust hover:text-accent-rust underline">Confucian Cosmogony</Link></td>
                 <td className="py-3 px-4">Zhu Xi&apos;s Neo-Confucian yin-yang synthesis</td>
                 <td className="py-3 px-4">English</td>
               </tr>
@@ -345,15 +345,15 @@ export default function FireHorsePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The difference between reading about Chinese astrology in an English summary and reading the source texts is the difference between a paint-by-numbers guide and the painting. The{' '}
-          <Link href="/book/6992cabad4d545ae73fee83d" className="text-amber-700 hover:text-amber-600 underline">五行大義</Link>
+          <Link href="/book/6992cabad4d545ae73fee83d" className="text-accent-rust hover:text-accent-rust underline">五行大義</Link>
           {' '}does not list &ldquo;fire = passion, horse = freedom&rdquo; in the manner of a horoscope column. It traces the element of fire through its cosmological, medical, political, musical, and seasonal manifestations &mdash; fire as the south, as the heart, as the note <em>zhi</em>, as the colour red, as the bitter taste, as the planet Mars, as the virtue of propriety. The system is not a personality quiz. It is a theory of everything.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           Source Library&apos;s AI translation pipeline can make these texts accessible in English for the first time. The{' '}
-          <Link href="/book/6992cac0d4d545ae73feea71" className="text-amber-700 hover:text-amber-600 underline">Five Stars Three Fates</Link>
+          <Link href="/book/6992cac0d4d545ae73feea71" className="text-accent-rust hover:text-accent-rust underline">Five Stars Three Fates</Link>
           {' '}astrology manual, the{' '}
-          <Link href="/book/6992cabad4d545ae73fee83d" className="text-amber-700 hover:text-amber-600 underline">五行大義</Link>
+          <Link href="/book/6992cabad4d545ae73fee83d" className="text-accent-rust hover:text-accent-rust underline">五行大義</Link>
           , the original Chinese I Ching commentaries &mdash; these are the works that define the tradition the Fire Horse belongs to. To understand what the Year of the Fire Horse actually means, you need to read them. Not a summary. Not a horoscope. The text.
         </p>
 
@@ -369,13 +369,13 @@ export default function FireHorsePage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/search?q=Chinese&language=Chinese"
-              className="inline-flex items-center gap-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-colors"
+              className="inline-flex items-center gap-2 bg-accent-rust text-white px-6 py-3 rounded-lg hover:bg-accent-rust/90 transition-colors"
             >
               Browse Chinese texts
             </Link>
             <Link
               href="/book/6992cac0d4d545ae73feea71"
-              className="inline-flex items-center gap-2 border border-amber-700 text-amber-700 px-6 py-3 rounded-lg hover:bg-amber-50 transition-colors"
+              className="inline-flex items-center gap-2 border border-accent-rust text-accent-rust px-6 py-3 rounded-lg hover:bg-accent-gold/8 transition-colors"
             >
               Read the Five Stars astrology manual
             </Link>

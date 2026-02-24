@@ -53,8 +53,8 @@ export default function ResearchPage() {
       {/* Poimandres Study */}
       <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-amber-100 rounded-lg">
-            <BookOpen className="w-5 h-5 text-amber-600" />
+          <div className="p-2 bg-accent-gold/15 rounded-lg">
+            <BookOpen className="w-5 h-5 text-accent-rust" />
           </div>
           <h2 className="text-xl font-semibold text-primary">
             Study 1: Poimandres (Greek → English)
@@ -94,8 +94,8 @@ export default function ResearchPage() {
                   however, like those weighed down from satiety of food or from bodily fatigue...
                 </p>
               </div>
-              <div className="p-3 bg-amber-50/50">
-                <div className="text-xs text-amber-600 font-medium mb-1">Scott (1924)</div>
+              <div className="p-3 bg-accent-gold/5">
+                <div className="text-xs text-accent-rust font-medium mb-1">Scott (1924)</div>
                 <p className="text-sm text-stone-700">
                   Once on a time, when I had begun to think about the things that are, and
                   my thoughts had soared high aloft, while my bodily senses had been put
@@ -118,8 +118,8 @@ export default function ResearchPage() {
                   I said: &quot;And who are you?&quot; He said: &quot;I am Poimandres, the Mind of Sovereignty.&quot;
                 </p>
               </div>
-              <div className="p-3 bg-amber-50/50">
-                <div className="text-xs text-amber-600 font-medium mb-1">Scott (1924)</div>
+              <div className="p-3 bg-accent-gold/5">
+                <div className="text-xs text-accent-rust font-medium mb-1">Scott (1924)</div>
                 <p className="text-sm text-stone-700">
                   &apos;Who are you?&apos; I said. &apos;I,&apos; said he, &apos;am Poimandres, the Mind of the Sovereignty.&apos;
                 </p>
@@ -140,8 +140,8 @@ export default function ResearchPage() {
                   gentle and joyful. And I was amazed at the sight.
                 </p>
               </div>
-              <div className="p-3 bg-amber-50/50">
-                <div className="text-xs text-amber-600 font-medium mb-1">Scott (1924)</div>
+              <div className="p-3 bg-accent-gold/5">
+                <div className="text-xs text-accent-rust font-medium mb-1">Scott (1924)</div>
                 <p className="text-sm text-stone-700">
                   ...I beheld a boundless view; all was changed into light, a mild and
                   joyous light; and I marvelled when I saw it.
@@ -164,8 +164,8 @@ export default function ResearchPage() {
                   is the Son of God.&quot;
                 </p>
               </div>
-              <div className="p-3 bg-amber-50/50">
-                <div className="text-xs text-amber-600 font-medium mb-1">Scott (1924)</div>
+              <div className="p-3 bg-accent-gold/5">
+                <div className="text-xs text-accent-rust font-medium mb-1">Scott (1924)</div>
                 <p className="text-sm text-stone-700">
                   &apos;That Light,&apos; he said, &apos;is I, even Mind, the first God, who was before
                   the watery substance which appeared out of the darkness; and the Word
@@ -181,7 +181,7 @@ export default function ResearchPage() {
 
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
           <div className="flex items-center gap-2 mb-2">
-            <CheckCircle2 className="w-5 h-5 text-green-600" />
+            <CheckCircle2 className="w-5 h-5 text-status-success" />
             <span className="font-semibold text-green-800">Accuracy: ~92%</span>
           </div>
           <p className="text-sm text-green-900">
@@ -200,9 +200,9 @@ export default function ResearchPage() {
               <li>• Maintains section numbering</li>
             </ul>
           </div>
-          <div className="bg-amber-50 rounded-lg p-4">
-            <h4 className="font-medium text-amber-800 mb-2">Scott Differences</h4>
-            <ul className="text-sm text-amber-900 space-y-1">
+          <div className="bg-accent-gold/8 rounded-lg p-4">
+            <h4 className="font-medium text-accent-gold-dark mb-2">Scott Differences</h4>
+            <ul className="text-sm text-accent-gold-dark space-y-1">
               <li>• Archaic English (&quot;methought&quot;, &quot;I would fain&quot;)</li>
               <li>• Scholarly footnotes provided</li>
               <li>• More interpretive word choices</li>
@@ -242,7 +242,7 @@ export default function ResearchPage() {
 
         <div className="mt-4 text-sm text-muted">
           <p>
-            Source: <Link href="/book/6953a93977f38f6761bd58f4" className="text-amber-600 hover:underline">
+            Source: <Link href="/book/6953a93977f38f6761bd58f4" className="text-accent-rust hover:underline">
               Scott, Hermetica Vol. I
             </Link> (Internet Archive: ScottHermeticaVolOne)
           </p>
@@ -256,7 +256,7 @@ export default function ResearchPage() {
       <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-2 bg-green-100 rounded-lg">
-            <BookOpen className="w-5 h-5 text-green-600" />
+            <BookOpen className="w-5 h-5 text-status-success" />
           </div>
           <h2 className="text-xl font-semibold text-primary">
             Study 2: De Voluptate (Latin → English)
@@ -372,10 +372,10 @@ export default function ResearchPage() {
 
       {/* Footer links */}
       <div className="flex justify-center gap-6 text-sm">
-        <Link href="/about/processing" className="text-amber-600 hover:underline">
+        <Link href="/about/processing" className="text-accent-rust hover:underline">
           How Processing Works
         </Link>
-        <Link href="/experiments" className="text-amber-600 hover:underline">
+        <Link href="/experiments" className="text-accent-rust hover:underline">
           A/B Experiments
         </Link>
       </div>

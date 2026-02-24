@@ -192,8 +192,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                 <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="1" />
               </svg>
               <span
-                className="hidden sm:inline text-base font-medium"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif' }}
+                className="hidden sm:inline text-base font-medium font-serif"
               >
                 Source Library
               </span>
@@ -249,7 +248,7 @@ export default function GuidePage({ params }: GuidePageProps) {
             <div className={`flex-1 ${book.thumbnail ? 'text-left' : 'text-center'}`}>
               <h1
                 className="text-3xl sm:text-4xl leading-tight"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+                style={{ color: 'var(--text-primary)' }}
               >
                 {book.display_title || book.title}
               </h1>
@@ -270,7 +269,7 @@ export default function GuidePage({ params }: GuidePageProps) {
               {(book.index?.bookSummary?.brief || book.reading_summary?.overview) && (
                 <p
                   className="mt-5 text-lg leading-relaxed"
-                  style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   {book.index?.bookSummary?.brief ||
                    (book.reading_summary?.overview && book.reading_summary.overview.split('\n\n')[0]?.slice(0, 300) + (book.reading_summary.overview.length > 300 ? '...' : ''))}
@@ -301,11 +300,11 @@ export default function GuidePage({ params }: GuidePageProps) {
               <div className="p-6 sm:p-8">
                 <h2
                   className="text-2xl mb-5"
-                  style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   Overview
                 </h2>
-                <div className="prose max-w-none" style={{ fontFamily: 'Newsreader, Georgia, serif' }}>
+                <div className="prose max-w-none font-body">
                   {summary.overview.split('\n\n').map((p, i) => (
                     <p key={i} className="leading-relaxed mb-4 text-base" style={{ color: 'var(--text-secondary)' }}>{p}</p>
                   ))}
@@ -316,7 +315,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                   <div className="mt-8 pt-8" style={{ borderTop: '1px solid var(--border-light)' }}>
                     <h3
                       className="text-xl mb-5"
-                      style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+                      style={{ color: 'var(--text-primary)' }}
                     >
                       Notable Passages
                     </h3>
@@ -327,7 +326,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                           className="relative pl-5"
                           style={{ borderLeft: '2px solid var(--accent-gold)' }}
                         >
-                          <p className="italic leading-relaxed" style={{ fontFamily: 'Newsreader, Georgia, serif', color: 'var(--text-secondary)' }}>
+                          <p className="italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                             &ldquo;{quote.text}&rdquo;
                           </p>
                           <div className="flex items-center gap-2 mt-2">
@@ -360,7 +359,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                   <div className="mt-8 pt-8" style={{ borderTop: '1px solid var(--border-light)' }}>
                     <h3
                       className="text-xl mb-4"
-                      style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+                      style={{ color: 'var(--text-primary)' }}
                     >
                       Key Themes
                     </h3>
@@ -383,7 +382,7 @@ export default function GuidePage({ params }: GuidePageProps) {
             <div className="rounded-xl p-8 sm:p-10 text-center" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
               <h2
                 className="text-2xl mb-3"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+                style={{ color: 'var(--text-primary)' }}
               >
                 Generate Reading Guide
               </h2>
@@ -434,7 +433,7 @@ export default function GuidePage({ params }: GuidePageProps) {
             >
               <span
                 className="text-xl flex items-center gap-3"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+                style={{ color: 'var(--text-primary)' }}
               >
                 Table of Contents
                 <span className="text-sm font-normal" style={{ color: 'var(--text-muted)' }}>
@@ -468,7 +467,7 @@ export default function GuidePage({ params }: GuidePageProps) {
             >
               <span
                 className="text-xl flex items-center gap-3"
-                style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}
+                style={{ color: 'var(--text-primary)' }}
               >
                 Illustrations
                 <span className="text-sm font-normal" style={{ color: 'var(--text-muted)' }}>

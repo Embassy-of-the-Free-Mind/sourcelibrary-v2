@@ -92,20 +92,18 @@ export default function SocietyLandingPage() {
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p
-              className="text-amber-700 text-sm tracking-widest uppercase mb-4"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="text-accent-rust text-sm tracking-widest uppercase mb-4 font-sans"
             >
               The Collection
             </p>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-6"
-              style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+              style={{ fontWeight: 400 }}
             >
               Rare texts, freshly translated
             </h2>
             <p
-              className="text-lg text-stone-600 max-w-2xl mx-auto"
-              style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+              className="text-lg text-stone-600 max-w-2xl mx-auto font-body"
             >
               From the Hermetic corpus to Renaissance alchemical manuscripts—works that
               shaped Western esotericism, now accessible in English.
@@ -130,11 +128,11 @@ export default function SocietyLandingPage() {
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3
                     className="text-white text-base mb-1"
-                    style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
+                    style={{ fontWeight: 500 }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-white/60 text-xs" style={{ fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-white/60 text-xs font-sans">
                     {item.book} ({item.year})
                   </p>
                 </div>
@@ -145,8 +143,7 @@ export default function SocietyLandingPage() {
           <div className="text-center">
             <Link
               href="/library"
-              className="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 font-medium"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="inline-flex items-center gap-2 text-accent-rust hover:text-accent-gold-dark font-medium font-sans"
             >
               Browse the full catalog
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,20 +159,18 @@ export default function SocietyLandingPage() {
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <p
-              className="text-amber-700 text-sm tracking-widest uppercase mb-4"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="text-accent-rust text-sm tracking-widest uppercase mb-4 font-sans"
             >
               Membership
             </p>
             <h2
               className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-6"
-              style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+              style={{ fontWeight: 400 }}
             >
               A path of deepening engagement
             </h2>
             <p
-              className="text-lg text-stone-600 max-w-2xl mx-auto"
-              style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+              className="text-lg text-stone-600 max-w-2xl mx-auto font-body"
             >
               Progress through contribution, not just payment. Each tier unlocks more access
               and more ways to shape the library&apos;s future.
@@ -189,15 +184,14 @@ export default function SocietyLandingPage() {
                 key={tier.name}
                 className={`relative rounded-2xl p-6 ${
                   tier.highlight
-                    ? 'bg-stone-900 text-white ring-2 ring-amber-500'
+                    ? 'bg-stone-900 text-white ring-2 ring-accent-gold'
                     : 'bg-stone-50 text-stone-900 border border-stone-200'
                 }`}
               >
                 {tier.highlight && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <span
-                      className="bg-amber-500 text-white text-xs px-3 py-1 rounded-full"
-                      style={{ fontFamily: 'Inter, sans-serif' }}
+                      className="bg-accent-gold/80 text-white text-xs px-3 py-1 rounded-full font-sans"
                     >
                       Most Popular
                     </span>
@@ -207,13 +201,12 @@ export default function SocietyLandingPage() {
                 <div className="mb-6">
                   <h3
                     className="text-2xl mb-1"
-                    style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
+                    style={{ fontWeight: 500 }}
                   >
                     {tier.name}
                   </h3>
                   <p
-                    className={`text-sm ${tier.highlight ? 'text-white/60' : 'text-stone-500'}`}
-                    style={{ fontFamily: 'Inter, sans-serif' }}
+                    className={`text-sm ${tier.highlight ? 'text-white/60' : 'text-stone-500'} font-sans`}
                   >
                     {tier.tagline}
                   </p>
@@ -221,16 +214,14 @@ export default function SocietyLandingPage() {
 
                 <div className="mb-6">
                   <span
-                    className={`text-3xl font-light ${tier.highlight ? 'text-amber-400' : 'text-amber-700'}`}
-                    style={{ fontFamily: 'Cormorant Garamond, serif' }}
+                    className={`text-3xl font-light ${tier.highlight ? 'text-accent-gold' : 'text-accent-rust'} font-serif`}
                   >
                     {tier.price}
                   </span>
                 </div>
 
                 <p
-                  className={`text-sm mb-6 ${tier.highlight ? 'text-white/70' : 'text-stone-600'}`}
-                  style={{ fontFamily: 'Newsreader, serif' }}
+                  className={`text-sm mb-6 ${tier.highlight ? 'text-white/70' : 'text-stone-600'} font-body`}
                 >
                   {tier.description}
                 </p>
@@ -241,12 +232,11 @@ export default function SocietyLandingPage() {
                       key={feature}
                       className={`flex items-start gap-2 text-sm ${
                         tier.highlight ? 'text-white/80' : 'text-stone-600'
-                      }`}
-                      style={{ fontFamily: 'Inter, sans-serif' }}
+                      } font-sans`}
                     >
                       <svg
                         className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
-                          tier.highlight ? 'text-amber-400' : 'text-amber-600'
+                          tier.highlight ? 'text-accent-gold' : 'text-accent-rust'
                         }`}
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -265,10 +255,9 @@ export default function SocietyLandingPage() {
                 <button
                   className={`w-full py-3 rounded-lg font-medium transition-colors ${
                     tier.highlight
-                      ? 'bg-amber-500 hover:bg-amber-400 text-stone-900'
+                      ? 'bg-accent-gold/80 hover:bg-accent-gold text-stone-900'
                       : 'bg-stone-900 hover:bg-stone-800 text-white'
-                  }`}
-                  style={{ fontFamily: 'Inter, sans-serif' }}
+                  } font-sans`}
                 >
                   {tier.cta}
                 </button>
@@ -282,20 +271,18 @@ export default function SocietyLandingPage() {
       <section className="py-20 md:py-28 bg-gradient-to-b from-stone-50 to-white">
         <div className="px-6 md:px-12 max-w-4xl mx-auto text-center">
           <p
-            className="text-amber-700 text-sm tracking-widest uppercase mb-4"
-            style={{ fontFamily: 'Inter, sans-serif' }}
+            className="text-accent-rust text-sm tracking-widest uppercase mb-4 font-sans"
           >
             The Pass
           </p>
           <h2
             className="text-3xl md:text-4xl text-stone-900 mb-6"
-            style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+            style={{ fontWeight: 400 }}
           >
             One hand reaches to another
           </h2>
           <p
-            className="text-lg text-stone-600 mb-12 max-w-2xl mx-auto"
-            style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+            className="text-lg text-stone-600 mb-12 max-w-2xl mx-auto font-body"
           >
             When you join as a Member, you receive a pass—a key to give to someone you
             believe should be here. Knowledge spreads through relationship, not broadcast.
@@ -304,44 +291,44 @@ export default function SocietyLandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl text-amber-700" style={{ fontFamily: 'Cormorant Garamond, serif' }}>1</span>
+              <div className="w-16 h-16 bg-accent-gold/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl text-accent-rust font-serif">1</span>
               </div>
               <h3
                 className="text-lg text-stone-900 mb-2"
-                style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
+                style={{ fontWeight: 500 }}
               >
                 You join
               </h3>
-              <p className="text-stone-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-stone-600 text-sm font-sans">
                 Become a Member and receive one pass
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl text-amber-700" style={{ fontFamily: 'Cormorant Garamond, serif' }}>2</span>
+              <div className="w-16 h-16 bg-accent-gold/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl text-accent-rust font-serif">2</span>
               </div>
               <h3
                 className="text-lg text-stone-900 mb-2"
-                style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
+                style={{ fontWeight: 500 }}
               >
                 You gift
               </h3>
-              <p className="text-stone-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-stone-600 text-sm font-sans">
                 Give your pass to someone who should be here
               </p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl text-amber-700" style={{ fontFamily: 'Cormorant Garamond, serif' }}>3</span>
+              <div className="w-16 h-16 bg-accent-gold/15 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl text-accent-rust font-serif">3</span>
               </div>
               <h3
                 className="text-lg text-stone-900 mb-2"
-                style={{ fontFamily: 'Cormorant Garamond, serif', fontWeight: 500 }}
+                style={{ fontWeight: 500 }}
               >
                 They continue
               </h3>
-              <p className="text-stone-600 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-stone-600 text-sm font-sans">
                 They receive their own pass to give forward
               </p>
             </div>
@@ -354,13 +341,12 @@ export default function SocietyLandingPage() {
         <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
           <h2
             className="text-3xl md:text-4xl text-white mb-6"
-            style={{ fontFamily: 'Cormorant Garamond, Playfair Display, Georgia, serif', fontWeight: 400 }}
+            style={{ fontWeight: 400 }}
           >
             Join the society translating the Western esoteric tradition
           </h2>
           <p
-            className="text-lg text-white/70 mb-10"
-            style={{ fontFamily: 'Newsreader, Georgia, serif' }}
+            className="text-lg text-white/70 mb-10 font-body"
           >
             Your membership funds the work. You decide what we translate next.
             And you get to read texts that have been locked in Latin for 500 years.
@@ -368,15 +354,13 @@ export default function SocietyLandingPage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/apply"
-              className="px-8 py-4 bg-amber-500 hover:bg-amber-400 text-stone-900 rounded-lg text-base font-medium transition-colors"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="px-8 py-4 bg-accent-gold/80 hover:bg-accent-gold text-stone-900 rounded-lg text-base font-medium transition-colors font-sans"
             >
               Apply for Membership
             </Link>
             <Link
               href="/auth/signin"
-              className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-lg text-base font-medium transition-colors border border-white/20"
-              style={{ fontFamily: 'Inter, sans-serif' }}
+              className="px-8 py-4 bg-white/10 hover:bg-white/20 text-white rounded-lg text-base font-medium transition-colors border border-white/20 font-sans"
             >
               Sign In
             </Link>
@@ -403,14 +387,14 @@ export default function SocietyLandingPage() {
 
           <div className="border-t border-white/10 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <p className="text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-sm font-sans">
                 &copy; {new Date().getFullYear()} The Ficino Society — A project of the Ancient Wisdom Trust
               </p>
-              <div className="flex gap-6 text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
+              <div className="flex gap-6 text-sm font-sans">
                 <Link href="/about" className="hover:text-white transition-colors">About</Link>
                 <Link href="/transparency" className="hover:text-white transition-colors">Transparency</Link>
                 <a href="https://sourcelibrary.org" className="hover:text-white transition-colors">Source Library</a>
-                <a href="mailto:derek@ancientwisdomtrust.org" className="text-amber-400 hover:text-amber-300 transition-colors">
+                <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-gold hover:text-accent-gold transition-colors">
                   Contact
                 </a>
               </div>

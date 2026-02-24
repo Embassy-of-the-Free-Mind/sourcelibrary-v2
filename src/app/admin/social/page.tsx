@@ -115,9 +115,9 @@ interface SocialTagItem {
 
 const STATUS_COLORS: Record<SocialPostStatus, string> = {
   draft: 'text-gray-400',
-  queued: 'text-amber-500',
-  posted: 'text-green-500',
-  failed: 'text-red-500',
+  queued: 'text-accent-gold',
+  posted: 'text-status-success',
+  failed: 'text-status-error',
 };
 
 const STATUS_ICONS: Record<SocialPostStatus, typeof Clock> = {
@@ -531,12 +531,12 @@ export default function SocialAdminPage() {
             {/* Status */}
             <div className="flex items-center gap-4 text-sm">
               {twitterConnected ? (
-                <span className="flex items-center gap-2 text-green-500">
+                <span className="flex items-center gap-2 text-status-success">
                   <CheckCircle className="w-4 h-4" />
                   @{twitterUsername}
                 </span>
               ) : (
-                <span className="flex items-center gap-2 text-amber-500">
+                <span className="flex items-center gap-2 text-accent-gold">
                   <AlertCircle className="w-4 h-4" />
                   Twitter not connected
                 </span>
@@ -700,7 +700,7 @@ export default function SocialAdminPage() {
                           <Heart className="w-4 h-4" />
                           Most Liked
                           {popularImages.length > 0 && (
-                            <span className="ml-1 px-1.5 py-0.5 bg-red-500/20 text-red-400 text-xs rounded">
+                            <span className="ml-1 px-1.5 py-0.5 bg-status-error/20 text-red-400 text-xs rounded">
                               {popularImages.length}
                             </span>
                           )}
@@ -785,7 +785,7 @@ export default function SocialAdminPage() {
                                   {image.description}
                                 </span>
                               </div>
-                              <div className="absolute top-2 right-2 bg-red-500/80 px-1.5 py-0.5 rounded text-xs flex items-center gap-1">
+                              <div className="absolute top-2 right-2 bg-status-error/80 px-1.5 py-0.5 rounded text-xs flex items-center gap-1">
                                 <Heart className="w-3 h-3" />
                                 {image.likeCount}
                               </div>
@@ -815,7 +815,7 @@ export default function SocialAdminPage() {
                             {selectedImage?.bookTitle || selectedPopularImage?.bookTitle}
                           </h3>
                           {selectedPopularImage && (
-                            <span className="flex items-center gap-1 text-xs text-red-400 bg-red-500/20 px-1.5 py-0.5 rounded flex-shrink-0">
+                            <span className="flex items-center gap-1 text-xs text-red-400 bg-status-error/20 px-1.5 py-0.5 rounded flex-shrink-0">
                               <Heart className="w-3 h-3" />
                               {selectedPopularImage.likeCount}
                             </span>
@@ -948,11 +948,11 @@ export default function SocialAdminPage() {
 
                         {/* Research Notes */}
                         {generatedTweet.research && (
-                          <div className="bg-amber-950/30 rounded-lg p-3 border border-amber-800/40">
-                            <p className="text-[10px] text-amber-500 uppercase tracking-wide mb-1.5 font-medium">
+                          <div className="bg-accent-gold-dark/30 rounded-lg p-3 border border-accent-gold-dark/40">
+                            <p className="text-[10px] text-accent-gold uppercase tracking-wide mb-1.5 font-medium">
                               Research Notes
                             </p>
-                            <p className="text-sm text-amber-100/80 leading-relaxed">
+                            <p className="text-sm text-accent-gold/80 leading-relaxed">
                               {generatedTweet.research}
                             </p>
                           </div>
@@ -1142,7 +1142,7 @@ export default function SocialAdminPage() {
             {/* Queued */}
             <div>
               <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-amber-500" />
+                <Clock className="w-5 h-5 text-accent-gold" />
                 Queued ({queuedPosts.length})
               </h2>
               {queuedPosts.length === 0 ? (
@@ -1173,7 +1173,7 @@ export default function SocialAdminPage() {
             <div>
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-medium flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <CheckCircle className="w-5 h-5 text-status-success" />
                   Posted ({postedPosts.length})
                 </h2>
                 {postedPosts.length > 0 && twitterConnected && (
@@ -1202,7 +1202,7 @@ export default function SocialAdminPage() {
             {failedPosts.length > 0 && (
               <div>
                 <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
-                  <XCircle className="w-5 h-5 text-red-500" />
+                  <XCircle className="w-5 h-5 text-status-error" />
                   Failed ({failedPosts.length})
                 </h2>
                 <div className="grid gap-3">
@@ -1296,7 +1296,7 @@ export default function SocialAdminPage() {
                         <span className="text-xs px-2 py-0.5 rounded bg-stone-800 text-stone-400 capitalize">
                           {tag.audience}
                         </span>
-                        <span className="text-xs px-2 py-0.5 rounded bg-amber-900/50 text-amber-400">
+                        <span className="text-xs px-2 py-0.5 rounded bg-accent-gold-dark/50 text-accent-gold">
                           P{tag.priority}
                         </span>
                       </div>
@@ -1315,7 +1315,7 @@ export default function SocialAdminPage() {
                       <button
                         onClick={() => toggleTagActive(tag.handle, tag.active)}
                         className={`px-3 py-1 rounded text-xs ${tag.active
-                          ? 'bg-green-600/20 text-green-400 hover:bg-green-600/30'
+                          ? 'bg-status-success/20 text-green-400 hover:bg-status-success/30'
                           : 'bg-stone-700 text-stone-400 hover:bg-stone-600'
                           }`}
                       >
@@ -1365,7 +1365,7 @@ export default function SocialAdminPage() {
                   }
                   disabled={savingSettings}
                   className={`px-4 py-2 rounded ${config.settings.auto_post_enabled
-                    ? 'bg-green-600 hover:bg-green-700'
+                    ? 'bg-status-success hover:bg-status-success/90'
                     : 'bg-stone-700 hover:bg-stone-600'
                     }`}
                 >
@@ -1468,13 +1468,13 @@ export default function SocialAdminPage() {
             <div className="bg-stone-900 rounded-lg p-4 border border-stone-800">
               <h2 className="text-lg font-medium mb-4">Twitter Connection</h2>
               {twitterConnected ? (
-                <div className="flex items-center gap-3 text-green-500">
+                <div className="flex items-center gap-3 text-status-success">
                   <CheckCircle className="w-5 h-5" />
                   <span>Connected as @{twitterUsername}</span>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-amber-500">
+                  <div className="flex items-center gap-3 text-accent-gold">
                     <AlertCircle className="w-5 h-5" />
                     <span>Not connected</span>
                   </div>
@@ -1575,7 +1575,7 @@ function PostCard({
                     placeholder="Tweet text..."
                   />
                   <div className={`absolute bottom-1 right-2 text-xs ${
-                    isOverLimit ? 'text-red-400' : charCount > 260 ? 'text-amber-400' : 'text-stone-500'
+                    isOverLimit ? 'text-red-400' : charCount > 260 ? 'text-accent-gold' : 'text-stone-500'
                   }`}>
                     {charCount}/280
                   </div>
@@ -1591,7 +1591,7 @@ function PostCard({
                   <button
                     onClick={handleSave}
                     disabled={saving || isOverLimit}
-                    className="text-xs px-2 py-1 bg-green-600 hover:bg-green-700 disabled:opacity-50 rounded"
+                    className="text-xs px-2 py-1 bg-status-success hover:bg-status-success/90 disabled:opacity-50 rounded"
                   >
                     {saving ? 'Saving...' : 'Save'}
                   </button>
@@ -1674,10 +1674,10 @@ function PostCard({
 
         {!isEditing && post.generated_by?.research_notes && (
           <details className="mt-2 group">
-            <summary className="text-[10px] text-amber-500/70 uppercase tracking-wide cursor-pointer hover:text-amber-400 select-none">
+            <summary className="text-[10px] text-accent-gold/70 uppercase tracking-wide cursor-pointer hover:text-accent-gold select-none">
               Research Notes
             </summary>
-            <p className="text-xs text-amber-100/60 mt-1 leading-relaxed">
+            <p className="text-xs text-accent-gold/60 mt-1 leading-relaxed">
               {post.generated_by.research_notes}
             </p>
           </details>
@@ -1749,7 +1749,7 @@ function PostCard({
             {onQueue && post.status === 'draft' && (
               <button
                 onClick={onQueue}
-                className="text-xs px-3 py-1 bg-amber-600 hover:bg-amber-700 rounded"
+                className="text-xs px-3 py-1 bg-accent-rust hover:bg-accent-rust/90 rounded"
               >
                 Add to Queue
               </button>

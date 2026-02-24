@@ -253,7 +253,7 @@ export default function DetectionReviewPage() {
               onClick={() => { setStatusFilter('pending'); setPage(0); }}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 statusFilter === 'pending'
-                  ? 'bg-amber-600 text-white'
+                  ? 'bg-accent-rust text-white'
                   : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
               }`}
             >
@@ -264,7 +264,7 @@ export default function DetectionReviewPage() {
               onClick={() => { setStatusFilter('approved'); setPage(0); }}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 statusFilter === 'approved'
-                  ? 'bg-green-600 text-white'
+                  ? 'bg-status-success text-white'
                   : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
               }`}
             >
@@ -275,7 +275,7 @@ export default function DetectionReviewPage() {
               onClick={() => { setStatusFilter('rejected'); setPage(0); }}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 statusFilter === 'rejected'
-                  ? 'bg-red-600 text-white'
+                  ? 'bg-status-error text-white'
                   : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
               }`}
             >
@@ -301,7 +301,7 @@ export default function DetectionReviewPage() {
                 onClick={() => { setSelectedBook(''); setPage(0); }}
                 className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
                   !selectedBook
-                    ? 'bg-amber-600 text-white'
+                    ? 'bg-accent-rust text-white'
                     : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
                 }`}
               >
@@ -313,7 +313,7 @@ export default function DetectionReviewPage() {
                   onClick={() => { setSelectedBook(book.id); setPage(0); }}
                   className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
                     selectedBook === book.id
-                      ? 'bg-amber-600 text-white'
+                      ? 'bg-accent-rust text-white'
                       : 'bg-stone-200 text-stone-700 hover:bg-stone-300'
                   }`}
                 >
@@ -470,7 +470,7 @@ function PageReviewCard({
         <div className="flex items-center justify-between text-xs">
           <Link
             href={`/book/${page.bookId}/guide?page=${page.pageNumber}`}
-            className="font-medium text-stone-700 hover:text-amber-700 truncate max-w-[70%]"
+            className="font-medium text-stone-700 hover:text-accent-rust truncate max-w-[70%]"
             title={page.bookTitle}
           >
             {page.bookTitle}
@@ -518,9 +518,9 @@ function PageReviewCard({
             <div
               key={`auto-${idx}`}
               className={`absolute border-2 border-dashed pointer-events-none ${
-                status === 'approved' ? 'border-green-500 bg-green-500/10' :
-                status === 'rejected' ? 'border-red-500 bg-red-500/10' :
-                'border-amber-500 bg-amber-500/10'
+                status === 'approved' ? 'border-green-500 bg-status-success/10' :
+                status === 'rejected' ? 'border-red-500 bg-status-error/10' :
+                'border-accent-gold bg-accent-gold/8'
               }`}
               style={{
                 left: `${bbox.x * 100}%`,
@@ -529,7 +529,7 @@ function PageReviewCard({
                 height: `${bbox.height * 100}%`
               }}
             >
-              <span className="absolute -top-5 left-0 px-1 bg-amber-500 text-white text-xs rounded">
+              <span className="absolute -top-5 left-0 px-1 bg-accent-gold/80 text-white text-xs rounded">
                 {det.type}
               </span>
             </div>
@@ -544,7 +544,7 @@ function PageReviewCard({
           return (
             <div
               key={`manual-${idx}`}
-              className="absolute border-2 border-green-500 bg-green-500/20"
+              className="absolute border-2 border-green-500 bg-status-success/20"
               style={{
                 left: `${det.bbox.x * 100}%`,
                 top: `${det.bbox.y * 100}%`,
@@ -552,12 +552,12 @@ function PageReviewCard({
                 height: `${det.bbox.height * 100}%`
               }}
             >
-              <span className="absolute -top-5 left-0 px-1 bg-green-600 text-white text-xs rounded">
+              <span className="absolute -top-5 left-0 px-1 bg-status-success text-white text-xs rounded">
                 {det.description}
               </span>
               <button
                 onClick={(e) => { e.stopPropagation(); onDeleteDetection(page.pageId, actualIdx); }}
-                className="absolute -top-5 right-0 p-0.5 bg-red-600 text-white rounded hover:bg-red-700"
+                className="absolute -top-5 right-0 p-0.5 bg-status-error text-white rounded hover:bg-status-error/90"
               >
                 <Trash2 className="w-3 h-3" />
               </button>
@@ -582,7 +582,7 @@ function PageReviewCard({
             </span>
             <button
               onClick={(e) => { e.stopPropagation(); removeDrawnBox(idx); }}
-              className="absolute -top-5 right-0 p-0.5 bg-red-600 text-white rounded hover:bg-red-700"
+              className="absolute -top-5 right-0 p-0.5 bg-status-error text-white rounded hover:bg-status-error/90"
             >
               <Trash2 className="w-3 h-3" />
             </button>
@@ -620,7 +620,7 @@ function PageReviewCard({
         <button
           onClick={handleApprove}
           disabled={reviewSaving}
-          className="flex items-center gap-1 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition-colors text-sm"
+          className="flex items-center gap-1 px-3 py-2 bg-status-success text-white rounded-lg hover:bg-status-success/90 disabled:opacity-50 transition-colors text-sm"
         >
           {reviewSaving ? (
             <Loader2 className="w-4 h-4 animate-spin" />

@@ -217,10 +217,10 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
         </div>
 
         {/* AI Identify + Catalog Search */}
-        <div className="p-4 bg-amber-50 border-b border-amber-100">
+        <div className="p-4 bg-accent-gold/8 border-b border-accent-gold/15">
           {/* AI Identify Button */}
           <div className="flex items-center justify-between mb-3">
-            <label className="block text-sm font-medium text-amber-900">
+            <label className="block text-sm font-medium text-accent-gold-dark">
               Find in Catalogs
             </label>
             <button
@@ -257,12 +257,12 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && searchCatalog()}
               placeholder="Search by title, author, or USTC ID..."
-              className="flex-1 px-3 py-2 border border-amber-200 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="flex-1 px-3 py-2 border border-accent-gold/20 rounded-lg text-sm text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
             />
             <button
               onClick={searchCatalog}
               disabled={searching}
-              className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 flex items-center gap-2"
+              className="px-4 py-2 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 disabled:opacity-50 flex items-center gap-2"
             >
               {searching ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
               Search
@@ -287,7 +287,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                     <button
                       key={`${result.id}-${idx}`}
                       onClick={() => applySearchResult(result)}
-                      className="w-full text-left p-3 bg-white rounded-lg border border-amber-200 hover:border-amber-400 transition-colors"
+                      className="w-full text-left p-3 bg-white rounded-lg border border-accent-gold/20 hover:border-accent-gold/30 transition-colors"
                     >
                       <div className="font-medium text-stone-900 text-sm">{result.title}</div>
                       {isUstcResult && result.englishTitle && (
@@ -303,7 +303,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                           <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
                             result.source === 'EFM' ? 'bg-purple-100 text-purple-700' :
                             result.source === 'IA' ? 'bg-blue-100 text-blue-700' :
-                            'bg-amber-100 text-amber-700'
+                            'bg-accent-gold/15 text-accent-gold-dark'
                           }`}>
                             {result.source}
                           </span>
@@ -312,7 +312,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                       {isUstcResult && result.subjectTags && result.subjectTags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-1.5">
                           {result.subjectTags.slice(0, 4).map((tag: string, i: number) => (
-                            <span key={i} className="text-xs bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">{tag}</span>
+                            <span key={i} className="text-xs bg-accent-gold/15 text-accent-gold-dark px-1.5 py-0.5 rounded">{tag}</span>
                           ))}
                         </div>
                       )}
@@ -333,7 +333,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               />
             </div>
 
@@ -347,7 +347,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                   value={displayTitle}
                   onChange={(e) => setDisplayTitle(e.target.value)}
                   placeholder={title}
-                  className="flex-1 px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="flex-1 px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                 />
                 <button
                   type="button"
@@ -368,7 +368,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 type="text"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               />
             </div>
 
@@ -379,7 +379,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
                 placeholder="e.g., Latin, German, English"
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               />
             </div>
 
@@ -390,7 +390,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 value={published}
                 onChange={(e) => setPublished(e.target.value)}
                 placeholder="e.g., 1548"
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               />
             </div>
 
@@ -401,7 +401,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 value={placePublished}
                 onChange={(e) => setPlacePublished(e.target.value)}
                 placeholder="e.g., Venice"
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               />
             </div>
 
@@ -411,7 +411,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 type="text"
                 value={publisher}
                 onChange={(e) => setPublisher(e.target.value)}
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               />
             </div>
 
@@ -423,7 +423,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                     href={`https://www.ustc.ac.uk/editions/${ustcId}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="ml-2 text-amber-600 hover:text-amber-700"
+                    className="ml-2 text-accent-rust hover:text-accent-rust"
                   >
                     <ExternalLink className="w-3 h-3 inline" />
                   </a>
@@ -434,7 +434,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
                 value={ustcId}
                 onChange={(e) => setUstcId(e.target.value)}
                 placeholder="e.g., 2029384"
-                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg text-stone-900 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               />
             </div>
           </div>
@@ -457,7 +457,7 @@ export default function BookEditModal({ book, onClose, onSave }: BookEditModalPr
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 disabled:opacity-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 disabled:opacity-50 transition-colors"
           >
             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             Save Changes

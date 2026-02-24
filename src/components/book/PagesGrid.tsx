@@ -71,7 +71,7 @@ export default function PagesGrid({
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>Pages</h2>
+        <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Pages</h2>
         <span className="text-sm text-stone-500">
           Showing {Math.min(visibleCount, pages.length)} of {pages.length}
         </span>
@@ -82,7 +82,7 @@ export default function PagesGrid({
           <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'var(--bg-warm)' }}>
             <FileText className="w-8 h-8" style={{ color: 'var(--text-faint)' }} />
           </div>
-          <h3 className="text-lg font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-secondary)' }}>No pages yet</h3>
+          <h3 className="text-lg font-medium" style={{ color: 'var(--text-secondary)' }}>No pages yet</h3>
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Upload pages to start processing</p>
         </div>
       ) : (
@@ -122,7 +122,7 @@ export default function PagesGrid({
                     </div>
                     <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
                       {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
-                      {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
+                      {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-status-success" />}
                       {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
                     </div>
                   </div>
@@ -138,7 +138,7 @@ export default function PagesGrid({
                   onClick={(e) => onPageToggle(page.id, index, e)}
                   className="group relative text-left"
                 >
-                  <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 relative ${isSelected ? 'border-amber-500 shadow-md' : 'border-stone-200 hover:border-stone-300'
+                  <div className={`aspect-[3/4] bg-white rounded-lg overflow-hidden transition-all border-2 relative ${isSelected ? 'border-accent-gold shadow-md' : 'border-stone-200 hover:border-stone-300'
                     }`} style={brightnessStyle}>
                     {imageUrl ? (
                       <PageImage src={imageUrl} alt={`Page ${page.page_number}`} />
@@ -146,13 +146,13 @@ export default function PagesGrid({
                       <div className="absolute inset-0 bg-gradient-to-r from-stone-200 via-stone-100 to-stone-200 bg-[length:200%_100%] animate-shimmer" />
                     )}
                     {isSelected && (
-                      <div className="absolute inset-0 bg-amber-500/20 flex items-center justify-center">
-                        <CheckCircle2 className="w-6 h-6 text-amber-600 drop-shadow" />
+                      <div className="absolute inset-0 bg-accent-gold/15 flex items-center justify-center">
+                        <CheckCircle2 className="w-6 h-6 text-accent-rust drop-shadow" />
                       </div>
                     )}
                     <div className="absolute bottom-0.5 right-0.5 flex gap-0.5">
                       {hasOcr && <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />}
-                      {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-green-500" />}
+                      {hasTranslation && <div className="w-1.5 h-1.5 rounded-full bg-status-success" />}
                       {hasSummary && <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
                     </div>
                   </div>

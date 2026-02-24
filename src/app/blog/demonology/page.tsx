@@ -73,7 +73,7 @@ export default function DemonologyPage() {
           </Link>
           <figcaption className="text-center text-sm text-muted mt-3 italic">
             A jinn from the <em>Kitab al-Bulhan</em> (Book of Wonders), 14th century. Bodleian Library, Oxford.{' '}
-            <Link href="/gallery/image/6953b56577f38f6761bd97db-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+            <Link href="/gallery/image/6953b56577f38f6761bd97db-0" className="text-accent-rust hover:text-accent-rust not-italic">View in gallery &rarr;</Link>
           </figcaption>
         </figure>
 
@@ -158,7 +158,7 @@ export default function DemonologyPage() {
             <p className="text-sm text-muted">
               <Link
                 href="/book/6952062aab34727b1f0432aa"
-                className="text-amber-700 hover:underline"
+                className="text-accent-rust hover:underline"
               >
                 Pimander (Corpus Hermeticum), 1493
               </Link>{' '}
@@ -183,7 +183,7 @@ export default function DemonologyPage() {
             <p className="text-sm text-muted">
               <Link
                 href="/book/6953a93977f38f6761bd58f4"
-                className="text-amber-700 hover:underline"
+                className="text-accent-rust hover:underline"
               >
                 Hermetica (Scott translation), Vol. I
               </Link>{' '}
@@ -242,7 +242,7 @@ export default function DemonologyPage() {
             <p className="text-sm text-muted">
               <Link
                 href="/book/6953b56577f38f6761bd979d"
-                className="text-amber-700 hover:underline"
+                className="text-accent-rust hover:underline"
               >
                 Kitab al-Bulhan
               </Link>{' '}
@@ -261,7 +261,7 @@ export default function DemonologyPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               A three-headed jinn from the <em>Kitab al-Bulhan</em>, Bodleian Library, Oxford.{' '}
-              <Link href="/gallery/image/6953b56577f38f6761bd97de-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+              <Link href="/gallery/image/6953b56577f38f6761bd97de-0" className="text-accent-rust hover:text-accent-rust not-italic">View in gallery &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -324,7 +324,7 @@ export default function DemonologyPage() {
             <p className="text-sm text-muted">
               <Link
                 href="/book/69523495ab34727b1f044a45"
-                className="text-amber-700 hover:underline"
+                className="text-accent-rust hover:underline"
               >
                 Malleus Maleficarum
               </Link>
@@ -359,7 +359,7 @@ export default function DemonologyPage() {
             <p className="text-sm text-muted">
               <Link
                 href="/book/694fe5f9f844de8615417df6"
-                className="text-amber-700 hover:underline"
+                className="text-accent-rust hover:underline"
               >
                 Daemonologie
               </Link>
@@ -428,7 +428,7 @@ export default function DemonologyPage() {
             <p className="text-sm text-muted">
               <Link
                 href="/book/695285d5ab34727b1f04c36f"
-                className="text-amber-700 hover:underline"
+                className="text-accent-rust hover:underline"
               >
                 The Lesser Key of Solomon (Goetia)
               </Link>{' '}
@@ -447,7 +447,7 @@ export default function DemonologyPage() {
             </Link>
             <figcaption className="text-center text-sm text-muted mt-3 italic">
               Seals of the 72 demons from the <em>Goetia</em> (Lesser Key of Solomon).{' '}
-              <Link href="/gallery/image/695285d5ab34727b1f04c378-0" className="text-amber-700 hover:text-amber-600 not-italic">View in gallery &rarr;</Link>
+              <Link href="/gallery/image/695285d5ab34727b1f04c378-0" className="text-accent-rust hover:text-accent-rust not-italic">View in gallery &rarr;</Link>
             </figcaption>
           </figure>
 
@@ -470,7 +470,7 @@ export default function DemonologyPage() {
             <p className="text-sm text-muted">
               <Link
                 href="/book/694fe602f844de8615417e27"
-                className="text-amber-700 hover:underline"
+                className="text-accent-rust hover:underline"
               >
                 Fourth Book of Occult Philosophy
               </Link>
@@ -570,7 +570,7 @@ export default function DemonologyPage() {
               <Link
                 key={source.href}
                 href={source.href}
-                className="flex items-start gap-3 p-4 rounded-lg bg-warm border border-border-light hover:border-amber-200 hover:shadow-sm transition-all group"
+                className="flex items-start gap-3 p-4 rounded-lg bg-warm border border-border-light hover:border-accent-gold/20 hover:shadow-sm transition-all group"
               >
                 <svg
                   className="w-4 h-4 text-muted mt-0.5 shrink-0"
@@ -586,7 +586,7 @@ export default function DemonologyPage() {
                   />
                 </svg>
                 <div>
-                  <p className="text-sm font-medium text-primary group-hover:text-amber-800 transition-colors">
+                  <p className="text-sm font-medium text-primary group-hover:text-accent-gold-dark transition-colors">
                     {source.title}
                   </p>
                   <p className="text-xs text-muted mt-0.5">{source.detail}</p>

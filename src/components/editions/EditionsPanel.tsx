@@ -119,7 +119,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
         className="w-full px-6 py-4 flex items-center justify-between hover:bg-stone-50 transition-colors"
       >
         <div className="flex items-center gap-3">
-          <BookMarked className="w-5 h-5 text-amber-600" />
+          <BookMarked className="w-5 h-5 text-accent-rust" />
           <div className="text-left">
             <h3 className="font-semibold text-stone-900">Published Editions</h3>
             <p className="text-sm text-stone-500">
@@ -148,7 +148,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
           {currentEdition && (
             <div className="space-y-4">
               <h4 className="font-medium text-stone-900 flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-green-500" />
+                <div className="w-2 h-2 rounded-full bg-status-success" />
                 Current Edition
               </h4>
 
@@ -173,7 +173,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
                         href={currentEdition.doi_url || `https://doi.org/${currentEdition.doi}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-sm hover:bg-amber-200 transition-colors"
+                        className="flex items-center gap-1 px-3 py-1 bg-accent-gold/15 text-accent-gold-dark rounded-full text-sm hover:bg-accent-gold/25 transition-colors"
                       >
                         DOI: {currentEdition.doi}
                         <ExternalLink className="w-3 h-3" />
@@ -196,12 +196,12 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
                         value={doiInput}
                         onChange={(e) => setDoiInput(e.target.value)}
                         placeholder="10.5281/zenodo.12345"
-                        className="px-3 py-1 text-sm border border-stone-300 rounded-lg w-48 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        className="px-3 py-1 text-sm border border-stone-300 rounded-lg w-48 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                       />
                       <button
                         onClick={() => handleSaveDoi(currentEdition.id)}
                         disabled={isSavingDoi}
-                        className="px-3 py-1 bg-amber-500 text-white rounded-lg text-sm hover:bg-amber-600 disabled:opacity-50"
+                        className="px-3 py-1 bg-accent-gold/80 text-white rounded-lg text-sm hover:bg-accent-rust disabled:opacity-50"
                       >
                         {isSavingDoi ? '...' : 'Save'}
                       </button>
@@ -216,7 +216,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
                     <div className="flex items-center gap-2">
                       <Link
                         href={`/book/${bookId}/edition/${currentEdition.id}/review`}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all shadow-sm"
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-accent-gold to-accent-rust/80 text-white rounded-lg text-sm font-medium hover:from-accent-rust hover:to-accent-rust/90 transition-all shadow-sm"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         Review & Publish
@@ -291,14 +291,14 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
                       onClick={() => copyToClipboard(generateCitation(currentEdition), 'citation')}
                       className="flex items-center gap-1 px-3 py-1 text-xs text-stone-600 hover:bg-stone-100 rounded transition-colors"
                     >
-                      {copiedId === 'citation' ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+                      {copiedId === 'citation' ? <Check className="w-3 h-3 text-status-success" /> : <Copy className="w-3 h-3" />}
                       Copy Citation
                     </button>
                     <button
                       onClick={() => copyToClipboard(generateBibtex(currentEdition), 'bibtex')}
                       className="flex items-center gap-1 px-3 py-1 text-xs text-stone-600 hover:bg-stone-100 rounded transition-colors"
                     >
-                      {copiedId === 'bibtex' ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
+                      {copiedId === 'bibtex' ? <Check className="w-3 h-3 text-status-success" /> : <Copy className="w-3 h-3" />}
                       Copy BibTeX
                     </button>
                   </div>
@@ -337,7 +337,7 @@ export default function EditionsPanel({ bookId, editions: initialEditions, onDoi
                         href={edition.doi_url || `https://doi.org/${edition.doi}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-amber-600 hover:text-amber-700 flex items-center gap-1"
+                        className="text-accent-rust hover:text-accent-rust flex items-center gap-1"
                       >
                         {edition.doi}
                         <ExternalLink className="w-3 h-3" />

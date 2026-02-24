@@ -312,7 +312,7 @@ export default function ImageDetailPage({
       <div className="min-h-screen bg-stone-900 flex items-center justify-center">
         <div className="text-center text-white">
           <p className="text-xl mb-4">{error || 'Image not found'}</p>
-          <Link href="/gallery" className="text-amber-500 hover:text-amber-400">
+          <Link href="/gallery" className="text-accent-gold hover:text-accent-gold">
             Back to Gallery
           </Link>
         </div>
@@ -350,7 +350,7 @@ export default function ImageDetailPage({
               title="Copy link"
             >
               {copied ? (
-                <Check className="w-5 h-5 text-green-500" />
+                <Check className="w-5 h-5 text-status-success" />
               ) : (
                 <Copy className="w-5 h-5" />
               )}
@@ -395,7 +395,7 @@ export default function ImageDetailPage({
 
             {/* Type badge */}
             {data.type && (
-              <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm bg-amber-600/90 text-white capitalize z-10">
+              <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-sm bg-accent-rust/90 text-white capitalize z-10">
                 {data.type}
               </span>
             )}
@@ -428,7 +428,7 @@ export default function ImageDetailPage({
                       max="200"
                       value={brightness}
                       onChange={(e) => setBrightness(parseInt(e.target.value))}
-                      className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-amber-500"
+                      className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-accent-gold"
                     />
                   </div>
                   <div>
@@ -442,7 +442,7 @@ export default function ImageDetailPage({
                       max="200"
                       value={contrast}
                       onChange={(e) => setContrast(parseInt(e.target.value))}
-                      className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-amber-500"
+                      className="w-full h-1.5 bg-stone-700 rounded appearance-none cursor-pointer accent-accent-gold"
                     />
                   </div>
                 </div>
@@ -465,7 +465,7 @@ export default function ImageDetailPage({
                     <textarea
                       value={titleValue}
                       onChange={(e) => setTitleValue(e.target.value)}
-                      className="w-full p-3 bg-stone-800 text-stone-100 text-2xl font-serif rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-amber-500 leading-relaxed"
+                      className="w-full p-3 bg-stone-800 text-stone-100 text-2xl font-serif rounded-lg resize-none focus:outline-none focus:ring-2 focus-visible:ring-accent-rust leading-relaxed"
                       rows={3}
                       autoFocus
                     />
@@ -473,7 +473,7 @@ export default function ImageDetailPage({
                       <button
                         onClick={saveTitle}
                         disabled={saving}
-                        className="px-4 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50"
+                        className="px-4 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50"
                       >
                         {saving ? 'Saving...' : 'Save'}
                       </button>
@@ -495,7 +495,7 @@ export default function ImageDetailPage({
                     </h1>
                     <button
                       onClick={() => setEditingTitle(true)}
-                      className="absolute top-0 right-0 text-xs text-amber-500 hover:text-amber-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute top-0 right-0 text-xs text-accent-gold hover:text-accent-gold opacity-0 group-hover:opacity-100 transition-opacity"
                     >
                       Edit
                     </button>
@@ -528,9 +528,9 @@ export default function ImageDetailPage({
                         step="0.05"
                         value={qualityValue}
                         onChange={(e) => setQualityValue(parseFloat(e.target.value))}
-                        className="flex-1 h-2 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                        className="flex-1 h-2 bg-stone-700 rounded-lg appearance-none cursor-pointer accent-accent-gold"
                       />
-                      <span className="text-lg font-mono text-amber-500 w-12 text-right">
+                      <span className="text-lg font-mono text-accent-gold w-12 text-right">
                         {qualityValue.toFixed(2)}
                       </span>
                     </div>
@@ -538,7 +538,7 @@ export default function ImageDetailPage({
                       <button
                         onClick={() => saveQuality(qualityValue)}
                         disabled={saving}
-                        className="flex-1 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50"
+                        className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50"
                       >
                         {saving ? 'Saving...' : 'Save'}
                       </button>
@@ -559,22 +559,22 @@ export default function ImageDetailPage({
                       <div className="w-32 h-2 bg-stone-700 rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all ${
-                            (data.galleryQuality ?? 0) >= 0.75 ? 'bg-green-500' :
-                            (data.galleryQuality ?? 0) >= 0.5 ? 'bg-amber-500' : 'bg-red-500'
+                            (data.galleryQuality ?? 0) >= 0.75 ? 'bg-status-success' :
+                            (data.galleryQuality ?? 0) >= 0.5 ? 'bg-accent-gold/80' : 'bg-status-error'
                           }`}
                           style={{ width: `${(data.galleryQuality ?? 0) * 100}%` }}
                         />
                       </div>
                       <span className={`text-lg font-mono ${
-                        (data.galleryQuality ?? 0) >= 0.75 ? 'text-green-500' :
-                        (data.galleryQuality ?? 0) >= 0.5 ? 'text-amber-500' : 'text-red-500'
+                        (data.galleryQuality ?? 0) >= 0.75 ? 'text-status-success' :
+                        (data.galleryQuality ?? 0) >= 0.5 ? 'text-accent-gold' : 'text-status-error'
                       }`}>
                         {data.galleryQuality != null ? data.galleryQuality.toFixed(2) : 'N/A'}
                       </span>
                     </div>
                     <button
                       onClick={() => setEditingQuality(true)}
-                      className="text-xs text-amber-500 hover:text-amber-400"
+                      className="text-xs text-accent-gold hover:text-accent-gold"
                     >
                       Adjust
                     </button>
@@ -595,7 +595,7 @@ export default function ImageDetailPage({
                   {!editingDescription && (
                     <button
                       onClick={() => setEditingDescription(true)}
-                      className="text-xs text-amber-500 hover:text-amber-400"
+                      className="text-xs text-accent-gold hover:text-accent-gold"
                     >
                       Edit
                     </button>
@@ -607,14 +607,14 @@ export default function ImageDetailPage({
                     <textarea
                       value={museumDescValue}
                       onChange={(e) => setMuseumDescValue(e.target.value)}
-                      className="w-full h-24 p-2 bg-stone-700 text-stone-200 rounded text-sm resize-none focus:outline-none focus:ring-1 focus:ring-amber-500"
+                      className="w-full h-24 p-2 bg-stone-700 text-stone-200 rounded text-sm resize-none focus:outline-none focus:ring-1 focus-visible:ring-accent-rust"
                       placeholder="Write a 2-3 sentence museum-style description..."
                     />
                     <div className="flex gap-2">
                       <button
                         onClick={saveMuseumDescription}
                         disabled={saving}
-                        className="flex-1 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50"
+                        className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50"
                       >
                         {saving ? 'Saving...' : 'Save'}
                       </button>
@@ -643,7 +643,7 @@ export default function ImageDetailPage({
                   {!editingMetadata && (
                     <button
                       onClick={() => setEditingMetadata(true)}
-                      className="text-xs text-amber-500 hover:text-amber-400"
+                      className="text-xs text-accent-gold hover:text-accent-gold"
                     >
                       Edit
                     </button>
@@ -661,7 +661,7 @@ export default function ImageDetailPage({
                           ...prev,
                           subjects: e.target.value.split(',').map(s => s.trim()).filter(Boolean)
                         }))}
-                        className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-amber-500"
+                        className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust"
                         placeholder="alchemy, transformation, mythology"
                       />
                     </div>
@@ -674,7 +674,7 @@ export default function ImageDetailPage({
                           ...prev,
                           figures: e.target.value.split(',').map(s => s.trim()).filter(Boolean)
                         }))}
-                        className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-amber-500"
+                        className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust"
                         placeholder="Mercury, old man, serpent"
                       />
                     </div>
@@ -687,7 +687,7 @@ export default function ImageDetailPage({
                           ...prev,
                           symbols: e.target.value.split(',').map(s => s.trim()).filter(Boolean)
                         }))}
-                        className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-amber-500"
+                        className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust"
                         placeholder="ouroboros, athanor, philosophical egg"
                       />
                     </div>
@@ -701,7 +701,7 @@ export default function ImageDetailPage({
                             ...prev,
                             style: e.target.value
                           }))}
-                          className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-amber-500"
+                          className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust"
                           placeholder="Northern European Renaissance"
                         />
                       </div>
@@ -714,7 +714,7 @@ export default function ImageDetailPage({
                             ...prev,
                             technique: e.target.value
                           }))}
-                          className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus:ring-amber-500"
+                          className="w-full p-2 bg-stone-700 text-stone-200 rounded text-sm focus:outline-none focus:ring-1 focus-visible:ring-accent-rust"
                           placeholder="woodcut, engraving"
                         />
                       </div>
@@ -723,7 +723,7 @@ export default function ImageDetailPage({
                       <button
                         onClick={saveMetadata}
                         disabled={saving}
-                        className="flex-1 py-1.5 bg-amber-600 hover:bg-amber-500 rounded text-sm transition-colors disabled:opacity-50"
+                        className="flex-1 py-1.5 bg-accent-rust hover:bg-accent-gold/80 rounded text-sm transition-colors disabled:opacity-50"
                       >
                         {saving ? 'Saving...' : 'Save'}
                       </button>
@@ -790,7 +790,7 @@ export default function ImageDetailPage({
                       <div className="flex gap-2">
                         <button
                           onClick={() => setEditingBbox(true)}
-                          className="text-xs text-amber-500 hover:text-amber-400"
+                          className="text-xs text-accent-gold hover:text-accent-gold"
                         >
                           Edit Crop
                         </button>
@@ -809,7 +809,7 @@ export default function ImageDetailPage({
                         <button
                           onClick={saveBbox}
                           disabled={saving}
-                          className="flex items-center gap-1 px-2 py-1 bg-amber-600 hover:bg-amber-500 rounded text-xs transition-colors disabled:opacity-50"
+                          className="flex items-center gap-1 px-2 py-1 bg-accent-rust hover:bg-accent-gold/80 rounded text-xs transition-colors disabled:opacity-50"
                         >
                           <Save className="w-3 h-3" />
                           {saving ? 'Saving...' : 'Save'}
@@ -888,7 +888,7 @@ export default function ImageDetailPage({
                         />
                         {/* Draggable bbox */}
                         <div
-                          className="absolute border-2 border-amber-500 cursor-move"
+                          className="absolute border-2 border-accent-gold cursor-move"
                           style={{
                             left: `${bboxValues.x * 100}%`,
                             top: `${bboxValues.y * 100}%`,
@@ -899,11 +899,11 @@ export default function ImageDetailPage({
                         >
                           {/* Move handle in center */}
                           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <Move className="w-6 h-6 text-amber-500 opacity-50" />
+                            <Move className="w-6 h-6 text-accent-gold opacity-50" />
                           </div>
                           {/* Resize handle at bottom-right */}
                           <div
-                            className="absolute -bottom-1 -right-1 w-4 h-4 bg-amber-500 rounded-sm cursor-se-resize"
+                            className="absolute -bottom-1 -right-1 w-4 h-4 bg-accent-gold/80 rounded-sm cursor-se-resize"
                             onMouseDown={(e) => {
                               e.stopPropagation();
                               handleBboxMouseDown(e, 'resize');
@@ -937,7 +937,7 @@ export default function ImageDetailPage({
                     <RotateCw className="w-4 h-4" />
                     Rotation
                   </p>
-                  {savingRotation && <span className="text-xs text-amber-500">Saving...</span>}
+                  {savingRotation && <span className="text-xs text-accent-gold">Saving...</span>}
                 </div>
                 <div className="flex gap-2">
                   {([0, 90, 180, 270] as const).map((deg) => (
@@ -947,7 +947,7 @@ export default function ImageDetailPage({
                       disabled={savingRotation}
                       className={`flex-1 py-1.5 rounded text-sm transition-colors ${
                         rotation === deg
-                          ? 'bg-amber-600 text-white'
+                          ? 'bg-accent-rust text-white'
                           : 'bg-stone-700 text-stone-300 hover:bg-stone-600'
                       } disabled:opacity-50`}
                     >
@@ -963,7 +963,7 @@ export default function ImageDetailPage({
                 <p className="text-stone-300 text-sm font-mono">{data.citation}</p>
                 <button
                   onClick={copyCitation}
-                  className="mt-3 text-xs text-amber-500 hover:text-amber-400 flex items-center gap-1"
+                  className="mt-3 text-xs text-accent-gold hover:text-accent-gold flex items-center gap-1"
                 >
                   <Copy className="w-3 h-3" />
                   Copy citation
@@ -980,7 +980,7 @@ export default function ImageDetailPage({
                   href={`/book/${data.book.id}`}
                   className="block group"
                 >
-                  <p className="text-amber-500 group-hover:text-amber-400 font-medium">
+                  <p className="text-accent-gold group-hover:text-accent-gold font-medium">
                     {data.book.title}
                   </p>
                   {data.book.author && (
@@ -1013,7 +1013,7 @@ export default function ImageDetailPage({
                 </Link>
                 <Link
                   href="/gallery"
-                  className="flex items-center justify-center gap-2 py-2 px-4 bg-amber-900/30 hover:bg-amber-900/50 text-amber-200 rounded-lg text-sm transition-colors border border-amber-800/30"
+                  className="flex items-center justify-center gap-2 py-2 px-4 bg-accent-gold-dark/30 hover:bg-accent-gold-dark/50 text-accent-gold rounded-lg text-sm transition-colors border border-accent-gold-dark/30"
                 >
                   <Images className="w-4 h-4" />
                   Browse full gallery

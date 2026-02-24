@@ -42,7 +42,7 @@ export default function FeedbackPage() {
           <Link href="/" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
             <ChevronLeft className="w-5 h-5" />
           </Link>
-          <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+          <h1 className="text-xl font-medium" style={{ color: 'var(--text-primary)' }}>
             Feedback
           </h1>
           <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
@@ -79,7 +79,7 @@ export default function FeedbackPage() {
                   {item.name && <span style={{ color: 'var(--text-muted)' }}>{item.name}</span>}
                   {item.email && <span>{item.email}</span>}
                   {item.page && (
-                    <Link href={item.page} className="underline hover:text-amber-600">
+                    <Link href={item.page} className="underline hover:text-accent-rust">
                       {item.page}
                     </Link>
                   )}

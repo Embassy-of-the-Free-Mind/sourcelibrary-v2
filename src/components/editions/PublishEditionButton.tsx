@@ -140,7 +140,7 @@ export default function PublishEditionButton({
                 <h3 className="font-medium text-stone-900 mb-2">{bookTitle}</h3>
                 <div className="flex items-center gap-4 text-sm">
                   <div className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${isComplete ? 'bg-green-500' : 'bg-amber-500'}`} />
+                    <div className={`w-3 h-3 rounded-full ${isComplete ? 'bg-status-success' : 'bg-accent-gold/80'}`} />
                     <span className="text-stone-600">
                       {translatedCount} of {totalPages} pages translated ({translationPercent}%)
                     </span>
@@ -154,7 +154,7 @@ export default function PublishEditionButton({
                         href={currentEdition.doi_url || `https://doi.org/${currentEdition.doi}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="ml-2 text-amber-600 hover:text-amber-700 inline-flex items-center gap-1"
+                        className="ml-2 text-accent-rust hover:text-accent-rust inline-flex items-center gap-1"
                       >
                         {currentEdition.doi}
                         <ExternalLink className="w-3 h-3" />
@@ -174,7 +174,7 @@ export default function PublishEditionButton({
                   value={versionLabel}
                   onChange={(e) => setVersionLabel(e.target.value)}
                   placeholder="e.g., First Edition, Revised, Complete"
-                  className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                 />
                 <p className="text-xs text-stone-500 mt-1">
                   Version number is assigned automatically (semver)
@@ -184,12 +184,12 @@ export default function PublishEditionButton({
               {/* License */}
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-2">
-                  License <span className="text-red-500">*</span>
+                  License <span className="text-status-error">*</span>
                 </label>
                 <select
                   value={license}
                   onChange={(e) => setLicense(e.target.value)}
-                  className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                 >
                   {LICENSES.map((lic) => (
                     <option key={lic.id} value={lic.id}>
@@ -224,7 +224,7 @@ export default function PublishEditionButton({
                               href={`https://orcid.org/${c.orcid}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-xs text-amber-600 ml-2"
+                              className="text-xs text-accent-rust ml-2"
                             >
                               ORCID
                             </a>
@@ -249,7 +249,7 @@ export default function PublishEditionButton({
                       value={newContributor.name}
                       onChange={(e) => setNewContributor({ ...newContributor, name: e.target.value })}
                       placeholder="Name"
-                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                     />
                     <select
                       value={newContributor.role}
@@ -259,7 +259,7 @@ export default function PublishEditionButton({
                           role: e.target.value as Contributor['role'],
                         })
                       }
-                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                     >
                       {CONTRIBUTOR_ROLES.map((role) => (
                         <option key={role.id} value={role.id}>
@@ -274,7 +274,7 @@ export default function PublishEditionButton({
                       value={newContributor.orcid}
                       onChange={(e) => setNewContributor({ ...newContributor, orcid: e.target.value })}
                       placeholder="ORCID (optional)"
-                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                     />
                     <input
                       type="text"
@@ -283,13 +283,13 @@ export default function PublishEditionButton({
                         setNewContributor({ ...newContributor, affiliation: e.target.value })
                       }
                       placeholder="Affiliation (optional)"
-                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                      className="px-3 py-2 border border-stone-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
                     />
                   </div>
                   <button
                     onClick={addContributor}
                     disabled={!newContributor.name.trim()}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm text-amber-700 hover:bg-amber-50 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex items-center gap-2 px-3 py-1.5 text-sm text-accent-rust hover:bg-accent-gold/8 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Plus className="w-4 h-4" />
                     Add Contributor
@@ -307,7 +307,7 @@ export default function PublishEditionButton({
                   onChange={(e) => setChangelog(e.target.value)}
                   rows={3}
                   placeholder="What's changed since the last version?"
-                  className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus-visible:ring-accent-rust resize-none"
                 />
               </div>
 
@@ -341,7 +341,7 @@ export default function PublishEditionButton({
               <button
                 onClick={handlePublish}
                 disabled={isPublishing || translatedCount === 0}
-                className="px-6 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-6 py-2 bg-accent-gold/80 hover:bg-accent-rust text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 {isPublishing ? (
                   <>

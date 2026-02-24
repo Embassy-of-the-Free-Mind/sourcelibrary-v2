@@ -103,7 +103,7 @@ const STAGES = [
   },
   {
     name: 'Archive',
-    color: 'bg-amber-50 text-amber-700',
+    color: 'bg-accent-gold/8 text-accent-gold-dark',
     icon: '2',
     summary: 'Images preserved on our infrastructure',
     detail:
@@ -143,7 +143,7 @@ const STAGES = [
   },
   {
     name: 'Images',
-    color: 'bg-amber-50 text-amber-700',
+    color: 'bg-accent-gold/8 text-accent-gold-dark',
     icon: '7',
     summary: 'Illustrations and emblems detected and cataloged',
     detail:

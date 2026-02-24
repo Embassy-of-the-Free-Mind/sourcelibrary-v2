@@ -3,12 +3,15 @@
 import { useAppState } from "@/lib/store";
 import { BirthDateInput } from "@/components/ui/BirthDateInput";
 import { DriftChart } from "@/components/viz/DriftChart";
+import { useHydrated } from "@/lib/hooks";
 import { useMemo } from "react";
 import { findBirthLunation, getMoonPhase } from "@/lib/astro";
 import { getLunarBirthday, getZodiacInfo } from "@/lib/lunar";
 import { ZODIAC_ANIMAL_EMOJIS } from "@/lib/constants";
+import { formatMonthDay } from "@/lib/hooks";
 
 export default function BirthdayPage() {
+  const hydrated = useHydrated();
   const { birthDate } = useAppState();
 
   const birthInfo = useMemo(() => {
@@ -40,6 +43,13 @@ export default function BirthdayPage() {
     return { phase, lunar, zodiac, lunation, birth };
   }, [birthDate]);
 
+  // Format next lunar birthday without locale-dependent toLocaleDateString
+  const nextBirthdayStr = useMemo(() => {
+    if (!birthInfo?.lunar?.next_lunar_birthday) return null;
+    const d = birthInfo.lunar.next_lunar_birthday;
+    return `${formatMonthDay(d)}, ${d.getFullYear()}`;
+  }, [birthInfo]);
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
       <div className="text-center mb-8">
@@ -57,7 +67,7 @@ export default function BirthdayPage() {
       </div>
 
       {/* Birth info cards */}
-      {birthInfo && (
+      {hydrated && birthInfo && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
           {/* Birth moon phase */}
           <div className="bg-bg-card border border-border rounded-xl p-5">
@@ -80,13 +90,9 @@ export default function BirthdayPage() {
               <div className="text-cream font-medium text-lg">
                 Month {birthInfo.lunar.lunar_month}, Day {birthInfo.lunar.lunar_day}
               </div>
-              {birthInfo.lunar.next_lunar_birthday && (
+              {nextBirthdayStr && (
                 <div className="text-muted text-sm mt-1">
-                  Next: {birthInfo.lunar.next_lunar_birthday.toLocaleDateString("en", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
-                  })}
+                  Next: {nextBirthdayStr}
                 </div>
               )}
             </div>
@@ -118,7 +124,11 @@ export default function BirthdayPage() {
           After 19 years (the Metonic cycle), it returns to nearly the same date.
           Gold bars show the lunation containing your birthday. Violet bars indicate leap years with 13 months.
         </p>
-        <DriftChart />
+        {hydrated ? <DriftChart /> : (
+          <div className="w-full h-48 flex items-center justify-center text-faint text-sm">
+            Calculating lunar drift&hellip;
+          </div>
+        )}
       </div>
     </div>
   );

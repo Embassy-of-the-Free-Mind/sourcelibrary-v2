@@ -213,7 +213,7 @@ export default function AdminCollectionsPage() {
               <button
                 onClick={reseed}
                 disabled={seeding}
-                className="flex items-center gap-2 px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white text-sm rounded-lg transition-colors disabled:opacity-50"
+                className="flex items-center gap-2 px-3 py-1.5 bg-accent-rust hover:bg-accent-gold/80 text-white text-sm rounded-lg transition-colors disabled:opacity-50"
               >
                 {seeding ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -228,7 +228,7 @@ export default function AdminCollectionsPage() {
                   {collections.length} collections
                 </p>
               </div>
-              <Layers className="w-6 h-6 text-amber-500" />
+              <Layers className="w-6 h-6 text-accent-gold" />
             </div>
           </div>
         </div>
@@ -239,8 +239,8 @@ export default function AdminCollectionsPage() {
         <div
           className={`fixed top-4 right-4 z-50 px-4 py-2 rounded-lg text-sm shadow-lg ${
             message.type === 'success'
-              ? 'bg-green-600 text-white'
-              : 'bg-red-600 text-white'
+              ? 'bg-status-success text-white'
+              : 'bg-status-error text-white'
           }`}
         >
           {message.text}
@@ -278,7 +278,7 @@ export default function AdminCollectionsPage() {
                     key={col.id}
                     className={`bg-white rounded-lg shadow-sm p-4 border-2 transition-colors ${
                       editingSlug === col.slug
-                        ? 'border-amber-500'
+                        ? 'border-accent-gold'
                         : 'border-transparent hover:border-stone-200'
                     }`}
                   >
@@ -307,7 +307,7 @@ export default function AdminCollectionsPage() {
                         <div className="flex items-center gap-2">
                           <h3 className="font-medium text-stone-800 truncate">{col.title}</h3>
                           {col.featured && (
-                            <Star className="w-3.5 h-3.5 text-amber-500 flex-shrink-0" fill="currentColor" />
+                            <Star className="w-3.5 h-3.5 text-accent-gold flex-shrink-0" fill="currentColor" />
                           )}
                         </div>
                         <p className="text-stone-500 text-xs mt-0.5">
@@ -319,7 +319,7 @@ export default function AdminCollectionsPage() {
                       <div className="flex items-center gap-1 flex-shrink-0">
                         <button
                           onClick={() => openEditor(col.slug)}
-                          className="p-1.5 text-stone-400 hover:text-amber-600 transition-colors"
+                          className="p-1.5 text-stone-400 hover:text-accent-rust transition-colors"
                           title="Edit"
                         >
                           <Edit2 className="w-4 h-4" />
@@ -333,7 +333,7 @@ export default function AdminCollectionsPage() {
                         </Link>
                         <button
                           onClick={() => deleteCollection(col.slug)}
-                          className="p-1.5 text-stone-400 hover:text-red-600 transition-colors"
+                          className="p-1.5 text-stone-400 hover:text-status-error transition-colors"
                           title="Delete"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -384,7 +384,7 @@ export default function AdminCollectionsPage() {
                           type="text"
                           value={editTitle}
                           onChange={(e) => setEditTitle(e.target.value)}
-                          className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                          className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold"
                         />
                       </div>
 
@@ -394,7 +394,7 @@ export default function AdminCollectionsPage() {
                           value={editDescription}
                           onChange={(e) => setEditDescription(e.target.value)}
                           rows={3}
-                          className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                          className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus-visible:ring-accent-rust focus:border-accent-gold"
                         />
                       </div>
 
@@ -404,7 +404,7 @@ export default function AdminCollectionsPage() {
                             type="checkbox"
                             checked={editFeatured}
                             onChange={(e) => setEditFeatured(e.target.checked)}
-                            className="rounded border-stone-300 text-amber-600 focus:ring-amber-500"
+                            className="rounded border-stone-300 text-accent-rust focus-visible:ring-accent-rust"
                           />
                           Featured
                         </label>
@@ -423,7 +423,7 @@ export default function AdminCollectionsPage() {
                       <button
                         onClick={saveChanges}
                         disabled={saving}
-                        className="flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white text-sm rounded-lg transition-colors disabled:opacity-50"
+                        className="flex items-center gap-2 px-4 py-2 bg-accent-rust hover:bg-accent-gold/80 text-white text-sm rounded-lg transition-colors disabled:opacity-50"
                       >
                         {saving ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -458,7 +458,7 @@ export default function AdminCollectionsPage() {
                           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex flex-col items-center justify-center gap-1">
                             <button
                               onClick={() => setCover(item.id)}
-                              className="px-2 py-1 bg-amber-600 text-white text-xs rounded hover:bg-amber-500"
+                              className="px-2 py-1 bg-accent-rust text-white text-xs rounded hover:bg-accent-gold/80"
                               title="Set as cover"
                             >
                               <Star className="w-3 h-3 inline mr-1" />
@@ -466,7 +466,7 @@ export default function AdminCollectionsPage() {
                             </button>
                             <button
                               onClick={() => removeImage(item.id)}
-                              className="px-2 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-500"
+                              className="px-2 py-1 bg-status-error text-white text-xs rounded hover:bg-status-error"
                               title="Remove from collection"
                             >
                               <Trash2 className="w-3 h-3 inline mr-1" />

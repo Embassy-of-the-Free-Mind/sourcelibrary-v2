@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { toast } from 'sonner';
-import { Heart, Loader2, Check, Filter } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
 const LIKES_CACHE_KEY = 'sl_likes_cache';
+const DOWNVOTES_KEY = 'sl_curate_downvotes';
 const BATCH_SIZE = 200;
 
 function getVisitorId(): string {
@@ -44,6 +45,25 @@ function setLikeInCache(key: string, liked: boolean) {
   }
 }
 
+function getDownvotesCache(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
+  try {
+    const cached = localStorage.getItem(DOWNVOTES_KEY);
+    return cached ? new Set(JSON.parse(cached)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function saveDownvotesCache(ids: Set<string>) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(DOWNVOTES_KEY, JSON.stringify([...ids]));
+  } catch {
+    // Ignore storage errors
+  }
+}
+
 function getImageId(item: GalleryItem): string {
   return `${item.pageId}:${item.detectionIndex}`;
 }
@@ -55,6 +75,7 @@ function getImageSrc(item: GalleryItem): string {
 export default function CurateClient() {
   const [images, setImages] = useState<GalleryItem[]>([]);
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
+  const [downvotedIds, setDownvotedIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [offset, setOffset] = useState(0);
@@ -62,11 +83,13 @@ export default function CurateClient() {
   const [toggling, setToggling] = useState<Set<string>>(new Set());
   const [applying, setApplying] = useState(false);
   const [applied, setApplied] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   // Filters
   const [minQuality, setMinQuality] = useState(0.5);
   const [filterType, setFilterType] = useState('');
   const [showLikedOnly, setShowLikedOnly] = useState(false);
+  const [showDownvotedOnly, setShowDownvotedOnly] = useState(false);
   const [types, setTypes] = useState<string[]>([]);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
@@ -114,12 +137,15 @@ export default function CurateClient() {
     }
   }, [minQuality, filterType, types.length]);
 
-  // Load liked IDs from server on mount
+  // Load liked IDs + downvoted IDs on mount
   useEffect(() => {
+    // Load downvotes from localStorage
+    setDownvotedIds(getDownvotesCache());
+
     const visitorId = getVisitorId();
     if (!visitorId) return;
 
-    // Use localStorage cache as initial state
+    // Use localStorage cache as initial state for likes
     const cache = getLikesCache();
     const initialLiked = new Set<string>();
     for (const key of Object.keys(cache)) {
@@ -167,7 +193,7 @@ export default function CurateClient() {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasMore && !loadingRef.current && !showLikedOnly) {
+        if (entries[0].isIntersecting && hasMore && !loadingRef.current && !showLikedOnly && !showDownvotedOnly) {
           fetchImages(offset, false);
         }
       },
@@ -176,15 +202,27 @@ export default function CurateClient() {
 
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [hasMore, offset, fetchImages, showLikedOnly]);
+  }, [hasMore, offset, fetchImages, showLikedOnly, showDownvotedOnly]);
 
-  // Toggle like
-  const handleToggleLike = useCallback(async (item: GalleryItem) => {
+  // Toggle like (heart)
+  const handleToggleLike = useCallback(async (item: GalleryItem, e: React.MouseEvent) => {
+    e.stopPropagation();
     const imageId = getImageId(item);
     const visitorId = getVisitorId();
     if (!visitorId || toggling.has(imageId)) return;
 
+    // If currently downvoted, remove downvote first
+    if (downvotedIds.has(imageId)) {
+      setDownvotedIds(prev => {
+        const next = new Set(prev);
+        next.delete(imageId);
+        saveDownvotesCache(next);
+        return next;
+      });
+    }
+
     setToggling(prev => new Set(prev).add(imageId));
+    setApplied(false);
 
     // Optimistic update
     const wasLiked = likedIds.has(imageId);
@@ -195,7 +233,6 @@ export default function CurateClient() {
       return next;
     });
     setLikeInCache(`image:${imageId}`, !wasLiked);
-    setApplied(false);
 
     try {
       const res = await fetch('/api/likes', {
@@ -208,7 +245,6 @@ export default function CurateClient() {
         }),
       });
       const data = await res.json();
-      // Sync with server response
       setLikedIds(prev => {
         const next = new Set(prev);
         if (data.liked) next.add(imageId);
@@ -217,7 +253,7 @@ export default function CurateClient() {
       });
       setLikeInCache(`image:${imageId}`, data.liked);
     } catch {
-      // Revert on error
+      // Revert
       setLikedIds(prev => {
         const next = new Set(prev);
         if (wasLiked) next.add(imageId);
@@ -232,40 +268,103 @@ export default function CurateClient() {
         return next;
       });
     }
-  }, [likedIds, toggling]);
+  }, [likedIds, downvotedIds, toggling]);
 
-  // Apply curated flag
+  // Toggle downvote (thumbs down) — local only, no server API
+  const handleToggleDownvote = useCallback((item: GalleryItem, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const imageId = getImageId(item);
+
+    // If currently liked, remove like first (fire and forget)
+    if (likedIds.has(imageId)) {
+      const visitorId = getVisitorId();
+      if (visitorId) {
+        setLikedIds(prev => {
+          const next = new Set(prev);
+          next.delete(imageId);
+          return next;
+        });
+        setLikeInCache(`image:${imageId}`, false);
+        // Unlike on server
+        fetch('/api/likes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ target_type: 'image', target_id: imageId, visitor_id: visitorId }),
+        }).catch(() => {});
+      }
+    }
+
+    setDownvotedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(imageId)) next.delete(imageId);
+      else next.add(imageId);
+      saveDownvotesCache(next);
+      return next;
+    });
+    setApplied(false);
+  }, [likedIds]);
+
+  // Apply curation
   const handleApplyCurated = useCallback(async () => {
-    if (likedIds.size === 0) return;
-    if (!confirm(`Mark ${likedIds.size} images as curated? This will boost their gallery_quality by 0.1.`)) return;
+    const upCount = likedIds.size;
+    const downCount = downvotedIds.size;
+    if (upCount === 0 && downCount === 0) return;
+
+    const parts = [];
+    if (upCount > 0) parts.push(`${upCount} upvoted (+0.1 quality)`);
+    if (downCount > 0) parts.push(`${downCount} downvoted (-0.15 quality)`);
+    if (!confirm(`Apply curation? ${parts.join(', ')}`)) return;
 
     setApplying(true);
     try {
       const res = await fetch('/api/gallery/curate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ imageIds: [...likedIds] }),
+        body: JSON.stringify({
+          upvoteIds: [...likedIds],
+          downvoteIds: [...downvotedIds],
+        }),
       });
       const data = await res.json();
       if (data.success) {
         setApplied(true);
+        toast.success(`Applied: ${data.upvotes.modified} boosted, ${data.downvotes.modified} penalized`);
       } else {
-        toast.error(data.error || 'Failed to apply curated flag');
+        toast.error(data.error || 'Failed to apply curation');
       }
     } catch (err) {
-      toast.error('Failed to apply curated flag');
+      toast.error('Failed to apply curation');
       console.error(err);
     } finally {
       setApplying(false);
     }
-  }, [likedIds]);
+  }, [likedIds, downvotedIds]);
 
   // Filter displayed images
   const displayImages = showLikedOnly
     ? images.filter(img => likedIds.has(getImageId(img)))
+    : showDownvotedOnly
+    ? images.filter(img => downvotedIds.has(getImageId(img)))
     : images;
 
+  // Lightbox keyboard navigation
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightboxIndex(null);
+      else if (e.key === 'ArrowRight') setLightboxIndex(i => i !== null ? Math.min(i + 1, displayImages.length - 1) : null);
+      else if (e.key === 'ArrowLeft') setLightboxIndex(i => i !== null ? Math.max(i - 1, 0) : null);
+    };
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [lightboxIndex, displayImages.length]);
+
   const heartedCount = likedIds.size;
+  const downvotedCount = downvotedIds.size;
 
   return (
     <div className="max-w-[2000px] mx-auto">
@@ -275,7 +374,17 @@ export default function CurateClient() {
           <div className="flex items-center gap-4">
             <h1 className="font-serif text-xl text-text-primary">Curate</h1>
             <span className="text-sm text-text-muted">
-              <span className="text-accent-rust font-medium">{heartedCount}</span> hearted
+              <span className="text-status-error font-medium">{heartedCount}</span>
+              {' '}
+              <Heart className="w-3 h-3 inline text-status-error" fill="currentColor" />
+              {downvotedCount > 0 && (
+                <>
+                  {' / '}
+                  <span className="text-blue-500 font-medium">{downvotedCount}</span>
+                  {' '}
+                  <ThumbsDown className="w-3 h-3 inline text-blue-500" fill="currentColor" />
+                </>
+              )}
               {' / '}
               <span>{total.toLocaleString()}</span> total
             </span>
@@ -300,22 +409,40 @@ export default function CurateClient() {
 
             {/* Show liked only toggle */}
             <button
-              onClick={() => setShowLikedOnly(v => !v)}
+              onClick={() => { setShowLikedOnly(v => !v); setShowDownvotedOnly(false); }}
               className={`
                 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm
                 border transition-colors
                 ${showLikedOnly
-                  ? 'border-red-300 bg-red-50 text-red-600'
+                  ? 'border-red-300 bg-red-50 text-status-error'
                   : 'border-border-light text-text-secondary hover:border-border-medium'
                 }
               `}
             >
               <Heart className="w-3.5 h-3.5" fill={showLikedOnly ? 'currentColor' : 'none'} />
-              Liked only
+              Liked
             </button>
 
+            {/* Show downvoted only toggle */}
+            {downvotedCount > 0 && (
+              <button
+                onClick={() => { setShowDownvotedOnly(v => !v); setShowLikedOnly(false); }}
+                className={`
+                  inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm
+                  border transition-colors
+                  ${showDownvotedOnly
+                    ? 'border-blue-300 bg-blue-50 text-blue-600'
+                    : 'border-border-light text-text-secondary hover:border-border-medium'
+                  }
+                `}
+              >
+                <ThumbsDown className="w-3.5 h-3.5" fill={showDownvotedOnly ? 'currentColor' : 'none'} />
+                Downvoted
+              </button>
+            )}
+
             {/* Apply curated button */}
-            {heartedCount > 0 && (
+            {(heartedCount > 0 || downvotedCount > 0) && (
               <button
                 onClick={handleApplyCurated}
                 disabled={applying || applied}
@@ -334,7 +461,7 @@ export default function CurateClient() {
                 ) : applied ? (
                   <Check className="w-3.5 h-3.5" />
                 ) : null}
-                {applied ? 'Applied' : `Apply ${heartedCount} as curated`}
+                {applied ? 'Applied' : `Apply ${heartedCount + downvotedCount} ratings`}
               </button>
             )}
           </div>
@@ -378,16 +505,21 @@ export default function CurateClient() {
 
       {/* Image grid */}
       <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 gap-0.5 p-0.5">
-        {displayImages.map((item) => {
+        {displayImages.map((item, idx) => {
           const imageId = getImageId(item);
           const isLiked = likedIds.has(imageId);
+          const isDownvoted = downvotedIds.has(imageId);
           const isToggling = toggling.has(imageId);
+          const hasRating = isLiked || isDownvoted;
 
           return (
             <div
               key={`${item.pageId}-${item.detectionIndex}`}
-              className="relative aspect-square group cursor-pointer overflow-hidden bg-warm"
-              onClick={() => handleToggleLike(item)}
+              className={`
+                relative aspect-square group cursor-pointer overflow-hidden bg-warm
+                ${isDownvoted ? 'opacity-40' : ''}
+              `}
+              onClick={() => setLightboxIndex(idx)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -397,28 +529,50 @@ export default function CurateClient() {
                 className="w-full h-full object-cover"
               />
 
-              {/* Heart overlay — visible on hover or when liked */}
+              {/* Action buttons — visible on hover or when rated */}
               <div
                 className={`
-                  absolute inset-0 flex items-center justify-center
+                  absolute inset-0 flex items-center justify-center gap-3
                   transition-opacity duration-150
-                  ${isLiked ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+                  ${hasRating ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
                 `}
               >
-                <div className={`
-                  rounded-full p-1.5
-                  ${isLiked ? '' : 'bg-black/30'}
-                `}>
+                {/* Heart button */}
+                <button
+                  onClick={(e) => handleToggleLike(item, e)}
+                  className={`
+                    rounded-full p-1.5 transition-all duration-150
+                    ${isLiked ? '' : 'bg-black/30 hover:bg-black/50'}
+                  `}
+                >
                   <Heart
                     className={`
                       w-5 h-5 drop-shadow-md transition-transform duration-150
-                      ${isLiked ? 'text-red-500 scale-110' : 'text-white'}
+                      ${isLiked ? 'text-status-error scale-110' : 'text-white'}
                       ${isToggling ? 'animate-pulse' : ''}
                     `}
                     fill={isLiked ? 'currentColor' : 'none'}
                     strokeWidth={isLiked ? 0 : 2.5}
                   />
-                </div>
+                </button>
+
+                {/* Thumbs down button */}
+                <button
+                  onClick={(e) => handleToggleDownvote(item, e)}
+                  className={`
+                    rounded-full p-1.5 transition-all duration-150
+                    ${isDownvoted ? '' : 'bg-black/30 hover:bg-black/50'}
+                  `}
+                >
+                  <ThumbsDown
+                    className={`
+                      w-4.5 h-4.5 drop-shadow-md transition-transform duration-150
+                      ${isDownvoted ? 'text-blue-500 scale-110' : 'text-white'}
+                    `}
+                    fill={isDownvoted ? 'currentColor' : 'none'}
+                    strokeWidth={isDownvoted ? 0 : 2.5}
+                  />
+                </button>
               </div>
 
               {/* Quality badge — tiny, bottom-right */}
@@ -442,12 +596,102 @@ export default function CurateClient() {
       {/* Empty state */}
       {!loading && displayImages.length === 0 && (
         <div className="flex justify-center py-16 text-text-muted text-sm">
-          {showLikedOnly ? 'No liked images yet. Click hearts to curate.' : 'No images found.'}
+          {showLikedOnly
+            ? 'No liked images yet.'
+            : showDownvotedOnly
+            ? 'No downvoted images yet.'
+            : 'No images found.'}
         </div>
       )}
 
       {/* Infinite scroll sentinel */}
-      {!showLikedOnly && <div ref={sentinelRef} className="h-1" />}
+      {!showLikedOnly && !showDownvotedOnly && <div ref={sentinelRef} className="h-1" />}
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && displayImages[lightboxIndex] && (() => {
+        const item = displayImages[lightboxIndex];
+        const imageId = getImageId(item);
+        const isLiked = likedIds.has(imageId);
+        const isDownvoted = downvotedIds.has(imageId);
+        const fullSrc = item.extractedUrl || item.imageUrl;
+
+        return (
+          <div
+            className="fixed inset-0 z-[100] bg-black/95 flex flex-col"
+            onClick={() => setLightboxIndex(null)}
+          >
+            {/* Top bar */}
+            <div className="flex items-center justify-between px-4 py-3 bg-black/50" onClick={e => e.stopPropagation()}>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={(e) => handleToggleLike(item, e)}
+                  className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <Heart
+                    className={`w-5 h-5 ${isLiked ? 'text-status-error' : 'text-white'}`}
+                    fill={isLiked ? 'currentColor' : 'none'}
+                  />
+                </button>
+                <button
+                  onClick={(e) => handleToggleDownvote(item, e)}
+                  className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <ThumbsDown
+                    className={`w-5 h-5 ${isDownvoted ? 'text-blue-500' : 'text-white'}`}
+                    fill={isDownvoted ? 'currentColor' : 'none'}
+                  />
+                </button>
+                {item.galleryQuality !== undefined && (
+                  <span className="text-white/60 text-xs font-mono">{item.galleryQuality.toFixed(2)}</span>
+                )}
+                {item.description && (
+                  <span className="text-white/50 text-xs max-w-xs truncate hidden sm:inline">{item.description}</span>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-white/50 text-xs">{lightboxIndex + 1} / {displayImages.length}</span>
+                <button
+                  onClick={() => setLightboxIndex(null)}
+                  className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </div>
+            </div>
+
+            {/* Image + nav */}
+            <div className="flex-1 flex items-center justify-center relative overflow-hidden" onClick={e => e.stopPropagation()}>
+              {/* Left arrow */}
+              {lightboxIndex > 0 && (
+                <button
+                  onClick={() => setLightboxIndex(lightboxIndex - 1)}
+                  className="absolute left-2 z-10 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors"
+                >
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </button>
+              )}
+
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={fullSrc}
+                alt={item.description || ''}
+                className="max-w-full max-h-full object-contain"
+                onClick={() => setLightboxIndex(null)}
+              />
+
+              {/* Right arrow */}
+              {lightboxIndex < displayImages.length - 1 && (
+                <button
+                  onClick={() => setLightboxIndex(lightboxIndex + 1)}
+                  className="absolute right-2 z-10 p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors"
+                >
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

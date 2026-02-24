@@ -70,21 +70,21 @@ export default function FechnerBohmePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           This is not a metaphor. Fechner meant it literally. In{' '}
-          <Link href="/book/69906315ef12272ffdc8f0a7" className="text-amber-700 hover:text-amber-600 underline"><em>Nanna, oder &uuml;ber das Seelenleben der Pflanzen</em></Link>
+          <Link href="/book/69906315ef12272ffdc8f0a7" className="text-accent-rust hover:text-accent-rust underline"><em>Nanna, oder &uuml;ber das Seelenleben der Pflanzen</em></Link>
           {' '}(1848), he argued that plants have souls &mdash; not in a poetic sense, but as a philosophical claim that the responsiveness of plants to light, gravity, and season indicates genuine inner experience. In{' '}
-          <Link href="/book/69906312e7b7642c081de690" className="text-amber-700 hover:text-amber-600 underline"><em>Zend-Avesta, oder &uuml;ber die Dinge des Himmels und des Jenseits</em></Link>
+          <Link href="/book/69906312e7b7642c081de690" className="text-accent-rust hover:text-accent-rust underline"><em>Zend-Avesta, oder &uuml;ber die Dinge des Himmels und des Jenseits</em></Link>
           {' '}(1851), he extended the argument to the earth itself, the planets, and the stars. The title is deliberately borrowed from Zoroastrian scripture &mdash; Fechner saw himself as recovering an ancient truth about the living cosmos that modern science had obscured.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           In{' '}
-          <Link href="/book/6992cbcc018b80967354b218" className="text-amber-700 hover:text-amber-600 underline"><em>&Uuml;ber die Seelenfrage</em></Link>
+          <Link href="/book/6992cbcc018b80967354b218" className="text-accent-rust hover:text-accent-rust underline"><em>&Uuml;ber die Seelenfrage</em></Link>
           {' '}(1861) &mdash; &ldquo;On the Soul Question: A Walk Through the Visible World to Find the Invisible&rdquo; &mdash; he made the case most systematically. And in{' '}
-          <Link href="/book/6992cbd3018b80967354b406" className="text-amber-700 hover:text-amber-600 underline"><em>Ueber das h&ouml;chste Gut</em></Link>
+          <Link href="/book/6992cbd3018b80967354b406" className="text-accent-rust hover:text-accent-rust underline"><em>Ueber das h&ouml;chste Gut</em></Link>
           {' '}(1846), he grounded his ethics in the same vision: the highest good is the maximisation of pleasure and minimisation of pain across all conscious beings &mdash; which, for Fechner, means across the entire universe.
         </p>
 
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
+        <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
           <p className="text-secondary italic mb-2">
             &ldquo;The earth is a living being, and we are parts of its body as cells are parts of ours. It has a consciousness that encompasses ours as ours encompasses the consciousness of our cells.&rdquo;
           </p>
@@ -99,25 +99,25 @@ export default function FechnerBohmePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Where did this vision come from? Fechner scholars have pointed to{' '}
-          <Link href="/book/6990632fef12272ffdc900f2" className="text-amber-700 hover:text-amber-600 underline">Schelling&apos;s <em>Naturphilosophie</em></Link>
+          <Link href="/book/6990632fef12272ffdc900f2" className="text-accent-rust hover:text-accent-rust underline">Schelling&apos;s <em>Naturphilosophie</em></Link>
           , to{' '}
-          <Link href="/book/695434491479a63c11088f29" className="text-amber-700 hover:text-amber-600 underline">Spinoza&apos;s monism</Link>
+          <Link href="/book/695434491479a63c11088f29" className="text-accent-rust hover:text-accent-rust underline">Spinoza&apos;s monism</Link>
           , to{' '}
-          <Link href="/book/6990683d249ce014347d5f43" className="text-amber-700 hover:text-amber-600 underline">Leibniz&apos;s monadology</Link>
+          <Link href="/book/6990683d249ce014347d5f43" className="text-accent-rust hover:text-accent-rust underline">Leibniz&apos;s monadology</Link>
           {' '}&mdash; all legitimate influences. But Fechner himself pointed to a more surprising source. In 1857, he published{' '}
-          <Link href="/book/6992cbd5018b80967354b452" className="text-amber-700 hover:text-amber-600 underline"><em>Jakob B&ouml;hme: sein Leben und seine Schriften</em></Link>
+          <Link href="/book/6992cbd5018b80967354b452" className="text-accent-rust hover:text-accent-rust underline"><em>Jakob B&ouml;hme: sein Leben und seine Schriften</em></Link>
           {' '}&mdash; a full-length biographical and philosophical study of the Silesian shoemaker-mystic who had died two centuries earlier.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           This was not a casual project. B&ouml;hme&apos;s{' '}
-          <Link href="/book/69525f56ab34727b1f046185" className="text-amber-700 hover:text-amber-600 underline"><em>Aurora</em></Link>
+          <Link href="/book/69525f56ab34727b1f046185" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
           {' '}(1612), his first and most famous work, describes a moment of illumination in which B&ouml;hme perceived the inner life of all things &mdash; the <em>Signatura Rerum</em>, the signature of spirit in every natural form. Everything in nature, B&ouml;hme argued, is an expression of a living divine process. Matter is not dead; it is the outermost manifestation of an inner spiritual reality. The cosmos is not a machine but a theophany &mdash; God making himself visible.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           The parallels with Fechner are unmistakable. B&ouml;hme&apos;s <em>Signatura Rerum</em> &mdash; the idea that every natural thing bears the signature of its inner character &mdash; maps directly onto Fechner&apos;s psychophysical parallelism, in which every physical process has a corresponding inner, experiential aspect. B&ouml;hme&apos;s vision of nature as a living whole, conscious at every level, is precisely Fechner&apos;s <em>Tagesansicht</em>. Even Fechner&apos;s hierarchy of souls &mdash; the soul of a cell within the soul of an organism within the soul of the earth within the soul of the cosmos &mdash; echoes B&ouml;hme&apos;s nested theophanies in the{' '}
-          <Link href="/book/69526046ab34727b1f04660c" className="text-amber-700 hover:text-amber-600 underline"><em>Mysterium Magnum</em></Link>
+          <Link href="/book/69526046ab34727b1f04660c" className="text-accent-rust hover:text-accent-rust underline"><em>Mysterium Magnum</em></Link>
           .
         </p>
 
@@ -135,11 +135,11 @@ export default function FechnerBohmePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           He spent the next decade working out the implications. The{' '}
-          <Link href="/book/699062f0ef12272ffdc8e403" className="text-amber-700 hover:text-amber-600 underline"><em>Elemente der Psychophysik</em>, Volume I</Link>
+          <Link href="/book/699062f0ef12272ffdc8e403" className="text-accent-rust hover:text-accent-rust underline"><em>Elemente der Psychophysik</em>, Volume I</Link>
           {' '}and{' '}
-          <Link href="/book/699062f2ef12272ffdc8e789" className="text-amber-700 hover:text-amber-600 underline">Volume II</Link>
+          <Link href="/book/699062f2ef12272ffdc8e789" className="text-accent-rust hover:text-accent-rust underline">Volume II</Link>
           {' '}(1860) laid out the experimental evidence and mathematical framework. The work founded a new science. Wundt built his laboratory on it. Helmholtz, Weber, and the entire tradition of German experimental psychology descends from it. The{' '}
-          <Link href="/book/6992cbf9018b80967354c7b7" className="text-amber-700 hover:text-amber-600 underline">English translation</Link>
+          <Link href="/book/6992cbf9018b80967354c7b7" className="text-accent-rust hover:text-accent-rust underline">English translation</Link>
           {' '}(1966) made Volume I accessible to Anglophone readers &mdash; but only the experimental content, stripped of its metaphysical context.
         </p>
 
@@ -149,13 +149,13 @@ export default function FechnerBohmePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Fechner defended and refined this position for another two decades. In{' '}
-          <Link href="/book/6992cbd8018b80967354ba41" className="text-amber-700 hover:text-amber-600 underline"><em>In Sachen der Psychophysik</em></Link>
+          <Link href="/book/6992cbd8018b80967354ba41" className="text-accent-rust hover:text-accent-rust underline"><em>In Sachen der Psychophysik</em></Link>
           {' '}(1877) and the{' '}
-          <Link href="/book/6992cbdc018b80967354bf99" className="text-amber-700 hover:text-amber-600 underline"><em>Revision der Hauptpuncte der Psychophysik</em></Link>
+          <Link href="/book/6992cbdc018b80967354bf99" className="text-accent-rust hover:text-accent-rust underline"><em>Revision der Hauptpuncte der Psychophysik</em></Link>
           {' '}(1882), he responded to critics and extended the mathematical framework. These works exist in no English translation.
         </p>
 
-        <div className="border-l-4 border-amber-400 pl-6 mb-8">
+        <div className="border-l-4 border-accent-gold/30 pl-6 mb-8">
           <p className="text-secondary italic mb-2">
             &ldquo;The whole material world may be said to be alive. Consciousness is not a rare accident in the universe but a fundamental feature of it.&rdquo;
           </p>
@@ -170,9 +170,9 @@ export default function FechnerBohmePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Late in life, Fechner turned to aesthetics. The{' '}
-          <Link href="/book/6992cbf6018b80967354c6a2" className="text-amber-700 hover:text-amber-600 underline"><em>Vorschule der Aesthetik</em>, Band 1</Link>
+          <Link href="/book/6992cbf6018b80967354c6a2" className="text-accent-rust hover:text-accent-rust underline"><em>Vorschule der Aesthetik</em>, Band 1</Link>
           {' '}and{' '}
-          <Link href="/book/6992cbc6018b80967354afba" className="text-amber-700 hover:text-amber-600 underline">Band 2</Link>
+          <Link href="/book/6992cbc6018b80967354afba" className="text-accent-rust hover:text-accent-rust underline">Band 2</Link>
           {' '}(1876) pioneered what he called &ldquo;aesthetics from below&rdquo; &mdash; the empirical study of what people actually find beautiful, measured through controlled experiments rather than deduced from philosophical first principles. He invented preference testing. He ran some of the first controlled psychological experiments in history, including his famous study of the golden ratio using rectangles of different proportions.
         </p>
 
@@ -186,14 +186,14 @@ export default function FechnerBohmePage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           Fechner died in 1887, the same year he published{' '}
-          <Link href="/book/6992cbbd018b80967354aee0" className="text-amber-700 hover:text-amber-600 underline"><em>Das B&uuml;chlein vom Leben nach dem Tode</em></Link>
-          {' '}&mdash; <Link href="/book/6992cbc2018b80967354af1a" className="text-amber-700 hover:text-amber-600 underline"><em>The Little Book of Life After Death</em></Link>
+          <Link href="/book/6992cbbd018b80967354aee0" className="text-accent-rust hover:text-accent-rust underline"><em>Das B&uuml;chlein vom Leben nach dem Tode</em></Link>
+          {' '}&mdash; <Link href="/book/6992cbc2018b80967354af1a" className="text-accent-rust hover:text-accent-rust underline"><em>The Little Book of Life After Death</em></Link>
           , one of the few works translated into English. It argues that death is not annihilation but a transition: just as waking succeeds sleep, a higher consciousness succeeds bodily death. The individual soul is absorbed into the greater soul of the earth and cosmos &mdash; not destroyed but expanded.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
           William James read Fechner seriously and devoted an entire chapter to him in{' '}
-          <Link href="/book/6955957b7bd6d2cd1d61f2c4" className="text-amber-700 hover:text-amber-600 underline"><em>A Pluralistic Universe</em></Link>
+          <Link href="/book/6955957b7bd6d2cd1d61f2c4" className="text-accent-rust hover:text-accent-rust underline"><em>A Pluralistic Universe</em></Link>
           {' '}(1909), calling his vision &ldquo;the most logically worked-out panpsychism in existence.&rdquo; James found Fechner&apos;s earth-soul doctrine genuinely compelling and regretted that Anglophone philosophy had ignored it.
         </p>
 
@@ -221,79 +221,79 @@ export default function FechnerBohmePage() {
             </thead>
             <tbody className="text-secondary">
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbd3018b80967354b406" className="text-amber-700 hover:text-amber-600 underline"><em>Ueber das h&ouml;chste Gut</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbd3018b80967354b406" className="text-accent-rust hover:text-accent-rust underline"><em>Ueber das h&ouml;chste Gut</em></Link></td>
                 <td className="py-3 px-4">1846</td>
                 <td className="py-3 px-4">Ethics: the highest good as universal pleasure</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/69906315ef12272ffdc8f0a7" className="text-amber-700 hover:text-amber-600 underline"><em>Nanna</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/69906315ef12272ffdc8f0a7" className="text-accent-rust hover:text-accent-rust underline"><em>Nanna</em></Link></td>
                 <td className="py-3 px-4">1848</td>
                 <td className="py-3 px-4">The soul-life of plants</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/69906312e7b7642c081de690" className="text-amber-700 hover:text-amber-600 underline"><em>Zend-Avesta</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/69906312e7b7642c081de690" className="text-accent-rust hover:text-accent-rust underline"><em>Zend-Avesta</em></Link></td>
                 <td className="py-3 px-4">1851</td>
                 <td className="py-3 px-4">Cosmic panpsychism: earth, planets, stars as ensouled beings</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbd0018b80967354b30f" className="text-amber-700 hover:text-amber-600 underline"><em>&Uuml;ber die physikalische und philosophische Atomenlehre</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbd0018b80967354b30f" className="text-accent-rust hover:text-accent-rust underline"><em>&Uuml;ber die physikalische und philosophische Atomenlehre</em></Link></td>
                 <td className="py-3 px-4">1855</td>
                 <td className="py-3 px-4">Physical vs philosophical atomism</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbd5018b80967354b452" className="text-amber-700 hover:text-amber-600 underline"><em>Jakob B&ouml;hme: sein Leben und seine Schriften</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbd5018b80967354b452" className="text-accent-rust hover:text-accent-rust underline"><em>Jakob B&ouml;hme: sein Leben und seine Schriften</em></Link></td>
                 <td className="py-3 px-4">1857</td>
                 <td className="py-3 px-4">Fechner&apos;s study of the mystic who inspired his vision</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/699062f0ef12272ffdc8e403" className="text-amber-700 hover:text-amber-600 underline"><em>Elemente der Psychophysik</em> I</Link> &amp; <Link href="/book/699062f2ef12272ffdc8e789" className="text-amber-700 hover:text-amber-600 underline">II</Link></td>
+                <td className="py-3 px-4"><Link href="/book/699062f0ef12272ffdc8e403" className="text-accent-rust hover:text-accent-rust underline"><em>Elemente der Psychophysik</em> I</Link> &amp; <Link href="/book/699062f2ef12272ffdc8e789" className="text-accent-rust hover:text-accent-rust underline">II</Link></td>
                 <td className="py-3 px-4">1860</td>
                 <td className="py-3 px-4">The founding text of experimental psychology</td>
-                <td className="py-3 px-4"><Link href="/book/6992cbf9018b80967354c7b7" className="text-amber-700 hover:text-amber-600 underline">Vol. I only</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbf9018b80967354c7b7" className="text-accent-rust hover:text-accent-rust underline">Vol. I only</Link></td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbcc018b80967354b218" className="text-amber-700 hover:text-amber-600 underline"><em>&Uuml;ber die Seelenfrage</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbcc018b80967354b218" className="text-accent-rust hover:text-accent-rust underline"><em>&Uuml;ber die Seelenfrage</em></Link></td>
                 <td className="py-3 px-4">1861</td>
                 <td className="py-3 px-4">Systematic case for universal consciousness</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbc9018b80967354b105" className="text-amber-700 hover:text-amber-600 underline"><em>Die drei Motive und Gr&uuml;nde des Glaubens</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbc9018b80967354b105" className="text-accent-rust hover:text-accent-rust underline"><em>Die drei Motive und Gr&uuml;nde des Glaubens</em></Link></td>
                 <td className="py-3 px-4">1863</td>
                 <td className="py-3 px-4">The three motives and grounds of belief</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbf6018b80967354c6a2" className="text-amber-700 hover:text-amber-600 underline"><em>Vorschule der Aesthetik</em> I</Link> &amp; <Link href="/book/6992cbc6018b80967354afba" className="text-amber-700 hover:text-amber-600 underline">II</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbf6018b80967354c6a2" className="text-accent-rust hover:text-accent-rust underline"><em>Vorschule der Aesthetik</em> I</Link> &amp; <Link href="/book/6992cbc6018b80967354afba" className="text-accent-rust hover:text-accent-rust underline">II</Link></td>
                 <td className="py-3 px-4">1876</td>
                 <td className="py-3 px-4">Experimental aesthetics: beauty as signature of unity</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbd8018b80967354ba41" className="text-amber-700 hover:text-amber-600 underline"><em>In Sachen der Psychophysik</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbd8018b80967354ba41" className="text-accent-rust hover:text-accent-rust underline"><em>In Sachen der Psychophysik</em></Link></td>
                 <td className="py-3 px-4">1877</td>
                 <td className="py-3 px-4">Defence against critics</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbdc018b80967354bf99" className="text-amber-700 hover:text-amber-600 underline"><em>Revision der Hauptpuncte der Psychophysik</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbdc018b80967354bf99" className="text-accent-rust hover:text-accent-rust underline"><em>Revision der Hauptpuncte der Psychophysik</em></Link></td>
                 <td className="py-3 px-4">1882</td>
                 <td className="py-3 px-4">Revised psychophysical theory</td>
                 <td className="py-3 px-4">No</td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbbd018b80967354aee0" className="text-amber-700 hover:text-amber-600 underline"><em>Das B&uuml;chlein vom Leben nach dem Tode</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbbd018b80967354aee0" className="text-accent-rust hover:text-accent-rust underline"><em>Das B&uuml;chlein vom Leben nach dem Tode</em></Link></td>
                 <td className="py-3 px-4">1887</td>
                 <td className="py-3 px-4">Death as transition to cosmic consciousness</td>
-                <td className="py-3 px-4"><Link href="/book/6992cbc2018b80967354af1a" className="text-amber-700 hover:text-amber-600 underline">Yes</Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbc2018b80967354af1a" className="text-accent-rust hover:text-accent-rust underline">Yes</Link></td>
               </tr>
               <tr className="border-b border-stone-200">
-                <td className="py-3 px-4"><Link href="/book/6992cbdf018b80967354c198" className="text-amber-700 hover:text-amber-600 underline"><em>Kollektivmasslehre</em></Link></td>
+                <td className="py-3 px-4"><Link href="/book/6992cbdf018b80967354c198" className="text-accent-rust hover:text-accent-rust underline"><em>Kollektivmasslehre</em></Link></td>
                 <td className="py-3 px-4">1897</td>
                 <td className="py-3 px-4">Collective measurement theory (posthumous)</td>
                 <td className="py-3 px-4">No</td>
@@ -320,40 +320,40 @@ export default function FechnerBohmePage() {
 
         <ul className="list-disc list-inside text-secondary space-y-2 mb-8 ml-4">
           <li>
-            <Link href="/book/69525f56ab34727b1f046185" className="text-amber-700 hover:text-amber-600 underline"><em>Aurora</em></Link>
+            <Link href="/book/69525f56ab34727b1f046185" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
             {' '}&mdash; B&ouml;hme&apos;s first vision (1612)
           </li>
           <li>
-            <Link href="/book/6867c580aadfee9e955eca92" className="text-amber-700 hover:text-amber-600 underline"><em>Morgenr&ouml;te im Aufgang</em></Link>
+            <Link href="/book/6867c580aadfee9e955eca92" className="text-accent-rust hover:text-accent-rust underline"><em>Morgenr&ouml;te im Aufgang</em></Link>
             {' '}&mdash; the German original of the <em>Aurora</em>
           </li>
           <li>
-            <Link href="/book/69526046ab34727b1f04660c" className="text-amber-700 hover:text-amber-600 underline"><em>Mysterium Magnum</em></Link>
+            <Link href="/book/69526046ab34727b1f04660c" className="text-accent-rust hover:text-accent-rust underline"><em>Mysterium Magnum</em></Link>
             {' '}&mdash; B&ouml;hme&apos;s commentary on Genesis, his fullest cosmological vision
           </li>
           <li>
-            <Link href="/book/695286feab34727b1f04cf28" className="text-amber-700 hover:text-amber-600 underline"><em>Alle Theosophische Wercken</em></Link>
+            <Link href="/book/695286feab34727b1f04cf28" className="text-accent-rust hover:text-accent-rust underline"><em>Alle Theosophische Wercken</em></Link>
             {' '}&mdash; the complete works in the original German
           </li>
           <li>
-            <Link href="/book/6978ee37a87012956d883ad4" className="text-amber-700 hover:text-amber-600 underline"><em>Christosophia: Der Weg zu Christo</em></Link>
+            <Link href="/book/6978ee37a87012956d883ad4" className="text-accent-rust hover:text-accent-rust underline"><em>Christosophia: Der Weg zu Christo</em></Link>
             {' '}&mdash; B&ouml;hme&apos;s spiritual practice
           </li>
           <li>
-            <Link href="/book/697c8e0f6000fdec2f130604" className="text-amber-700 hover:text-amber-600 underline"><em>Von der Genaden-Wahl</em></Link>
+            <Link href="/book/697c8e0f6000fdec2f130604" className="text-accent-rust hover:text-accent-rust underline"><em>Von der Genaden-Wahl</em></Link>
             {' '}&mdash; on the election of grace
           </li>
           <li>
-            <Link href="/book/698255e93e158c7e3c9a4f72" className="text-amber-700 hover:text-amber-600 underline"><em>Het Mysterium Magnum</em></Link>
+            <Link href="/book/698255e93e158c7e3c9a4f72" className="text-accent-rust hover:text-accent-rust underline"><em>Het Mysterium Magnum</em></Link>
             {' '}&mdash; Dutch translation, evidence of B&ouml;hme&apos;s reach
           </li>
         </ul>
 
         <p className="text-secondary leading-relaxed mb-8">
           Reading Fechner&apos;s{' '}
-          <Link href="/book/6992cbd5018b80967354b452" className="text-amber-700 hover:text-amber-600 underline"><em>Jakob B&ouml;hme</em></Link>
+          <Link href="/book/6992cbd5018b80967354b452" className="text-accent-rust hover:text-accent-rust underline"><em>Jakob B&ouml;hme</em></Link>
           {' '}alongside B&ouml;hme&apos;s own{' '}
-          <Link href="/book/69525f56ab34727b1f046185" className="text-amber-700 hover:text-amber-600 underline"><em>Aurora</em></Link>
+          <Link href="/book/69525f56ab34727b1f046185" className="text-accent-rust hover:text-accent-rust underline"><em>Aurora</em></Link>
           {' '}is to watch one of the strangest and most productive encounters in intellectual history: a laboratory physicist finding in a visionary shoemaker the metaphysical framework for a new science.
         </p>
 
@@ -385,13 +385,13 @@ export default function FechnerBohmePage() {
           <div className="flex flex-wrap gap-4">
             <Link
               href="/search?q=Fechner"
-              className="inline-flex items-center gap-2 bg-amber-700 text-white px-6 py-3 rounded-lg hover:bg-amber-800 transition-colors"
+              className="inline-flex items-center gap-2 bg-accent-rust text-white px-6 py-3 rounded-lg hover:bg-accent-rust/90 transition-colors"
             >
               Search &ldquo;Fechner&rdquo;
             </Link>
             <Link
               href="/book/6992cbd5018b80967354b452"
-              className="inline-flex items-center gap-2 border border-amber-700 text-amber-700 px-6 py-3 rounded-lg hover:bg-amber-50 transition-colors"
+              className="inline-flex items-center gap-2 border border-accent-rust text-accent-rust px-6 py-3 rounded-lg hover:bg-accent-gold/8 transition-colors"
             >
               Read the B&ouml;hme study
             </Link>

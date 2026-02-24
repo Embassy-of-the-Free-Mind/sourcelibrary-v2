@@ -67,7 +67,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
 
   const buttonClass = variant === 'header'
     ? "flex items-center gap-2 px-3 py-1.5 text-stone-300 hover:text-white hover:bg-white/10 rounded-lg text-sm transition-colors"
-    : "flex items-center gap-2 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg font-medium text-sm transition-colors";
+    : "flex items-center gap-2 px-4 py-2 bg-accent-gold/80 hover:bg-accent-rust text-white rounded-lg font-medium text-sm transition-colors";
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -92,13 +92,13 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
               disabled={downloading !== null}
               className="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50"
             >
-              <Languages className="w-4 h-4 text-green-600" />
+              <Languages className="w-4 h-4 text-status-success" />
               <div className="text-left">
                 <div className="text-sm font-medium text-stone-900">English Translation</div>
                 <div className="text-xs text-stone-500">Translated text only</div>
               </div>
               {downloading === 'translation' && (
-                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
               )}
             </button>
           )}
@@ -115,7 +115,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
                 <div className="text-xs text-stone-500">Source language transcription</div>
               </div>
               {downloading === 'ocr' && (
-                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
               )}
             </button>
           )}
@@ -132,7 +132,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
                 <div className="text-xs text-stone-500">Original + translation per page</div>
               </div>
               {downloading === 'both' && (
-                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
               )}
             </button>
           )}
@@ -147,13 +147,13 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
               disabled={downloading !== null}
               className="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-stone-50 transition-colors disabled:opacity-50"
             >
-              <BookOpen className="w-4 h-4 text-green-600" />
+              <BookOpen className="w-4 h-4 text-status-success" />
               <div className="text-left">
                 <div className="text-sm font-medium text-stone-900">English Translation</div>
                 <div className="text-xs text-stone-500">E-reader format</div>
               </div>
               {downloading === 'epub-translation' && (
-                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
               )}
             </button>
           )}
@@ -170,7 +170,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
                 <div className="text-xs text-stone-500">E-reader format</div>
               </div>
               {downloading === 'epub-ocr' && (
-                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
               )}
             </button>
           )}
@@ -187,7 +187,7 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
                 <div className="text-xs text-stone-500">E-reader format</div>
               </div>
               {downloading === 'epub-both' && (
-                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
               )}
             </button>
           )}
@@ -196,15 +196,15 @@ export default function DownloadButton({ bookId, hasTranslations, hasOcr, hasIma
             <button
               onClick={() => handleDownload('epub-parallel')}
               disabled={downloading !== null}
-              className="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-amber-50 transition-colors disabled:opacity-50 border-t border-stone-100"
+              className="w-full px-3 py-2.5 flex items-center gap-3 hover:bg-accent-gold/8 transition-colors disabled:opacity-50 border-t border-stone-100"
             >
-              <Columns className="w-4 h-4 text-amber-700" />
+              <Columns className="w-4 h-4 text-accent-rust" />
               <div className="text-left">
                 <div className="text-sm font-medium text-stone-900">Parallel Text</div>
                 <div className="text-xs text-stone-500">OCR + translation facing pages</div>
               </div>
               {downloading === 'epub-parallel' && (
-                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-amber-500 rounded-full animate-spin" />
+                <div className="ml-auto w-4 h-4 border-2 border-stone-300 border-t-accent-gold rounded-full animate-spin" />
               )}
             </button>
           )}

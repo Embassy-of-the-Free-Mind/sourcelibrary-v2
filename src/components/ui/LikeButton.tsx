@@ -190,7 +190,7 @@ export default memo(function LikeButton({
           ${buttonSizes[size]} rounded-full
           transition-all duration-200
           ${liked
-            ? 'text-red-500'
+            ? 'text-status-error'
             : 'text-gray-400 hover:text-red-400 group-hover:scale-110'
           }
         `}
@@ -206,7 +206,7 @@ export default memo(function LikeButton({
           className={`
             ${textSizes[size]} font-medium
             transition-colors duration-200
-            ${liked ? 'text-red-500' : 'text-gray-500'}
+            ${liked ? 'text-status-error' : 'text-gray-500'}
           `}
         >
           {count}

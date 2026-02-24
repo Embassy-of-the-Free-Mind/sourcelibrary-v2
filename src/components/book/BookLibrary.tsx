@@ -358,7 +358,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
 
       {/* Section Heading */}
       <div className="mb-8">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+        <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 italic font-display">
           {showCollections ? 'Explore the Library' : 'Library'}
         </h2>
         {showCollections && (
@@ -453,7 +453,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
           {/* Recently Translated */}
           {recentlyTranslated.length > 0 && (
             <div className="mt-12">
-              <h3 className="text-xl md:text-2xl text-gray-900 mb-4" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+              <h3 className="text-xl md:text-2xl text-gray-900 mb-4 font-display">
                 Recently Translated
               </h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
@@ -584,7 +584,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
           {searchQuery && searchQuery.length >= 2 && (
             <button
               onClick={handleSearch}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-600 text-white rounded-full text-sm font-medium hover:bg-amber-700 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-accent-rust text-white rounded-full text-sm font-medium hover:bg-accent-rust/90 transition-colors"
             >
               <Search className="w-4 h-4" />
               Search External Catalogs
@@ -643,7 +643,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                     );
                   })()}
                   {book.translation_percent !== undefined && (
-                    <span className={book.translation_percent === 100 ? 'text-accent-rust' : 'text-amber-600'}>
+                    <span className={book.translation_percent === 100 ? 'text-accent-rust' : 'text-accent-rust'}>
                       {book.translation_percent === 100 ? '✓ Translated' : `${book.translation_percent}% translated`}
                     </span>
                   )}
@@ -684,7 +684,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
         <div className="mt-12 pt-8 border-t border-stone-200">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-xl font-semibold text-stone-900" style={{ fontFamily: 'Playfair Display, Georgia, serif' }}>
+              <h3 className="text-xl font-semibold text-stone-900 font-display">
                 Discover More
               </h3>
               <p className="text-sm text-stone-500 mt-1">
@@ -700,7 +700,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
 
           {catalogSearching ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+              <Loader2 className="w-8 h-8 animate-spin text-accent-rust" />
               <span className="ml-3 text-stone-500">Searching catalogs...</span>
             </div>
           ) : catalogResults.length === 0 ? (
@@ -713,7 +713,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
               {catalogResults.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-start gap-4 p-4 bg-white rounded-lg border border-stone-200 hover:border-amber-300 transition-colors"
+                  className="flex items-start gap-4 p-4 bg-white rounded-lg border border-stone-200 hover:border-accent-gold/20 transition-colors"
                 >
                   {/* Thumbnail */}
                   <div className="w-16 h-20 bg-stone-100 rounded overflow-hidden flex-shrink-0">
@@ -767,7 +767,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                         {importedBooks[item.id] ? (
                           <Link
                             href={`/book/${importedBooks[item.id]}`}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-status-success text-white rounded-lg hover:bg-status-success/90 transition-colors"
                           >
                             <Check className="w-3.5 h-3.5" />
                             Open
@@ -776,7 +776,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                           <button
                             onClick={() => importFromIA(item)}
                             disabled={importingIds.has(item.id)}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                             {importingIds.has(item.id) ? (
                               <Loader2 className="w-3.5 h-3.5 animate-spin" />

@@ -11,7 +11,7 @@ export default function Footer() {
           <span className="hidden sm:inline">•</span>
           <a
             href="mailto:derek@ancientwisdomtrust.org"
-            className="text-amber-700 hover:text-amber-800 transition-colors"
+            className="text-accent-rust hover:text-accent-gold-dark transition-colors"
           >
             derek@ancientwisdomtrust.org
           </a>

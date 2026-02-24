@@ -144,7 +144,7 @@ export default memo(function PageThumbnail({ page, bookId, index }: PageThumbnai
             <div className="w-2 h-2 rounded-full bg-blue-500" title="OCR complete" />
           )}
           {hasTranslation && (
-            <div className="w-2 h-2 rounded-full bg-green-500" title="Translated" />
+            <div className="w-2 h-2 rounded-full bg-status-success" title="Translated" />
           )}
           {hasSummary && (
             <div className="w-2 h-2 rounded-full bg-purple-500" title="Summarized" />
@@ -153,7 +153,7 @@ export default memo(function PageThumbnail({ page, bookId, index }: PageThumbnai
 
         {isComplete && (
           <div className="absolute top-1 right-1">
-            <CheckCircle className="w-4 h-4 text-green-500 bg-white rounded-full" />
+            <CheckCircle className="w-4 h-4 text-status-success bg-white rounded-full" />
           </div>
         )}
       </div>

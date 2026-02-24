@@ -54,7 +54,7 @@ export default function CapturedPageReview({
           disabled={isUploading}
           className="flex flex-col items-center gap-2 text-white disabled:opacity-50"
         >
-          <div className="w-14 h-14 rounded-full bg-green-600 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-status-success flex items-center justify-center">
             {isUploading ? (
               <Loader2 className="w-6 h-6 animate-spin" />
             ) : (

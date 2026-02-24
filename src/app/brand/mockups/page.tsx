@@ -36,8 +36,8 @@ function MockupPanel({ label, variant, children }: {
       <div className="flex items-center gap-2 mb-2">
         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
           variant === 'before'
-            ? 'bg-red-50 text-red-600 border border-red-200'
-            : 'bg-green-50 text-green-600 border border-green-200'
+            ? 'bg-red-50 text-status-error border border-red-200'
+            : 'bg-green-50 text-status-success border border-green-200'
         }`}>
           {variant === 'before' ? 'Current' : 'Proposed'}
         </span>
@@ -203,7 +203,7 @@ function BookIndexBefore() {
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="text-sm font-medium text-stone-700">Places</span>
-              <span className="text-xs text-green-600">(8)</span>
+              <span className="text-xs text-status-success">(8)</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {['Alexandria', 'Florence', 'Rome', 'Athens'].map(name => (
@@ -506,9 +506,9 @@ function NotesRendererBefore() {
           <p className="text-sm text-indigo-700">Caput III. De Lapide Philosophorum</p>
         </div>
 
-        <div className="p-3 rounded-lg bg-amber-50 border border-amber-300">
-          <p className="text-xs uppercase tracking-wide text-amber-700 mb-1">Blockquote</p>
-          <p className="text-sm text-amber-700 italic">&ldquo;As above, so below.&rdquo;</p>
+        <div className="p-3 rounded-lg bg-accent-gold/8 border border-accent-gold/20">
+          <p className="text-xs uppercase tracking-wide text-accent-rust mb-1">Blockquote</p>
+          <p className="text-sm text-accent-rust italic">&ldquo;As above, so below.&rdquo;</p>
         </div>
 
         <div className="inline-block px-2 py-0.5 rounded bg-purple-100 text-purple-700 text-xs">
@@ -700,14 +700,14 @@ export default function MockupsPage() {
                 <div className="flex items-center gap-2 shrink-0 w-32">
                   <span className={`text-[10px] px-1.5 py-0.5 rounded ${
                     effort === 'Low' ? 'bg-green-50 text-green-700' :
-                    effort === 'Medium' ? 'bg-amber-50 text-amber-700' :
+                    effort === 'Medium' ? 'bg-accent-gold/8 text-accent-gold-dark' :
                     'bg-red-50 text-red-700'
                   }`}>{effort} effort</span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0 w-32">
                   <span className={`text-[10px] px-1.5 py-0.5 rounded ${
                     impact === 'High' ? 'bg-green-50 text-green-700' :
-                    impact === 'Medium' ? 'bg-amber-50 text-amber-700' :
+                    impact === 'Medium' ? 'bg-accent-gold/8 text-accent-gold-dark' :
                     'bg-stone-100 text-stone-600'
                   }`}>{impact} impact</span>
                 </div>

@@ -619,7 +619,7 @@ export default function SplitPage({ params }: PageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <span className="text-sm font-medium text-amber-700">
+              <span className="text-sm font-medium text-accent-rust">
                 {selectedPages.size} page{selectedPages.size !== 1 ? 's' : ''} selected
                 {detectingPages.size > 0 && (
                   <span className="ml-2 text-blue-600">
@@ -630,7 +630,7 @@ export default function SplitPage({ params }: PageProps) {
               <select
                 value={detectionAlgo}
                 onChange={(e) => setDetectionAlgo(e.target.value as DetectionAlgo)}
-                className="px-3 py-1.5 text-sm font-medium bg-stone-100 border border-stone-200 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="px-3 py-1.5 text-sm font-medium bg-stone-100 border border-stone-200 rounded-lg text-stone-700 focus:outline-none focus:ring-2 focus-visible:ring-accent-rust"
               >
                 <option value="auto">Auto Detect</option>
                 <option value="gemini">Gemini AI</option>
@@ -641,7 +641,7 @@ export default function SplitPage({ params }: PageProps) {
               </select>
               <button
                 onClick={selectAll}
-                className="px-4 py-2 text-sm font-medium bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200"
+                className="px-4 py-2 text-sm font-medium bg-accent-gold/15 text-accent-gold-dark rounded-lg hover:bg-accent-gold/25"
               >
                 Select All ({splittablePages.length})
               </button>
@@ -686,7 +686,7 @@ export default function SplitPage({ params }: PageProps) {
                     >
                       -0.5%
                     </button>
-                    <span className="px-2 py-1 text-xs font-medium bg-amber-100 text-amber-800 rounded min-w-[4rem] text-center">
+                    <span className="px-2 py-1 text-xs font-medium bg-accent-gold/15 text-accent-gold-dark rounded min-w-[4rem] text-center">
                       {(averagePosition / 10).toFixed(1)}%
                     </span>
                     <button
@@ -735,7 +735,7 @@ export default function SplitPage({ params }: PageProps) {
                 className={`bg-white rounded-lg border p-3 transition-all ${
                   isSplittable
                     ? `cursor-pointer ${isSelected
-                        ? 'border-amber-400 ring-2 ring-amber-200'
+                        ? 'border-accent-gold/30 ring-2 ring-accent-gold/25'
                         : 'border-stone-200 hover:border-stone-300'}`
                     : isRightHalf
                       ? 'border-green-200 bg-green-50/30'
@@ -760,7 +760,7 @@ export default function SplitPage({ params }: PageProps) {
                     </div>
                   )}
                   {isRightHalf && (
-                    <div className="absolute top-2 right-2 px-2 py-1 bg-green-500/90 text-white text-xs rounded">
+                    <div className="absolute top-2 right-2 px-2 py-1 bg-status-success/90 text-white text-xs rounded">
                       Right
                     </div>
                   )}
@@ -784,7 +784,7 @@ export default function SplitPage({ params }: PageProps) {
                         Detecting...
                       </span>
                     ) : (
-                      <span className={`text-xs font-medium ${splitWarnings[page.id] ? 'text-orange-600' : 'text-green-600'}`}>
+                      <span className={`text-xs font-medium ${splitWarnings[page.id] ? 'text-orange-600' : 'text-status-success'}`}>
                         {((splitPositions[page.id] ?? 500) / 10).toFixed(1)}%
                         {splitWarnings[page.id] ? ' ⚠️' : ' ✓'}
                       </span>
@@ -796,7 +796,7 @@ export default function SplitPage({ params }: PageProps) {
                         resetSplitPage(page.id);
                       }}
                       disabled={resettingPage === page.id}
-                      className="flex items-center gap-1 px-2 py-1 text-xs text-stone-500 hover:text-amber-600 hover:bg-amber-50 rounded disabled:opacity-50"
+                      className="flex items-center gap-1 px-2 py-1 text-xs text-stone-500 hover:text-accent-rust hover:bg-accent-gold/8 rounded disabled:opacity-50"
                       title="Reset this split"
                     >
                       {resettingPage === page.id ? (
@@ -818,7 +818,7 @@ export default function SplitPage({ params }: PageProps) {
             <p className="text-stone-500">No pages found</p>
             <Link
               href={`/book/${bookId}`}
-              className="inline-block mt-4 text-amber-600 hover:text-amber-800"
+              className="inline-block mt-4 text-accent-rust hover:text-accent-gold-dark"
             >
               Back to Book →
             </Link>
@@ -837,7 +837,7 @@ export default function SplitPage({ params }: PageProps) {
           <button
             onClick={() => setShowConfirm(true)}
             disabled={splitting || detectingPages.size > 0}
-            className="flex items-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-full shadow-lg hover:bg-amber-700 disabled:opacity-50 text-sm font-medium"
+            className="flex items-center gap-2 px-6 py-3 bg-accent-rust text-white rounded-full shadow-lg hover:bg-accent-rust/90 disabled:opacity-50 text-sm font-medium"
           >
             {splitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />
@@ -875,7 +875,7 @@ export default function SplitPage({ params }: PageProps) {
               </button>
               <button
                 onClick={applySplits}
-                className="flex items-center gap-2 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 text-sm"
               >
                 <Scissors className="w-4 h-4" />
                 Split Now
@@ -908,8 +908,8 @@ export default function SplitPage({ params }: PageProps) {
             <p className="text-sm text-stone-600 mb-4">
               You&apos;re about to reset <strong>{alreadySplitPages.length} split page{alreadySplitPages.length !== 1 ? 's' : ''}</strong> back to their original state.
             </p>
-            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
-              <p className="text-sm text-amber-800 font-medium">
+            <div className="bg-accent-gold/8 border border-accent-gold/20 rounded-lg p-3 mb-4">
+              <p className="text-sm text-accent-gold-dark font-medium">
                 Warning: All OCR and translation data on the split pages will be permanently deleted.
               </p>
             </div>
@@ -925,7 +925,7 @@ export default function SplitPage({ params }: PageProps) {
               </button>
               <button
                 onClick={resetAllSplits}
-                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 text-sm"
+                className="flex items-center gap-2 px-4 py-2 bg-status-error text-white rounded-lg hover:bg-status-error/90 text-sm"
               >
                 <RotateCcw className="w-4 h-4" />
                 Reset All
@@ -948,7 +948,7 @@ export default function SplitPage({ params }: PageProps) {
 
       {/* Split Results Modal */}
       {reviewingSplits.length > 0 && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl max-w-5xl w-full mx-4 max-h-[90vh] overflow-hidden">
             <div className="flex items-center justify-between p-4 border-b border-stone-200">
               <div>
@@ -987,7 +987,7 @@ export default function SplitPage({ params }: PageProps) {
                         <button
                           onClick={() => resetSplitPage(page.id)}
                           disabled={isResetting}
-                          className="flex items-center gap-1 p-1 text-stone-500 hover:text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-50"
+                          className="flex items-center gap-1 p-1 text-stone-500 hover:text-accent-rust opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-50"
                           title="Reset this split"
                         >
                           {isResetting ? (

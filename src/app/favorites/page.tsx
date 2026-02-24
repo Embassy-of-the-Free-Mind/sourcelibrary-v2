@@ -431,7 +431,7 @@ export default function FavoritesPage() {
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <span className="text-xs text-faint">p. {page.pageNumber}</span>
-                        <span className="inline-flex items-center gap-1 text-xs text-red-500">
+                        <span className="inline-flex items-center gap-1 text-xs text-status-error">
                           <Heart className="w-3 h-3" fill="currentColor" />
                           {page.likeCount}
                         </span>

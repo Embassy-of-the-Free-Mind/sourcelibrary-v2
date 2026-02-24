@@ -23,7 +23,7 @@ export default function HighlightedText({ text, query, className }: HighlightedT
     <span className={className}>
       {segments.map((segment, i) =>
         segment.highlight ? (
-          <mark key={i} className="bg-amber-200/60 text-amber-900 rounded-sm px-0.5">
+          <mark key={i} className="bg-accent-gold/25 text-accent-gold-dark rounded-sm px-0.5">
             {segment.text}
           </mark>
         ) : (

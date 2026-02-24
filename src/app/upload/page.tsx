@@ -220,16 +220,16 @@ export default function UploadPage() {
         {/* Progress Steps */}
         <div className="flex items-center justify-center mb-8">
           <div className="flex items-center gap-3">
-            <div className={`flex items-center gap-2 ${step === 'metadata' ? 'text-amber-700' : 'text-green-700'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'metadata' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'
+            <div className={`flex items-center gap-2 ${step === 'metadata' ? 'text-accent-rust' : 'text-green-700'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'metadata' ? 'bg-accent-gold/15 text-accent-gold-dark' : 'bg-green-100 text-green-700'
                 }`}>
                 {step === 'metadata' ? '1' : <CheckCircle className="w-5 h-5" />}
               </div>
               <span className="text-sm font-medium hidden sm:inline">Book Details</span>
             </div>
             <div className="w-12 h-px bg-stone-300" />
-            <div className={`flex items-center gap-2 ${step === 'upload' ? 'text-amber-700' : step === 'complete' ? 'text-green-700' : 'text-stone-400'}`}>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'upload' ? 'bg-amber-100 text-amber-700' :
+            <div className={`flex items-center gap-2 ${step === 'upload' ? 'text-accent-rust' : step === 'complete' ? 'text-green-700' : 'text-stone-400'}`}>
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${step === 'upload' ? 'bg-accent-gold/15 text-accent-gold-dark' :
                 step === 'complete' ? 'bg-green-100 text-green-700' : 'bg-stone-100'
                 }`}>
                 {step === 'complete' ? <CheckCircle className="w-5 h-5" /> : '2'}
@@ -250,7 +250,7 @@ export default function UploadPage() {
         {/* Error Display */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-status-error flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-red-800 font-medium">Error</p>
               <p className="text-red-700 text-sm">{error}</p>
@@ -262,9 +262,9 @@ export default function UploadPage() {
         {step === 'metadata' && (
           <div className="space-y-6">
             {/* Instructions */}
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+            <div className="bg-accent-gold/8 border border-accent-gold/20 rounded-xl p-4 text-sm text-accent-gold-dark">
               <p className="font-medium mb-1">Two ways to add a book:</p>
-              <ol className="list-decimal list-inside space-y-1 text-amber-700">
+              <ol className="list-decimal list-inside space-y-1 text-accent-rust">
                 <li><strong>Search catalogs</strong> — Find the book in Internet Archive or BPH to pre-fill metadata</li>
                 <li><strong>Enter manually</strong> — Skip the search and fill in the form below</li>
               </ol>
@@ -354,7 +354,7 @@ export default function UploadPage() {
               {selectedCatalogItem && (
                 <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-green-600" />
+                    <CheckCircle className="w-5 h-5 text-status-success" />
                     <span className="text-sm text-green-800">
                       Selected: <strong>{selectedCatalogItem.title}</strong>
                     </span>
@@ -376,8 +376,8 @@ export default function UploadPage() {
             {/* Book Metadata Form */}
             <div className="bg-white rounded-xl border border-stone-200 p-6 sm:p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-                  <BookOpen className="w-5 h-5 text-amber-700" />
+                <div className="w-10 h-10 rounded-full bg-accent-gold/15 flex items-center justify-center">
+                  <BookOpen className="w-5 h-5 text-accent-rust" />
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-stone-900">Book Details</h2>
@@ -388,7 +388,7 @@ export default function UploadPage() {
               <form onSubmit={handleCreateBook} className="space-y-5">
                 <div>
                   <label className="block text-sm font-medium text-stone-700 mb-1">
-                    Original Title <span className="text-red-500">*</span>
+                    Original Title <span className="text-status-error">*</span>
                   </label>
                   <input
                     type="text"
@@ -396,7 +396,7 @@ export default function UploadPage() {
                     onChange={(e) => setTitle(e.target.value)}
                     required
                     placeholder="e.g., Fons Sapientiae"
-                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                   />
                   <p className="text-xs text-stone-500 mt-1">The title in the original language</p>
                 </div>
@@ -410,7 +410,7 @@ export default function UploadPage() {
                     value={displayTitle}
                     onChange={(e) => setDisplayTitle(e.target.value)}
                     placeholder="e.g., Fountain of Wisdom"
-                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                   />
                   <p className="text-xs text-stone-500 mt-1">English title for display (optional)</p>
                 </div>
@@ -425,7 +425,7 @@ export default function UploadPage() {
                       value={author}
                       onChange={(e) => setAuthor(e.target.value)}
                       placeholder="e.g., Anonymous"
-                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                     />
                   </div>
 
@@ -438,7 +438,7 @@ export default function UploadPage() {
                       value={published}
                       onChange={(e) => setPublished(e.target.value)}
                       placeholder="e.g., c. 1650"
-                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                     />
                   </div>
                 </div>
@@ -450,7 +450,7 @@ export default function UploadPage() {
                   <select
                     value={language}
                     onChange={(e) => setLanguage(e.target.value)}
-                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                   >
                     {languages.map(lang => (
                       <option key={lang} value={lang}>{lang}</option>
@@ -469,7 +469,7 @@ export default function UploadPage() {
                       value={placeOfPublication}
                       onChange={(e) => setPlaceOfPublication(e.target.value)}
                       placeholder="e.g., Venice"
-                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                     />
                   </div>
 
@@ -482,7 +482,7 @@ export default function UploadPage() {
                       value={publisher}
                       onChange={(e) => setPublisher(e.target.value)}
                       placeholder="e.g., Aldus Manutius"
-                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                     />
                   </div>
                 </div>
@@ -496,7 +496,7 @@ export default function UploadPage() {
                     value={printer}
                     onChange={(e) => setPrinter(e.target.value)}
                     placeholder="e.g., Johann Froben"
-                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                    className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                   />
                 </div>
 
@@ -515,7 +515,7 @@ export default function UploadPage() {
                       <select
                         value={imageSourceProvider}
                         onChange={(e) => setImageSourceProvider(e.target.value as ImageSourceProvider)}
-                        className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                        className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                       >
                         <option value="efm">Embassy of the Free Mind (BPH)</option>
                         <option value="internet_archive">Internet Archive</option>
@@ -538,7 +538,7 @@ export default function UploadPage() {
                       <select
                         value={imageLicense}
                         onChange={(e) => setImageLicense(e.target.value)}
-                        className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                        className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                       >
                         {IMAGE_LICENSES.map(lic => (
                           <option key={lic.id} value={lic.id}>{lic.name} - {lic.description}</option>
@@ -556,7 +556,7 @@ export default function UploadPage() {
                       value={imageSourceUrl}
                       onChange={(e) => setImageSourceUrl(e.target.value)}
                       placeholder="e.g., https://archive.org/details/..."
-                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                     />
                     <p className="text-xs text-stone-500 mt-1">Link to the original source of the scans</p>
                   </div>
@@ -570,7 +570,7 @@ export default function UploadPage() {
                       value={imageAttribution}
                       onChange={(e) => setImageAttribution(e.target.value)}
                       placeholder="e.g., Scans courtesy of British Library"
-                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500"
+                      className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                     />
                     <p className="text-xs text-stone-500 mt-1">Required credit text (if any)</p>
                   </div>
@@ -579,7 +579,7 @@ export default function UploadPage() {
                 <button
                   type="submit"
                   disabled={creating || !title}
-                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-accent-rust text-white rounded-lg font-medium hover:bg-accent-rust/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {creating ? (
                     <>
@@ -602,8 +602,8 @@ export default function UploadPage() {
         {step === 'upload' && (
           <div className="bg-white rounded-xl border border-stone-200 p-6 sm:p-8">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-                <Upload className="w-5 h-5 text-amber-700" />
+              <div className="w-10 h-10 rounded-full bg-accent-gold/15 flex items-center justify-center">
+                <Upload className="w-5 h-5 text-accent-rust" />
               </div>
               <div>
                 <h1 className="text-xl font-semibold text-stone-900">Upload Pages</h1>
@@ -615,7 +615,7 @@ export default function UploadPage() {
             <div
               onDrop={handleDrop}
               onDragOver={handleDragOver}
-              className="border-2 border-dashed border-stone-300 rounded-xl p-8 text-center hover:border-amber-400 transition-colors cursor-pointer"
+              className="border-2 border-dashed border-stone-300 rounded-xl p-8 text-center hover:border-accent-gold/30 transition-colors cursor-pointer"
               onClick={() => document.getElementById('file-input')?.click()}
             >
               <input
@@ -705,7 +705,7 @@ export default function UploadPage() {
               <button
                 onClick={handleUpload}
                 disabled={uploading || files.length === 0}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-accent-rust text-white rounded-lg font-medium hover:bg-accent-rust/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {uploading ? (
                   <>
@@ -727,7 +727,7 @@ export default function UploadPage() {
         {step === 'complete' && bookId && (
           <div className="bg-white rounded-xl border border-stone-200 p-6 sm:p-8 text-center">
             <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-green-600" />
+              <CheckCircle className="w-8 h-8 text-status-success" />
             </div>
             <h1 className="text-2xl font-semibold text-stone-900 mb-2">Book Created!</h1>
             <p className="text-stone-600 mb-6">
@@ -737,7 +737,7 @@ export default function UploadPage() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href={`/book/${bookId}/split`}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-accent-rust text-white rounded-lg font-medium hover:bg-accent-rust/90 transition-colors"
               >
                 Split Pages
               </Link>

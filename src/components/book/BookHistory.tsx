@@ -142,7 +142,7 @@ export default function BookHistory({ bookId }: BookHistoryProps) {
               <BookLoader size="xs" />
             </div>
           ) : error ? (
-            <div className="text-center py-8 text-red-500 text-sm">
+            <div className="text-center py-8 text-status-error text-sm">
               Failed to load history: {error}
             </div>
           ) : !data || data.events.length === 0 ? (

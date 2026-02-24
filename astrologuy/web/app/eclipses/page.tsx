@@ -1,8 +1,11 @@
 "use client";
 
 import { EclipseTimeline } from "@/components/viz/EclipseTimeline";
+import { useHydrated } from "@/lib/hooks";
 
 export default function EclipsesPage() {
+  const hydrated = useHydrated();
+
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
       <div className="text-center mb-8">
@@ -14,7 +17,11 @@ export default function EclipsesPage() {
         </p>
       </div>
 
-      <EclipseTimeline count={15} />
+      {hydrated ? <EclipseTimeline count={15} /> : (
+        <div className="w-full h-48 flex items-center justify-center text-faint text-sm">
+          Computing eclipse forecast&hellip;
+        </div>
+      )}
     </div>
   );
 }

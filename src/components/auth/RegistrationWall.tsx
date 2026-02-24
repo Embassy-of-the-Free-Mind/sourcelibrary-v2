@@ -37,7 +37,7 @@ export default function RegistrationWall({ bookTitle, freeBookCount }: Registrat
             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
           </svg>
         </div>
-        <h3 className="text-xl font-medium mb-2" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+        <h3 className="text-xl font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
           Check your email
         </h3>
         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
@@ -50,7 +50,7 @@ export default function RegistrationWall({ bookTitle, freeBookCount }: Registrat
   return (
     <div className="max-w-lg mx-auto text-center py-16 px-6">
       <div className="card p-8">
-        <h3 className="text-2xl font-medium mb-3" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+        <h3 className="text-2xl font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
           Register to keep reading
         </h3>
         <p className="text-sm mb-6" style={{ color: 'var(--text-muted)', lineHeight: '1.6' }}>

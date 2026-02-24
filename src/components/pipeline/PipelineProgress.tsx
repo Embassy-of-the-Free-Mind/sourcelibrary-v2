@@ -25,11 +25,11 @@ interface PipelineProgressProps {
 function StepIcon({ status }: { status: PipelineStepState['status'] }) {
   switch (status) {
     case 'completed':
-      return <Check className="w-5 h-5 text-green-600" />;
+      return <Check className="w-5 h-5 text-status-success" />;
     case 'running':
-      return <Loader2 className="w-5 h-5 text-amber-600 animate-spin" />;
+      return <Loader2 className="w-5 h-5 text-accent-rust animate-spin" />;
     case 'failed':
-      return <AlertCircle className="w-5 h-5 text-red-600" />;
+      return <AlertCircle className="w-5 h-5 text-status-error" />;
     case 'skipped':
       return <SkipForward className="w-5 h-5 text-stone-400" />;
     default:
@@ -48,7 +48,7 @@ function ProgressBar({ completed, total }: { completed: number; total: number })
       </div>
       <div className="h-2 bg-stone-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-amber-500 transition-all duration-300"
+          className="h-full bg-accent-gold/80 transition-all duration-300"
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -68,7 +68,7 @@ export default function PipelineProgress({ steps, currentStep }: PipelineProgres
             key={step.key}
             className={`p-4 rounded-lg border transition-colors ${
               isActive
-                ? 'border-amber-300 bg-amber-50'
+                ? 'border-accent-gold/20 bg-accent-gold/8'
                 : state.status === 'completed'
                 ? 'border-green-200 bg-green-50'
                 : state.status === 'failed'
@@ -117,7 +117,7 @@ export default function PipelineProgress({ steps, currentStep }: PipelineProgres
                 )}
 
                 {state.status === 'failed' && state.error && (
-                  <p className="text-sm text-red-600 mt-2">
+                  <p className="text-sm text-status-error mt-2">
                     Error: {state.error}
                   </p>
                 )}
@@ -125,7 +125,7 @@ export default function PipelineProgress({ steps, currentStep }: PipelineProgres
                 {state.status === 'completed' && typeof state.result?.reviewUrl === 'string' && (
                   <a
                     href={state.result.reviewUrl}
-                    className="inline-flex items-center gap-1 mt-2 text-sm text-amber-700 hover:text-amber-800 font-medium"
+                    className="inline-flex items-center gap-1 mt-2 text-sm text-accent-rust hover:text-accent-gold-dark font-medium"
                   >
                     Review & Mint DOI →
                   </a>

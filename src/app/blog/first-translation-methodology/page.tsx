@@ -42,7 +42,7 @@ export default function FirstTranslationMethodologyPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           If you haven&apos;t read the companion post,{' '}
-          <Link href="/blog/first-translations" className="text-amber-700 hover:text-amber-600 underline">
+          <Link href="/blog/first-translations" className="text-accent-rust hover:text-accent-rust underline">
             <em>First English Translations</em>
           </Link>{' '}
           describes what these books are and why they matter. This post is about how we find them.
@@ -142,11 +142,11 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Books classified as <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> or <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">likely_first</code> are surfaced throughout the site with a gold &ldquo;First Translation&rdquo; badge. This appears on book cards in the library and collection pages, in search results, and on the book detail page. The badge is also available as a search filter &mdash; you can search for books and filter to show only first translations.
+          Books classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> or <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">likely_first</code> are surfaced throughout the site with a gold &ldquo;First Translation&rdquo; badge. This appears on book cards in the library and collection pages, in search results, and on the book detail page. The badge is also available as a search filter &mdash; you can search for books and filter to show only first translations.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          We chose to group <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> and <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">likely_first</code> together because the practical difference between them is small for readers. Both indicate that no prior English translation is known to exist. The distinction matters for bibliographic precision, but not for the reader who wants to know whether this text has been available in English before.
+          We chose to group <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> and <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">likely_first</code> together because the practical difference between them is small for readers. Both indicate that no prior English translation is known to exist. The distinction matters for bibliographic precision, but not for the reader who wants to know whether this text has been available in English before.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -155,7 +155,7 @@ export default function FirstTranslationMethodologyPage() {
 
         <p className="text-secondary leading-relaxed mb-6">
           The AI classification is a first pass. For specific collections where precision matters most, we perform deeper bibliographic verification. The{' '}
-          <Link href="/collections/astrology" className="text-amber-700 hover:text-amber-600 underline">Astrology &amp; Divination</Link>{' '}
+          <Link href="/collections/astrology" className="text-accent-rust hover:text-accent-rust underline">Astrology &amp; Divination</Link>{' '}
           collection is the best example: each of its 95 identified first translations was reviewed against subject bibliographies, WorldCat, and specialist databases for Indian astrological literature. Of those 95, 85 were confirmed with 80%+ confidence that no prior English translation exists.
         </p>
 
@@ -184,11 +184,11 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong className="text-primary">Partial translations are a grey area.</strong> Many canonical texts have been partially translated &mdash; selected chapters in anthologies, key passages quoted in secondary literature, or abridged versions. The <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">has_partial</code> status captures this, but the line between &ldquo;partial translation&rdquo; and &ldquo;no translation&rdquo; is blurry. A book that has had three pages quoted in a scholarly article is not &ldquo;translated&rdquo; in any meaningful sense, but neither is it entirely unknown to English readers.
+          <strong className="text-primary">Partial translations are a grey area.</strong> Many canonical texts have been partially translated &mdash; selected chapters in anthologies, key passages quoted in secondary literature, or abridged versions. The <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">has_partial</code> status captures this, but the line between &ldquo;partial translation&rdquo; and &ldquo;no translation&rdquo; is blurry. A book that has had three pages quoted in a scholarly article is not &ldquo;translated&rdquo; in any meaningful sense, but neither is it entirely unknown to English readers.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          <strong className="text-primary">Confidence is unevenly distributed.</strong> The model is most reliable for texts that are either very famous (it knows the translation history) or very obscure (the absence of any mention is itself strong evidence). It is least reliable for texts of intermediate fame &mdash; well-known enough that a translation <em>might</em> exist, but not so famous that the model can definitively say. These cases are typically classified as <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">uncertain</code> and do not receive the first-translation badge.
+          <strong className="text-primary">Confidence is unevenly distributed.</strong> The model is most reliable for texts that are either very famous (it knows the translation history) or very obscure (the absence of any mention is itself strong evidence). It is least reliable for texts of intermediate fame &mdash; well-known enough that a translation <em>might</em> exist, but not so famous that the model can definitively say. These cases are typically classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> and do not receive the first-translation badge.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -205,19 +205,19 @@ export default function FirstTranslationMethodologyPage() {
 
         <ul className="space-y-3 text-secondary mb-8">
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1.5 shrink-0">&bull;</span>
+            <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span><strong>Stored with provenance</strong> &mdash; the model used, the confidence level, the reasoning, and the date of classification are all preserved in the book&apos;s metadata record.</span>
           </li>
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1.5 shrink-0">&bull;</span>
+            <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span><strong>Based on actual text analysis</strong> &mdash; the model reads the OCR text, not just the title. This catches cases where a title might suggest familiarity but the actual content is a different or expanded work.</span>
           </li>
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1.5 shrink-0">&bull;</span>
-            <span><strong>Conservative by default</strong> &mdash; only <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> and <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">likely_first</code> receive the badge. Books classified as <code className="text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded text-sm">uncertain</code> are not badged, even if the balance of probability suggests no prior translation exists.</span>
+            <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
+            <span><strong>Conservative by default</strong> &mdash; only <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">confirmed_first</code> and <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">likely_first</code> receive the badge. Books classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> are not badged, even if the balance of probability suggests no prior translation exists.</span>
           </li>
           <li className="flex items-start gap-3">
-            <span className="text-amber-600 mt-1.5 shrink-0">&bull;</span>
+            <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
             <span><strong>Correctable</strong> &mdash; if a specialist identifies a prior translation we missed, the classification can be updated. The original text and translation remain valuable regardless.</span>
           </li>
         </ul>
@@ -272,12 +272,12 @@ export default function FirstTranslationMethodologyPage() {
           If you are a specialist in any of the fields covered by Source Library &mdash; Renaissance Latin literature, Early Modern German, Sanskrit philosophical traditions, alchemical bibliography &mdash; we would welcome your review of our classifications. If you know of a prior English translation that we missed, or if you can confirm that our classification is correct, that information makes the library more reliable for everyone.
         </p>
 
-        <div className="bg-amber-50/50 rounded-lg p-6 border border-amber-100 mb-8">
+        <div className="bg-accent-gold/5 rounded-lg p-6 border border-accent-gold/15 mb-8">
           <p className="text-stone-700 leading-relaxed">
             <strong>Explore:</strong>{' '}
-            <Link href="/search?first_translation=true" className="text-amber-700 hover:text-amber-600 underline">Search all first translations</Link>{' '}
+            <Link href="/search?first_translation=true" className="text-accent-rust hover:text-accent-rust underline">Search all first translations</Link>{' '}
             or read the companion post on{' '}
-            <Link href="/blog/first-translations" className="text-amber-700 hover:text-amber-600 underline">what these first translations contain</Link>.
+            <Link href="/blog/first-translations" className="text-accent-rust hover:text-accent-rust underline">what these first translations contain</Link>.
             Every book preserves the original text alongside the translation for verification.
           </p>
         </div>
@@ -285,7 +285,7 @@ export default function FirstTranslationMethodologyPage() {
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed">
             Source Library is a project of the Embassy of the Free Mind. Everything in the collection is CC0 public domain. Corrections and feedback are welcome &mdash;{' '}
-            <a href="mailto:derek@ancientwisdomtrust.org" className="text-amber-700 hover:text-amber-600 underline">derek@ancientwisdomtrust.org</a>.
+            <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-rust hover:text-accent-rust underline">derek@ancientwisdomtrust.org</a>.
           </p>
         </div>
       </article>

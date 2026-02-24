@@ -80,7 +80,7 @@ export default function CollectionDetailPage({
       <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] flex items-center justify-center">
         <div className="text-center">
           <p className="text-stone-600 text-xl mb-4">{error || 'Collection not found'}</p>
-          <Link href="/gallery/collections" className="text-amber-600 hover:text-amber-700">
+          <Link href="/gallery/collections" className="text-accent-rust hover:text-accent-rust">
             Browse all collections
           </Link>
         </div>
@@ -105,7 +105,7 @@ export default function CollectionDetailPage({
                   {data.imageCount} {data.imageCount === 1 ? 'image' : 'images'}
                 </p>
               </div>
-              <Layers className="w-6 h-6 text-amber-500" />
+              <Layers className="w-6 h-6 text-accent-gold" />
             </div>
           </div>
         </div>
@@ -166,7 +166,7 @@ function CollectionImageCard({ item }: { item: CollectionImage }) {
           )}
 
           {item.galleryQuality && item.galleryQuality >= 0.9 && (
-            <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-amber-500 text-white">
+            <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded text-[10px] bg-accent-gold/80 text-white">
               ★
             </span>
           )}

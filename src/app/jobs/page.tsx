@@ -67,7 +67,7 @@ export default function JobsPage() {
             <Link href="/" className="hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
               <ChevronLeft className="w-5 h-5" />
             </Link>
-            <h1 className="text-xl font-medium" style={{ fontFamily: 'Cormorant Garamond, Georgia, serif', color: 'var(--text-primary)' }}>
+            <h1 className="text-xl font-medium" style={{ color: 'var(--text-primary)' }}>
               Jobs Manager
             </h1>
             <Link

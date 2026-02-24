@@ -93,7 +93,7 @@ export default function ReadingSidebar({
                   border-l-4 transition-colors
                   min-h-[56px] sm:min-h-0
                   ${isActive
-                    ? 'border-amber-500 bg-amber-50 text-amber-900'
+                    ? 'border-accent-gold bg-accent-gold/8 text-accent-gold-dark'
                     : 'border-transparent hover:bg-stone-50 active:bg-stone-100 text-stone-700'
                   }
                 `}

@@ -1,7 +1,6 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useState, useMemo } from "react";
+import { MoonDisplay } from "@/components/viz/MoonDisplay";
 import { PhaseWheel } from "@/components/viz/PhaseWheel";
 import { MoonHeatmap } from "@/components/viz/MoonHeatmap";
 import { YearCalendar } from "@/components/viz/YearCalendar";
@@ -9,23 +8,12 @@ import { DriftChart } from "@/components/viz/DriftChart";
 import { ZodiacWheel } from "@/components/viz/ZodiacWheel";
 import { EclipseTimeline } from "@/components/viz/EclipseTimeline";
 import { BirthDateInput } from "@/components/ui/BirthDateInput";
-import { useMoonPhase, useMoonSign, useMoonCycle } from "@/lib/hooks";
+import { useHydrated } from "@/lib/hooks";
 import { useAppState } from "@/lib/store";
 import { SYNODIC_MONTH } from "@/lib/constants";
 
-const Scene = dynamic(() => import("@/components/three/Scene").then((m) => m.Scene), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full aspect-square max-w-xs mx-auto flex items-center justify-center">
-      <PhaseWheel size={240} />
-    </div>
-  ),
-});
-
 export default function EssayPage() {
-  const phase = useMoonPhase();
-  const sign = useMoonSign();
-  const cycle = useMoonCycle();
+  const hydrated = useHydrated();
   const { birthDate } = useAppState();
 
   return (
@@ -70,41 +58,34 @@ export default function EssayPage() {
         <div className="essay-prose">
           <p>
             Before we talk about calendars, look up. Or rather, look here.
-            Right now, at this moment, the moon is a{" "}
-            <strong className="text-accent-gold">{phase.phase_name}</strong>.
-            It&rsquo;s {phase.illumination}% illuminated, {cycle.moon_age.toFixed(1)} days
-            into its current cycle, and sitting in the constellation of{" "}
-            <strong>{sign.name}</strong> {sign.symbol}.
+            The visualization below shows the moon&rsquo;s current phase,
+            computed in real time from orbital mechanics &mdash; the same
+            math that governs the tides and eclipses.
           </p>
         </div>
 
         <figure className="essay-figure">
-          <div className="max-w-xs mx-auto">
-            <Scene />
-          </div>
+          {hydrated ? (
+            <MoonDisplay />
+          ) : (
+            <div className="w-full max-w-sm mx-auto text-center py-8">
+              <div className="text-5xl">&#127761;</div>
+              <div className="text-faint text-sm mt-3">Computing moon position&hellip;</div>
+            </div>
+          )}
           <figcaption>
-            The moon as it appears right now &mdash; {phase.phase_name},{" "}
-            {phase.illumination}% illuminated. The 3D model shows
-            the actual sunlight angle computed from orbital mechanics.
+            The illuminated portion matches the real moon right now.
+            The sun indicator shows the light source direction.
+            Every data point is computed from the actual positions of Earth, Moon, and Sun.
           </figcaption>
         </figure>
 
         <div className="essay-prose">
           <p>
-            This isn&rsquo;t decorative. Every data point on this page is computed
-            in real time from the actual positions of the Earth, Moon, and Sun.
-            No server, no lookup table &mdash; your browser is doing the orbital
-            mechanics right now.
+            This isn&rsquo;t decorative. No server, no lookup table &mdash;
+            your browser is doing the orbital mechanics right now, using the
+            same <em>astronomy-engine</em> library that powers planetarium software.
           </p>
-          {cycle.next_phase && (
-            <p>
-              The next phase shift is in{" "}
-              <strong className="text-accent-gold">
-                {cycle.next_phase.days_away.toFixed(1)} days
-              </strong>, when the moon enters{" "}
-              {["New Moon", "First Quarter", "Full Moon", "Third Quarter"][cycle.next_phase.quarter]}.
-            </p>
-          )}
         </div>
       </section>
 
@@ -131,7 +112,11 @@ export default function EssayPage() {
 
         <figure className="essay-figure">
           <div className="max-w-sm mx-auto">
-            <PhaseWheel size={320} />
+            {hydrated ? <PhaseWheel size={300} /> : (
+              <div className="w-[300px] h-[300px] mx-auto flex items-center justify-center text-faint text-sm">
+                Loading phase wheel&hellip;
+              </div>
+            )}
           </div>
           <figcaption>
             The eight phases of a single lunation. New moon at top, full moon at bottom.
@@ -204,7 +189,11 @@ export default function EssayPage() {
         </div>
 
         <figure className="essay-figure essay-figure-wide">
-          <MoonHeatmap />
+          {hydrated ? <MoonHeatmap /> : (
+            <div className="w-full h-32 flex items-center justify-center text-faint text-sm">
+              Computing illumination data&hellip;
+            </div>
+          )}
           <figcaption>
             Every day of the year, colored by moon illumination. Each bright wave is a
             full moon; each dark trough is a new moon. The rhythm is as regular as breathing &mdash;
@@ -253,7 +242,11 @@ export default function EssayPage() {
         </div>
 
         <figure className="essay-figure essay-figure-wide">
-          <YearCalendar />
+          {hydrated ? <YearCalendar /> : (
+            <div className="w-full h-64 flex items-center justify-center text-faint text-sm">
+              Building 13-month calendar&hellip;
+            </div>
+          )}
           <figcaption>
             The year as thirteen 28-day months. Each month starts at the new moon.
             Real lunations average {SYNODIC_MONTH} days &mdash; the extra ~1.5 days per month
@@ -321,7 +314,11 @@ export default function EssayPage() {
         )}
 
         <figure className="essay-figure essay-figure-wide">
-          <DriftChart />
+          {hydrated ? <DriftChart /> : (
+            <div className="w-full h-48 flex items-center justify-center text-faint text-sm">
+              Calculating lunar drift&hellip;
+            </div>
+          )}
           <figcaption>
             {birthDate
               ? "Your lunar birthday drifting across 19 years. Gold bars = normal years, violet = years with a leap month (13 lunations). After 19 years, it returns to nearly the same Gregorian date."
@@ -367,7 +364,11 @@ export default function EssayPage() {
         </div>
 
         <figure className="essay-figure essay-figure-wide">
-          <ZodiacWheel />
+          {hydrated ? <ZodiacWheel /> : (
+            <div className="w-full h-64 flex items-center justify-center text-faint text-sm">
+              Drawing zodiac wheel&hellip;
+            </div>
+          )}
           <figcaption>
             The twelve Chinese zodiac animals, colored by element. Your zodiac animal
             {birthDate ? " is highlighted based on your birth year" : " will highlight when you enter your birth date above"}.
@@ -410,7 +411,11 @@ export default function EssayPage() {
         </div>
 
         <figure className="essay-figure">
-          <EclipseTimeline count={6} />
+          {hydrated ? <EclipseTimeline count={6} /> : (
+            <div className="w-full h-48 flex items-center justify-center text-faint text-sm">
+              Computing eclipse forecast&hellip;
+            </div>
+          )}
           <figcaption>
             The next six eclipses, computed from orbital mechanics. Solar eclipses
             always fall on a new moon; lunar eclipses always fall on a full moon.
