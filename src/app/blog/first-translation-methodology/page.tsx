@@ -18,7 +18,7 @@ export default function FirstTranslationMethodologyPage() {
           title="How We Identify First Translations"
           subtitle="The methodology behind Source Library's classification system"
         >
-          <p className="text-stone-400 text-sm mt-4">23 February 2026 &middot; 10 min read</p>
+          <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 24 February 2026 &middot; 14 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -176,6 +176,143 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Automated catalog verification
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          In February 2026, we added a second layer of verification: automated searches of three major library catalogs for every non-English book in the collection. This moves beyond the AI model&apos;s parametric knowledge to check actual bibliographic records.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Stage 1: Catalog search
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          For each of the 1,370 non-English books in the library, the system searches three catalog APIs for English-language editions of the same work:
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border-light bg-stone-50">
+                <th className="text-left px-4 py-3 text-primary font-semibold">Catalog</th>
+                <th className="text-left px-4 py-3 text-primary font-semibold">What it searches</th>
+                <th className="text-left px-4 py-3 text-primary font-semibold">Strength</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Open Library</td>
+                <td className="px-4 py-3 text-secondary">Title + author search, filtered to English-language results</td>
+                <td className="px-4 py-3 text-secondary">Good coverage of published books; includes ISBNs and edition data</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Google Books</td>
+                <td className="px-4 py-3 text-secondary">Title + author search with language filter</td>
+                <td className="px-4 py-3 text-secondary">Broadest coverage; includes out-of-print and academic works</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-secondary font-medium">Internet Archive</td>
+                <td className="px-4 py-3 text-secondary">Full-text search across digitized books</td>
+                <td className="px-4 py-3 text-secondary">Many translations digitized; includes public domain texts</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The search uses both the original-language title and the English display title (when available) to maximize recall. Catalog results are stored as structured evidence &mdash; each hit includes the English title, translator name, publication year, publisher, catalog identifier, and a direct link to the catalog record.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Stage 2: Validation
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Catalog search results are noisy. A search for Ficino&apos;s <em>De Vita</em> returns dozens of results, most of which are about Ficino rather than translations <em>of</em> Ficino. Stage 2 uses an AI model (Gemini 2.5 Flash) to evaluate each catalog hit and determine whether it represents an actual English translation of the specific work in question.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The validation follows two parallel paths:
+        </p>
+
+        <div className="space-y-4 mb-8">
+          <div className="bg-white rounded-xl border border-border-light p-5">
+            <p className="font-semibold text-primary mb-2">Path A: Verify catalog claims</p>
+            <p className="text-secondary text-sm leading-relaxed">
+              For books where the catalog search found potential translations, the model examines each result and asks: &ldquo;Is this actually a translation of this specific work, or is it a different book by the same author, a secondary study, or an unrelated work that happens to share a similar title?&rdquo; Only results that pass this filter are stored as validated translations.
+            </p>
+          </div>
+          <div className="bg-white rounded-xl border border-border-light p-5">
+            <p className="font-semibold text-primary mb-2">Path B: LLM knowledge check</p>
+            <p className="text-secondary text-sm leading-relaxed">
+              For books where no catalog results were found, the model draws on its own training data to check whether it knows of any English translation &mdash; including translations too recent for the catalogs, translations published in journals or anthologies, or translations from publishers not well indexed by Open Library or Google Books. These claims are stored separately and flagged as unverified.
+            </p>
+          </div>
+        </div>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Three dispositions
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          After both stages, each book receives one of three dispositions:
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border-light bg-stone-50">
+                <th className="text-left px-4 py-3 text-primary font-semibold">Disposition</th>
+                <th className="text-right px-4 py-3 text-primary font-semibold">Books</th>
+                <th className="text-left px-4 py-3 text-primary font-semibold">Meaning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">confirmed_first</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">685</td>
+                <td className="px-4 py-3 text-secondary">No English translation found in any catalog, and the model does not know of one either. Strong evidence that this is a first translation.</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">translation_found</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">105</td>
+                <td className="px-4 py-3 text-secondary">At least one verified English translation was found in library catalogs. The book page now links to the catalog record.</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-secondary font-medium">needs_review</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">580</td>
+                <td className="px-4 py-3 text-secondary">No catalog evidence, but the model claims to know of a translation. These claims have a high hallucination rate (~67% in our sampling) and are not displayed to readers.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          The hallucination problem
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">needs_review</code> disposition deserves special attention. When asked &ldquo;Do you know of an English translation of this work?&rdquo;, the model sometimes produces plausible-looking but fictitious references &mdash; a real translator paired with a nonexistent book, or a real publisher with a fabricated publication year. In our sampling, roughly two-thirds of the model&apos;s claims in this category could not be verified against any catalog or bibliographic record.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          This is a known failure mode of large language models: they generate text that looks like a correct answer, drawing on real bibliographic patterns, but the specific combination is invented. We handle this by treating <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">needs_review</code> items as unverified and not displaying them to readers. Catalog-verified translations (<code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">translation_found</code>) always link directly to the external catalog record, so readers can verify the claim independently.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          What readers see
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          For books where the catalog verification found existing English translations, the book&apos;s bibliographic information panel now shows a &ldquo;Known English Translations&rdquo; section. Each entry includes the English title, translator, publication year, publisher, and a link to the catalog record on Open Library, Google Books, or Internet Archive. This allows readers to compare Source Library&apos;s AI translation with existing scholarly translations of the same work.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          For books confirmed as first translations, the panel notes that no prior English translation was found in the searched catalogs, naming which APIs were queried. This makes the basis for the first-translation claim explicit and auditable.
+        </p>
+
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Known limitations
         </h2>
 
@@ -191,8 +328,12 @@ export default function FirstTranslationMethodologyPage() {
           <strong className="text-primary">Confidence is unevenly distributed.</strong> The model is most reliable for texts that are either very famous (it knows the translation history) or very obscure (the absence of any mention is itself strong evidence). It is least reliable for texts of intermediate fame &mdash; well-known enough that a translation <em>might</em> exist, but not so famous that the model can definitively say. These cases are typically classified as <code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">uncertain</code> and do not receive the first-translation badge.
         </p>
 
-        <p className="text-secondary leading-relaxed mb-8">
+        <p className="text-secondary leading-relaxed mb-6">
           <strong className="text-primary">The classification is a snapshot.</strong> A book classified as a first translation today could have a human translation published tomorrow. The classification reflects the state of knowledge at the time of enrichment. We do not currently re-run the classification automatically, though books that pass through the pipeline again will receive updated assessments.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          <strong className="text-primary">Catalog coverage is incomplete.</strong> Open Library, Google Books, and Internet Archive are large but not exhaustive. Translations published by small academic presses, included in anthologies, or printed before the digital era may not appear in any of these catalogs. The catalog search is a strong negative signal &mdash; if a translation exists and has been widely distributed, it will usually appear &mdash; but it cannot catch everything. Specialised databases like WorldCat, COPAC, and subject bibliographies (checked during manual deep verification) provide better coverage for niche translations.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -227,7 +368,7 @@ export default function FirstTranslationMethodologyPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          As of February 2026, the enrichment system has classified every book in the collection. The breakdown:
+          As of February 2026, the enrichment system has classified every book in the collection. The initial AI classification:
         </p>
 
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
@@ -256,8 +397,45 @@ export default function FirstTranslationMethodologyPage() {
           </table>
         </div>
 
-        <p className="text-secondary leading-relaxed mb-8">
+        <p className="text-secondary leading-relaxed mb-6">
           529 books &mdash; roughly 12% of the collection &mdash; are classified as first translations. This is consistent with what we would expect from a collection focused on pre-1800 Latin, German, and Sanskrit texts in fields like alchemy, astrology, and Christian mysticism, where English translation rates have historically been very low.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The subsequent catalog verification refined this picture. Of the 1,370 non-English books searched:
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border-light bg-stone-50">
+                <th className="text-left px-4 py-3 text-primary font-semibold">Verification result</th>
+                <th className="text-right px-4 py-3 text-primary font-semibold">Books</th>
+                <th className="text-left px-4 py-3 text-primary font-semibold">What it means</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Confirmed first translation</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">685</td>
+                <td className="px-4 py-3 text-secondary">No English translation found in any catalog or by the model</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Existing translation found</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">105</td>
+                <td className="px-4 py-3 text-secondary">Catalog-verified English translation exists, now linked on book page</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-secondary font-medium">Needs manual review</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">580</td>
+                <td className="px-4 py-3 text-secondary">Model claims a translation exists but no catalog evidence; ~67% hallucination rate</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          The 685 confirmed first translations are a stronger claim than the original 529 from the AI classification. They have been checked against three independent catalog systems and found no prior English edition. The 105 books where translations were found demonstrate that the verification process works in both directions &mdash; surfacing existing translations is just as valuable as confirming their absence.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
