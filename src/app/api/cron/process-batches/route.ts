@@ -46,11 +46,16 @@ export async function GET(request: NextRequest) {
     // PHASE 1: Collect results from completed jobs
     // ============================================
 
-    // Query only child jobs (those with parent_job_id) and existing standalone jobs
-    // New parent-child jobs use job_name, old jobs use gemini_job_name
+    // Query child/standalone jobs that need result collection.
+    // Include 'completed' status — jobs can reach this state via updateParentJobProgress()
+    // or other code paths without having their results collected.
+    // Exclude parent jobs (those with child_job_ids) — they don't have their own Gemini results.
+    // Skip already-collected jobs (results_collected: true) for idempotency.
     const pendingJobs = await db.collection('batch_jobs')
       .find({
-        status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+        status: { $in: ['pending', 'processing', 'completed', 'completed_with_errors', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+        results_collected: { $ne: true },
+        child_job_ids: { $exists: false },
         $or: [
           { job_name: { $exists: true, $nin: [null, ''] } },
           { gemini_job_name: { $exists: true, $nin: [null, ''] } }

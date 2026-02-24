@@ -205,9 +205,17 @@ async function validateCatalogClaims(book) {
 
 // ── Path B: LLM knowledge check ─────────────────────────────────────
 
+function sanitizeForPrompt(s, maxLen = 120) {
+  if (!s) return 'Unknown';
+  // Keep original if short enough
+  if (s.length <= maxLen) return s;
+  // Truncate at word boundary
+  return s.substring(0, maxLen).replace(/\s+\S*$/, '') + '...';
+}
+
 function buildKnowledgePrompt(book) {
-  const title = book.display_title || book.title || 'Unknown';
-  const author = book.author || 'Unknown';
+  const title = sanitizeForPrompt(book.display_title || book.title, 150);
+  const author = sanitizeForPrompt(book.author, 80);
   const published = book.published || book.year || 'Unknown';
   const language = book.language || book.ai_metadata?.language || 'Unknown';
 
@@ -253,13 +261,13 @@ If this is a well-known work, confirm with high confidence.
 If this is an obscure text, be honest about uncertainty.`;
 }
 
-async function checkWithLLM(book) {
+async function callGeminiForKnowledge(book, retryCount = 0) {
   const client = getClient();
   const model = client.getGenerativeModel({
     model: MODEL,
     generationConfig: {
       temperature: 0.1,
-      maxOutputTokens: 2048,
+      maxOutputTokens: 4096,
       responseMimeType: 'application/json',
     },
   });
@@ -280,11 +288,31 @@ async function checkWithLLM(book) {
   try {
     parsed = JSON.parse(text);
   } catch {
+    // Try to extract JSON from partial response
     const m = text.match(/\{[\s\S]*\}/);
     if (m) {
       try { parsed = JSON.parse(m[0]); }
-      catch { return { error: 'parse_failed', raw: text.substring(0, 300) }; }
-    } else {
+      catch { /* fall through to retry */ }
+    }
+    // If still no parse, try fixing truncated JSON
+    if (!parsed) {
+      try {
+        // Attempt to close truncated JSON: add missing brackets
+        let fixed = text.trim();
+        if (!fixed.endsWith('}')) {
+          // Find last complete property
+          const lastComma = fixed.lastIndexOf(',');
+          const lastBrace = fixed.lastIndexOf('}');
+          if (lastComma > lastBrace) fixed = fixed.substring(0, lastComma);
+          // Close arrays and objects
+          const openBrackets = (fixed.match(/\[/g) || []).length - (fixed.match(/\]/g) || []).length;
+          const openBraces = (fixed.match(/\{/g) || []).length - (fixed.match(/\}/g) || []).length;
+          fixed += ']'.repeat(Math.max(0, openBrackets)) + '}'.repeat(Math.max(0, openBraces));
+        }
+        parsed = JSON.parse(fixed);
+      } catch { /* fall through to retry */ }
+    }
+    if (!parsed) {
       return { error: 'parse_failed', raw: text.substring(0, 300) };
     }
   }
@@ -297,6 +325,17 @@ async function checkWithLLM(book) {
     },
     duration_ms: durationMs,
   };
+}
+
+async function checkWithLLM(book) {
+  // First attempt
+  let result = await callGeminiForKnowledge(book);
+  if (result.error === 'parse_failed') {
+    // Retry once with delay
+    await new Promise(r => setTimeout(r, 1000));
+    result = await callGeminiForKnowledge(book);
+  }
+  return result;
 }
 
 // ── Cost ────────────────────────────────────────────────────────────

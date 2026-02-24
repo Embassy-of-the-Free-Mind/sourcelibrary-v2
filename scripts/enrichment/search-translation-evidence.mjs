@@ -379,12 +379,14 @@ async function main() {
   const limit = args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1]) : 1000;
   const offset = args.includes('--offset') ? parseInt(args[args.indexOf('--offset') + 1]) : 0;
   const bookId = args.includes('--book-id') ? args[args.indexOf('--book-id') + 1] : null;
+  const allBooks = args.includes('--all-books');
 
   console.log(`=== Stage 1: Search Translation Evidence ===`);
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'APPLYING'}`);
   console.log(`Model: ${MODEL} | Concurrency: ${CONCURRENCY} | Keys: ${apiKeys.length}`);
   console.log(`Limit: ${limit} | Offset: ${offset}`);
   if (bookId) console.log(`Book: ${bookId}`);
+  if (allBooks) console.log(`Scope: ALL BOOKS (not just is_first_translation)`);
   console.log();
 
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 3, serverSelectionTimeoutMS: 10000 });
@@ -392,16 +394,30 @@ async function main() {
   const db = client.db(MONGODB_DB);
 
   // Find books to process
-  const query = bookId
-    ? { id: bookId }
-    : {
-        is_first_translation: true,
-        // Skip books already searched via catalog_search
-        $or: [
-          { 'translation_verification.source': { $ne: 'catalog_search' } },
-          { 'translation_verification': { $exists: false } },
-        ],
-      };
+  let query;
+  if (bookId) {
+    query = { id: bookId };
+  } else if (allBooks) {
+    // All non-hidden, non-English books with pages, not yet searched
+    query = {
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+      language: { $not: /^english$/i },
+      $or: [
+        { 'translation_verification.source': { $ne: 'catalog_search' } },
+        { 'translation_verification': { $exists: false } },
+      ],
+    };
+  } else {
+    query = {
+      is_first_translation: true,
+      // Skip books already searched via catalog_search
+      $or: [
+        { 'translation_verification.source': { $ne: 'catalog_search' } },
+        { 'translation_verification': { $exists: false } },
+      ],
+    };
+  }
 
   const books = await db.collection('books')
     .find(query)

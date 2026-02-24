@@ -47,6 +47,9 @@ export interface Book {
   is_first_translation?: boolean; // AI-detected: first known English translation of this text
   license?: string;             // SPDX identifier (e.g., "CC0-1.0", "CC-BY-4.0")
 
+  // Translation verification (catalog search + LLM knowledge check)
+  translation_verification?: TranslationVerification;
+
   // Dublin Core metadata for library interoperability
   dublin_core?: DublinCoreMetadata;
 
@@ -184,4 +187,39 @@ export interface Chapter {
   pageNumber: number;
   level: number;  // 1 = top-level division, 2 = major chapter, 3 = sub-chapter
   confidence?: 'high' | 'medium' | 'low'; // AI's confidence in this chapter boundary
+}
+
+// Translation verification from catalog search + LLM knowledge check
+export type TranslationDisposition = 'confirmed_first' | 'translation_found' | 'needs_review';
+
+export interface TranslationVerification {
+  source: 'catalog_search';
+  searched_at: Date;
+  has_english_translation: boolean;
+  translations?: TranslationEvidence[];
+  confidence?: 'high' | 'medium' | 'low';
+  reasoning?: string;
+  search_evidence?: {
+    apis_queried: string[];
+    total_results: number;
+    evidence_strength: 'none' | 'weak' | 'moderate' | 'strong';
+  };
+  // Stage 2 validation
+  disposition?: TranslationDisposition;
+  disposition_reasoning?: string;
+  disposition_at?: Date;
+  validated_translations?: TranslationEvidence[];  // Path A: catalog-verified
+  llm_knowledge_translations?: TranslationEvidence[];  // Path B: LLM claims (may hallucinate)
+}
+
+export interface TranslationEvidence {
+  english_title?: string;
+  translator?: string;
+  pub_year?: string;
+  publisher?: string;
+  completeness?: 'complete' | 'partial' | 'excerpts' | 'unknown';
+  evidence_source?: string;  // 'open_library' | 'google_books' | 'internet_archive' | 'llm_knowledge'
+  catalog_id?: string;
+  validated?: boolean;
+  notes?: string;
 }

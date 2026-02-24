@@ -93,7 +93,7 @@ async function callGemini(prompt, retries = 3) {
         contents: prompt,
         config: {
           temperature: 0.3,
-          maxOutputTokens: 8192,
+          maxOutputTokens: 16384,
           responseMimeType: 'application/json',
         },
       });
@@ -151,47 +151,35 @@ async function main() {
   console.log(`Estimated batches: ${Math.ceil(Math.min(totalToProcess - OFFSET, LIMIT) / BATCH_SIZE)}`);
   console.log('');
 
-  // Fetch entities
-  const cursor = entitiesCol.find(query)
+  // Load all entity IDs upfront to avoid cursor timeout during slow Gemini calls
+  const allEntities = await entitiesCol.find(query)
     .sort({ book_count: -1 })
     .skip(OFFSET)
-    .project({ name: 1, type: 1, book_count: 1, books: { $slice: 6 } });
+    .limit(LIMIT === Infinity ? 0 : LIMIT)
+    .project({ name: 1, type: 1, book_count: 1, books: { $slice: 6 } })
+    .toArray();
 
-  let entities = [];
+  console.log(`Loaded ${allEntities.length} entities into memory\n`);
+
   let processed = 0;
   let enriched = 0;
   let errors = 0;
   let totalInputTokens = 0;
   let totalOutputTokens = 0;
 
-  for await (const entity of cursor) {
-    if (processed >= LIMIT) break;
-    entities.push(entity);
-
-    if (entities.length >= BATCH_SIZE) {
-      const result = await processBatch(entities, entitiesCol, usageCol, DRY_RUN);
-      enriched += result.enriched;
-      errors += result.errors;
-      totalInputTokens += result.inputTokens;
-      totalOutputTokens += result.outputTokens;
-      processed += entities.length;
-
-      console.log(`  Progress: ${processed}/${Math.min(totalToProcess - OFFSET, LIMIT)} | Enriched: ${enriched} | Errors: ${errors} | Tokens: ${totalInputTokens}in/${totalOutputTokens}out`);
-      entities = [];
-
-      // Rate limit: 100ms between calls
-      await new Promise(r => setTimeout(r, 100));
-    }
-  }
-
-  // Process remaining
-  if (entities.length > 0 && processed < LIMIT) {
-    const result = await processBatch(entities, entitiesCol, usageCol, DRY_RUN);
+  for (let i = 0; i < allEntities.length; i += BATCH_SIZE) {
+    const batch = allEntities.slice(i, i + BATCH_SIZE);
+    const result = await processBatch(batch, entitiesCol, usageCol, DRY_RUN);
     enriched += result.enriched;
     errors += result.errors;
     totalInputTokens += result.inputTokens;
     totalOutputTokens += result.outputTokens;
-    processed += entities.length;
+    processed += batch.length;
+
+    console.log(`  Progress: ${processed}/${allEntities.length} | Enriched: ${enriched} | Errors: ${errors} | Tokens: ${totalInputTokens}in/${totalOutputTokens}out`);
+
+    // Rate limit: 100ms between calls
+    await new Promise(r => setTimeout(r, 100));
   }
 
   // Estimate cost

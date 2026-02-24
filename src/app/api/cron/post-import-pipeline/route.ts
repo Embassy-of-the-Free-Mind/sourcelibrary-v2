@@ -10,6 +10,7 @@ import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { enqueuePagesForJob } from '@/lib/queue-utils';
 import { createCronLogger } from '@/lib/cron-logger';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { syncBookToGitHub } from '@/lib/git-sync';
 
 export const maxDuration = 300;
 
@@ -140,6 +141,7 @@ export async function GET(request: NextRequest) {
     images_submitted: 0,
     images_advanced: 0,
     finalized: 0,
+    git_synced: 0,
     needs_attention: 0,
     stale_retried: 0,
     stale_failed: 0,
@@ -199,6 +201,12 @@ export async function GET(request: NextRequest) {
 
         await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
         log.finalized++;
+
+        // Sync text to GitHub (non-blocking — don't fail the pipeline on git errors)
+        try {
+          const gitResult = await syncBookToGitHub(book.id);
+          if (gitResult.synced) log.git_synced++;
+        } catch { /* git sync is best-effort */ }
       }
     }
 
@@ -1155,6 +1163,7 @@ export async function GET(request: NextRequest) {
       images_submitted: log.images_submitted,
       images_advanced: log.images_advanced,
       finalized: log.finalized,
+      git_synced: log.git_synced,
       needs_attention: log.needs_attention,
       stale_retried: log.stale_retried,
       stale_failed: log.stale_failed,
@@ -1188,6 +1197,7 @@ export async function GET(request: NextRequest) {
       chapters_extracted: log.chapters_extracted,
       images_submitted: log.images_submitted,
       finalized: log.finalized,
+      git_synced: log.git_synced,
       needs_attention: log.needs_attention,
       stale_retried: log.stale_retried,
       stale_failed: log.stale_failed,

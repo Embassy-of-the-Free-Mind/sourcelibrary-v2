@@ -144,6 +144,17 @@ export async function GET(request: NextRequest) {
       byType[r.type as keyof typeof byType]++;
     }
 
+    // Log search query (fire-and-forget)
+    db.collection('analytics_events').insertOne({
+      event: 'search_query',
+      query,
+      results_count: results.length,
+      filters: { type, source: 'index' },
+      timestamp: new Date(),
+      ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
+      created_at: new Date(),
+    }).catch(() => {});
+
     return NextResponse.json({
       query,
       total: results.length,

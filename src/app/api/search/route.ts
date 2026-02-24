@@ -378,7 +378,7 @@ export async function GET(request: NextRequest) {
       event: 'search_query',
       query,
       results_count: results.length,
-      filters: { language, category, year, bookId, library },
+      filters: { language, category, year, bookId, library, source: 'global' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
       created_at: new Date(),

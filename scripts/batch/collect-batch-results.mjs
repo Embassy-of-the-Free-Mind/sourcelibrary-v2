@@ -294,12 +294,18 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Also pick up "saved" jobs that have 0 pages (broken by metadata.key bug)
+  // Pick up jobs needing collection:
+  // 1. pending/processing — not yet checked with Gemini
+  // 2. completed/completed_with_errors — parent set status but results not collected
+  // 3. saved with 0 pages — broken by metadata.key bug
+  // Exclude parent jobs (child_job_ids exists) — they don't have Gemini results
   const pendingJobs = await db.collection('batch_jobs')
     .find({
+      child_job_ids: { $exists: false },
       $or: [
         {
-          status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+          status: { $in: ['pending', 'processing', 'completed', 'completed_with_errors', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+          results_collected: { $ne: true },
           $or: [
             { job_name: { $exists: true, $nin: [null, ''] } },
             { gemini_job_name: { $exists: true, $nin: [null, ''] } }
