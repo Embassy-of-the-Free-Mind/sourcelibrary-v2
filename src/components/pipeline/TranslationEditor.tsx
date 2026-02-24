@@ -1017,7 +1017,7 @@ export default function TranslationEditor({
 
           return (
             <div
-              className="flex-1 flex flex-col lg:flex-row overflow-hidden relative"
+              className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden relative"
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
@@ -1030,7 +1030,7 @@ export default function TranslationEditor({
             >
               {/* Source Image Panel */}
               {showImagePanel && (
-                <div className={`w-full ${panelWidth} flex flex-col flex-1 min-h-0 lg:flex-initial lg:h-auto`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
                   </div>
@@ -1050,7 +1050,7 @@ export default function TranslationEditor({
 
               {/* OCR Panel */}
               {showOcrPanel && (
-                <div className={`w-full ${panelWidth} flex flex-col flex-1 min-h-0 lg:flex-initial`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
@@ -1119,7 +1119,7 @@ export default function TranslationEditor({
 
               {/* Translation Panel */}
               {showTranslationPanel && (
-                <div className={`w-full ${panelWidth} flex flex-col min-h-0 flex-1`} style={{ background: 'var(--bg-white)' }}>
+                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
