@@ -137,6 +137,26 @@ const TOOLS: Tool[] = [
     },
   },
 
+  {
+    name: "search_within_book",
+    description:
+      "Search inside a specific book's page content (OCR and translations). Returns matching pages with snippets showing where the query appears. Use after finding a book via search_library or list_books to locate specific passages within it.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        book_id: {
+          type: "string",
+          description: "The book ID to search within",
+        },
+        query: {
+          type: "string",
+          description: "Search query — finds matches in both original text (OCR) and English translations",
+        },
+      },
+      required: ["book_id", "query"],
+    },
+  },
+
   // ── Reading & Text ──
   {
     name: "get_book",
@@ -511,6 +531,42 @@ async function searchPassages(args: {
   };
 }
 
+async function searchWithinBook(args: {
+  book_id: string;
+  query: string;
+}) {
+  const params = new URLSearchParams({ q: args.query });
+  const result = (await apiGet(
+    `/books/${args.book_id}/search`,
+    params
+  )) as Record<string, unknown>;
+
+  const results = (
+    result.results as Array<Record<string, unknown>>
+  )?.map((r) => {
+    const matches = r.matches as Array<Record<string, unknown>>;
+    // Prefer translation snippets, fall back to OCR
+    const bestMatch =
+      matches?.find((m) => m.field === "translation") || matches?.[0];
+    return {
+      page: r.pageNumber,
+      page_id: r.pageId,
+      snippet: bestMatch?.snippet,
+      source: bestMatch?.field,
+      match_count: matches?.length || 0,
+      read_url: `https://sourcelibrary.org/book/${args.book_id}/page/${r.pageId}`,
+    };
+  });
+
+  return {
+    book_id: args.book_id,
+    query: result.query,
+    total: result.total,
+    results,
+    tip: "Use get_quote with book_id and page number to get the full text with academic citations.",
+  };
+}
+
 async function listBooks(args: {
   search?: string;
   language?: string;
@@ -856,7 +912,7 @@ async function getBookImages(args: {
 const server = new Server(
   {
     name: "source-library",
-    version: "2.1.0",
+    version: "2.2.0",
   },
   {
     capabilities: {
@@ -884,6 +940,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         break;
       case "search_passages":
         result = await searchPassages(args as Parameters<typeof searchPassages>[0]);
+        break;
+      case "search_within_book":
+        result = await searchWithinBook(args as Parameters<typeof searchWithinBook>[0]);
         break;
       case "list_books":
         result = await listBooks(args as Parameters<typeof listBooks>[0]);
@@ -975,7 +1034,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v2.1.0 running (12 tools)");
+  console.error("Source Library MCP server v2.2.0 running (13 tools)");
 }
 
 main().catch((error) => {
