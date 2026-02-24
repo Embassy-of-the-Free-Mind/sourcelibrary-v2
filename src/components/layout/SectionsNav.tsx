@@ -13,6 +13,7 @@ interface SectionSummary {
   quotes?: Array<{
     text: string;
     page: number;
+    page_id?: string;
     significance?: string;
   }>;
   concepts?: string[];
@@ -143,6 +144,12 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                                 sizes="64px"
                                 className="object-cover"
                               />
+                              <span
+                                className="absolute bottom-0 right-0 text-[9px] leading-none px-1 py-0.5 rounded-tl"
+                                style={{ background: 'rgba(0,0,0,0.6)', color: 'white' }}
+                              >
+                                p.{item.pageNumber}
+                              </span>
                             </Link>
                           );
                         })}
@@ -197,7 +204,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                       </div>
                       <div className="space-y-3">
                         {section.quotes.slice(0, 3).map((quote, i) => {
-                          const quotePageId = getPageId(quote.page);
+                          const quotePageId = quote.page_id || getPageId(quote.page);
                           return (
                             <div key={i} className="relative pl-3" style={{ borderLeft: '2px solid var(--accent-gold)' }}>
                               <p className="text-sm italic" style={{ color: 'var(--text-secondary)' }}>

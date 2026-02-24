@@ -16,7 +16,7 @@ interface SectionSummary {
   startPage: number;
   endPage: number;
   summary: string;
-  quotes?: Array<{ text: string; page: number; significance?: string }>;
+  quotes?: Array<{ text: string; page: number; page_id?: string; significance?: string }>;
   concepts?: string[];
 }
 
@@ -26,7 +26,7 @@ interface GuidePageProps {
 
 interface BookSummary {
   overview: string;
-  quotes: Array<{ text: string; page: number }>;
+  quotes: Array<{ text: string; page: number; page_id?: string }>;
   themes: string[];
   generated_at?: Date;
 }
@@ -311,7 +311,13 @@ export default function GuidePage({ params }: GuidePageProps) {
                 </div>
 
                 {/* Key Quotes */}
-                {summary.quotes && summary.quotes.length > 0 && (
+                {summary.quotes && summary.quotes.length > 0 && (() => {
+                  // Filter to quotes with a resolvable page link
+                  const linkableQuotes = summary.quotes.filter(q =>
+                    q.page_id || pages.find(p => p.page_number === q.page)?.id
+                  );
+                  if (linkableQuotes.length === 0) return null;
+                  return (
                   <div className="mt-8 pt-8" style={{ borderTop: '1px solid var(--border-light)' }}>
                     <h3
                       className="text-xl mb-5"
@@ -320,7 +326,9 @@ export default function GuidePage({ params }: GuidePageProps) {
                       Notable Passages
                     </h3>
                     <div className="space-y-5">
-                      {summary.quotes.map((quote, i) => (
+                      {linkableQuotes.map((quote, i) => {
+                        const resolvedPageId = quote.page_id || pages.find(p => p.page_number === quote.page)?.id || '';
+                        return (
                         <blockquote
                           key={i}
                           className="relative pl-5"
@@ -331,7 +339,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                           </p>
                           <div className="flex items-center gap-2 mt-2">
                             <Link
-                              href={`/book/${bookId}/page/${pages.find(p => p.page_number === quote.page)?.id || ''}`}
+                              href={`/book/${bookId}/page/${resolvedPageId}`}
                               className="text-xs hover:opacity-70 inline-flex items-center gap-1"
                               style={{ color: 'var(--accent-rust)' }}
                             >
@@ -349,10 +357,12 @@ export default function GuidePage({ params }: GuidePageProps) {
                             />
                           </div>
                         </blockquote>
-                      ))}
+                        );
+                      })}
                     </div>
                   </div>
-                )}
+                  );
+                })()}
 
                 {/* Themes */}
                 {summary.themes && summary.themes.length > 0 && (

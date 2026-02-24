@@ -54,6 +54,7 @@ async function researchBook(title: string, author: string): Promise<string> {
 }
 
 interface PageData {
+  id: string;
   page_number: number;
   ocr?: { data: string };
   translation?: { data: string };
@@ -524,6 +525,7 @@ interface SectionSummary {
   quotes?: Array<{
     text: string;
     page: number;
+    page_id?: string;
     significance?: string;
   }>;
   concepts?: string[];
@@ -734,46 +736,134 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
 }
 
 /**
- * Validate quotes against source translation text.
- * Returns only quotes whose text has >70% word overlap with some passage in the source.
+ * Clean translation text of metadata tags for matching.
  */
-function validateQuotes(
-  quotes: Array<{ text: string; page: number; context?: string; significance?: string }>,
-  pages: PageData[]
-): Array<{ text: string; page: number; context?: string; significance?: string }> {
-  // Build a lookup of translation text by page number
-  const textByPage = new Map<number, string>();
-  for (const page of pages) {
-    if (page.translation?.data) {
-      // Clean metadata tags for matching
-      const clean = page.translation.data
-        .replace(/<[a-z-]+>[\s\S]*?<\/[a-z-]+>/gi, '')
-        .replace(/\[\[[^\]]+\]\]/g, '')
-        .toLowerCase();
-      textByPage.set(page.page_number, clean);
+function cleanTranslationText(text: string): string {
+  return text
+    .replace(/<[a-z-]+>[\s\S]*?<\/[a-z-]+>/gi, '')
+    .replace(/\[\[[^\]]+\]\]/g, '')
+    .replace(/^```(?:markdown)?\s*\n?/i, '')
+    .replace(/\n?```\s*$/i, '')
+    .trim();
+}
+
+/**
+ * Find the best matching substring in sourceText for the given quote words.
+ * Uses a sliding window approach: score = fraction of quote words found in window.
+ * Returns { score, extractedText } or null if no good match.
+ */
+function findBestMatch(
+  quoteText: string,
+  sourceText: string
+): { score: number; extractedText: string } | null {
+  const quoteWords = quoteText.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+  if (quoteWords.length === 0) return null;
+
+  const sourceWords = sourceText.split(/\s+/);
+  if (sourceWords.length === 0) return null;
+
+  // Window size: same number of words as the quote, with some slack
+  const windowSize = Math.max(quoteWords.length, 5);
+  const maxWindow = Math.min(windowSize + Math.ceil(windowSize * 0.5), sourceWords.length);
+
+  let bestScore = 0;
+  let bestStart = 0;
+  let bestEnd = 0;
+
+  // Slide across source text
+  for (let start = 0; start <= sourceWords.length - windowSize; start++) {
+    // Try a few window sizes around the quote length
+    for (let winSize = windowSize; winSize <= maxWindow && start + winSize <= sourceWords.length; winSize++) {
+      const windowText = sourceWords.slice(start, start + winSize).join(' ').toLowerCase();
+      const matchCount = quoteWords.filter(w => windowText.includes(w)).length;
+      const score = matchCount / quoteWords.length;
+
+      if (score > bestScore) {
+        bestScore = score;
+        bestStart = start;
+        bestEnd = start + winSize;
+      }
     }
   }
 
-  // Combine all text for fallback matching (quote might reference wrong page)
-  const allText = Array.from(textByPage.values()).join(' ');
+  if (bestScore < 0.8) return null;
 
-  return quotes.filter(quote => {
-    if (!quote.text || quote.text.length < 10) return false;
+  // Extract the actual text from the source (preserving original casing)
+  const extractedText = sourceWords.slice(bestStart, bestEnd).join(' ');
+  return { score: bestScore, extractedText };
+}
 
-    const quoteWords = quote.text.toLowerCase().split(/\s+/).filter(w => w.length > 3);
-    if (quoteWords.length === 0) return true; // Very short quote, keep it
+/**
+ * Ground quotes against source translation text.
+ * Instead of just filtering, find the actual verbatim text in the translation
+ * and replace the AI's paraphrase. Also resolves page_id.
+ */
+function groundQuotes(
+  quotes: Array<{ text: string; page: number; context?: string; significance?: string }>,
+  pages: PageData[]
+): Array<{ text: string; page: number; page_id: string; context?: string; significance?: string }> {
+  // Build lookup of clean translation text by page number, preserving page_id
+  const pageIndex = new Map<number, { text: string; page_id: string }>();
+  for (const page of pages) {
+    if (page.translation?.data) {
+      pageIndex.set(page.page_number, {
+        text: cleanTranslationText(page.translation.data),
+        page_id: page.id,
+      });
+    }
+  }
 
-    // First try the specific page
-    const pageText = textByPage.get(quote.page);
-    if (pageText) {
-      const matchCount = quoteWords.filter(w => pageText.includes(w)).length;
-      if (matchCount / quoteWords.length > 0.7) return true;
+  const grounded: Array<{ text: string; page: number; page_id: string; context?: string; significance?: string }> = [];
+
+  for (const quote of quotes) {
+    if (!quote.text || quote.text.length < 10) continue;
+
+    // 1. Try the specified page first
+    const specifiedPage = pageIndex.get(quote.page);
+    if (specifiedPage) {
+      const match = findBestMatch(quote.text, specifiedPage.text);
+      if (match) {
+        grounded.push({
+          text: match.extractedText,
+          page: quote.page,
+          page_id: specifiedPage.page_id,
+          context: quote.context,
+          significance: quote.significance,
+        });
+        continue;
+      }
     }
 
-    // Fallback: check across all pages
-    const matchCount = quoteWords.filter(w => allText.includes(w)).length;
-    return matchCount / quoteWords.length > 0.7;
-  });
+    // 2. Search all pages (AI often gets page numbers wrong)
+    let bestOverall: { score: number; extractedText: string; pageNum: number; pageId: string } | null = null;
+    for (const [pageNum, pageData] of pageIndex) {
+      if (pageNum === quote.page) continue; // Already tried
+      const match = findBestMatch(quote.text, pageData.text);
+      if (match && (!bestOverall || match.score > bestOverall.score)) {
+        bestOverall = {
+          score: match.score,
+          extractedText: match.extractedText,
+          pageNum,
+          pageId: pageData.page_id,
+        };
+      }
+    }
+
+    if (bestOverall) {
+      grounded.push({
+        text: bestOverall.extractedText,
+        page: bestOverall.pageNum,
+        page_id: bestOverall.pageId,
+        context: quote.context,
+        significance: quote.significance,
+      });
+      continue;
+    }
+
+    // 3. No good match anywhere — drop the quote
+  }
+
+  return grounded;
 }
 
 // Sync entities from a single book to the cross-book entities collection
@@ -979,22 +1069,22 @@ export async function GET(
       console.log('Skipping summary: no translations and no research context');
     }
 
-    // Validate quotes against source text — drop hallucinated ones
+    // Ground quotes against source text — replace paraphrases with verbatim passages
     const allBatchQuotes = batchExtractions.flatMap(b => b.quotes);
-    const validatedBatchQuotes = validateQuotes(allBatchQuotes, pages);
-    const droppedBatch = allBatchQuotes.length - validatedBatchQuotes.length;
+    const groundedBatchQuotes = groundQuotes(allBatchQuotes, pages);
+    const droppedBatch = allBatchQuotes.length - groundedBatchQuotes.length;
     if (droppedBatch > 0) {
-      console.log(`Quote validation: dropped ${droppedBatch}/${allBatchQuotes.length} batch quotes`);
+      console.log(`Quote grounding: dropped ${droppedBatch}/${allBatchQuotes.length} batch quotes (no source match)`);
     }
 
-    // Also validate section quotes
+    // Also ground section quotes
     for (const section of sectionSummaries) {
       if (section.quotes && section.quotes.length > 0) {
         const before = section.quotes.length;
-        section.quotes = validateQuotes(section.quotes, pages);
+        section.quotes = groundQuotes(section.quotes, pages);
         const dropped = before - section.quotes.length;
         if (dropped > 0) {
-          console.log(`Quote validation: dropped ${dropped}/${before} quotes from section "${section.title}"`);
+          console.log(`Quote grounding: dropped ${dropped}/${before} quotes from section "${section.title}"`);
         }
       }
     }
@@ -1028,7 +1118,7 @@ export async function GET(
         overview: bookSummary.abstract || bookSummary.brief,
         detailed: bookSummary.detailed || '',
         themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
-        quotes: validatedBatchQuotes.slice(0, 15),
+        quotes: groundedBatchQuotes.slice(0, 15),
         generated_at: new Date(),
         model: 'gemini-3-flash-preview'
       };
