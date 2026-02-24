@@ -157,6 +157,30 @@ const TOOLS: Tool[] = [
     },
   },
 
+  {
+    name: "find_quotes",
+    description:
+      "Find the most quotable passages in a book on a given topic. Higher-level than search_within_book: searches the book for your topic, then retrieves full page text with original language and academic citations for the best matches. Returns up to 5 citable passages ready for scholarly use.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        book_id: {
+          type: "string",
+          description: "The book ID to find quotes in",
+        },
+        topic: {
+          type: "string",
+          description: "Research topic or concept to find quotes about (e.g., 'relationship between music and cosmic order', 'nature of the soul', 'transmutation of metals')",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum quotes to return (default 5, max 10)",
+        },
+      },
+      required: ["book_id", "topic"],
+    },
+  },
+
   // ── Reading & Text ──
   {
     name: "get_book",
@@ -567,6 +591,80 @@ async function searchWithinBook(args: {
   };
 }
 
+async function findQuotes(args: {
+  book_id: string;
+  topic: string;
+  limit?: number;
+}) {
+  const maxQuotes = Math.min(args.limit || 5, 10);
+
+  // Step 1: Search within the book for the topic
+  const searchParams = new URLSearchParams({ q: args.topic });
+  const searchResult = (await apiGet(
+    `/books/${args.book_id}/search`,
+    searchParams
+  )) as Record<string, unknown>;
+
+  const searchResults = searchResult.results as Array<Record<string, unknown>>;
+  if (!searchResults?.length) {
+    return {
+      book_id: args.book_id,
+      topic: args.topic,
+      total: 0,
+      quotes: [],
+      tip: "Try broader search terms, or use get_book_text to read the full text.",
+    };
+  }
+
+  // Step 2: Take the top N pages and fetch full quotes with citations
+  const topPages = searchResults.slice(0, maxQuotes);
+  const quotes = await Promise.all(
+    topPages.map(async (page) => {
+      try {
+        const quoteParams = new URLSearchParams({
+          page: String(page.pageNumber),
+          include_original: "true",
+        });
+        const quoteResult = (await apiGet(
+          `/books/${args.book_id}/quote`,
+          quoteParams
+        )) as Record<string, unknown>;
+
+        const quote = quoteResult.quote as Record<string, unknown>;
+        const citation = quoteResult.citation as Record<string, unknown>;
+
+        return {
+          page: page.pageNumber,
+          text: quote?.translation,
+          original_text: quote?.original,
+          language: quote?.language,
+          citation: citation?.inline,
+          citation_url: citation?.doi_url || citation?.url,
+          read_url: `https://sourcelibrary.org/book/${args.book_id}/page/${page.pageId}`,
+        };
+      } catch {
+        // If quote fetch fails, return what we have from search
+        const matches = page.matches as Array<Record<string, unknown>>;
+        const best =
+          matches?.find((m) => m.field === "translation") || matches?.[0];
+        return {
+          page: page.pageNumber,
+          text: best?.snippet,
+          read_url: `https://sourcelibrary.org/book/${args.book_id}/page/${page.pageId}`,
+        };
+      }
+    })
+  );
+
+  return {
+    book_id: args.book_id,
+    topic: args.topic,
+    total: searchResult.total,
+    showing: quotes.length,
+    quotes,
+  };
+}
+
 async function listBooks(args: {
   search?: string;
   language?: string;
@@ -912,7 +1010,7 @@ async function getBookImages(args: {
 const server = new Server(
   {
     name: "source-library",
-    version: "2.2.0",
+    version: "2.3.0",
   },
   {
     capabilities: {
@@ -943,6 +1041,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         break;
       case "search_within_book":
         result = await searchWithinBook(args as Parameters<typeof searchWithinBook>[0]);
+        break;
+      case "find_quotes":
+        result = await findQuotes(args as Parameters<typeof findQuotes>[0]);
         break;
       case "list_books":
         result = await listBooks(args as Parameters<typeof listBooks>[0]);
@@ -1034,7 +1135,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v2.2.0 running (13 tools)");
+  console.error("Source Library MCP server v2.3.0 running (14 tools)");
 }
 
 main().catch((error) => {
