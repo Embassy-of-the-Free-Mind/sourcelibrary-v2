@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
@@ -39,14 +38,11 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt }: Co
       <div className="relative overflow-hidden text-white py-16 md:py-20">
         {image ? (
           <>
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={image}
               alt={imageAlt || ''}
-              fill
-              sizes="100vw"
-              className="object-cover"
-              priority
-              unoptimized
+              className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.88)] via-[rgba(26,22,18,0.5)] to-[rgba(26,22,18,0.25)]" />
           </>

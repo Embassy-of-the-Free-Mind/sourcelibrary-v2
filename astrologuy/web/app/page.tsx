@@ -477,6 +477,10 @@ export default function EssayPage() {
             <strong>Eclipse Forecast</strong>
             <span>Full timeline of upcoming lunar and solar eclipses with type and visibility.</span>
           </a>
+          <a href="/crescent">
+            <strong>Crescent Predictor</strong>
+            <span>When will the moon&rsquo;s horns point up? Bowl crescent forecast for your location.</span>
+          </a>
         </div>
       </nav>
     </article>

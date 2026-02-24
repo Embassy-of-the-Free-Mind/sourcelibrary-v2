@@ -9,6 +9,32 @@ import { useRouter } from 'next/navigation';
 import { books } from '@/lib/api-client';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 
+function getCatalogUrl(source: string, catalogId: string): string {
+  // Some catalog_ids have comma-separated values — take the first
+  const id = catalogId.split(',')[0].trim();
+  switch (source) {
+    case 'open_library':
+      return id.startsWith('/')
+        ? `https://openlibrary.org${id}`
+        : `https://openlibrary.org/works/${id}`;
+    case 'google_books':
+      return `https://books.google.com/books?id=${id}`;
+    case 'internet_archive':
+      return `https://archive.org/details/${id}`;
+    default:
+      return '#';
+  }
+}
+
+function getCatalogLabel(source: string): string {
+  switch (source) {
+    case 'open_library': return 'Open Library';
+    case 'google_books': return 'Google Books';
+    case 'internet_archive': return 'Internet Archive';
+    default: return source;
+  }
+}
+
 interface BibliographicInfoProps {
   book: Book;
   pagesCount: number;
@@ -188,6 +214,59 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                       </span>
                     </div>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Known English Translations */}
+            {book.translation_verification?.disposition && (
+              <div className="mt-3 pt-3 border-t border-stone-700/50">
+                <span className="text-stone-400 text-xs font-medium uppercase tracking-wide">English Translations</span>
+                <div className="mt-2 space-y-2">
+                  {book.translation_verification.disposition === 'translation_found' && (() => {
+                    const translations = book.translation_verification!.validated_translations?.length
+                      ? book.translation_verification!.validated_translations
+                      : book.translation_verification!.translations || [];
+                    return translations
+                      .filter(t => t.english_title || t.translator)
+                      .map((t, i) => (
+                        <div key={i} className="text-sm">
+                          <div className="text-stone-200">
+                            {t.english_title && (
+                              <span className="italic">
+                                {t.english_title.length > 100
+                                  ? t.english_title.substring(0, 100).replace(/\s+\S*$/, '') + '...'
+                                  : t.english_title}
+                              </span>
+                            )}
+                            {t.translator && t.translator !== 'unknown' && t.translator !== 'Not specified' && (
+                              <span className="text-stone-400">, trans. {t.translator}</span>
+                            )}
+                            {t.pub_year && <span className="text-stone-400"> ({t.pub_year})</span>}
+                            {t.publisher && <span className="text-stone-500">, {t.publisher}</span>}
+                          </div>
+                          {t.catalog_id && t.evidence_source && t.evidence_source !== 'llm_knowledge' && (
+                            <a
+                              href={getCatalogUrl(t.evidence_source, t.catalog_id)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-1 mt-0.5"
+                            >
+                              View on {getCatalogLabel(t.evidence_source)}
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      ));
+                  })()}
+                  {book.translation_verification.disposition === 'confirmed_first' && (
+                    <p className="text-stone-500 text-xs">
+                      No prior English translation found in library catalogs
+                      {book.translation_verification.search_evidence?.apis_queried?.length
+                        ? ` (${book.translation_verification.search_evidence.apis_queried.map(a => getCatalogLabel(a)).join(', ')})`
+                        : ''}
+                    </p>
+                  )}
                 </div>
               </div>
             )}

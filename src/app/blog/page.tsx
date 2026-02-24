@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
@@ -169,14 +168,12 @@ export default function BlogPage() {
       >
         <div className="md:flex md:min-h-[340px]">
           {hero.image && (
-            <div className="md:w-[45%] shrink-0 overflow-hidden relative h-56 md:h-auto">
-              <Image
+            <div className="md:w-[45%] shrink-0 overflow-hidden">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={hero.image}
                 alt={hero.imageAlt || ''}
-                fill
-                sizes="(max-width: 768px) 100vw, 45vw"
-                className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
-                unoptimized
+                className="w-full h-56 md:h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
               />
             </div>
           )}
@@ -216,14 +213,12 @@ export default function BlogPage() {
             className="block bg-white rounded-xl overflow-hidden shadow-sm border border-border-light hover:shadow-md hover:border-accent-gold/12 transition-all group"
           >
             {post.image && (
-              <div className="h-44 overflow-hidden relative">
-                <Image
+              <div className="h-44 overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={post.image}
                   alt={post.imageAlt || ''}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-                  unoptimized
+                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
                 />
               </div>
             )}

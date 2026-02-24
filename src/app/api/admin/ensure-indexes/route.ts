@@ -588,6 +588,36 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Analytics pageviews - IP + timestamp for unique visitor aggregations
+    // Query: { timestamp: { $gte }, ip } grouped by day+ip
+    try {
+      await db.collection('analytics_pageviews').createIndex(
+        { ip: 1, timestamp: -1 },
+        { name: 'pageviews_ip_ts_idx', background: true }
+      );
+      results['analytics_pageviews.pageviews_ip_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['analytics_pageviews.pageviews_ip_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Analytics events - timestamp for search query analytics
+    // Query: { event: 'search_query', timestamp: { $gte } }
+    try {
+      await db.collection('analytics_events').createIndex(
+        { event: 1, timestamp: -1 },
+        { name: 'analytics_events_event_ts_idx', background: true }
+      );
+      results['analytics_events.analytics_events_event_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['analytics_events.analytics_events_event_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Annotations - lookup by book and page
     // Query: { book_id, page_id }
     try {

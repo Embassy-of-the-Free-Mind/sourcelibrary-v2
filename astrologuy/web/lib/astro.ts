@@ -330,3 +330,165 @@ export function findBirthLunation(birthDate: Date) {
 export function getMoonPhaseAngle(date: Date): number {
   return Astronomy.MoonPhase(date);
 }
+
+// ═══════════════════════════════════════════════
+// CRESCENT ORIENTATION — "wet moon" / bowl crescent predictor
+// ═══════════════════════════════════════════════
+
+export interface CrescentOrientation {
+  tiltDeg: number;      // angle of bright limb from zenith (clockwise), 0-360
+  cuspsUp: number;      // -cos(tilt): +1 = perfect bowl, -1 = perfect frown
+  moonAlt: number;      // altitude above horizon (degrees)
+  moonAz: number;       // azimuth (degrees)
+  illumination: number; // percent illuminated (0-100)
+  phaseAngle: number;   // moon phase angle (0-360)
+}
+
+/**
+ * Compute the crescent orientation at a specific time and place.
+ *
+ * Returns the tilt of the bright limb relative to the zenith and a
+ * "cuspsUp" score: +1 = perfect bowl (horns up), -1 = perfect frown.
+ *
+ * The math:
+ * - Position Angle (PA): direction from moon to sun on the celestial sphere
+ * - Parallactic Angle (q): rotation of celestial north from zenith at the moon
+ * - Tilt = PA - q: how the bright limb is oriented relative to "up" for the observer
+ */
+export function getCrescentOrientation(date: Date, lat: number, lon: number): CrescentOrientation {
+  const observer = new Astronomy.Observer(lat, lon, 0);
+
+  // Equatorial coordinates (apparent, of-date)
+  const moonEq = Astronomy.Equator(Astronomy.Body.Moon, date, observer, true, true);
+  const sunEq = Astronomy.Equator(Astronomy.Body.Sun, date, observer, true, true);
+
+  // Convert RA (hours) and Dec (degrees) to radians
+  const raMoon = moonEq.ra * Math.PI / 12;
+  const decMoon = moonEq.dec * Math.PI / 180;
+  const raSun = sunEq.ra * Math.PI / 12;
+  const decSun = sunEq.dec * Math.PI / 180;
+
+  // Position angle of the bright limb
+  const dRA = raSun - raMoon;
+  const PA = Math.atan2(
+    Math.cos(decSun) * Math.sin(dRA),
+    Math.sin(decSun) * Math.cos(decMoon) - Math.cos(decSun) * Math.sin(decMoon) * Math.cos(dRA),
+  );
+
+  // Parallactic angle
+  const gast = Astronomy.SiderealTime(date); // hours
+  const lst = gast + lon / 15; // hours
+  const H = (lst - moonEq.ra) * Math.PI / 12; // hour angle in radians
+  const latRad = lat * Math.PI / 180;
+  const q = Math.atan2(
+    Math.sin(H),
+    Math.tan(latRad) * Math.cos(decMoon) - Math.sin(decMoon) * Math.cos(H),
+  );
+
+  // Tilt of bright limb from zenith and cuspsUp score
+  const tiltRad = PA - q;
+  const tiltDeg = ((tiltRad * 180 / Math.PI) % 360 + 360) % 360;
+  const cuspsUp = Math.round(-Math.cos(tiltRad) * 1000) / 1000;
+
+  // Moon horizontal coordinates
+  const horizon = Astronomy.Horizon(date, observer, moonEq.ra, moonEq.dec, "normal");
+
+  // Phase info
+  const phaseAngle = Astronomy.MoonPhase(date);
+  const illum = Astronomy.Illumination(Astronomy.Body.Moon, date);
+
+  return {
+    tiltDeg,
+    cuspsUp,
+    moonAlt: Math.round(horizon.altitude * 100) / 100,
+    moonAz: Math.round(horizon.azimuth * 100) / 100,
+    illumination: Math.round(illum.phase_fraction * 10000) / 100,
+    phaseAngle: Math.round(phaseAngle * 100) / 100,
+  };
+}
+
+export interface CrescentEvent {
+  date: Date;
+  type: "evening" | "morning";
+  daysFromNew: number;
+  cuspsUp: number;
+  moonAlt: number;
+  illumination: number;
+  tiltDeg: number;
+  phaseAngle: number;
+  newMoonDate: Date;
+}
+
+/**
+ * Find upcoming crescent viewing opportunities at a given location.
+ * Returns events sorted by date, covering both evening (waxing) and morning (waning) crescents.
+ */
+export function findCrescentEvents(lat: number, lon: number, monthsAhead: number = 6): CrescentEvent[] {
+  const events: CrescentEvent[] = [];
+  const observer = new Astronomy.Observer(lat, lon, 0);
+  let searchDate = new Date();
+
+  for (let n = 0; n < monthsAhead; n++) {
+    const newMoonResult = Astronomy.SearchMoonPhase(0, searchDate, 35);
+    if (!newMoonResult) break;
+    const nm = newMoonResult.date;
+
+    // Waxing crescents: evenings 1-5 days after new moon
+    for (let d = 1; d <= 5; d++) {
+      const dayDate = new Date(nm.getTime() + d * 86400000);
+      const noon = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate(), 12, 0, 0);
+      try {
+        const sunset = Astronomy.SearchRiseSet(Astronomy.Body.Sun, observer, -1, noon, 1);
+        if (!sunset) continue;
+        const viewTime = new Date(sunset.date.getTime() + 40 * 60000);
+        const orient = getCrescentOrientation(viewTime, lat, lon);
+        if (orient.moonAlt > 3 && orient.illumination > 0.3 && orient.illumination < 35) {
+          events.push({
+            date: viewTime, type: "evening", daysFromNew: d,
+            cuspsUp: orient.cuspsUp, moonAlt: orient.moonAlt,
+            illumination: orient.illumination, tiltDeg: orient.tiltDeg,
+            phaseAngle: orient.phaseAngle, newMoonDate: nm,
+          });
+        }
+      } catch { /* polar region, no sunset */ }
+    }
+
+    // Waning crescents: mornings 1-5 days before this new moon
+    for (let d = 1; d <= 5; d++) {
+      const dayDate = new Date(nm.getTime() - d * 86400000);
+      const midnight = new Date(dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate(), 0, 0, 0);
+      try {
+        const sunrise = Astronomy.SearchRiseSet(Astronomy.Body.Sun, observer, +1, midnight, 1);
+        if (!sunrise) continue;
+        const viewTime = new Date(sunrise.date.getTime() - 40 * 60000);
+        const orient = getCrescentOrientation(viewTime, lat, lon);
+        if (orient.moonAlt > 3 && orient.illumination > 0.3 && orient.illumination < 35) {
+          events.push({
+            date: viewTime, type: "morning", daysFromNew: -d,
+            cuspsUp: orient.cuspsUp, moonAlt: orient.moonAlt,
+            illumination: orient.illumination, tiltDeg: orient.tiltDeg,
+            phaseAngle: orient.phaseAngle, newMoonDate: nm,
+          });
+        }
+      } catch { /* polar region, no sunrise */ }
+    }
+
+    searchDate = new Date(nm.getTime() + 20 * 86400000);
+  }
+
+  events.sort((a, b) => a.date.getTime() - b.date.getTime());
+  return events;
+}
+
+/**
+ * Compute cuspsUp across latitudes for a given time and longitude.
+ * Shows how the bowl crescent effect varies by latitude at one moment.
+ */
+export function getLatitudeBand(date: Date, lon: number): Array<{ lat: number; cuspsUp: number; moonAlt: number }> {
+  const band = [];
+  for (let lat = -60; lat <= 60; lat += 2) {
+    const orient = getCrescentOrientation(date, lat, lon);
+    band.push({ lat, cuspsUp: orient.cuspsUp, moonAlt: orient.moonAlt });
+  }
+  return band;
+}

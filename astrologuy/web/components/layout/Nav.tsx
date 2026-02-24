@@ -9,6 +9,7 @@ const deepDives = [
   { href: "/birthday", label: "Birthday" },
   { href: "/zodiac", label: "Zodiac" },
   { href: "/eclipses", label: "Eclipses" },
+  { href: "/crescent", label: "Crescent" },
 ];
 
 export function Nav() {
