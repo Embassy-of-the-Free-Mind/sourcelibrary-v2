@@ -327,6 +327,18 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                     )}
                   </div>
                 )}
+                {book.image_source.contributing_library && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Digitized by:</span>
+                    <span className="text-stone-200">{book.image_source.contributing_library}</span>
+                  </div>
+                )}
+                {book.image_source.sponsor && (
+                  <div className="flex gap-2">
+                    <span className="text-stone-500 w-24 flex-shrink-0">Sponsor:</span>
+                    <span className="text-stone-200">{book.image_source.sponsor}</span>
+                  </div>
+                )}
                 {book.image_source.license && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">License:</span>
