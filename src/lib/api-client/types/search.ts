@@ -5,6 +5,7 @@
 
 export interface SearchResult {
   id: string;
+  page_id?: string;
   type: 'book' | 'page';
   book_id: string;
   title: string;

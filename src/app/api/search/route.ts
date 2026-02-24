@@ -59,6 +59,7 @@ export async function GET(request: NextRequest) {
     const library = searchParams.get('library');
     const bookId = searchParams.get('book_id'); // Filter to specific book
     const searchContent = searchParams.get('search_content') === 'true'; // Default false (page search is slow on 300K+ docs)
+    const pagesOnly = searchParams.get('pages_only') === 'true'; // Return only page-level results (for MCP passage search)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
     const offset = parseInt(searchParams.get('offset') || '0');
@@ -144,9 +145,9 @@ export async function GET(request: NextRequest) {
     const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
     const [bookDocs, pageDocs] = await Promise.all([
-      // --- Book text search (skip when searching within a specific book) ---
+      // --- Book text search (skip when searching within a specific book or pages_only mode) ---
       (async () => {
-        if (bookId) return [];
+        if (bookId || pagesOnly) return [];
         const bookFilters = buildBookFilters();
         try {
           return await db.collection('books')
@@ -176,7 +177,7 @@ export async function GET(request: NextRequest) {
 
       // --- Page content search (aggregation pipeline truncates text for snippets) ---
       (async () => {
-        if (!searchContent) return [];
+        if (!searchContent && !pagesOnly) return [];
 
         const pageFilter: Record<string, unknown> = {};
         if (bookId) {
@@ -202,7 +203,7 @@ export async function GET(request: NextRequest) {
           }
         }
 
-        const pageLimit = bookId ? limit : MAX_PAGE_RESULTS;
+        const pageLimit = (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS;
 
         try {
           return await db.collection('pages')
@@ -248,7 +249,7 @@ export async function GET(request: NextRequest) {
         const book = bookMap.get(page.book_id as string);
         if (!book) continue;
         if ((book as any).hidden === true) continue;
-        if (seenBooks.has(book.id)) continue;
+        if (!pagesOnly && seenBooks.has(book.id)) continue;
 
         const translationText = page.translation?.data as string || '';
         const ocrText = page.ocr?.data as string || '';
@@ -257,6 +258,7 @@ export async function GET(request: NextRequest) {
 
         results.push({
           id: `${book.id}-p${page.page_number}`,
+          page_id: page.id as string,
           type: 'page',
           book_id: book.id,
           title: book.title,

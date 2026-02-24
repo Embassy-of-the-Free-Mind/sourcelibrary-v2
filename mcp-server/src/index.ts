@@ -101,6 +101,42 @@ const TOOLS: Tool[] = [
     },
   },
 
+  {
+    name: "search_passages",
+    description:
+      "Search across all translated page content in the library. Returns passage snippets with page numbers and book context. Use this for discovering what historical authors wrote about a topic — search a concept and see which books and pages mention it. Unlike search_library (which matches book titles/authors), this searches inside the actual text of translations and OCR.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        query: {
+          type: "string",
+          description: "Search query — searches inside page translations and OCR text (e.g., 'divine providence', 'philosopher stone', 'harmony of the spheres')",
+        },
+        language: {
+          type: "string",
+          description: "Filter by book's original language (e.g., 'Latin', 'German', 'Greek')",
+        },
+        year_from: {
+          type: "number",
+          description: "Filter by publication year (start, inclusive)",
+        },
+        year_to: {
+          type: "number",
+          description: "Filter by publication year (end, inclusive)",
+        },
+        book_id: {
+          type: "string",
+          description: "Search within a specific book only",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum results (default 20, max 50)",
+        },
+      },
+      required: ["query"],
+    },
+  },
+
   // ── Reading & Text ──
   {
     name: "get_book",
@@ -428,6 +464,50 @@ async function searchLibrary(args: {
     total: result.total,
     results,
     ...(result.nearby ? { nearby: result.nearby } : {}),
+  };
+}
+
+async function searchPassages(args: {
+  query: string;
+  language?: string;
+  year_from?: number;
+  year_to?: number;
+  book_id?: string;
+  limit?: number;
+}) {
+  const params = new URLSearchParams({
+    q: args.query,
+    pages_only: "true",
+    limit: String(Math.min(args.limit || 20, 50)),
+  });
+  if (args.language) params.set("language", args.language);
+  if (args.year_from) params.set("year_from", String(args.year_from));
+  if (args.year_to) params.set("year_to", String(args.year_to));
+  if (args.book_id) params.set("book_id", args.book_id);
+
+  const result = (await apiGet("/search", params)) as Record<string, unknown>;
+
+  const passages = (
+    result.results as Array<Record<string, unknown>>
+  )?.map((r) => ({
+    book_id: r.book_id,
+    title: r.display_title || r.title,
+    author: r.author,
+    language: r.language,
+    published: r.published,
+    page: r.page_number,
+    snippet: r.snippet,
+    snippet_source: r.snippet_type,
+    read_url: r.page_id
+      ? `https://sourcelibrary.org/book/${r.book_id}/page/${r.page_id}`
+      : `https://sourcelibrary.org/book/${r.book_id}`,
+  }));
+
+  return {
+    query: result.query,
+    total: result.total,
+    passages,
+    tip: "Use get_quote with book_id and page number to get the full text with academic citations.",
   };
 }
 
@@ -776,7 +856,7 @@ async function getBookImages(args: {
 const server = new Server(
   {
     name: "source-library",
-    version: "2.0.0",
+    version: "2.1.0",
   },
   {
     capabilities: {
@@ -801,6 +881,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     switch (name) {
       case "search_library":
         result = await searchLibrary(args as Parameters<typeof searchLibrary>[0]);
+        break;
+      case "search_passages":
+        result = await searchPassages(args as Parameters<typeof searchPassages>[0]);
         break;
       case "list_books":
         result = await listBooks(args as Parameters<typeof listBooks>[0]);
@@ -892,7 +975,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v2.0.0 running (11 tools)");
+  console.error("Source Library MCP server v2.1.0 running (12 tools)");
 }
 
 main().catch((error) => {
