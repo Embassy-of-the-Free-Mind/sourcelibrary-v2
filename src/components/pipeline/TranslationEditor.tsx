@@ -702,6 +702,10 @@ export default function TranslationEditor({
     setOcrText(page.ocr?.data || '');
     setTranslationText(page.translation?.data || '');
     setSummaryText(page.summary?.data || '');
+    // Reset scroll on all content panels
+    document.querySelectorAll('[data-reader-panel]').forEach(el => {
+      el.scrollTop = 0;
+    });
   }, [page]);
 
   const handleProcess = async (action: 'ocr' | 'translation' | 'summary' | 'all') => {
@@ -1033,7 +1037,7 @@ export default function TranslationEditor({
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>Source Image</span>
                   </div>
-                  <div className="flex-1 overflow-auto p-2 lg:p-4">
+                  <div className="flex-1 overflow-auto p-2 lg:p-4" data-reader-panel>
                     <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                       {pageDisplayUrl ? (
                         <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
@@ -1072,7 +1076,7 @@ export default function TranslationEditor({
                       </>
                     )}
                   </div>
-                  <div className="flex-1 overflow-auto p-4 min-h-0">
+                  <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {ocrText ? (
                       <div className="prose-manuscript leading-relaxed" style={{ color: 'var(--text-secondary)' }} lang={book.language === 'Latin' ? 'la' : book.language === 'German' ? 'de' : book.language === 'Arabic' ? 'ar' : book.language === 'Hebrew' ? 'he' : book.language === 'Greek' ? 'el' : book.language === 'French' ? 'fr' : book.language === 'Italian' ? 'it' : book.language === 'Dutch' ? 'nl' : undefined}>
                         <NotesRenderer key={`ocr-${showNotes}`} text={ocrText} showNotes={showNotes} showMetadata={false} language={book.language} columns={page.columns} />
@@ -1176,7 +1180,7 @@ export default function TranslationEditor({
                       </div>
                     )}
                   </div>
-                  <div className="flex-1 overflow-auto p-4 min-h-0">
+                  <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {translationText ? (
                       <HighlightSelection
                         bookId={book.id}
@@ -1554,7 +1558,7 @@ export default function TranslationEditor({
                 <span className="hidden sm:inline">Info</span>
               </button>
             </div>
-            <div className="flex-1 overflow-auto p-4">
+            <div className="flex-1 overflow-auto p-4" data-reader-panel>
               <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                 {pageDisplayUrl ? (
                   <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
@@ -1602,7 +1606,7 @@ export default function TranslationEditor({
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{ocrText.length} chars</span>
             </div>
 
-            <div className="flex-1 overflow-auto p-3 sm:p-4">
+            <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>
               <textarea
                 value={ocrText}
                 onChange={(e) => setOcrText(e.target.value)}
@@ -1654,7 +1658,7 @@ export default function TranslationEditor({
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{translationText.length} chars</span>
             </div>
 
-            <div className="flex-1 overflow-auto p-3 sm:p-4">
+            <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>
               <textarea
                 value={translationText}
                 onChange={(e) => setTranslationText(e.target.value)}
