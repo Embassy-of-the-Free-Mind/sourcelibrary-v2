@@ -158,6 +158,7 @@ export default function PageEditorPage({ params }: PageProps) {
     setCurrentPageId(newPageId);
     // Update URL without triggering a refetch
     window.history.pushState(null, '', `/book/${bookId}/page/${newPageId}`);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [bookId]);
 
   const currentIndex = pageList.findIndex(p => p.id === currentPageId);

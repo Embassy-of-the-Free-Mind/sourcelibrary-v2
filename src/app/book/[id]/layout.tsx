@@ -12,7 +12,7 @@ export default function BookLayout({
 
   useEffect(() => {
     // Scroll to top when navigating to a new book page
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [pathname]);
 
   return children;
