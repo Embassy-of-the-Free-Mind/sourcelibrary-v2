@@ -43,7 +43,10 @@ const PROVIDER_URLS: Record<string, string> = {
 function formatCentury(yearBucket: number): string {
   if (yearBucket <= 0) return '1st c.';
   const c = Math.floor(yearBucket / 100) + 1;
-  const suffix = c === 1 ? 'st' : c === 2 ? 'nd' : c === 3 ? 'rd' : 'th';
+  const mod10 = c % 10;
+  const mod100 = c % 100;
+  const suffix =
+    mod100 >= 11 && mod100 <= 13 ? 'th' : mod10 === 1 ? 'st' : mod10 === 2 ? 'nd' : mod10 === 3 ? 'rd' : 'th';
   return `${c}${suffix} c.`;
 }
 
