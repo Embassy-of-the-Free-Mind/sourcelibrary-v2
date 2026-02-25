@@ -12,6 +12,7 @@ const NAV_COLUMNS = [
       { label: 'Browse Books', href: '/' },
       { label: 'Gallery', href: '/gallery' },
       { label: 'Collections', href: '/collections' },
+      { label: 'Libraries', href: '/libraries' },
       { label: 'Timeline', href: '/timeline' },
       { label: 'Encyclopedia', href: '/encyclopedia' },
       { label: 'Search', href: '/search' },
@@ -23,6 +24,8 @@ const NAV_COLUMNS = [
       { label: 'About', href: '/about' },
       { label: 'Blog', href: '/blog' },
       { label: 'Press', href: '/press' },
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
     ],
   },
   {
@@ -139,9 +142,8 @@ export default function GlobalFooter() {
           ))}
         </div>
 
-        {/* Zone 3: Partners + Stats + Copyright */}
-        <div className="py-8 space-y-6">
-          {/* Partner logos */}
+        {/* Zone 3: Partners */}
+        <div className="py-8">
           <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
             {PARTNERS.map((partner) => (
               <a
@@ -163,17 +165,6 @@ export default function GlobalFooter() {
                 />
               </a>
             ))}
-          </div>
-
-          {/* Copyright + legal */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-white/30">
-            <span>&copy; 2026 Source Library</span>
-            <span className="hidden sm:inline">&middot;</span>
-            <div className="flex items-center gap-3">
-              <a href="mailto:Derek@ancientwisdomtrust.org" className="hover:text-white/50 transition-colors">Derek@ancientwisdomtrust.org</a>
-              <Link href="/privacy" className="hover:text-white/50 transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-white/50 transition-colors">Terms</Link>
-            </div>
           </div>
         </div>
       </div>

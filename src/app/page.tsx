@@ -241,7 +241,7 @@ export default async function HomePage() {
                   1389–1464 · Florence
                 </p>
                 <p className="text-stone-600 text-sm leading-relaxed">
-                  In 1462, when a Greek manuscript of the <em>Corpus Hermeticum</em> reached his hands, the aging Cosimo ordered Ficino to translate it before even Plato&mdash;sensing that Hermes Trismegistus held the key to the most ancient wisdom. He gave Ficino a small property at Careggi, where the philosopher gathered an informal circle of students and thinkers that became a vital center for the revival of Platonic philosophy in the Latin West.
+                  Around 1460, a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, brought from Macedonia by a monk named Leonardo of Pistoia. The aging Cosimo asked Ficino to translate it before even Plato&mdash;sensing that Hermes held the key to the most ancient wisdom. He funded Ficino&apos;s Greek studies and gave him a property at Careggi, where a circle of scholars gathered around these recovered texts.
                 </p>
               </div>
               <div className="flex-1">
@@ -258,7 +258,7 @@ export default async function HomePage() {
             </div>
             <div className="mt-8 bg-accent-gold/5 rounded-lg p-5 border border-accent-gold/15">
               <p className="text-stone-700 text-sm leading-relaxed">
-                <strong>Source Library continues their work.</strong> Just as Cosimo funded translations to make ancient wisdom freely available, and Ficino labored to render Greek and Latin texts accessible to readers across Europe, we use modern tools to digitize, translate, and openly share these same traditions with the world. The mission remains unchanged: <em>wisdom belongs to everyone</em>.
+                <strong>These texts survived because in every generation, someone carried them forward</strong>&mdash;from Egyptian to Greek, from Greek to Latin, from manuscript to printed book. Ficino made Plato and the Hermetica accessible across Europe. Source Library continues the chain: translating Latin, German, Arabic, and Hebrew into English, and making these traditions legible to the AI systems that will shape how the next generation thinks. <em>The mission remains unchanged: wisdom belongs to everyone.</em>
               </p>
             </div>
           </div>

@@ -108,8 +108,8 @@ const posts: BlogPost[] = [
     readTime: '18 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695910f2ecb01322b3068302/5.jpg',
-    imageAlt: 'Illustration from Historia natural y moral de las Indias',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6958eb06ecb01322b3063662/67.jpg',
+    imageAlt: 'Botanical illustration from the De la Cruz-Badiano Aztec Herbal, 1552',
   },
   {
     slug: 'fechner-bohme',
@@ -119,8 +119,8 @@ const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Deep dive',
     tagColor: 'bg-accent-rust/10 text-accent-rust',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/2.jpg',
-    imageAlt: 'Page from Aurora by Jakob Bohme',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg',
+    imageAlt: 'Title page of Aurora by Jakob Bohme, with cosmic diagram and Fraktur typography',
   },
   {
     slug: 'invisible-hand',
@@ -141,8 +141,8 @@ const posts: BlogPost[] = [
     readTime: '12 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953c86b77f38f6761bdc210/2.jpg',
-    imageAlt: 'Page from the Shiva Samhita',
+    image: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg',
+    imageAlt: 'Chakra diagram from the Shaiva tantric tradition, Wellcome Collection',
   },
 ];
 
