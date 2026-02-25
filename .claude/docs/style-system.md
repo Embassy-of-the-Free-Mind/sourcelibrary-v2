@@ -4,6 +4,12 @@
 
 All brand colors are defined as CSS custom properties in `src/app/globals.css` and exposed as Tailwind utilities via `@theme inline`. Component-level color maps (entity types, processing actions, etc.) live in `src/lib/style-constants.ts` — the single source of truth for repeated style patterns.
 
+## Typography Minimums
+
+- **Prose / text blocks:** `text-base` (16px) minimum. Never use `text-sm` (14px) or smaller for multi-sentence reading content. This is the browser default and WCAG accessibility baseline.
+- **Labels, badges, metadata:** `text-xs` (12px) or `text-sm` (14px) is fine for short strings like dates, language badges, status labels.
+- **Reading content** (translations, OCR, page text): `text-base` or larger. The reader uses `font-body` (Newsreader) at 16px+.
+
 ## Design Tokens (globals.css)
 
 ### Palette

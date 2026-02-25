@@ -153,7 +153,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
             {book.display_title || book.title}
           </h3>
           <p className="text-sm text-stone-600 mt-1 line-clamp-1">{book.author}</p>
-          <div className="flex items-center gap-2 mt-2 text-xs text-stone-500">
+          <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-2 text-xs text-stone-500">
             <span className="px-2 py-0.5 bg-stone-100 rounded">
               {book.language?.startsWith('Multiple') ? 'Multiple' : book.language}
             </span>

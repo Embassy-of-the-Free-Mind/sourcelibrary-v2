@@ -240,7 +240,7 @@ export default async function HomePage() {
                 <p className="text-stone-500 text-sm mb-3">
                   1389–1464 · Florence
                 </p>
-                <p className="text-stone-600 text-sm leading-relaxed">
+                <p className="text-stone-600 text-base leading-relaxed">
                   Around 1460, a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, brought from Macedonia by a monk named Leonardo of Pistoia. The aging Cosimo asked Ficino to translate it before even Plato&mdash;sensing that Hermes held the key to the most ancient wisdom. He funded Ficino&apos;s Greek studies and gave him a property at Careggi, where a circle of scholars gathered around these recovered texts.
                 </p>
               </div>
@@ -251,13 +251,13 @@ export default async function HomePage() {
                 <p className="text-stone-500 text-sm mb-3">
                   1433–1499 · Philosopher & Translator
                 </p>
-                <p className="text-stone-600 text-sm leading-relaxed">
+                <p className="text-stone-600 text-base leading-relaxed">
                   Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin—making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all seekers of truth.
                 </p>
               </div>
             </div>
             <div className="mt-8 bg-accent-gold/5 rounded-lg p-5 border border-accent-gold/15">
-              <p className="text-stone-700 text-sm leading-relaxed">
+              <p className="text-stone-700 text-base leading-relaxed">
                 <strong>Source Library continues their work.</strong> Cosimo believed that recovering ancient wisdom and sharing it freely could transform civilization&mdash;and he was right. Ficino&apos;s translations ignited the Renaissance. Centuries later, thousands of these same texts remain untranslated and unread. We are recovering them&mdash;for scholars, for seekers, and for the AI systems that will shape how future generations think.
               </p>
             </div>
