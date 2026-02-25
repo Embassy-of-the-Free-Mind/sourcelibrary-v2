@@ -31,8 +31,8 @@ const posts: BlogPost[] = [
     readTime: '10 min read',
     tag: 'Methodology',
     tagColor: 'bg-accent-sage/10 text-accent-sage-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952898bab34727b1f04d709/3.jpg',
-    imageAlt: 'Frontispiece portrait from La chymie charitable by Marie Meurdrac',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg',
+    imageAlt: 'Title page of Symbola Aureae Mensae by Michael Maier, with twelve alchemist portrait medallions, 1617',
   },
   {
     slug: 'astrological-diagrams',
@@ -86,8 +86,8 @@ const posts: BlogPost[] = [
     readTime: '8 min read',
     tag: 'Technical',
     tagColor: 'bg-stone-100 text-stone-600',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/694f3d6ebe37f451a5324e95/4.jpg',
-    imageAlt: 'Illustration from the Complete Hermetica, 1505 Paris edition',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg',
+    imageAlt: 'The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450',
   },
   {
     slug: 'fire-horse',
@@ -108,7 +108,7 @@ const posts: BlogPost[] = [
     readTime: '18 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6958eb06ecb01322b3063662/67.jpg',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6958eb06d3a8928334817227/67.jpg',
     imageAlt: 'Botanical illustration from the De la Cruz-Badiano Aztec Herbal, 1552',
   },
   {
@@ -155,8 +155,8 @@ export default function BlogPage() {
         <ContentHeader
           title="Blog"
           subtitle="Essays on recovering and translating rare texts from the world's philosophical traditions."
-          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/694f3d6ebe37f451a5324e95/4.jpg"
-          imageAlt="Illustration from the Complete Hermetica, 1505 Paris edition"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
+          imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
         />
       }
       bg="bg-cream"
