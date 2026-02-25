@@ -44,25 +44,27 @@ function getPos(row: number, col: number) {
 
 /*
  * Breathing cycle timing:
- *   Build up:  rows cascade in ~2.8s (monad first, bottom row last)
- *   Hold:      1.2s fully visible
- *   Dissolve:  rows cascade out ~2.4s (bottom row first, monad last)
- *   Pause:     0.8s empty
+ *   Build up:  dots cascade in one at a time ~2.3s (monad first, bottom-right last)
+ *   Hold:      ~1.1s fully visible
+ *   Dissolve:  dots cascade out one at a time ~2.3s (bottom-right first, monad last)
+ *   Pause:     ~1.2s empty
  *   Total:     ~8s
  */
 const CYCLE_MS = 8000;
-const DISSOLVE_START = 4000; // ms into cycle when dissolve begins
+const BUILD_BASE = 500;       // first dot starts appearing
+const DOT_STAGGER = 200;      // ms between each dot
+const TRANSITION = 800;       // fade in/out duration per dot
+const DISSOLVE_START = 4200;  // ms into cycle when dissolve begins
 
 // Precompute per-point keyframes at module level
-const KEYFRAMES_CSS = TETRACTYS.map(({ row, col }, i) => {
-  // Build: monad first, bottom row last
-  const expandStart = 600 + row * 500 + col * 150;
-  const expandEnd = expandStart + 1000;
-  // Dissolve: bottom row first, monad last (reverse order)
-  const maxRow = ROWS - 1;
-  const reverseRow = maxRow - row;
-  const dissolveStart = DISSOLVE_START + reverseRow * 400 + (reverseRow > 0 ? col : 0) * 100;
-  const dissolveEnd = dissolveStart + 700;
+const KEYFRAMES_CSS = TETRACTYS.map((_pt, i) => {
+  // Build: cascade by index (monad → bottom-right)
+  const expandStart = BUILD_BASE + i * DOT_STAGGER;
+  const expandEnd = expandStart + TRANSITION;
+  // Dissolve: reverse cascade (bottom-right → monad)
+  const reverseI = TETRACTYS.length - 1 - i;
+  const dissolveStart = DISSOLVE_START + reverseI * DOT_STAGGER;
+  const dissolveEnd = dissolveStart + TRANSITION;
 
   const p = (ms: number) => (ms / CYCLE_MS * 100).toFixed(1);
 
