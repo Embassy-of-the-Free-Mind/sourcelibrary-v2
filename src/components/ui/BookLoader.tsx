@@ -42,6 +42,40 @@ function getPos(row: number, col: number) {
   };
 }
 
+/*
+ * Breathing cycle timing:
+ *   Build up:  rows cascade in ~2.8s (monad first, bottom row last)
+ *   Hold:      1.2s fully visible
+ *   Dissolve:  rows cascade out ~2.4s (bottom row first, monad last)
+ *   Pause:     0.8s empty
+ *   Total:     ~8s
+ */
+const CYCLE_MS = 8000;
+const DISSOLVE_START = 4000; // ms into cycle when dissolve begins
+
+// Precompute per-point keyframes at module level
+const KEYFRAMES_CSS = TETRACTYS.map(({ row, col }, i) => {
+  // Build: monad first, bottom row last
+  const expandStart = 600 + row * 500 + col * 150;
+  const expandEnd = expandStart + 1000;
+  // Dissolve: bottom row first, monad last (reverse order)
+  const maxRow = ROWS - 1;
+  const reverseRow = maxRow - row;
+  const dissolveStart = DISSOLVE_START + reverseRow * 400 + (reverseRow > 0 ? col : 0) * 100;
+  const dissolveEnd = dissolveStart + 700;
+
+  const p = (ms: number) => (ms / CYCLE_MS * 100).toFixed(1);
+
+  return `@keyframes t-cycle-${i} {
+  0% { transform: scale(0); opacity: 0; }
+  ${p(expandStart)}% { transform: scale(0); opacity: 0; }
+  ${p(expandEnd)}% { transform: scale(1); opacity: 1; }
+  ${p(dissolveStart)}% { transform: scale(1); opacity: 1; }
+  ${p(dissolveEnd)}% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(0); opacity: 0; }
+}`;
+}).join('\n');
+
 export function BookLoader({ className, size = 'md', variant = 'light' }: BookLoaderProps) {
   const svgClass = size === 'xs' ? 'w-16 h-16'
     : size === 'sm' ? 'w-32 h-32'
@@ -54,40 +88,27 @@ export function BookLoader({ className, size = 'md', variant = 'light' }: BookLo
     <div className={cn('flex items-center justify-center', className)}>
       <svg
         viewBox={`0 0 ${vbW} ${vbH}`}
-        className={cn(svgClass, 'animate-[tetractys-fade-in_2s_ease-out_both]')}
+        className={svgClass}
         aria-hidden="true"
       >
         <defs>
-          <style>{`
-            @keyframes tetractys-fade-in {
-              from { opacity: 0; }
-              to   { opacity: 1; }
-            }
-            @keyframes t-expand {
-              0%   { transform: scale(0); opacity: 0; }
-              40%  { opacity: 1; }
-              100% { transform: scale(1); opacity: 1; }
-            }
-          `}</style>
+          <style>{KEYFRAMES_CSS}</style>
         </defs>
 
         {TETRACTYS.map(({ row, col }, i) => {
           const { x, y } = getPos(row, col);
-          // Cascade: Monad appears first, each row ~500ms later
-          const groupDelay = 800 + row * 500 + col * 150;
 
           return (
             <g
               key={i}
               style={{
                 transformOrigin: `${x}px ${y}px`,
-                animation: `t-expand 1.2s ease-out ${groupDelay}ms both`,
+                animation: `t-cycle-${i} ${CYCLE_MS}ms ease-in-out infinite`,
               }}
             >
-              {/* Concentric rings emanating outward — many, thin, overlapping */}
+              {/* Concentric rings emanating outward */}
               {Array.from({ length: RINGS }).map((_, r) => {
                 const radius = (r + 1) * RING_SPACING;
-                // Outer rings fade more
                 const opacity = 0.75 - r * 0.06;
                 return (
                   <circle
