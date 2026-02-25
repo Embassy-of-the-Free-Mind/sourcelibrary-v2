@@ -1041,7 +1041,7 @@ async function getBookImages(args: {
 const server = new Server(
   {
     name: "source-library",
-    version: "2.3.0",
+    version: "2.3.1",
   },
   {
     capabilities: {
@@ -1166,7 +1166,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v2.3.0 running (14 tools)");
+  console.error("Source Library MCP server v2.3.1 running (14 tools)");
 }
 
 main().catch((error) => {
