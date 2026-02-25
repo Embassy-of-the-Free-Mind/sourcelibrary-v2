@@ -1,0 +1,19 @@
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Explore — Source Library',
+  description:
+    'Explore 12,500+ entities across the Western esoteric tradition — interactive map, timeline, and knowledge network built from AI-indexed historical texts and Wikidata.',
+  openGraph: {
+    title: 'Explore — Source Library',
+    description:
+      'Interactive visualizations of people, places, and concepts from 1,200+ digitized historical texts.',
+    url: 'https://sourcelibrary.org/explore',
+    siteName: 'Source Library',
+    type: 'website',
+  },
+};
+
+export default function ExploreLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}

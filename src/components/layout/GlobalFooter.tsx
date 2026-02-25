@@ -13,6 +13,7 @@ const NAV_COLUMNS = [
       { label: 'Gallery', href: '/gallery' },
       { label: 'Collections', href: '/collections' },
       { label: 'Libraries', href: '/libraries' },
+      { label: 'Explore', href: '/explore' },
       { label: 'Timeline', href: '/timeline' },
       { label: 'Encyclopedia', href: '/encyclopedia' },
       { label: 'Search', href: '/search' },
