@@ -1,6 +1,7 @@
 "use client";
 
 import { useMoonPhase, useMoonSign, useMoonCycle } from "@/lib/hooks";
+import { buildLitPath } from "@/lib/astro";
 
 /**
  * SVG moon phase disc — shows the illuminated portion accurately.
@@ -87,30 +88,3 @@ export function MoonDisplay() {
   );
 }
 
-/** Build SVG path for the illuminated portion of the moon disc. */
-function buildLitPath(cx: number, cy: number, r: number, k: number, waxing: boolean): string {
-  const top = cy - r;
-  const bottom = cy + r;
-
-  // Semi-circle on the lit side (right if waxing, left if waning)
-  // sweepFlag: 1 = clockwise, 0 = counter-clockwise
-  const litSweep = waxing ? 1 : 0;
-
-  // Terminator ellipse: the x-radius is |k| * r, y-radius is r
-  // When k > 0 (gibbous), terminator curves toward the dark side
-  // When k < 0 (crescent), terminator curves into the lit side
-  const terminatorRx = Math.abs(k) * r;
-
-  // For the terminator arc, we need to determine sweep direction
-  // based on whether moon is crescent or gibbous
-  const gibbous = Math.abs(phase_to_illum_check(k)) > 0.5;
-  const terminatorSweep = (waxing === gibbous) ? 0 : 1;
-
-  // Path: start at top, semicircle to bottom (lit side), terminator back to top
-  return `M ${cx} ${top} A ${r} ${r} 0 0 ${litSweep} ${cx} ${bottom} A ${terminatorRx} ${r} 0 0 ${terminatorSweep} ${cx} ${top}`;
-}
-
-function phase_to_illum_check(k: number): number {
-  // k = cos(angle): +1 at full, -1 at new
-  return (1 + k) / 2;
-}

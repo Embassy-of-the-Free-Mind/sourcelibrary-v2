@@ -251,7 +251,8 @@ export default function EssayPage() {
             The year as thirteen 28-day months. Each month starts at the new moon.
             Real lunations average {SYNODIC_MONTH} days &mdash; the extra ~1.5 days per month
             accumulate into the &ldquo;Day Out of Time&rdquo; at year&rsquo;s end.
-            Toggle to &ldquo;Astronomical&rdquo; to see real lunation lengths.
+            Toggle to &ldquo;Astronomical&rdquo; for real lunation lengths,
+            or &ldquo;Solar&rdquo; to see lunar months overlaid on the Gregorian calendar.
           </figcaption>
         </figure>
 

@@ -331,6 +331,22 @@ export function getMoonPhaseAngle(date: Date): number {
   return Astronomy.MoonPhase(date);
 }
 
+/** Convert k = cos(phaseAngle) to illumination fraction 0..1 */
+export function phaseToIllumFraction(k: number): number {
+  return (1 + k) / 2;
+}
+
+/** Build SVG path for the illuminated portion of a moon disc. */
+export function buildLitPath(cx: number, cy: number, r: number, k: number, waxing: boolean): string {
+  const top = cy - r;
+  const bottom = cy + r;
+  const litSweep = waxing ? 1 : 0;
+  const terminatorRx = Math.abs(k) * r;
+  const gibbous = Math.abs(phaseToIllumFraction(k)) > 0.5;
+  const terminatorSweep = (waxing === gibbous) ? 0 : 1;
+  return `M ${cx} ${top} A ${r} ${r} 0 0 ${litSweep} ${cx} ${bottom} A ${terminatorRx} ${r} 0 0 ${terminatorSweep} ${cx} ${top}`;
+}
+
 // ═══════════════════════════════════════════════
 // CRESCENT ORIENTATION — "wet moon" / bowl crescent predictor
 // ═══════════════════════════════════════════════
