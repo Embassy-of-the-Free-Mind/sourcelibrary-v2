@@ -1208,26 +1208,32 @@ export default function TranslationEditor({
                         <p className="text-sm mb-4 max-w-xs" style={{ color: 'var(--text-muted)' }}>
                           OCR complete! Now translate the {book.language || 'text'} into English.
                         </p>
-                        <button
-                          onClick={() => handleProcess('translation')}
-                          disabled={processing !== null}
-                          className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
-                          style={{ background: 'var(--accent-sage, #6b8a63)' }}
-                        >
-                          {processing === 'translation' ? (
-                            <>
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                              Translating...
-                            </>
-                          ) : (
-                            <>
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                              </svg>
-                              Translate to English
-                            </>
-                          )}
-                        </button>
+                        <AuthCheck fallback={
+                          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                            Sign in to translate this page.
+                          </p>
+                        }>
+                          <button
+                            onClick={() => handleProcess('translation')}
+                            disabled={processing !== null}
+                            className="flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-white transition-all hover:opacity-90 disabled:opacity-50"
+                            style={{ background: 'var(--accent-sage, #6b8a63)' }}
+                          >
+                            {processing === 'translation' ? (
+                              <>
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                                Translating...
+                              </>
+                            ) : (
+                              <>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                Translate to English
+                              </>
+                            )}
+                          </button>
+                        </AuthCheck>
                       </div>
                     ) : (
                       <div className="h-full flex flex-col items-center justify-center text-center px-4">
