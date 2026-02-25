@@ -210,8 +210,18 @@ async function fetchCollectionData(id: string, sort: string, language: string, o
       ? db.collection('gallery_images')
           .find({
             book_id: { $in: collectionBookIds },
-            gallery_quality: { $gte: 0.7 },
-            type: { $nin: ['decorative', 'symbol', 'musical_score'] },
+            gallery_quality: { $gte: 0.8 },
+            type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+            // Filter out tiny detections (bbox area < 10% of page)
+            $expr: {
+              $gt: [
+                { $multiply: [
+                  { $subtract: [{ $ifNull: ['$bbox.x2', 1000] }, { $ifNull: ['$bbox.x1', 0] }] },
+                  { $subtract: [{ $ifNull: ['$bbox.y2', 1000] }, { $ifNull: ['$bbox.y1', 0] }] },
+                ] },
+                100000, // 10% of 1000x1000 coordinate space
+              ],
+            },
           })
           .sort({ gallery_quality: -1 })
           .limit(60)
