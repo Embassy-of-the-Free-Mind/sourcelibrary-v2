@@ -266,14 +266,8 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     return () => ro.disconnect();
   }, []);
 
-  // Parse dates once
-  const parsed = useMemo(() => {
-    return entities.map((e) => ({
-      ...e,
-      birth_year: parseYear(e.birth_year as unknown as string),
-      death_year: parseYear(e.death_year as unknown as string),
-    }));
-  }, [entities]);
+  // Entities already have numeric birth_year/death_year from the server
+  const parsed = entities;
 
   // Apply filters
   const filtered = useMemo(() => {
