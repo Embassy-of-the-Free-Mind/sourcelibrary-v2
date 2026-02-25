@@ -40,7 +40,7 @@ const VIZ_CARDS = [
       </svg>
     ),
     color: 'var(--accent-rust)',
-    available: false,
+    available: true,
   },
   {
     href: '/explore/network',
