@@ -89,6 +89,7 @@ export default async function RootLayout({
           title="Source Library"
           href="/opensearch.xml"
         />
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="rzuKlnvyAKd8TdooDnPSYg" async></script>
       </head>
       <body className="antialiased min-h-screen flex flex-col" suppressHydrationWarning>
         <a href="#main-content" className="skip-link">
