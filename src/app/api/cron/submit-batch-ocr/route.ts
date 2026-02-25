@@ -10,7 +10,7 @@ export const maxDuration = 300;
 const MAX_ACTIVE_JOBS = 100;    // Don't submit if this many batch jobs are already active
 const BOOKS_PER_RUN = 15;       // Books to submit per cron invocation
 const PAGES_PER_BOOK = 100;     // Pages to submit per book
-const MODEL = 'gemini-3-flash-preview';
+const MODEL = process.env.GEMINI_BATCH_MODEL || 'gemini-3-flash-preview';
 
 /**
  * GET /api/cron/submit-batch-ocr

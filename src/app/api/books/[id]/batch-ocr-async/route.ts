@@ -101,7 +101,7 @@ export const POST = withAuth(async (request, session, context) => {
     const body = await request.json().catch(() => ({}));
     const {
       limit = 500,
-      model = 'gemini-3-flash-preview',
+      model = process.env.GEMINI_BATCH_MODEL || 'gemini-3-flash-preview',
       force = false, // When true, include pages that already have OCR (for re-processing)
       pagesPerRequest = 1, // >1 enables multi-page mode: N images per Gemini request (saves quota)
       apiKeyIndex, // Optional: rotate between available API keys (0, 1, 2)

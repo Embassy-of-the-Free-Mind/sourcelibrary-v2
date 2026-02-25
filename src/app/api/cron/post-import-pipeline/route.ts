@@ -96,6 +96,148 @@ async function markFailed(
 }
 
 /**
+ * Submit OCR for a book via Lambda workers (realtime Gemini API).
+ * Used as fallback when Gemini Batch API quota is exhausted.
+ * Creates a job record and enqueues pages to the OCR SQS queue.
+ */
+async function submitOcrViaLambda(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+): Promise<{ success: boolean; jobId?: string; error?: string }> {
+  try {
+    // Find pages that need OCR
+    const pages = await db.collection('pages')
+      .find({
+        book_id: bookId,
+        $or: [
+          { 'ocr.data': { $exists: false } },
+          { 'ocr.data': null },
+          { 'ocr.data': '' },
+        ],
+      })
+      .project({ id: 1 })
+      .toArray();
+
+    if (pages.length === 0) {
+      return { success: true, jobId: undefined, error: 'No pages need OCR' };
+    }
+
+    const pageIds = pages.map(p => p.id);
+    const jobId = nanoid(12);
+
+    const book = await db.collection('books').findOne(
+      { id: bookId },
+      { projection: { title: 1, language: 1 } },
+    );
+
+    // Create job record (same shape as queue-books route)
+    await db.collection('jobs').insertOne({
+      id: jobId,
+      type: 'ocr',
+      book_id: bookId,
+      book_title: book?.title,
+      status: 'pending',
+      progress: { total: pageIds.length, completed: 0, failed: 0 },
+      config: {
+        page_ids: pageIds,
+        model: 'gemini-3-flash-preview',
+        language: book?.language || 'auto-detect',
+      },
+      initiated_by: 'pipeline_lambda_fallback',
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    // Set active job on book
+    await db.collection('books').updateOne(
+      { id: bookId },
+      { $set: { job: { type: 'realtime', job_id: jobId } } },
+    );
+
+    // Enqueue to SQS
+    await enqueuePagesForJob(bookId, pageIds, 'ocr', jobId);
+
+    console.log(`[pipeline] Lambda OCR fallback: ${pageIds.length} pages for ${bookId} (job ${jobId})`);
+    return { success: true, jobId };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'unknown';
+    console.error(`[pipeline] Lambda OCR fallback failed for ${bookId}:`, msg);
+    return { success: false, error: msg };
+  }
+}
+
+/**
+ * Submit translation for a book via Lambda workers (realtime Gemini API).
+ * Used as fallback when Gemini Batch API quota is exhausted.
+ */
+async function submitTranslationViaLambda(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+): Promise<{ success: boolean; jobId?: string; error?: string }> {
+  try {
+    // Find pages with OCR but no translation (skip non-content page types)
+    const pages = await db.collection('pages')
+      .find({
+        book_id: bookId,
+        'ocr.data': { $exists: true, $nin: [null, ''] },
+        page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+        $or: [
+          { 'translation.data': { $exists: false } },
+          { 'translation.data': null },
+          { 'translation.data': '' },
+        ],
+      })
+      .sort({ page_number: 1 })
+      .project({ id: 1 })
+      .toArray();
+
+    if (pages.length === 0) {
+      return { success: true, jobId: undefined, error: 'No pages need translation' };
+    }
+
+    const pageIds = pages.map(p => p.id);
+    const jobId = nanoid(12);
+
+    const book = await db.collection('books').findOne(
+      { id: bookId },
+      { projection: { title: 1, language: 1 } },
+    );
+
+    await db.collection('jobs').insertOne({
+      id: jobId,
+      type: 'translation',
+      book_id: bookId,
+      book_title: book?.title,
+      status: 'pending',
+      progress: { total: pageIds.length, completed: 0, failed: 0 },
+      config: {
+        page_ids: pageIds,
+        model: 'gemini-3-flash-preview',
+        language: book?.language || 'auto-detect',
+      },
+      initiated_by: 'pipeline_lambda_fallback',
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    await db.collection('books').updateOne(
+      { id: bookId },
+      { $set: { job: { type: 'realtime', job_id: jobId } } },
+    );
+
+    // Translation uses FIFO queue — enqueuePagesForJob handles messageGroupId
+    await enqueuePagesForJob(bookId, pageIds, 'translation', jobId);
+
+    console.log(`[pipeline] Lambda translate fallback: ${pageIds.length} pages for ${bookId} (job ${jobId})`);
+    return { success: true, jobId };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'unknown';
+    console.error(`[pipeline] Lambda translate fallback failed for ${bookId}:`, msg);
+    return { success: false, error: msg };
+  }
+}
+
+/**
  * GET /api/cron/post-import-pipeline
  *
  * Cron-driven post-import pipeline orchestrator.
@@ -532,9 +674,8 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
-    // Batch API is 50% cheaper than realtime. Jobs complete within hours.
-    // The route handles child-batch splitting for large books.
+    // ── Phase 2: Submit OCR (archive_complete -> ocr_submitted) ──
+    // Primary: Gemini Batch API (50% cheaper). Fallback: Lambda workers (realtime).
     if (hasTimeBudget(startTime)) {
       // Backpressure: don't overwhelm the Gemini Batch API queue
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
@@ -556,8 +697,13 @@ export async function GET(request: NextRequest) {
         .toArray() : [];
 
       let ocrQuotaExhausted = false;
+      let lambdaFallbackCount = 0;
+      const LAMBDA_FALLBACK_LIMIT = 5; // Max books to process via Lambda per cron run
+
       for (const book of readyForOcr) {
-        if (!hasTimeBudget(startTime) || ocrQuotaExhausted) break;
+        if (!hasTimeBudget(startTime)) break;
+        // When batch is exhausted, switch to Lambda fallback (limited per run)
+        if (ocrQuotaExhausted && lambdaFallbackCount >= LAMBDA_FALLBACK_LIMIT) break;
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
           // Guard: verify book has pages with good archived images (not failed)
@@ -584,6 +730,27 @@ export async function GET(request: NextRequest) {
             continue;
           }
 
+          // If batch quota is exhausted, use Lambda workers (realtime, same model)
+          if (ocrQuotaExhausted) {
+            const lambdaResult = await submitOcrViaLambda(db, book.id);
+            if (lambdaResult.success && lambdaResult.jobId) {
+              await setPipelineStatus(db, book.id, 'ocr_submitted', {
+                ocr_job_id: lambdaResult.jobId,
+                retry_count: 0,
+              });
+              log.ocr_submitted++;
+              lambdaFallbackCount++;
+              logger.action('ocr_lambda_fallback', lambdaFallbackCount);
+            } else if (lambdaResult.success) {
+              // No pages needed OCR — advance directly
+              await setPipelineStatus(db, book.id, 'ocr_complete');
+              log.ocr_advanced++;
+            } else {
+              log.errors.push(`OCR Lambda ${book.id}: ${lambdaResult.error}`);
+            }
+            continue;
+          }
+
           // Submit the full book — route handles parallel downloads and child-batch splitting
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-ocr-async`, {
             method: 'POST',
@@ -607,13 +774,27 @@ export async function GET(request: NextRequest) {
               log.errors.push(`OCR submit ${book.id}: no valid image URLs — needs_attention`);
               continue;
             }
-            // Circuit breaker: 429 = quota/rate limit — stop trying more books this run
-            // Don't count systemic quota exhaustion against per-book retry count
+            // Circuit breaker: 429 = batch quota exhausted — switch to Lambda fallback
             if (res.status === 429) {
               ocrQuotaExhausted = true;
-              logger.backpressure('ocr_quota_exhausted', { book_id: book.id, status: 429 });
-              log.errors.push(`OCR: quota/rate limit hit (HTTP 429) — skipping remaining OCR submits`);
-              break;
+              logger.backpressure('ocr_batch_quota_exhausted', { book_id: book.id, status: 429 });
+              // Try this book via Lambda instead of skipping
+              const lambdaResult = await submitOcrViaLambda(db, book.id);
+              if (lambdaResult.success && lambdaResult.jobId) {
+                await setPipelineStatus(db, book.id, 'ocr_submitted', {
+                  ocr_job_id: lambdaResult.jobId,
+                  retry_count: 0,
+                });
+                log.ocr_submitted++;
+                lambdaFallbackCount++;
+                logger.action('ocr_lambda_fallback', lambdaFallbackCount);
+              } else if (lambdaResult.success) {
+                await setPipelineStatus(db, book.id, 'ocr_complete');
+                log.ocr_advanced++;
+              } else {
+                log.errors.push(`OCR Lambda fallback ${book.id}: ${lambdaResult.error}`);
+              }
+              continue;
             }
             // Transient failure — retry with tracking
             if (retries >= MAX_RETRIES) {
@@ -648,9 +829,22 @@ export async function GET(request: NextRequest) {
           // Circuit breaker: catch quota errors that come through as exceptions
           if (errMsg.includes('429') || errMsg.includes('quota')) {
             ocrQuotaExhausted = true;
-            logger.backpressure('ocr_quota_exhausted', { book_id: book.id, error: errMsg });
-            log.errors.push(`OCR: quota/rate limit hit — skipping remaining OCR submits`);
-            break;
+            logger.backpressure('ocr_batch_quota_exhausted', { book_id: book.id, error: errMsg });
+            // Try this book via Lambda
+            const lambdaResult = await submitOcrViaLambda(db, book.id);
+            if (lambdaResult.success && lambdaResult.jobId) {
+              await setPipelineStatus(db, book.id, 'ocr_submitted', {
+                ocr_job_id: lambdaResult.jobId,
+                retry_count: 0,
+              });
+              log.ocr_submitted++;
+              lambdaFallbackCount++;
+              logger.action('ocr_lambda_fallback', lambdaFallbackCount);
+            } else if (lambdaResult.success) {
+              await setPipelineStatus(db, book.id, 'ocr_complete');
+              log.ocr_advanced++;
+            }
+            continue;
           }
           if (retries >= MAX_RETRIES) {
             await markFailed(db, book.id, `OCR submit exception: ${errMsg}`, retries);
@@ -662,7 +856,7 @@ export async function GET(request: NextRequest) {
       }
 
       if (ocrQuotaExhausted) {
-        log.errors.push('OCR: All API keys quota exhausted');
+        log.errors.push(`OCR: Batch API quota exhausted — used Lambda fallback for ${lambdaFallbackCount} books`);
       }
     }
 
@@ -820,12 +1014,36 @@ export async function GET(request: NextRequest) {
         .toArray();
 
       let translateQuotaExhausted = false;
+      let translateLambdaCount = 0;
+      const TRANSLATE_LAMBDA_LIMIT = 3; // Fewer than OCR — translation is sequential (FIFO)
+
       for (const book of readyForTranslate) {
-        if (!hasTimeBudget(startTime) || translateQuotaExhausted) break;
+        if (!hasTimeBudget(startTime)) break;
+        if (translateQuotaExhausted && translateLambdaCount >= TRANSLATE_LAMBDA_LIMIT) break;
         const retries = book.pipeline_auto?.retry_count || 0;
 
         // English books get modernized (Early Modern → Modern English) via the same batch route
         try {
+          // If batch quota is exhausted, use Lambda workers directly
+          if (translateQuotaExhausted) {
+            const lambdaResult = await submitTranslationViaLambda(db, book.id);
+            if (lambdaResult.success && lambdaResult.jobId) {
+              await setPipelineStatus(db, book.id, 'translate_submitted', {
+                translate_job_id: lambdaResult.jobId,
+                retry_count: 0,
+              });
+              log.translate_submitted++;
+              translateLambdaCount++;
+              logger.action('translate_lambda_fallback', translateLambdaCount);
+            } else if (lambdaResult.success) {
+              await setPipelineStatus(db, book.id, 'translate_complete');
+              log.translate_advanced++;
+            } else {
+              log.errors.push(`Translate Lambda ${book.id}: ${lambdaResult.error}`);
+            }
+            continue;
+          }
+
           const res = await fetch(`${baseUrl}/api/books/${book.id}/batch-translate-async`, {
             method: 'POST',
             headers: getInternalHeaders(),
@@ -839,13 +1057,27 @@ export async function GET(request: NextRequest) {
           }
 
           if (!res.ok) {
-            // Circuit breaker: 429 = quota/rate limit — stop trying more books this run
-            // Don't count systemic rate limits against per-book retry count
+            // Circuit breaker: 429 = quota exhausted — switch to Lambda fallback
             if (res.status === 429) {
               translateQuotaExhausted = true;
-              logger.backpressure('translate_quota_exhausted', { book_id: book.id, status: 429 });
-              log.errors.push(`Translate: rate limit hit (HTTP 429) — skipping remaining translate submits`);
-              break;
+              logger.backpressure('translate_batch_quota_exhausted', { book_id: book.id, status: 429 });
+              // Try this book via Lambda
+              const lambdaResult = await submitTranslationViaLambda(db, book.id);
+              if (lambdaResult.success && lambdaResult.jobId) {
+                await setPipelineStatus(db, book.id, 'translate_submitted', {
+                  translate_job_id: lambdaResult.jobId,
+                  retry_count: 0,
+                });
+                log.translate_submitted++;
+                translateLambdaCount++;
+                logger.action('translate_lambda_fallback', translateLambdaCount);
+              } else if (lambdaResult.success) {
+                await setPipelineStatus(db, book.id, 'translate_complete');
+                log.translate_advanced++;
+              } else {
+                log.errors.push(`Translate Lambda fallback ${book.id}: ${lambdaResult.error}`);
+              }
+              continue;
             }
             if (retries >= MAX_RETRIES) {
               await markFailed(db, book.id, `Translate submit failed after ${retries} retries: HTTP ${res.status}`, retries);
@@ -878,9 +1110,22 @@ export async function GET(request: NextRequest) {
           // Circuit breaker: catch rate limit errors that come through as exceptions
           if (errMsg.includes('429') || errMsg.includes('quota') || errMsg.includes('rate')) {
             translateQuotaExhausted = true;
-            logger.backpressure('translate_quota_exhausted', { book_id: book.id, error: errMsg });
-            log.errors.push(`Translate: rate limit hit — skipping remaining translate submits`);
-            break;
+            logger.backpressure('translate_batch_quota_exhausted', { book_id: book.id, error: errMsg });
+            // Try this book via Lambda
+            const lambdaResult = await submitTranslationViaLambda(db, book.id);
+            if (lambdaResult.success && lambdaResult.jobId) {
+              await setPipelineStatus(db, book.id, 'translate_submitted', {
+                translate_job_id: lambdaResult.jobId,
+                retry_count: 0,
+              });
+              log.translate_submitted++;
+              translateLambdaCount++;
+              logger.action('translate_lambda_fallback', translateLambdaCount);
+            } else if (lambdaResult.success) {
+              await setPipelineStatus(db, book.id, 'translate_complete');
+              log.translate_advanced++;
+            }
+            continue;
           }
           if (retries >= MAX_RETRIES) {
             await markFailed(db, book.id, `Translate submit exception: ${errMsg}`, retries);
@@ -889,6 +1134,10 @@ export async function GET(request: NextRequest) {
           }
           log.errors.push(`Translate submit ${book.id}: ${errMsg}`);
         }
+      }
+
+      if (translateQuotaExhausted) {
+        log.errors.push(`Translate: Batch API quota exhausted — used Lambda fallback for ${translateLambdaCount} books`);
       }
     }
 

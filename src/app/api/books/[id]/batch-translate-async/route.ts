@@ -42,7 +42,7 @@ export const POST = withAuth(async (request, session, context) => {
     const {
       limit = 500,
       targetLanguage = 'English',
-      model = 'gemini-3-flash-preview',
+      model = process.env.GEMINI_BATCH_MODEL || 'gemini-3-flash-preview',
       force = false, // When true, include pages that already have translation (for re-processing)
       staleOnly = false, // When true, only retranslate pages where translation model differs from OCR model
     } = body;
