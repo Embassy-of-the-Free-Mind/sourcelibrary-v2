@@ -526,13 +526,6 @@ export default function TranslationEditor({
   const [swipeOffset, setSwipeOffset] = useState(0);
   const [isSwiping, setIsSwiping] = useState(false);
 
-  // Pulse the panel toggles briefly on first load so users notice them
-  const [showToggleHint, setShowToggleHint] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setShowToggleHint(false), 4000);
-    return () => clearTimeout(t);
-  }, []);
-
   const previousPage = currentIndex > 0 ? pages[currentIndex - 1] : null;
   const nextPage = currentIndex < pages.length - 1 ? pages[currentIndex + 1] : null;
 
@@ -837,7 +830,7 @@ export default function TranslationEditor({
           {/* Row 2: Panel toggles ... Mode toggle + Like */}
           <div className="flex items-center justify-between mt-2 sm:mt-3">
             {/* Panel visibility toggles */}
-            <div className={`flex items-center gap-1 p-1 rounded-lg ${showToggleHint ? 'animate-toggle-hint' : ''}`} role="toolbar" aria-label="Panel visibility">
+            <div className={`flex items-center gap-1 p-1 rounded-lg `} role="toolbar" aria-label="Panel visibility">
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showImagePanel ? 'text-white' : ''}`}
@@ -1447,7 +1440,7 @@ export default function TranslationEditor({
         {/* Row 2: Panel toggles, Mode toggle, Like */}
         <div className="flex items-center justify-between mt-2 sm:mt-3">
           {/* Panel visibility toggles */}
-          <div className={`flex items-center gap-1 p-1 rounded-lg ${showToggleHint ? 'animate-toggle-hint' : ''}`} style={{ background: 'var(--bg-warm)' }}>
+          <div className={`flex items-center gap-1 p-1 rounded-lg `} style={{ background: 'var(--bg-warm)' }}>
             <button
               onClick={() => setShowImagePanel(!showImagePanel)}
               className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? 'text-white' : ''}`}
