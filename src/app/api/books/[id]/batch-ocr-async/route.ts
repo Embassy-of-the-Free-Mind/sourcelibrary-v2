@@ -485,9 +485,13 @@ export const POST = withAuth(async (request, session, context) => {
 
   } catch (error) {
     console.error('Batch OCR submit error:', error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    // Pass through quota/rate-limit errors as 429 so callers can circuit-break
+    const isQuotaError = errMsg.includes('429') || errMsg.includes('quota') ||
+      errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('exhausted');
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Submit failed' },
-      { status: 500 }
+      { error: errMsg },
+      { status: isQuotaError ? 429 : 500 }
     );
   }
 });

@@ -221,9 +221,12 @@ export const POST = withAuth(async (request, session, context) => {
 
   } catch (error) {
     console.error('Batch translation submit error:', error);
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const isQuotaError = errMsg.includes('429') || errMsg.includes('quota') ||
+      errMsg.includes('RESOURCE_EXHAUSTED') || errMsg.includes('exhausted');
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Submit failed' },
-      { status: 500 }
+      { error: errMsg },
+      { status: isQuotaError ? 429 : 500 }
     );
   }
 });
