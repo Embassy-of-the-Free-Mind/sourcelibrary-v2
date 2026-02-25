@@ -27,12 +27,11 @@ export const GET = withAuth(async () => {
   let db;
   try {
     db = await getDb();
-    const serverStatus = await db.command({ serverStatus: 1 });
-    const connections = serverStatus.connections || {};
+    const pingStart = Date.now();
+    await db.command({ ping: 1 });
     checks.mongodb = {
       status: 'ok',
-      current_connections: connections.current,
-      available_connections: connections.available,
+      latency_ms: Date.now() - pingStart,
     };
   } catch (error) {
     checks.mongodb = {
