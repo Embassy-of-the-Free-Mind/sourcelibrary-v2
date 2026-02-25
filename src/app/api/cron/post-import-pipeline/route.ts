@@ -770,7 +770,9 @@ export async function GET(request: NextRequest) {
 
       let ocrQuotaExhausted = false;
       let lambdaFallbackCount = 0;
-      const LAMBDA_FALLBACK_LIMIT = 5; // Max books to process via Lambda per cron run
+      let consecutiveBatchFailures = 0;
+      const LAMBDA_FALLBACK_LIMIT = 20; // Increased from 5 — Lambda is primary path when batch quota exhausted
+      const CONSECUTIVE_FAILURE_THRESHOLD = 3; // After N consecutive batch 500s, assume quota exhausted
 
       for (const book of readyForOcr) {
         if (!hasTimeBudget(startTime)) break;
@@ -874,6 +876,30 @@ export async function GET(request: NextRequest) {
               }
               continue;
             }
+            // Track consecutive batch failures — likely quota exhaustion manifesting as 500
+            if (res.status === 500) {
+              consecutiveBatchFailures++;
+              if (consecutiveBatchFailures >= CONSECUTIVE_FAILURE_THRESHOLD) {
+                ocrQuotaExhausted = true;
+                logger.backpressure('ocr_batch_consecutive_500s', {
+                  book_id: book.id, count: consecutiveBatchFailures,
+                });
+                // Try this book via Lambda
+                const lambdaResult = await submitOcrViaLambda(db, book.id);
+                if (lambdaResult.success && lambdaResult.jobId) {
+                  await setPipelineStatus(db, book.id, 'ocr_submitted', {
+                    ocr_job_id: lambdaResult.jobId, retry_count: 0,
+                  });
+                  log.ocr_submitted++;
+                  lambdaFallbackCount++;
+                  logger.action('ocr_lambda_fallback', lambdaFallbackCount);
+                } else if (lambdaResult.success) {
+                  await setPipelineStatus(db, book.id, 'ocr_complete');
+                  log.ocr_advanced++;
+                }
+                continue;
+              }
+            }
             // Transient failure — retry with tracking
             if (retries >= MAX_RETRIES) {
               await markFailed(db, book.id, `OCR submit failed after ${retries} retries: HTTP ${res.status}`, retries);
@@ -883,6 +909,9 @@ export async function GET(request: NextRequest) {
             log.errors.push(`OCR submit ${book.id}: HTTP ${res.status} (retry ${retries + 1}/${MAX_RETRIES})`);
             continue;
           }
+
+          // Reset consecutive failure counter on success
+          consecutiveBatchFailures = 0;
 
           if (data.jobName) {
             await setPipelineStatus(db, book.id, 'ocr_submitted', {
@@ -1093,7 +1122,9 @@ export async function GET(request: NextRequest) {
 
       let translateQuotaExhausted = false;
       let translateLambdaCount = 0;
-      const TRANSLATE_LAMBDA_LIMIT = 3; // Fewer than OCR — translation is sequential (FIFO)
+      let consecutiveTranslateFailures = 0;
+      const TRANSLATE_LAMBDA_LIMIT = 10; // Increased from 3 — Lambda is primary path when batch quota exhausted
+      const CONSECUTIVE_TRANSLATE_THRESHOLD = 3;
 
       for (const book of readyForTranslate) {
         if (!hasTimeBudget(startTime)) break;
@@ -1163,6 +1194,29 @@ export async function GET(request: NextRequest) {
               }
               continue;
             }
+            // Track consecutive batch failures — likely quota exhaustion manifesting as 500
+            if (res.status === 500) {
+              consecutiveTranslateFailures++;
+              if (consecutiveTranslateFailures >= CONSECUTIVE_TRANSLATE_THRESHOLD) {
+                translateQuotaExhausted = true;
+                logger.backpressure('translate_batch_consecutive_500s', {
+                  book_id: book.id, count: consecutiveTranslateFailures,
+                });
+                const lambdaResult = await submitTranslationViaLambda(db, book.id);
+                if (lambdaResult.success && lambdaResult.jobId) {
+                  await setPipelineStatus(db, book.id, 'translate_submitted', {
+                    translate_job_id: lambdaResult.jobId, retry_count: 0,
+                  });
+                  log.translate_submitted++;
+                  translateLambdaCount++;
+                  logger.action('translate_lambda_fallback', translateLambdaCount);
+                } else if (lambdaResult.success) {
+                  await setPipelineStatus(db, book.id, 'translate_complete');
+                  log.translate_advanced++;
+                }
+                continue;
+              }
+            }
             if (retries >= MAX_RETRIES) {
               await markFailed(db, book.id, `Translate submit failed after ${retries} retries: HTTP ${res.status}`, retries);
             } else {
@@ -1171,6 +1225,9 @@ export async function GET(request: NextRequest) {
             log.errors.push(`Translate submit ${book.id}: HTTP ${res.status} (retry ${retries + 1}/${MAX_RETRIES})`);
             continue;
           }
+
+          // Reset consecutive failure counter on success
+          consecutiveTranslateFailures = 0;
 
           if (data.jobName) {
             await setPipelineStatus(db, book.id, 'translate_submitted', {
