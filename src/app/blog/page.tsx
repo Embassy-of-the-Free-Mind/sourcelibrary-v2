@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
 export const metadata: Metadata = {
@@ -164,16 +165,18 @@ export default function BlogPage() {
       {/* Hero post — editorial side-by-side feature */}
       <Link
         href={`/blog/${hero.slug}`}
-        className="block bg-white rounded-xl overflow-hidden shadow-sm border border-border-light hover:shadow-lg hover:border-accent-gold/12 transition-all group mb-16"
+        className="block bg-white rounded-xl overflow-hidden shadow-sm border border-border-light hover:shadow-lg hover:border-accent-gold/12 transition-all group mb-12"
       >
         <div className="md:flex md:min-h-[340px]">
           {hero.image && (
-            <div className="md:w-[45%] shrink-0 overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div className="md:w-[45%] shrink-0 overflow-hidden relative h-56 md:h-auto">
+              <Image
                 src={hero.image}
                 alt={hero.imageAlt || ''}
-                className="w-full h-56 md:h-full object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                fill
+                sizes="(max-width: 768px) 100vw, 45vw"
+                className="object-cover group-hover:scale-[1.02] transition-transform duration-700"
+                priority
               />
             </div>
           )}
@@ -199,44 +202,40 @@ export default function BlogPage() {
         </div>
       </Link>
 
-      {/* Thin rule divider */}
-      <div className="mb-14 flex justify-center">
-        <div className="w-16 h-px bg-accent-gold/30" />
-      </div>
-
-      {/* Remaining posts in 2-column grid */}
-      <div className="grid md:grid-cols-2 gap-7">
+      {/* Post list */}
+      <div className="divide-y divide-border-light">
         {rest.map((post) => (
           <Link
             key={post.slug}
             href={`/blog/${post.slug}`}
-            className="block bg-white rounded-xl overflow-hidden shadow-sm border border-border-light hover:shadow-md hover:border-accent-gold/12 transition-all group"
+            className="flex gap-5 py-6 first:pt-0 group"
           >
             {post.image && (
-              <div className="h-44 overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              <div className="w-24 h-24 md:w-32 md:h-24 shrink-0 rounded-lg overflow-hidden relative">
+                <Image
                   src={post.image}
                   alt={post.imageAlt || ''}
-                  className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                  fill
+                  sizes="128px"
+                  className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
                 />
               </div>
             )}
-            <div className="p-5 md:p-6">
-              <div className="flex items-center gap-3 mb-2.5">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
                 {post.tag && (
-                  <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${post.tagColor}`}>
+                  <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${post.tagColor}`}>
                     {post.tag}
                   </span>
                 )}
-                <span className="text-xs text-muted tracking-wide uppercase">{post.readTime}</span>
               </div>
-              <h2 className="font-serif text-lg md:text-xl text-primary group-hover:text-accent-gold-dark transition-colors mb-2 leading-snug">
+              <h2 className="font-serif text-base md:text-lg text-primary group-hover:text-accent-gold-dark transition-colors leading-snug mb-1">
                 {post.title}
               </h2>
-              <p className="text-sm text-secondary leading-relaxed line-clamp-3 font-body">
+              <p className="text-sm text-secondary leading-relaxed line-clamp-2 font-body mb-1.5 hidden sm:block">
                 {post.subtitle}
               </p>
+              <span className="text-xs text-muted">{post.date} &middot; {post.readTime}</span>
             </div>
           </Link>
         ))}
