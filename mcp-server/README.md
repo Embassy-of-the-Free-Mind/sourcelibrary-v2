@@ -39,9 +39,9 @@ npm install && npm run build
 npm start
 ```
 
-## Available Tools (11)
+## Available Tools (14)
 
-### Discovery & Browse
+### Discovery & Search
 
 #### search_library
 
@@ -57,6 +57,28 @@ Full-text search across books and page content. Searches titles, authors, transl
 | `has_translation` | boolean | No | Only translated books |
 | `sort` | string | No | relevance, date_asc, date_desc, title |
 | `limit` | number | No | Max results (default 10, max 100) |
+
+#### search_passages
+
+Search across all translated page content in the library. Returns passage snippets with page numbers and book context. Unlike `search_library` (which matches book titles/authors), this searches inside the actual text of translations and OCR.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `query` | string | Yes | Search inside page text (e.g., "divine providence", "philosopher stone") |
+| `language` | string | No | Filter by book's original language |
+| `year_from` | number | No | Publication year start |
+| `year_to` | number | No | Publication year end |
+| `book_id` | string | No | Search within a specific book only |
+| `limit` | number | No | Max results (default 20, max 50) |
+
+#### search_within_book
+
+Search inside a specific book's page content (OCR and translations). Returns matching pages with snippets showing where the query appears.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `book_id` | string | Yes | The book ID to search within |
+| `query` | string | Yes | Search query (matches both original text and translations) |
 
 #### list_books
 
@@ -90,14 +112,25 @@ Get the full text of a book in a single call. Essential for reading and analyzin
 
 #### get_quote
 
-Get a specific page with formatted academic citations (inline, footnote, DOI).
+Get a page with formatted academic citations (inline, footnote, DOI). Provide a page number for direct lookup, or a query to search within the book and return the best matching page as a citable quote.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `book_id` | string | Yes | Book ID |
-| `page` | number | Yes | Page number |
-| `include_original` | boolean | No | Include original language (default true) |
+| `page` | number | No | Page number (optional if query is provided) |
+| `query` | string | No | Search query — finds the best matching page (optional if page is provided) |
+| `include_original` | boolean | No | Include original language text (default true) |
 | `include_context` | boolean | No | Include adjacent pages |
+
+#### find_quotes
+
+Find the most quotable passages in a book on a given topic. Searches the book, then retrieves full page text with original language and academic citations for the best matches. Returns up to 5 citable passages ready for scholarly use.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `book_id` | string | Yes | The book ID to find quotes in |
+| `topic` | string | Yes | Research topic or concept (e.g., "nature of the soul") |
+| `limit` | number | No | Max quotes to return (default 5, max 10) |
 
 ### Knowledge Graph & Entities
 
@@ -157,14 +190,20 @@ Get all extracted images from a specific book.
 
 ## Example Research Workflows
 
-**Cross-book conceptual analysis:**
-> "Search for references to 'prima materia' across the collection. Which authors discuss it, and how do their treatments differ?"
+**Discover what historical authors wrote about a topic:**
+> "Search for passages about 'prima materia' across the collection. Which authors discuss it, and how do their treatments differ?"
+
+**Find citable quotes from a specific book:**
+> "Find quotes about the divine mind in Ficino's Pimander. I need them with DOI citations."
 
 **Entity network exploration:**
 > "Find all entities connected to Hermes Trismegistus. What books discuss this figure, and what other entities appear alongside?"
 
 **Reading a primary source:**
 > "Get the full translation of Fludd's History of Both Worlds, pages 1-50. Summarize the cosmological framework."
+
+**Search within a book, then cite:**
+> "Search for references to the soul in Agrippa's De Occulta Philosophia, then get a citable quote from the best match."
 
 **Historical illustration research:**
 > "Find all alchemical emblems depicting the ouroboros. What texts are they from?"
