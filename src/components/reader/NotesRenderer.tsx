@@ -140,6 +140,12 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract headers (running headers) - hidden from display
   result = result.replace(/<header>([\s\S]*?)<\/header>/gi, () => '');
 
+  // Strip <detected-images> blocks (JSON bounding box data — not for display)
+  result = result.replace(/<detected-images>[\s\S]*?<\/detected-images>/gi, '');
+
+  // Strip <columns>N</columns> metadata tag (already extracted at save time into page.columns)
+  result = result.replace(/<columns>\d+<\/columns>/gi, '');
+
   // === Bracket syntax (legacy, for backward compatibility) ===
   // Extract language (hidden from reader) - supports multiline
   result = result.replace(/\[\[language:\s*([\s\S]*?)\]\]/gi, (_, lang) => {
@@ -644,12 +650,17 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
   const { cleanText, metadata } = useMemo(() => extractMetadata(text), [text]);
   const withBracketTags = useMemo(() => preprocessBracketTags(cleanText, showNotes), [cleanText, showNotes]);
   const withCentering = useMemo(() => preprocessCentering(withBracketTags), [withBracketTags]);
-  // Ensure blank lines after block-level closing tags so markdown parser resumes inline processing
-  // Without this, text like "</margin>\n**bold**" is treated as one HTML block and ** renders literally
-  const processedText = useMemo(() =>
-    withCentering.replace(/<\/margin>\s*\n(?!\n)/gi, '</margin>\n\n'),
-    [withCentering]
-  );
+  // Ensure blank lines around block-level HTML tags so markdown parser resumes inline processing.
+  // Without this, text like "</div>\n**bold**" is treated as one HTML block and ** renders literally.
+  // CommonMark spec: HTML blocks (type 6) end only at a blank line.
+  const processedText = useMemo(() => {
+    let t = withCentering;
+    // After closing block-level tags: ensure blank line follows
+    t = t.replace(/<\/(div|h[1-6]|margin|blockquote|table|ul|ol|li|p|pre|hr)>\s*\n(?!\n)/gi, '</$1>\n\n');
+    // Before opening block-level tags: ensure blank line precedes (unless at start of text)
+    t = t.replace(/([^\n])\n(<(?:div|h[1-6])\s)/gi, '$1\n\n$2');
+    return t;
+  }, [withCentering]);
 
   // Split on <column-break/> for multi-column rendering, with paragraph-midpoint fallback
   const columnSegments = useMemo(() => {
