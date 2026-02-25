@@ -29,14 +29,14 @@ test.describe('Search', () => {
   test('mode tabs switch between Books and Index', async ({ page }) => {
     await page.goto(`/search?q=${SEARCH.query}`);
 
-    // Wait for Index section to load (heading text is "Index (count)")
-    const indexHeading = page.getByRole('heading', { name: /index/i });
-    await expect(indexHeading).toBeVisible({ timeout: 20000 });
+    // Wait for results to load
+    const resultsHeading = page.getByRole('heading', { name: /results/i });
+    await expect(resultsHeading).toBeVisible({ timeout: 20000 });
 
-    // Click "See all" drill-down button in Index section
-    const indexSection = indexHeading.locator('xpath=ancestor::section');
-    const seeAllButton = indexSection.getByRole('button', { name: /See all/i });
-    await seeAllButton.click();
+    // Click "See all ... index entries" button to drill into index mode
+    const seeAllIndex = page.getByRole('button', { name: /See all.*index/i });
+    await expect(seeAllIndex).toBeVisible({ timeout: 10000 });
+    await seeAllIndex.click();
 
     // Verify drilled into index mode
     await expect(page).toHaveURL(/mode=index/i);
