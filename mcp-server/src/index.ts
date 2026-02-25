@@ -160,7 +160,7 @@ const TOOLS: Tool[] = [
   {
     name: "find_quotes",
     description:
-      "Find the most quotable passages in a book on a given topic. Higher-level than search_within_book: searches the book for your topic, then retrieves full page text with original language and academic citations for the best matches. Returns up to 5 citable passages ready for scholarly use.",
+      "Find the most quotable passages in a book on a given topic. Higher-level than search_within_book: searches the book for your topic, then retrieves full page text with original language and shortlinks for the best matches. Returns up to 5 citable passages ready for scholarly use.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -237,7 +237,7 @@ const TOOLS: Tool[] = [
   {
     name: "get_quote",
     description:
-      "Get a page with formatted academic citations (inline, footnote, DOI). Provide a page number for direct lookup, or a query to search within the book and return the best matching page as a citable quote.",
+      "Get a page with formatted citations and a shortlink. Provide a page number for direct lookup, or a query to search within the book and return the best matching page as a citable quote.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -643,8 +643,7 @@ async function findQuotes(args: {
           original_text: quote?.original,
           language: quote?.language,
           citation: citation?.inline,
-          citation_url: citation?.doi_url || citation?.url,
-          read_url: `https://sourcelibrary.org/book/${args.book_id}/page/${page.pageId}`,
+          url: citation?.short_url || citation?.url || `https://sourcelibrary.org/book/${args.book_id}/page/${page.pageId}`,
         };
       } catch {
         // If quote fetch fails, return what we have from search
@@ -816,7 +815,7 @@ async function getQuote(args: {
     citation: {
       inline: citation.inline,
       footnote: citation.footnote,
-      doi_url: citation.doi_url,
+      url: citation.short_url || citation.url,
     },
   };
 }
