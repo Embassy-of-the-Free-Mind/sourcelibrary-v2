@@ -260,6 +260,15 @@ function preprocessBracketTags(text: string, showNotes: boolean): string {
   return result;
 }
 
+// Convert markdown bold/italic to HTML tags.
+// Used inside HTML block elements (divs, headings) where the markdown parser won't process inline syntax.
+function inlineMarkdownToHtml(text: string): string {
+  return text
+    .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+}
+
 // Pre-process centering syntax (doesn't break tables)
 function preprocessCentering(text: string): string {
   let result = text;
@@ -267,14 +276,14 @@ function preprocessCentering(text: string): string {
   // Handle centered headings: ->## text<- → <h2 class="text-center">text</h2>
   result = result.replace(/->\s*(#{1,6})\s*([\s\S]*?)\s*<-/g, (_, hashes, content) => {
     const level = hashes.length;
-    const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
+    const cleaned = inlineMarkdownToHtml(content.trim().replace(/\s*\n\s*/g, ' '));
     return `<h${level} class="text-center">${cleaned}</h${level}>`;
   });
 
   // Handle headings with centered content: ## ->text<- → <h2 class="text-center">text</h2>
   result = result.replace(/^(#{1,6})\s*->([\s\S]*?)<-\s*$/gm, (_, hashes, content) => {
     const level = hashes.length;
-    const cleaned = content.trim().replace(/\s*\n\s*/g, ' ');
+    const cleaned = inlineMarkdownToHtml(content.trim().replace(/\s*\n\s*/g, ' '));
     return `<h${level} class="text-center">${cleaned}</h${level}>`;
   });
 
@@ -282,13 +291,13 @@ function preprocessCentering(text: string): string {
   result = result.replace(/^(\d+)\. /gm, '$1\\. ');
 
   // Centered text: ->text<- or ::text:: (handles multiline)
-  // Only process if NOT inside a table (no | on same line)
+  // Convert markdown bold/italic to HTML since content inside <div> blocks is not parsed as markdown.
   result = result.replace(/->([\s\S]*?)<-/g, (match, content) => {
-    const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
+    const cleaned = inlineMarkdownToHtml(content.trim().replace(/\s*\n\s*/g, '<br>'));
     return `<div class="text-center">${cleaned}</div>`;
   });
   result = result.replace(/::([\s\S]*?)::/g, (_, content) => {
-    const cleaned = content.trim().replace(/\s*\n\s*/g, '<br>');
+    const cleaned = inlineMarkdownToHtml(content.trim().replace(/\s*\n\s*/g, '<br>'));
     return `<div class="text-center">${cleaned}</div>`;
   });
 
