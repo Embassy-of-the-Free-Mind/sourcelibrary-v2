@@ -42,8 +42,8 @@ const posts: BlogPost[] = [
     readTime: '15 min read',
     tag: 'Visual essay',
     tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69906313e7b7642c081de828/22.jpg',
-    imageAlt: 'Astrological diagram from a medieval manuscript',
+    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg',
+    imageAlt: 'Integra Naturae Speculum by Robert Fludd, showing the Great Chain of Being with celestial spheres and zodiac signs, 1617',
   },
   {
     slug: 'demonology',
