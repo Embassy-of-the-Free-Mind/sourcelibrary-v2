@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getDb, forceReconnect, isConnectionError } from '@/lib/mongodb';
 import type { PipelineAutoStatus } from '@/lib/types/pipeline';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { extractChaptersForBook } from '@/lib/chapter-extraction';
@@ -253,7 +253,7 @@ export async function GET(request: NextRequest) {
   const logger = createCronLogger('post-import-pipeline');
   const startTime = Date.now();
   const baseUrl = getBaseUrl();
-  const db = await getDb();
+  let db = await getDb();
 
   // Check emergency stop flag
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' as any });
@@ -1447,6 +1447,46 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error('[post-import-pipeline] Error:', error);
+
+    // On connection timeout, try to reconnect for the logging/summary phase
+    if (isConnectionError(error)) {
+      logger.error(`MongoDB connection lost: ${error instanceof Error ? error.message : 'unknown'} — reconnecting`);
+      try {
+        db = await forceReconnect();
+        // If reconnect works, try to at least write the partial summary
+        logger.setActions({
+          enrolled: log.enrolled,
+          archived: log.archived,
+          ocr_submitted: log.ocr_submitted,
+          ocr_advanced: log.ocr_advanced,
+          metadata_enriched: log.metadata_enriched,
+          translate_submitted: log.translate_submitted,
+          translate_advanced: log.translate_advanced,
+          enriched: log.enriched,
+          chapters_extracted: log.chapters_extracted,
+          images_submitted: log.images_submitted,
+          finalized: log.finalized,
+          git_synced: log.git_synced,
+          needs_attention: log.needs_attention,
+          stale_retried: log.stale_retried,
+          stale_failed: log.stale_failed,
+          stale_retranslate: log.stale_retranslate,
+        });
+        logger.addErrors(log.errors);
+        logger.error(`Recovered from connection timeout after partial work`);
+        await logger.flush();
+        // Return 200 — work was partially done, cron shouldn't count as failed
+        return NextResponse.json({
+          success: true,
+          recovered: true,
+          duration_ms: Date.now() - startTime,
+          partial: log,
+        });
+      } catch {
+        // Reconnect also failed — fall through to standard error handling
+      }
+    }
+
     logger.setActions({
       enrolled: log.enrolled,
       archived: log.archived,

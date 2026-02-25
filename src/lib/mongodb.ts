@@ -15,6 +15,14 @@ let cachedDb: Db | null = null;
 let lastValidated = 0;
 const VALIDATION_INTERVAL_MS = 30_000;
 
+/** Returns true if the error is a MongoDB connection/socket timeout */
+export function isConnectionError(err: unknown): boolean {
+  const msg = err instanceof Error ? err.message : String(err);
+  return msg.includes('timed out') || msg.includes('ECONNREFUSED') ||
+    msg.includes('ECONNRESET') || msg.includes('ETIMEDOUT') ||
+    msg.includes('topology was destroyed') || msg.includes('pool was cleared');
+}
+
 function clearCache() {
   cachedClient = null;
   cachedDb = null;
@@ -49,9 +57,11 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
 
     console.log('[MongoDB] Initializing connection...');
     const client = new MongoClient(uri, {
-      serverSelectionTimeoutMS: 5000,
-      connectTimeoutMS: isLambda ? 10000 : 5000,
-      socketTimeoutMS: 45000,
+      // Atlas cluster is in ap-south-1 (Mumbai), Vercel in iad1 (Virginia).
+      // Cross-region latency (~200ms RTT) needs generous timeouts.
+      serverSelectionTimeoutMS: isLambda ? 5000 : 10000,
+      connectTimeoutMS: isLambda ? 10000 : 10000,
+      socketTimeoutMS: isLambda ? 45000 : 90000,
 
       // Close idle connections after 1 minute to prevent pool exhaustion
       maxIdleTimeMS: 60000,
@@ -81,6 +91,16 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
 }
 
 export async function getDb(): Promise<Db> {
+  const { db } = await connectToDatabase();
+  return db;
+}
+
+/** Force-close cached connection and reconnect. Use after catching a connection timeout. */
+export async function forceReconnect(): Promise<Db> {
+  if (cachedClient) {
+    try { await cachedClient.close(); } catch { /* ignore close errors */ }
+  }
+  clearCache();
   const { db } = await connectToDatabase();
   return db;
 }
