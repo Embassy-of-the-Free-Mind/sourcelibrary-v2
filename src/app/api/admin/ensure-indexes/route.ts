@@ -899,6 +899,37 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Books - pipeline_auto.status (pipeline cron does ~10 status-specific queries)
+    // CRITICAL: Without this, every pipeline cron query collection-scans 4,430+ books
+    // causing MongoDB timeouts on cross-region Atlas shared tier
+    try {
+      await db.collection('books').createIndex(
+        { 'pipeline_auto.status': 1 },
+        { name: 'books_pipeline_status_idx', background: true, sparse: true }
+      );
+      results['books.books_pipeline_status_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_pipeline_status_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - pipeline_auto.status + last_updated (stale detection queries)
+    // Query: { 'pipeline_auto.status': X, 'pipeline_auto.last_updated': { $lt: cutoff } }
+    try {
+      await db.collection('books').createIndex(
+        { 'pipeline_auto.status': 1, 'pipeline_auto.last_updated': 1 },
+        { name: 'books_pipeline_status_updated_idx', background: true, sparse: true }
+      );
+      results['books.books_pipeline_status_updated_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_pipeline_status_updated_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Pipeline snapshots - time-range scans for velocity charts
     try {
       await db.collection('pipeline_snapshots').createIndex(
