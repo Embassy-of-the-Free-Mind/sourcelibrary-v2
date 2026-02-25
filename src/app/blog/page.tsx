@@ -109,8 +109,8 @@ const posts: BlogPost[] = [
     readTime: '18 min read',
     tag: 'Collection',
     tagColor: 'bg-accent-violet/10 text-accent-violet',
-    image: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6958eb06d3a8928334817227/67.jpg',
-    imageAlt: 'Botanical illustration from the De la Cruz-Badiano Aztec Herbal, 1552',
+    image: 'https://archive.org/download/gri_33125009545621/page/n23/full/pct:50/0/default.jpg',
+    imageAlt: 'Weighing of the Heart scene from the Book of the Dead, Papyrus of Ani, British Museum, c. 1250 BCE',
   },
   {
     slug: 'fechner-bohme',
@@ -211,12 +211,12 @@ export default function BlogPage() {
             className="flex gap-5 py-6 first:pt-0 group"
           >
             {post.image && (
-              <div className="w-24 h-24 md:w-32 md:h-24 shrink-0 rounded-lg overflow-hidden relative">
+              <div className="w-28 h-28 md:w-44 md:h-32 shrink-0 rounded-lg overflow-hidden relative">
                 <Image
                   src={post.image}
                   alt={post.imageAlt || ''}
                   fill
-                  sizes="128px"
+                  sizes="(max-width: 768px) 112px, 176px"
                   className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
                 />
               </div>
@@ -229,13 +229,13 @@ export default function BlogPage() {
                   </span>
                 )}
               </div>
-              <h2 className="font-serif text-base md:text-lg text-primary group-hover:text-accent-gold-dark transition-colors leading-snug mb-1">
+              <h2 className="font-serif text-lg md:text-xl text-primary group-hover:text-accent-gold-dark transition-colors leading-snug mb-1.5">
                 {post.title}
               </h2>
-              <p className="text-sm text-secondary leading-relaxed line-clamp-2 font-body mb-1.5 hidden sm:block">
+              <p className="text-sm md:text-base text-secondary leading-relaxed line-clamp-2 font-body mb-2 hidden sm:block">
                 {post.subtitle}
               </p>
-              <span className="text-xs text-muted">{post.date} &middot; {post.readTime}</span>
+              <span className="text-sm text-muted">{post.date} &middot; {post.readTime}</span>
             </div>
           </Link>
         ))}

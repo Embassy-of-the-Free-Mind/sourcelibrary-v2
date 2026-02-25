@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Sacred Texts That Were Never "Texts" - Blog - Source Library',
@@ -489,6 +490,8 @@ export default function IndigenousTraditionsPage() {
           </div>
         </div>
       </article>
+
+      <BlogComments slug="indigenous-traditions" />
     </ContentPageLayout>
   );
 }

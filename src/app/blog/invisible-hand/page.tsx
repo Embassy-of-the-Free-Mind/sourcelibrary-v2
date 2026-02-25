@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Invisible Hand Has a History - Blog - Source Library',
@@ -409,6 +410,8 @@ export default function InvisibleHandPage() {
           </p>
         </div>
       </article>
+
+      <BlogComments slug="invisible-hand" />
     </ContentPageLayout>
   );
 }

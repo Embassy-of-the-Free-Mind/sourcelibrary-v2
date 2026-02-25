@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'A History of Astrology Across Traditions - Blog - Source Library',
@@ -453,6 +454,8 @@ export default function HistoryOfAstrologyPage() {
           </div>
         </div>
       </article>
+
+      <BlogComments slug="history-of-astrology" />
     </ContentPageLayout>
   );
 }

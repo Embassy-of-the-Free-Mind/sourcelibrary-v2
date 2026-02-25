@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Mystic Who Invented Psychophysics - Blog - Source Library',
@@ -398,6 +399,8 @@ export default function FechnerBohmePage() {
           </div>
         </div>
       </article>
+
+      <BlogComments slug="fechner-bohme" />
     </ContentPageLayout>
   );
 }
