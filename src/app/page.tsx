@@ -241,7 +241,7 @@ export default async function HomePage() {
                   1389–1464 · Florence
                 </p>
                 <p className="text-stone-600 text-sm leading-relaxed">
-                  In 1460, when a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, Cosimo ordered its translation before even Plato—sensing that Hermes Trismegistus held the key to ancient wisdom. He founded the Platonic Academy in his villa at Careggi, creating the first institution dedicated to freely sharing philosophical knowledge since antiquity.
+                  In 1462, when a Greek manuscript of the <em>Corpus Hermeticum</em> reached his hands, the aging Cosimo ordered Ficino to translate it before even Plato&mdash;sensing that Hermes Trismegistus held the key to the most ancient wisdom. He gave Ficino a small property at Careggi, where the philosopher gathered an informal circle of students and thinkers that became a vital center for the revival of Platonic philosophy in the Latin West.
                 </p>
               </div>
               <div className="flex-1">
@@ -264,36 +264,6 @@ export default async function HomePage() {
           </div>
         </div>
 
-        {/* Footer Links */}
-        <div className="px-6 md:px-12 mt-16">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-stone-300 max-w-5xl mx-auto">
-            <div className="mb-4 md:mb-0 text-gray-600">
-              &copy; {new Date().getFullYear()} Source Library
-            </div>
-            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
-              <a
-                href="#about"
-                className="hover:text-gray-900 transition-colors"
-              >
-                About
-              </a>
-              <span className="hidden md:inline">•</span>
-              <a
-                href="/press"
-                className="text-accent-rust hover:text-accent-gold-dark transition-colors"
-              >
-                Press
-              </a>
-              <span className="hidden md:inline">•</span>
-              <a
-                href="mailto:derek@ancientwisdomtrust.org"
-                className="text-accent-rust hover:text-accent-gold-dark transition-colors"
-              >
-                Contact
-              </a>
-            </div>
-          </div>
-        </div>
       </footer>
     </div>
   );
