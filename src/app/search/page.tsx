@@ -71,8 +71,9 @@ export default function SearchPage() {
     (searchParams.get('sort') as any) || 'relevance'
   );
 
-  // Filters (books mode)
-  const [showFilters, setShowFilters] = useState(false);
+  // Filters
+  const hasInitialFilters = !!(searchParams.get('language') || searchParams.get('category') || searchParams.get('date_from') || searchParams.get('date_to') || searchParams.get('has_doi') || searchParams.get('has_translation') || searchParams.get('first_translation') || searchParams.get('library'));
+  const [showFilters, setShowFilters] = useState(hasInitialFilters);
   const [language, setLanguage] = useState(searchParams.get('language') || '');
   const [category, setCategory] = useState(searchParams.get('category') || '');
   const [dateFrom, setDateFrom] = useState(searchParams.get('date_from') || '');
@@ -122,8 +123,19 @@ export default function SearchPage() {
     try {
       if (mode === 'unified') {
         // Run all three in parallel, limited previews
+        const bookFilters: Record<string, string | undefined> = {
+          limit: String(PREVIEW_BOOKS),
+          language: language || undefined,
+          category: category || undefined,
+          date_from: dateFrom || undefined,
+          date_to: dateTo || undefined,
+          has_doi: hasDoi ? 'true' : undefined,
+          has_translation: hasTranslation ? 'true' : undefined,
+          first_translation: firstTranslation ? 'true' : undefined,
+          library: library || undefined,
+        };
         const [bookData, indexData, imageData] = await Promise.all([
-          searchApi.search(q, { limit: PREVIEW_BOOKS }),
+          searchApi.search(q, bookFilters),
           searchApi.index(q, {}),
           galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }),
         ]);
@@ -173,17 +185,16 @@ export default function SearchPage() {
     if (q) params.set('q', q);
     if (mode !== 'unified') params.set('mode', mode);
     if (mode === 'index' && indexType) params.set('type', indexType);
-    if (mode === 'books') {
-      if (language) params.set('language', language);
-      if (category) params.set('category', category);
-      if (dateFrom) params.set('date_from', dateFrom);
-      if (dateTo) params.set('date_to', dateTo);
-      if (hasDoi) params.set('has_doi', 'true');
-      if (hasTranslation) params.set('has_translation', 'true');
-      if (firstTranslation) params.set('first_translation', 'true');
-      if (library) params.set('library', library);
-      if (sortBy !== 'relevance') params.set('sort', sortBy);
-    }
+    // Persist filters in URL for all modes
+    if (language) params.set('language', language);
+    if (category) params.set('category', category);
+    if (dateFrom) params.set('date_from', dateFrom);
+    if (dateTo) params.set('date_to', dateTo);
+    if (hasDoi) params.set('has_doi', 'true');
+    if (hasTranslation) params.set('has_translation', 'true');
+    if (firstTranslation) params.set('first_translation', 'true');
+    if (library) params.set('library', library);
+    if (mode === 'books' && sortBy !== 'relevance') params.set('sort', sortBy);
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     router.replace(`/search?${params.toString()}`, { scroll: false });
   }, [router, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy]);
@@ -296,32 +307,18 @@ export default function SearchPage() {
               )}
             </div>
             {viewMode === 'books' && (
-              <div className="flex gap-3">
-                <div className="relative flex-1 sm:flex-initial">
-                  <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
-                  <select
-                    value={sortBy}
-                    onChange={(e) => { setSortBy(e.target.value as any); setOffset(0); }}
-                    className="w-full sm:w-auto pl-9 pr-3 py-3 border border-border-medium rounded-xl text-sm text-secondary bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 appearance-none cursor-pointer"
-                  >
-                    <option value="relevance">Relevance</option>
-                    <option value="date_desc">Newest first</option>
-                    <option value="date_asc">Oldest first</option>
-                    <option value="title">Title A-Z</option>
-                  </select>
-                </div>
-                <button
-                  onClick={() => setShowFilters(!showFilters)}
-                  className={`px-4 py-3 border rounded-xl flex items-center gap-2 transition-colors ${
-                    showFilters || hasActiveFilters
-                      ? 'bg-accent-rust/10 border-accent-rust/30 text-accent-rust'
-                      : 'border-border-medium text-secondary hover:bg-warm'
-                  }`}
+              <div className="relative flex-shrink-0">
+                <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
+                <select
+                  value={sortBy}
+                  onChange={(e) => { setSortBy(e.target.value as any); setOffset(0); }}
+                  className="w-full sm:w-auto pl-9 pr-3 py-3 border border-border-medium rounded-xl text-sm text-secondary bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 appearance-none cursor-pointer"
                 >
-                  <Filter className="w-5 h-5" />
-                  <span className="sm:inline">Filters</span>
-                  {hasActiveFilters && <span className="w-2 h-2 bg-accent-rust rounded-full" />}
-                </button>
+                  <option value="relevance">Relevance</option>
+                  <option value="date_desc">Newest first</option>
+                  <option value="date_asc">Oldest first</option>
+                  <option value="title">Title A-Z</option>
+                </select>
               </div>
             )}
           </div>
@@ -349,69 +346,79 @@ export default function SearchPage() {
             </div>
           )}
 
-          {/* Filters Panel (books drill-down mode) */}
-          {showFilters && viewMode === 'books' && (
-            <div className="mt-4 p-4 bg-warm rounded-xl border border-border-light">
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-medium text-primary">Filters</span>
-                {hasActiveFilters && (
-                  <button onClick={clearFilters} className="text-sm text-muted hover:text-primary flex items-center gap-1">
-                    <X className="w-4 h-4" /> Clear all
-                  </button>
-                )}
+          {/* Search Options Accordion */}
+          <div className="mt-3">
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-2 text-sm text-muted hover:text-secondary transition-colors"
+            >
+              <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? '' : '-rotate-90'}`} />
+              <Filter className="w-3.5 h-3.5" />
+              Search options
+              {hasActiveFilters && <span className="w-1.5 h-1.5 bg-accent-rust rounded-full" />}
+            </button>
+            {showFilters && (
+              <div className="mt-3 p-4 bg-warm rounded-xl border border-border-light">
+                <div className="flex items-center justify-between mb-3">
+                  {hasActiveFilters && (
+                    <button onClick={clearFilters} className="text-sm text-muted hover:text-primary flex items-center gap-1 ml-auto">
+                      <X className="w-4 h-4" /> Clear all
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Language</label>
+                    <select value={language} onChange={(e) => setLanguage(e.target.value)}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Subject</label>
+                    <select value={category} onChange={(e) => setCategory(e.target.value)}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Library</label>
+                    <select value={library} onChange={(e) => setLibrary(e.target.value)}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      <option value="">All Libraries</option>
+                      {Object.values(LIBRARY_PARTNERS).map((p) => (
+                        <option key={p.providerKey} value={p.providerKey}>{p.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Published after</label>
+                    <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
+                      placeholder="e.g., 1500" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Published before</label>
+                    <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
+                      placeholder="e.g., 1700" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                  </div>
+                  <div className="flex flex-col gap-2 justify-end">
+                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                      <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
+                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has translation
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                      <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
+                        className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> First translation
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                      <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
+                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has DOI
+                    </label>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm text-secondary mb-1">Language</label>
-                  <select value={language} onChange={(e) => setLanguage(e.target.value)}
-                    className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                    {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm text-secondary mb-1">Subject</label>
-                  <select value={category} onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                    {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm text-secondary mb-1">Published After</label>
-                  <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
-                    placeholder="e.g., 1500" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
-                </div>
-                <div>
-                  <label className="block text-sm text-secondary mb-1">Published Before</label>
-                  <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
-                    placeholder="e.g., 1700" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
-                </div>
-                <div>
-                  <label className="block text-sm text-secondary mb-1">Library</label>
-                  <select value={library} onChange={(e) => setLibrary(e.target.value)}
-                    className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
-                    <option value="">All Libraries</option>
-                    {Object.values(LIBRARY_PARTNERS).map((p) => (
-                      <option key={p.providerKey} value={p.providerKey}>{p.shortName}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="flex flex-col gap-2 pt-6">
-                  <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                    <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
-                      className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has DOI
-                  </label>
-                  <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                    <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
-                      className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has translation
-                  </label>
-                  <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
-                    <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
-                      className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> First translation
-                  </label>
-                </div>
-              </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 
