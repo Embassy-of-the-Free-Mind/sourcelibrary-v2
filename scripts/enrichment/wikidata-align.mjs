@@ -91,17 +91,44 @@ function extractWikiTitle(url) {
  */
 async function resolveWikipediaToWikidata(titles) {
   const encoded = titles.map(t => encodeURIComponent(t.replace(/ /g, '_'))).join('|');
-  const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encoded}&prop=pageprops&ppprop=wikibase_item&format=json&formatversion=2`;
+  const url = `https://en.wikipedia.org/w/api.php?action=query&titles=${encoded}&redirects=1&prop=pageprops&ppprop=wikibase_item&format=json&formatversion=2`;
   const data = await apiFetch(url);
+
+  // Build redirect map: original title → final title
+  const redirectMap = new Map();
+  for (const r of data.query?.redirects || []) {
+    redirectMap.set(r.from, r.to);
+  }
+  // Also handle normalizations (e.g. underscore → space)
+  const normalMap = new Map();
+  for (const n of data.query?.normalized || []) {
+    normalMap.set(n.from, n.to);
+  }
 
   const results = new Map();
   for (const page of data.query?.pages || []) {
     if (page.pageprops?.wikibase_item) {
-      // Map normalized title back — Wikipedia normalizes spaces/case
       results.set(page.title, page.pageprops.wikibase_item);
     }
   }
-  return results;
+
+  // Map original titles through redirects to find their QIDs
+  const titleResults = new Map();
+  for (const origTitle of titles) {
+    // Follow normalization → redirect → page title chain
+    let resolved = origTitle;
+    if (normalMap.has(resolved.replace(/ /g, '_'))) {
+      resolved = normalMap.get(resolved.replace(/ /g, '_'));
+    }
+    if (redirectMap.has(resolved)) {
+      resolved = redirectMap.get(resolved);
+    }
+    if (results.has(resolved)) {
+      titleResults.set(origTitle, results.get(resolved));
+    }
+  }
+
+  return titleResults;
 }
 
 async function passWikipedia(db) {
@@ -359,32 +386,29 @@ async function fetchWikidataProps(qid, entityType) {
   const props = {};
 
   try {
-    const properties = entityType === 'person' ? 'P569|P570' : entityType === 'place' ? 'P625' : null;
-    if (!properties) return props;
-
-    const url = `https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=${qid}&property=${properties}&format=json`;
-    const data = await apiFetch(url);
-
     if (entityType === 'person') {
-      // Birth date (P569)
-      const birthClaim = data.claims?.P569?.[0];
+      // wbgetclaims only accepts one property at a time — fetch birth and death separately
+      const birthUrl = `https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=${qid}&property=P569&format=json`;
+      const birthData = await apiFetch(birthUrl);
+      const birthClaim = birthData.claims?.P569?.[0];
       if (birthClaim?.mainsnak?.datavalue?.value?.time) {
         const time = birthClaim.mainsnak.datavalue.value.time;
         const precision = birthClaim.mainsnak.datavalue.value.precision;
         props.wikidata_birth_date = formatWikidataDate(time, precision);
       }
 
-      // Death date (P570)
-      const deathClaim = data.claims?.P570?.[0];
+      const deathUrl = `https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=${qid}&property=P570&format=json`;
+      const deathData = await apiFetch(deathUrl);
+      const deathClaim = deathData.claims?.P570?.[0];
       if (deathClaim?.mainsnak?.datavalue?.value?.time) {
         const time = deathClaim.mainsnak.datavalue.value.time;
         const precision = deathClaim.mainsnak.datavalue.value.precision;
         props.wikidata_death_date = formatWikidataDate(time, precision);
       }
-    }
-
-    if (entityType === 'place') {
+    } else if (entityType === 'place') {
       // Coordinates (P625)
+      const url = `https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=${qid}&property=P625&format=json`;
+      const data = await apiFetch(url);
       const coordClaim = data.claims?.P625?.[0];
       if (coordClaim?.mainsnak?.datavalue?.value) {
         const { latitude, longitude } = coordClaim.mainsnak.datavalue.value;
