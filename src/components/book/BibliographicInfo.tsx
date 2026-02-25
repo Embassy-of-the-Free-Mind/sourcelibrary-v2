@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, RotateCcw, AlertTriangle, Loader2, Pencil } from 'lucide-react';
+import { ChevronDown, ChevronUp, Copy, Check, ExternalLink, Image as ImageIcon, Pencil } from 'lucide-react';
 import type { Book, ImageSource } from '@/lib/types';
 import { IMAGE_LICENSES } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import { useRouter } from 'next/navigation';
-import { books } from '@/lib/api-client';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 
 function getCatalogUrl(source: string, catalogId: string): string {
@@ -44,32 +43,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [showResetModal, setShowResetModal] = useState(false);
-  const [resetMode, setResetMode] = useState<'soft' | 'full'>('soft');
-  const [resetting, setResetting] = useState(false);
-  const [resetResult, setResetResult] = useState<{ success: boolean; message: string } | null>(null);
   const [showEditModal, setShowEditModal] = useState(false);
-
-  // Check if full reimport is available (requires IA source)
-  const canFullReimport = book.ia_identifier || book.image_source?.provider === 'internet_archive';
-
-  const handleReset = async () => {
-    setResetting(true);
-    setResetResult(null);
-    try {
-      const data = await books.reimport(book.id, { mode: resetMode });
-      setResetResult({ success: true, message: data.message });
-      // Reload after short delay to show success message
-      setTimeout(() => {
-        window.location.reload();
-      }, 1500);
-    } catch (err) {
-      const error = err as Error;
-      setResetResult({ success: false, message: error.message || 'Reset failed' });
-    } finally {
-      setResetting(false);
-    }
-  };
 
   // Format a bibliographic citation
   const formatCitation = () => {
@@ -353,31 +327,9 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                     <span className="text-stone-200">{book.image_source.attribution}</span>
                   </div>
                 )}
-                {/* Reset to Source button */}
-                <div className="mt-3 pt-3 border-t border-stone-600">
-                  <button
-                    onClick={() => setShowResetModal(true)}
-                    className="flex items-center gap-2 px-3 py-1.5 text-sm text-stone-400 hover:text-stone-200 hover:bg-stone-700 rounded-lg transition-colors"
-                  >
-                    <RotateCcw className="w-4 h-4" />
-                    Reset to Source
-                  </button>
-                </div>
               </div>
             </div>
-          ) : (
-            /* Reset option for books without image source (soft reset only) */
-            <div className="mt-4 pt-4 border-t border-stone-700">
-              <button
-                onClick={() => setShowResetModal(true)}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-stone-400 hover:text-stone-200 hover:bg-stone-700 rounded-lg transition-colors"
-              >
-                <RotateCcw className="w-4 h-4" />
-                Reset Content
-              </button>
-              <p className="text-stone-500 text-xs mt-1">Clear OCR and translation data</p>
-            </div>
-          )}
+          ) : null}
 
           {/* Copy citation button */}
           <div className="mt-4 pt-3 border-t border-stone-700">
@@ -401,121 +353,6 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
             <p className="mt-2 text-xs text-stone-500 font-mono break-all">
               {formatCitation()}
             </p>
-          </div>
-        </div>
-      )}
-
-      {/* Reset Modal */}
-      {showResetModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-stone-800 rounded-xl max-w-md w-full p-6 border border-stone-700">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-accent-gold/15 rounded-lg">
-                <AlertTriangle className="w-6 h-6 text-accent-gold" />
-              </div>
-              <h3 className="text-lg font-semibold text-white">Reset to Source</h3>
-            </div>
-
-            <p className="text-stone-300 text-sm mb-4">
-              Choose how to reset this book&apos;s content:
-            </p>
-
-            <div className="space-y-3 mb-6">
-              {/* Soft Reset Option */}
-              <label
-                className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${resetMode === 'soft'
-                    ? 'border-accent-gold bg-accent-gold/8'
-                    : 'border-stone-600 hover:border-stone-500'
-                  }`}
-              >
-                <input
-                  type="radio"
-                  name="resetMode"
-                  value="soft"
-                  checked={resetMode === 'soft'}
-                  onChange={() => setResetMode('soft')}
-                  className="mt-1"
-                />
-                <div>
-                  <span className="text-white font-medium">Soft Reset</span>
-                  <p className="text-stone-400 text-sm mt-1">
-                    Clear all OCR, translations, and summaries. Page images remain unchanged.
-                  </p>
-                </div>
-              </label>
-
-              {/* Full Reset Option */}
-              <label
-                className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${!canFullReimport ? 'opacity-50 cursor-not-allowed' : ''
-                  } ${resetMode === 'full'
-                    ? 'border-red-500 bg-status-error/10'
-                    : 'border-stone-600 hover:border-stone-500'
-                  }`}
-              >
-                <input
-                  type="radio"
-                  name="resetMode"
-                  value="full"
-                  checked={resetMode === 'full'}
-                  onChange={() => canFullReimport && setResetMode('full')}
-                  disabled={!canFullReimport}
-                  className="mt-1"
-                />
-                <div>
-                  <span className="text-white font-medium">Full Re-import</span>
-                  <p className="text-stone-400 text-sm mt-1">
-                    Delete all pages and re-import fresh from Internet Archive.
-                  </p>
-                  {!canFullReimport && (
-                    <p className="text-red-400 text-xs mt-1">
-                      Requires Internet Archive source
-                    </p>
-                  )}
-                </div>
-              </label>
-            </div>
-
-            {/* Result message */}
-            {resetResult && (
-              <div className={`p-3 rounded-lg mb-4 ${resetResult.success ? 'bg-status-success/20 text-green-300' : 'bg-status-error/20 text-red-300'
-                }`}>
-                {resetResult.message}
-              </div>
-            )}
-
-            {/* Actions */}
-            <div className="flex gap-3 justify-end">
-              <button
-                onClick={() => {
-                  setShowResetModal(false);
-                  setResetResult(null);
-                }}
-                disabled={resetting}
-                className="px-4 py-2 text-stone-300 hover:text-white transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleReset}
-                disabled={resetting}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${resetMode === 'full'
-                    ? 'bg-status-error hover:bg-status-error/90 text-white'
-                    : 'bg-accent-rust hover:bg-accent-rust/90 text-white'
-                  }`}
-              >
-                {resetting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Resetting...
-                  </>
-                ) : (
-                  <>
-                    <RotateCcw className="w-4 h-4" />
-                    {resetMode === 'full' ? 'Re-import' : 'Reset'}
-                  </>
-                )}
-              </button>
-            </div>
           </div>
         </div>
       )}

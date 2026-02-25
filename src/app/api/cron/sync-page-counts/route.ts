@@ -108,9 +108,34 @@ export async function GET(request: NextRequest) {
       updated = result.modifiedCount;
     }
 
-    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches) in ${logger.durationMs}ms`);
+    // --- Sync collection book_count caches ---
+    const collections = await db.collection('collections').find({}, { projection: { _id: 1, slug: 1, book_count: 1 } }).toArray();
+    let collectionsUpdated = 0;
+    const collectionOps = [];
+    for (const col of collections) {
+      const liveCount = await db.collection('books').countDocuments({
+        collections: col.slug,
+        status: { $ne: 'deleted' },
+        hidden: { $ne: true },
+        pages_count: { $gt: 0 },
+      });
+      if ((col.book_count || 0) !== liveCount) {
+        collectionOps.push({
+          updateOne: {
+            filter: { _id: col._id },
+            update: { $set: { book_count: liveCount, updated_at: new Date() } },
+          },
+        });
+      }
+    }
+    if (collectionOps.length > 0) {
+      const colResult = await db.collection('collections').bulkWrite(collectionOps);
+      collectionsUpdated = colResult.modifiedCount;
+    }
 
-    logger.setActions({ books_checked: books.length, mismatches: mismatchCount, updated });
+    console.log(`[sync-page-counts] ${updated} books updated (${mismatchCount} mismatches), ${collectionsUpdated} collections updated in ${logger.durationMs}ms`);
+
+    logger.setActions({ books_checked: books.length, mismatches: mismatchCount, updated, collections_checked: collections.length, collections_updated: collectionsUpdated });
 
     await logger.flush();
 
@@ -119,6 +144,8 @@ export async function GET(request: NextRequest) {
       books_checked: books.length,
       mismatches: mismatchCount,
       updated,
+      collections_checked: collections.length,
+      collections_updated: collectionsUpdated,
       duration_ms: logger.durationMs,
     });
   } catch (error) {

@@ -67,9 +67,12 @@ export async function PATCH(request: NextRequest) {
       );
       booksTagged = tagResult.modifiedCount;
 
-      // Update book_count on collection
+      // Update book_count on collection (same filter as detail page)
       const bookCount = await db.collection('books').countDocuments({
-        collections: slug, status: { $ne: 'deleted' }
+        collections: slug,
+        status: { $ne: 'deleted' },
+        hidden: { $ne: true },
+        pages_count: { $gt: 0 },
       });
       updates.book_count = bookCount;
     }
@@ -142,6 +145,14 @@ export async function POST(request: NextRequest) {
       .map(([lang, count]) => ({ lang, count }))
       .sort((a, b) => b.count - a.count);
 
+    // Count visible books (same filter as detail page)
+    const bookCount = await db.collection('books').countDocuments({
+      collections: slug,
+      status: { $ne: 'deleted' },
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+    });
+
     // Create collection record
     const now = new Date();
     const collectionDoc = {
@@ -151,7 +162,7 @@ export async function POST(request: NextRequest) {
       description: description || '',
       color: color || 'gold',
       order: order ?? 99,
-      book_count: books.length,
+      book_count: bookCount,
       languages,
       featured_images: [],
       created_at: now,
