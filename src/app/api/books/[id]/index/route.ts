@@ -56,6 +56,7 @@ async function researchBook(title: string, author: string): Promise<string> {
 interface PageData {
   id: string;
   page_number: number;
+  page_type?: string;
   ocr?: { data: string };
   translation?: { data: string };
   summary?: { data: string };
@@ -750,6 +751,7 @@ function cleanTranslationText(text: string): string {
 /**
  * Find the best matching substring in sourceText for the given quote words.
  * Uses a sliding window approach: score = fraction of quote words found in window.
+ * After finding the best window, snaps to sentence boundaries for clean quotes.
  * Returns { score, extractedText } or null if no good match.
  */
 function findBestMatch(
@@ -788,24 +790,121 @@ function findBestMatch(
 
   if (bestScore < 0.8) return null;
 
-  // Extract the actual text from the source (preserving original casing)
-  const extractedText = sourceWords.slice(bestStart, bestEnd).join(' ');
+  // Snap to sentence boundaries for cleaner quotes
+  const snapped = snapToSentenceBoundaries(sourceWords, bestStart, bestEnd);
+
+  // Clean the extracted text: remove markdown artifacts
+  let extractedText = sourceWords.slice(snapped.start, snapped.end).join(' ');
+  extractedText = cleanExtractedQuote(extractedText);
+
+  // Trim trailing incomplete sentence if quote doesn't end with punctuation
+  if (extractedText.length > 60 && !/[.!?]["'\u201d\u2019)]*$/.test(extractedText)) {
+    const lastSentenceEnd = Math.max(
+      extractedText.lastIndexOf('.'),
+      extractedText.lastIndexOf('!'),
+      extractedText.lastIndexOf('?')
+    );
+    if (lastSentenceEnd > extractedText.length * 0.4) {
+      extractedText = extractedText.substring(0, lastSentenceEnd + 1);
+    }
+  }
+
+  // Trim leading incomplete sentence fragment if it starts lowercase
+  if (/^[a-z]/.test(extractedText)) {
+    const firstSentenceStart = extractedText.search(/[.!?]\s+[A-Z]/);
+    if (firstSentenceStart > 0 && firstSentenceStart < extractedText.length * 0.4) {
+      extractedText = extractedText.substring(firstSentenceStart + 2).trim();
+    }
+  }
+
+  if (extractedText.length < 30) return null;
+
   return { score: bestScore, extractedText };
+}
+
+/**
+ * Snap window boundaries to the nearest sentence start/end.
+ * For start: looks backward for period, then forward for capital letter.
+ * For end: looks forward for sentence-ending punctuation.
+ */
+function snapToSentenceBoundaries(
+  words: string[],
+  start: number,
+  end: number
+): { start: number; end: number } {
+  const sentenceEnd = /[.!?]["'\u201d\u2019)]*$/;
+  const maxExtend = 12; // max words to extend in either direction
+
+  // Snap start: first try backward for a sentence-ending word
+  let newStart = start;
+  let foundStart = false;
+  for (let i = start - 1; i >= Math.max(0, start - maxExtend); i--) {
+    if (sentenceEnd.test(words[i])) {
+      newStart = i + 1;
+      foundStart = true;
+      break;
+    }
+  }
+  // If no period found, look forward for a capital letter (sentence beginning)
+  if (!foundStart) {
+    for (let i = start; i < Math.min(words.length, start + maxExtend); i++) {
+      if (/^[A-Z\u201c\u201e"'(]/.test(words[i])) {
+        newStart = i;
+        break;
+      }
+    }
+  }
+
+  // Snap end: look forward for sentence-ending punctuation
+  let newEnd = end;
+  for (let i = end - 1; i < Math.min(words.length, end + maxExtend); i++) {
+    if (sentenceEnd.test(words[i])) {
+      newEnd = i + 1;
+      break;
+    }
+  }
+
+  return { start: newStart, end: newEnd };
+}
+
+/**
+ * Clean extracted quote text: remove markdown artifacts, stray page numbers,
+ * blockquote markers, XML tags, and other formatting noise.
+ */
+function cleanExtractedQuote(text: string): string {
+  return text
+    .replace(/^>\s*/gm, '')              // Remove blockquote markers
+    .replace(/\*{1,2}([^*]+)\*{1,2}/g, '$1') // Remove bold/italic markdown
+    .replace(/\*/g, '')                  // Remove any remaining stray asterisks
+    .replace(/^\d{1,3}\s+/g, '')         // Remove leading page numbers (e.g. "257 The soul...")
+    .replace(/\s+\d{1,3}\s*\*?\s*\*/g, '') // Remove inline page refs (e.g. "110* *")
+    .replace(/<\/?[a-z-]+\/?>/gi, '')    // Remove stray XML/HTML tags (e.g. </margin>, <column-break/>)
+    .replace(/->/g, '')                  // Remove arrow markers
+    .replace(/<-/g, '')                  // Remove reverse arrow markers
+    .replace(/^[IVX]+\s+/g, '')          // Remove leading chapter numbers (e.g. "II ")
+    .replace(/\s{2,}/g, ' ')             // Collapse whitespace
+    .trim();
 }
 
 /**
  * Ground quotes against source translation text.
  * Instead of just filtering, find the actual verbatim text in the translation
  * and replace the AI's paraphrase. Also resolves page_id.
+ * Excludes non-content pages (index, TOC, title pages, etc.).
  */
+const NON_CONTENT_PAGE_TYPES = new Set([
+  'index', 'table_of_contents', 'title_page', 'blank_page', 'colophon', 'errata',
+]);
+
 function groundQuotes(
   quotes: Array<{ text: string; page: number; context?: string; significance?: string }>,
   pages: PageData[]
 ): Array<{ text: string; page: number; page_id: string; context?: string; significance?: string }> {
   // Build lookup of clean translation text by page number, preserving page_id
+  // Exclude non-content pages (index, TOC, etc.) to avoid quoting index entries
   const pageIndex = new Map<number, { text: string; page_id: string }>();
   for (const page of pages) {
-    if (page.translation?.data) {
+    if (page.translation?.data && !NON_CONTENT_PAGE_TYPES.has(page.page_type || '')) {
       pageIndex.set(page.page_number, {
         text: cleanTranslationText(page.translation.data),
         page_id: page.id,
@@ -816,7 +915,7 @@ function groundQuotes(
   const grounded: Array<{ text: string; page: number; page_id: string; context?: string; significance?: string }> = [];
 
   for (const quote of quotes) {
-    if (!quote.text || quote.text.length < 10) continue;
+    if (!quote.text || quote.text.length < 30) continue;
 
     // 1. Try the specified page first
     const specifiedPage = pageIndex.get(quote.page);

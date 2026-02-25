@@ -28,6 +28,8 @@ interface GalleryItem {
   description: string;
   type?: string;
   bbox?: { x: number; y: number; width: number; height: number };
+  extractedUrl?: string;
+  thumbnailUrl?: string;
 }
 
 interface SectionsNavProps {
@@ -127,9 +129,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                       <div className="flex gap-2 overflow-x-auto pb-2">
                         {sectionImages.slice(0, 4).map((item) => {
                           const imageId = `${item.pageId}-${item.detectionIndex}`;
-                          const cropUrl = item.bbox
-                            ? `/api/crop-image?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
-                            : item.imageUrl;
+                          const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
                           return (
                             <Link
                               key={imageId}
@@ -138,7 +138,7 @@ export default function SectionsNav({ bookId, sections, pages, currentPage, illu
                               style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                             >
                               <Image
-                                src={cropUrl}
+                                src={displayUrl}
                                 alt={item.description || `Page ${item.pageNumber}`}
                                 fill
                                 sizes="64px"

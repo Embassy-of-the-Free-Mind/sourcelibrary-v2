@@ -40,6 +40,8 @@ interface GalleryItem {
   description: string;
   type?: string;
   bbox?: { x: number; y: number; width: number; height: number };
+  extractedUrl?: string;
+  thumbnailUrl?: string;
 }
 
 export default function GuidePage({ params }: GuidePageProps) {
@@ -494,10 +496,8 @@ export default function GuidePage({ params }: GuidePageProps) {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {illustrations.map((item) => {
                   const imageId = `${item.pageId}-${item.detectionIndex}`;
-                  // Build cropped URL if bbox exists
-                  const cropUrl = item.bbox
-                    ? `/api/crop-image?url=${encodeURIComponent(item.imageUrl)}&x=${item.bbox.x}&y=${item.bbox.y}&w=${item.bbox.width}&h=${item.bbox.height}`
-                    : item.imageUrl;
+                  // Use pre-cropped URL if available, fall back to original
+                  const displayUrl = item.extractedUrl || item.thumbnailUrl || item.imageUrl;
 
                   return (
                     <Link
@@ -507,7 +507,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                       style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                     >
                       <Image
-                        src={cropUrl}
+                        src={displayUrl}
                         alt={item.description || 'Illustration'}
                         fill
                         sizes="(max-width: 640px) 50vw, 33vw"
