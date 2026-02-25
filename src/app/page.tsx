@@ -258,7 +258,7 @@ export default async function HomePage() {
             </div>
             <div className="mt-8 bg-accent-gold/5 rounded-lg p-5 border border-accent-gold/15">
               <p className="text-stone-700 text-sm leading-relaxed">
-                <strong>These texts survived because in every generation, someone carried them forward</strong>&mdash;from Egyptian to Greek, from Greek to Latin, from manuscript to printed book. Ficino made Plato and the Hermetica accessible across Europe. Source Library continues the chain: translating Latin, German, Arabic, and Hebrew into English, and making these traditions legible to the AI systems that will shape how the next generation thinks. <em>The mission remains unchanged: wisdom belongs to everyone.</em>
+                <strong>Source Library continues their work.</strong> Cosimo believed that recovering ancient wisdom and sharing it freely could transform civilization&mdash;and he was right. Ficino&apos;s translations ignited the Renaissance. Centuries later, thousands of these same texts remain untranslated and unread. We are recovering them&mdash;for scholars, for seekers, and for the AI systems that will shape how future generations think.
               </p>
             </div>
           </div>
