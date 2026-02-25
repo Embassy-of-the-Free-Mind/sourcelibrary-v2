@@ -86,6 +86,57 @@ async function setPipelineStatus(
   }
 }
 
+/**
+ * If a book's thumbnail still points to an unsplit upload, update it to the best cropped page.
+ * Prefers title-page > frontispiece > first non-blank cropped page.
+ */
+async function fixStaleThumbnail(
+  db: Awaited<ReturnType<typeof getDb>>,
+  bookId: string,
+) {
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { thumbnail: 1 } }
+  );
+  if (!book?.thumbnail?.includes('/uploads/')) return;
+
+  const hasCroppedPages = await db.collection('pages').countDocuments({
+    book_id: bookId,
+    cropped_photo: { $exists: true, $ne: '' },
+  });
+  if (hasCroppedPages === 0) return;
+
+  let bestPage = await db.collection('pages').findOne({
+    book_id: bookId, page_type: 'title-page',
+    cropped_photo: { $exists: true, $ne: '' },
+  });
+  if (!bestPage) {
+    bestPage = await db.collection('pages').findOne({
+      book_id: bookId, page_type: 'frontispiece',
+      cropped_photo: { $exists: true, $ne: '' },
+    });
+  }
+  if (!bestPage) {
+    bestPage = await db.collection('pages').findOne({
+      book_id: bookId,
+      cropped_photo: { $exists: true, $ne: '' },
+      page_type: { $nin: ['blank', null] },
+    }, { sort: { page_number: 1 } });
+  }
+  if (!bestPage) {
+    bestPage = await db.collection('pages').findOne({
+      book_id: bookId,
+      cropped_photo: { $exists: true, $ne: '' },
+    }, { sort: { page_number: 1 } });
+  }
+
+  if (bestPage) {
+    const update: Record<string, string> = { thumbnail: bestPage.cropped_photo };
+    if (bestPage.thumbnail_blob) update.thumbnail_blob = bestPage.thumbnail_blob;
+    await db.collection('books').updateOne({ id: bookId }, { $set: update });
+  }
+}
+
 async function markFailed(
   db: Awaited<ReturnType<typeof getDb>>,
   bookId: string,
@@ -561,7 +612,13 @@ export async function GET(request: NextRequest) {
               body: JSON.stringify({ staleOnly: true, limit: 500 }),
             });
 
-            if (res.status === 429) {
+            // Detect quota exhaustion — either direct 429 or quota error in 500 body
+            const staleResText = !res.ok ? await res.clone().text().catch(() => '') : '';
+            const isStaleQuota = res.status === 429 || (res.status === 500 && (
+              staleResText.includes('429') || staleResText.includes('quota') ||
+              staleResText.includes('RESOURCE_EXHAUSTED') || staleResText.includes('exhausted')
+            ));
+            if (isStaleQuota) {
               staleTranslateQuotaExhausted = true;
               logger.backpressure('stale_retranslate_quota', { book_id: staleBook._id });
               break;
@@ -672,6 +729,7 @@ export async function GET(request: NextRequest) {
 
         if (remaining === 0) {
           await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
+          await fixStaleThumbnail(db, book.id);
           log.archived++;
         } else {
           // Timeout: if stuck in archiving for >24h, advance anyway.
@@ -679,6 +737,7 @@ export async function GET(request: NextRequest) {
           const archiveStart = book.pipeline_auto?.started_at || book.pipeline_auto?.last_updated;
           if (archiveStart && (Date.now() - new Date(archiveStart).getTime()) > ARCHIVE_TIMEOUT_MS) {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
+            await fixStaleThumbnail(db, book.id);
             log.archived++;
             logger.decision('skip', `Archive timeout: ${book.id} (${book.title}) — ${remaining} unarchived pages, advancing after 24h`, { book_id: book.id, remaining });
           }
@@ -788,7 +847,13 @@ export async function GET(request: NextRequest) {
               continue;
             }
             // Circuit breaker: 429 = batch quota exhausted — switch to Lambda fallback
-            if (res.status === 429) {
+            // Also detect quota errors hidden in 500 responses (defense-in-depth)
+            const errorStr = typeof data.error === 'string' ? data.error : '';
+            const isQuotaIn500 = res.status === 500 && (
+              errorStr.includes('429') || errorStr.includes('quota') ||
+              errorStr.includes('RESOURCE_EXHAUSTED') || errorStr.includes('exhausted')
+            );
+            if (res.status === 429 || isQuotaIn500) {
               ocrQuotaExhausted = true;
               logger.backpressure('ocr_batch_quota_exhausted', { book_id: book.id, status: 429 });
               // Try this book via Lambda instead of skipping
@@ -1071,9 +1136,15 @@ export async function GET(request: NextRequest) {
 
           if (!res.ok) {
             // Circuit breaker: 429 = quota exhausted — switch to Lambda fallback
-            if (res.status === 429) {
+            // Also detect quota errors hidden in 500 responses (defense-in-depth)
+            const translateErrorStr = typeof data.error === 'string' ? data.error : '';
+            const isTranslateQuotaIn500 = res.status === 500 && (
+              translateErrorStr.includes('429') || translateErrorStr.includes('quota') ||
+              translateErrorStr.includes('RESOURCE_EXHAUSTED') || translateErrorStr.includes('exhausted')
+            );
+            if (res.status === 429 || isTranslateQuotaIn500) {
               translateQuotaExhausted = true;
-              logger.backpressure('translate_batch_quota_exhausted', { book_id: book.id, status: 429 });
+              logger.backpressure('translate_batch_quota_exhausted', { book_id: book.id, status: res.status });
               // Try this book via Lambda
               const lambdaResult = await submitTranslationViaLambda(db, book.id);
               if (lambdaResult.success && lambdaResult.jobId) {
