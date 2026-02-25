@@ -32,6 +32,12 @@ interface QuoteResponse {
     language: string;
   };
   citation: Citation;
+  license: {
+    spdx: string;
+    url: string;
+    attribution: string;
+    terms: string;
+  };
   context?: {
     previous_page?: string;
     next_page?: string;
@@ -164,6 +170,12 @@ export async function GET(request: NextRequest, context: RouteContext) {
         language: book.language,
       },
       citation: generateCitations(book, pageNumber, bookId, page.id, currentEdition),
+      license: {
+        spdx: 'CC-BY-SA-4.0',
+        url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        attribution: 'Source Library (https://sourcelibrary.org)',
+        terms: 'https://sourcelibrary.org/terms',
+      },
     };
 
     // Include original text if requested

@@ -97,7 +97,9 @@ export async function GET(
       lines.push(`# ${book.display_title || book.title}`);
       lines.push(`# ${book.author} (${book.published || 'n.d.'})`);
       lines.push(`# Language: ${book.language}`);
+      lines.push(`# Produced by SourceLibrary.org in Amsterdam, 2026`);
       lines.push(`# Source: https://sourcelibrary.org/book/${resolvedBookId}`);
+      lines.push(`# License: CC BY-SA 4.0 (https://sourcelibrary.org/terms)`);
       lines.push('');
 
       for (const page of pages) {
@@ -152,6 +154,12 @@ export async function GET(
         published: book.published,
         year: book.year,
         url: `https://sourcelibrary.org/book/${resolvedBookId}`,
+      },
+      license: {
+        spdx: 'CC-BY-SA-4.0',
+        url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        attribution: 'Source Library (https://sourcelibrary.org)',
+        terms: 'https://sourcelibrary.org/terms',
       },
       content_type: content,
       total_pages: book.pages_count || pages.length,

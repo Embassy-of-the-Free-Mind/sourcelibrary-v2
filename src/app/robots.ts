@@ -5,26 +5,61 @@ export default function robots(): MetadataRoute.Robots {
 
   return {
     rules: [
+      // Default: allow search engine indexing
       {
         userAgent: '*',
         allow: '/',
         disallow: [
           '/book/*/pipeline',
           '/book/*/capture',
+          '/api/',
         ],
       },
+
+      // AI training crawlers: block bulk scraping, point to API
+      // These companies should use our API or MCP server instead.
+      // See https://sourcelibrary.org/terms for licensing details.
       {
-        // Allow AI agents to access the API
+        userAgent: 'Google-Extended',
+        disallow: '/',
+      },
+      {
+        userAgent: 'CCBot',
+        disallow: '/',
+      },
+      {
+        userAgent: 'Bytespider',
+        disallow: '/',
+      },
+      {
+        userAgent: 'Diffbot',
+        disallow: '/',
+      },
+      {
+        userAgent: 'Omgilibot',
+        disallow: '/',
+      },
+      {
+        userAgent: 'FacebookBot',
+        disallow: '/',
+      },
+
+      // AI assistants: welcome to use the API and llms.txt
+      // GPTBot, Claude-Web, etc. — access the structured API
+      {
         userAgent: 'GPTBot',
-        allow: ['/api/search', '/api/books/', '/llms.txt'],
+        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms'],
+        disallow: '/',
       },
       {
         userAgent: 'Claude-Web',
-        allow: ['/api/search', '/api/books/', '/llms.txt'],
+        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms'],
+        disallow: '/',
       },
       {
         userAgent: 'Anthropic-AI',
-        allow: ['/api/search', '/api/books/', '/llms.txt'],
+        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms'],
+        disallow: '/',
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,

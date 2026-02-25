@@ -1287,11 +1287,11 @@ export default function TranslationEditor({
 
         {/* Footer: nav hint + search */}
         <div style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-          <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs">
+          <div className="px-4 py-1 flex items-center justify-center gap-4 text-xs flex-wrap">
             <span className="hidden lg:inline">Use ← → arrow keys to navigate</span>
             <span className="lg:hidden">Swipe left/right to navigate</span>
-            <span className="hidden sm:inline">·</span>
-            <span className="hidden sm:inline">CC0 Public Domain</span>
+            <span>·</span>
+            <span>Produced by <a href="https://sourcelibrary.org" className="hover:underline" style={{ color: 'var(--text-muted)' }}>SourceLibrary.org</a> in Amsterdam, 2026</span>
           </div>
           <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
             <BookSearchBar bookId={book.id} />

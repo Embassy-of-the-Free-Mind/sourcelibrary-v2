@@ -392,6 +392,12 @@ export async function GET(request: NextRequest) {
       offset,
       limit,
       sort: sortBy,
+      license: {
+        spdx: 'CC-BY-SA-4.0',
+        url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        attribution: 'Source Library (https://sourcelibrary.org)',
+        terms: 'https://sourcelibrary.org/terms',
+      },
       results: paginatedResults,
       ...(nearby.length > 0 && { nearby, nearby_range: `${parseInt(year!) - 5}-${parseInt(year!) + 5}` }),
       filters: {

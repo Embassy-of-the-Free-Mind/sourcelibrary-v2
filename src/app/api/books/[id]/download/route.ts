@@ -61,9 +61,9 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   // Source and license
   lines.push(`Source: ${BASE_URL}/book/${book.id}`);
   lines.push(`Downloaded: ${now}`);
-  lines.push(`License: CC BY 4.0 (Creative Commons Attribution)`);
+  lines.push(`License: CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)`);
   lines.push('');
-  lines.push('This translation was created with AI assistance and human review.');
+  lines.push('Produced by SourceLibrary.org in Amsterdam, 2026');
   lines.push('Please cite Source Library when using this material.');
   lines.push('');
 
@@ -360,8 +360,8 @@ async function generateEpubDownload(
     <div class="colophon">
       <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
       <p><strong>Downloaded:</strong> ${now}</p>
-      <p><strong>License:</strong> CC BY 4.0 (Creative Commons Attribution)</p>
-      <p>This text was digitized and translated with AI assistance and human review by the Source Library, a project of the Ancient Wisdom Trust.</p>
+      <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
+      <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     </div>
   `;
   chapters.push({ title: 'Title Page', content: frontMatter });
@@ -407,10 +407,9 @@ async function generateEpubDownload(
   // Add colophon chapter at the end
   const colophon = `
     <h1>About This Edition</h1>
-    <p>This digital edition was prepared by the <strong>Source Library</strong>, a project dedicated to digitizing and translating rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.</p>
-    <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-    <p><strong>License:</strong> This translation is released under a Creative Commons Attribution 4.0 International License (CC BY 4.0). You are free to share and adapt this material for any purpose, provided you give appropriate credit.</p>
-    <p>Source Library is a project of the Ancient Wisdom Trust. Preserving humanity's wisdom for the digital age.</p>
+    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
+    <p><strong>Source:</strong> <a href="${BASE_URL}/book/${book.id}">${BASE_URL}/book/${book.id}</a></p>
+    <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution-ShareAlike)</p>
   `;
   chapters.push({ title: 'About This Edition', content: colophon });
 
@@ -512,7 +511,7 @@ async function generateLoebEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>
     <dc:date>${now}</dc:date>
-    <dc:rights>CC BY 4.0</dc:rights>
+    <dc:rights>CC BY-SA 4.0</dc:rights>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <!-- Fixed-layout metadata -->
     <meta property="rendition:layout">pre-paginated</meta>
@@ -693,8 +692,8 @@ p:first-of-type {
           <p style="text-indent:0;text-align:center;">Original ${escapeXml(book.language)} with English translation</p>
         </div>
         <div class="colophon">
-          <p style="text-indent:0;text-align:center;">Source Library · ${now}</p>
-          <p style="text-indent:0;text-align:center;">CC BY 4.0</p>
+          <p style="text-indent:0;text-align:center;">Produced by SourceLibrary.org in Amsterdam, 2026</p>
+          <p style="text-indent:0;text-align:center;">CC BY-SA 4.0</p>
         </div>
       </div>
     `, 'Title Page', 'page-right');
@@ -736,7 +735,7 @@ p:first-of-type {
       <p>The Source Library digitizes and translates rare Hermetic, esoteric, and humanist texts for scholars, seekers, and AI systems.</p>
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-        <p><strong>License:</strong> CC BY 4.0 (Creative Commons Attribution)</p>
+        <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution)</p>
         <p>Source Library is a project of the Ancient Wisdom Trust.</p>
       </div>
     `, 'About This Edition', 'page-right');
@@ -890,7 +889,7 @@ async function generateFacsimileEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>
     <dc:date>${now}</dc:date>
-    <dc:rights>CC BY 4.0</dc:rights>
+    <dc:rights>CC BY-SA 4.0</dc:rights>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
     <meta property="rendition:layout">pre-paginated</meta>
     <meta property="rendition:orientation">auto</meta>
@@ -1069,7 +1068,7 @@ p:first-of-type { text-indent: 0; }
       <p>This facsimile edition presents original manuscript pages alongside translations.</p>
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
-        <p><strong>License:</strong> CC BY 4.0</p>
+        <p><strong>License:</strong> CC BY-SA 4.0</p>
         <p>Source Library · Ancient Wisdom Trust</p>
       </div>
     `, 'About This Edition', 'page-right');
@@ -1504,7 +1503,7 @@ async function generateScholarlyEpubDownload(
     <dc:publisher>Source Library</dc:publisher>
     <dc:language>en</dc:language>
     <dc:date>${edition?.published_at ? new Date(edition.published_at).toISOString().split('T')[0] : now}</dc:date>
-    <dc:rights>${edition?.license || 'CC-BY-4.0'}</dc:rights>
+    <dc:rights>${edition?.license || 'CC-BY-SA-4.0'}</dc:rights>
     ${edition?.doi ? `<dc:source>https://doi.org/${edition.doi}</dc:source>` : ''}
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d{3}Z$/, 'Z')}</meta>
   </metadata>
@@ -1575,15 +1574,14 @@ async function generateScholarlyEpubDownload(
     <p>Original work by ${escapeXml(book.author)}${book.published ? ` (${book.published})` : ''}</p>
     <p>English translation prepared by Source Library</p>
     <p>&nbsp;</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-4.0'} (Creative Commons Attribution 4.0 International)</p>
-    <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit.</p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'} (Creative Commons Attribution-ShareAlike)</p>
+    <p>You are free to share and adapt this material for any purpose, provided you give appropriate credit and distribute under the same license.</p>
     ${edition?.doi ? `<p>&nbsp;</p><p><strong>Permanent Identifier:</strong> <a href="https://doi.org/${edition.doi}">https://doi.org/${edition.doi}</a></p>` : ''}
     <p>&nbsp;</p>
     <p><strong>Contributors:</strong></p>
     ${contributors.map(c => `<p>• ${escapeXml(c.name)} (${c.role})${c.type === 'ai' && c.model ? ` - ${c.model}` : ''}</p>`).join('\n    ')}
     <p>&nbsp;</p>
-    <p>Source Library is a project of the Ancient Wisdom Trust.</p>
-    <p>Preserving humanity's wisdom for the digital age.</p>
+    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     <p>&nbsp;</p>
     <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
   </div>
@@ -1763,14 +1761,10 @@ async function generateScholarlyEpubDownload(
 <body>
   <div class="colophon">
     <h1>About This Edition</h1>
-    <p>This scholarly edition was prepared by the <strong>Source Library</strong>, a project dedicated to digitizing, transcribing, and translating rare Hermetic, esoteric, and humanist texts.</p>
-    <p>The translation was created using AI-assisted transcription and translation, with human editorial oversight. Our goal is to make these important historical texts accessible to scholars, students, and seekers worldwide.</p>
+    <p>Produced by SourceLibrary.org in Amsterdam, 2026</p>
     ${edition?.doi ? `<p><strong>Permanent Citation:</strong> ${edition.doi_url || `https://doi.org/${edition.doi}`}</p>` : ''}
     <p><strong>Online Version:</strong> ${BASE_URL}/book/${book.id}</p>
-    <p><strong>License:</strong> ${edition?.license || 'CC-BY-4.0'}</p>
-    <p>&nbsp;</p>
-    <p>Source Library is a project of the Ancient Wisdom Trust.</p>
-    <p><em>Preserving humanity's wisdom for the digital age.</em></p>
+    <p><strong>License:</strong> ${edition?.license || 'CC-BY-SA-4.0'}</p>
     <p>&nbsp;</p>
     <p style="font-size:0.85em;color:#888;">Generated: ${now}</p>
   </div>

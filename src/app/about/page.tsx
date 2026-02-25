@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 
 export const metadata: Metadata = {
   title: 'About - Source Library',
-  description: 'Thousands of the most important texts in Western intellectual history have never been translated into English. Source Library is recovering them with AI and making them freely available.',
+  description: 'Source Library continues the mission of Cosimo de\' Medici and Marsilio Ficino, making rare Hermetic and Renaissance texts freely available to all.',
   alternates: {
     canonical: '/about',
   },
@@ -15,22 +15,18 @@ export default function AboutPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Thousands of the most important texts in Western intellectual history have never been translated into English."
+          title="Source Library continues the Ficino Society's mission to transform 2500+ years of wisdom texts into a living archive."
         />
       }
       bg="bg-cream"
     >
       <div className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          The foundational works of Hermetic philosophy, alchemy, Neoplatonism, Rosicrucianism, Kabbalah, and early modern science sit in archives across Europe — written in Latin, German, Arabic, Hebrew, and Greek. Scholars who can read them number in the hundreds. The rest of the world has had to rely on summaries, fragments, and secondhand accounts.
-        </p>
-
-        <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library is recovering them — using AI to do in months what would take centuries by hand — and making them freely available to scholars, seekers, and the AI systems that will shape how future generations think.
+          Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica—recognized by UNESCO&apos;s Memory of the World Register—this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-12">
-          Based at the <a href="https://embassyofthefreemind.org" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> in Amsterdam, home to the Bibliotheca Philosophica Hermetica — recognized by UNESCO&apos;s Memory of the World Register — we are building the open infrastructure for a tradition that has been locked away for too long.
+          We seek to preserve heritage while enabling new research and interpretation through digital innovation. By digitizing, connecting, and reanimating these works through technology, we aim to spark a new renaissance in the study of philosophy, mysticism, and free thought.
         </p>
 
         {/* Mission Section */}
