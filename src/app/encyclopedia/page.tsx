@@ -12,6 +12,15 @@ const TYPE_ICONS = {
   concept: Lightbulb,
 };
 
+function formatLifespan(birth?: string, death?: string): string | null {
+  if (!birth && !death) return null;
+  const b = birth?.slice(0, 4);
+  const d = death?.slice(0, 4);
+  if (b && d) return `${b}\u2013${d}`;
+  if (b) return `b.\u00a0${b}`;
+  return `d.\u00a0${d}`;
+}
+
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const PER_PAGE = 60;
 
@@ -57,6 +66,7 @@ async function getEntities(searchParams: SearchParams) {
       .limit(PER_PAGE)
       .project({
         name: 1, type: 1, book_count: 1, total_mentions: 1, description: 1,
+        wikidata_birth_date: 1, wikidata_death_date: 1,
         books: { $slice: 3 },
       })
       .toArray(),
@@ -91,6 +101,8 @@ async function getEntities(searchParams: SearchParams) {
       book_count: (e.book_count || 0) as number,
       total_mentions: (e.total_mentions || 0) as number,
       description: (e.description || null) as string | null,
+      wikidata_birth_date: (e.wikidata_birth_date || undefined) as string | undefined,
+      wikidata_death_date: (e.wikidata_death_date || undefined) as string | undefined,
       books: (e.books || []) as Array<{ book_id: string; book_title: string }>,
     })),
     total,
@@ -280,6 +292,11 @@ export default async function EncyclopediaPage({
                     <div className="flex-1 min-w-0">
                       <h3 className="font-medium text-stone-900 group-hover:text-accent-rust transition-colors truncate">
                         {entity.name}
+                        {entity.type === 'person' && formatLifespan(entity.wikidata_birth_date, entity.wikidata_death_date) && (
+                          <span className="text-stone-400 font-normal text-sm ml-1.5">
+                            ({formatLifespan(entity.wikidata_birth_date, entity.wikidata_death_date)})
+                          </span>
+                        )}
                       </h3>
                       {entity.description && (
                         <p className="text-xs text-stone-500 mt-0.5 line-clamp-2">{entity.description}</p>

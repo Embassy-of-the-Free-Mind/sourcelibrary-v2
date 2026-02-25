@@ -11,6 +11,24 @@ const TYPE_ICONS = {
   concept: Lightbulb,
 };
 
+function formatLifespan(birth?: string, death?: string): string | null {
+  if (!birth && !death) return null;
+  const b = birth?.slice(0, 4);
+  const d = death?.slice(0, 4);
+  if (b && d) return `${b}\u2013${d}`;
+  if (b) return `b.\u00a0${b}`;
+  return `d.\u00a0${d}`;
+}
+
+function formatCoordinates(coords: { lat: number; lng: number }) {
+  const latDir = coords.lat >= 0 ? 'N' : 'S';
+  const lngDir = coords.lng >= 0 ? 'E' : 'W';
+  return {
+    label: `${Math.abs(coords.lat).toFixed(4)}\u00b0\u00a0${latDir}, ${Math.abs(coords.lng).toFixed(4)}\u00b0\u00a0${lngDir}`,
+    osmUrl: `https://www.openstreetmap.org/?mlat=${coords.lat}&mlon=${coords.lng}#map=10/${coords.lat}/${coords.lng}`,
+  };
+}
+
 export default async function EntityDetailPage({
   params,
 }: {
@@ -61,6 +79,11 @@ export default async function EntityDetailPage({
                   Also known as: {entity.aliases.join(', ')}
                 </p>
               )}
+              {entity.type === 'person' && formatLifespan(entity.wikidata_birth_date, entity.wikidata_death_date) && (
+                <p className="text-stone-300 mt-1 text-lg">
+                  {formatLifespan(entity.wikidata_birth_date, entity.wikidata_death_date)}
+                </p>
+              )}
               <div className="flex items-center gap-4 mt-4 text-sm text-stone-400">
                 <span>{entity.book_count} book{entity.book_count !== 1 ? 's' : ''}</span>
                 <span>&middot;</span>
@@ -73,10 +96,28 @@ export default async function EntityDetailPage({
 
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
         {/* Description */}
-        {entity.description && (
+        {(entity.description || (entity.type === 'place' && entity.wikidata_coordinates)) && (
           <div className="bg-white rounded-lg border border-stone-200 p-6">
             <h2 className="text-lg font-semibold text-stone-900 mb-3">About</h2>
-            <p className="text-stone-700 leading-relaxed">{entity.description}</p>
+            {entity.description && (
+              <p className="text-stone-700 leading-relaxed">{entity.description}</p>
+            )}
+            {entity.type === 'place' && entity.wikidata_coordinates && (() => {
+              const coords = formatCoordinates(entity.wikidata_coordinates);
+              return (
+                <p className={`text-sm text-stone-500 ${entity.description ? 'mt-3' : ''}`}>
+                  <MapPin className="w-3.5 h-3.5 inline-block mr-1 -mt-0.5" />
+                  <a
+                    href={coords.osmUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-accent-rust transition-colors"
+                  >
+                    {coords.label}
+                  </a>
+                </p>
+              );
+            })()}
             <div className="flex items-center gap-4 mt-4">
               {entity.wikipedia_url && (
                 <a
