@@ -467,10 +467,13 @@ export async function GET(request: NextRequest) {
         // Rolling back while Gemini is still processing creates duplicate submissions
         if (status === 'ocr_submitted' || status === 'translate_submitted') {
           const batchType = status === 'ocr_submitted' ? 'ocr' : 'translation';
+          const BATCH_MAX_AGE_MS = 72 * 60 * 60 * 1000; // 72h — completed jobs older than this are abandoned
+          const batchAgeThreshold = new Date(Date.now() - BATCH_MAX_AGE_MS);
           const activeBatch = await db.collection('batch_jobs').countDocuments({
             book_id: book.id,
             type: batchType,
             status: { $in: ['pending', 'processing', 'completed'] }, // completed = not yet collected
+            created_at: { $gte: batchAgeThreshold }, // Ignore ancient zombie jobs
           });
           if (activeBatch > 0) {
             // Extend staleness window — batch jobs exist but haven't been collected
@@ -640,10 +643,11 @@ export async function GET(request: NextRequest) {
       }
 
       // Check archiving books for completion (pages archived by Hetzner script)
+      const ARCHIVE_TIMEOUT_MS = 24 * 60 * 60 * 1000; // 24h — OCR works on original IIIF URLs
       const archivingBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'archiving' })
         .sort({ hidden: 1 }) // Visible books first
-        .project({ id: 1 })
+        .project({ id: 1, title: 1, 'pipeline_auto.last_updated': 1, 'pipeline_auto.started_at': 1 })
         .limit(100) // Just DB queries per book — can handle many
         .toArray();
 
@@ -669,8 +673,17 @@ export async function GET(request: NextRequest) {
         if (remaining === 0) {
           await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
           log.archived++;
+        } else {
+          // Timeout: if stuck in archiving for >24h, advance anyway.
+          // OCR works fine on original IIIF URLs — archiving is a nice-to-have, not a blocker.
+          const archiveStart = book.pipeline_auto?.started_at || book.pipeline_auto?.last_updated;
+          if (archiveStart && (Date.now() - new Date(archiveStart).getTime()) > ARCHIVE_TIMEOUT_MS) {
+            await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
+            log.archived++;
+            logger.decision('skip', `Archive timeout: ${book.id} (${book.title}) — ${remaining} unarchived pages, advancing after 24h`, { book_id: book.id, remaining });
+          }
+          // Otherwise Hetzner is still working — check again next cycle
         }
-        // Otherwise Hetzner is still working — check again next cycle
       }
     }
 
