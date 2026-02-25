@@ -43,6 +43,33 @@ export async function GET(request: NextRequest) {
     const db = await getDb();
 
     // ============================================
+    // PHASE 0: Clean up orphan batch_jobs
+    // ============================================
+    // Orphan jobs have no job_name (Gemini submission failed) and are older than 1 hour.
+    // These permanently inflate pending counts and never complete. Auto-fail them.
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const orphanResult = await db.collection('batch_jobs').updateMany(
+      {
+        status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+        job_name: { $in: [null, undefined, ''] },
+        gemini_job_name: { $in: [null, undefined, ''] },
+        child_job_ids: { $exists: false },
+        created_at: { $lt: oneHourAgo },
+      },
+      {
+        $set: {
+          status: 'failed',
+          error: 'Orphan job: no Gemini job_name (submission likely failed)',
+          updated_at: new Date(),
+        },
+      }
+    );
+    if (orphanResult.modifiedCount > 0) {
+      logger.action('orphans_cleaned', orphanResult.modifiedCount);
+      console.log(`[cron] Cleaned up ${orphanResult.modifiedCount} orphan batch_jobs`);
+    }
+
+    // ============================================
     // PHASE 1: Collect results from completed jobs
     // ============================================
 

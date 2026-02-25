@@ -110,29 +110,8 @@ export const POST = withAuth(async (request, session, context) => {
       );
     }
 
-    // Create parent job
     const parentJobId = nanoid();
-    const pendingStatus: JobStatus = 'pending';    
-
-    const parentJob: BatchJob = {
-      id: parentJobId,
-      type: jobType,
-      book_id: bookId,
-      book_title: book.title,
-      total_pages: pages.length,
-      child_job_ids: [],
-      progress: {
-        completed: 0,
-        failed: 0,
-        pending: pages.length,
-        total: pages.length
-      },
-      status: pendingStatus,
-      created_at: new Date(),
-      updated_at: new Date()
-    };
-
-    await db.collection('batch_jobs').insertOne(parentJob);
+    const pendingStatus: JobStatus = 'pending';
 
     // Split pages into chunks of BATCH_SIZE
     const chunks: Page[][] = [];
@@ -140,14 +119,21 @@ export const POST = withAuth(async (request, session, context) => {
       chunks.push(pages.slice(i, i + BATCH_SIZE));
     }
 
-    const childJobIds: string[] = [];
     const language = book.language || 'auto-detect';
 
     // Get OCR prompt
     const promptResult = await getOcrPrompt();
     const prompt = promptResult.text;
 
-    // Submit each chunk as a Gemini batch
+    // Phase 1: Submit ALL chunks to Gemini first (no DB writes yet).
+    // This prevents orphan parent records if Gemini submission fails (e.g. quota exhaustion).
+    const submittedChildren: Array<{
+      childJobId: string;
+      batchJobName: string;
+      pageIds: string[];
+      pageCount: number;
+    }> = [];
+
     for (const chunk of chunks) {
       const childJobId = nanoid();
 
@@ -200,26 +186,46 @@ export const POST = withAuth(async (request, session, context) => {
         `ocr-${bookId}-${childJobId}-${Date.now()}`
       );
 
-      // Create child job record
+      submittedChildren.push({
+        childJobId,
+        batchJobName: batchJob.name!,
+        pageIds: batchRequests.map(r => r.key),
+        pageCount: batchRequests.length,
+      });
+    }
+
+    if (submittedChildren.length === 0) {
+      return NextResponse.json(
+        { error: 'All Gemini batch submissions failed — no DB records created' },
+        { status: 500 }
+      );
+    }
+
+    // Phase 2: All Gemini submissions succeeded — now create DB records.
+    const childJobIds: string[] = [];
+    const now = new Date();
+
+    for (const child of submittedChildren) {
+      childJobIds.push(child.childJobId);
+
       const childJob: BatchJob = {
-        id: childJobId,
+        id: child.childJobId,
         parent_job_id: parentJobId,
-        job_name: batchJob.name,
+        job_name: child.batchJobName,
         type: jobType,
         book_id: bookId,
-        page_ids: batchRequests.map(r => r.key),
-        page_count: batchRequests.length,
+        page_ids: child.pageIds,
+        page_count: child.pageCount,
         status: pendingStatus,
         model: DEFAULT_BATCH_MODEL,
         language,
         prompt_version: PROMPT_VERSION,
         force: overwriteMode,
-        created_at: new Date(),
-        updated_at: new Date()
+        created_at: now,
+        updated_at: now,
       };
 
       await db.collection('batch_jobs').insertOne(childJob);
-      childJobIds.push(childJobId);
 
       // Log batch submission
       await logGeminiCall({
@@ -228,10 +234,10 @@ export const POST = withAuth(async (request, session, context) => {
         model: DEFAULT_BATCH_MODEL,
         book_id: bookId,
         book_title: book.title,
-        page_ids: batchRequests.map(r => r.key),
-        page_count: batchRequests.length,
-        batch_job_id: childJobId,
-        gemini_job_name: batchJob.name,
+        page_ids: child.pageIds,
+        page_count: child.pageCount,
+        batch_job_id: child.childJobId,
+        gemini_job_name: child.batchJobName,
         input_tokens: 0,
         output_tokens: 0,
         status: 'submitted',
@@ -239,11 +245,26 @@ export const POST = withAuth(async (request, session, context) => {
       });
     }
 
-    // Update parent with child IDs
-    await db.collection('batch_jobs').updateOne(
-      { id: parentJobId },
-      { $set: { child_job_ids: childJobIds, updated_at: new Date() } }
-    );
+    // Create parent record last (all children already exist)
+    const parentJob: BatchJob = {
+      id: parentJobId,
+      type: jobType,
+      book_id: bookId,
+      book_title: book.title,
+      total_pages: pages.length,
+      child_job_ids: childJobIds,
+      progress: {
+        completed: 0,
+        failed: 0,
+        pending: pages.length,
+        total: pages.length
+      },
+      status: pendingStatus,
+      created_at: now,
+      updated_at: now,
+    };
+
+    await db.collection('batch_jobs').insertOne(parentJob);
 
     // Set active batch job on book document (prevents duplicate submissions)
     await db.collection('books').updateOne(

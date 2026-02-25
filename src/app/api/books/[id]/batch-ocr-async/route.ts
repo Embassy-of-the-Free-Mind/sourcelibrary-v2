@@ -35,6 +35,21 @@ const BATCH_API_KEYS = [
 // Deduplicate
 const UNIQUE_BATCH_KEYS = [...new Set(BATCH_API_KEYS)];
 
+/** Normalize raw Gemini batch job state to our DB status values */
+function normalizeGeminiState(state: string | undefined | null): string {
+  switch (state) {
+    case 'JOB_STATE_PENDING': return 'pending';
+    case 'JOB_STATE_RUNNING': return 'processing';
+    case 'JOB_STATE_SUCCEEDED': return 'completed';
+    case 'JOB_STATE_FAILED': return 'failed';
+    case 'JOB_STATE_CANCELLED':
+    case 'BATCH_STATE_CANCELLED': return 'cancelled';
+    case 'JOB_STATE_EXPIRED':
+    case 'BATCH_STATE_EXPIRED': return 'failed';
+    default: return 'pending';
+  }
+}
+
 function getAiClient(keyIndex?: number): GoogleGenAI {
   if (keyIndex !== undefined && keyIndex >= 0 && keyIndex < UNIQUE_BATCH_KEYS.length) {
     return new GoogleGenAI({ apiKey: UNIQUE_BATCH_KEYS[keyIndex] });
@@ -316,7 +331,8 @@ export const POST = withAuth(async (request, session, context) => {
         page_count: allPageIds.length,
         pages_per_request: effectivePPR,
         request_count: batchRequests.length,
-        status: batchJob.state,
+        status: normalizeGeminiState(batchJob.state),
+        gemini_state: batchJob.state,
         created_at: now,
         updated_at: now,
       });
@@ -359,6 +375,7 @@ export const POST = withAuth(async (request, session, context) => {
       childJobId: string;
       batchJobName: string;
       batchJobState: string;
+      geminiRawState: string;
       batchPageIds: string[];
       requestCount: number;
     }> = [];
@@ -382,7 +399,8 @@ export const POST = withAuth(async (request, session, context) => {
       submittedChildren.push({
         childJobId,
         batchJobName: batchJob.name!,
-        batchJobState: batchJob.state || 'JOB_STATE_PENDING',
+        batchJobState: normalizeGeminiState(batchJob.state),
+        geminiRawState: batchJob.state || 'JOB_STATE_PENDING',
         batchPageIds,
         requestCount: batch.length,
       });
@@ -408,6 +426,7 @@ export const POST = withAuth(async (request, session, context) => {
         pages_per_request: effectivePPR,
         request_count: child.requestCount,
         status: child.batchJobState,
+        gemini_state: child.geminiRawState,
         created_at: now,
         updated_at: now,
       });
@@ -508,10 +527,10 @@ export const GET = withAuth(async (request, session, context) => {
     // Get job status from Gemini
     const batchJob = await ai.batches.get({ name: jobName });
 
-    // Update status in database
+    // Update status in database (normalize Gemini state to our status values)
     await db.collection('batch_jobs').updateOne(
       { job_name: jobName },
-      { $set: { status: batchJob.state, updated_at: new Date() } }
+      { $set: { status: normalizeGeminiState(batchJob.state), gemini_state: batchJob.state, updated_at: new Date() } }
     );
 
     // If job succeeded, collect results
