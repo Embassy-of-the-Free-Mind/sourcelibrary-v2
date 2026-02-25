@@ -38,6 +38,8 @@ export async function GET() {
           total_mentions: 1,
           description: 1,
           wikidata_id: 1,
+          wikidata_birth_date: 1,
+          wikidata_death_date: 1,
           years: '$book_docs.year',
         },
       },
@@ -51,15 +53,38 @@ export async function GET() {
       const type = e.type as string;
       byType[type] = (byType[type] || 0) + 1;
 
-      const years = (e.years as number[]).filter((y) => y > 0);
+      // Prefer biographical dates for century range, fall back to book years
       let century_range: [number, number] | null = null;
-      if (years.length > 0) {
-        const minY = Math.min(...years);
-        const maxY = Math.max(...years);
-        const minC = Math.floor((minY - 1) / 100) + 1;
-        const maxC = Math.floor((maxY - 1) / 100) + 1;
-        century_range = [minC, maxC];
-        for (let c = minC; c <= maxC; c++) {
+
+      const birthStr = e.wikidata_birth_date as string | undefined;
+      const deathStr = e.wikidata_death_date as string | undefined;
+      const birthYear = birthStr ? parseInt(birthStr.slice(0, 4), 10) : NaN;
+      const deathYear = deathStr ? parseInt(deathStr.slice(0, 4), 10) : NaN;
+
+      if (!isNaN(birthYear) || !isNaN(deathYear)) {
+        const bioYears = [birthYear, deathYear].filter((y) => !isNaN(y) && y > 0);
+        if (bioYears.length > 0) {
+          const minY = Math.min(...bioYears);
+          const maxY = Math.max(...bioYears);
+          const minC = Math.floor((minY - 1) / 100) + 1;
+          const maxC = Math.floor((maxY - 1) / 100) + 1;
+          century_range = [minC, maxC];
+        }
+      }
+
+      if (!century_range) {
+        const years = (e.years as number[]).filter((y) => y > 0);
+        if (years.length > 0) {
+          const minY = Math.min(...years);
+          const maxY = Math.max(...years);
+          const minC = Math.floor((minY - 1) / 100) + 1;
+          const maxC = Math.floor((maxY - 1) / 100) + 1;
+          century_range = [minC, maxC];
+        }
+      }
+
+      if (century_range) {
+        for (let c = century_range[0]; c <= century_range[1]; c++) {
           byCentury[String(c)] = (byCentury[String(c)] || 0) + 1;
         }
       }

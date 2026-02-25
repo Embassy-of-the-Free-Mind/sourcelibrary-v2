@@ -74,7 +74,14 @@ export default function MapSidebar({ entity, onClose }: MapSidebarProps) {
             </div>
             <div className="text-xs" style={{ color: 'var(--text-muted)' }}>mentions</div>
           </div>
-          {entity.century_range && (
+          {entity.lifespan ? (
+            <div>
+              <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                {entity.lifespan}
+              </div>
+              <div className="text-xs" style={{ color: 'var(--text-muted)' }}>lifespan</div>
+            </div>
+          ) : entity.century_range ? (
             <div>
               <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                 {entity.century_range[0] === entity.century_range[1]
@@ -83,7 +90,7 @@ export default function MapSidebar({ entity, onClose }: MapSidebarProps) {
               </div>
               <div className="text-xs" style={{ color: 'var(--text-muted)' }}>era</div>
             </div>
-          )}
+          ) : null}
         </div>
 
         {/* Coordinates */}

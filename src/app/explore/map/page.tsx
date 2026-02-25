@@ -45,6 +45,8 @@ async function fetchMapData() {
         total_mentions: 1,
         description: 1,
         wikidata_id: 1,
+        wikidata_birth_date: 1,
+        wikidata_death_date: 1,
         years: '$book_docs.year',
       },
     },
@@ -57,17 +59,55 @@ async function fetchMapData() {
     const type = e.type as string;
     byType[type] = (byType[type] || 0) + 1;
 
-    const years = (e.years as number[]).filter((y: number) => y > 0);
+    // Prefer biographical dates for century range (people),
+    // fall back to book publication years (places, concepts, or people without dates)
     let century_range: [number, number] | null = null;
-    if (years.length > 0) {
-      const minY = Math.min(...years);
-      const maxY = Math.max(...years);
-      const minC = Math.floor((minY - 1) / 100) + 1;
-      const maxC = Math.floor((maxY - 1) / 100) + 1;
-      century_range = [minC, maxC];
-      for (let c = minC; c <= maxC; c++) {
+
+    const birthStr = e.wikidata_birth_date as string | undefined;
+    const deathStr = e.wikidata_death_date as string | undefined;
+    const birthYear = birthStr ? parseInt(birthStr.slice(0, 4), 10) : NaN;
+    const deathYear = deathStr ? parseInt(deathStr.slice(0, 4), 10) : NaN;
+
+    if (!isNaN(birthYear) || !isNaN(deathYear)) {
+      // Use biographical dates — handles BCE as positive year strings (e.g. "0550" = 550 BCE...
+      // but actually stored as positive CE-style, so 0550 = 550 CE in the string).
+      // These are all positive ints from Wikidata.
+      const bioYears = [birthYear, deathYear].filter((y) => !isNaN(y) && y > 0);
+      if (bioYears.length > 0) {
+        const minY = Math.min(...bioYears);
+        const maxY = Math.max(...bioYears);
+        const minC = Math.floor((minY - 1) / 100) + 1;
+        const maxC = Math.floor((maxY - 1) / 100) + 1;
+        century_range = [minC, maxC];
+      }
+    }
+
+    // Fall back to book years if no biographical dates
+    if (!century_range) {
+      const years = (e.years as number[]).filter((y: number) => y > 0);
+      if (years.length > 0) {
+        const minY = Math.min(...years);
+        const maxY = Math.max(...years);
+        const minC = Math.floor((minY - 1) / 100) + 1;
+        const maxC = Math.floor((maxY - 1) / 100) + 1;
+        century_range = [minC, maxC];
+      }
+    }
+
+    if (century_range) {
+      for (let c = century_range[0]; c <= century_range[1]; c++) {
         byCentury[String(c)] = (byCentury[String(c)] || 0) + 1;
       }
+    }
+
+    // Build lifespan string from biographical dates
+    let lifespan: string | undefined;
+    if (!isNaN(birthYear) && birthYear > 0 && !isNaN(deathYear) && deathYear > 0) {
+      lifespan = `${birthYear}–${deathYear}`;
+    } else if (!isNaN(birthYear) && birthYear > 0) {
+      lifespan = `b. ${birthYear}`;
+    } else if (!isNaN(deathYear) && deathYear > 0) {
+      lifespan = `d. ${deathYear}`;
     }
 
     return {
@@ -79,6 +119,7 @@ async function fetchMapData() {
       description: (e.description as string) || undefined,
       wikidata_id: (e.wikidata_id as string) || undefined,
       century_range,
+      lifespan,
     };
   });
 

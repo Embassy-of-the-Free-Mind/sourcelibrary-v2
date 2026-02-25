@@ -14,6 +14,7 @@ export interface MapEntity {
   description?: string;
   wikidata_id?: string;
   century_range: [number, number] | null;
+  lifespan?: string; // e.g. "1433–1499" or "c. 550"
 }
 
 interface EntityMapProps {
