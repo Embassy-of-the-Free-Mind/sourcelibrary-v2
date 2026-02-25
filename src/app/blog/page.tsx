@@ -224,18 +224,18 @@ export default function BlogPage() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 {post.tag && (
-                  <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full ${post.tagColor}`}>
+                  <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${post.tagColor}`}>
                     {post.tag}
                   </span>
                 )}
               </div>
-              <h2 className="font-serif text-lg md:text-xl text-primary group-hover:text-accent-gold-dark transition-colors leading-snug mb-1.5">
+              <h2 className="font-serif text-xl md:text-2xl text-primary group-hover:text-accent-gold-dark transition-colors leading-snug mb-2">
                 {post.title}
               </h2>
-              <p className="text-sm md:text-base text-secondary leading-relaxed line-clamp-2 font-body mb-2 hidden sm:block">
+              <p className="text-base text-secondary leading-relaxed line-clamp-2 font-body mb-2 hidden sm:block">
                 {post.subtitle}
               </p>
-              <span className="text-sm text-muted">{post.date} &middot; {post.readTime}</span>
+              <span className="text-base text-muted">{post.date} &middot; {post.readTime}</span>
             </div>
           </Link>
         ))}
