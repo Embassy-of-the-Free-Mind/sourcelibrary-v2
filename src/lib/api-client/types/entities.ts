@@ -16,6 +16,10 @@ export interface Entity {
   aliases?: string[];
   description?: string;
   wikipedia_url?: string;
+  wikidata_id?: string;
+  wikidata_birth_date?: string;
+  wikidata_death_date?: string;
+  wikidata_coordinates?: { lat: number; lng: number };
   books: EntityBook[];
   total_mentions: number;
   book_count: number;
@@ -53,4 +57,8 @@ export interface EntityUpdateRequest {
   description?: string;
   aliases?: string[];
   wikipedia_url?: string;
+  wikidata_id?: string;
+  wikidata_birth_date?: string;
+  wikidata_death_date?: string;
+  wikidata_coordinates?: { lat: number; lng: number };
 }

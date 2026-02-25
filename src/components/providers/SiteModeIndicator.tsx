@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useSiteMode } from './SiteModeProvider';
 
 /**
@@ -8,13 +9,18 @@ import { useSiteMode } from './SiteModeProvider';
  */
 export default function SiteModeIndicator() {
   const { mode, siteName, isSociety } = useSiteMode();
+  const [showDebug, setShowDebug] = useState(false);
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('debug') === 'true') {
+      setShowDebug(true);
+    }
+  }, []);
 
   // Only show in development or with debug flag
   const isDev = process.env.NODE_ENV === 'development';
-  const hasDebug = typeof window !== 'undefined' &&
-    new URLSearchParams(window.location.search).get('debug') === 'true';
 
-  if (!isDev && !hasDebug) {
+  if (!isDev && !showDebug) {
     return null;
   }
 

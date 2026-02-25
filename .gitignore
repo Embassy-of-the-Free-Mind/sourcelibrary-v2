@@ -70,3 +70,4 @@ mcp-server/node_modules/
 mcp-server/dist/
 logs/*.log
 split-review.html
+input.json

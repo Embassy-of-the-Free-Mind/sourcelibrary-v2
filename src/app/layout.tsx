@@ -6,7 +6,8 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import PageTracker from "@/components/reader/PageTracker";
 import { getSiteMode } from "@/lib/site-mode.server";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
-import { Toaster } from "sonner";
+import ClientToaster from "@/components/providers/ClientToaster";
+import InputWidget from "@/components/InputWidget";
 
 export const metadata: Metadata = {
   title: "Source Library",
@@ -90,7 +91,8 @@ export default async function RootLayout({
           <GlobalFooter />
           <SiteModeIndicator />
         </Providers>
-        <Toaster position="bottom-right" richColors closeButton />
+        <ClientToaster />
+        <InputWidget allowedHosts={["localhost", "vercel.app"]} />
         <GoogleAnalytics gaId="G-C1QJNTSZT2" />
         <PageTracker />
       </body>

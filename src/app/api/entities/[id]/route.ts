@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { buildEntityJsonLd } from '@/lib/jsonld';
 
 /**
  * GET /api/entities/[id]
@@ -34,6 +35,29 @@ export async function GET(
 
     if (!entity) {
       return NextResponse.json({ error: 'Entity not found' }, { status: 404 });
+    }
+
+    // JSON-LD format
+    const format = new URL(request.url).searchParams.get('format');
+    if (format === 'jsonld') {
+      const jsonLd = buildEntityJsonLd({
+        name: entity.name,
+        type: entity.type,
+        aliases: entity.aliases,
+        description: entity.description,
+        wikipedia_url: entity.wikipedia_url,
+        wikidata_id: entity.wikidata_id,
+        wikidata_birth_date: entity.wikidata_birth_date,
+        wikidata_death_date: entity.wikidata_death_date,
+        wikidata_coordinates: entity.wikidata_coordinates,
+        books: entity.books,
+      });
+      return new Response(JSON.stringify(jsonLd, null, 2), {
+        headers: {
+          'Content-Type': 'application/ld+json; charset=utf-8',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
     }
 
     // Find related entities (entities that appear in the same books)
@@ -73,7 +97,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     const db = await getDb();
 
     // Only allow certain fields to be updated
-    const allowedFields = ['description', 'aliases', 'wikipedia_url'];
+    const allowedFields = ['description', 'aliases', 'wikipedia_url', 'wikidata_id', 'wikidata_birth_date', 'wikidata_death_date', 'wikidata_coordinates'];
     const filteredUpdates: Record<string, unknown> = {};
 
     for (const field of allowedFields) {

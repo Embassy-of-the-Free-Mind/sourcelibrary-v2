@@ -1,10 +1,16 @@
 import { BASE_URL } from './schema-utils';
+import { buildSameAsArray } from '@/lib/jsonld';
 
 interface EntitySchemaProps {
   name: string;
   type?: string;
   description?: string;
   wikipediaUrl?: string;
+  wikidataId?: string;
+  aliases?: string[];
+  birthDate?: string;
+  deathDate?: string;
+  coordinates?: { lat: number; lng: number };
   bookCount?: number;
   books?: Array<{ book_id: string; book_title?: string }>;
 }
@@ -18,6 +24,11 @@ export default function EntitySchema({
   type,
   description,
   wikipediaUrl,
+  wikidataId,
+  aliases,
+  birthDate,
+  deathDate,
+  coordinates,
   books,
 }: EntitySchemaProps) {
   const pageUrl = `${BASE_URL}/encyclopedia/${encodeURIComponent(name)}`;
@@ -35,15 +46,42 @@ export default function EntitySchema({
     '@id': `${pageUrl}#entity`,
     name,
     ...(description && { description }),
-    ...(wikipediaUrl && { sameAs: wikipediaUrl }),
-    ...(books && books.length > 0 && {
-      subjectOf: books.slice(0, 10).map(b => ({
-        '@type': 'Book',
-        '@id': `${BASE_URL}/book/${b.book_id}`,
-        name: b.book_title,
-      })),
-    }),
   };
+
+  // Aliases
+  if (aliases?.length) {
+    entity.alternateName = aliases;
+  }
+
+  // sameAs: Wikipedia + Wikidata + DBpedia
+  const sameAs = buildSameAsArray({ wikipedia_url: wikipediaUrl, wikidata_id: wikidataId });
+  if (sameAs.length > 0) {
+    entity.sameAs = sameAs;
+  }
+
+  // Wikidata identifier
+  if (wikidataId) {
+    entity.identifier = {
+      '@type': 'PropertyValue',
+      propertyID: 'wikidata',
+      value: wikidataId,
+    };
+  }
+
+  // Person-specific: birth/death dates
+  if (schemaType === 'Person') {
+    if (birthDate) entity.birthDate = birthDate;
+    if (deathDate) entity.deathDate = deathDate;
+  }
+
+  // Place-specific: coordinates
+  if (schemaType === 'Place' && coordinates) {
+    entity.geo = {
+      '@type': 'GeoCoordinates',
+      latitude: coordinates.lat,
+      longitude: coordinates.lng,
+    };
+  }
 
   // DefinedTerm-specific: add inDefinedTermSet
   if (schemaType === 'DefinedTerm') {
@@ -52,6 +90,15 @@ export default function EntitySchema({
       name: 'Source Library Encyclopedia',
       url: `${BASE_URL}/encyclopedia`,
     };
+  }
+
+  // Books this entity appears in
+  if (books?.length) {
+    entity.subjectOf = books.slice(0, 10).map(b => ({
+      '@type': 'Book',
+      '@id': `${BASE_URL}/book/${b.book_id}`,
+      name: b.book_title,
+    }));
   }
 
   const webPage = {

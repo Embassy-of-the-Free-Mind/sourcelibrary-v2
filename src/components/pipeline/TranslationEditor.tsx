@@ -840,10 +840,10 @@ export default function TranslationEditor({
             <div className={`flex items-center gap-1 p-1 rounded-lg ${showToggleHint ? 'animate-toggle-hint' : ''}`} role="toolbar" aria-label="Panel visibility">
               <button
                 onClick={() => setShowImagePanel(!showImagePanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showImagePanel ? 'shadow-sm' : 'border border-border-medium'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showImagePanel ? 'text-white' : ''}`}
                 style={{
-                  background: showImagePanel ? 'var(--bg-white)' : 'transparent',
-                  color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  background: showImagePanel ? 'var(--accent-rust)' : 'transparent',
+                  color: showImagePanel ? '#fff' : 'var(--text-muted)',
                 }}
                 aria-label={`${showImagePanel ? 'Hide' : 'Show'} source image`}
                 aria-pressed={showImagePanel}
@@ -853,10 +853,10 @@ export default function TranslationEditor({
               </button>
               <button
                 onClick={() => setShowOcrPanel(!showOcrPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showOcrPanel ? 'shadow-sm' : 'border border-border-medium'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showOcrPanel ? 'text-white' : ''}`}
                 style={{
-                  background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
-                  color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  background: showOcrPanel ? 'var(--accent-rust)' : 'transparent',
+                  color: showOcrPanel ? '#fff' : 'var(--text-muted)',
                 }}
                 aria-label={`${showOcrPanel ? 'Hide' : 'Show'} original text`}
                 aria-pressed={showOcrPanel}
@@ -866,10 +866,10 @@ export default function TranslationEditor({
               </button>
               <button
                 onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'shadow-sm' : 'border border-border-medium'}`}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
                 style={{
-                  background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
-                  color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                  background: showTranslationPanel ? 'var(--accent-rust)' : 'transparent',
+                  color: showTranslationPanel ? '#fff' : 'var(--text-muted)',
                 }}
                 aria-label={`${showTranslationPanel ? 'Hide' : 'Show'} translation`}
                 aria-pressed={showTranslationPanel}
@@ -1450,10 +1450,10 @@ export default function TranslationEditor({
           <div className={`flex items-center gap-1 p-1 rounded-lg ${showToggleHint ? 'animate-toggle-hint' : ''}`} style={{ background: 'var(--bg-warm)' }}>
             <button
               onClick={() => setShowImagePanel(!showImagePanel)}
-              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? 'shadow-sm' : 'border border-border-medium'}`}
+              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showImagePanel ? 'text-white' : ''}`}
               style={{
-                background: showImagePanel ? 'var(--bg-white)' : 'transparent',
-                color: showImagePanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                background: showImagePanel ? 'var(--accent-rust)' : 'transparent',
+                color: showImagePanel ? '#fff' : 'var(--text-muted)',
               }}
               title="Toggle source image"
             >
@@ -1462,10 +1462,10 @@ export default function TranslationEditor({
             </button>
             <button
               onClick={() => setShowOcrPanel(!showOcrPanel)}
-              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showOcrPanel ? 'shadow-sm' : 'border border-border-medium'}`}
+              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showOcrPanel ? 'text-white' : ''}`}
               style={{
-                background: showOcrPanel ? 'var(--bg-white)' : 'transparent',
-                color: showOcrPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                background: showOcrPanel ? 'var(--accent-rust)' : 'transparent',
+                color: showOcrPanel ? '#fff' : 'var(--text-muted)',
               }}
               title="Toggle OCR panel"
             >
@@ -1474,10 +1474,10 @@ export default function TranslationEditor({
             </button>
             <button
               onClick={() => setShowTranslationPanel(!showTranslationPanel)}
-              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? 'shadow-sm' : 'border border-border-medium'}`}
+              className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? 'text-white' : ''}`}
               style={{
-                background: showTranslationPanel ? 'var(--bg-white)' : 'transparent',
-                color: showTranslationPanel ? 'var(--text-primary)' : 'var(--text-muted)',
+                background: showTranslationPanel ? 'var(--accent-rust)' : 'transparent',
+                color: showTranslationPanel ? '#fff' : 'var(--text-muted)',
               }}
               title="Toggle translation panel"
             >

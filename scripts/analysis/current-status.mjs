@@ -2,18 +2,9 @@
 /**
  * Quick system status check — pipeline, jobs, recent activity.
  */
-import { MongoClient } from 'mongodb';
+import { withMongo } from '../lib/mongo.mjs';
 
-const uri = process.env.MONGODB_URI;
-if (!uri) { console.error('MONGODB_URI required'); process.exit(1); }
-
-const client = new MongoClient(uri, { maxPoolSize: 1 });
-const timeout = setTimeout(() => { console.error('Script timeout (60s)'); client.close(); process.exit(1); }, 60000);
-
-try {
-  await client.connect();
-  const db = client.db('bookstore');
-
+await withMongo(async (db) => {
   // Pipeline status distribution
   const pipelineStats = await db.collection('books').aggregate([
     { $match: { 'pipeline_auto.status': { $exists: true } } },
@@ -112,7 +103,4 @@ try {
     console.log(`\n⚠️  Needs attention: ${needsAttention}, Failed: ${failed}`);
   }
 
-} finally {
-  clearTimeout(timeout);
-  await client.close();
-}
+}, { timeoutMs: 120_000 });

@@ -193,13 +193,10 @@ export default async function HomePage() {
       <section id="about" className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
-            Source Library continues the Ficino Society&apos;s mission to transform 2500+ years of wisdom texts into a living archive.
+            The Renaissance was written in Latin. To create a second Renaissance, we want to start by translating the first.
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-            Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica—recognized by UNESCO&apos;s Memory of the World Register—this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
-          </p>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-            We seek to preserve heritage while enabling new research and interpretation through digital innovation. By digitizing, connecting, and reanimating these works through technology, we aim to spark a new renaissance in the study of philosophy, mysticism, and free thought.
+            Welcome to the world&apos;s largest collection of premodern translations. The Source Library is an initiative of the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica&mdash;one of the world&apos;s most important collections of rare, esoteric Renaissance works. We seek to translate these works and make them accessible to scholars, seekers, and frontier AI systems that will shape how future generations think.
           </p>
         </div>
       </section>
@@ -230,24 +227,6 @@ export default async function HomePage() {
       {/* Footer */}
       <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          {/* Partner Logos */}
-          <div className="flex items-center gap-8 mb-16">
-            <img
-              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
-              alt="Embassy of the Free Mind"
-              loading="lazy"
-              decoding="async"
-              className="h-16 md:h-20 w-auto object-contain"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif"
-              alt="UNESCO Memory of the World"
-              loading="lazy"
-              decoding="async"
-              className="h-20 md:h-24 w-auto object-contain"
-            />
-          </div>
-
           {/* Dedication */}
           <div className="max-w-4xl border-t border-stone-300 pt-10 mt-8">
             <p className="text-sm uppercase tracking-[0.2em] text-stone-500 mb-6">
@@ -289,7 +268,7 @@ export default async function HomePage() {
         <div className="px-6 md:px-12 mt-16">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-8 border-t border-stone-300 max-w-5xl mx-auto">
             <div className="mb-4 md:mb-0 text-gray-600">
-              &copy; {new Date().getFullYear()} Source Library — An initiative of the Embassy of the Free Mind
+              &copy; {new Date().getFullYear()} Source Library
             </div>
             <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
               <a

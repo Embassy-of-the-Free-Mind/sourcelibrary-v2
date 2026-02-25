@@ -237,17 +237,21 @@ const TOOLS: Tool[] = [
   {
     name: "get_quote",
     description:
-      "Get a specific page with formatted academic citations (inline, footnote, DOI). Use after searching to retrieve and cite specific passages.",
+      "Get a page with formatted academic citations (inline, footnote, DOI). Provide a page number for direct lookup, or a query to search within the book and return the best matching page as a citable quote.",
     inputSchema: {
       type: "object" as const,
       properties: {
         book_id: {
           type: "string",
-          description: "The book ID from search results",
+          description: "The book ID",
         },
         page: {
           type: "number",
-          description: "Page number to get quote from",
+          description: "Page number to get quote from (optional if query is provided)",
+        },
+        query: {
+          type: "string",
+          description: "Search query — finds the best matching page in the book and returns it as a citable quote (optional if page is provided)",
         },
         include_original: {
           type: "boolean",
@@ -258,7 +262,7 @@ const TOOLS: Tool[] = [
           description: "Include adjacent pages for context",
         },
       },
-      required: ["book_id", "page"],
+      required: ["book_id"],
     },
   },
 
@@ -756,11 +760,37 @@ async function getBookText(args: {
 
 async function getQuote(args: {
   book_id: string;
-  page: number;
+  page?: number;
+  query?: string;
   include_original?: boolean;
   include_context?: boolean;
 }) {
-  const params = new URLSearchParams({ page: String(args.page) });
+  let pageNumber = args.page;
+  let searchTotal: number | undefined;
+
+  // If query provided without page, search within the book first
+  if (pageNumber === undefined) {
+    if (!args.query) {
+      throw new Error("Either page or query is required");
+    }
+    const searchParams = new URLSearchParams({ q: args.query });
+    const searchResult = (await apiGet(
+      `/books/${args.book_id}/search`,
+      searchParams
+    )) as Record<string, unknown>;
+
+    const results = searchResult.results as Array<Record<string, unknown>>;
+    if (!results?.length) {
+      return {
+        error: `No matches for "${args.query}" in this book`,
+        tip: "Try broader search terms, or use search_within_book to see all matches.",
+      };
+    }
+    pageNumber = results[0].pageNumber as number;
+    searchTotal = searchResult.total as number;
+  }
+
+  const params = new URLSearchParams({ page: String(pageNumber) });
   if (args.include_original !== undefined) {
     params.set("include_original", String(args.include_original));
   }
@@ -773,6 +803,7 @@ async function getQuote(args: {
   const citation = result.citation as Record<string, unknown>;
 
   return {
+    ...(args.query ? { matched_query: args.query, total_matches: searchTotal } : {}),
     quote: quote.translation,
     original: quote.original,
     page: quote.page,
@@ -1121,7 +1152,7 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
   if (pageNum) {
     const result = await getQuote({ book_id: bookId, page: parseInt(pageNum) });
     return {
-      contents: [{ uri, mimeType: "text/plain", text: result.quote as string }],
+      contents: [{ uri, mimeType: "text/plain", text: (result as Record<string, unknown>).quote as string }],
     };
   } else {
     const result = await getBook({ book_id: bookId });

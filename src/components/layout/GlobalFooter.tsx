@@ -3,13 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { analytics } from '@/lib/api-client';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
-
-interface GlobalStats {
-  totalBooks: number;
-  pagesTranslated: number;
-}
 
 const NAV_COLUMNS = [
   {
@@ -48,7 +42,6 @@ const PARTNERS = [
 ];
 
 export default function GlobalFooter() {
-  const [stats, setStats] = useState<GlobalStats | null>(null);
   const [hasBookshelf, setHasBookshelf] = useState(false);
   const [hasFavorites, setHasFavorites] = useState(false);
 
@@ -66,22 +59,7 @@ export default function GlobalFooter() {
         setHasFavorites(true);
       }
     } catch { /* ignore */ }
-
-    analytics.stats()
-      .then((data: any) => {
-        setStats({
-          totalBooks: data.totalBooks || 0,
-          pagesTranslated: data.pagesTranslated || 0,
-        });
-      })
-      .catch(() => {});
   }, []);
-
-  const formatNumber = (n: number) => {
-    if (n >= 1000000) return `${(n / 1000000).toFixed(1)}M`;
-    if (n >= 1000) return `${Math.round(n / 1000)}K`;
-    return n.toLocaleString();
-  };
 
   return (
     <footer className="bg-dark text-white/60 mt-auto">
@@ -101,7 +79,7 @@ export default function GlobalFooter() {
             />
           </Link>
           <p className="font-serif italic text-white/50 text-lg">
-            Wisdom belongs to everyone.
+            Ancient Wisdom for the Future
           </p>
         </div>
 
@@ -187,21 +165,9 @@ export default function GlobalFooter() {
             ))}
           </div>
 
-          {/* Stats line */}
-          <div className="text-center">
-            <Link
-              href="/analytics"
-              className="text-xs text-white/40 hover:text-white/60 transition-colors"
-            >
-              {stats
-                ? `${formatNumber(stats.totalBooks)} Books \u00B7 ${formatNumber(stats.pagesTranslated)} Pages Translated \u00B7 CC0 Public Domain`
-                : 'CC0 Public Domain'}
-            </Link>
-          </div>
-
           {/* Copyright + legal */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs text-white/30">
-            <span>&copy; 2026 Source Library &mdash; An initiative of the Embassy of the Free Mind</span>
+            <span>&copy; 2026 Source Library</span>
             <span className="hidden sm:inline">&middot;</span>
             <div className="flex items-center gap-3">
               <a href="mailto:Derek@ancientwisdomtrust.org" className="hover:text-white/50 transition-colors">Derek@ancientwisdomtrust.org</a>

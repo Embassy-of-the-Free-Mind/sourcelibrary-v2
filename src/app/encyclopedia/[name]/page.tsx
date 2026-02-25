@@ -77,17 +77,30 @@ export default async function EntityDetailPage({
           <div className="bg-white rounded-lg border border-stone-200 p-6">
             <h2 className="text-lg font-semibold text-stone-900 mb-3">About</h2>
             <p className="text-stone-700 leading-relaxed">{entity.description}</p>
-            {entity.wikipedia_url && (
-              <a
-                href={entity.wikipedia_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 mt-4 text-sm text-accent-rust hover:text-accent-gold-dark"
-              >
-                Read more on Wikipedia
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            )}
+            <div className="flex items-center gap-4 mt-4">
+              {entity.wikipedia_url && (
+                <a
+                  href={entity.wikipedia_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-accent-rust hover:text-accent-gold-dark"
+                >
+                  Wikipedia
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+              {entity.wikidata_id && (
+                <a
+                  href={`https://www.wikidata.org/wiki/${entity.wikidata_id}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-sm text-accent-violet hover:text-accent-gold-dark"
+                >
+                  Wikidata
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+            </div>
           </div>
         )}
 

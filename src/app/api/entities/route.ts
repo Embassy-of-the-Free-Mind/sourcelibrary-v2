@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
+import { buildEntityListJsonLd } from '@/lib/jsonld';
 
 export interface Entity {
   _id?: string;
@@ -79,6 +80,29 @@ export async function GET(request: NextRequest) {
       .skip(offset)
       .limit(limit)
       .toArray();
+
+    // JSON-LD format
+    const format = searchParams.get('format');
+    if (format === 'jsonld') {
+      const jsonLd = buildEntityListJsonLd(entities.map(e => ({
+        name: e.name as string,
+        type: e.type as 'person' | 'place' | 'concept',
+        aliases: e.aliases as string[] | undefined,
+        description: e.description as string | undefined,
+        wikipedia_url: e.wikipedia_url as string | undefined,
+        wikidata_id: e.wikidata_id as string | undefined,
+        wikidata_birth_date: e.wikidata_birth_date as string | undefined,
+        wikidata_death_date: e.wikidata_death_date as string | undefined,
+        wikidata_coordinates: e.wikidata_coordinates as { lat: number; lng: number } | undefined,
+        books: e.books as Array<{ book_id: string; book_title: string; book_author: string }>,
+      })));
+      return new Response(JSON.stringify(jsonLd, null, 2), {
+        headers: {
+          'Content-Type': 'application/ld+json; charset=utf-8',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+    }
 
     return NextResponse.json({
       entities,
