@@ -17,10 +17,10 @@ export const maxDuration = 300;
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
 const ENROLL_LIMIT = 50;
 const ARCHIVE_LIMIT = 100; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 40; // Batch API jobs are async — submit more per cycle
+const OCR_SUBMIT_LIMIT = 0; // PAUSED — draining current OCR jobs, prioritizing translation
 const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
-const TRANSLATE_SUBMIT_LIMIT = 30; // Batch API jobs are async
+const TRANSLATE_SUBMIT_LIMIT = 50; // Increased — large backlog at metadata_enriched
 const ENRICH_LIMIT = 8; // Processed concurrently — 8 books × ~60s each in parallel
 const CHAPTER_LIMIT = 15; // Fast (~5-10s each)
 const IMAGE_SUBMIT_LIMIT = 5;
@@ -771,7 +771,7 @@ export async function GET(request: NextRequest) {
       let ocrQuotaExhausted = false;
       let lambdaFallbackCount = 0;
       let consecutiveBatchFailures = 0;
-      const LAMBDA_FALLBACK_LIMIT = 20; // Increased from 5 — Lambda is primary path when batch quota exhausted
+      const LAMBDA_FALLBACK_LIMIT = 0; // PAUSED — let current OCR jobs drain, focus Lambda on translation
       const CONSECUTIVE_FAILURE_THRESHOLD = 3; // After N consecutive batch 500s, assume quota exhausted
 
       for (const book of readyForOcr) {
@@ -1123,7 +1123,7 @@ export async function GET(request: NextRequest) {
       let translateQuotaExhausted = false;
       let translateLambdaCount = 0;
       let consecutiveTranslateFailures = 0;
-      const TRANSLATE_LAMBDA_LIMIT = 10; // Increased from 3 — Lambda is primary path when batch quota exhausted
+      const TRANSLATE_LAMBDA_LIMIT = 30; // Aggressive — each FIFO job is sequential, so more jobs = more parallelism
       const CONSECUTIVE_TRANSLATE_THRESHOLD = 3;
 
       for (const book of readyForTranslate) {
