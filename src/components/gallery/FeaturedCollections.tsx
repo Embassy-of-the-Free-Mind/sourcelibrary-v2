@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Image as ImageIcon, Layers } from 'lucide-react';
+import { Image as ImageIcon, Layers, ArrowRight } from 'lucide-react';
 import { gallery } from '@/lib/api-client';
+
+const MAX_SHOWN = 11;
 
 interface CollectionListItem {
   id: string;
@@ -25,7 +27,6 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
   const [loaded, setLoaded] = useState(!!initialCollections);
 
   useEffect(() => {
-    // Skip fetch if we already have server-provided data
     if (initialCollections) return;
 
     gallery.collections
@@ -37,6 +38,9 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
 
   if (!loaded || collections.length === 0) return null;
 
+  const shown = collections.slice(0, MAX_SHOWN);
+  const hasMore = collections.length > MAX_SHOWN;
+
   return (
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-4">
@@ -45,7 +49,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {collections.map((collection) => (
+        {shown.map((collection) => (
           <Link
             key={collection.id}
             href={`/gallery/collections/${collection.slug}`}
@@ -85,6 +89,25 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
             </div>
           </Link>
         ))}
+
+        {hasMore && (
+          <Link
+            href="/gallery/collections"
+            className="group bg-warm rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5 flex flex-col items-center justify-center"
+          >
+            <div className="flex flex-col items-center justify-center gap-3 p-8 text-center h-full">
+              <div className="w-12 h-12 rounded-full bg-accent-rust/10 flex items-center justify-center group-hover:bg-accent-rust/20 transition-colors">
+                <ArrowRight className="w-5 h-5 text-accent-rust" />
+              </div>
+              <h3 className="font-serif text-lg text-stone-800 group-hover:text-accent-rust transition-colors">
+                See all collections
+              </h3>
+              <p className="text-stone-500 text-sm">
+                {collections.length - MAX_SHOWN} more to explore
+              </p>
+            </div>
+          </Link>
+        )}
       </div>
     </div>
   );
