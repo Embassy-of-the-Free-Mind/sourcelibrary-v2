@@ -700,10 +700,18 @@ export default async function BookDetailPage({ params, searchParams }: PageProps
   const { id } = await params;
   const query = await searchParams;
 
-  // Redirect ?page=N to the page reader
+  // Redirect ?page=N to the reader
   const pageNum = typeof query.page === 'string' ? parseInt(query.page, 10) : NaN;
   if (!isNaN(pageNum) && pageNum > 0) {
-    redirect(`/book/${id}/page-number/${pageNum}`);
+    const db0 = await getDb();
+    const targetPage = await db0.collection('pages').findOne(
+      { book_id: id, page_number: pageNum },
+      { projection: { id: 1 } }
+    );
+    if (targetPage) {
+      const pageId = targetPage.id || targetPage._id?.toString();
+      redirect(`/book/${id}/page/${pageId}`);
+    }
   }
 
   // Redirect ObjectId URLs to canonical custom-id URLs at the server level
