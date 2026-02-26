@@ -75,6 +75,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
 
     // Step 2: For each person, check if they authored OTHER books in our library
     // Match entity name/aliases against book_author fields in the entity's books array
+    // Use word-boundary matching to avoid "Jacob" matching "Böhme, Jacob"
     const directCitationBookIds = new Map<string, string>(); // bookId -> cited_as
     for (const entity of personEntities) {
       const names = [entity.name, ...(entity.aliases || [])].filter(
@@ -82,10 +83,29 @@ const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
       );
       for (const bookEntry of entity.books || []) {
         if (bookEntry.book_id === bookId) continue;
-        const authorStr = (bookEntry.book_author || '').toLowerCase();
-        if (!authorStr || authorStr === 'unknown') continue;
+        const authorStr = (bookEntry.book_author || '');
+        if (!authorStr || authorStr.toLowerCase() === 'unknown') continue;
         for (const name of names) {
-          if (authorStr.includes(name.toLowerCase())) {
+          // Require word-boundary match: the name must appear as a leading/standalone
+          // part of the author string, not as a middle name or substring.
+          // "Plato" matches "Plato; Ficino (trans.)" but "Jacob" won't match "Böhme, Jacob"
+          const nameLower = name.toLowerCase();
+          const authorLower = authorStr.toLowerCase();
+          const idx = authorLower.indexOf(nameLower);
+          if (idx === -1) continue;
+          // Must start at word boundary (start of string or after non-letter)
+          const charBefore = idx > 0 ? authorLower[idx - 1] : ' ';
+          const isWordStart = !/[a-z]/.test(charBefore);
+          // Must end at word boundary
+          const afterIdx = idx + nameLower.length;
+          const charAfter = afterIdx < authorLower.length ? authorLower[afterIdx] : ' ';
+          const isWordEnd = !/[a-z]/.test(charAfter);
+          // For short names (single word, <8 chars), require it appears BEFORE any comma
+          // to match surname position: "Plato" ok, but "Jacob" in "Böhme, Jacob" is after comma
+          const isSingleWord = !name.includes(' ');
+          const commaIdx = authorLower.indexOf(',');
+          const isBeforeComma = commaIdx === -1 || idx < commaIdx;
+          if (isWordStart && isWordEnd && (!isSingleWord || name.length >= 8 || isBeforeComma)) {
             directCitationBookIds.set(bookEntry.book_id, entity.name);
             break;
           }
