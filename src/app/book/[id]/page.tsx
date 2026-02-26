@@ -756,22 +756,35 @@ async function BookInfo({ id }: { id: string }) {
               );
             })()}
 
-            {/* Related Books — search links derived from book metadata */}
+            {/* Related Books — collapsed by default, matching Index card pattern */}
             {(() => {
               const index = (book as unknown as { index?: { people?: Array<{ term: string; pages: number[] }>; concepts?: Array<{ term: string; pages: number[] }> } }).index;
               const topPeople = (index?.people || []).slice(0, 3);
               const topConcepts = (index?.concepts || []).slice(0, 3);
+              const directCitations = entityRelatedBooks.filter(rb => rb.type === 'direct');
+              const sharedCitations = entityRelatedBooks.filter(rb => rb.type === 'shared');
               const hasLinks = authorCount > 0 || workSiblings.length > 0 || entityRelatedBooks.length > 0 || book.language || topPeople.length > 0 || topConcepts.length > 0;
 
               if (!hasLinks) return null;
 
-              return (
-                <div className="card p-6 mt-6">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Search className="w-4 h-4 text-stone-400" />
-                    <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Related Books</h2>
-                  </div>
+              const counts = [
+                workSiblings.length > 0 ? `${workSiblings.length + 1} editions` : '',
+                directCitations.length > 0 ? `${directCitations.length} cited` : '',
+                sharedCitations.length > 0 ? `${sharedCitations.length} related` : '',
+              ].filter(Boolean).join(', ');
 
+              return (
+                <details className="card mt-6">
+                  <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                    <div className="flex items-center gap-3">
+                      <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Related Books</h2>
+                      {counts && <span className="text-xs text-stone-400">{counts}</span>}
+                    </div>
+                    <span className="text-sm text-accent-rust hover:text-accent-gold-dark">
+                      See All &rarr;
+                    </span>
+                  </summary>
+                  <div className="px-6 pb-6">
                   {/* Work siblings — other editions of the same text */}
                   {workSiblings.length > 0 && (
                     <div className="mb-4 pb-4 border-b border-stone-100">
@@ -801,91 +814,55 @@ async function BookInfo({ id }: { id: string }) {
                   )}
 
                   {/* Direct citations — this book mentions authors of these works */}
-                  {(() => {
-                    const directCitations = entityRelatedBooks.filter(rb => rb.type === 'direct');
-                    if (directCitations.length === 0) return null;
-                    const SHOW_LIMIT = 5;
-                    const visible = directCitations.slice(0, SHOW_LIMIT);
-                    const overflow = directCitations.slice(SHOW_LIMIT);
-                    const renderLink = (rb: typeof directCitations[0]) => (
-                      <Link
-                        key={rb.id}
-                        href={`/book/${rb.id}`}
-                        className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
-                      >
-                        <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
-                          {rb.title}
-                        </span>
-                        {rb.cited_as && (
-                          <span className="text-xs text-accent-rust shrink-0">via {rb.cited_as}</span>
-                        )}
-                      </Link>
-                    );
-                    return (
-                      <div className="mb-4 pb-4 border-b border-stone-100">
-                        <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                          Cited authors in our library
-                        </p>
-                        <div className="space-y-1.5">
-                          {visible.map(renderLink)}
-                        </div>
-                        {overflow.length > 0 && (
-                          <details className="mt-1">
-                            <summary className="px-3 py-1.5 text-xs text-stone-400 hover:text-stone-600 cursor-pointer select-none">
-                              +{overflow.length} more
-                            </summary>
-                            <div className="space-y-1.5 mt-1">
-                              {overflow.map(renderLink)}
-                            </div>
-                          </details>
-                        )}
+                  {directCitations.length > 0 && (
+                    <div className="mb-4 pb-4 border-b border-stone-100">
+                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                        Cited authors in our library ({directCitations.length})
+                      </p>
+                      <div className="space-y-1.5">
+                        {directCitations.map((rb) => (
+                          <Link
+                            key={rb.id}
+                            href={`/book/${rb.id}`}
+                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                          >
+                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
+                              {rb.title}
+                            </span>
+                            {rb.cited_as && (
+                              <span className="text-xs text-accent-rust shrink-0">via {rb.cited_as}</span>
+                            )}
+                          </Link>
+                        ))}
                       </div>
-                    );
-                  })()}
+                    </div>
+                  )}
 
                   {/* Shared entity context — books discussing the same people/places/concepts */}
-                  {(() => {
-                    const sharedCitations = entityRelatedBooks.filter(rb => rb.type === 'shared');
-                    if (sharedCitations.length === 0) return null;
-                    const SHOW_LIMIT = 5;
-                    const visible = sharedCitations.slice(0, SHOW_LIMIT);
-                    const overflow = sharedCitations.slice(SHOW_LIMIT);
-                    const renderLink = (rb: typeof sharedCitations[0]) => (
-                      <Link
-                        key={rb.id}
-                        href={`/book/${rb.id}`}
-                        className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
-                      >
-                        <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
-                          {rb.title}
-                        </span>
-                        {rb.author && rb.author !== 'Unknown' && (
-                          <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>
-                        )}
-                        <span className="text-xs text-accent-sage shrink-0">{rb.shared_entities} shared</span>
-                      </Link>
-                    );
-                    return (
-                      <div className="mb-4 pb-4 border-b border-stone-100">
-                        <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                          Related works
-                        </p>
-                        <div className="space-y-1.5">
-                          {visible.map(renderLink)}
-                        </div>
-                        {overflow.length > 0 && (
-                          <details className="mt-1">
-                            <summary className="px-3 py-1.5 text-xs text-stone-400 hover:text-stone-600 cursor-pointer select-none">
-                              +{overflow.length} more
-                            </summary>
-                            <div className="space-y-1.5 mt-1">
-                              {overflow.map(renderLink)}
-                            </div>
-                          </details>
-                        )}
+                  {sharedCitations.length > 0 && (
+                    <div className="mb-4 pb-4 border-b border-stone-100">
+                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                        Related works ({sharedCitations.length})
+                      </p>
+                      <div className="space-y-1.5">
+                        {sharedCitations.map((rb) => (
+                          <Link
+                            key={rb.id}
+                            href={`/book/${rb.id}`}
+                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                          >
+                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
+                              {rb.title}
+                            </span>
+                            {rb.author && rb.author !== 'Unknown' && (
+                              <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>
+                            )}
+                            <span className="text-xs text-accent-sage shrink-0">{rb.shared_entities} shared</span>
+                          </Link>
+                        ))}
                       </div>
-                    );
-                  })()}
+                    </div>
+                  )}
 
                   {/* Search pills */}
                   <div className="flex flex-wrap gap-2">
@@ -924,7 +901,8 @@ async function BookInfo({ id }: { id: string }) {
                       </Link>
                     ))}
                   </div>
-                </div>
+                  </div>
+                </details>
               );
             })()}
           </div>
