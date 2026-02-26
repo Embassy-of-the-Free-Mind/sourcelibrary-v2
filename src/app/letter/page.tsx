@@ -26,7 +26,7 @@ export default function LetterPage() {
         <p className="text-xl text-secondary leading-relaxed mb-6">
           In December 2025, Source Library was a Next.js scaffold with a MongoDB connection.
           Today it holds 4,400+ books in 30+ languages with AI-powered OCR, translation,
-          and scholarly publishing — and it cost less than $4,000 in AI processing to get here.
+          and scholarly publishing — and it cost about $4,200 in AI processing to get here.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
@@ -76,7 +76,7 @@ export default function LetterPage() {
             { value: '1,077', label: 'Fully processed books' },
             { value: '71K', label: 'Illustrations extracted' },
             { value: '30+', label: 'Languages' },
-            { value: '~$3,400', label: 'Total AI cost' },
+            { value: '~$4,200', label: 'Total AI cost' },
             { value: '77 days', label: 'Since first commit' },
           ].map(s => (
             <div key={s.label} className="bg-white rounded-lg p-3 border border-border-light text-center">
@@ -88,9 +88,9 @@ export default function LetterPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           The average cost to fully process a book — OCR, translation, summary, index, chapter extraction,
-          image detection — is <strong>$0.77</strong>. That&apos;s not a typo. A 300-page Latin alchemical
-          treatise costs about $1.20 to go from scanned images to a searchable, translated, indexed,
-          illustrated digital edition.
+          image detection — is about <strong>$2.40</strong>. A 300-page Latin alchemical
+          treatise costs roughly $2.40 to go from scanned images to a searchable, translated, indexed,
+          illustrated digital edition. Using batch processing (50% discount), that drops to about $1.40.
         </p>
 
         {/* ── What We Built ── */}
@@ -140,7 +140,7 @@ export default function LetterPage() {
           <div className="border-l-4 border-accent-rust/30 pl-6">
             <p className="text-primary font-medium mb-1">The cost is negligible. The people aren&apos;t.</p>
             <p className="text-secondary text-sm">
-              $3,400 in AI costs for 4,400 books. But someone has to decide what to scan, validate the output,
+              $4,200 in AI costs for 4,400 books. But someone has to decide what to scan, validate the output,
               engage scholars, write grants, and build institutional relationships. That&apos;s where the real
               investment goes.
             </p>
