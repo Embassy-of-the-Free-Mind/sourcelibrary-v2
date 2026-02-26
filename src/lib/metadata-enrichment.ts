@@ -13,6 +13,7 @@ import { Db } from 'mongodb';
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai';
 import { logGeminiCall } from './gemini-logger';
 import { logAuditEvent } from './audit-logger';
+import { logMetadataChange } from './book-changelog';
 
 const MODEL = 'gemini-3-flash-preview';
 const MAX_OCR_PAGES = 25;
@@ -420,6 +421,15 @@ export async function enrichBookMetadata(
         confidence,
         changes,
       },
+    });
+
+    // Append-only changelog
+    logMetadataChange(db, {
+      book_id: bookId,
+      source: 'ai_enrichment',
+      model: MODEL,
+      changes,
+      note: `Confidence: ${confidence}, ${ocrSamples.length} pages analyzed`,
     });
   }
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 import { logAuditEvent } from '@/lib/audit-logger';
+import { logMetadataChange, MetadataFieldChange } from '@/lib/book-changelog';
 
 export const dynamic = 'force-dynamic';
 
@@ -310,12 +311,35 @@ export const POST = withAuth(async (request, session, context) => {
 
     await db.collection('books').updateOne({ id }, { $set: updates });
 
+    // Build structured changelog
+    const structuredChanges: MetadataFieldChange[] = [];
+    if (year && book.published !== year) {
+      structuredChanges.push({ field: 'published', previous: book.published, new_value: year });
+    }
+    if (language && book.language !== language) {
+      structuredChanges.push({ field: 'language', previous: book.language, new_value: language });
+    }
+    if (place && book.place_of_publication !== place) {
+      structuredChanges.push({ field: 'place_of_publication', previous: book.place_of_publication || null, new_value: place });
+    }
+    if (publisher && book.publisher !== publisher) {
+      structuredChanges.push({ field: 'publisher', previous: book.publisher || null, new_value: publisher });
+    }
+
     // Audit trail
     logAuditEvent({
       action: 'book_metadata_verified',
       book_id: id,
       book_title: book.title,
       metadata: { changes, source: source || 'catalog', confidence: confidence || 0 },
+    });
+
+    // Append-only changelog
+    logMetadataChange(db, {
+      book_id: id,
+      source: 'catalog_verification',
+      changes: structuredChanges,
+      note: `Source: ${source || 'catalog'}, confidence: ${confidence || 0}`,
     });
 
     return NextResponse.json({

@@ -914,6 +914,21 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Book metadata changelog - lookup by book_id, newest first
+    // Query: { book_id } sorted by timestamp desc
+    try {
+      await db.collection('book_metadata_changelog').createIndex(
+        { book_id: 1, timestamp: -1 },
+        { name: 'book_metadata_changelog_book_ts_idx', background: true }
+      );
+      results['book_metadata_changelog.book_metadata_changelog_book_ts_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['book_metadata_changelog.book_metadata_changelog_book_ts_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Books - pipeline_auto.status (pipeline cron does ~10 status-specific queries)
     // CRITICAL: Without this, every pipeline cron query collection-scans 4,430+ books
     // causing MongoDB timeouts on cross-region Atlas shared tier
@@ -1049,7 +1064,7 @@ export const POST = withAuth(async (request, session) => {
 export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
-    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics'];
+    const collections = ['books', 'pages', 'highlights', 'jobs', 'batch_jobs', 'analytics_events', 'analytics_pageviews', 'deleted_books', 'gemini_usage', 'audit_log', 'likes', 'annotations', 'gallery_embeddings', 'gallery_collections', 'gallery_images', 'bookshelves', 'page_revisions', 'curator_sessions', 'collections', 'cron_runs', 'pipeline_snapshots', 'loading_metrics', 'book_metadata_changelog'];
     const indexes: Record<string, unknown[]> = {};
 
     for (const col of collections) {

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 interface HistoryEvent {
-  type: 'imported' | 'archived' | 'ocr' | 'translation' | 'summary' | 'index' | 'image_extraction' | 'extract_chapters' | 'metadata_enriched' | 'edition_published' | 'admin_action';
+  type: 'imported' | 'archived' | 'ocr' | 'translation' | 'summary' | 'index' | 'image_extraction' | 'extract_chapters' | 'metadata_enriched' | 'metadata_change' | 'edition_published' | 'admin_action';
   timestamp: string;
   description: string;
   pages?: number;
@@ -14,6 +14,7 @@ interface HistoryEvent {
   version?: string;
   doi?: string;
   action?: string;
+  changes?: Array<{ field: string; previous: unknown; new_value: unknown }>;
 }
 
 /**
@@ -67,8 +68,8 @@ export async function GET(
 
     const resolvedBookId = book.id || book._id?.toString();
 
-    // Run 5 queries in parallel
-    const [usageRecords, jobRecords, pageStats, auditRecords] = await Promise.all([
+    // Run 6 queries in parallel
+    const [usageRecords, jobRecords, pageStats, auditRecords, changelogRecords] = await Promise.all([
       // 1. gemini_usage — all AI calls for this book
       db.collection('gemini_usage').find(
         { book_id: resolvedBookId },
@@ -109,6 +110,12 @@ export async function GET(
         { book_id: resolvedBookId },
         { projection: { timestamp: 1, action: 1, pages_affected: 1, cleared_ocr: 1, cleared_translation: 1 } }
       ).sort({ timestamp: 1 }).toArray(),
+
+      // 5. book_metadata_changelog — metadata change history
+      db.collection('book_metadata_changelog').find(
+        { book_id: resolvedBookId },
+        { projection: { timestamp: 1, source: 1, model: 1, changes: 1, note: 1 } }
+      ).sort({ timestamp: -1 }).limit(100).toArray(),
     ]);
 
     // Build a set of job_ids that exist in the jobs collection for deduplication
@@ -355,6 +362,29 @@ export async function GET(
         description: `${label}${pagesStr}`,
         pages: entry.pages_affected,
         action: entry.action,
+      });
+    }
+
+    // --- Metadata changelog events ---
+    const sourceLabels: Record<string, string> = {
+      ai_enrichment: 'AI enrichment',
+      catalog_verification: 'Catalog verification',
+      admin_edit: 'Admin edit',
+      import: 'Import',
+      script: 'Script',
+    };
+    for (const entry of changelogRecords) {
+      const label = sourceLabels[entry.source as string] || entry.source;
+      const fieldNames = (entry.changes as Array<{ field: string }>)
+        .map(c => c.field)
+        .join(', ');
+
+      events.push({
+        type: 'metadata_change',
+        timestamp: new Date(entry.timestamp).toISOString(),
+        description: `${label}: ${fieldNames}`,
+        model: entry.model as string | undefined,
+        changes: entry.changes as Array<{ field: string; previous: unknown; new_value: unknown }>,
       });
     }
 

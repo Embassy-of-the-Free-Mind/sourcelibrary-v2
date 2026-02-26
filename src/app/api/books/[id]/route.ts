@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 
 export const preferredRegion = 'fra1';
 
@@ -240,6 +241,20 @@ export const PATCH = withAuth(async (request, session, context) => {
         book_title: book.title,
         metadata: { fields_changed: changedFields },
       });
+
+      // Append-only changelog with before/after values
+      const changes = diffBookFields(
+        book as unknown as Record<string, unknown>,
+        updates,
+        changedFields,
+      );
+      if (changes.length > 0) {
+        logMetadataChange(db, {
+          book_id: bookId,
+          source: 'admin_edit',
+          changes,
+        });
+      }
     }
 
     return NextResponse.json({ success: true, updated: Object.keys(updates) });

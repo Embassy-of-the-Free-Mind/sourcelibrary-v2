@@ -8,7 +8,7 @@ Every book page shows a "Book History" section (`BookHistory` component) that di
 **Component:** `src/components/book/BookHistory.tsx`
 **Client:** `books.history(bookId)` in `src/lib/api-client/books.ts`
 
-### Data Sources (5 parallel queries)
+### Data Sources (6 parallel queries)
 
 | Source | Collection | Events generated |
 |--------|-----------|-----------------|
@@ -17,6 +17,7 @@ Every book page shows a "Book History" section (`BookHistory` component) that di
 | Processing jobs | `jobs` | ocr, translation (with progress: completed/total/failed) |
 | Page stats | `pages` | archived (aggregate count + dates) |
 | Admin log | `audit_log` | admin_action (OCR resets, etc.) |
+| Metadata changelog | `book_metadata_changelog` | metadata_change (field-level before/after diffs) |
 
 ### Deduplication
 
@@ -63,6 +64,7 @@ The `cost_tracking` collection is fully deprecated — zero active writers or re
 | `annotations` | Community notes with threading | `book_id + page_id` |
 | `social_posts` | Tweet scheduling and metrics | — |
 | `split_adjustments` | ML split detection feedback | — |
+| `book_metadata_changelog` | Append-only metadata change history (field-level diffs) | `book_id + timestamp` |
 | `cost_tracking` | **DEPRECATED** — no active writers/readers, use `gemini_usage` | — |
 
 ---
@@ -158,6 +160,25 @@ await logger.flush(); // writes one document to cron_runs
 **Logged actions:** `book_imported`, `book_deleted`, `book_deleted_permanent`, `book_restored`, `book_reimported`, `book_metadata_updated`, `edition_published`, `doi_minted`, `page_edited`, `reset_book_ocr`
 
 All audit events automatically appear in the Book History timeline.
+
+## Book Metadata Changelog
+
+`src/lib/book-changelog.ts` — `logMetadataChange()`. Append-only, non-blocking. Writes to `book_metadata_changelog` collection.
+
+Tracks every field-level change to book metadata with before/after values. Hooked into 3 write paths:
+
+| Write path | Source value | File |
+|-----------|-------------|------|
+| AI metadata enrichment | `ai_enrichment` | `src/lib/metadata-enrichment.ts` |
+| Catalog verification (USTC/EFM) | `catalog_verification` | `src/app/api/books/[id]/verify-metadata/route.ts` |
+| Admin PATCH edits | `admin_edit` | `src/app/api/books/[id]/route.ts` |
+
+Each entry stores: `book_id`, `source`, `model` (for AI), `changes[]` (field + previous + new_value), `note`, `timestamp`.
+
+Query: `getBookChangelog(db, bookId, limit?)` — returns entries newest first.
+Diff utility: `diffBookFields(before, after, fields)` — computes `MetadataFieldChange[]` from two objects.
+
+Changelog events appear in the Book History timeline as `metadata_change` type.
 
 ## Search Query Logging
 
