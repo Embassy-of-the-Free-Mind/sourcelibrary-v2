@@ -70,10 +70,11 @@ export const POST = withAuth(async (request, session, context) => {
         page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
       };
     } else if (force) {
+      // force=true bypasses BOTH the translation-exists check AND the page-type filter
+      // (illustration/diagram pages in manuscripts like Kitab al-Bulhan have translatable text)
       translationFilter = {
         book_id: bookId,
         'ocr.data': { $exists: true, $nin: [null, ''] },
-        page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
       };
     } else {
       translationFilter = {
