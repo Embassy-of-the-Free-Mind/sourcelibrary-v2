@@ -388,7 +388,7 @@ export default async function FullDataPage() {
     { label: 'Reading summary', count: data.hasSummary },
     { label: 'AI index', count: data.hasIndex },
     { label: 'Chapters', count: data.hasChapters },
-    { label: 'Source work dates', count: data.hasSourceDates },
+    { label: 'Original source dates', count: data.hasSourceDates },
     { label: 'Published editions', count: data.hasEditions },
   ];
 

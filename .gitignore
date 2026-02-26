@@ -59,6 +59,8 @@ check-books.js
 # Temp files
 tmp/
 tmp_*
+scripts/_tmp-*
+scripts/output/
 
 # Experimental tools
 tools/
