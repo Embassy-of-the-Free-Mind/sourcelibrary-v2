@@ -5,6 +5,7 @@ import path from 'path';
 export const metadata: Metadata = {
   title: 'Brand Kit & Color System - Source Library',
   description: 'Source Library logos, color system, design tokens, and brand guidelines.',
+  alternates: { canonical: '/brand' },
 };
 
 function getAssets() {

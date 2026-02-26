@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Full Collection Data — Source Library',
   description:
     'Complete collection data including all books, pipeline status, OCR/translation coverage, and enrichment metrics.',
+  alternates: { canonical: '/fulldata' },
 };
 
 /* ── provider URLs (external institutions) ── */

@@ -4,6 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Press - Source Library',
   description: 'Press releases, key facts, and media resources for Source Library — an initiative of the Embassy of the Free Mind, Amsterdam.',
+  alternates: { canonical: '/press' },
 };
 
 const PRESS_RELEASES = [

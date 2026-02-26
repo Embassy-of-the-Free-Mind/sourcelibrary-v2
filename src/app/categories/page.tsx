@@ -7,6 +7,7 @@ import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/rout
 export const metadata: Metadata = {
   title: 'Browse by Category — Source Library',
   description: 'Explore rare esoteric, alchemical, and philosophical texts organized by tradition: alchemy, Hermeticism, Kabbalah, Neoplatonism, Rosicrucianism, astrology, and more.',
+  alternates: { canonical: '/categories' },
   openGraph: {
     title: 'Browse by Category — Source Library',
     description: 'Explore rare esoteric texts organized by tradition and subject.',

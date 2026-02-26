@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'Research Sessions - Source Library',
   description:
     'Browse AI-assisted curator research sessions — conversations discovering, evaluating, and importing historical texts across alchemy, Hermetica, Kabbalah, and 30+ traditions.',
+  alternates: { canonical: '/research' },
   openGraph: {
     title: 'Research Sessions - Source Library',
     description:

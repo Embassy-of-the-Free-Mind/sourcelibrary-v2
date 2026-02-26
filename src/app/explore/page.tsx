@@ -12,6 +12,7 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Explore — Source Library',
   description: 'Interactive visualizations of 12,500+ people, places, and concepts from the Western esoteric tradition. Century heatmaps, era highlights, and data source breakdowns.',
+  alternates: { canonical: '/explore' },
   openGraph: {
     title: 'Explore — Source Library',
     description: 'Interactive visualizations of the Western esoteric tradition, enriched with Wikidata.',

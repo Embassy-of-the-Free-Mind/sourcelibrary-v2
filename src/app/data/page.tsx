@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: 'The Collection — Source Library',
   description:
     'Live data on the Source Library collection: books, languages, centuries, topics, and source institutions.',
+  alternates: { canonical: '/data' },
   openGraph: {
     title: 'The Collection — Source Library',
     description:

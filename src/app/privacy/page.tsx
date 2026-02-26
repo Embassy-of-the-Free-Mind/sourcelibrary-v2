@@ -4,6 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
   title: 'Privacy Policy - Source Library',
   description: 'Privacy policy for Source Library.',
+  alternates: { canonical: '/privacy' },
 };
 
 export default function PrivacyPage() {

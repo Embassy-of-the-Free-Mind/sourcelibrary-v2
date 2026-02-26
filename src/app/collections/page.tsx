@@ -9,6 +9,7 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: 'Collections | Source Library',
   description: 'Browse thousands of historical texts organized into thematic collections — Western esotericism, classical philosophy, sacred texts, and more.',
+  alternates: { canonical: '/collections' },
 };
 
 interface FeaturedImage {
