@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
 
@@ -18,9 +19,26 @@ export const metadata: Metadata = {
   },
 };
 
+// Map fine-grained categories → broad traditions for color coding
+const CATEGORY_TO_TRADITION: Record<string, string> = {
+  hermeticism: 'hermeticism', alchemy: 'hermeticism', 'spiritual-alchemy': 'hermeticism',
+  paracelsian: 'hermeticism', 'prisca-theologia': 'hermeticism',
+  philosophy: 'philosophy', neoplatonism: 'philosophy', 'florentine-platonism': 'philosophy',
+  pythagoreanism: 'philosophy', Aristotelianism: 'philosophy',
+  'ritual-magic': 'magic', 'natural-magic': 'magic', astrology: 'magic',
+  divination: 'magic', witchcraft: 'magic', 'Angel Magic': 'magic', 'Astrological Magic': 'magic',
+  theology: 'mysticism', mysticism: 'mysticism', 'christian-mysticism': 'mysticism',
+  'biblical-studies': 'mysticism',
+  'jewish-kabbalah': 'kabbalah', 'christian-cabala': 'kabbalah',
+  rosicrucianism: 'rosicrucianism', freemasonry: 'rosicrucianism', theosophy: 'rosicrucianism',
+  'natural-philosophy': 'science', medicine: 'science', astronomy: 'science',
+  mathematics: 'science', chemistry: 'science', botany: 'science', Anatomy: 'science',
+};
+
 async function fetchTimelineData() {
   const db = await getDb();
 
+  // Fetch entities with their book_ids for tradition lookup
   const entities = await db
     .collection('entities')
     .aggregate([
@@ -42,10 +60,59 @@ async function fetchTimelineData() {
           description: 1,
           wikidata_birth_date: 1,
           wikidata_death_date: 1,
+          'books.book_id': 1,
         },
       },
     ])
     .toArray();
+
+  // Build book_id → categories map from books collection
+  const allBookIds = new Set<string>();
+  for (const e of entities) {
+    for (const b of (e.books as { book_id: string }[]) || []) {
+      allBookIds.add(b.book_id);
+    }
+  }
+
+  const bookIdArr = [...allBookIds];
+  // Book IDs can be ObjectId hex strings or UUID strings
+  const objectIds = bookIdArr
+    .filter((id) => /^[a-f0-9]{24}$/.test(id))
+    .map((id) => new ObjectId(id));
+  const stringIds = bookIdArr.filter((id) => !/^[a-f0-9]{24}$/.test(id));
+
+  const bookCats = await db.collection('books').find(
+    { $or: [
+      ...(objectIds.length ? [{ _id: { $in: objectIds } }] : []),
+      ...(stringIds.length ? [{ _id: { $in: stringIds as unknown as ObjectId[] } }] : []),
+    ] },
+    { projection: { _id: 1, categories: 1 } }
+  ).toArray();
+
+  const bookCatMap = new Map<string, string[]>();
+  for (const b of bookCats) {
+    const cats = (b.categories as string[]) || [];
+    bookCatMap.set(String(b._id), cats);
+  }
+
+  // Compute dominant tradition for an entity from its books' categories
+  function getDominantTradition(books: { book_id: string }[] | undefined): string {
+    if (!books || books.length === 0) return 'other';
+    const counts: Record<string, number> = {};
+    for (const b of books) {
+      const cats = bookCatMap.get(b.book_id) || [];
+      for (const cat of cats) {
+        const tradition = CATEGORY_TO_TRADITION[cat];
+        if (tradition) counts[tradition] = (counts[tradition] || 0) + 1;
+      }
+    }
+    let best = 'other';
+    let bestCount = 0;
+    for (const [t, c] of Object.entries(counts)) {
+      if (c > bestCount) { best = t; bestCount = c; }
+    }
+    return best;
+  }
 
   const byCentury: Record<string, number> = {};
   let minYear = Infinity;
@@ -89,6 +156,7 @@ async function fetchTimelineData() {
         book_count: (e.book_count as number) || 0,
         total_mentions: (e.total_mentions as number) || 0,
         description: (e.description as string) || undefined,
+        tradition: getDominantTradition(e.books as { book_id: string }[] | undefined),
       };
     })
     .filter(Boolean) as {
@@ -99,6 +167,7 @@ async function fetchTimelineData() {
     book_count: number;
     total_mentions: number;
     description?: string;
+    tradition: string;
   }[];
 
   return {

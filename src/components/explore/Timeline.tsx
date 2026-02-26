@@ -12,6 +12,7 @@ export interface TimelineEntity {
   book_count: number;
   total_mentions: number;
   description?: string;
+  tradition?: string;
 }
 
 interface TimelineProps {
@@ -26,6 +27,17 @@ interface TimelineProps {
 const TYPE_COLORS: Record<string, string> = {
   person: '#9e4a3a',
   concept: '#7c5db5',
+};
+
+const TRADITION_COLORS: Record<string, { color: string; label: string }> = {
+  hermeticism: { color: '#c9a86c', label: 'Alchemy & Hermeticism' },
+  philosophy:  { color: '#7c5db5', label: 'Philosophy' },
+  magic:       { color: '#9e4a3a', label: 'Magic & Astrology' },
+  mysticism:   { color: '#4a7ab5', label: 'Mysticism & Theology' },
+  kabbalah:    { color: '#5b9e8e', label: 'Kabbalah' },
+  rosicrucianism: { color: '#b55d7c', label: 'Rosicrucianism' },
+  science:     { color: '#8b9a7d', label: 'Science & Medicine' },
+  other:       { color: '#999', label: 'Other' },
 };
 
 const BAR_HEIGHT = 14;
@@ -254,7 +266,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
 
   // Filters
   const [minBooks, setMinBooks] = useState(2);
-  const [colorMode, setColorMode] = useState<'type' | 'books'>('type');
+  const [colorMode, setColorMode] = useState<'type' | 'books' | 'tradition'>('tradition');
   const [showTypes, setShowTypes] = useState(new Set(['person', 'concept']));
 
   // Tooltip
@@ -330,6 +342,9 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     if (colorMode === 'type') {
       return TYPE_COLORS[entity.type] || '#999';
     }
+    if (colorMode === 'tradition') {
+      return TRADITION_COLORS[entity.tradition || 'other']?.color || '#999';
+    }
     // Book count gradient: light sage → dark rust
     const t = Math.min(entity.book_count / maxBookCount, 1);
     const r = Math.round(139 + t * (158 - 139));
@@ -338,9 +353,18 @@ export default function Timeline({ entities, stats }: TimelineProps) {
     return `rgb(${r},${g},${b})`;
   }
 
-  // Wheel zoom — only on Ctrl/Cmd+wheel so normal scroll works
+  // Wheel: Ctrl/Cmd+wheel = zoom, Shift+wheel = horizontal pan, plain = vertical scroll
   const handleWheel = useCallback(
     (e: React.WheelEvent) => {
+      if (e.shiftKey) {
+        // Horizontal pan
+        e.preventDefault();
+        const span = viewEnd - viewStart;
+        const delta = (e.deltaY || e.deltaX) * (span / svgWidth) * 1.5;
+        setViewStart((s) => Math.round(s + delta));
+        setViewEnd((s) => Math.round(s + delta));
+        return;
+      }
       if (!e.ctrlKey && !e.metaKey) return; // let normal scroll pass through
       e.preventDefault();
       const rect = (e.currentTarget as SVGSVGElement).getBoundingClientRect();
@@ -538,10 +562,11 @@ export default function Timeline({ entities, stats }: TimelineProps) {
           Color
           <select
             value={colorMode}
-            onChange={(e) => setColorMode(e.target.value as 'type' | 'books')}
+            onChange={(e) => setColorMode(e.target.value as 'type' | 'books' | 'tradition')}
             className="rounded px-1.5 py-0.5 text-sm"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-secondary)' }}
           >
+            <option value="tradition">By tradition</option>
             <option value="type">By type</option>
             <option value="books">By book count</option>
           </select>
@@ -556,6 +581,35 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         </span>
 
         <div className="ml-auto flex gap-1">
+          <button
+            onClick={() => {
+              const span = viewEnd - viewStart;
+              const shift = Math.round(span * 0.3);
+              setViewStart((s) => s - shift);
+              setViewEnd((s) => s - shift);
+            }}
+            className="px-1.5 py-0.5 rounded text-xs font-mono"
+            style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
+            title="Pan left"
+          >
+            &larr;
+          </button>
+          <button
+            onClick={() => {
+              const span = viewEnd - viewStart;
+              const shift = Math.round(span * 0.3);
+              setViewStart((s) => s + shift);
+              setViewEnd((s) => s + shift);
+            }}
+            className="px-1.5 py-0.5 rounded text-xs font-mono"
+            style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
+            title="Pan right"
+          >
+            &rarr;
+          </button>
+
+          <span className="w-px h-5 mx-0.5" style={{ background: 'var(--border-light)' }} />
+
           <button
             onClick={() => {
               const mid = (viewStart + viewEnd) / 2;
@@ -613,9 +667,24 @@ export default function Timeline({ entities, stats }: TimelineProps) {
         </div>
 
         <span className="text-[10px] hidden lg:inline" style={{ color: 'var(--text-faint)' }}>
-          Ctrl+scroll to zoom &middot; drag to pan
+          Ctrl+scroll to zoom &middot; Shift+scroll or drag to pan
         </span>
       </div>
+
+      {/* Tradition legend */}
+      {colorMode === 'tradition' && (
+        <div
+          className="shrink-0 px-4 py-1.5 flex flex-wrap items-center gap-x-3 gap-y-1"
+          style={{ borderBottom: '1px solid var(--border-light)', background: 'var(--bg-cream)' }}
+        >
+          {Object.entries(TRADITION_COLORS).map(([key, { color, label }]) => (
+            <span key={key} className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-secondary)' }}>
+              <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ background: color }} />
+              {label}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* SVG timeline */}
       <div ref={containerRef} className="flex-1 overflow-y-auto overflow-x-hidden relative">
@@ -731,6 +800,9 @@ export default function Timeline({ entities, stats }: TimelineProps) {
                     ? `d. ${formatYear(tooltip.entity.death_year)}`
                     : ''}
               {' '}&middot; {tooltip.entity.book_count} books &middot; {tooltip.entity.total_mentions} mentions
+              {tooltip.entity.tradition && tooltip.entity.tradition !== 'other' && (
+                <> &middot; {TRADITION_COLORS[tooltip.entity.tradition]?.label || tooltip.entity.tradition}</>
+              )}
             </div>
             {tooltip.entity.description && (
               <div className="text-xs opacity-70 mt-1 line-clamp-2">
