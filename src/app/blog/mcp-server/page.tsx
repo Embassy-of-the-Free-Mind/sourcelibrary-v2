@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'Claude Can Now Read Thousands of Rare Books - Blog - Source Library',
   description: 'We shipped an MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 50,000+ illustrations. One command to install.',
+  openGraph: {
+    title: 'Claude Can Now Read Thousands of Rare Books',
+    description: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 50,000+ illustrations.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/mcp-server',
   },

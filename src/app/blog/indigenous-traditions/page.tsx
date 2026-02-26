@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'The Sacred Texts That Were Never "Texts" - Blog - Source Library',
   description: 'Source Library now holds 90+ volumes documenting indigenous spiritual traditions from every inhabited continent — Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas, Polynesian creation chants, and more. Most were recorded in the field by ethnographers who knew the traditions were vanishing.',
+  openGraph: {
+    title: 'The Sacred Texts That Were Never "Texts"',
+    description: '90+ volumes documenting indigenous spiritual traditions from every inhabited continent — Navajo ceremonies, Yoruba cosmology, Celtic place-lore, Norse Eddas.',
+    images: [{ url: 'https://archive.org/download/gri_33125009545621/page/n23/full/pct:50/0/default.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/indigenous-traditions',
   },

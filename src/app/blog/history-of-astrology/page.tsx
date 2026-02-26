@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'A History of Astrology Across Traditions - Blog - Source Library',
   description: 'From Babylonian omen texts to Kepler\'s geometrical cosmos, astrology was one of the longest-running intellectual projects in human history — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions. Source Library holds the primary texts.',
+  openGraph: {
+    title: 'A History of Astrology Across Traditions',
+    description: 'From Babylonian omen texts to Kepler\'s geometrical cosmos — pursued independently across Greek, Indian, Arabic, Chinese, and European traditions.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/history-of-astrology',
   },

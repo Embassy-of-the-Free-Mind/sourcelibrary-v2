@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'First English Translations - Blog - Source Library',
   description: 'Hundreds of books in Source Library appear to be first-ever English translations — alchemical lab manuals, radical theology, Sanskrit astrology manuscripts, women alchemists, and founding texts of biblical criticism, all previously inaccessible in English.',
+  openGraph: {
+    title: 'Over 500 First English Translations',
+    description: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, and founding texts of biblical criticism — all previously inaccessible in English.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/first-translations',
   },

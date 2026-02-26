@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'Recovering the Chakra Tradition - Blog - Source Library',
   description: 'How Source Library is digitizing and translating the primary tantric sources on chakras, nadis, and kundalini — many for the first time in any Western language.',
+  openGraph: {
+    title: 'Recovering the Chakra Tradition',
+    description: 'Digitizing and translating the primary tantric sources on chakras, nadis, and kundalini — many for the first time in any Western language.',
+    images: [{ url: 'https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/chakra-tradition',
   },

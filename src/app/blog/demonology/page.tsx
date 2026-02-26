@@ -7,6 +7,11 @@ export const metadata: Metadata = {
   title: 'What Are Demons? Five Answers from the Primary Sources - Source Library',
   description:
     'The word "demon" names two almost opposite things. The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel trying to damn your soul. Source Library holds the texts that document this extraordinary reversal.',
+  openGraph: {
+    title: 'What Are Demons? Five Answers from the Primary Sources',
+    description: 'The Hermetic daemon is your cosmic guardian; the Christian demon is a fallen angel. Source Library holds the texts that document this extraordinary reversal.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/demonology',
   },

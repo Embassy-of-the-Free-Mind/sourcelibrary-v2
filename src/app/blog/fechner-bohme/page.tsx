@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'The Mystic Who Invented Psychophysics - Blog - Source Library',
   description: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works, now in Source Library, reveal the Böhmean mysticism behind the Weber-Fechner law.',
+  openGraph: {
+    title: 'The Mystic Who Invented Psychophysics',
+    description: 'Gustav Fechner founded experimental psychology — but his real goal was proving the universe has a soul. His untranslated German works reveal the mysticism behind the Weber-Fechner law.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/fechner-bohme',
   },

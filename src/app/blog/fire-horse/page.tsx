@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'The Year of the Fire Horse - Blog - Source Library',
   description: 'Chinese New Year 2026 marks the Year of the Fire Horse — the only year in the 60-year cycle where both heavenly stem and earthly branch carry yang fire. Source Library holds the original Chinese texts that define this system, from Tang dynasty astrology manuals to the Five Elements classic.',
+  openGraph: {
+    title: 'The Year of the Fire Horse',
+    description: 'Double yang fire, a 17th-century arsonist, and the original texts behind Chinese astrology — from the sexagenary cycle to the I Ching.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6992cac0d4d545ae73feea71/6.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/fire-horse',
   },

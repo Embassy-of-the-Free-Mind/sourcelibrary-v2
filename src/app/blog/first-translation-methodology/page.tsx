@@ -6,6 +6,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'How We Identify First Translations - Blog - Source Library',
   description: 'The methodology behind Source Library\'s first-translation classification: how AI enrichment, bibliographic heuristics, and human review work together to identify books that have never been translated into English.',
+  openGraph: {
+    title: 'How We Identify First Translations',
+    description: 'The methodology behind Source Library\'s first-translation classification: AI enrichment, bibliographic heuristics, and human review.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/first-translation-methodology',
   },

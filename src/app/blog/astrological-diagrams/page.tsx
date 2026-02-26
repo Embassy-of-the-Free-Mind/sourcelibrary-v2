@@ -7,6 +7,11 @@ import BlogComments from '@/components/blog/BlogComments';
 export const metadata: Metadata = {
   title: 'Reading the Stars: Astrological Diagrams from Nine Centuries — Blog — Source Library',
   description: 'A visual tour of Source Library\'s astrological collection: from the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics, with the original diagrams that mapped humanity\'s relationship to the heavens.',
+  openGraph: {
+    title: 'Reading the Stars: Astrological Diagrams from Nine Centuries',
+    description: 'A visual tour from the 10th-century Dunhuang Star Chart to Kepler\'s cosmic harmonics — the original diagrams that mapped humanity\'s relationship to the heavens.',
+    images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg', width: 1200, height: 630 }],
+  },
   alternates: {
     canonical: '/blog/astrological-diagrams',
   },

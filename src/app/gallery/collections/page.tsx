@@ -1,11 +1,17 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
-import { gallery } from '@/lib/api-client';
-import { BookLoader } from '@/components/ui/BookLoader';
+import { getDb } from '@/lib/mongodb';
+
+export const metadata: Metadata = {
+  title: 'Curated Collections — Gallery — Source Library',
+  description: 'Thematic collections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts — woodcuts, engravings, emblems, and diagrams spanning five centuries.',
+  openGraph: {
+    title: 'Curated Image Collections — Source Library',
+    description: 'Thematic collections of illustrations from rare historical manuscripts.',
+  },
+};
 
 interface CollectionListItem {
   id: string;
@@ -17,23 +23,89 @@ interface CollectionListItem {
   coverImage: { url: string; description: string } | null;
 }
 
-export default function CollectionsPage() {
-  const [collections, setCollections] = useState<CollectionListItem[]>([]);
-  const [loading, setLoading] = useState(true);
+async function getCollections(): Promise<CollectionListItem[]> {
+  const db = await getDb();
 
-  useEffect(() => {
-    async function fetchCollections() {
-      try {
-        const data = await gallery.collections.list();
-        setCollections(data.collections);
-      } catch (e) {
-        console.error('Failed to load collections:', e);
-      } finally {
-        setLoading(false);
+  const collections = await db
+    .collection('gallery_collections')
+    .find({})
+    .sort({ sort_order: 1, created_at: -1 })
+    .toArray();
+
+  // Resolve cover images
+  const coverIds = collections
+    .map((c) => c.cover_image_id as string)
+    .filter(Boolean);
+
+  const coverImages = await resolveCoverImages(db, coverIds);
+
+  return collections.map((c) => ({
+    id: c.id as string,
+    slug: c.slug as string,
+    title: c.title as string,
+    description: c.description as string,
+    imageCount: (c.image_ids as string[])?.length || 0,
+    featured: c.featured as boolean,
+    coverImage: coverImages.get(c.cover_image_id as string) || null,
+  }));
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function resolveCoverImages(db: any, imageIds: string[]) {
+  if (imageIds.length === 0) return new Map<string, { url: string; description: string }>();
+
+  const parsed = imageIds.map((id) => {
+    const parts = id.split('-');
+    const idx = parseInt(parts.pop()!);
+    return { id, pageId: parts.join('-'), detIdx: idx };
+  });
+
+  const pageIds = [...new Set(parsed.map((p) => p.pageId))];
+  const pages = await db
+    .collection('pages')
+    .find(
+      { id: { $in: pageIds } },
+      { projection: { id: 1, detected_images: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
+    )
+    .toArray();
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pageMap = new Map<string, any>(pages.map((p: any) => [p.id, p]));
+  const result = new Map<string, { url: string; description: string }>();
+
+  for (const { id, pageId, detIdx } of parsed) {
+    const page = pageMap.get(pageId);
+    if (!page) continue;
+    const det = page.detected_images?.[detIdx];
+    if (!det) continue;
+
+    let cropUrl: string | null = null;
+    if (det.bbox) {
+      const baseUrl = page.archived_photo || page.cropped_photo || page.photo;
+      if (baseUrl) {
+        const params = new URLSearchParams({
+          url: baseUrl,
+          x: det.bbox.x.toString(),
+          y: det.bbox.y.toString(),
+          w: det.bbox.width.toString(),
+          h: det.bbox.height.toString(),
+        });
+        if (det.rotation) params.set('rotation', det.rotation.toString());
+        cropUrl = `https://sourcelibrary.org/api/crop-image?${params}`;
       }
     }
-    fetchCollections();
-  }, []);
+
+    result.set(id, {
+      url: det.thumbnail_url || det.extracted_url || cropUrl || page.cropped_photo || page.photo || '',
+      description: det.description || '',
+    });
+  }
+
+  return result;
+}
+
+export default async function CollectionsPage() {
+  const collections = await getCollections();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
@@ -67,20 +139,14 @@ export default function CollectionsPage() {
           </p>
         </div>
 
-        {loading && (
-          <div className="py-20">
-            <BookLoader size="xs" />
-          </div>
-        )}
-
-        {!loading && collections.length === 0 && (
+        {collections.length === 0 && (
           <div className="text-center py-20">
             <Layers className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <p className="text-stone-500">No collections yet.</p>
           </div>
         )}
 
-        {!loading && collections.length > 0 && (
+        {collections.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {collections.map((collection) => (
               <Link
