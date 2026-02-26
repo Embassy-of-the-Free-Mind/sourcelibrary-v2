@@ -18,7 +18,7 @@ import { MongoClient } from 'mongodb';
 // ── Config ──────────────────────────────────────────────────────────
 
 const MODEL = 'gemini-3-flash-preview';
-const BATCH_SIZE = 20; // Titles per Gemini call
+const BATCH_SIZE = 10; // Titles per Gemini call
 const DELAY_MS = 300;  // Between batches
 
 const SAFETY_SETTINGS = [
@@ -133,17 +133,54 @@ Titles to translate:
 ${JSON.stringify(titlesForPrompt, null, 2)}`;
 
     try {
-      const result = await model.generateContent(prompt);
-      const text = result.response.text().trim();
+      let text;
+      let usage;
+      const callWithTimeout = (prompt, timeoutMs = 30000) => {
+        return Promise.race([
+          model.generateContent(prompt),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Gemini timeout')), timeoutMs)),
+        ]);
+      };
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const result = await callWithTimeout(prompt);
+          const response = result.response;
+          const candidates = response.candidates || [];
+          const allParts = candidates[0]?.content?.parts || [];
+          text = allParts.map(p => p.text || '').join('').trim();
+          if (!text) text = response.text().trim();
+          usage = response.usageMetadata;
+          if (text) break;
+        } catch (e) {
+          if (attempt === 1) throw e;
+          console.error(`  Attempt ${attempt + 1} failed: ${e.message}, retrying...`);
+          await new Promise(r => setTimeout(r, 2000));
+        }
+      }
+
+      if (!text) throw new Error('Empty response from Gemini');
+
       let parsed;
       try {
         parsed = JSON.parse(text);
       } catch {
+        // Try extracting JSON array from response
         const jsonMatch = text.match(/\[[\s\S]*\]/);
         if (jsonMatch) {
           parsed = JSON.parse(jsonMatch[0]);
         } else {
+          console.error(`  Raw response (first 500 chars): ${text.substring(0, 500)}`);
           throw new Error('Failed to parse JSON array');
+        }
+      }
+
+      // If model returned an object with an array property, unwrap it
+      if (!Array.isArray(parsed) && typeof parsed === 'object') {
+        const arrayProp = Object.values(parsed).find(v => Array.isArray(v));
+        if (arrayProp) {
+          parsed = arrayProp;
+        } else {
+          throw new Error('Response is not an array');
         }
       }
 
@@ -198,7 +235,6 @@ ${JSON.stringify(titlesForPrompt, null, 2)}`;
         totalUpdated++;
       }
 
-      const usage = result.response.usageMetadata;
       console.log(`  Batch ${batchNum}/${batches.length}: ${resultMap.size}/${batch.length} translated (${usage?.promptTokenCount || '?'} in / ${usage?.candidatesTokenCount || '?'} out)\n`);
 
     } catch (err) {
