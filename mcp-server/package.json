@@ -1,12 +1,13 @@
 {
   "name": "@source-library/mcp-server",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "mcpName": "io.github.Embassy-of-the-Free-Mind/source-library",
-  "description": "MCP server for searching and citing Source Library historical texts with shortlink citations, plus browsing historical illustrations and emblems",
+  "description": "Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 14 research tools, CLI + MCP server, no API key needed.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "source-library-mcp": "dist/index.js"
+    "source-library-mcp": "dist/index.js",
+    "source-library": "dist/cli.js"
   },
   "files": [
     "dist",
@@ -15,6 +16,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "cli": "tsx src/cli.ts",
     "dev": "tsx src/index.ts",
     "prepublishOnly": "npm run build"
   },
@@ -23,6 +25,7 @@
     "model-context-protocol",
     "claude",
     "ai",
+    "cli",
     "historical-texts",
     "alchemy",
     "hermeticism",
