@@ -85,10 +85,16 @@ const MILESTONES: Milestone[] = [
     color: 'var(--accent-violet)',
   },
   {
+    date: 'Dec 30',
+    title: 'Full-text search',
+    detail: 'Search across the text of every book in the collection — original languages and English translations',
+    color: 'var(--accent-sage)',
+  },
+  {
     date: 'Jan 1',
     title: 'Gallica and Bavarian State Library',
     detail: 'Import from the Bibliothque nationale de France and the Bayerische Staatsbibliothek',
-    color: 'var(--accent-sage)',
+    color: 'var(--accent-rust)',
   },
   {
     date: 'Jan 4',
@@ -97,10 +103,28 @@ const MILESTONES: Milestone[] = [
     color: 'var(--accent-gold)',
   },
   {
+    date: 'Jan 8',
+    title: 'Google Scholar indexing',
+    detail: 'Structured data, citation meta tags, and SEO so scholars can find and cite texts through Google',
+    color: 'var(--accent-violet)',
+  },
+  {
     date: 'Jan 15',
     title: '6 new library sources in one day',
     detail: 'Wellcome Collection, e-rara, Bodleian, Cambridge, Vatican, Herzog August. Total: 13 sources.',
     color: 'var(--accent-rust)',
+  },
+  {
+    date: 'Jan 20',
+    title: 'Community annotations',
+    detail: 'Highlights, margin notes, corrections, and threaded discussions — anyone can contribute context to any page',
+    color: 'var(--accent-sage)',
+  },
+  {
+    date: 'Jan 25',
+    title: 'Right-to-left language support',
+    detail: 'Arabic, Hebrew, and Persian texts display correctly with native bidirectional rendering',
+    color: 'var(--accent-gold)',
   },
   {
     date: 'Feb 4',
@@ -131,6 +155,12 @@ const MILESTONES: Milestone[] = [
     title: 'Curated collections and feeds',
     detail: 'Themed gallery collections. Atom feeds for new books and images. Visual similarity search.',
     color: 'var(--accent-violet)',
+  },
+  {
+    date: 'Feb 18',
+    title: 'Multi-column layout detection',
+    detail: 'AI detects and renders two-column page layouts found in many early printed books',
+    color: 'var(--accent-sage)',
   },
   {
     date: 'Feb 21',
