@@ -772,7 +772,7 @@ export async function GET(request: NextRequest) {
         .limit(ocrLimit)
         .toArray() : [];
 
-      let ocrQuotaExhausted = false;
+      let ocrQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let lambdaFallbackCount = 0;
       let consecutiveBatchFailures = 0;
       const LAMBDA_FALLBACK_LIMIT = 10; // Re-enabled for OCR push to 2,000 books
@@ -1124,7 +1124,7 @@ export async function GET(request: NextRequest) {
         .limit(TRANSLATE_SUBMIT_LIMIT)
         .toArray();
 
-      let translateQuotaExhausted = false;
+      let translateQuotaExhausted = true; // FORCE Lambda — batch quota exhausted, skip costly batch attempts
       let translateLambdaCount = 0;
       let consecutiveTranslateFailures = 0;
       const TRANSLATE_LAMBDA_LIMIT = 30; // Aggressive — each FIFO job is sequential, so more jobs = more parallelism
