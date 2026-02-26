@@ -49,23 +49,76 @@ async function getBookForMetadata(id: string): Promise<Book | null> {
   return book as unknown as Book | null;
 }
 
-// Cross-book citation graph: find books that share the most entities with a given book
-interface RelatedBook {
+// Cross-book citation graph
+// "direct" = this book mentions a person who authored another book in our library (real citation)
+// "shared" = books that share many of the same entity mentions (intellectual context)
+interface CitedBook {
   id: string;
   title: string;
   author: string;
   published?: string;
   year?: number;
-  shared_entities: number;
+  type: 'direct' | 'shared';
+  cited_as?: string;        // entity name that triggered the direct citation
+  shared_entities?: number;  // count for shared type
 }
 
-const getRelatedBooks = cache(async (bookId: string): Promise<RelatedBook[]> => {
+const getRelatedBooks = cache(async (bookId: string): Promise<CitedBook[]> => {
   try {
     const db = await getDb();
-    const results = await db.collection('entities').aggregate([
+
+    // Step 1: Find person entities mentioned in THIS book
+    const personEntities = await db.collection('entities').find(
+      { type: 'person', 'books.book_id': bookId },
+      { projection: { name: 1, aliases: 1, books: 1 } },
+    ).toArray();
+
+    // Step 2: For each person, check if they authored OTHER books in our library
+    // Match entity name/aliases against book_author fields in the entity's books array
+    const directCitationBookIds = new Map<string, string>(); // bookId -> cited_as
+    for (const entity of personEntities) {
+      const names = [entity.name, ...(entity.aliases || [])].filter(
+        (n: string) => n && n.length >= 4,
+      );
+      for (const bookEntry of entity.books || []) {
+        if (bookEntry.book_id === bookId) continue;
+        const authorStr = (bookEntry.book_author || '').toLowerCase();
+        if (!authorStr || authorStr === 'unknown') continue;
+        for (const name of names) {
+          if (authorStr.includes(name.toLowerCase())) {
+            directCitationBookIds.set(bookEntry.book_id, entity.name);
+            break;
+          }
+        }
+      }
+    }
+
+    // Step 3: Enrich direct citations with book metadata
+    const directBooks: CitedBook[] = [];
+    if (directCitationBookIds.size > 0) {
+      const bookDocs = await db.collection('books').find(
+        { id: { $in: [...directCitationBookIds.keys()] }, hidden: { $ne: true } },
+        { projection: { id: 1, display_title: 1, title: 1, author: 1, published: 1, year: 1 } },
+      ).toArray();
+      for (const doc of bookDocs) {
+        directBooks.push({
+          id: doc.id as string,
+          title: (doc.display_title || doc.title) as string,
+          author: (doc.author || 'Unknown') as string,
+          published: doc.published as string | undefined,
+          year: doc.year as number | undefined,
+          type: 'direct',
+          cited_as: directCitationBookIds.get(doc.id as string),
+        });
+      }
+    }
+
+    // Step 4: Fill remaining slots with entity-overlap books (shared context)
+    const directIds = new Set(directBooks.map(b => b.id));
+    const sharedResults = await db.collection('entities').aggregate([
       { $match: { 'books.book_id': bookId } },
       { $unwind: '$books' },
-      { $match: { 'books.book_id': { $ne: bookId } } },
+      { $match: { 'books.book_id': { $ne: bookId, $nin: [...directIds] } } },
       { $group: {
         _id: '$books.book_id',
         title: { $first: '$books.book_title' },
@@ -74,7 +127,7 @@ const getRelatedBooks = cache(async (bookId: string): Promise<RelatedBook[]> => 
       }},
       { $match: { shared_entities: { $gte: 3 } } },
       { $sort: { shared_entities: -1 as const } },
-      { $limit: 10 },
+      { $limit: 10 - directBooks.length },
       { $lookup: {
         from: 'books',
         localField: '_id',
@@ -86,14 +139,17 @@ const getRelatedBooks = cache(async (bookId: string): Promise<RelatedBook[]> => 
       { $match: { 'book_doc.hidden': { $ne: true } } },
     ]).toArray();
 
-    return results.map(r => ({
+    const sharedBooks: CitedBook[] = sharedResults.map(r => ({
       id: r._id as string,
       title: (r.book_doc?.display_title || r.title) as string,
       author: (r.author || 'Unknown') as string,
       published: r.book_doc?.published as string | undefined,
       year: r.book_doc?.year as number | undefined,
+      type: 'shared' as const,
       shared_entities: r.shared_entities as number,
     }));
+
+    return [...directBooks, ...sharedBooks];
   } catch {
     return [];
   }
@@ -135,10 +191,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (book.publisher) scholarMeta['citation_publisher'] = book.publisher;
   if (book.doi) scholarMeta['citation_doi'] = book.doi;
 
-  // Cross-book citations: books sharing entities are part of the same intellectual tradition
+  // Cross-book citations: only emit citation_reference for direct author citations
+  // (this book mentions a person who authored another book in our library)
   const relatedBooks = await getRelatedBooks(book.id);
-  if (relatedBooks.length > 0) {
-    scholarMeta['citation_reference'] = relatedBooks.map(rb => {
+  const directCitations = relatedBooks.filter(rb => rb.type === 'direct');
+  if (directCitations.length > 0) {
+    scholarMeta['citation_reference'] = directCitations.map(rb => {
       const parts = [`citation_title=${rb.title}`];
       if (rb.author && rb.author !== 'Unknown') parts.push(`citation_author=${rb.author}`);
       if (rb.published) parts.push(`citation_publication_date=${rb.published}`);
@@ -705,14 +763,39 @@ async function BookInfo({ id }: { id: string }) {
                     </div>
                   )}
 
-                  {/* Cross-referenced books — share entities with this book */}
-                  {entityRelatedBooks.length > 0 && (
+                  {/* Direct citations — this book mentions authors of these works */}
+                  {entityRelatedBooks.filter(rb => rb.type === 'direct').length > 0 && (
                     <div className="mb-4 pb-4 border-b border-stone-100">
                       <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                        Referenced together
+                        Cited authors in our library
                       </p>
                       <div className="space-y-1.5">
-                        {entityRelatedBooks.map((rb) => (
+                        {entityRelatedBooks.filter(rb => rb.type === 'direct').map((rb) => (
+                          <Link
+                            key={rb.id}
+                            href={`/book/${rb.id}`}
+                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group"
+                          >
+                            <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">
+                              {rb.title}
+                            </span>
+                            {rb.cited_as && (
+                              <span className="text-xs text-accent-rust shrink-0">via {rb.cited_as}</span>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Shared entity context — books discussing the same people/places/concepts */}
+                  {entityRelatedBooks.filter(rb => rb.type === 'shared').length > 0 && (
+                    <div className="mb-4 pb-4 border-b border-stone-100">
+                      <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
+                        Related works
+                      </p>
+                      <div className="space-y-1.5">
+                        {entityRelatedBooks.filter(rb => rb.type === 'shared').map((rb) => (
                           <Link
                             key={rb.id}
                             href={`/book/${rb.id}`}
