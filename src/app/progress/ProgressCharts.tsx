@@ -26,8 +26,11 @@ export function ProgressCharts({ commitData }: { commitData: ChartData[] }) {
 
   useEffect(() => {
     fetch('/api/progress')
-      .then(r => r.json())
-      .then(setData)
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then(d => { if (d.books) setData(d); })
       .catch(() => {});
   }, []);
 

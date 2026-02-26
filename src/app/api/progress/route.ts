@@ -2,19 +2,20 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 /**
  * GET /api/progress — collection growth data for the progress page.
  * Returns weekly book imports, OCR'd pages, and translated pages over time.
+ * Uses book-level cached counts to avoid scanning the 900k+ pages collection.
  */
 export async function GET() {
   try {
     const db = await getDb();
 
-    // Book imports by week
+    // Book imports by week — small collection, fast
     const booksByWeek = await db.collection('books').aggregate([
-      { $match: { created_at: { $exists: true } } },
+      { $match: { created_at: { $exists: true, $type: 'date' } } },
       {
         $group: {
           _id: {
@@ -26,50 +27,63 @@ export async function GET() {
       { $sort: { _id: 1 } },
     ]).toArray();
 
-    // Pages OCR'd by week (using ocr.updated_at)
-    const ocrByWeek = await db.collection('pages').aggregate([
-      { $match: { 'ocr.data': { $exists: true, $ne: '' }, 'ocr.updated_at': { $exists: true } } },
+    // Use book-level cached page counts instead of scanning pages collection.
+    // These are refreshed by sync-page-counts cron every 6h.
+    const bookStats = await db.collection('books').aggregate([
+      { $match: { created_at: { $exists: true, $type: 'date' } } },
       {
         $group: {
           _id: {
-            $dateToString: { format: '%Y-%m-%d', date: { $dateTrunc: { date: '$ocr.updated_at', unit: 'week' } } },
+            $dateToString: { format: '%Y-%m-%d', date: { $dateTrunc: { date: '$created_at', unit: 'week' } } },
           },
-          count: { $sum: 1 },
+          pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+          pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
         },
       },
       { $sort: { _id: 1 } },
     ]).toArray();
 
-    // Pages translated by week
-    const translationByWeek = await db.collection('pages').aggregate([
-      { $match: { 'translation.data': { $exists: true, $ne: '' }, 'translation.updated_at': { $exists: true } } },
+    // Current totals from book-level caches
+    const totalsAgg = await db.collection('books').aggregate([
       {
         $group: {
-          _id: {
-            $dateToString: { format: '%Y-%m-%d', date: { $dateTrunc: { date: '$translation.updated_at', unit: 'week' } } },
-          },
-          count: { $sum: 1 },
+          _id: null,
+          books: { $sum: 1 },
+          pages: { $sum: { $ifNull: ['$pages_count', 0] } },
+          ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+          translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
         },
       },
-      { $sort: { _id: 1 } },
     ]).toArray();
-
-    // Current totals
-    const totalBooks = await db.collection('books').countDocuments();
-    const totalPages = await db.collection('pages').countDocuments();
-    const totalOcr = await db.collection('pages').countDocuments({ 'ocr.data': { $exists: true, $ne: '' } });
-    const totalTranslated = await db.collection('pages').countDocuments({ 'translation.data': { $exists: true, $ne: '' } });
+    const totals = totalsAgg[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
 
     // Convert to cumulative
     const booksCumulative = toCumulative(booksByWeek as Array<{ _id: string; count: number }>);
-    const ocrCumulative = toCumulative(ocrByWeek as Array<{ _id: string; count: number }>);
-    const translationCumulative = toCumulative(translationByWeek as Array<{ _id: string; count: number }>);
+
+    // For OCR and translation, build cumulative from book stats
+    // (This shows when books were imported, weighted by their OCR/translation counts.
+    //  Not perfect — would be better with page-level dates — but avoids 900k doc scan.)
+    const ocrCumulative = toCumulative(
+      bookStats.filter(r => r.pages_ocr > 0).map(r => ({ _id: r._id, count: r.pages_ocr }))
+    );
+    const translationCumulative = toCumulative(
+      bookStats.filter(r => r.pages_translated > 0).map(r => ({ _id: r._id, count: r.pages_translated }))
+    );
 
     return NextResponse.json({
-      books: { weekly: booksByWeek.map(r => ({ x: r._id, y: r.count })), cumulative: booksCumulative },
-      ocr: { weekly: ocrByWeek.map(r => ({ x: r._id, y: r.count })), cumulative: ocrCumulative },
-      translation: { weekly: translationByWeek.map(r => ({ x: r._id, y: r.count })), cumulative: translationCumulative },
-      totals: { books: totalBooks, pages: totalPages, ocr: totalOcr, translated: totalTranslated },
+      books: {
+        weekly: booksByWeek.map(r => ({ x: r._id, y: r.count })),
+        cumulative: booksCumulative,
+      },
+      ocr: {
+        weekly: bookStats.map(r => ({ x: r._id, y: r.pages_ocr })),
+        cumulative: ocrCumulative,
+      },
+      translation: {
+        weekly: bookStats.map(r => ({ x: r._id, y: r.pages_translated })),
+        cumulative: translationCumulative,
+      },
+      totals: { books: totals.books, pages: totals.pages, ocr: totals.ocr, translated: totals.translated },
     });
   } catch (error) {
     console.error('Progress API error:', error);
