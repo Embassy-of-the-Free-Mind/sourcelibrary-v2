@@ -675,7 +675,11 @@ export async function GET(request: NextRequest) {
 
     // ── Phase 2: Submit OCR (archive_complete -> ocr_submitted) ──
     // Primary: Gemini Batch API (50% cheaper). Fallback: Lambda workers (realtime).
-    if (hasTimeBudget(startTime)) {
+    const ocrPaused = control?.paused_phases?.includes('ocr');
+    if (ocrPaused) {
+      logger.decision('skip', 'OCR submission paused via processing_control.paused_phases');
+    }
+    if (hasTimeBudget(startTime) && !ocrPaused) {
       // Backpressure: don't overwhelm the Gemini Batch API queue
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
         type: 'ocr',
