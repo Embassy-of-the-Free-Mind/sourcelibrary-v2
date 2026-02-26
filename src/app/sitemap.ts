@@ -109,6 +109,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  // Category pages — server-rendered with metadata
+  const categoryPages: MetadataRoute.Sitemap = [
+    'alchemy', 'hermeticism', 'jewish-kabbalah', 'christian-cabala',
+    'neoplatonism', 'rosicrucianism', 'freemasonry', 'natural-philosophy',
+    'astrology', 'natural-magic', 'ritual-magic', 'theurgy', 'mysticism',
+    'theology', 'medicine', 'gnosticism', 'theosophy', 'pythagoreanism',
+    'divination', 'ars-notoria', 'paracelsian', 'spiritual-alchemy',
+    'christian-mysticism', 'prisca-theologia', 'florentine-platonism',
+    'renaissance', 'reformation', 'enlightenment', '19th-century-revival',
+  ].map((slug) => ({
+    url: `${baseUrl}/categories/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
+
   // Press releases
   const pressPages: MetadataRoute.Sitemap = [
     'origins-of-science',
@@ -206,6 +222,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
       ...staticPages,
       ...blogPosts,
+      ...categoryPages,
       ...pressPages,
       ...bookPages,
       ...entityPages,
@@ -214,6 +231,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ];
   } catch (error) {
     console.error('Error generating sitemap:', error);
-    return [...staticPages, ...blogPosts, ...pressPages];
+    return [...staticPages, ...blogPosts, ...categoryPages, ...pressPages];
   }
 }

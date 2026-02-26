@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ExploreStats from '@/components/explore/ExploreStats';
 import CenturyHeatmap from '@/components/explore/CenturyHeatmap';
@@ -7,6 +8,15 @@ import DataSources from '@/components/explore/DataSources';
 import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Explore — Source Library',
+  description: 'Interactive visualizations of 12,500+ people, places, and concepts from the Western esoteric tradition. Century heatmaps, era highlights, and data source breakdowns.',
+  openGraph: {
+    title: 'Explore — Source Library',
+    description: 'Interactive visualizations of the Western esoteric tradition, enriched with Wikidata.',
+  },
+};
 
 async function fetchExploreStats() {
   const db = await getDb();

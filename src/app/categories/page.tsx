@@ -1,33 +1,48 @@
-'use client';
-
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
-import { BookLoader } from '@/components/ui/BookLoader';
-import { categories as categoriesApi } from '@/lib/api-client';
-import { Category } from '@/lib/api-client/types';
+import { getDb } from '@/lib/mongodb';
+import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
-export default function CategoriesPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+export const metadata: Metadata = {
+  title: 'Browse by Category — Source Library',
+  description: 'Explore rare esoteric, alchemical, and philosophical texts organized by tradition: alchemy, Hermeticism, Kabbalah, Neoplatonism, Rosicrucianism, astrology, and more.',
+  openGraph: {
+    title: 'Browse by Category — Source Library',
+    description: 'Explore rare esoteric texts organized by tradition and subject.',
+  },
+};
 
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const data = await categoriesApi.list();
-        setCategories(data.categories);
-      } catch (error) {
-        console.error('Failed to fetch categories:', error);
-        toast.error('Failed to load categories');
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCategories();
-  }, []);
+async function getCategoriesWithCounts(): Promise<CategoryWithCount[]> {
+  const db = await getDb();
 
-  // Separate categories with books from empty ones
+  const categoryCounts = await db.collection('books').aggregate([
+    { $match: { hidden: { $ne: true } } },
+    { $unwind: '$categories' },
+    { $group: { _id: '$categories', count: { $sum: 1 } } },
+  ]).toArray();
+
+  const countMap = new Map<string, number>();
+  for (const item of categoryCounts) {
+    countMap.set(item._id as string, item.count as number);
+  }
+
+  const categories: CategoryWithCount[] = LIBRARY_CATEGORIES.map(cat => ({
+    ...cat,
+    book_count: countMap.get(cat.id) || 0,
+  }));
+
+  categories.sort((a, b) => {
+    if (b.book_count !== a.book_count) return b.book_count - a.book_count;
+    return a.name.localeCompare(b.name);
+  });
+
+  return categories;
+}
+
+export default async function CategoriesPage() {
+  const categories = await getCategoriesWithCounts();
+
   const activeCategories = categories.filter(c => c.book_count > 0);
   const emptyCategories = categories.filter(c => c.book_count === 0);
 
@@ -61,78 +76,70 @@ export default function CategoriesPage() {
 
       {/* Content */}
       <main className="max-w-5xl mx-auto px-4 py-8">
-        {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <BookLoader size="sm" />
-          </div>
-        ) : (
-          <>
-            {/* Categories with books */}
-            {activeCategories.length > 0 && (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {activeCategories.map(category => (
-                  <Link
-                    key={category.id}
-                    href={`/categories/${category.id}`}
-                    className="group bg-white rounded-xl border border-stone-200 p-5 hover:border-accent-gold/20 hover:shadow-md transition-all"
-                  >
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-2xl">{category.icon}</span>
-                        <div>
-                          <h2 className="font-semibold text-stone-900 group-hover:text-accent-rust transition-colors">
-                            {category.name}
-                          </h2>
-                          <p className="text-sm text-accent-rust font-medium">
-                            {category.book_count} book{category.book_count !== 1 ? 's' : ''}
-                          </p>
-                        </div>
-                      </div>
-                      <ChevronRight className="w-5 h-5 text-stone-400 group-hover:text-accent-rust transition-colors" />
-                    </div>
-                    {category.description && (
-                      <p className="text-sm text-stone-600 mt-3 line-clamp-2">
-                        {category.description}
+        {/* Categories with books */}
+        {activeCategories.length > 0 && (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {activeCategories.map(category => (
+              <Link
+                key={category.id}
+                href={`/categories/${category.id}`}
+                className="group bg-white rounded-xl border border-stone-200 p-5 hover:border-accent-gold/20 hover:shadow-md transition-all"
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">{category.icon}</span>
+                    <div>
+                      <h2 className="font-semibold text-stone-900 group-hover:text-accent-rust transition-colors">
+                        {category.name}
+                      </h2>
+                      <p className="text-sm text-accent-rust font-medium">
+                        {category.book_count} book{category.book_count !== 1 ? 's' : ''}
                       </p>
-                    )}
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            {/* Empty categories */}
-            {emptyCategories.length > 0 && (
-              <div className="mt-12">
-                <h3 className="text-sm font-semibold text-stone-500 uppercase tracking-wider mb-4">
-                  Coming Soon
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  {emptyCategories.map(category => (
-                    <div
-                      key={category.id}
-                      className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-500 rounded-lg"
-                    >
-                      <span>{category.icon}</span>
-                      <span className="text-sm">{category.name}</span>
                     </div>
-                  ))}
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-stone-400 group-hover:text-accent-rust transition-colors" />
                 </div>
-              </div>
-            )}
+                {category.description && (
+                  <p className="text-sm text-stone-600 mt-3 line-clamp-2">
+                    {category.description}
+                  </p>
+                )}
+              </Link>
+            ))}
+          </div>
+        )}
 
-            {/* No categories */}
-            {categories.length === 0 && (
-              <div className="text-center py-16">
-                <BookOpen className="w-16 h-16 text-stone-300 mx-auto mb-4" />
-                <h2 className="text-xl font-semibold text-stone-700 mb-2">
-                  No categories yet
-                </h2>
-                <p className="text-stone-500">
-                  Books will be organized into categories as they are processed.
-                </p>
-              </div>
-            )}
-          </>
+        {/* Empty categories */}
+        {emptyCategories.length > 0 && (
+          <div className="mt-12">
+            <h3 className="text-sm font-semibold text-stone-500 uppercase tracking-wider mb-4">
+              Coming Soon
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              {emptyCategories.map(category => (
+                <div
+                  key={category.id}
+                  className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-500 rounded-lg"
+                >
+                  <span>{category.icon}</span>
+                  <span className="text-sm">{category.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* No categories */}
+        {categories.length === 0 && (
+          <div className="text-center py-16">
+            <BookOpen className="w-16 h-16 text-stone-300 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold text-stone-700 mb-2">
+              No categories yet
+            </h2>
+            <p className="text-stone-500">
+              Books will be organized into categories as they are processed.
+            </p>
+          </div>
         )}
       </main>
     </div>

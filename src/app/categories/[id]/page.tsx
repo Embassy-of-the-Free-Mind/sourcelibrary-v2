@@ -1,11 +1,10 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, BookOpen, Book as BookIcon } from 'lucide-react';
-import { BookLoader } from '@/components/ui/BookLoader';
-import { categories } from '@/lib/api-client';
+import { getDb } from '@/lib/mongodb';
+import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
+import { notFound } from 'next/navigation';
 
 interface Book {
   id: string;
@@ -21,51 +20,83 @@ interface Book {
   summary?: { data: string } | string;
 }
 
-interface Category {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-}
-
 interface CategoryPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const [categoryId, setCategoryId] = useState<string | null>(null);
-  const [category, setCategory] = useState<Category | null>(null);
-  const [books, setBooks] = useState<Book[]>([]);
-  const [loading, setLoading] = useState(true);
+function getCategory(id: string) {
+  return LIBRARY_CATEGORIES.find(c => c.id === id);
+}
 
-  useEffect(() => {
-    params.then(p => setCategoryId(p.id));
-  }, [params]);
-
-  useEffect(() => {
-    if (!categoryId) return;
-
-    async function fetchCategory() {
-      try {
-        const data = await categories.get(categoryId!);
-        setCategory(data.category);
-        setBooks(data.books);
-      } catch (error) {
-        console.error('Failed to fetch category:', error);
-      } finally {
-        setLoading(false);
+async function getCategoryBooks(id: string): Promise<Book[]> {
+  const db = await getDb();
+  return db.collection('books').aggregate([
+    { $match: { categories: id, hidden: { $ne: true } } },
+    {
+      $lookup: {
+        from: 'pages',
+        localField: 'id',
+        foreignField: 'book_id',
+        as: 'pages_array'
       }
-    }
-    fetchCategory();
-  }, [categoryId]);
+    },
+    {
+      $addFields: {
+        pages_count: { $size: '$pages_array' },
+        pages_translated: {
+          $size: {
+            $filter: {
+              input: '$pages_array',
+              as: 'page',
+              cond: {
+                $and: [
+                  { $ne: ['$$page.translation', null] },
+                  { $ne: ['$$page.translation.data', null] },
+                  { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      $addFields: {
+        translation_percent: {
+          $cond: {
+            if: { $gt: ['$pages_count', 0] },
+            then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_count'] }, 100] }] },
+            else: 0
+          }
+        }
+      }
+    },
+    { $project: { pages_array: 0, _id: 0 } },
+    { $sort: { translation_percent: -1, title: 1 } }
+  ]).toArray() as unknown as Book[];
+}
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
-        <BookLoader />
-      </div>
-    );
-  }
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const category = getCategory(id);
+  if (!category) return { title: 'Category Not Found' };
+
+  return {
+    title: `${category.name} — Source Library`,
+    description: `Browse ${category.description.toLowerCase()} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
+    openGraph: {
+      title: `${category.name} — Source Library`,
+      description: category.description,
+    },
+  };
+}
+
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { id } = await params;
+  const category = getCategory(id);
+  if (!category) notFound();
+
+  const books = await getCategoryBooks(id);
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -86,12 +117,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-5xl mx-auto px-4 py-12">
           <div className="flex items-center gap-4">
-            <span className="text-4xl">{category?.icon || '📚'}</span>
+            <span className="text-4xl">{category.icon}</span>
             <div>
               <h1 className="text-3xl sm:text-4xl font-serif font-bold">
-                {category?.name || categoryId}
+                {category.name}
               </h1>
-              {category?.description && (
+              {category.description && (
                 <p className="text-stone-300 mt-2">{category.description}</p>
               )}
             </div>
