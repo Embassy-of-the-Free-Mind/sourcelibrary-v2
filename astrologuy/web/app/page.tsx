@@ -140,6 +140,57 @@ export default function EssayPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════
+          III-b. TWO CLOCKS
+          ═══════════════════════════════════════════════ */}
+      <section className="essay-section">
+        <h2 className="essay-heading">Two Clocks</h2>
+        <div className="essay-prose">
+          <p>
+            But there&rsquo;s a subtlety most people miss. The moon is actually running
+            <em>two</em> cycles simultaneously, at slightly different speeds.
+          </p>
+          <p>
+            The first is the one you see: the <strong>synodic month</strong>, 29.53 days
+            from new moon to new moon. This is the cycle of phases &mdash; the waxing and
+            waning that gives us the calendar month. It measures the moon&rsquo;s position
+            relative to the Sun.
+          </p>
+          <p>
+            The second is invisible unless you watch carefully: the <strong>sidereal month</strong>,
+            27.32 days for the moon to complete one actual orbit and return to the same position
+            against the background stars. This is the moon&rsquo;s true orbital period &mdash;
+            one full trip around Earth.
+          </p>
+          <p>
+            Why the difference? Because while the moon is orbiting Earth, Earth is orbiting
+            the Sun. After 27.32 days, the moon has completed a full lap &mdash; but the
+            finish line has moved. The Sun&rsquo;s position has shifted by about 27 degrees,
+            so the moon needs another 2.2 days to catch up and reach the same <em>phase</em>
+            again.
+          </p>
+          <p>
+            The sidereal cycle is what governs <em>where</em> the moon is &mdash; which
+            constellation it&rsquo;s passing through, where it rises on the horizon, when
+            it rises. The moon moves about 13 degrees eastward per day, which is why it
+            rises roughly 50 minutes later each night. Every 2&ndash;3 days it enters
+            a new zodiac sign. Astrologers have tracked this clock for millennia:
+            &ldquo;the Moon is in Scorpio&rdquo; is a statement about the sidereal cycle.
+          </p>
+          <p>
+            The synodic cycle governs <em>what the moon looks like</em> &mdash; how much
+            is lit, whether it&rsquo;s waxing or waning. This is the clock that drives
+            tides, determines when eclipses happen, and gave us the calendar month.
+          </p>
+          <p>
+            Two clocks, running at slightly different speeds, from the same mechanism.
+            One measures the moon against the stars. The other measures it against the Sun.
+            Their interplay produces every lunar phenomenon you can observe &mdash; and
+            the calendar you&rsquo;re about to see was built on both.
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════
           IV. THE BREAK
           ═══════════════════════════════════════════════ */}
       <section className="essay-section">
