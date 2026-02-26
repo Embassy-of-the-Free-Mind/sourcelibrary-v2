@@ -17,7 +17,7 @@ export const maxDuration = 300;
 const TIME_BUDGET_MS = 270_000; // 4.5 min — leave 30s buffer before Vercel's 300s limit
 const ENROLL_LIMIT = 50;
 const ARCHIVE_LIMIT = 100; // Just DB checks now — Hetzner does actual archiving
-const OCR_SUBMIT_LIMIT = 0; // PAUSED — draining current OCR jobs, prioritizing translation
+const OCR_SUBMIT_LIMIT = 20; // Re-enabled — pushing to 2,000 fully OCR'd books
 const MAX_ACTIVE_BATCH_OCR = 200; // Gemini Batch API handles many concurrent jobs
 const METADATA_ENRICH_LIMIT = 20; // Single Gemini call per book, fast
 const TRANSLATE_SUBMIT_LIMIT = 50; // Increased — large backlog at metadata_enriched
@@ -771,7 +771,7 @@ export async function GET(request: NextRequest) {
       let ocrQuotaExhausted = false;
       let lambdaFallbackCount = 0;
       let consecutiveBatchFailures = 0;
-      const LAMBDA_FALLBACK_LIMIT = 0; // PAUSED — let current OCR jobs drain, focus Lambda on translation
+      const LAMBDA_FALLBACK_LIMIT = 10; // Re-enabled for OCR push to 2,000 books
       const CONSECUTIVE_FAILURE_THRESHOLD = 3; // After N consecutive batch 500s, assume quota exhausted
 
       for (const book of readyForOcr) {
