@@ -68,7 +68,7 @@ const TOOLS: Tool[] = [
   {
     name: "list_books",
     description:
-      "Browse the Source Library collection with filters. Unlike search_library which does full-text search, this returns a filtered list of all books. Use for browsing by language, finding recently translated works, or getting collection statistics.",
+      "Browse the Source Library collection with filters. Returns books with title, author, language, year, page counts, and translation progress. Unlike search_library which does full-text search, this returns a filtered list of all books. Use for browsing by language, finding recently translated works, or getting collection statistics.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -102,9 +102,9 @@ const TOOLS: Tool[] = [
   },
 
   {
-    name: "search_passages",
+    name: "search_translations",
     description:
-      "Search across all translated page content in the library. Returns passage snippets with page numbers and book context. Use this for discovering what historical authors wrote about a topic — search a concept and see which books and pages mention it. Unlike search_library (which matches book titles/authors), this searches inside the actual text of translations and OCR.",
+      "Search inside translated page text across the entire library. Returns passage snippets with page numbers, book title, author, and direct reading links. THE tool for finding what historical authors wrote about a topic — search a concept and see which books and pages discuss it. Unlike search_library (which matches book titles/authors), this searches inside the actual text of translations and OCR. (Also available as 'search_passages'.)",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -160,7 +160,7 @@ const TOOLS: Tool[] = [
   {
     name: "find_quotes",
     description:
-      "Find the most quotable passages in a book on a given topic. Higher-level than search_within_book: searches the book for your topic, then retrieves full page text with original language and shortlinks for the best matches. Returns up to 5 citable passages ready for scholarly use.",
+      "Find citable passages in a book on a given topic. Searches the book, retrieves full page text with original language, English translation, and shortlinks for the top matches. Returns up to 5 passages with academic citations ready for scholarly use. Use this when you know which book to look in; use search_translations to find passages across the whole library.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -237,7 +237,7 @@ const TOOLS: Tool[] = [
   {
     name: "get_quote",
     description:
-      "Get a page with formatted citations and a shortlink. Provide a page number for direct lookup, or a query to search within the book and return the best matching page as a citable quote.",
+      "Get a citable quote from a book with academic citations (APA, Chicago, MLA, BibTeX) and a shortlink. Two modes: (1) provide a page number for direct lookup, or (2) provide a query to search within the book and return the best matching page. Returns translation, original language text, and formatted citations ready for scholarly use.",
     inputSchema: {
       type: "object" as const,
       properties: {
@@ -1066,6 +1066,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "search_library":
         result = await searchLibrary(args as Parameters<typeof searchLibrary>[0]);
         break;
+      case "search_translations":
       case "search_passages":
         result = await searchPassages(args as Parameters<typeof searchPassages>[0]);
         break;
